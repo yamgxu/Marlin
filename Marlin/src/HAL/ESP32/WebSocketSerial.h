@@ -21,10 +21,11 @@
  */
 #pragma once
 
-#include "../../inc/MarlinConfig.h"
+#include <stddef.h>
 #include "../../core/serial_hook.h"
 
 #include <Stream.h>
+#include "esp_http_server.h"
 
 #ifndef TX_BUFFER_SIZE
   #define TX_BUFFER_SIZE 32
@@ -60,17 +61,26 @@ public:
 class WebSocketSerial: public Stream {
   RingBuffer rx_buffer;
   RingBuffer tx_buffer;
+  httpd_handle_t server;
+  int64_t last_flush;
+  static const httpd_uri_t ws;
 
 public:
   WebSocketSerial();
+  void attach(httpd_handle_t server);
   void begin(const long);
   void end();
   int available();
   int peek();
+  void push(const uint8_t *buffer, size_t size);
   int read();
   void flush();
   size_t write(const uint8_t c);
   size_t write(const uint8_t *buffer, size_t size);
+  void handle_flush();
+
+  static void ws_async_send(void *arg);
+  static esp_err_t ws_handler(httpd_req_t *req);
 
   #if ENABLED(SERIAL_STATS_DROPPED_RX)
     FORCE_INLINE uint32_t dropped() { return 0; }

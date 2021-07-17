@@ -659,6 +659,8 @@
   #include "esp32/pins_E4D.h"                   // ESP32                                  env:esp32
 #elif MB(FYSETC_E4)
   #include "esp32/pins_FYSETC_E4.h"             // ESP32                                  env:FYSETC_E4
+#elif MB(ESP32CONTROLLERR3)
+  #include "esp32/pins_ESP32CONTROLLERR3.h"     // ESP32                                  env:esp32controllerr3
 
 //
 // Adafruit Grand Central M4 (SAMD51 ARM Cortex-M4)

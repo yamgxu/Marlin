@@ -31,27 +31,48 @@
 #include "../shared/math_32bit.h"
 #include "../shared/HAL_SPI.h"
 
+#include "WebSocketSerial.h"
 #include "fastio.h"
 #include "watchdog.h"
 #include "i2s.h"
+#include "USB.h"
 
-#if ENABLED(WIFISUPPORT)
-  #include "WebSocketSerial.h"
-#endif
+#include "../../core/serial_hook.h"
 
 #if ENABLED(ESP3D_WIFISUPPORT)
   #include "esp3dlib.h"
 #endif
 
-#include "FlushableHardwareSerial.h"
-
 // ------------------------
 // Defines
 // ------------------------
 
+// hacky
+#undef O_RDONLY
+#undef O_WRONLY
+#undef O_RDWR
+#undef O_ACCMODE
+#undef O_APPEND
+#undef O_SYNC
+#undef O_TRUNC
+#undef O_CREAT
+#undef O_EXCL
+
 extern portMUX_TYPE spinlock;
 
-#define MYSERIAL1 flushableSerial
+// TODO check if serial_port === -1 an initialize USB serial only on ESP32-S2
+// TODO add serial2 for ESP32
+// typedef ForwardSerial1Class< decltype(Serial) > DefaultSerial1; -- only if using serial0 as output serial
+typedef ForwardSerial1Class< decltype(Serial1) > DefaultSerial2;
+typedef Serial1Class<USBCDC> DefaultSerialUSB;
+// typedef Serial1Class<WebSocketSerial> MSerialWebSocketT;
+
+
+// extern DefaultSerial1 MSerial1;
+// extern DefaultSerial2 MSerial2;
+extern DefaultSerialUSB MSerialUSB;
+
+#define MYSERIAL1 webSocketSerial
 
 #if EITHER(WIFISUPPORT, ESP3D_WIFISUPPORT)
   #if ENABLED(ESP3D_WIFISUPPORT)
@@ -59,7 +80,7 @@ extern portMUX_TYPE spinlock;
     extern DefaultSerial1 MSerial0;
     #define MYSERIAL2 MSerial0
   #else
-    #define MYSERIAL2 webSocketSerial
+    // #define MYSERIAL2 webSocketSerial
   #endif
 #endif
 
@@ -123,7 +144,7 @@ void analogWrite(pin_t pin, int value);
 
 void HAL_adc_init();
 
-#define HAL_ADC_VREF         3.3
+#define HAL_ADC_VREF        3.3
 #define HAL_ADC_RESOLUTION  10
 #define HAL_START_ADC(pin)  HAL_adc_start_conversion(pin)
 #define HAL_READ_ADC()      HAL_adc_result
@@ -182,3 +203,8 @@ FORCE_INLINE static void DELAY_CYCLES(uint32_t x) {
   }
 
 }
+
+
+
+// HardwareSerial Serial1(1);
+// HardwareSerial Serial2(2);

@@ -32,24 +32,7 @@
 
 void OTA_init() {
   ArduinoOTA
-    .onStart([]() {
-      timer_pause(TIMER_GROUP_0, TIMER_0);
-      timer_pause(TIMER_GROUP_0, TIMER_1);
-
-      // U_FLASH or U_SPIFFS
-      String type = (ArduinoOTA.getCommand() == U_FLASH) ? "sketch" : "filesystem";
-
-      // NOTE: if updating SPIFFS this would be the place to unmount SPIFFS using SPIFFS.end()
-      Serial.println("Start updating " + type);
-    })
-    .onEnd([]() {
-      Serial.println("\nEnd");
-    })
-    .onProgress([](unsigned int progress, unsigned int total) {
-      Serial.printf("Progress: %u%%\r", (progress / (total / 100)));
-    })
     .onError([](ota_error_t error) {
-      Serial.printf("Error[%u]: ", error);
       char *str;
       switch (error) {
         case OTA_AUTH_ERROR:    str = "Auth Failed";    break;
@@ -58,7 +41,6 @@ void OTA_init() {
         case OTA_RECEIVE_ERROR: str = "Receive Failed"; break;
         case OTA_END_ERROR:     str = "End Failed";     break;
       }
-      Serial.println(str);
     });
 
   ArduinoOTA.begin();

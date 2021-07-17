@@ -408,6 +408,7 @@
 #define BOARD_MRR_ESPE                6002  // MRR ESPE based on ESP32 (with I2S stepper stream)
 #define BOARD_E4D_BOX                 6003  // E4d@BOX
 #define BOARD_FYSETC_E4               6004  // FYSETC E4
+#define BOARD_ESP32CONTROLLERR3       6005
 
 //
 // SAMD51 ARM Cortex M4

@@ -35,38 +35,67 @@
 
 #define NUM_HARDWARE_TIMERS 4
 
+#define TIMER_STATUS 
+
 // ------------------------
 // Private Variables
 // ------------------------
 
 static timg_dev_t *TG[2] = {&TIMERG0, &TIMERG1};
+TaskHandle_t temperatureTaskHandle;
+
+void temperature_isr() {
+  vTaskNotifyGiveFromISR(temperatureTaskHandle, NULL);
+}
 
 const tTimerConfig TimerConfig [NUM_HARDWARE_TIMERS] = {
   { TIMER_GROUP_0, TIMER_0, STEPPER_TIMER_PRESCALE, stepTC_Handler }, // 0 - Stepper
-  { TIMER_GROUP_0, TIMER_1,    TEMP_TIMER_PRESCALE, tempTC_Handler }, // 1 - Temperature
+  { TIMER_GROUP_0, TIMER_1,    TEMP_TIMER_PRESCALE, temperature_isr }, // 1 - Temperature
   { TIMER_GROUP_1, TIMER_0,     PWM_TIMER_PRESCALE, pwmTC_Handler  }, // 2 - PWM
   { TIMER_GROUP_1, TIMER_1,    TONE_TIMER_PRESCALE, toneTC_Handler }, // 3 - Tone
 };
 
+
 // ------------------------
 // Public functions
 // ------------------------
+
+
+void temperatureTask(void *params) {
+  for (;;) {
+    ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+    tempTC_Handler();
+  }
+}
 
 void IRAM_ATTR timer_isr(void *para) {
   const tTimerConfig& timer = TimerConfig[(int)para];
 
   // Retrieve the interrupt status and the counter value
   // from the timer that reported the interrupt
-  uint32_t intr_status = TG[timer.group]->int_st_timers.val;
-  TG[timer.group]->hw_timer[timer.idx].update = 1;
+  #if CONFIG_IDF_TARGET_ESP32
+    uint32_t intr_status = TG[timer.group]->int_st_timers.val;
+  #elif CONFIG_IDF_TARGET_ESP32S2
+    uint32_t intr_status = TG[timer.group]->int_st.val;
+  #endif
+  TG[timer.group]->hw_timer[timer.idx].update.val = 1;
 
   // Clear the interrupt
   if (intr_status & BIT(timer.idx)) {
-    switch (timer.idx) {
-      case TIMER_0: TG[timer.group]->int_clr_timers.t0 = 1; break;
-      case TIMER_1: TG[timer.group]->int_clr_timers.t1 = 1; break;
-      case TIMER_MAX: break;
-    }
+    #if CONFIG_IDF_TARGET_ESP32
+      switch (timer.idx) {
+        case TIMER_0: TG[timer.group]->int_clr_timers.t0 = 1; break;
+        case TIMER_1: TG[timer.group]->int_clr_timers.t1 = 1; break;
+        case TIMER_MAX: break;
+      }
+    #elif CONFIG_IDF_TARGET_ESP32S2
+      // TODO: cleanup
+      switch (timer.idx) {
+        case TIMER_0: TG[timer.group]->int_clr.t0 = 1; break;
+        case TIMER_1: TG[timer.group]->int_clr.t1 = 1; break;
+        case TIMER_MAX: break;
+      }
+    #endif
   }
 
   timer.fn();
@@ -82,6 +111,11 @@ void IRAM_ATTR timer_isr(void *para) {
  * @param frequency frequency of the timer
  */
 void HAL_timer_start(const uint8_t timer_num, uint32_t frequency) {
+  // Workaround
+  if (timer_num == 1) {
+    xTaskCreate(temperatureTask, "TemperatureTask", 2048, NULL, tskIDLE_PRIORITY+1, &temperatureTaskHandle);
+  }
+
   const tTimerConfig timer = TimerConfig[timer_num];
 
   timer_config_t config;
@@ -90,7 +124,7 @@ void HAL_timer_start(const uint8_t timer_num, uint32_t frequency) {
   config.counter_en  = TIMER_PAUSE;
   config.alarm_en    = TIMER_ALARM_EN;
   config.intr_type   = TIMER_INTR_LEVEL;
-  config.auto_reload = true;
+  config.auto_reload = TIMER_AUTORELOAD_EN;
 
   // Select and initialize the timer
   timer_init(timer.group, timer.idx, &config);

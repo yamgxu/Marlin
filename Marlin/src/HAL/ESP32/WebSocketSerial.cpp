@@ -27,14 +27,11 @@
 
 #include "WebSocketSerial.h"
 #include "wifi.h"
-#include <ESPAsyncWebServer.h>
-
-MSerialWebSocketT webSocketSerial(false);
-AsyncWebSocket ws("/ws"); // TODO Move inside the class.
-
-// RingBuffer impl
 
 #define NEXT_INDEX(I, SIZE) ((I + 1) & (ring_buffer_pos_t)(SIZE - 1))
+#define FLUSHTIMEOUT 500*1000
+
+MSerialWebSocketT webSocketSerial(false);
 
 RingBuffer::RingBuffer(ring_buffer_pos_t size)
   : data(new uint8_t[size]),
@@ -96,42 +93,140 @@ ring_buffer_pos_t RingBuffer::read(uint8_t *buffer) {
 
 void RingBuffer::flush() { read_index = write_index; }
 
+struct async_resp_arg {
+  httpd_handle_t hd;
+  uint8_t txbuf[TX_BUFFER_SIZE];
+  ring_buffer_pos_t len; 
+};
+
+const httpd_uri_t WebSocketSerial::ws = {
+  .uri        = "/ws",
+  .method     = HTTP_GET,
+  .handler    = &WebSocketSerial::ws_handler,
+  .user_ctx   = NULL,
+  .is_websocket = true
+};
+
 // WebSocketSerial impl
 WebSocketSerial::WebSocketSerial()
     : rx_buffer(RingBuffer(RX_BUFFER_SIZE)),
-      tx_buffer(RingBuffer(TX_BUFFER_SIZE))
+      tx_buffer(RingBuffer(TX_BUFFER_SIZE)),
+      server(nullptr)
 {}
 
-void WebSocketSerial::begin(const long baud_setting) {
-  ws.onEvent([this](AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type, void *arg, uint8_t *data, size_t len) {
-    switch (type) {
-      case WS_EVT_CONNECT: client->ping(); break; // client connected
-      case WS_EVT_DISCONNECT:                     // client disconnected
-      case WS_EVT_ERROR:                          // error was received from the other end
-      case WS_EVT_PONG: break;                    // pong message was received (in response to a ping request maybe)
-      case WS_EVT_DATA: {                         // data packet
-        AwsFrameInfo * info = (AwsFrameInfo*)arg;
-        if (info->opcode == WS_TEXT || info->message_opcode == WS_TEXT)
-          this->rx_buffer.write(data, len);
-      }
-    }
-  });
-  server.addHandler(&ws);
+void WebSocketSerial::attach(httpd_handle_t server) {
+  this->server = server;
+
+  httpd_register_uri_handler(server, &ws);
 }
 
+void WebSocketSerial::begin(const long baud_setting) { }
 void WebSocketSerial::end() { }
 int WebSocketSerial::peek() { return rx_buffer.peek(); }
 int WebSocketSerial::read() { return rx_buffer.read(); }
 int WebSocketSerial::available() { return rx_buffer.available(); }
-void WebSocketSerial::flush() { rx_buffer.flush(); }
+
+void WebSocketSerial::flush() {
+  if (tx_buffer.available()) {
+    struct async_resp_arg *resp_arg = (struct async_resp_arg *)malloc(sizeof(struct async_resp_arg));
+    resp_arg->hd = this->server;
+    resp_arg->len = tx_buffer.read(resp_arg->txbuf);
+
+    httpd_queue_work(this->server, (httpd_work_fn_t)&WebSocketSerial::ws_async_send, resp_arg);
+  } else {
+    tx_buffer.flush();
+  }
+
+  last_flush = esp_timer_get_time(); 
+}
+
+void WebSocketSerial::handle_flush() {
+  int available = tx_buffer.available();
+  if (available > 0 && ((available == TX_BUFFER_SIZE-1) || (esp_timer_get_time()-last_flush) > FLUSHTIMEOUT)) {
+    flush();
+  }
+}
+
+void WebSocketSerial::push(const uint8_t *buffer, size_t size) {
+  rx_buffer.write(buffer, size);
+}
+
+void WebSocketSerial::ws_async_send(void *arg) {
+  struct async_resp_arg *resp_arg = (struct async_resp_arg *)arg;
+  httpd_ws_frame_t ws_pkt;
+  memset(&ws_pkt, 0, sizeof(httpd_ws_frame_t));
+  ws_pkt.payload = resp_arg->txbuf;
+  ws_pkt.len = resp_arg->len;
+  ws_pkt.type = HTTPD_WS_TYPE_TEXT;
+
+  // todo use the size from the server config
+  size_t fds = 8;
+  int client_fds[8];
+  esp_err_t ret = httpd_get_client_list(resp_arg->hd, &fds, client_fds); //todo handle error
+  if (ret != ESP_OK) {
+    return;
+  } 
+
+  for (int i=0; i<fds; i++) {
+    if (httpd_ws_get_fd_info(resp_arg->hd, client_fds[i]) == HTTPD_WS_CLIENT_WEBSOCKET) {
+      httpd_ws_send_frame_async(resp_arg->hd, client_fds[i], &ws_pkt);
+      // When is ws_pkt freed?
+    }
+  }
+
+  free(arg);
+  // when to free arg->txbuf? <- same time ass ws_pkt
+
+  // TODO free memory
+}
+
+esp_err_t WebSocketSerial::ws_handler(httpd_req_t *req) {
+  if (req->method == HTTP_GET) {
+    return ESP_OK;
+  }
+
+  httpd_ws_frame_t ws_pkt;
+  uint8_t *buf = NULL;
+  memset(&ws_pkt, 0, sizeof(httpd_ws_frame_t));
+  ws_pkt.type = HTTPD_WS_TYPE_TEXT;
+  /* Set max_len = 0 to get the frame len */
+  esp_err_t ret = httpd_ws_recv_frame(req, &ws_pkt, 0);
+  if (ret != ESP_OK) {
+    return ret;
+  }
+
+  if (ws_pkt.len) {
+    /* ws_pkt.len + 1 is for NULL termination as we are expecting a string */
+    buf = (uint8_t *)calloc(1, ws_pkt.len + 1);
+    if (buf == NULL) {
+      return ESP_ERR_NO_MEM;
+    }
+    ws_pkt.payload = buf;
+    /* Set max_len = ws_pkt.len to get the frame payload */
+    ret = httpd_ws_recv_frame(req, &ws_pkt, ws_pkt.len);
+    if (ret != ESP_OK) {
+      free(buf);
+      return ret;
+    }
+
+    // TODO this is static so need a ref to this, would be cleaner if it was not statuc but it's a C callback
+    webSocketSerial.push(ws_pkt.payload, ws_pkt.len);
+  }
+
+  free(buf);
+
+  return ret;
+}
 
 size_t WebSocketSerial::write(const uint8_t c) {
+  if (!tx_buffer.available()) {
+    last_flush = esp_timer_get_time();
+  }
+
   size_t ret = tx_buffer.write(c);
 
-  if (ret && c == '\n') {
-    uint8_t tmp[TX_BUFFER_SIZE];
-    ring_buffer_pos_t size = tx_buffer.read(tmp);
-    ws.textAll(tmp, size);
+  if (ret) {
+    handle_flush();
   }
 
   return ret;

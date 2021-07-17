@@ -22,6 +22,7 @@
 #pragma once
 
 #include <Arduino.h>
+#include "driver/ledc.h"
 
 class Servo {
   static const int MIN_ANGLE =   0,
@@ -30,8 +31,8 @@ class Servo {
                    MAX_PULSE_WIDTH = 2400,  // Longest pulse sent to a servo
                    TAU_MSEC = 20,
                    TAU_USEC = (TAU_MSEC * 1000),
-                   MAX_COMPARE = _BV(16) - 1, // 65535
-                   CHANNEL_MAX_NUM = 16;
+                   MAX_COMPARE = _BV(LEDC_TIMER_14_BIT) - 1, // 65535
+                   CHANNEL_MAX_NUM = LEDC_CHANNEL_MAX;
 
 public:
   Servo();

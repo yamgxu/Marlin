@@ -27,7 +27,7 @@
 
 #include "../shared/Marduino.h"
 #include <driver/periph_ctrl.h>
-#include <rom/lldesc.h>
+#include <soc/lldesc.h>
 #include <soc/i2s_struct.h>
 #include <freertos/queue.h>
 #include "../../module/stepper.h"
@@ -52,7 +52,13 @@ typedef struct {
 } i2s_dma_t;
 
 static portMUX_TYPE i2s_spinlock[I2S_NUM_MAX] = {portMUX_INITIALIZER_UNLOCKED, portMUX_INITIALIZER_UNLOCKED};
-static i2s_dev_t* I2S[I2S_NUM_MAX] = {&I2S0, &I2S1};
+
+// TODO simplify this don't need ref to i2s1
+#if CONFIG_IDF_TARGET_ESP32
+  static i2s_dev_t* I2S[I2S_NUM_MAX] = {&I2S0, &I2S1};
+#elif CONFIG_IDF_TARGET_ESP32S2
+  static i2s_dev_t* I2S[I2S_NUM_MAX] = {&I2S0};
+#endif
 static i2s_dma_t dma;
 
 // output value
@@ -249,8 +255,14 @@ int i2s_init() {
 
   I2S0.conf2.lcd_en = 0;
   I2S0.conf2.camera_en = 0;
-  I2S0.pdm_conf.pcm2pdm_conv_en = 0;
-  I2S0.pdm_conf.pdm2pcm_conv_en = 0;
+
+  #if CONFIG_IDF_TARGET_ESP32
+    I2S0.pdm_conf.pcm2pdm_conv_en = 0;
+    I2S0.pdm_conf.pdm2pcm_conv_en = 0;
+
+    I2S0.pdm_conf.rx_pdm_en = 0;
+    I2S0.pdm_conf.tx_pdm_en = 0;
+  #endif
 
   I2S0.fifo_conf.dscr_en = 0;
 
@@ -279,16 +291,17 @@ int i2s_init() {
   I2S0.conf.tx_slave_mod = 0; // Master
   I2S0.fifo_conf.tx_fifo_mod_force_en = 1;
 
-  I2S0.pdm_conf.rx_pdm_en = 0;
-  I2S0.pdm_conf.tx_pdm_en = 0;
-
   I2S0.conf.tx_short_sync = 0;
   I2S0.conf.rx_short_sync = 0;
   I2S0.conf.tx_msb_shift = 0;
   I2S0.conf.rx_msb_shift = 0;
 
   // set clock
-  I2S0.clkm_conf.clka_en = 0;       // Use PLL/2 as reference
+  #if CONFIG_IDF_TARGET_ESP32
+    I2S0.clkm_conf.clka_en = 0;       // Use PLL/2 as reference
+  #elif CONFIG_IDF_TARGET_ESP32S2
+    I2S0.clkm_conf.clk_sel = 2;
+  #endif
   I2S0.clkm_conf.clkm_div_num = 10; // minimum value of 2, reset value of 4, max 256
   I2S0.clkm_conf.clkm_div_a = 0;    // 0 at reset, what about divide by 0? (not an issue)
   I2S0.clkm_conf.clkm_div_b = 0;    // 0 at reset

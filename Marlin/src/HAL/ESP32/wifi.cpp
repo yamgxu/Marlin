@@ -28,10 +28,7 @@
 
 #include <WiFi.h>
 #include <ESPmDNS.h>
-#include <ESPAsyncWebServer.h>
 #include "wifi.h"
-
-AsyncWebServer server(80);
 
 #ifndef WIFI_HOSTNAME
   #define WIFI_HOSTNAME DEFAULT_WIFI_HOSTNAME
