@@ -33,7 +33,7 @@
 
 #include "fastio.h"
 #include "watchdog.h"
-#include "i2s.h"
+
 
 #if ENABLED(WIFISUPPORT)
   #include "WebSocketSerial.h"

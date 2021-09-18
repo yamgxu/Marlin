@@ -26,6 +26,7 @@
 #include <rom/rtc.h>
 #include <driver/adc.h>
 #include <esp_adc_cal.h>
+#include "soc/adc_channel.h"
 #include <HardwareSerial.h>
 
 #if ENABLED(WIFISUPPORT)
@@ -127,7 +128,7 @@ void HAL_init_board() {
   // Initialize the i2s peripheral only if the I2S stepper stream is enabled.
   // The following initialization is performed after Serial1 and Serial2 are defined as
   // their native pins might conflict with the i2s stream even when they are remapped.
-  TERN_(I2S_STEPPER_STREAM, i2s_init());
+ // TERN_(I2S_STEPPER_STREAM, i2s_init());
 }
 
 void HAL_idletask() {
@@ -155,12 +156,16 @@ int freeMemory() { return ESP.getFreeHeap(); }
 
 adc1_channel_t get_channel(int pin) {
   switch (pin) {
-    case 39: return ADC1_CHANNEL(39);
-    case 36: return ADC1_CHANNEL(36);
-    case 35: return ADC1_CHANNEL(35);
-    case 34: return ADC1_CHANNEL(34);
-    case 33: return ADC1_CHANNEL(33);
-    case 32: return ADC1_CHANNEL(32);
+    case 1: return ADC1_CHANNEL(1);
+    case 2: return ADC1_CHANNEL(2);
+    case 3: return ADC1_CHANNEL(3);
+    case 4: return ADC1_CHANNEL(4);
+    case 6: return ADC1_CHANNEL(5);
+    case 7: return ADC1_CHANNEL(7);
+    case 8: return ADC1_CHANNEL(8);
+    case 9: return ADC1_CHANNEL(9);
+    case 10: return ADC1_CHANNEL(10);
+
   }
   return ADC1_CHANNEL_MAX;
 }
@@ -174,7 +179,7 @@ void adc1_set_attenuation(adc1_channel_t chan, adc_atten_t atten) {
 
 void HAL_adc_init() {
   // Configure ADC
-  adc1_config_width(ADC_WIDTH_12Bit);
+  adc1_config_width(ADC_WIDTH_BIT_13);
 
   // Configure channels only if used as (re-)configuring a pin for ADC that is used elsewhere might have adverse effects
   TERN_(HAS_TEMP_ADC_0, adc1_set_attenuation(get_channel(TEMP_0_PIN), ADC_ATTEN_11db));
@@ -195,7 +200,7 @@ void HAL_adc_init() {
 
   // Calculate ADC characteristics (i.e., gain and offset factors for each attenuation level)
   for (int i = 0; i < ADC_ATTEN_MAX; i++) {
-    esp_adc_cal_characterize(ADC_UNIT_1, (adc_atten_t)i, ADC_WIDTH_BIT_12, V_REF, &characteristics[i]);
+    esp_adc_cal_characterize(ADC_UNIT_1, (adc_atten_t)i, ADC_WIDTH_BIT_13, V_REF, &characteristics[i]);
 
     // Change attenuation 100mV below the calibrated threshold
     thresholds[i] = esp_adc_cal_raw_to_voltage(4095, &characteristics[i]);

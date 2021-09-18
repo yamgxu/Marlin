@@ -61,7 +61,11 @@
 #define _E7DIAG_ 407
 
 #define _FORCE_INLINE_ __attribute__((__always_inline__)) __inline__
-#define  FORCE_INLINE  __attribute__((always_inline)) inline
+
+#ifndef FORCE_INLINE
+    #define  FORCE_INLINE  __attribute__((always_inline)) inline
+#endif
+
 #define NO_INLINE      __attribute__((noinline))
 #define _UNUSED      __attribute__((unused))
 #define _O0          __attribute__((optimize("O0")))
