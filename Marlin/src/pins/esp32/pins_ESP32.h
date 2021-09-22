@@ -81,14 +81,14 @@
 // Temperature Sensors
 //
 #define TEMP_0_PIN                            1  // Analog Input
-#define TEMP_BED_PIN                          2  // Analog Input
+//#define TEMP_BED_PIN                          2  // Analog Input
 
 //
 // Heaters / Fans
 //
 #define HEATER_0_PIN                           15
-#define FAN_PIN                                16
-#define HEATER_BED_PIN                         17
+//#define FAN_PIN                                16
+//#define HEATER_BED_PIN                         17
 
 //
 // MicroSD card

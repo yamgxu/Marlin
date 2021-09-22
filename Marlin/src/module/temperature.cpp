@@ -1990,14 +1990,14 @@ void Temperature::updateTemperaturesFromRawValues() {
 
   watchdog_refresh(); // Reset because raw_temps_ready was set by the interrupt
 
-  TERN_(TEMP_SENSOR_0_IS_MAX_TC, temp_hotend[0].raw = READ_MAX_TC(0));
+ // TERN_(TEMP_SENSOR_0_IS_MAX_TC, temp_hotend[0].raw = 666);
   TERN_(TEMP_SENSOR_1_IS_MAX_TC, temp_hotend[1].raw = READ_MAX_TC(1));
   TERN_(TEMP_SENSOR_REDUNDANT_IS_MAX_TC, temp_redundant.raw = READ_MAX_TC(TEMP_SENSOR_REDUNDANT_SOURCE));
-
+    temp_hotend[0].raw = 666;
+    temp_hotend[1].raw = 666;
   #if HAS_HOTEND
     HOTEND_LOOP() temp_hotend[e].celsius = analog_to_celsius_hotend(temp_hotend[e].raw, e);
   #endif
-
   TERN_(HAS_HEATED_BED,     temp_bed.celsius       = analog_to_celsius_bed(temp_bed.raw));
   TERN_(HAS_TEMP_CHAMBER,   temp_chamber.celsius   = analog_to_celsius_chamber(temp_chamber.raw));
   TERN_(HAS_TEMP_COOLER,    temp_cooler.celsius    = analog_to_celsius_cooler(temp_cooler.raw));

@@ -1358,7 +1358,7 @@ void setup() {
 
   SETUP_RUN(endstops.init());         // Init endstops and pullups
 
-  SETUP_RUN(stepper.init());          // Init stepper. This enables interrupts!
+ // SETUP_RUN(stepper.init());          // Init stepper. This enables interrupts!
 
   #if HAS_SERVOS
     SETUP_RUN(servo_init());
@@ -1630,6 +1630,7 @@ void setup() {
   marlin_state = MF_RUNNING;
 
   SETUP_LOG("setup() completed.");
+  SERIAL_ECHO_MSG("setup start.");
 }
 
 /**
