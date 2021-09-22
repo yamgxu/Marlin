@@ -57,14 +57,14 @@ void IRAM_ATTR timer_isr(void *para) {
 
   // Retrieve the interrupt status and the counter value
   // from the timer that reported the interrupt
-  uint32_t intr_status = TG[timer.group]->int_st.val;
-  TG[timer.group]->hw_timer[timer.idx].update.val = 1;
+  uint32_t intr_status = TG[timer.group]->int_st_timers.val;
+  TG[timer.group]->hw_timer[timer.idx].update = 1;
 
   // Clear the interrupt
   if (intr_status & BIT(timer.idx)) {
     switch (timer.idx) {
-      case TIMER_0: TG[timer.group]->int_clr.t0 = 1; break;
-      case TIMER_1: TG[timer.group]->int_clr.t1 = 1; break;
+      case TIMER_0: TG[timer.group]->int_clr_timers.t0 = 1; break;
+      case TIMER_1: TG[timer.group]->int_clr_timers.t1 = 1; break;
       case TIMER_MAX: break;
     }
   }
@@ -90,7 +90,7 @@ void HAL_timer_start(const uint8_t timer_num, uint32_t frequency) {
   config.counter_en  = TIMER_PAUSE;
   config.alarm_en    = TIMER_ALARM_EN;
   config.intr_type   = TIMER_INTR_LEVEL;
-  config.auto_reload = TIMER_AUTORELOAD_EN;
+  config.auto_reload = true;
 
   // Select and initialize the timer
   timer_init(timer.group, timer.idx, &config);

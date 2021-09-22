@@ -20,4 +20,3 @@
  *
  */
 #pragma once
-#define RUNTIME_ONLY_ANALOG_TO_DIGITAL
