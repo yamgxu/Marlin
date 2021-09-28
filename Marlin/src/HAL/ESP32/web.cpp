@@ -27,12 +27,12 @@
 
 #include "../../inc/MarlinConfig.h"
 
-#include <SPIFFS.h>
+
 #include "wifi.h"
 #include "web.h"
 #include "esp_vfs.h"
 #include "esp_http_server.h"
-#include "../../sd/cardreader.h"
+
 
 #define SCRATCH_BUFSIZE  8192
 
@@ -96,8 +96,6 @@ static esp_err_t upload_file_handler(httpd_req_t *req) {
 
       // In case of error close and delete the file
       if (header) {
-        card.closefile();
-        card.removeFile(filename);
       }
 
       httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, NULL);
@@ -130,7 +128,6 @@ static esp_err_t upload_file_handler(httpd_req_t *req) {
       strncpy(filename, cdisposition_filename, filename_len);
       filename[filename_len] = 0;
 
-      card.openFileWrite(filename);
 
       // Get the beginning of the data
       writedata = strstr(buf, "\r\n\r\n");
@@ -150,10 +147,8 @@ static esp_err_t upload_file_handler(httpd_req_t *req) {
       writelen = end-2-writedata; // remove 2 to remove the preceding \r\n
     }
 
-    card.write(writedata, writelen);
   }
 
-  card.closefile();
 
   httpd_resp_sendstr(req, "File uploaded successfully");
 

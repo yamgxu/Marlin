@@ -38,7 +38,7 @@
 #include "USB.h"
 
 #include "../../core/serial_hook.h"
-
+#include "FlushableHardwareSerial.h"
 #if ENABLED(ESP3D_WIFISUPPORT)
   #include "esp3dlib.h"
 #endif
@@ -72,7 +72,7 @@ typedef Serial1Class<USBCDC> DefaultSerialUSB;
 // extern DefaultSerial2 MSerial2;
 extern DefaultSerialUSB MSerialUSB;
 
-#define MYSERIAL1 webSocketSerial
+#define MYSERIAL1 flushableSerial
 
 #if EITHER(WIFISUPPORT, ESP3D_WIFISUPPORT)
   #if ENABLED(ESP3D_WIFISUPPORT)
@@ -80,7 +80,7 @@ extern DefaultSerialUSB MSerialUSB;
     extern DefaultSerial1 MSerial0;
     #define MYSERIAL2 MSerial0
   #else
-    // #define MYSERIAL2 webSocketSerial
+    #define MYSERIAL2 webSocketSerial
   #endif
 #endif
 

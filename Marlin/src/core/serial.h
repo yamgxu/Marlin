@@ -264,7 +264,7 @@ void serialprintPGM(PGM_P str);
 #define SERIAL_ECHOLNPGM_P(P)       do{ serialprintPGM(P); SERIAL_EOL(); }while(0)
 
 #define SERIAL_ECHOPGM(S)           (serialprintPGM(PSTR(S)))
-#define SERIAL_ECHOLNPGM(S)         (serialprintPGM(PSTR(S "\n")))
+#define SERIAL_ECHOLNPGM(S)         (serialprintPGM(PSTR(S "\r\n")))
 
 #define SERIAL_ECHOPAIR_F_P(P,V...) do{ serialprintPGM(P); SERIAL_ECHO_F(V); }while(0)
 #define SERIAL_ECHOLNPAIR_F_P(V...) do{ SERIAL_ECHOPAIR_F_P(V); SERIAL_EOL(); }while(0)

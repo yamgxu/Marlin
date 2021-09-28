@@ -21,7 +21,7 @@
  */
 #pragma once
 
-#define OVM(V) OV((V)*(0.327/0.5))
+#define OVM(V) OV(V)
 
 // R25 = 100 kOhm, beta25 = 4092 K, 4.7 kOhm pull-up, bed thermistor
 constexpr temp_entry_t temptable_331[] PROGMEM = {

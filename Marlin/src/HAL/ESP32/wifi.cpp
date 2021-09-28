@@ -37,12 +37,14 @@
 void wifi_init() {
 
   SERIAL_ECHO_MSG("Starting WiFi...");
+   Serial.println("Starting WiFi...");
 
   WiFi.mode(WIFI_STA);
   WiFi.begin(WIFI_SSID, WIFI_PWD);
 
   while (WiFi.waitForConnectResult() != WL_CONNECTED) {
     SERIAL_ERROR_MSG("Unable to connect to WiFi with SSID '" WIFI_SSID "', restarting.");
+    Serial.println("Unable to connect to WiFi with SSID '" WIFI_SSID "', restarting.");
     delay(5000);
     ESP.restart();
   }
@@ -50,13 +52,16 @@ void wifi_init() {
   delay(10);
   if (!MDNS.begin(WIFI_HOSTNAME)) {
     SERIAL_ERROR_MSG("Unable to start mDNS with hostname '" WIFI_HOSTNAME "', restarting.");
+    Serial.println("Unable to start mDNS with hostname '" WIFI_HOSTNAME "', restarting.");
     delay(5000);
     ESP.restart();
   }
 
   MDNS.addService("http", "tcp", 80);
-
   SERIAL_ECHOLNPAIR("Successfully connected to WiFi with SSID '" WIFI_SSID "', hostname: '" WIFI_HOSTNAME "', IP address: ", WiFi.localIP().toString().c_str());
+  Serial.println("Successfully connected to WiFi with SSID '" WIFI_SSID "', hostname: '" WIFI_HOSTNAME "', IP address: "  );
+  Serial.println(WiFi.localIP().toString().c_str()  );
+
 }
 
 #endif // WIFISUPPORT

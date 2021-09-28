@@ -1077,6 +1077,7 @@ inline void tmc_standby_setup() {
  *  - Set Marlin to RUNNING State
  */
 void setup() {
+
   #ifdef BOARD_PREINIT
     BOARD_PREINIT(); // Low-level init (before serial init)
   #endif
@@ -1318,7 +1319,7 @@ void setup() {
 
   SETUP_RUN(endstops.init());         // Init endstops and pullups
 
-  SETUP_RUN(stepper.init());          // Init stepper. This enables interrupts!
+  //SETUP_RUN(stepper.init());          // Init stepper. This enables interrupts!
 
   #if HAS_SERVOS
     SETUP_RUN(servo_init());

@@ -32,70 +32,58 @@
 //
 // I2S (steppers & other output-only pins)
 //
-#define I2S_STEPPER_STREAM
-#define I2S_WS                                15
-#define I2S_BCK                               16
-#define I2S_DATA                              14
-
+#undef I2S_STEPPER_STREAM
+#define I2S_WS                                -1
+#define I2S_BCK                               -1
+#define I2S_DATA                              -1
 //
 // Limit Switches
 //
-#define X_MIN_PIN                             40
-#define Y_MIN_PIN                             41
-#define Z_MIN_PIN                             42
+#define X_MIN_PIN                             3
+#define Y_MIN_PIN                             4
+#define Z_MIN_PIN                             5
 
 //
 // Steppers
 //
-#define X_STEP_PIN                           129
-#define X_DIR_PIN                            128
-#define X_ENABLE_PIN                         130
+#define X_STEP_PIN                           6
+#define X_DIR_PIN                            7
+#define X_ENABLE_PIN                         2
 //#define X_CS_PIN                             0
 
-#define Y_STEP_PIN                           132
-#define Y_DIR_PIN                            131
-#define Y_ENABLE_PIN                         133
+#define Y_STEP_PIN                           8
+#define Y_DIR_PIN                            9
+#define Y_ENABLE_PIN                         X_ENABLE_PIN
 //#define Y_CS_PIN                            13
 
-#define Z_STEP_PIN                           135
-#define Z_DIR_PIN                            134
-#define Z_ENABLE_PIN                         136
+#define Z_STEP_PIN                           10
+#define Z_DIR_PIN                            11
+#define Z_ENABLE_PIN                         X_ENABLE_PIN
 //#define Z_CS_PIN                             5  // SS_PIN
 
-#define E0_STEP_PIN                          138
-#define E0_DIR_PIN                           137
-#define E0_ENABLE_PIN                        139
+#define E0_STEP_PIN                          12
+#define E0_DIR_PIN                           13
+#define E0_ENABLE_PIN                        X_ENABLE_PIN
 //#define E0_CS_PIN                           21
 
 //
 // Temperature Sensors
 //
 #define TEMP_0_PIN                            1  // Analog Input
-#define TEMP_BED_PIN                          2  // Analog Input
+#define TEMP_BED_PIN                          0  // Analog Input
 
 //
 // Heaters / Fans
 //
-#define HEATER_0_PIN                           7
-#define FAN_PIN                               21
-#define HEATER_BED_PIN                         6
+#define HEATER_0_PIN                           0
+#define FAN_PIN                                0
+#define HEATER_BED_PIN                         0
 
 // SPI
-#define SDSS                                  34
-
+#define SDSS                                   34
 // TODO copied from stm32/inc/conditionals_adv.h see where that should be included
 // The Sensitive Pins array is not optimizable
 #define RUNTIME_ONLY_ANALOG_TO_DIGITAL
-
-#define X_HARDWARE_SERIAL Serial
-#define Y_HARDWARE_SERIAL Serial
-#define Z_HARDWARE_SERIAL Serial
-#define E0_HARDWARE_SERIAL Serial
-
 #define HARDWARE_SERIAL1_RX                   44
 #define HARDWARE_SERIAL1_TX                   43
-
-#define HARDWARE_SERIAL2_RX                   18
-#define HARDWARE_SERIAL2_TX                   17
-
-#define SERVO0_PIN  0
+#define TMC_BAUD_RATE 115200

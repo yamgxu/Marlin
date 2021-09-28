@@ -19,25 +19,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
+
 #ifdef ARDUINO_ARCH_ESP32
 
-#include "../../inc/MarlinConfigPre.h"
+#include "FlushableHardwareSerial.h"
 
-#if BOTH(WIFISUPPORT, WEBSUPPORT)
+Serial1Class<FlushableHardwareSerial> flushableSerial(false, 0);
 
-#include "../../core/serial.h"
-
-#include <FS.h>
-#include <SPIFFS.h>
-
-bool spiffs_initialized;
-
-void spiffs_init() {
- // if (SPIFFS.begin(true))  // formatOnFail = true
- //   spiffs_initialized = true;
- // else
- //   SERIAL_ERROR_MSG("SPIFFS mount failed");
-}
-
-#endif // WIFISUPPORT && WEBSUPPORT
-#endif // ARDUINO_ARCH_ESP32
+#endif

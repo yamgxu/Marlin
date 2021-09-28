@@ -98,14 +98,16 @@ volatile int numPWMUsed = 0,
 void HAL_init_board() {
   USB.productName("ESP32S2-USB");
   USB.begin();
-
+    HardwareSerial Serial1(1);
+    Serial.begin(115200);
+    Serial.println("hello, world11");
   #if ENABLED(ESP3D_WIFISUPPORT)
     esp3dlib.init();
   #elif ENABLED(WIFISUPPORT)
     wifi_init();
     TERN_(OTASUPPORT, OTA_init());
     #if ENABLED(WEBSUPPORT)
-      spiffs_init();
+      //spiffs_init();
       web_init();
     #endif
   #endif
@@ -113,27 +115,28 @@ void HAL_init_board() {
   // ESP32 uses a GPIO matrix that allows pins to be assigned to hardware serial ports.
   // The following code initializes hardware Serial1 and Serial2 to use user-defined pins
   // if they have been defined.
-  // #if defined(HARDWARE_SERIAL1_RX) && defined(HARDWARE_SERIAL1_TX)
-  //   // HardwareSerial Serial1(1);
-  //   #ifdef TMC_BAUD_RATE  // use TMC_BAUD_RATE for Serial1 if defined
-  //     Serial.begin(TMC_BAUD_RATE, SERIAL_8N1, HARDWARE_SERIAL1_RX, HARDWARE_SERIAL1_TX);
-  //   #else  // use default BAUDRATE if TMC_BAUD_RATE not defined
-  //     Serial.begin(BAUDRATE, SERIAL_8N1, HARDWARE_SERIAL1_RX, HARDWARE_SERIAL1_TX);
-  //   #endif
-  // #endif
-  // #if defined(HARDWARE_SERIAL2_RX) && defined(HARDWARE_SERIAL2_TX)
-  //   HardwareSerial Serial2(2);
-  //   #ifdef TMC_BAUD_RATE  // use TMC_BAUD_RATE for Serial1 if defined
-  //     Serial2.begin(TMC_BAUD_RATE, SERIAL_8N1, HARDWARE_SERIAL2_RX, HARDWARE_SERIAL2_TX);
-  //   #else  // use default BAUDRATE if TMC_BAUD_RATE not defined
-  //     Serial2.begin(BAUDRATE, SERIAL_8N1, HARDWARE_SERIAL2_RX, HARDWARE_SERIAL2_TX);
-  //   #endif
-  // #endif
+
+   #if defined(HARDWARE_SERIAL1_RX) && defined(HARDWARE_SERIAL1_TX)
+     // HardwareSerial Serial1(1);
+     #ifdef TMC_BAUD_RATE  // use TMC_BAUD_RATE for Serial1 if defined
+      // Serial.begin(TMC_BAUD_RATE, SERIAL_8N1, HARDWARE_SERIAL1_RX, HARDWARE_SERIAL1_TX);
+     #else  // use default BAUDRATE if TMC_BAUD_RATE not defined
+      // Serial.begin(BAUDRATE, SERIAL_8N1, HARDWARE_SERIAL1_RX, HARDWARE_SERIAL1_TX);
+     #endif
+   #endif
+   #if defined(HARDWARE_SERIAL2_RX) && defined(HARDWARE_SERIAL2_TX)
+     HardwareSerial Serial2(2);
+     #ifdef TMC_BAUD_RATE  // use TMC_BAUD_RATE for Serial1 if defined
+       Serial2.begin(TMC_BAUD_RATE, SERIAL_8N1, HARDWARE_SERIAL2_RX, HARDWARE_SERIAL2_TX);
+     #else  // use default BAUDRATE if TMC_BAUD_RATE not defined
+       Serial2.begin(BAUDRATE, SERIAL_8N1, HARDWARE_SERIAL2_RX, HARDWARE_SERIAL2_TX);
+     #endif
+   #endif
 
   // Initialize the i2s peripheral only if the I2S stepper stream is enabled.
   // The following initialization is performed after Serial1 and Serial2 are defined as
   // their native pins might conflict with the i2s stream even when they are remapped.
-  TERN_(I2S_STEPPER_STREAM, i2s_init());
+  //TERN_(I2S_STEPPER_STREAM, i2s_init());
 }
 
 void HAL_idletask() {
@@ -219,10 +222,30 @@ void HAL_adc_init() {
 void HAL_adc_start_conversion(const uint8_t adc_pin) {
   const adc1_channel_t chan = get_channel(adc_pin);
   uint32_t mv;
-  esp_err_t err = esp_adc_cal_get_voltage((adc_channel_t)chan, &characteristics[attenuations[chan]], &mv); 
+  //esp_err_t err = esp_adc_cal_get_voltage((adc_channel_t)chan, &characteristics[attenuations[chan]], &mv);
 
-  HAL_adc_result = mv * 1023.0 / 3300.0;
+    uint32_t adcRead = analogRead(adc_pin);
+    //SERIAL_ECHOPAIR("adcRead", adcRead);
+    //SERIAL_ECHO("\r\n");
+    double xadc = (adcRead +72.27488151 )/1.2664459692;
+    //SERIAL_ECHO("xadc" );
+    //SERIAL_ECHOLN(xadc);
+    double vy = xadc/8191.0*3.6;
+    //SERIAL_ECHO("vy" );
+    //SERIAL_ECHOLN(vy);
+    double v47=3.6-vy;
+    double rc=4.7/(v47/vy);
+    double r=1.0/(1.0/rc-1.0/4.7);//print('测温电阻',1/(1/y-1/4.7));
+    //SERIAL_ECHO("r" );
+    //SERIAL_ECHOLN(r);
+    double adc=1024/(4.7/r+1 ); //还原 adc
+    //SERIAL_ECHO("adc" );
+    //SERIAL_ECHOLN(adc);
+    //SERIAL_ECHO("\r\n");
+    HAL_adc_result = (uint16_t )(adc);
 
+   //  SERIAL_ECHO("HAL_adc_result" );
+   //SERIAL_ECHOLN(HAL_adc_result);
   // Change the attenuation level based on the new reading
   adc_atten_t atten;
   if (mv < 750)
