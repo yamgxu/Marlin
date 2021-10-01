@@ -45,7 +45,16 @@ extern xyze_pos_t destination;
  * G0, G1: Coordinated movement of X Y Z E axes
  */
 void GcodeSuite::G0_G1(TERN_(HAS_FAST_MOVES, const bool fast_move/*=false*/)) {
+    SERIAL_ECHO_MSG("G0_G1");
+    #if ENABLED(NO_MOTION_BEFORE_HOMING)
+        SERIAL_ECHO_MSG("NO_MOTION_BEFORE_HOMING");
+    #endif
+     if (IsRunning()){
+            SERIAL_ECHO_MSG("IsRunning");
 
+        }else{
+            SERIAL_ECHO_MSG("notRunning");
+        }
   if (IsRunning()
     #if ENABLED(NO_MOTION_BEFORE_HOMING)
       && !homing_needed_error(
@@ -92,6 +101,9 @@ void GcodeSuite::G0_G1(TERN_(HAS_FAST_MOVES, const bool fast_move/*=false*/)) {
           && !parser.seen(LINEAR_AXIS_GANG("X", "Y", "Z", AXIS4_STR, AXIS5_STR, AXIS6_STR))
         ) {
           const float echange = destination.e - current_position.e;
+                      SERIAL_ECHO_MSG("echange");
+                      SERIAL_ECHO_MSG(echange);
+
           // Is this a retract or recover move?
           if (WITHIN(ABS(echange), MIN_AUTORETRACT, MAX_AUTORETRACT) && fwretract.retracted[active_extruder] == (echange > 0.0)) {
             current_position.e = destination.e;       // Hide a G1-based retract/recover from calculations
@@ -126,7 +138,11 @@ void GcodeSuite::G0_G1(TERN_(HAS_FAST_MOVES, const bool fast_move/*=false*/)) {
       }
       TERN_(FULL_REPORT_TO_HOST_FEATURE, set_and_report_grblstate(M_IDLE));
     #else
-      TERN_(FULL_REPORT_TO_HOST_FEATURE, report_current_grblstate_moving());
+        SERIAL_ECHO_MSG("report_current_grblstate_moving");
+
+        TERN_(FULL_REPORT_TO_HOST_FEATURE, report_current_grblstate_moving());
     #endif
+  } else{
+        SERIAL_ECHO_MSG("zhijieshib");
   }
 }

@@ -79,8 +79,8 @@
 //
 
 // UART
-#define RXD        3
-#define TXD        1
+#define RXD        44
+#define TXD        43
 
 // TWI (I2C)
 #define SCL        5

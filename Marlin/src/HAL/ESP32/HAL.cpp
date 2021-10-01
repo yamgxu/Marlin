@@ -136,7 +136,7 @@ void HAL_init_board() {
   // Initialize the i2s peripheral only if the I2S stepper stream is enabled.
   // The following initialization is performed after Serial1 and Serial2 are defined as
   // their native pins might conflict with the i2s stream even when they are remapped.
-  //TERN_(I2S_STEPPER_STREAM, i2s_init());
+//  TERN_(I2S_STEPPER_STREAM, i2s_init());
 }
 
 void HAL_idletask() {
@@ -152,7 +152,10 @@ void HAL_clear_reset_source() { }
 
 uint8_t HAL_get_reset_source() { return esp_reset_reason(); }
 
-void HAL_reboot() { ESP.restart(); }
+void HAL_reboot() {
+        SERIAL_ECHO_MSG("HAL_rebootHAL_rebootHAL_rebootHAL_rebootHAL_reboot wb");
+
+      ESP.restart(); }
 
 void _delay_ms(int delay_ms) { delay(delay_ms); }
 
@@ -262,6 +265,14 @@ void HAL_adc_start_conversion(const uint8_t adc_pin) {
 }
 
 void analogWrite(pin_t pin, int value) {
+      if(pin >0){
+         SERIAL_ECHO_MSG("analogWrite");
+        SERIAL_ECHO(int(pin));
+        SERIAL_ECHO(value);
+        SERIAL_ECHO_MSG("analogWrite ok");
+      }
+
+
   // Use ledc hardware for internal pins
   if (pin < 34) {
     static int cnt_channel = 1, pin_to_channel[40] = { 0 };

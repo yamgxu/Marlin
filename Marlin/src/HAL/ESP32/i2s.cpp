@@ -146,6 +146,7 @@ static void IRAM_ATTR i2s_intr_handler_default(void *arg) {
 }
 
 void stepperTask(void *parameter) {
+  SERIAL_ECHO_MSG("stepperTask");
   uint32_t remaining = 0;
 
   while (1) {
@@ -167,6 +168,9 @@ void stepperTask(void *parameter) {
 }
 
 int i2s_init() {
+
+         SERIAL_ECHO_MSG("i2s_init");
+
   periph_module_enable(PERIPH_I2S0_MODULE);
 
   /**

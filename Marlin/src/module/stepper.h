@@ -454,7 +454,10 @@ class Stepper {
     }
 
     // Quickly stop all steppers
-    FORCE_INLINE static void quick_stop() { abort_current_block = true; }
+    FORCE_INLINE static void quick_stop() {
+        SERIAL_ECHO_MSG("quick_stop");
+
+        abort_current_block = true; }
 
     // The direction of a single motor
     FORCE_INLINE static bool motor_direction(const AxisEnum axis) { return TEST(last_direction_bits, axis); }

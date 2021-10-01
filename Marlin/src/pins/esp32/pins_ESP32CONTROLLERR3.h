@@ -39,16 +39,16 @@
 //
 // Limit Switches
 //
-#define X_MIN_PIN                             3
-#define Y_MIN_PIN                             4
-#define Z_MIN_PIN                             5
+#define X_MIN_PIN                             18
+#define Y_MIN_PIN                             17
+#define Z_MIN_PIN                             16
 
 //
 // Steppers
 //
 #define X_STEP_PIN                           6
 #define X_DIR_PIN                            7
-#define X_ENABLE_PIN                         2
+#define X_ENABLE_PIN                         12
 //#define X_CS_PIN                             0
 
 #define Y_STEP_PIN                           8
@@ -86,4 +86,4 @@
 #define RUNTIME_ONLY_ANALOG_TO_DIGITAL
 #define HARDWARE_SERIAL1_RX                   44
 #define HARDWARE_SERIAL1_TX                   43
-#define TMC_BAUD_RATE 115200
+//#define TMC_BAUD_RATE 115200

@@ -1319,7 +1319,9 @@ void setup() {
 
   SETUP_RUN(endstops.init());         // Init endstops and pullups
 
-  //SETUP_RUN(stepper.init());          // Init stepper. This enables interrupts!
+    SERIAL_ECHO_MSG("stepper.init()");
+    SETUP_RUN(stepper.init());          // Init stepper. This enables interrupts!
+    SERIAL_ECHO_MSG("stepper.init()ok");
 
   #if HAS_SERVOS
     SETUP_RUN(servo_init());
@@ -1511,7 +1513,7 @@ void setup() {
   #endif
 
   #if ENABLED(USE_WATCHDOG)
-    SETUP_RUN(watchdog_init());       // Reinit watchdog after HAL_get_reset_source call
+    //SETUP_RUN(watchdog_init());       // Reinit watchdog after HAL_get_reset_source call
   #endif
 
   #if ENABLED(EXTERNAL_CLOSED_LOOP_CONTROLLER)
@@ -1589,6 +1591,7 @@ void setup() {
   #endif
 
   marlin_state = MF_RUNNING;
+   SERIAL_ECHO_MSG("setup() completed.");
 
   SETUP_LOG("setup() completed.");
 }

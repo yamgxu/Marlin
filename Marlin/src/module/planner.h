@@ -163,32 +163,32 @@ typedef struct block_t {
 
   volatile uint8_t flag;                    // Block flags (See BlockFlag enum above) - Modified by ISR and main thread!
 
-  // Fields used by the motion planner to manage acceleration
-  float nominal_speed_sqr,                  // The nominal speed for this block in (mm/sec)^2
-        entry_speed_sqr,                    // Entry speed at previous-current junction in (mm/sec)^2
-        max_entry_speed_sqr,                // Maximum allowable junction entry speed in (mm/sec)^2
-        millimeters,                        // The total travel of this block in mm
-        acceleration;                       // acceleration mm/sec^2
+  //运动规划器用于管理加速度的字段
+  float nominal_speed_sqr,                  // 该块的标称速度 (mm/sec)^2
+        entry_speed_sqr,                    // 前一个当前结的进入速度（mm/sec）^2
+        max_entry_speed_sqr,                // 最大允许的结入口速度(mm/sec)^2
+        millimeters,                        // 这个块的总行程，单位为毫米
+        acceleration;                       // 加速度mm/sec ^ 2
 
   union {
-    abce_ulong_t steps;                     // Step count along each axis
-    abce_long_t position;                   // New position to force when this sync block is executed
+    abce_ulong_t steps;                     // 沿每个轴进行步长计数
+    abce_long_t position;                   //执行同步块时要强制执行的新位置
   };
-  uint32_t step_event_count;                // The number of step events required to complete this block
+  uint32_t step_event_count;                // 完成此块所需的步骤事件数
 
-  #if HAS_MULTI_EXTRUDER
+  #if HAS_MULTI_EXTRUDER //有多个挤出机
     uint8_t extruder;                       // The extruder to move (if E move)
   #else
     static constexpr uint8_t extruder = 0;
   #endif
 
-  #if ENABLED(MIXING_EXTRUDER)
+  #if ENABLED(MIXING_EXTRUDER)//混合挤出机
     mixer_comp_t b_color[MIXING_STEPPERS];  // Normalized color for the mixing steppers
   #endif
 
-  // Settings for the trapezoid generator
-  uint32_t accelerate_until,                // The index of the step event on which to stop acceleration
-           decelerate_after;                // The index of the step event on which to start decelerating
+  // 梯形发生器的设置
+  uint32_t accelerate_until,                //停止加速的步骤事件的索引
+           decelerate_after;                //开始减速的步骤事件的索引
 
   #if ENABLED(S_CURVE_ACCELERATION)
     uint32_t cruise_rate,                   // The actual cruise rate to use, between end of the acceleration phase and start of deceleration phase
@@ -197,12 +197,12 @@ typedef struct block_t {
              acceleration_time_inverse,     // Inverse of acceleration and deceleration periods, expressed as integer. Scale depends on CPU being used
              deceleration_time_inverse;
   #else
-    uint32_t acceleration_rate;             // The acceleration rate used for acceleration calculation
+    uint32_t acceleration_rate;             // 用于加速度计算的加速度
   #endif
 
-  uint8_t direction_bits;                   // The direction bit set for this block (refers to *_DIRECTION_BIT in config.h)
+  uint8_t direction_bits;                   //为该块设置的方向位（参考 config.h 中的 _DIRECTION_BIT）
 
-  // Advance extrusion
+  // 超前挤压
   #if ENABLED(LIN_ADVANCE)
     bool use_advance_lead;
     uint16_t advance_speed,                 // STEP timer value for extruder speed offset ISR
