@@ -1363,11 +1363,15 @@ void Stepper::set_directions() {
  */
 
 HAL_STEP_TIMER_ISR() {
+    SERIAL_ECHO_MSG("HAL_STEP_TIMER_ISR");
+
   HAL_timer_isr_prologue(STEP_TIMER_NUM);
 
   Stepper::isr();
 
   HAL_timer_isr_epilogue(STEP_TIMER_NUM);
+    SERIAL_ECHO_MSG("HAL_STEP_TIMER_ISR ok");
+
 }
 
 #ifdef CPU_32_BIT
@@ -1377,6 +1381,7 @@ HAL_STEP_TIMER_ISR() {
 #endif
 
 void Stepper::isr() {
+    SERIAL_ECHO_MSG("Stepper::isr");
 
   static uint32_t nextMainISR = 0;  // Interval until the next main Stepper Pulse phase (0 = Now)
 
@@ -1418,7 +1423,7 @@ void Stepper::isr() {
 
     if (!nextMainISR) nextMainISR = block_phase_isr();  // Manage acc/deceleration, get next block
 
-    #if ENABLED(INTEGRATED_BABYSTEPPING)
+#if ENABLED(INTEGRATED_BABYSTEPPING)
       if (is_babystep)                                  // Avoid ANY stepping too soon after baby-stepping
         NOLESS(nextMainISR, (BABYSTEP_TICKS) / 8);      // FULL STOP for 125µs after a baby-step
 
@@ -1490,6 +1495,7 @@ void Stepper::isr() {
      * read and the write of the new period value).
      */
     DISABLE_ISRS();
+      SERIAL_ECHO_MSG("DISABLE_ISRS st");
 
     /**
      * Get the current tick value + margin
@@ -1519,12 +1525,16 @@ void Stepper::isr() {
 
   // Now 'next_isr_ticks' contains the period to the next Stepper ISR - And we are
   // sure that the time has not arrived yet - Warrantied by the scheduler
+    SERIAL_ECHO_MSG("ENABLE_ISRS wb1");
 
   // Set the next ISR to fire at the proper time
   HAL_timer_set_compare(STEP_TIMER_NUM, hal_timer_t(next_isr_ticks));
+  SERIAL_ECHO_MSG("ENABLE_ISRS wb");
 
   // Don't forget to finally reenable interrupts
   ENABLE_ISRS();
+    SERIAL_ECHO_MSG("ENABLE_ISRS wb3");
+
 }
 
 #if MINIMUM_STEPPER_PULSE || MAXIMUM_STEPPER_RATE
@@ -1542,6 +1552,8 @@ void Stepper::isr() {
  * is to keep pulse timing as regular as possible.
  */
 void Stepper::pulse_phase_isr() {
+
+    SERIAL_ECHO_MSG("pulse_phase_isr");
 
   // If we must abort the current block, do so!
   if (abort_current_block) {
@@ -1832,6 +1844,7 @@ void Stepper::pulse_phase_isr() {
 // the step pulses, so it is not time critical, as pulses are already done.
 
 uint32_t Stepper::block_phase_isr() {
+    SERIAL_ECHO_MSG("block_phase_isr");
 
   // If no queued movements, just wait 1ms for the next block
   uint32_t interval = (STEPPER_TIMER_RATE) / 1000UL;
@@ -2679,11 +2692,11 @@ void Stepper::init() {
     E_AXIS_INIT(7);
   #endif
 
-  #if DISABLED(I2S_STEPPER_STREAM)
+/*  #if DISABLED(I2S_STEPPER_STREAM)
     HAL_timer_start(STEP_TIMER_NUM, 122); // Init Stepper ISR to 122 Hz for quick starting
     wake_up();
     sei();
-  #endif
+  #endif*/
 
   // Init direction bits for first moves
   set_directions(0
@@ -2785,7 +2798,8 @@ void Stepper::set_axis_position(const AxisEnum a, const int32_t &v) {
 // when the stepper ISR resumes, we must be very sure that the movement
 // is properly canceled
 void Stepper::endstop_triggered(const AxisEnum axis) {
-
+    SERIAL_ECHO_MSG("endstop_triggered");
+    return;
   const bool was_enabled = suspend();
   endstops_trigsteps[axis] = (
     #if IS_CORE
@@ -2949,6 +2963,7 @@ void Stepper::report_positions() {
   // MUST ONLY BE CALLED BY AN ISR,
   // No other ISR should ever interrupt this!
   void Stepper::do_babystep(const AxisEnum axis, const bool direction) {
+  SERIAL_ECHO_MSG("do_babystep");
 
     IF_DISABLED(INTEGRATED_BABYSTEPPING, cli());
 
@@ -3196,7 +3211,7 @@ void Stepper::report_positions() {
     }
 
     void Stepper::digipot_init() {
-
+        SERIAL_ECHO_MSG("digipot_init");
       #if HAS_MOTOR_CURRENT_SPI
 
         SPI.begin();
