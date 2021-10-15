@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -23,9 +24,9 @@
 
 #define REVERSE_TEMP_SENSOR_RANGE_1047 1
 
-// Pt1000 with 4k7 pullup
+// Pt1000 with 4k7 pullup//带4k7上拉的Pt1000
 constexpr temp_entry_t temptable_1047[] PROGMEM = {
-  // only a few values are needed as the curve is very flat
+  // only a few values are needed as the curve is very flat//由于曲线非常平坦，因此只需要几个值
   PtLine(  0, 1000, 4700),
   PtLine( 50, 1000, 4700),
   PtLine(100, 1000, 4700),

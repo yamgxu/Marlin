@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -24,8 +25,8 @@
  * temperature.cpp - temperature control
  */
 
-// Useful when debugging thermocouples
-//#define IGNORE_THERMOCOUPLE_ERRORS
+// Useful when debugging thermocouples//调试热电偶时非常有用
+//#define IGNORE_THERMOCOUPLE_ERRORS//#定义忽略热电偶错误
 
 #include "../MarlinCore.h"
 #include "../HAL/shared/Delay.h"
@@ -58,7 +59,7 @@
 
 #define TEMP_SENSOR_IS_ANY_MAX_TC(n) (ENABLED(TEMP_SENSOR_##n##_IS_MAX_TC) || (ENABLED(TEMP_SENSOR_REDUNDANT_IS_MAX_TC) && ENABLED(TEMP_SENSOR_REDUNDANT_SOURCE) && TEMP_SENSOR_REDUNDANT_SOURCE == n))
 
-// LIB_MAX31855 can be added to the build_flags in platformio.ini to use a user-defined library
+// LIB_MAX31855 can be added to the build_flags in platformio.ini to use a user-defined library//LIB_MAX31855可以添加到platformio.ini中的build_标志中，以使用用户定义的库
 #if LIB_USR_MAX31855
   #include <Adafruit_MAX31855.h>
   #if PIN_EXISTS(MAX31855_MISO) && PIN_EXISTS(MAX31855_SCK)
@@ -68,7 +69,7 @@
     #define HAS_MAX31855_TEMP 1
     Adafruit_MAX31855 max31855_0 = Adafruit_MAX31855(MAX31855_CS_PIN
       #if MAX31855_USES_SW_SPI
-        , MAX31855_MISO_PIN, MAX31855_SCK_PIN  // For software SPI also set MISO/SCK
+        , MAX31855_MISO_PIN, MAX31855_SCK_PIN  // For software SPI also set MISO/SCK//对于软件SPI，还应设置MISO/SCK
       #endif
       #if ENABLED(LARGE_PINMAP)
         , HIGH
@@ -79,7 +80,7 @@
     #define HAS_MAX31855_TEMP 1
     Adafruit_MAX31855 max31855_1 = Adafruit_MAX31855(MAX31855_CS2_PIN
       #if MAX31855_USES_SW_SPI
-        , MAX31855_MISO_PIN, MAX31855_SCK_PIN  // For software SPI also set MISO/SCK
+        , MAX31855_MISO_PIN, MAX31855_SCK_PIN  // For software SPI also set MISO/SCK//对于软件SPI，还应设置MISO/SCK
       #endif
       #if ENABLED(LARGE_PINMAP)
         , HIGH
@@ -88,8 +89,8 @@
   #endif
 #endif
 
-// LIB_MAX31865 can be added to the build_flags in platformio.ini to use a user-defined library.
-// If LIB_MAX31865 is not on the build_flags then the Adafruit MAX31865 V1.1.0 library is used.
+// LIB_MAX31865 can be added to the build_flags in platformio.ini to use a user-defined library.//LIB_MAX31865可以添加到platformio.ini中的build_标志中，以使用用户定义的库。
+// If LIB_MAX31865 is not on the build_flags then the Adafruit MAX31865 V1.1.0 library is used.//如果LIB_MAX31865不在build_标志上，则使用Adafruit MAX31865 V1.1.0库。
 #if HAS_MAX31865
   #include <Adafruit_MAX31865.h>
   #ifndef MAX31865_MOSI_PIN
@@ -102,7 +103,7 @@
     #define HAS_MAX31865_TEMP 1
       Adafruit_MAX31865 max31865_0 = Adafruit_MAX31865(MAX31865_CS_PIN
         #if MAX31865_USES_SW_SPI && PIN_EXISTS(MAX31865_MOSI)
-          , MAX31865_MOSI_PIN, MAX31865_MISO_PIN, MAX31865_SCK_PIN  // For software SPI also set MOSI/MISO/SCK
+          , MAX31865_MOSI_PIN, MAX31865_MISO_PIN, MAX31865_SCK_PIN  // For software SPI also set MOSI/MISO/SCK//对于软件SPI，还应设置MOSI/MISO/SCK
         #endif
         #if ENABLED(LARGE_PINMAP)
           , HIGH
@@ -113,7 +114,7 @@
     #define HAS_MAX31865_TEMP 1
     Adafruit_MAX31865 max31865_1 = Adafruit_MAX31865(MAX31865_CS2_PIN
       #if MAX31865_USES_SW_SPI && PIN_EXISTS(MAX31865_MOSI)
-        , MAX31865_MOSI_PIN, MAX31865_MISO_PIN, MAX31865_SCK_PIN  // For software SPI also set MOSI/MISO/SCK
+        , MAX31865_MOSI_PIN, MAX31865_MISO_PIN, MAX31865_SCK_PIN  // For software SPI also set MOSI/MISO/SCK//对于软件SPI，还应设置MOSI/MISO/SCK
       #endif
       #if ENABLED(LARGE_PINMAP)
         , HIGH
@@ -122,7 +123,7 @@
   #endif
 #endif
 
-// LIB_MAX6675 can be added to the build_flags in platformio.ini to use a user-defined library
+// LIB_MAX6675 can be added to the build_flags in platformio.ini to use a user-defined library//LIB_MAX6675可以添加到platformio.ini中的build_标志中，以使用用户定义的库
 #if LIB_USR_MAX6675
   #include <max6675.h>
   #if PIN_EXISTS(MAX6675_MISO) && PIN_EXISTS(MAX6675_SCK)
@@ -132,7 +133,7 @@
     #define HAS_MAX6675_TEMP 1
     MAX6675 max6675_0 = MAX6675(MAX6675_CS_PIN
       #if MAX6675_USES_SW_SPI
-        , MAX6675_MISO_PIN, MAX6675_SCK_PIN   // For software SPI also set MISO/SCK
+        , MAX6675_MISO_PIN, MAX6675_SCK_PIN   // For software SPI also set MISO/SCK//对于软件SPI，还应设置MISO/SCK
       #endif
       #if ENABLED(LARGE_PINMAP)
         , HIGH
@@ -143,7 +144,7 @@
     #define HAS_MAX6675_TEMP 1
     MAX6675 max6675_1 = MAX6675(MAX6675_CS2_PIN
       #if MAX6675_USES_SW_SPI
-        , MAX6675_MISO_PIN, MAX6675_SCK_PIN   // For software SPI also set MISO/SCK
+        , MAX6675_MISO_PIN, MAX6675_SCK_PIN   // For software SPI also set MISO/SCK//对于软件SPI，还应设置MISO/SCK
       #endif
       #if ENABLED(LARGE_PINMAP)
         , HIGH
@@ -246,7 +247,7 @@ const char str_t_thermal_runaway[] PROGMEM = STR_T_THERMAL_RUNAWAY,
 #define _E_PSTR(h,N) ((HOTENDS) > N && (h) == N) ? PSTR(LCD_STR_E##N) :
 #define HEATER_PSTR(h) _BED_PSTR(h) _CHAMBER_PSTR(h) _COOLER_PSTR(h) _E_PSTR(h,1) _E_PSTR(h,2) _E_PSTR(h,3) _E_PSTR(h,4) _E_PSTR(h,5) PSTR(LCD_STR_E0)
 
-// public:
+// public://公众：
 
 #if ENABLED(NO_FAN_SLOWING_IN_PID_TUNING)
   bool Temperature::adaptive_fan_slowing = true;
@@ -263,20 +264,20 @@ const char str_t_thermal_runaway[] PROGMEM = STR_T_THERMAL_RUNAWAY,
 #endif
 
 #if ENABLED(AUTO_POWER_E_FANS)
-  uint8_t Temperature::autofan_speed[HOTENDS]; // = { 0 }
+  uint8_t Temperature::autofan_speed[HOTENDS]; // = { 0 }// = { 0 }
 #endif
 
 #if ENABLED(AUTO_POWER_CHAMBER_FAN)
-  uint8_t Temperature::chamberfan_speed; // = 0
+  uint8_t Temperature::chamberfan_speed; // = 0// = 0
 #endif
 
 #if ENABLED(AUTO_POWER_COOLER_FAN)
-  uint8_t Temperature::coolerfan_speed; // = 0
+  uint8_t Temperature::coolerfan_speed; // = 0// = 0
 #endif
 
 #if HAS_FAN
 
-  uint8_t Temperature::fan_speed[FAN_COUNT]; // = { 0 }
+  uint8_t Temperature::fan_speed[FAN_COUNT]; // = { 0 }// = { 0 }
 
   #if ENABLED(EXTRA_FAN_SPEED)
 
@@ -306,8 +307,8 @@ const char str_t_thermal_runaway[] PROGMEM = STR_T_THERMAL_RUNAWAY,
   #endif
 
   #if EITHER(PROBING_FANS_OFF, ADVANCED_PAUSE_FANS_PAUSE)
-    bool Temperature::fans_paused; // = false;
-    uint8_t Temperature::saved_fan_speed[FAN_COUNT]; // = { 0 }
+    bool Temperature::fans_paused; // = false;//=假；
+    uint8_t Temperature::saved_fan_speed[FAN_COUNT]; // = { 0 }// = { 0 }
   #endif
 
   #if ENABLED(ADAPTIVE_FAN_SLOWING)
@@ -328,7 +329,7 @@ const char str_t_thermal_runaway[] PROGMEM = STR_T_THERMAL_RUNAWAY,
       }
     #endif
 
-    TERN_(SINGLENOZZLE, fan = 0); // Always use fan index 0 with SINGLENOZZLE
+    TERN_(SINGLENOZZLE, fan = 0); // Always use fan index 0 with SINGLENOZZLE//始终将风扇索引0与单喷嘴一起使用
 
     if (fan >= FAN_COUNT) return;
 
@@ -365,26 +366,26 @@ const char str_t_thermal_runaway[] PROGMEM = STR_T_THERMAL_RUNAWAY,
 
   #endif
 
-#endif // HAS_FAN
+#endif // HAS_FAN//范先生
 
 #if WATCH_HOTENDS
-  hotend_watch_t Temperature::watch_hotend[HOTENDS]; // = { { 0 } }
+  hotend_watch_t Temperature::watch_hotend[HOTENDS]; // = { { 0 } }// = { { 0 } }
 #endif
 #if HEATER_IDLE_HANDLER
-  Temperature::heater_idle_t Temperature::heater_idle[NR_HEATER_IDLE]; // = { { 0 } }
+  Temperature::heater_idle_t Temperature::heater_idle[NR_HEATER_IDLE]; // = { { 0 } }// = { { 0 } }
 #endif
 
 #if HAS_HEATED_BED
-  bed_info_t Temperature::temp_bed; // = { 0 }
-  // Init min and max temp with extreme values to prevent false errors during startup
+  bed_info_t Temperature::temp_bed; // = { 0 }// = { 0 }
+  // Init min and max temp with extreme values to prevent false errors during startup//具有极值的初始最小和最大温度，以防止启动过程中出现错误
   int16_t Temperature::mintemp_raw_BED = TEMP_SENSOR_BED_RAW_LO_TEMP,
           Temperature::maxtemp_raw_BED = TEMP_SENSOR_BED_RAW_HI_TEMP;
-  TERN_(WATCH_BED, bed_watch_t Temperature::watch_bed); // = { 0 }
+  TERN_(WATCH_BED, bed_watch_t Temperature::watch_bed); // = { 0 }// = { 0 }
   IF_DISABLED(PIDTEMPBED, millis_t Temperature::next_bed_check_ms);
 #endif
 
 #if HAS_TEMP_CHAMBER
-  chamber_info_t Temperature::temp_chamber; // = { 0 }
+  chamber_info_t Temperature::temp_chamber; // = { 0 }// = { 0 }
   #if HAS_HEATED_CHAMBER
     millis_t next_cool_check_ms_2 = 0;
     celsius_float_t old_temp = 9999;
@@ -396,10 +397,10 @@ const char str_t_thermal_runaway[] PROGMEM = STR_T_THERMAL_RUNAWAY,
 #endif
 
 #if HAS_TEMP_COOLER
-  cooler_info_t Temperature::temp_cooler; // = { 0 }
+  cooler_info_t Temperature::temp_cooler; // = { 0 }// = { 0 }
   #if HAS_COOLER
     bool flag_cooler_state;
-    //bool flag_cooler_excess = false;
+    //bool flag_cooler_excess = false;//bool标志\u冷却器\u过量=错误；
     celsius_float_t previous_temp = 9999;
     int16_t Temperature::mintemp_raw_COOLER = TEMP_SENSOR_COOLER_RAW_LO_TEMP,
             Temperature::maxtemp_raw_COOLER = TEMP_SENSOR_COOLER_RAW_HI_TEMP;
@@ -411,7 +412,7 @@ const char str_t_thermal_runaway[] PROGMEM = STR_T_THERMAL_RUNAWAY,
 #endif
 
 #if HAS_TEMP_PROBE
-  probe_info_t Temperature::temp_probe; // = { 0 }
+  probe_info_t Temperature::temp_probe; // = { 0 }// = { 0 }
 #endif
 
 #if ENABLED(PREVENT_COLD_EXTRUSION)
@@ -419,7 +420,7 @@ const char str_t_thermal_runaway[] PROGMEM = STR_T_THERMAL_RUNAWAY,
   celsius_t Temperature::extrude_min_temp = EXTRUDE_MINTEMP;
 #endif
 
-// private:
+// private://私人：
 
 volatile bool Temperature::raw_temps_ready = false;
 
@@ -431,7 +432,7 @@ volatile bool Temperature::raw_temps_ready = false;
 #define TEMPDIR(N) ((TEMP_SENSOR_##N##_RAW_LO_TEMP) < (TEMP_SENSOR_##N##_RAW_HI_TEMP) ? 1 : -1)
 
 #if HAS_HOTEND
-  // Init mintemp and maxtemp with extreme values to prevent false errors during startup
+  // Init mintemp and maxtemp with extreme values to prevent false errors during startup//Init mintemp和maxtemp具有极值，以防止启动过程中出现错误
   constexpr temp_range_t sensor_heater_0 { TEMP_SENSOR_0_RAW_LO_TEMP, TEMP_SENSOR_0_RAW_HI_TEMP, 0, 16383 },
                          sensor_heater_1 { TEMP_SENSOR_1_RAW_LO_TEMP, TEMP_SENSOR_1_RAW_HI_TEMP, 0, 16383 },
                          sensor_heater_2 { TEMP_SENSOR_2_RAW_LO_TEMP, TEMP_SENSOR_2_RAW_HI_TEMP, 0, 16383 },
@@ -472,7 +473,7 @@ volatile bool Temperature::raw_temps_ready = false;
   bool Temperature::paused_for_probing;
 #endif
 
-// public:
+// public://公众：
 
 #if HAS_ADC_BUTTONS
   uint32_t Temperature::current_ADCKey_raw = HAL_ADC_RANGE;
@@ -480,7 +481,7 @@ volatile bool Temperature::raw_temps_ready = false;
 #endif
 
 #if ENABLED(PID_EXTRUSION_SCALING)
-  int16_t Temperature::lpq_len; // Initialized in settings.cpp
+  int16_t Temperature::lpq_len; // Initialized in settings.cpp//已在settings.cpp中初始化
 #endif
 
 #if HAS_PID_HEATING
@@ -571,15 +572,15 @@ volatile bool Temperature::raw_temps_ready = false;
 
     TERN_(NO_FAN_SLOWING_IN_PID_TUNING, adaptive_fan_slowing = false);
 
-    // PID Tuning loop
-    wait_for_heatup = true; // Can be interrupted with M108
+    // PID Tuning loop//PID调节回路
+    wait_for_heatup = true; // Can be interrupted with M108//可以用M108中断
     while (wait_for_heatup) {
 
       const millis_t ms = millis();
 
-      if (updateTemperaturesIfReady()) { // temp sample ready
+      if (updateTemperaturesIfReady()) { // temp sample ready//临时样品准备好了吗
 
-        // Get the current temperature and constrain it
+        // Get the current temperature and constrain it//获取当前温度并对其进行约束
         current_temp = GHV(degChamber(), degBed(), degHotend(heater_id));
         NOLESS(maxT, current_temp);
         NOMORE(minT, current_temp);
@@ -638,7 +639,7 @@ volatile bool Temperature::raw_temps_ready = false;
         }
       }
 
-      // Did the temperature overshoot very far?
+      // Did the temperature overshoot very far?//温度超高了吗？
       #ifndef MAX_OVERSHOOT_PID_AUTOTUNE
         #define MAX_OVERSHOOT_PID_AUTOTUNE 30
       #endif
@@ -648,7 +649,7 @@ volatile bool Temperature::raw_temps_ready = false;
         break;
       }
 
-      // Report heater states every 2 seconds
+      // Report heater states every 2 seconds//每2秒报告一次加热器状态
       if (ELAPSED(ms, next_temp_ms)) {
         #if HAS_TEMP_SENSOR
           print_heater_states(ischamber ? active_extruder : (isbed ? active_extruder : heater_id));
@@ -656,25 +657,25 @@ volatile bool Temperature::raw_temps_ready = false;
         #endif
         next_temp_ms = ms + 2000UL;
 
-        // Make sure heating is actually working
+        // Make sure heating is actually working//确保暖气真的在工作
         #if WATCH_PID
           if (BOTH(WATCH_BED, WATCH_HOTENDS) || isbed == DISABLED(WATCH_HOTENDS) || ischamber == DISABLED(WATCH_HOTENDS)) {
-            if (!heated) {                                            // If not yet reached target...
-              if (current_temp > next_watch_temp) {                   // Over the watch temp?
-                next_watch_temp = current_temp + watch_temp_increase; // - set the next temp to watch for
-                temp_change_ms = ms + SEC_TO_MS(watch_temp_period);     // - move the expiration timer up
-                if (current_temp > watch_temp_target) heated = true;  // - Flag if target temperature reached
+            if (!heated) {                                            // If not yet reached target...//如果还没有达到目标。。。
+              if (current_temp > next_watch_temp) {                   // Over the watch temp?//超过手表温度？
+                next_watch_temp = current_temp + watch_temp_increase; // - set the next temp to watch for//-设置要监视的下一个温度
+                temp_change_ms = ms + SEC_TO_MS(watch_temp_period);     // - move the expiration timer up//-向上移动过期计时器
+                if (current_temp > watch_temp_target) heated = true;  // - Flag if target temperature reached//-如果达到目标温度，则标记
               }
-              else if (ELAPSED(ms, temp_change_ms))                   // Watch timer expired
+              else if (ELAPSED(ms, temp_change_ms))                   // Watch timer expired//手表计时器已过期
                 _temp_error(heater_id, str_t_heating_failed, GET_TEXT(MSG_HEATING_FAILED_LCD));
             }
-            else if (current_temp < target - (MAX_OVERSHOOT_PID_AUTOTUNE)) // Heated, then temperature fell too far?
+            else if (current_temp < target - (MAX_OVERSHOOT_PID_AUTOTUNE)) // Heated, then temperature fell too far?//加热，然后温度下降得太远？
               _temp_error(heater_id, str_t_thermal_runaway, GET_TEXT(MSG_THERMAL_RUNAWAY));
           }
         #endif
-      } // every 2 seconds
+      } // every 2 seconds//每2秒
 
-      // Timeout after MAX_CYCLE_TIME_PID_AUTOTUNE minutes since the last undershoot/overshoot cycle
+      // Timeout after MAX_CYCLE_TIME_PID_AUTOTUNE minutes since the last undershoot/overshoot cycle//自上次欠调/超调循环以来的最大周期时间PID自动调谐分钟后超时
       #ifndef MAX_CYCLE_TIME_PID_AUTOTUNE
         #define MAX_CYCLE_TIME_PID_AUTOTUNE 20L
       #endif
@@ -726,7 +727,7 @@ volatile bool Temperature::raw_temps_ready = false;
           };
         #endif
 
-        // Use the result? (As with "M303 U1")
+        // Use the result? (As with "M303 U1")//使用结果？（与“M303 U1”相同）
         if (set_result)
           GHV(_set_chamber_pid(tune_pid), _set_bed_pid(tune_pid), _set_hotend_pid(heater_id, tune_pid));
 
@@ -737,10 +738,10 @@ volatile bool Temperature::raw_temps_ready = false;
         goto EXIT_M303;
       }
 
-      // Run HAL idle tasks
+      // Run HAL idle tasks//运行空闲任务
       TERN_(HAL_IDLETASK, HAL_idletask());
 
-      // Run UI update
+      // Run UI update//运行UI更新
       TERN(DWIN_CREALITY_LCD, DWIN_Update(), ui.update());
     }
     wait_for_heatup = false;
@@ -756,7 +757,7 @@ volatile bool Temperature::raw_temps_ready = false;
       return;
   }
 
-#endif // HAS_PID_HEATING
+#endif // HAS_PID_HEATING//有没有电加热
 
 /**
  * Class and Instance Methods
@@ -871,11 +872,11 @@ int16_t Temperature::getHeaterPower(const heater_id_t heater_id) {
     }
   }
 
-#endif // HAS_AUTO_FAN
+#endif // HAS_AUTO_FAN//有自动风扇吗
 
-//
-// Temperature Error Handlers
-//
+////
+// Temperature Error Handlers//温度误差处理程序
+////
 
 inline void loud_kill(PGM_P const lcd_msg, const heater_id_t heater_id) {
   marlin_state = MF_KILLED;
@@ -915,7 +916,7 @@ void Temperature::_temp_error(const heater_id_t heater_id, PGM_P const serial_ms
     SERIAL_EOL();
   }
 
-  disable_all_heaters(); // always disable (even for bogus temp)
+  disable_all_heaters(); // always disable (even for bogus temp)//始终禁用（即使是假温度）
   watchdog_refresh();
 
   #if BOGUS_TEMPERATURE_GRACE_PERIOD
@@ -956,7 +957,7 @@ void Temperature::min_temp_error(const heater_id_t heater_id) {
 }
 
 #if ANY(PID_DEBUG, PID_BED_DEBUG, PID_CHAMBER_DEBUG)
-  bool Temperature::pid_debug_flag; // = 0
+  bool Temperature::pid_debug_flag; // = 0// = 0
 #endif
 
 #if HAS_HOTEND
@@ -1019,24 +1020,24 @@ void Temperature::min_temp_error(const heater_id_t heater_id) {
               work_pid[ee].Kc = (lpq[lpq_ptr] * planner.steps_to_mm[E_AXIS]) * PID_PARAM(Kc, ee);
               pid_output += work_pid[ee].Kc;
             }
-          #endif // PID_EXTRUSION_SCALING
+          #endif // PID_EXTRUSION_SCALING//PID_挤出_缩放
           #if ENABLED(PID_FAN_SCALING)
             if (fan_speed[active_extruder] > PID_FAN_SCALING_MIN_SPEED) {
               work_pid[ee].Kf = PID_PARAM(Kf, ee) + (PID_FAN_SCALING_LIN_FACTOR) * fan_speed[active_extruder];
               pid_output += work_pid[ee].Kf;
             }
-            //pid_output -= work_pid[ee].Ki;
-            //pid_output += work_pid[ee].Ki * work_pid[ee].Kf
-          #endif // PID_FAN_SCALING
+            //pid_output -= work_pid[ee].Ki;//pid_输出-=工作_pid[ee].Ki；
+            //pid_output += work_pid[ee].Ki * work_pid[ee].Kf//pid_输出+=work_pid[ee].Ki*work_pid[ee].Kf
+          #endif // PID_FAN_SCALING//PID_风扇_缩放
           LIMIT(pid_output, 0, PID_MAX);
         }
         temp_dState[ee] = temp_hotend[ee].celsius;
 
-      #else // PID_OPENLOOP
+      #else // PID_OPENLOOP//PID_开环
 
         const float pid_output = constrain(temp_hotend[ee].target, 0, PID_MAX);
 
-      #endif // PID_OPENLOOP
+      #endif // PID_OPENLOOP//PID_开环
 
       #if ENABLED(PID_DEBUG)
         if (ee == active_extruder && pid_debug_flag) {
@@ -1053,7 +1054,7 @@ void Temperature::min_temp_error(const heater_id_t heater_id) {
         }
       #endif
 
-    #else // No PID enabled
+    #else // No PID enabled//未启用PID
 
       const bool is_idling = TERN0(HEATER_IDLE_HANDLER, heater_idle[ee].timed_out);
       const float pid_output = (!is_idling && temp_hotend[ee].celsius < temp_hotend[ee].target) ? BANG_MAX : 0;
@@ -1063,7 +1064,7 @@ void Temperature::min_temp_error(const heater_id_t heater_id) {
     return pid_output;
   }
 
-#endif // HAS_HOTEND
+#endif // HAS_HOTEND//霍顿德酒店
 
 #if ENABLED(PIDTEMPBED)
 
@@ -1104,11 +1105,11 @@ void Temperature::min_temp_error(const heater_id_t heater_id) {
         pid_output = constrain(work_pid.Kp + work_pid.Ki + work_pid.Kd + float(MIN_BED_POWER), 0, MAX_BED_POWER);
       }
 
-    #else // PID_OPENLOOP
+    #else // PID_OPENLOOP//PID_开环
 
       const float pid_output = constrain(temp_bed.target, 0, MAX_BED_POWER);
 
-    #endif // PID_OPENLOOP
+    #endif // PID_OPENLOOP//PID_开环
 
     #if ENABLED(PID_BED_DEBUG)
       if (pid_debug_flag) {
@@ -1126,7 +1127,7 @@ void Temperature::min_temp_error(const heater_id_t heater_id) {
     return pid_output;
   }
 
-#endif // PIDTEMPBED
+#endif // PIDTEMPBED//皮坦普德
 
 #if ENABLED(PIDTEMPCHAMBER)
 
@@ -1167,11 +1168,11 @@ void Temperature::min_temp_error(const heater_id_t heater_id) {
         pid_output = constrain(work_pid.Kp + work_pid.Ki + work_pid.Kd + float(MIN_CHAMBER_POWER), 0, MAX_CHAMBER_POWER);
       }
 
-    #else // PID_OPENLOOP
+    #else // PID_OPENLOOP//PID_开环
 
       const float pid_output = constrain(temp_chamber.target, 0, MAX_CHAMBER_POWER);
 
-    #endif // PID_OPENLOOP
+    #endif // PID_OPENLOOP//PID_开环
 
     #if ENABLED(PID_CHAMBER_DEBUG)
     {
@@ -1189,7 +1190,7 @@ void Temperature::min_temp_error(const heater_id_t heater_id) {
     return pid_output;
   }
 
-#endif // PIDTEMPCHAMBER
+#endif // PIDTEMPCHAMBER//皮坦普尔酒店
 
 /**
  * Manage heating activities for extruder hot-ends and a heated bed
@@ -1201,18 +1202,18 @@ void Temperature::min_temp_error(const heater_id_t heater_id) {
  *  - Update the heated bed PID output value
  */
 void Temperature::manage_heater() {
-  if (marlin_state == MF_INITIALIZING) return watchdog_refresh(); // If Marlin isn't started, at least reset the watchdog!
+  if (marlin_state == MF_INITIALIZING) return watchdog_refresh(); // If Marlin isn't started, at least reset the watchdog!//如果Marlin没有启动，至少重置看门狗！
 
   #if ENABLED(EMERGENCY_PARSER)
     if (emergency_parser.killed_by_M112) kill(M112_KILL_STR, nullptr, true);
 
     if (emergency_parser.quickstop_by_M410) {
-      emergency_parser.quickstop_by_M410 = false; // quickstop_stepper may call idle so clear this now!
+      emergency_parser.quickstop_by_M410 = false; // quickstop_stepper may call idle so clear this now!//quickstop\u步进器可能会调用idle，所以现在请清除此选项！
       quickstop_stepper();
     }
   #endif
 
-  if (!updateTemperaturesIfReady()) return; // Will also reset the watchdog if temperatures are ready
+  if (!updateTemperaturesIfReady()) return; // Will also reset the watchdog if temperatures are ready//如果温度准备就绪，也将重置看门狗
 
   #if DISABLED(IGNORE_THERMOCOUPLE_ERRORS)
     #if TEMP_SENSOR_0_IS_MAX_TC
@@ -1241,17 +1242,17 @@ void Temperature::manage_heater() {
       TERN_(HEATER_IDLE_HANDLER, heater_idle[e].update(ms));
 
       #if ENABLED(THERMAL_PROTECTION_HOTENDS)
-        // Check for thermal runaway
+        // Check for thermal runaway//检查热失控
         tr_state_machine[e].run(temp_hotend[e].celsius, temp_hotend[e].target, (heater_id_t)e, THERMAL_PROTECTION_PERIOD, THERMAL_PROTECTION_HYSTERESIS);
       #endif
 
       temp_hotend[e].soft_pwm_amount = (temp_hotend[e].celsius > temp_range[e].mintemp || is_preheating(e)) && temp_hotend[e].celsius < temp_range[e].maxtemp ? (int)get_pid_output_hotend(e) >> 1 : 0;
 
       #if WATCH_HOTENDS
-        // Make sure temperature is increasing
-        if (watch_hotend[e].elapsed(ms)) {          // Enabled and time to check?
-          if (watch_hotend[e].check(degHotend(e)))  // Increased enough?
-            start_watching_hotend(e);               // If temp reached, turn off elapsed check
+        // Make sure temperature is increasing//确保温度升高
+        if (watch_hotend[e].elapsed(ms)) {          // Enabled and time to check?//启用和检查时间？
+          if (watch_hotend[e].check(degHotend(e)))  // Increased enough?//增加的够多吗？
+            start_watching_hotend(e);               // If temp reached, turn off elapsed check//如果达到温度，则关闭运行检查
           else {
             TERN_(DWIN_CREALITY_LCD, DWIN_Popup_Temperature(0));
             _temp_error((heater_id_t)e, str_t_heating_failed, GET_TEXT(MSG_HEATING_FAILED_LCD));
@@ -1259,18 +1260,18 @@ void Temperature::manage_heater() {
         }
       #endif
 
-    } // HOTEND_LOOP
+    } // HOTEND_LOOP//热端环
 
-  #endif // HAS_HOTEND
+  #endif // HAS_HOTEND//霍顿德酒店
 
   #if HAS_TEMP_REDUNDANT
-    // Make sure measured temperatures are close together
+    // Make sure measured temperatures are close together//确保测量的温度接近
     if (ABS(degRedundantTarget() - degRedundant()) > TEMP_SENSOR_REDUNDANT_MAX_DIFF)
       _temp_error((heater_id_t)TEMP_SENSOR_REDUNDANT_TARGET, PSTR(STR_REDUNDANCY), GET_TEXT(MSG_ERR_REDUNDANT_TEMP));
   #endif
 
   #if HAS_AUTO_FAN
-    if (ELAPSED(ms, next_auto_fan_check_ms)) { // only need to check fan state very infrequently
+    if (ELAPSED(ms, next_auto_fan_check_ms)) { // only need to check fan state very infrequently//只需很少检查风扇状态
       checkExtruderAutoFans();
       next_auto_fan_check_ms = ms + 2500UL;
     }
@@ -1291,16 +1292,16 @@ void Temperature::manage_heater() {
     #endif
 
     #if WATCH_BED
-      // Make sure temperature is increasing
-      if (watch_bed.elapsed(ms)) {              // Time to check the bed?
-        if (watch_bed.check(degBed()))          // Increased enough?
-          start_watching_bed();                 // If temp reached, turn off elapsed check
+      // Make sure temperature is increasing//确保温度升高
+      if (watch_bed.elapsed(ms)) {              // Time to check the bed?//该检查床铺了？
+        if (watch_bed.check(degBed()))          // Increased enough?//增加的够多吗？
+          start_watching_bed();                 // If temp reached, turn off elapsed check//如果达到温度，则关闭运行检查
         else {
           TERN_(DWIN_CREALITY_LCD, DWIN_Popup_Temperature(0));
           _temp_error(H_BED, str_t_heating_failed, GET_TEXT(MSG_HEATING_FAILED_LCD));
         }
       }
-    #endif // WATCH_BED
+    #endif // WATCH_BED//守夜
 
     #if BOTH(PROBING_HEATERS_OFF, BED_LIMIT_SWITCHING)
       #define PAUSE_CHANGE_REQD 1
@@ -1339,14 +1340,14 @@ void Temperature::manage_heater() {
         #if ENABLED(PIDTEMPBED)
           temp_bed.soft_pwm_amount = WITHIN(temp_bed.celsius, BED_MINTEMP, BED_MAXTEMP) ? (int)get_pid_output_bed() >> 1 : 0;
         #else
-          // Check if temperature is within the correct band
+          // Check if temperature is within the correct band//检查温度是否在正确的范围内
           if (WITHIN(temp_bed.celsius, BED_MINTEMP, BED_MAXTEMP)) {
             #if ENABLED(BED_LIMIT_SWITCHING)
               if (temp_bed.celsius >= temp_bed.target + BED_HYSTERESIS)
                 temp_bed.soft_pwm_amount = 0;
               else if (temp_bed.celsius <= temp_bed.target - (BED_HYSTERESIS))
                 temp_bed.soft_pwm_amount = MAX_BED_POWER >> 1;
-            #else // !PIDTEMPBED && !BED_LIMIT_SWITCHING
+            #else // !PIDTEMPBED && !BED_LIMIT_SWITCHING// !皮德姆贝德&！床限位开关
               temp_bed.soft_pwm_amount = temp_bed.celsius < temp_bed.target ? MAX_BED_POWER >> 1 : 0;
             #endif
           }
@@ -1359,7 +1360,7 @@ void Temperature::manage_heater() {
 
     } while (false);
 
-  #endif // HAS_HEATED_BED
+  #endif // HAS_HEATED_BED//你给床加热了吗
 
   #if HAS_HEATED_CHAMBER
 
@@ -1372,21 +1373,21 @@ void Temperature::manage_heater() {
     #endif
 
     #if WATCH_CHAMBER
-      // Make sure temperature is increasing
-      if (watch_chamber.elapsed(ms)) {          // Time to check the chamber?
-        if (watch_chamber.check(degChamber()))  // Increased enough? Error below.
-          start_watching_chamber();             // If temp reached, turn off elapsed check.
+      // Make sure temperature is increasing//确保温度升高
+      if (watch_chamber.elapsed(ms)) {          // Time to check the chamber?//是时候检查一下房间了？
+        if (watch_chamber.check(degChamber()))  // Increased enough? Error below.//增加的够多吗？下面的错误。
+          start_watching_chamber();             // If temp reached, turn off elapsed check.//如果达到温度，则关闭运行检查。
         else
           _temp_error(H_CHAMBER, str_t_heating_failed, GET_TEXT(MSG_HEATING_FAILED_LCD));
       }
     #endif
 
     #if EITHER(CHAMBER_FAN, CHAMBER_VENT) || DISABLED(PIDTEMPCHAMBER)
-      static bool flag_chamber_excess_heat; // = false;
+      static bool flag_chamber_excess_heat; // = false;//=假；
     #endif
 
     #if EITHER(CHAMBER_FAN, CHAMBER_VENT)
-      static bool flag_chamber_off; // = false
+      static bool flag_chamber_off; // = false//=错误
 
       if (temp_chamber.target > CHAMBER_MINTEMP) {
         flag_chamber_off = false;
@@ -1405,7 +1406,7 @@ void Temperature::manage_heater() {
             fan_chamber_pwm = CHAMBER_FAN_BASE + _MAX((CHAMBER_FAN_FACTOR) * (temp_chamber.celsius - temp_chamber.target), 0);
           #endif
           NOMORE(fan_chamber_pwm, 225);
-          set_fan_speed(2, fan_chamber_pwm); // TODO: instead of fan 2, set to chamber fan
+          set_fan_speed(2, fan_chamber_pwm); // TODO: instead of fan 2, set to chamber fan//TODO:设置为腔室风扇，而不是风扇2
         #endif
 
         #if ENABLED(CHAMBER_VENT)
@@ -1416,11 +1417,11 @@ void Temperature::manage_heater() {
             #define MIN_COOLING_SLOPE_DEG_CHAMBER_VENT 1.5
           #endif
           if (!flag_chamber_excess_heat && temp_chamber.celsius - temp_chamber.target >= HIGH_EXCESS_HEAT_LIMIT) {
-            // Open vent after MIN_COOLING_SLOPE_TIME_CHAMBER_VENT seconds if the
-            // temperature didn't drop at least MIN_COOLING_SLOPE_DEG_CHAMBER_VENT
+            // Open vent after MIN_COOLING_SLOPE_TIME_CHAMBER_VENT seconds if the//在最短冷却时间、坡度、时间、腔室通风时间后打开通风孔，如果
+            // temperature didn't drop at least MIN_COOLING_SLOPE_DEG_CHAMBER_VENT//温度至少没有下降到最小冷却坡度腔室通风孔
             if (next_cool_check_ms_2 == 0 || ELAPSED(ms, next_cool_check_ms_2)) {
               if (temp_chamber.celsius - old_temp > MIN_COOLING_SLOPE_DEG_CHAMBER_VENT)
-                flag_chamber_excess_heat = true; // the bed is heating the chamber too much
+                flag_chamber_excess_heat = true; // the bed is heating the chamber too much//床给房间加热太多了
               next_cool_check_ms_2 = ms + SEC_TO_MS(MIN_COOLING_SLOPE_TIME_CHAMBER_VENT);
               old_temp = temp_chamber.celsius;
             }
@@ -1446,7 +1447,7 @@ void Temperature::manage_heater() {
     #endif
 
     #if ENABLED(PIDTEMPCHAMBER)
-      // PIDTEMPCHAMBER doens't support a CHAMBER_VENT yet.
+      // PIDTEMPCHAMBER doens't support a CHAMBER_VENT yet.//PIDTEMPCHAMBER还不支持CHAMBER_通风口。
       temp_chamber.soft_pwm_amount = WITHIN(temp_chamber.celsius, CHAMBER_MINTEMP, CHAMBER_MAXTEMP) ? (int)get_pid_output_chamber() >> 1 : 0;
     #else
       if (ELAPSED(ms, next_chamber_check_ms)) {
@@ -1483,7 +1484,7 @@ void Temperature::manage_heater() {
      #endif
    #endif
 
-  #endif // HAS_HEATED_CHAMBER
+  #endif // HAS_HEATED_CHAMBER//你有没有给房间加热
 
   #if HAS_COOLER
 
@@ -1496,29 +1497,29 @@ void Temperature::manage_heater() {
     #endif
 
     #if WATCH_COOLER
-      // Make sure temperature is decreasing
-      if (watch_cooler.elapsed(ms)) {             // Time to check the cooler?
-        if (degCooler() > watch_cooler.target)    // Failed to decrease enough?
+      // Make sure temperature is decreasing//确保温度正在下降
+      if (watch_cooler.elapsed(ms)) {             // Time to check the cooler?//是时候检查冷却器了？
+        if (degCooler() > watch_cooler.target)    // Failed to decrease enough?//没有足够的减少？
           _temp_error(H_COOLER, GET_TEXT(MSG_COOLING_FAILED), GET_TEXT(MSG_COOLING_FAILED));
         else
-          start_watching_cooler();                 // Start again if the target is still far off
+          start_watching_cooler();                 // Start again if the target is still far off//如果目标仍在远处，请重新启动
       }
     #endif
 
-    static bool flag_cooler_state; // = false
+    static bool flag_cooler_state; // = false//=错误
 
     if (cooler.enabled) {
-      flag_cooler_state = true; // used to allow M106 fan control when cooler is disabled
+      flag_cooler_state = true; // used to allow M106 fan control when cooler is disabled//用于在冷却器禁用时允许M106风扇控制
       if (temp_cooler.target == 0) temp_cooler.target = COOLER_MIN_TARGET;
       if (ELAPSED(ms, next_cooler_check_ms)) {
         next_cooler_check_ms = ms + COOLER_CHECK_INTERVAL;
         if (temp_cooler.celsius > temp_cooler.target) {
           temp_cooler.soft_pwm_amount = temp_cooler.celsius > temp_cooler.target ? MAX_COOLER_POWER : 0;
-          flag_cooler_state = temp_cooler.soft_pwm_amount > 0 ? true : false; // used to allow M106 fan control when cooler is disabled
+          flag_cooler_state = temp_cooler.soft_pwm_amount > 0 ? true : false; // used to allow M106 fan control when cooler is disabled//用于在冷却器禁用时允许M106风扇控制
           #if ENABLED(COOLER_FAN)
             int16_t fan_cooler_pwm = (COOLER_FAN_BASE) + (COOLER_FAN_FACTOR) * ABS(temp_cooler.celsius - temp_cooler.target);
             NOMORE(fan_cooler_pwm, 255);
-            set_fan_speed(COOLER_FAN_INDEX, fan_cooler_pwm); // Set cooler fan pwm
+            set_fan_speed(COOLER_FAN_INDEX, fan_cooler_pwm); // Set cooler fan pwm//设置冷却器风扇pwm
             cooler_fan_flush_ms = ms + 5000;
           #endif
         }
@@ -1544,7 +1545,7 @@ void Temperature::manage_heater() {
       tr_state_machine[RUNAWAY_IND_COOLER].run(temp_cooler.celsius, temp_cooler.target, H_COOLER, THERMAL_PROTECTION_COOLER_PERIOD, THERMAL_PROTECTION_COOLER_HYSTERESIS);
     #endif
 
-  #endif // HAS_COOLER
+  #endif // HAS_COOLER//你有冷却器吗
 
   #if ENABLED(LASER_COOLANT_FLOW_METER)
     cooler.flowmeter_task(ms);
@@ -1586,7 +1587,7 @@ void Temperature::manage_heater() {
 
 #if HAS_USER_THERMISTORS
 
-  user_thermistor_t Temperature::user_thermistor[USER_THERMISTORS]; // Initialized by settings.load()
+  user_thermistor_t Temperature::user_thermistor[USER_THERMISTORS]; // Initialized by settings.load()//由settings.load（）初始化
 
   void Temperature::reset_user_thermistors() {
     user_thermistor_t default_user_thermistor[USER_THERMISTORS] = {
@@ -1668,16 +1669,16 @@ void Temperature::manage_heater() {
   }
 
   celsius_float_t Temperature::user_thermistor_to_deg_c(const uint8_t t_index, const int16_t raw) {
-    //#if (MOTHERBOARD == BOARD_RAMPS_14_EFB)
-    //  static uint32_t clocks_total = 0;
-    //  static uint32_t calls = 0;
-    //  uint32_t tcnt5 = TCNT5;
-    //#endif
+    //#if (MOTHERBOARD == BOARD_RAMPS_14_EFB)//#如果（主板==电路板\u斜坡\u 14\u EFB）
+    //  static uint32_t clocks_total = 0;//静态uint32时钟总计=0；
+    //  static uint32_t calls = 0;//静态uint32_t调用=0；
+    //  uint32_t tcnt5 = TCNT5;//uint32_t tcnt5=tcnt5；
+    //#endif//#恩迪夫
 
     if (!WITHIN(t_index, 0, COUNT(user_thermistor) - 1)) return 25;
 
     user_thermistor_t &t = user_thermistor[t_index];
-    if (t.pre_calc) { // pre-calculate some variables
+    if (t.pre_calc) { // pre-calculate some variables//预先计算一些变量
       t.pre_calc     = false;
       t.res_25_recip = 1.0f / t.res_25;
       t.res_25_log   = logf(t.res_25);
@@ -1686,9 +1687,9 @@ void Temperature::manage_heater() {
                         - (t.beta_recip * t.res_25_log) - (t.sh_c_coeff * cu(t.res_25_log));
     }
 
-    // maximum adc value .. take into account the over sampling
+    // maximum adc value .. take into account the over sampling//最大adc值。。考虑过多的抽样
     const int adc_max = MAX_RAW_THERMISTOR_VALUE,
-              adc_raw = constrain(raw, 1, adc_max - 1); // constrain to prevent divide-by-zero
+              adc_raw = constrain(raw, 1, adc_max - 1); // constrain to prevent divide-by-zero//约束以防止被零除
 
     const float adc_inverse = (adc_max - adc_raw) - 0.5f,
                 resistance = t.series_res * (adc_raw + 0.5f) / adc_inverse,
@@ -1700,22 +1701,22 @@ void Temperature::manage_heater() {
       value += t.sh_c_coeff * cu(log_resistance);
     value = 1.0f / value;
 
-    //#if (MOTHERBOARD == BOARD_RAMPS_14_EFB)
-    //  int32_t clocks = TCNT5 - tcnt5;
-    //  if (clocks >= 0) {
-    //    clocks_total += clocks;
-    //    calls++;
-    //  }
-    //#endif
+    //#if (MOTHERBOARD == BOARD_RAMPS_14_EFB)//#如果（主板==电路板\u斜坡\u 14\u EFB）
+    //  int32_t clocks = TCNT5 - tcnt5;//int32_t时钟=TCNT5-TCNT5；
+    //  if (clocks >= 0) {//如果（时钟>=0）{
+    //    clocks_total += clocks;//时钟总数+=时钟；
+    //    calls++;//调用++；
+    //  }//  }
+    //#endif//#恩迪夫
 
-    // Return degrees C (up to 999, as the LCD only displays 3 digits)
+    // Return degrees C (up to 999, as the LCD only displays 3 digits)//返回摄氏度（最高999度，因为LCD仅显示3位数字）
     return _MIN(value + THERMISTOR_ABS_ZERO_C, 999);
   }
 #endif
 
 #if HAS_HOTEND
-  // Derived from RepRap FiveD extruder::getTemperature()
-  // For hot end temperature measurement.
+  // Derived from RepRap FiveD extruder::getTemperature()//源自RepRap FiveD挤出机：：getTemperature（）
+  // For hot end temperature measurement.//用于热端温度测量。
   celsius_float_t Temperature::analog_to_celsius_hotend(const int16_t raw, const uint8_t e) {
       if (e >= HOTENDS) {
         SERIAL_ERROR_START();
@@ -1814,17 +1815,17 @@ void Temperature::manage_heater() {
     }
 
     #if HAS_HOTEND_THERMISTOR
-      // Thermistor with conversion table?
+      // Thermistor with conversion table?//带转换表的热敏电阻？
       const temp_entry_t(*tt)[] = (temp_entry_t(*)[])(heater_ttbl_map[e]);
       SCAN_THERMISTOR_TABLE((*tt), heater_ttbllen_map[e]);
     #endif
 
     return 0;
   }
-#endif // HAS_HOTEND
+#endif // HAS_HOTEND//霍顿德酒店
 
 #if HAS_HEATED_BED
-  // For bed temperature measurement.
+  // For bed temperature measurement.//用于床温测量。
   celsius_float_t Temperature::analog_to_celsius_bed(const int16_t raw) {
     #if TEMP_SENSOR_BED_IS_CUSTOM
       return user_thermistor_to_deg_c(CTI_BED, raw);
@@ -1839,10 +1840,10 @@ void Temperature::manage_heater() {
       return 0;
     #endif
   }
-#endif // HAS_HEATED_BED
+#endif // HAS_HEATED_BED//你给床加热了吗
 
 #if HAS_TEMP_CHAMBER
-  // For chamber temperature measurement.
+  // For chamber temperature measurement.//用于腔室温度测量。
   celsius_float_t Temperature::analog_to_celsius_chamber(const int16_t raw) {
     #if TEMP_SENSOR_CHAMBER_IS_CUSTOM
       return user_thermistor_to_deg_c(CTI_CHAMBER, raw);
@@ -1857,10 +1858,10 @@ void Temperature::manage_heater() {
       return 0;
     #endif
   }
-#endif // HAS_TEMP_CHAMBER
+#endif // HAS_TEMP_CHAMBER//有温度室
 
 #if HAS_TEMP_COOLER
-  // For cooler temperature measurement.
+  // For cooler temperature measurement.//用于冷却器温度测量。
   celsius_float_t Temperature::analog_to_celsius_cooler(const int16_t raw) {
     #if TEMP_SENSOR_COOLER_IS_CUSTOM
       return user_thermistor_to_deg_c(CTI_COOLER, raw);
@@ -1875,10 +1876,10 @@ void Temperature::manage_heater() {
       return 0;
     #endif
   }
-#endif // HAS_TEMP_COOLER
+#endif // HAS_TEMP_COOLER//有温度冷却器吗
 
 #if HAS_TEMP_PROBE
-  // For probe temperature measurement.
+  // For probe temperature measurement.//用于探头温度测量。
   celsius_float_t Temperature::analog_to_celsius_probe(const int16_t raw) {
     #if TEMP_SENSOR_PROBE_IS_CUSTOM
       return user_thermistor_to_deg_c(CTI_PROBE, raw);
@@ -1893,10 +1894,10 @@ void Temperature::manage_heater() {
       return 0;
     #endif
   }
-#endif // HAS_TEMP_PROBE
+#endif // HAS_TEMP_PROBE//有温度探头吗
 
 #if HAS_TEMP_REDUNDANT
-  // For redundant temperature measurement.
+  // For redundant temperature measurement.//用于冗余温度测量。
   celsius_float_t Temperature::analog_to_celsius_redundant(const int16_t raw) {
     #if TEMP_SENSOR_REDUNDANT_IS_CUSTOM
       return user_thermistor_to_deg_c(CTI_REDUNDANT, raw);
@@ -1915,7 +1916,7 @@ void Temperature::manage_heater() {
       return 0;
     #endif
   }
-#endif // HAS_TEMP_REDUNDANT
+#endif // HAS_TEMP_REDUNDANT//有多余的吗
 
 /**
  * Convert the raw sensor readings into actual Celsius temperatures and
@@ -1931,7 +1932,7 @@ void Temperature::manage_heater() {
  */
 void Temperature::updateTemperaturesFromRawValues() {
 
-  watchdog_refresh(); // Reset because raw_temps_ready was set by the interrupt
+  watchdog_refresh(); // Reset because raw_temps_ready was set by the interrupt//重置，因为原始温度准备就绪是由中断设置的
 
   TERN_(TEMP_SENSOR_0_IS_MAX_TC, temp_hotend[0].raw = READ_MAX_TC(0));
   TERN_(TEMP_SENSOR_1_IS_MAX_TC, temp_hotend[1].raw = READ_MAX_TC(1));
@@ -1940,9 +1941,9 @@ void Temperature::updateTemperaturesFromRawValues() {
     HOTEND_LOOP() temp_hotend[e].celsius = analog_to_celsius_hotend(temp_hotend[e].raw, e);
   #endif
 
-    //SERIAL_ECHOPAIR(" temp_hotend[0].raw", temp_hotend[0].raw);
-   // SERIAL_ECHOPAIR_F(" celsius", temp_hotend[0].celsius);
-    //SERIAL_ECHO("\r\n");
+    //SERIAL_ECHOPAIR(" temp_hotend[0].raw", temp_hotend[0].raw);//串行回波对（“临时热端[0].raw”，临时热端[0].raw）；
+   // SERIAL_ECHOPAIR_F(" celsius", temp_hotend[0].celsius);//串行回波对（“摄氏度”，温度热端[0]。摄氏度）；
+    //SERIAL_ECHO("\r\n");//串行回波（“\r\n”）；
 
     TERN_(HAS_HEATED_BED,     temp_bed.celsius       = analog_to_celsius_bed(temp_bed.raw));
   TERN_(HAS_TEMP_CHAMBER,   temp_chamber.celsius   = analog_to_celsius_chamber(temp_chamber.raw));
@@ -1976,7 +1977,7 @@ void Temperature::updateTemperaturesFromRawValues() {
     LOOP_L_N(e, COUNT(temp_dir)) {
       const int8_t tdir = temp_dir[e];
       if (tdir) {
-        const int16_t rawtemp = temp_hotend[e].raw * tdir; // normal direction, +rawtemp, else -rawtemp
+        const int16_t rawtemp = temp_hotend[e].raw * tdir; // normal direction, +rawtemp, else -rawtemp//法向+rawtemp，其他-rawtemp
         if (rawtemp > temp_range[e].raw_max * tdir) max_temp_error((heater_id_t)e);
 
         const bool heater_on = temp_hotend[e].target > 0;
@@ -1993,7 +1994,7 @@ void Temperature::updateTemperaturesFromRawValues() {
       }
     }
 
-  #endif // HAS_HOTEND
+  #endif // HAS_HOTEND//霍顿德酒店
 
   #if ENABLED(THERMAL_PROTECTION_BED)
     #define BEDCMP(A,B) (TEMPDIR(BED) < 0 ? ((A)<(B)) : ((A)>(B)))
@@ -2019,7 +2020,7 @@ void Temperature::updateTemperaturesFromRawValues() {
   SPIclass<MAX6675_DO_PIN, SD_MOSI_PIN, MAX6675_SCK_PIN> max_tc_spi;
 #endif
 
-// Init fans according to whether they're native PWM or Software PWM
+// Init fans according to whether they're native PWM or Software PWM//根据是本机PWM还是软件PWM初始化风扇
 #ifdef BOARD_OPENDRAIN_MOSFETS
   #define _INIT_SOFT_FAN(P) OUT_WRITE_OD(P, FAN_INVERTING ? LOW : HIGH)
 #else
@@ -2074,7 +2075,7 @@ void Temperature::init() {
     last_e_position = 0;
   #endif
 
-  // Init (and disable) SPI thermocouples
+  // Init (and disable) SPI thermocouples//初始化（和禁用）SPI热电偶
   #if TEMP_SENSOR_IS_MAX(0, MAX6675) && PIN_EXISTS(MAX6675_CS)
     OUT_WRITE(MAX6675_CS_PIN, HIGH);
   #endif
@@ -2096,7 +2097,7 @@ void Temperature::init() {
 
   #if HAS_MAX31865_TEMP
     #if TEMP_SENSOR_IS_MAX(0, MAX31865)
-      max31865_0.begin(MAX31865_2WIRE); // MAX31865_2WIRE, MAX31865_3WIRE, MAX31865_4WIRE
+      max31865_0.begin(MAX31865_2WIRE); // MAX31865_2WIRE, MAX31865_3WIRE, MAX31865_4WIRE//MAX31865_2WIRE，MAX31865_3WIRE，MAX31865_4WIRE
     #endif
     #if TEMP_SENSOR_IS_MAX(1, MAX31865)
       max31865_1.begin(MAX31865_2WIRE);
@@ -2122,7 +2123,7 @@ void Temperature::init() {
   #endif
 
   #if MB(RUMBA)
-    // Disable RUMBA JTAG in case the thermocouple extension is plugged on top of JTAG connector
+    // Disable RUMBA JTAG in case the thermocouple extension is plugged on top of JTAG connector//如果热电偶延长件插在JTAG连接器顶部，则禁用RUMBA JTAG
     #define _AD(N) (TEMP_SENSOR_##N##_IS_AD595 || TEMP_SENSOR_##N##_IS_AD8495)
     #if _AD(0) || _AD(1) || _AD(2) || _AD(BED) || _AD(CHAMBER) || _AD(REDUNDANT)
       MCUCR = _BV(JTD);
@@ -2130,7 +2131,7 @@ void Temperature::init() {
     #endif
   #endif
 
-  // Thermistor activation by MCU pin
+  // Thermistor activation by MCU pin//利用单片机引脚激活热敏电阻
   #if PIN_EXISTS(TEMP_0_TR_ENABLE)
     OUT_WRITE(TEMP_0_TR_ENABLE_PIN,
       #if TEMP_SENSOR_IS_ANY_MAX_TC(0)
@@ -2323,8 +2324,8 @@ void Temperature::init() {
     INIT_CHAMBER_AUTO_FAN_PIN(CHAMBER_AUTO_FAN_PIN);
   #endif
 
-  // Wait for temperature measurement to settle
-  //delay(250);
+  // Wait for temperature measurement to settle//等待温度测量确定
+  //delay(250);//延迟（250）；
 
   #if HAS_HOTEND
 
@@ -2392,7 +2393,7 @@ void Temperature::init() {
       _TEMP_MAX_E(7);
     #endif
 
-  #endif // HAS_HOTEND
+  #endif // HAS_HOTEND//霍顿德酒店
 
   #if HAS_HEATED_BED
     while (analog_to_celsius_bed(mintemp_raw_BED) < BED_MINTEMP) mintemp_raw_BED += TEMPDIR(BED) * (OVERSAMPLENR);
@@ -2428,7 +2429,7 @@ void Temperature::init() {
 
 #if HAS_THERMAL_PROTECTION
 
-  Temperature::tr_state_machine_t Temperature::tr_state_machine[NR_HEATER_RUNAWAY]; // = { { TRInactive, 0 } };
+  Temperature::tr_state_machine_t Temperature::tr_state_machine[NR_HEATER_RUNAWAY]; // = { { TRInactive, 0 } };//={{TRInactive，0}}；
 
   /**
    * @brief Thermal Runaway state machine for a single heater
@@ -2443,7 +2444,7 @@ void Temperature::init() {
   void Temperature::tr_state_machine_t::run(const_celsius_float_t current, const_celsius_float_t target, const heater_id_t heater_id, const uint16_t period_seconds, const celsius_t hysteresis_degc) {
 
     #if HEATER_IDLE_HANDLER
-      // Convert the given heater_id_t to an idle array index
+      // Convert the given heater_id_t to an idle array index//将给定的加热器id转换为空闲数组索引
       const IdleIndex idle_index = idle_index_for_id(heater_id);
     #endif
 
@@ -2465,7 +2466,7 @@ void Temperature::init() {
     */
 
     #if HEATER_IDLE_HANDLER
-      // If the heater idle timeout expires, restart
+      // If the heater idle timeout expires, restart//如果加热器怠速超时过期，重新启动
       if (heater_idle[idle_index].timed_out) {
         state = TRInactive;
         running_temp = 0;
@@ -2473,7 +2474,7 @@ void Temperature::init() {
       else
     #endif
     {
-      // If the target temperature changes, restart
+      // If the target temperature changes, restart//如果目标温度发生变化，请重新启动
       if (running_temp != target) {
         running_temp = target;
         state = target > 0 ? TRFirstHeating : TRInactive;
@@ -2481,15 +2482,15 @@ void Temperature::init() {
     }
 
     switch (state) {
-      // Inactive state waits for a target temperature to be set
+      // Inactive state waits for a target temperature to be set//非活动状态等待设置目标温度
       case TRInactive: break;
 
-      // When first heating, wait for the temperature to be reached then go to Stable state
+      // When first heating, wait for the temperature to be reached then go to Stable state//首次加热时，等待温度达到，然后进入稳定状态
       case TRFirstHeating:
         if (current < running_temp) break;
         state = TRStable;
 
-      // While the temperature is stable watch for a bad temperature
+      // While the temperature is stable watch for a bad temperature//当温度稳定时，观察是否有坏温度
       case TRStable:
 
         #if ENABLED(ADAPTIVE_FAN_SLOWING)
@@ -2521,13 +2522,13 @@ void Temperature::init() {
     }
   }
 
-#endif // HAS_THERMAL_PROTECTION
+#endif // HAS_THERMAL_PROTECTION//有热保护
 
 void Temperature::disable_all_heaters() {
 
   TERN_(AUTOTEMP, planner.autotemp_enabled = false);
 
-  // Unpause and reset everything
+  // Unpause and reset everything//取消暂停并重置所有内容
   TERN_(PROBING_HEATERS_OFF, pause_heaters(false));
 
   #if HAS_HOTEND
@@ -2591,8 +2592,8 @@ void Temperature::disable_all_heaters() {
     if (p != paused_for_probing) {
       paused_for_probing = p;
       if (p) {
-        HOTEND_LOOP() heater_idle[e].expire();    // Timeout immediately
-        TERN_(HAS_HEATED_BED, heater_idle[IDLE_INDEX_BED].expire()); // Timeout immediately
+        HOTEND_LOOP() heater_idle[e].expire();    // Timeout immediately//立即超时
+        TERN_(HAS_HEATED_BED, heater_idle[IDLE_INDEX_BED].expire()); // Timeout immediately//立即超时
       }
       else {
         HOTEND_LOOP() reset_hotend_idle_timer(e);
@@ -2601,7 +2602,7 @@ void Temperature::disable_all_heaters() {
     }
   }
 
-#endif // PROBING_HEATERS_OFF
+#endif // PROBING_HEATERS_OFF//探测加热器关闭
 
 #if EITHER(SINGLENOZZLE_STANDBY_TEMP, SINGLENOZZLE_STANDBY_FAN)
 
@@ -2616,7 +2617,7 @@ void Temperature::disable_all_heaters() {
         setTargetHotend(singlenozzle_temp[new_tool], 0);
         TERN_(AUTOTEMP, planner.autotemp_update());
         set_heating_message(0);
-        (void)wait_for_hotend(0, false);  // Wait for heating or cooling
+        (void)wait_for_hotend(0, false);  // Wait for heating or cooling//等待加热或冷却
       }
     #endif
   }
@@ -2636,21 +2637,21 @@ void Temperature::disable_all_heaters() {
       static uint32_t max_tc_temp = 2000;
       #define MAX_TC_ERROR_MASK    7
       #define MAX_TC_DISCARD_BITS 18
-      #define MAX_TC_SPEED_BITS    3        // (_BV(SPR1)) // clock ÷ 64
+      #define MAX_TC_SPEED_BITS    3        // (_BV(SPR1)) // clock ÷ 64//（_BV（SPR1））//时钟÷64
     #elif HAS_MAX31865_TEMP
-      static uint16_t max_tc_temp = 2000;   // From datasheet 16 bits D15-D0
-      #define MAX_TC_ERROR_MASK    1        // D0 Bit not used
-      #define MAX_TC_DISCARD_BITS  1        // Data is in D15-D1
-      #define MAX_TC_SPEED_BITS    3        //  (_BV(SPR1)) // clock ÷ 64
+      static uint16_t max_tc_temp = 2000;   // From datasheet 16 bits D15-D0//来自数据表16位D15-D0
+      #define MAX_TC_ERROR_MASK    1        // D0 Bit not used//D0位未使用
+      #define MAX_TC_DISCARD_BITS  1        // Data is in D15-D1//数据在D15-D1中
+      #define MAX_TC_SPEED_BITS    3        //  (_BV(SPR1)) // clock ÷ 64//（_BV（SPR1））//时钟÷64
     #else
       static uint16_t max_tc_temp = 2000;
       #define MAX_TC_ERROR_MASK    4
       #define MAX_TC_DISCARD_BITS  3
-      #define MAX_TC_SPEED_BITS    2        // (_BV(SPR0)) // clock ÷ 16
+      #define MAX_TC_SPEED_BITS    2        // (_BV(SPR0)) // clock ÷ 16//（_BV（SPR0））//时钟÷16
     #endif
 
     #if HAS_MULTI_MAX_TC
-      // Needed to return the correct temp when this is called between readings
+      // Needed to return the correct temp when this is called between readings//在读数之间调用时，需要返回正确的温度
       static celsius_t max_tc_temp_previous[MAX_TC_COUNT] = { 0 };
       #define THERMO_TEMP(I) max_tc_temp_previous[I]
       #define THERMO_SEL(A,B) (hindex ? (B) : (A))
@@ -2676,34 +2677,34 @@ void Temperature::disable_all_heaters() {
 
     static uint8_t max_tc_errors[MAX_TC_COUNT] = { 0 };
 
-    // Return last-read value between readings
+    // Return last-read value between readings//返回两次读数之间的上次读取值
     static millis_t next_max_tc_ms[MAX_TC_COUNT] = { 0 };
     millis_t ms = millis();
     if (PENDING(ms, next_max_tc_ms[hindex])) return int(THERMO_TEMP(hindex));
     next_max_tc_ms[hindex] = ms + MAX6675_HEAT_INTERVAL;
 
-    //
-    // TODO: spiBegin, spiRec and spiInit doesn't work when soft spi is used.
-    //
+    ////
+    // TODO: spiBegin, spiRec and spiInit doesn't work when soft spi is used.//TODO:spiBegin、spiRec和spiInit在使用软spi时不起作用。
+    ////
     #if !THERMO_SEPARATE_SPI && NO_THERMO_TEMPS
       spiBegin();
       spiInit(MAX_TC_SPEED_BITS);
     #endif
 
     #if NO_THERMO_TEMPS
-      MAX6675_WRITE(LOW);  // enable TT_MAX6675
-      DELAY_NS(100);       // Ensure 100ns delay
+      MAX6675_WRITE(LOW);  // enable TT_MAX6675//启用TT_MAX6675
+      DELAY_NS(100);       // Ensure 100ns delay//确保100ns的延迟
     #endif
 
     max_tc_temp = 0;
 
-    // Read a big-endian temperature value
+    // Read a big-endian temperature value//读取大端温度值
     #if NO_THERMO_TEMPS
       for (uint8_t i = sizeof(max_tc_temp); i--;) {
         max_tc_temp |= TERN(THERMO_SEPARATE_SPI, max_tc_spi.receive(), spiRec());
-        if (i > 0) max_tc_temp <<= 8; // shift left if not the last byte
+        if (i > 0) max_tc_temp <<= 8; // shift left if not the last byte//如果不是最后一个字节，则向左移位
       }
-        MAX6675_WRITE(HIGH); // disable TT_MAX6675
+        MAX6675_WRITE(HIGH); // disable TT_MAX6675//禁用TT_MAX6675
     #endif
 
     #if HAS_MAX31855_TEMP
@@ -2744,8 +2745,8 @@ void Temperature::disable_all_heaters() {
             SERIAL_ECHOLNPGM("Short to VCC");
         #elif HAS_MAX31865
           #if ENABLED(LIB_USR_MAX31865)
-            // At the present time we do not have the ability to set the MAX31865 HIGH threshold
-            // or thr LOW threshold, so no need to check for them, zero these bits out
+            // At the present time we do not have the ability to set the MAX31865 HIGH threshold//目前，我们无法设置MAX31865高阈值
+            // or thr LOW threshold, so no need to check for them, zero these bits out//或thr低阈值，因此无需检查它们，将这些位归零
             const uint8_t fault_31865 = max865ref.readFault() & 0x3FU;
           #endif
           max865ref.clearFault();
@@ -2769,7 +2770,7 @@ void Temperature::disable_all_heaters() {
           SERIAL_ECHOLNPGM("MAX6675 Open Circuit");
         #endif
 
-        // Thermocouple open
+        // Thermocouple open//热电偶开路
         max_tc_temp = 4 * THERMO_SEL(TEMP_SENSOR_0_MAX_TC_TMAX, TEMP_SENSOR_1_MAX_TC_TMAX);
       }
       else
@@ -2781,10 +2782,10 @@ void Temperature::disable_all_heaters() {
     }
 
     #if HAS_MAX31855
-      if (max_tc_temp & 0x00002000) max_tc_temp |= 0xFFFFC000; // Support negative temperature
+      if (max_tc_temp & 0x00002000) max_tc_temp |= 0xFFFFC000; // Support negative temperature//支持负温度
     #endif
 
-    // Return the RTD resistance for MAX31865 for display in SHOW_TEMP_ADC_VALUES
+    // Return the RTD resistance for MAX31865 for display in SHOW_TEMP_ADC_VALUES//返回MAX31865的RTD电阻，以便在显示温度ADC值时显示
     #if HAS_MAX31865_TEMP
       #if ENABLED(LIB_ADAFRUIT_MAX31865)
         max_tc_temp = (uint32_t(max865ref.readRTD()) * THERMO_SEL(MAX31865_CALIBRATION_OHMS_0, MAX31865_CALIBRATION_OHMS_1)) >> 16;
@@ -2798,7 +2799,7 @@ void Temperature::disable_all_heaters() {
     return int(max_tc_temp);
   }
 
-#endif // HAS_MAX_TC
+#endif // HAS_MAX_TC//有最大值吗
 
 /**
  * Update raw temperatures
@@ -2842,13 +2843,13 @@ void Temperature::update_raw_temperatures() {
  */
 void Temperature::readings_ready() {
 
-  // Update raw values only if they're not already set.
+  // Update raw values only if they're not already set.//仅当未设置原始值时才更新原始值。
   if (!raw_temps_ready) {
     update_raw_temperatures();
     raw_temps_ready = true;
   }
 
-  // Filament Sensor - can be read any time since IIR filtering is used
+  // Filament Sensor - can be read any time since IIR filtering is used//灯丝传感器-使用IIR滤波后可随时读取
   TERN_(FILAMENT_WIDTH_SENSOR, filwidth.reading_ready());
 
   #if HAS_HOTEND
@@ -2890,7 +2891,7 @@ HAL_TEMP_TIMER_ISR() {
 }
 
 #if ENABLED(SLOW_PWM_HEATERS) && !defined(MIN_STATE_TIME)
-  #define MIN_STATE_TIME 16 // MIN_STATE_TIME * 65.5 = time in milliseconds
+  #define MIN_STATE_TIME 16 // MIN_STATE_TIME * 65.5 = time in milliseconds//最小状态时间*65.5=以毫秒为单位的时间
 #endif
 
 class SoftPWM {
@@ -2929,7 +2930,7 @@ void Temperature::isr() {
   static ADCSensorState adc_sensor_state = StartupDelay;
   static uint8_t pwm_count = _BV(SOFT_PWM_SCALE);
 
-  // avoid multiple loads of pwm_count
+  // avoid multiple loads of pwm_count//避免pwm_计数的多个负载
   uint8_t pwm_count_tmp = pwm_count;
 
   #if HAS_ADC_BUTTONS
@@ -3067,17 +3068,17 @@ void Temperature::isr() {
       #endif
     }
 
-    // SOFT_PWM_SCALE to frequency:
-    //
-    // 0: 16000000/64/256/128 =   7.6294 Hz
-    // 1:                / 64 =  15.2588 Hz
-    // 2:                / 32 =  30.5176 Hz
-    // 3:                / 16 =  61.0352 Hz
-    // 4:                /  8 = 122.0703 Hz
-    // 5:                /  4 = 244.1406 Hz
+    // SOFT_PWM_SCALE to frequency://软脉冲宽度调制频率比例：
+    ////
+    // 0: 16000000/64/256/128 =   7.6294 Hz//0:16000000/64/256/128=7.6294 Hz
+    // 1:                / 64 =  15.2588 Hz//1:/64=15.2588 Hz
+    // 2:                / 32 =  30.5176 Hz//2:/32=30.5176赫兹
+    // 3:                / 16 =  61.0352 Hz//3:/16=61.0352 Hz
+    // 4:                /  8 = 122.0703 Hz//4:/8=122.0703 Hz
+    // 5:                /  4 = 244.1406 Hz//5:/4=244.1406 Hz
     pwm_count = pwm_count_tmp + _BV(SOFT_PWM_SCALE);
 
-  #else // SLOW_PWM_HEATERS
+  #else // SLOW_PWM_HEATERS//慢速PWM加热器
 
     /**
      * SLOW PWM HEATERS
@@ -3109,7 +3110,7 @@ void Temperature::isr() {
         _SLOW_PWM(COOLER, soft_pwm_cooler, temp_cooler);
       #endif
 
-    } // slow_pwm_count == 0
+    } // slow_pwm_count == 0//慢脉冲宽度调制计数==0
 
     #if HAS_HOTEND
       #define _PWM_OFF_E(N) _PWM_OFF(N, soft_pwm_hotend[N]);
@@ -3184,20 +3185,20 @@ void Temperature::isr() {
       #if HAS_FAN7
         if (soft_pwm_count_fan[7] <= pwm_count_tmp) WRITE_FAN(7, LOW);
       #endif
-    #endif // FAN_SOFT_PWM
+    #endif // FAN_SOFT_PWM//风扇软PWM
 
-    // SOFT_PWM_SCALE to frequency:
-    //
-    // 0: 16000000/64/256/128 =   7.6294 Hz
-    // 1:                / 64 =  15.2588 Hz
-    // 2:                / 32 =  30.5176 Hz
-    // 3:                / 16 =  61.0352 Hz
-    // 4:                /  8 = 122.0703 Hz
-    // 5:                /  4 = 244.1406 Hz
+    // SOFT_PWM_SCALE to frequency://软脉冲宽度调制频率比例：
+    ////
+    // 0: 16000000/64/256/128 =   7.6294 Hz//0:16000000/64/256/128=7.6294 Hz
+    // 1:                / 64 =  15.2588 Hz//1:/64=15.2588 Hz
+    // 2:                / 32 =  30.5176 Hz//2:/32=30.5176赫兹
+    // 3:                / 16 =  61.0352 Hz//3:/16=61.0352 Hz
+    // 4:                /  8 = 122.0703 Hz//4:/8=122.0703 Hz
+    // 5:                /  4 = 244.1406 Hz//5:/4=244.1406 Hz
     pwm_count = pwm_count_tmp + _BV(SOFT_PWM_SCALE);
 
-    // increment slow_pwm_count only every 64th pwm_count,
-    // i.e. yielding a PWM frequency of 16/128 Hz (8s).
+    // increment slow_pwm_count only every 64th pwm_count,//仅每64次pwm计数增加一次慢速pwm计数，
+    // i.e. yielding a PWM frequency of 16/128 Hz (8s).//即产生16/128 Hz（8s）的PWM频率。
     if (((pwm_count >> SOFT_PWM_SCALE) & 0x3F) == 0) {
       slow_pwm_count++;
       slow_pwm_count &= 0x7F;
@@ -3210,11 +3211,11 @@ void Temperature::isr() {
       TERN_(HAS_COOLER, soft_pwm_cooler.dec());
     }
 
-  #endif // SLOW_PWM_HEATERS
+  #endif // SLOW_PWM_HEATERS//慢速PWM加热器
 
-  //
-  // Update lcd buttons 488 times per second
-  //
+  ////
+  // Update lcd buttons 488 times per second//每秒更新lcd按钮488次
+  ////
   static bool do_buttons;
   if ((do_buttons ^= true)) ui.update_buttons();
 
@@ -3237,24 +3238,24 @@ void Temperature::isr() {
   switch (adc_sensor_state) {
 
     case SensorsReady: {
-      // All sensors have been read. Stay in this state for a few
-      // ISRs to save on calls to temp update/checking code below.
+      // All sensors have been read. Stay in this state for a few//所有传感器均已读取。在这种状态下呆几天
+      // ISRs to save on calls to temp update/checking code below.//ISR将保存对以下临时更新/检查代码的调用。
       constexpr int8_t extra_loops = MIN_ADC_ISR_LOOPS - (int8_t)SensorsReady;
       static uint8_t delay_count = 0;
       if (extra_loops > 0) {
-        if (delay_count == 0) delay_count = extra_loops;  // Init this delay
-        if (--delay_count)                                // While delaying...
-          next_sensor_state = SensorsReady;               // retain this state (else, next state will be 0)
+        if (delay_count == 0) delay_count = extra_loops;  // Init this delay//延迟
+        if (--delay_count)                                // While delaying...//在拖延的时候。。。
+          next_sensor_state = SensorsReady;               // retain this state (else, next state will be 0)//保留此状态（否则，下一个状态将为0）
         break;
       }
       else {
-        adc_sensor_state = StartSampling;                 // Fall-through to start sampling
+        adc_sensor_state = StartSampling;                 // Fall-through to start sampling//通过测试开始采样
         next_sensor_state = (ADCSensorState)(int(StartSampling) + 1);
       }
     }
 
-    case StartSampling:                                   // Start of sampling loops. Do updates/checks.
-      if (++temp_count >= OVERSAMPLENR) {                 // 10 * 16 * 1/(16000000/64/256)  = 164ms.
+    case StartSampling:                                   // Start of sampling loops. Do updates/checks.//开始采样循环。进行更新/检查。
+      if (++temp_count >= OVERSAMPLENR) {                 // 10 * 16 * 1/(16000000/64/256)  = 164ms.//10*16*1/（16000000/64/256）=164ms。
         temp_count = 0;
         readings_ready();
       }
@@ -3328,7 +3329,7 @@ void Temperature::isr() {
     #if ENABLED(FILAMENT_WIDTH_SENSOR)
       case Prepare_FILWIDTH: HAL_START_ADC(FILWIDTH_PIN); break;
       case Measure_FILWIDTH:
-        if (!HAL_ADC_READY()) next_sensor_state = adc_sensor_state; // Redo this state
+        if (!HAL_ADC_READY()) next_sensor_state = adc_sensor_state; // Redo this state//重做此状态
         else filwidth.accumulate(HAL_READ_ADC());
       break;
     #endif
@@ -3338,7 +3339,7 @@ void Temperature::isr() {
         HAL_START_ADC(POWER_MONITOR_CURRENT_PIN);
         break;
       case Measure_POWER_MONITOR_CURRENT:
-        if (!HAL_ADC_READY()) next_sensor_state = adc_sensor_state; // Redo this state
+        if (!HAL_ADC_READY()) next_sensor_state = adc_sensor_state; // Redo this state//重做此状态
         else power_monitor.add_current_sample(HAL_READ_ADC());
         break;
     #endif
@@ -3348,7 +3349,7 @@ void Temperature::isr() {
         HAL_START_ADC(POWER_MONITOR_VOLTAGE_PIN);
         break;
       case Measure_POWER_MONITOR_VOLTAGE:
-        if (!HAL_ADC_READY()) next_sensor_state = adc_sensor_state; // Redo this state
+        if (!HAL_ADC_READY()) next_sensor_state = adc_sensor_state; // Redo this state//重做此状态
         else power_monitor.add_voltage_sample(HAL_READ_ADC());
         break;
     #endif
@@ -3375,14 +3376,14 @@ void Temperature::isr() {
       case Prepare_ADC_KEY: HAL_START_ADC(ADC_KEYPAD_PIN); break;
       case Measure_ADC_KEY:
         if (!HAL_ADC_READY())
-          next_sensor_state = adc_sensor_state; // redo this state
+          next_sensor_state = adc_sensor_state; // redo this state//重做此状态
         else if (ADCKey_count < ADC_BUTTON_DEBOUNCE_DELAY) {
           raw_ADCKey_value = HAL_READ_ADC();
           if (raw_ADCKey_value <= 900UL * HAL_ADC_RANGE / 1024UL) {
             NOMORE(current_ADCKey_raw, raw_ADCKey_value);
             ADCKey_count++;
           }
-          else { //ADC Key release
+          else { //ADC Key release//ADC密钥释放
             if (ADCKey_count > 0) ADCKey_count++; else ADCKey_pressed = false;
             if (ADCKey_pressed) {
               ADCKey_count = 0;
@@ -3392,27 +3393,27 @@ void Temperature::isr() {
         }
         if (ADCKey_count == ADC_BUTTON_DEBOUNCE_DELAY) ADCKey_pressed = true;
         break;
-    #endif // HAS_ADC_BUTTONS
+    #endif // HAS_ADC_BUTTONS//有\u ADC\u按钮
 
     case StartupDelay: break;
 
-  } // switch(adc_sensor_state)
+  } // switch(adc_sensor_state)//开关（adc_传感器_状态）
 
-  // Go to the next state
+  // Go to the next state//去下一个州
   adc_sensor_state = next_sensor_state;
 
-  //
-  // Additional ~1KHz Tasks
-  //
+  ////
+  // Additional ~1KHz Tasks//额外的~1KHz任务
+  ////
 
   #if ENABLED(BABYSTEPPING) && DISABLED(INTEGRATED_BABYSTEPPING)
     babystep.task();
   #endif
 
-  // Poll endstops state, if required
+  // Poll endstops state, if required//轮询结束停止状态（如果需要）
   endstops.poll();
 
-  // Periodically call the planner timer service routine
+  // Periodically call the planner timer service routine//定期调用计划器计时器服务例程
   planner.isr();
 }
 
@@ -3469,7 +3470,7 @@ void Temperature::isr() {
     SERIAL_ECHOPGM(" /");
     SERIAL_PRINT(t, SFP);
     #if ENABLED(SHOW_TEMP_ADC_VALUES)
-      // Temperature MAX SPI boards do not have an OVERSAMPLENR defined
+      // Temperature MAX SPI boards do not have an OVERSAMPLENR defined//最高温度SPI板未定义过采样
       SERIAL_ECHOPAIR(" (", TERN(NO_THERMO_TEMPS, false, k == 'T') ? r : r * RECIPROCAL(OVERSAMPLENR));
       SERIAL_CHAR(')');
     #endif
@@ -3557,10 +3558,10 @@ void Temperature::isr() {
       #if TEMP_RESIDENCY_TIME > 0
         millis_t residency_start_ms = 0;
         bool first_loop = true;
-        // Loop until the temperature has stabilized
+        // Loop until the temperature has stabilized//循环，直到温度稳定
         #define TEMP_CONDITIONS (!residency_start_ms || PENDING(now, residency_start_ms + SEC_TO_MS(TEMP_RESIDENCY_TIME)))
       #else
-        // Loop until the temperature is very close target
+        // Loop until the temperature is very close target//循环，直到温度非常接近目标
         #define TEMP_CONDITIONS (wants_to_cool ? isCoolingHotend(target_extruder) : isHeatingHotend(target_extruder))
       #endif
 
@@ -3578,17 +3579,17 @@ void Temperature::isr() {
       millis_t now, next_temp_ms = 0, next_cool_check_ms = 0;
       wait_for_heatup = true;
       do {
-        // Target temperature might be changed during the loop
+        // Target temperature might be changed during the loop//在循环过程中，目标温度可能会发生变化
         if (target_temp != degTargetHotend(target_extruder)) {
           wants_to_cool = isCoolingHotend(target_extruder);
           target_temp = degTargetHotend(target_extruder);
 
-          // Exit if S<lower>, continue if S<higher>, R<lower>, or R<higher>
+          // Exit if S<lower>, continue if S<higher>, R<lower>, or R<higher>//如果S<lower>退出，如果S<higher>、R<lower>或R<higher>继续
           if (no_wait_for_cooling && wants_to_cool) break;
         }
 
         now = millis();
-        if (ELAPSED(now, next_temp_ms)) { // Print temp & remaining time every 1s while waiting
+        if (ELAPSED(now, next_temp_ms)) { // Print temp & remaining time every 1s while waiting//等待时每1s打印一次温度和剩余时间
           next_temp_ms = now + 1000UL;
           print_heater_states(target_extruder);
           #if TEMP_RESIDENCY_TIME > 0
@@ -3602,12 +3603,12 @@ void Temperature::isr() {
         }
 
         idle();
-        gcode.reset_stepper_timeout(); // Keep steppers powered
+        gcode.reset_stepper_timeout(); // Keep steppers powered//保持步进电机通电
 
         const celsius_float_t temp = degHotend(target_extruder);
 
         #if ENABLED(PRINTER_EVENT_LEDS)
-          // Gradually change LED strip from violet to red as nozzle heats up
+          // Gradually change LED strip from violet to red as nozzle heats up//随着喷嘴加热，LED条逐渐从紫色变为红色
           if (!wants_to_cool) printerEventLEDs.onHotendHeating(start_temp, temp, target_temp);
         #endif
 
@@ -3616,12 +3617,12 @@ void Temperature::isr() {
           const celsius_float_t temp_diff = ABS(target_temp - temp);
 
           if (!residency_start_ms) {
-            // Start the TEMP_RESIDENCY_TIME timer when we reach target temp for the first time.
+            // Start the TEMP_RESIDENCY_TIME timer when we reach target temp for the first time.//当我们第一次达到目标温度时，启动临时居住时间计时器。
             if (temp_diff < TEMP_WINDOW)
               residency_start_ms = now + (first_loop ? SEC_TO_MS(TEMP_RESIDENCY_TIME) / 3 : 0);
           }
           else if (temp_diff > TEMP_HYSTERESIS) {
-            // Restart the timer whenever the temperature falls outside the hysteresis.
+            // Restart the timer whenever the temperature falls outside the hysteresis.//当温度降至滞后范围之外时，重新启动计时器。
             residency_start_ms = now;
           }
 
@@ -3629,10 +3630,10 @@ void Temperature::isr() {
 
         #endif
 
-        // Prevent a wait-forever situation if R is misused i.e. M109 R0
+        // Prevent a wait-forever situation if R is misused i.e. M109 R0//如果R被误用，即M109 R0，则防止出现永远等待的情况
         if (wants_to_cool) {
-          // break after MIN_COOLING_SLOPE_TIME seconds
-          // if the temperature did not drop at least MIN_COOLING_SLOPE_DEG
+          // break after MIN_COOLING_SLOPE_TIME seconds//最小冷却时间秒后中断
+          // if the temperature did not drop at least MIN_COOLING_SLOPE_DEG//如果温度没有下降至少最小冷却坡度
           if (!next_cool_check_ms || ELAPSED(now, next_cool_check_ms)) {
             if (old_temp - temp < float(MIN_COOLING_SLOPE_DEG)) break;
             next_cool_check_ms = now + SEC_TO_MS(MIN_COOLING_SLOPE_TIME);
@@ -3653,7 +3654,7 @@ void Temperature::isr() {
         wait_for_heatup = false;
         #if ENABLED(DWIN_CREALITY_LCD)
           HMI_flag.heat_flag = 0;
-          duration_t elapsed = print_job_timer.duration();  // print timer
+          duration_t elapsed = print_job_timer.duration();  // print timer//打印计时器
           dwin_heat_time = elapsed.value;
         #else
           ui.reset_status();
@@ -3676,7 +3677,7 @@ void Temperature::isr() {
       }
     #endif
 
-  #endif // HAS_TEMP_HOTEND
+  #endif // HAS_TEMP_HOTEND//有热端吗
 
   #if HAS_HEATED_BED
 
@@ -3693,10 +3694,10 @@ void Temperature::isr() {
       #if TEMP_BED_RESIDENCY_TIME > 0
         millis_t residency_start_ms = 0;
         bool first_loop = true;
-        // Loop until the temperature has stabilized
+        // Loop until the temperature has stabilized//循环，直到温度稳定
         #define TEMP_BED_CONDITIONS (!residency_start_ms || PENDING(now, residency_start_ms + SEC_TO_MS(TEMP_BED_RESIDENCY_TIME)))
       #else
-        // Loop until the temperature is very close target
+        // Loop until the temperature is very close target//循环，直到温度非常接近目标
         #define TEMP_BED_CONDITIONS (wants_to_cool ? isCoolingBed() : isHeatingBed())
       #endif
 
@@ -3714,17 +3715,17 @@ void Temperature::isr() {
       millis_t now, next_temp_ms = 0, next_cool_check_ms = 0;
       wait_for_heatup = true;
       do {
-        // Target temperature might be changed during the loop
+        // Target temperature might be changed during the loop//在循环过程中，目标温度可能会发生变化
         if (target_temp != degTargetBed()) {
           wants_to_cool = isCoolingBed();
           target_temp = degTargetBed();
 
-          // Exit if S<lower>, continue if S<higher>, R<lower>, or R<higher>
+          // Exit if S<lower>, continue if S<higher>, R<lower>, or R<higher>//如果S<lower>退出，如果S<higher>、R<lower>或R<higher>继续
           if (no_wait_for_cooling && wants_to_cool) break;
         }
 
         now = millis();
-        if (ELAPSED(now, next_temp_ms)) { //Print Temp Reading every 1 second while heating up.
+        if (ELAPSED(now, next_temp_ms)) { //Print Temp Reading every 1 second while heating up.//加热时每1秒打印一次温度读数。
           next_temp_ms = now + 1000UL;
           print_heater_states(active_extruder);
           #if TEMP_BED_RESIDENCY_TIME > 0
@@ -3738,12 +3739,12 @@ void Temperature::isr() {
         }
 
         idle();
-        gcode.reset_stepper_timeout(); // Keep steppers powered
+        gcode.reset_stepper_timeout(); // Keep steppers powered//保持步进电机通电
 
         const celsius_float_t temp = degBed();
 
         #if ENABLED(PRINTER_EVENT_LEDS)
-          // Gradually change LED strip from blue to violet as bed heats up
+          // Gradually change LED strip from blue to violet as bed heats up//随着床的升温，LED条逐渐从蓝色变为紫色
           if (!wants_to_cool) printerEventLEDs.onBedHeating(start_temp, temp, target_temp);
         #endif
 
@@ -3752,21 +3753,21 @@ void Temperature::isr() {
           const celsius_float_t temp_diff = ABS(target_temp - temp);
 
           if (!residency_start_ms) {
-            // Start the TEMP_BED_RESIDENCY_TIME timer when we reach target temp for the first time.
+            // Start the TEMP_BED_RESIDENCY_TIME timer when we reach target temp for the first time.//当我们第一次达到目标温度时，启动临时住宿计时器。
             if (temp_diff < TEMP_BED_WINDOW)
               residency_start_ms = now + (first_loop ? SEC_TO_MS(TEMP_BED_RESIDENCY_TIME) / 3 : 0);
           }
           else if (temp_diff > TEMP_BED_HYSTERESIS) {
-            // Restart the timer whenever the temperature falls outside the hysteresis.
+            // Restart the timer whenever the temperature falls outside the hysteresis.//当温度降至滞后范围之外时，重新启动计时器。
             residency_start_ms = now;
           }
 
-        #endif // TEMP_BED_RESIDENCY_TIME > 0
+        #endif // TEMP_BED_RESIDENCY_TIME > 0//临时住宿时间>0
 
-        // Prevent a wait-forever situation if R is misused i.e. M190 R0
+        // Prevent a wait-forever situation if R is misused i.e. M190 R0//如果R被误用，即M190 R0，则防止出现永远等待的情况
         if (wants_to_cool) {
-          // Break after MIN_COOLING_SLOPE_TIME_BED seconds
-          // if the temperature did not drop at least MIN_COOLING_SLOPE_DEG_BED
+          // Break after MIN_COOLING_SLOPE_TIME_BED seconds//最小冷却坡度时间床秒后破裂
+          // if the temperature did not drop at least MIN_COOLING_SLOPE_DEG_BED//如果温度未下降，则至少为最小冷却坡度
           if (!next_cool_check_ms || ELAPSED(now, next_cool_check_ms)) {
             if (old_temp - temp < float(MIN_COOLING_SLOPE_DEG_BED)) break;
             next_cool_check_ms = now + SEC_TO_MS(MIN_COOLING_SLOPE_TIME_BED);
@@ -3805,7 +3806,7 @@ void Temperature::isr() {
       }
     }
 
-  #endif // HAS_HEATED_BED
+  #endif // HAS_HEATED_BED//你给床加热了吗
 
   #if HAS_TEMP_PROBE
 
@@ -3832,7 +3833,7 @@ void Temperature::isr() {
       wait_for_heatup = true;
       while (will_wait && wait_for_heatup) {
 
-        // Print Temp Reading every 10 seconds while heating up.
+        // Print Temp Reading every 10 seconds while heating up.//加热时每10秒打印一次温度读数。
         millis_t now = millis();
         if (!next_temp_ms || ELAPSED(now, next_temp_ms)) {
           next_temp_ms = now + 10000UL;
@@ -3841,11 +3842,11 @@ void Temperature::isr() {
         }
 
         idle();
-        gcode.reset_stepper_timeout(); // Keep steppers powered
+        gcode.reset_stepper_timeout(); // Keep steppers powered//保持步进电机通电
 
-        // Break after MIN_DELTA_SLOPE_TIME_PROBE seconds if the temperature
-        // did not drop at least MIN_DELTA_SLOPE_DEG_PROBE. This avoids waiting
-        // forever as the probe is not actively heated.
+        // Break after MIN_DELTA_SLOPE_TIME_PROBE seconds if the temperature//如果温度升高，则在最小值_增量_斜率_时间_探针秒后破裂
+        // did not drop at least MIN_DELTA_SLOPE_DEG_PROBE. This avoids waiting//未落下至少最小三角形坡度的探头。这样可以避免等待
+        // forever as the probe is not actively heated.//由于探头未主动加热，因此永远不会停止。
         if (!next_delta_check_ms || ELAPSED(now, next_delta_check_ms)) {
           const float temp = degProbe(),
                       delta_temp = old_temp > temp ? old_temp - temp : temp - old_temp;
@@ -3857,7 +3858,7 @@ void Temperature::isr() {
           old_temp = temp;
         }
 
-        // Loop until the temperature is very close target
+        // Loop until the temperature is very close target//循环，直到温度非常接近目标
         if (!(wants_to_cool ? isProbeAboveTemp(target_temp) : isProbeBelowTemp(target_temp))) {
             SERIAL_ECHOLN(wants_to_cool ? PSTR("Cooldown") : PSTR("Heatup"));
             SERIAL_ECHOLNPGM(" complete, target probe temperature reached.");
@@ -3876,7 +3877,7 @@ void Temperature::isr() {
       return false;
     }
 
-  #endif // HAS_TEMP_PROBE
+  #endif // HAS_TEMP_PROBE//有温度探头吗
 
   #if HAS_HEATED_CHAMBER
 
@@ -3891,10 +3892,10 @@ void Temperature::isr() {
       #if TEMP_CHAMBER_RESIDENCY_TIME > 0
         millis_t residency_start_ms = 0;
         bool first_loop = true;
-        // Loop until the temperature has stabilized
+        // Loop until the temperature has stabilized//循环，直到温度稳定
         #define TEMP_CHAMBER_CONDITIONS (!residency_start_ms || PENDING(now, residency_start_ms + SEC_TO_MS(TEMP_CHAMBER_RESIDENCY_TIME)))
       #else
-        // Loop until the temperature is very close target
+        // Loop until the temperature is very close target//循环，直到温度非常接近目标
         #define TEMP_CHAMBER_CONDITIONS (wants_to_cool ? isCoolingChamber() : isHeatingChamber())
       #endif
 
@@ -3907,17 +3908,17 @@ void Temperature::isr() {
       millis_t now, next_temp_ms = 0, next_cool_check_ms = 0;
       wait_for_heatup = true;
       do {
-        // Target temperature might be changed during the loop
+        // Target temperature might be changed during the loop//在循环过程中，目标温度可能会发生变化
         if (target_temp != degTargetChamber()) {
           wants_to_cool = isCoolingChamber();
           target_temp = degTargetChamber();
 
-          // Exit if S<lower>, continue if S<higher>, R<lower>, or R<higher>
+          // Exit if S<lower>, continue if S<higher>, R<lower>, or R<higher>//如果S<lower>退出，如果S<higher>、R<lower>或R<higher>继续
           if (no_wait_for_cooling && wants_to_cool) break;
         }
 
         now = millis();
-        if (ELAPSED(now, next_temp_ms)) { // Print Temp Reading every 1 second while heating up.
+        if (ELAPSED(now, next_temp_ms)) { // Print Temp Reading every 1 second while heating up.//加热时每1秒打印一次温度读数。
           next_temp_ms = now + 1000UL;
           print_heater_states(active_extruder);
           #if TEMP_CHAMBER_RESIDENCY_TIME > 0
@@ -3931,7 +3932,7 @@ void Temperature::isr() {
         }
 
         idle();
-        gcode.reset_stepper_timeout(); // Keep steppers powered
+        gcode.reset_stepper_timeout(); // Keep steppers powered//保持步进电机通电
 
         const float temp = degChamber();
 
@@ -3940,22 +3941,22 @@ void Temperature::isr() {
           const float temp_diff = ABS(target_temp - temp);
 
           if (!residency_start_ms) {
-            // Start the TEMP_CHAMBER_RESIDENCY_TIME timer when we reach target temp for the first time.
+            // Start the TEMP_CHAMBER_RESIDENCY_TIME timer when we reach target temp for the first time.//当我们第一次达到目标温度时，启动温度室居住时间计时器。
             if (temp_diff < TEMP_CHAMBER_WINDOW)
               residency_start_ms = now + (first_loop ? SEC_TO_MS(TEMP_CHAMBER_RESIDENCY_TIME) / 3 : 0);
           }
           else if (temp_diff > TEMP_CHAMBER_HYSTERESIS) {
-            // Restart the timer whenever the temperature falls outside the hysteresis.
+            // Restart the timer whenever the temperature falls outside the hysteresis.//当温度降至滞后范围之外时，重新启动计时器。
             residency_start_ms = now;
           }
 
           first_loop = false;
-        #endif // TEMP_CHAMBER_RESIDENCY_TIME > 0
+        #endif // TEMP_CHAMBER_RESIDENCY_TIME > 0//临时居住时间>0
 
-        // Prevent a wait-forever situation if R is misused i.e. M191 R0
+        // Prevent a wait-forever situation if R is misused i.e. M191 R0//如果R被误用，即M191 R0，则防止出现永远等待的情况
         if (wants_to_cool) {
-          // Break after MIN_COOLING_SLOPE_TIME_CHAMBER seconds
-          // if the temperature did not drop at least MIN_COOLING_SLOPE_DEG_CHAMBER
+          // Break after MIN_COOLING_SLOPE_TIME_CHAMBER seconds//最小冷却时间、坡度、时间、燃烧室秒后破裂
+          // if the temperature did not drop at least MIN_COOLING_SLOPE_DEG_CHAMBER//如果温度没有下降，至少冷却室的最小坡度
           if (!next_cool_check_ms || ELAPSED(now, next_cool_check_ms)) {
             if (old_temp - temp < float(MIN_COOLING_SLOPE_DEG_CHAMBER)) break;
             next_cool_check_ms = now + SEC_TO_MS(MIN_COOLING_SLOPE_TIME_CHAMBER);
@@ -3973,7 +3974,7 @@ void Temperature::isr() {
       return false;
     }
 
-  #endif // HAS_HEATED_CHAMBER
+  #endif // HAS_HEATED_CHAMBER//你有没有给房间加热
 
   #if HAS_COOLER
 
@@ -3989,10 +3990,10 @@ void Temperature::isr() {
       #if TEMP_COOLER_RESIDENCY_TIME > 0
         millis_t residency_start_ms = 0;
         bool first_loop = true;
-        // Loop until the temperature has stabilized
+        // Loop until the temperature has stabilized//循环，直到温度稳定
         #define TEMP_COOLER_CONDITIONS (!residency_start_ms || PENDING(now, residency_start_ms + SEC_TO_MS(TEMP_COOLER_RESIDENCY_TIME)))
       #else
-        // Loop until the temperature is very close target
+        // Loop until the temperature is very close target//循环，直到温度非常接近目标
         #define TEMP_COOLER_CONDITIONS (wants_to_cool ? isLaserHeating() : isLaserCooling())
       #endif
 
@@ -4005,17 +4006,17 @@ void Temperature::isr() {
       millis_t now, next_temp_ms = 0, next_cooling_check_ms = 0;
       wait_for_heatup = true;
       do {
-        // Target temperature might be changed during the loop
+        // Target temperature might be changed during the loop//在循环过程中，目标温度可能会发生变化
         if (target_temp != degTargetCooler()) {
           wants_to_cool = isLaserHeating();
           target_temp = degTargetCooler();
 
-          // Exit if S<lower>, continue if S<higher>, R<lower>, or R<higher>
+          // Exit if S<lower>, continue if S<higher>, R<lower>, or R<higher>//如果S<lower>退出，如果S<higher>、R<lower>或R<higher>继续
           if (no_wait_for_cooling && wants_to_cool) break;
         }
 
         now = millis();
-        if (ELAPSED(now, next_temp_ms)) { // Print Temp Reading every 1 second while heating up.
+        if (ELAPSED(now, next_temp_ms)) { // Print Temp Reading every 1 second while heating up.//加热时每1秒打印一次温度读数。
           next_temp_ms = now + 1000UL;
           print_heater_states(active_extruder);
           #if TEMP_COOLER_RESIDENCY_TIME > 0
@@ -4029,7 +4030,7 @@ void Temperature::isr() {
         }
 
         idle();
-        gcode.reset_stepper_timeout(); // Keep steppers powered
+        gcode.reset_stepper_timeout(); // Keep steppers powered//保持步进电机通电
 
         const celsius_float_t current_temp = degCooler();
 
@@ -4038,21 +4039,21 @@ void Temperature::isr() {
           const celsius_float_t temp_diff = ABS(target_temp - temp);
 
           if (!residency_start_ms) {
-            // Start the TEMP_COOLER_RESIDENCY_TIME timer when we reach target temp for the first time.
+            // Start the TEMP_COOLER_RESIDENCY_TIME timer when we reach target temp for the first time.//当我们第一次达到目标温度时，启动临时冷却器常驻时间计时器。
             if (temp_diff < TEMP_COOLER_WINDOW)
               residency_start_ms = now + (first_loop ? SEC_TO_MS(TEMP_COOLER_RESIDENCY_TIME) / 3 : 0);
           }
           else if (temp_diff > TEMP_COOLER_HYSTERESIS) {
-            // Restart the timer whenever the temperature falls outside the hysteresis.
+            // Restart the timer whenever the temperature falls outside the hysteresis.//当温度降至滞后范围之外时，重新启动计时器。
             residency_start_ms = now;
           }
 
           first_loop = false;
-        #endif // TEMP_COOLER_RESIDENCY_TIME > 0
+        #endif // TEMP_COOLER_RESIDENCY_TIME > 0//临时冷却器常驻时间>0
 
         if (wants_to_cool) {
-          // Break after MIN_COOLING_SLOPE_TIME_CHAMBER seconds
-          // if the temperature did not drop at least MIN_COOLING_SLOPE_DEG_CHAMBER
+          // Break after MIN_COOLING_SLOPE_TIME_CHAMBER seconds//最小冷却时间、坡度、时间、燃烧室秒后破裂
+          // if the temperature did not drop at least MIN_COOLING_SLOPE_DEG_CHAMBER//如果温度没有下降，至少冷却室的最小坡度
           if (!next_cooling_check_ms || ELAPSED(now, next_cooling_check_ms)) {
             if (previous_temp - current_temp < float(MIN_COOLING_SLOPE_DEG_COOLER)) break;
             next_cooling_check_ms = now + SEC_TO_MS(MIN_COOLING_SLOPE_TIME_COOLER);
@@ -4062,7 +4063,7 @@ void Temperature::isr() {
 
       } while (wait_for_heatup && TEMP_COOLER_CONDITIONS);
 
-      // Prevent a wait-forever situation if R is misused i.e. M191 R0
+      // Prevent a wait-forever situation if R is misused i.e. M191 R0//如果R被误用，即M191 R0，则防止出现永远等待的情况
       if (wait_for_heatup) {
         wait_for_heatup = false;
         ui.reset_status();
@@ -4072,6 +4073,6 @@ void Temperature::isr() {
       return false;
     }
 
-  #endif // HAS_COOLER
+  #endif // HAS_COOLER//你有冷却器吗
 
-#endif // HAS_TEMP_SENSOR
+#endif // HAS_TEMP_SENSOR//有温度传感器

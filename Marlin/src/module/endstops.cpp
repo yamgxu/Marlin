@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -36,7 +37,7 @@
 #endif
 
 #if BOTH(SD_ABORT_ON_ENDSTOP_HIT, SDSUPPORT)
-  #include "printcounter.h" // for print_job_timer
+  #include "printcounter.h" // for print_job_timer//用于打印作业计时器
 #endif
 
 #if ENABLED(BLTOUCH)
@@ -53,9 +54,9 @@
 
 Endstops endstops;
 
-// private:
+// private://私人：
 
-bool Endstops::enabled, Endstops::enabled_globally; // Initialized by settings.load()
+bool Endstops::enabled, Endstops::enabled_globally; // Initialized by settings.load()//由settings.load（）初始化
 
 volatile Endstops::endstop_mask_t Endstops::hit_state;
 Endstops::endstop_mask_t Endstops::live_state = 0;
@@ -69,7 +70,7 @@ Endstops::endstop_mask_t Endstops::live_state = 0;
   volatile bool Endstops::z_probe_enabled = false;
 #endif
 
-// Initialized by settings.load()
+// Initialized by settings.load()//由settings.load（）初始化
 #if ENABLED(X_DUAL_ENDSTOPS)
   float Endstops::x2_endstop_adj;
 #endif
@@ -87,10 +88,10 @@ Endstops::endstop_mask_t Endstops::live_state = 0;
 #endif
 
 #if ENABLED(SPI_ENDSTOPS)
-  Endstops::tmc_spi_homing_t Endstops::tmc_spi_homing; // = 0
+  Endstops::tmc_spi_homing_t Endstops::tmc_spi_homing; // = 0// = 0
 #endif
 #if ENABLED(IMPROVE_HOMING_RELIABILITY)
-  millis_t sg_guard_period; // = 0
+  millis_t sg_guard_period; // = 0// = 0
 #endif
 
 /**
@@ -347,15 +348,15 @@ void Endstops::init() {
 
   TERN_(ENDSTOP_INTERRUPTS_FEATURE, setup_endstop_interrupts());
 
-  // Enable endstops
+  // Enable endstops//启用结束停止
   enable_globally(ENABLED(ENDSTOPS_ALWAYS_ON_DEFAULT));
 
-} // Endstops::init
+} // Endstops::init//Endstops:：init
 
-// Called at ~1KHz from Temperature ISR: Poll endstop state if required
+// Called at ~1KHz from Temperature ISR: Poll endstop state if required//从温度ISR以~1KHz的频率调用：轮询结束停止状态（如果需要）
 void Endstops::poll() {
 
-  TERN_(PINS_DEBUGGING, run_monitor()); // Report changes in endstop status
+  TERN_(PINS_DEBUGGING, run_monitor()); // Report changes in endstop status//报告endstop状态的更改
 
   #if DISABLED(ENDSTOP_INTERRUPTS_FEATURE)
     update();
@@ -369,26 +370,26 @@ void Endstops::enable_globally(const bool onoff) {
   resync();
 }
 
-// Enable / disable endstop checking
+// Enable / disable endstop checking//启用/禁用结束停止检查
 void Endstops::enable(const bool onoff) {
   enabled = onoff;
   resync();
 }
 
-// Disable / Enable endstops based on ENSTOPS_ONLY_FOR_HOMING and global enable
+// Disable / Enable endstops based on ENSTOPS_ONLY_FOR_HOMING and global enable//基于ENSTOPS（仅限ENSU）禁用/启用端止点，以进行重新定位和全局启用
 void Endstops::not_homing() {
   enabled = enabled_globally;
 }
 
 #if ENABLED(VALIDATE_HOMING_ENDSTOPS)
-  // If the last move failed to trigger an endstop, call kill
+  // If the last move failed to trigger an endstop, call kill//如果最后一步未能触发结束停止，则调用kill
   void Endstops::validate_homing_move() {
     if (trigger_state()) hit_on_purpose();
     else kill(GET_TEXT(MSG_KILL_HOMING_FAILED));
   }
 #endif
 
-// Enable / disable endstop z-probe checking
+// Enable / disable endstop z-probe checking//启用/禁用endstop z-probe检查
 #if HAS_BED_PROBE
   void Endstops::enable_z_probe(const bool onoff) {
     z_probe_enabled = onoff;
@@ -396,11 +397,11 @@ void Endstops::not_homing() {
   }
 #endif
 
-// Get the stable endstop states when enabled
+// Get the stable endstop states when enabled//启用时获取稳定的endstop状态
 void Endstops::resync() {
-  if (!abort_enabled()) return;     // If endstops/probes are disabled the loop below can hang
+  if (!abort_enabled()) return;     // If endstops/probes are disabled the loop below can hang//如果终止停止/探测被禁用，下面的回路可能会挂起
 
-  // Wait for Temperature ISR to run at least once (runs at 1KHz)
+  // Wait for Temperature ISR to run at least once (runs at 1KHz)//等待温度ISR至少运行一次（以1KHz的频率运行）
   TERN(ENDSTOP_INTERRUPTS_FEATURE, update(), safe_delay(2));
   while (TERN0(ENDSTOP_NOISE_THRESHOLD, endstop_poll_count)) safe_delay(1);
 }
@@ -408,15 +409,15 @@ void Endstops::resync() {
 #if ENABLED(PINS_DEBUGGING)
   void Endstops::run_monitor() {
     if (!monitor_flag) return;
-    static uint8_t monitor_count = 16;  // offset this check from the others
-    monitor_count += _BV(1);            //  15 Hz
+    static uint8_t monitor_count = 16;  // offset this check from the others//将这张支票与其他支票抵销
+    monitor_count += _BV(1);            //  15 Hz//15赫兹
     monitor_count &= 0x7F;
-    if (!monitor_count) monitor();      // report changes in endstop status
+    if (!monitor_count) monitor();      // report changes in endstop status//报告endstop状态的更改
   }
 #endif
 
 void Endstops::event_handler() {
-  static endstop_mask_t prev_hit_state; // = 0
+  static endstop_mask_t prev_hit_state; // = 0// = 0
   if (hit_state == prev_hit_state) return;
   prev_hit_state = hit_state;
   if (hit_state) {
@@ -590,16 +591,16 @@ void _O2 Endstops::report_states() {
   TERN_(BLTOUCH, bltouch._reset_SW_mode());
   TERN_(JOYSTICK_DEBUG, joystick.report());
 
-} // Endstops::report_states
+} // Endstops::report_states//Endstops:：报告状态
 
-// The following routines are called from an ISR context. It could be the temperature ISR, the
-// endstop ISR or the Stepper ISR.
+// The following routines are called from an ISR context. It could be the temperature ISR, the//从ISR上下文调用以下例程。可能是温度ISR，也可能是
+// endstop ISR or the Stepper ISR.//结束停止ISR或步进机ISR。
 
 #define _ENDSTOP(AXIS, MINMAX) AXIS ##_## MINMAX
 #define _ENDSTOP_PIN(AXIS, MINMAX) AXIS ##_## MINMAX ##_PIN
 #define _ENDSTOP_INVERTING(AXIS, MINMAX) AXIS ##_## MINMAX ##_ENDSTOP_INVERTING
 
-// Check endstops - Could be called from Temperature ISR!
+// Check endstops - Could be called from Temperature ISR!//检查结束停止-可从温度ISR调用！
 void Endstops::update() {
 
   #if !ENDSTOP_NOISE_THRESHOLD
@@ -610,15 +611,15 @@ void Endstops::update() {
   #define COPY_LIVE_STATE(SRC_BIT, DST_BIT) SET_BIT_TO(live_state, DST_BIT, TEST(live_state, SRC_BIT))
 
   #if BOTH(G38_PROBE_TARGET, HAS_Z_MIN_PROBE_PIN) && NONE(CORE_IS_XY, CORE_IS_XZ, MARKFORGED_XY)
-    // If G38 command is active check Z_MIN_PROBE for ALL movement
+    // If G38 command is active check Z_MIN_PROBE for ALL movement//如果G38命令处于激活状态，检查Z_MIN_探针是否有所有移动
     if (G38_move) UPDATE_ENDSTOP_BIT(Z, MIN_PROBE);
   #endif
 
-  // With Dual X, endstops are only checked in the homing direction for the active extruder
+  // With Dual X, endstops are only checked in the homing direction for the active extruder//对于双X，仅在主动挤出机的归位方向上检查止动块
   #define X_MIN_TEST() TERN1(DUAL_X_CARRIAGE, TERN0(X_HOME_TO_MIN, stepper.last_moved_extruder == 0) || TERN0(X2_HOME_TO_MIN, stepper.last_moved_extruder != 0))
   #define X_MAX_TEST() TERN1(DUAL_X_CARRIAGE, TERN0(X_HOME_TO_MAX, stepper.last_moved_extruder == 0) || TERN0(X2_HOME_TO_MAX, stepper.last_moved_extruder != 0))
 
-  // Use HEAD for core axes, AXIS for others
+  // Use HEAD for core axes, AXIS for others//芯轴使用头部，其他轴使用头部
   #if ANY(CORE_IS_XY, CORE_IS_XZ, MARKFORGED_XY)
     #define X_AXIS_HEAD X_HEAD
   #else
@@ -712,13 +713,13 @@ void Endstops::update() {
   #endif
 
   #if HAS_BED_PROBE
-    // When closing the gap check the enabled probe
+    // When closing the gap check the enabled probe//闭合间隙时，检查启用的探头
     if (probe_switch_activated())
       UPDATE_ENDSTOP_BIT(Z, TERN(HAS_CUSTOM_PROBE_PIN, MIN_PROBE, MIN));
   #endif
 
   #if HAS_Z_MAX && !Z_SPI_SENSORLESS
-    // Check both Z dual endstops
+    // Check both Z dual endstops//检查两个Z双端止动块
     #if ENABLED(Z_MULTI_ENDSTOPS)
       UPDATE_ENDSTOP_BIT(Z, MAX);
       #if HAS_Z2_MAX
@@ -741,7 +742,7 @@ void Endstops::update() {
         #endif
       #endif
     #elif !HAS_CUSTOM_PROBE_PIN || Z_MAX_PIN != Z_MIN_PROBE_PIN
-      // If this pin isn't the bed probe it's the Z endstop
+      // If this pin isn't the bed probe it's the Z endstop//如果这个针不是床探头，它是Z端止动器
       UPDATE_ENDSTOP_BIT(Z, MAX);
     #endif
   #endif
@@ -848,13 +849,13 @@ void Endstops::update() {
 
   #endif
 
-  // Test the current status of an endstop
+  // Test the current status of an endstop//测试endstop的当前状态
   #define TEST_ENDSTOP(ENDSTOP) (TEST(state(), ENDSTOP))
 
-  // Record endstop was hit
+  // Record endstop was hit//创纪录的终点站被击中了
   #define _ENDSTOP_HIT(AXIS, MINMAX) SBI(hit_state, _ENDSTOP(AXIS, MINMAX))
 
-  // Call the endstop triggered routine for single endstops
+  // Call the endstop triggered routine for single endstops//调用endstop触发的例程以获得单个endstops
   #define PROCESS_ENDSTOP(AXIS, MINMAX) do { \
     if (TEST_ENDSTOP(_ENDSTOP(AXIS, MINMAX))) { \
       _ENDSTOP_HIT(AXIS, MINMAX); \
@@ -862,7 +863,7 @@ void Endstops::update() {
     } \
   }while(0)
 
-  // Core Sensorless Homing needs to test an Extra Pin
+  // Core Sensorless Homing needs to test an Extra Pin//核心无传感器归位需要测试一个额外的引脚
   #define CORE_DIAG(QQ,A,MM) (CORE_IS_##QQ && A##_SENSORLESS && !A##_SPI_SENSORLESS && HAS_##A##_##MM)
   #define PROCESS_CORE_ENDSTOP(A1,M1,A2,M2) do { \
     if (TEST_ENDSTOP(_ENDSTOP(A1,M1))) { \
@@ -871,7 +872,7 @@ void Endstops::update() {
     } \
   }while(0)
 
-  // Call the endstop triggered routine for dual endstops
+  // Call the endstop triggered routine for dual endstops//调用endstop触发的例程进行双endstops
   #define PROCESS_DUAL_ENDSTOP(A, MINMAX) do { \
     const byte dual_hit = TEST_ENDSTOP(_ENDSTOP(A, MINMAX)) | (TEST_ENDSTOP(_ENDSTOP(A##2, MINMAX)) << 1); \
     if (dual_hit) { \
@@ -930,7 +931,7 @@ void Endstops::update() {
     #else
       #define _G38_OPEN_STATE LOW
     #endif
-    // If G38 command is active check Z_MIN_PROBE for ALL movement
+    // If G38 command is active check Z_MIN_PROBE for ALL movement//如果G38命令处于激活状态，检查Z_MIN_探针是否有所有移动
     if (G38_move && TEST_ENDSTOP(_ENDSTOP(Z, MIN_PROBE)) != _G38_OPEN_STATE) {
            if (stepper.axis_is_moving(X_AXIS)) { _ENDSTOP_HIT(X, TERN(X_HOME_TO_MIN, MIN, MAX)); planner.endstop_triggered(X_AXIS); }
       #if HAS_Y_AXIS
@@ -943,10 +944,10 @@ void Endstops::update() {
     }
   #endif
 
-  // Signal, after validation, if an endstop limit is pressed or not
+  // Signal, after validation, if an endstop limit is pressed or not//验证后，如果按下或未按下endstop限制，则发出信号
 
   if (stepper.axis_is_moving(X_AXIS)) {
-    if (stepper.motor_direction(X_AXIS_HEAD)) { // -direction
+    if (stepper.motor_direction(X_AXIS_HEAD)) { // -direction//-方向
       #if HAS_X_MIN || (X_SPI_SENSORLESS && X_HOME_TO_MIN)
         PROCESS_ENDSTOP_X(MIN);
         #if   CORE_DIAG(XY, Y, MIN)
@@ -960,7 +961,7 @@ void Endstops::update() {
         #endif
       #endif
     }
-    else { // +direction
+    else { // +direction//+方向
       #if HAS_X_MAX || (X_SPI_SENSORLESS && X_HOME_TO_MAX)
         PROCESS_ENDSTOP_X(MAX);
         #if   CORE_DIAG(XY, Y, MIN)
@@ -978,7 +979,7 @@ void Endstops::update() {
 
   #if HAS_Y_AXIS
     if (stepper.axis_is_moving(Y_AXIS)) {
-      if (stepper.motor_direction(Y_AXIS_HEAD)) { // -direction
+      if (stepper.motor_direction(Y_AXIS_HEAD)) { // -direction//-方向
         #if HAS_Y_MIN || (Y_SPI_SENSORLESS && Y_HOME_TO_MIN)
           PROCESS_ENDSTOP_Y(MIN);
           #if   CORE_DIAG(XY, X, MIN)
@@ -992,7 +993,7 @@ void Endstops::update() {
           #endif
         #endif
       }
-      else { // +direction
+      else { // +direction//+方向
         #if HAS_Y_MAX || (Y_SPI_SENSORLESS && Y_HOME_TO_MAX)
           PROCESS_ENDSTOP_Y(MAX);
           #if   CORE_DIAG(XY, X, MIN)
@@ -1011,7 +1012,7 @@ void Endstops::update() {
 
   #if HAS_Z_AXIS
     if (stepper.axis_is_moving(Z_AXIS)) {
-      if (stepper.motor_direction(Z_AXIS_HEAD)) { // Z -direction. Gantry down, bed up.
+      if (stepper.motor_direction(Z_AXIS_HEAD)) { // Z -direction. Gantry down, bed up.//Z方向。门架放下，床上起来。
 
         #if HAS_Z_MIN || (Z_SPI_SENSORLESS && Z_HOME_TO_MIN)
           if ( TERN1(Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN, z_probe_enabled)
@@ -1028,16 +1029,16 @@ void Endstops::update() {
           #endif
         #endif
 
-        // When closing the gap check the enabled probe
+        // When closing the gap check the enabled probe//闭合间隙时，检查启用的探头
         #if HAS_CUSTOM_PROBE_PIN
           if (z_probe_enabled) PROCESS_ENDSTOP(Z, MIN_PROBE);
         #endif
       }
-      else { // Z +direction. Gantry up, bed down.
+      else { // Z +direction. Gantry up, bed down.//Z+方向。门架上升，床下降。
         #if HAS_Z_MAX || (Z_SPI_SENSORLESS && Z_HOME_TO_MAX)
           #if ENABLED(Z_MULTI_ENDSTOPS)
             PROCESS_ENDSTOP_Z(MAX);
-          #elif !HAS_CUSTOM_PROBE_PIN || Z_MAX_PIN != Z_MIN_PROBE_PIN  // No probe or probe is Z_MIN || Probe is not Z_MAX
+          #elif !HAS_CUSTOM_PROBE_PIN || Z_MAX_PIN != Z_MIN_PROBE_PIN  // No probe or probe is Z_MIN || Probe is not Z_MAX//无探头或探头为Z|MIN |探头不是Z|MAX
             PROCESS_ENDSTOP(Z, MAX);
           #endif
           #if   CORE_DIAG(XZ, X, MIN)
@@ -1056,12 +1057,12 @@ void Endstops::update() {
 
   #if LINEAR_AXES >= 4
     if (stepper.axis_is_moving(I_AXIS)) {
-      if (stepper.motor_direction(I_AXIS_HEAD)) { // -direction
+      if (stepper.motor_direction(I_AXIS_HEAD)) { // -direction//-方向
         #if HAS_I_MIN || (I_SPI_SENSORLESS && I_HOME_TO_MIN)
           PROCESS_ENDSTOP(I, MIN);
         #endif
       }
-      else { // +direction
+      else { // +direction//+方向
         #if HAS_I_MAX || (I_SPI_SENSORLESS && I_HOME_TO_MAX)
           PROCESS_ENDSTOP(I, MAX);
         #endif
@@ -1071,12 +1072,12 @@ void Endstops::update() {
 
   #if LINEAR_AXES >= 5
     if (stepper.axis_is_moving(J_AXIS)) {
-      if (stepper.motor_direction(J_AXIS_HEAD)) { // -direction
+      if (stepper.motor_direction(J_AXIS_HEAD)) { // -direction//-方向
         #if HAS_J_MIN || (J_SPI_SENSORLESS && J_HOME_TO_MIN)
           PROCESS_ENDSTOP(J, MIN);
         #endif
       }
-      else { // +direction
+      else { // +direction//+方向
         #if HAS_J_MAX || (J_SPI_SENSORLESS && J_HOME_TO_MAX)
           PROCESS_ENDSTOP(J, MAX);
         #endif
@@ -1086,19 +1087,19 @@ void Endstops::update() {
 
   #if LINEAR_AXES >= 6
     if (stepper.axis_is_moving(K_AXIS)) {
-      if (stepper.motor_direction(K_AXIS_HEAD)) { // -direction
+      if (stepper.motor_direction(K_AXIS_HEAD)) { // -direction//-方向
         #if HAS_K_MIN || (K_SPI_SENSORLESS && K_HOME_TO_MIN)
           PROCESS_ENDSTOP(K, MIN);
         #endif
       }
-      else { // +direction
+      else { // +direction//+方向
         #if HAS_K_MAX || (K_SPI_SENSORLESS && K_HOME_TO_MAX)
           PROCESS_ENDSTOP(K, MAX);
         #endif
       }
     }
   #endif
-} // Endstops::update()
+} // Endstops::update()//Endstops:：update（）
 
 #if ENABLED(SPI_ENDSTOPS)
 
@@ -1173,7 +1174,7 @@ void Endstops::update() {
     TERN_(K_SPI_SENSORLESS, CBI(live_state, K_ENDSTOP));
   }
 
-#endif // SPI_ENDSTOPS
+#endif // SPI_ENDSTOPS//SPI_止动块
 
 #if ENABLED(PINS_DEBUGGING)
 
@@ -1346,4 +1347,4 @@ void Endstops::update() {
     }
   }
 
-#endif // PINS_DEBUGGING
+#endif // PINS_DEBUGGING//引脚调试

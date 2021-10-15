@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -39,9 +40,9 @@
  * https://www.microsoft.com/whdc/system/platform/firmware/fatgen.mspx
  */
 
-uint8_t const BOOTSIG0 = 0x55,          // Value for byte 510 of boot block or MBR
-              BOOTSIG1 = 0xAA,          // Value for byte 511 of boot block or MBR
-              EXTENDED_BOOT_SIG = 0x29; // Value for bootSignature field int FAT/FAT32 boot sector
+uint8_t const BOOTSIG0 = 0x55,          // Value for byte 510 of boot block or MBR//启动块或MBR的字节510的值
+              BOOTSIG1 = 0xAA,          // Value for byte 511 of boot block or MBR//启动块或MBR的字节511的值
+              EXTENDED_BOOT_SIG = 0x29; // Value for bootSignature field int FAT/FAT32 boot sector//引导签名字段int FAT/FAT32引导扇区的值
 
 /**
  * \struct partitionTable
@@ -97,11 +98,11 @@ struct partitionTable {
    */
   uint8_t  endCylinderLow;
 
-  uint32_t firstSector;   // Logical block address of the first block in the partition.
-  uint32_t totalSectors;  // Length of the partition, in blocks.
+  uint32_t firstSector;   // Logical block address of the first block in the partition.//分区中第一个块的逻辑块地址。
+  uint32_t totalSectors;  // Length of the partition, in blocks.//分区的长度，以块为单位。
 } PACKED;
 
-typedef struct partitionTable part_t; // Type name for partitionTable
+typedef struct partitionTable part_t; // Type name for partitionTable//partitionTable的类型名称
 
 /**
  * \struct masterBootRecord
@@ -111,12 +112,12 @@ typedef struct partitionTable part_t; // Type name for partitionTable
  * The first block of a storage device that is formatted with a MBR.
  */
 struct masterBootRecord {
-  uint8_t  codeArea[440]; // Code Area for master boot program.
-  uint32_t diskSignature; // Optional Windows NT disk signature. May contain boot code.
-  uint16_t usuallyZero;   // Usually zero but may be more boot code.
-  part_t   part[4];       // Partition tables.
-  uint8_t  mbrSig0;       // First MBR signature byte. Must be 0x55
-  uint8_t  mbrSig1;       // Second MBR signature byte. Must be 0xAA
+  uint8_t  codeArea[440]; // Code Area for master boot program.//主引导程序的代码区。
+  uint32_t diskSignature; // Optional Windows NT disk signature. May contain boot code.//可选的Windows NT磁盘签名。可能包含启动代码。
+  uint16_t usuallyZero;   // Usually zero but may be more boot code.//通常为零，但可能是更多的启动代码。
+  part_t   part[4];       // Partition tables.//分区表。
+  uint8_t  mbrSig0;       // First MBR signature byte. Must be 0x55//第一个MBR签名字节。必须是0x55
+  uint8_t  mbrSig1;       // Second MBR signature byte. Must be 0xAA//第二个MBR签名字节。必须是0xAA
 } PACKED;
 /** Type name for masterBootRecord */
 typedef struct masterBootRecord mbr_t;
@@ -193,8 +194,8 @@ struct fat_boot {
    */
   uint16_t sectorsPerFat16;
 
-  uint16_t sectorsPerTrack; // Sectors per track for interrupt 0x13. Not used otherwise.
-  uint16_t headCount;       // Number of heads for interrupt 0x13. Not used otherwise.
+  uint16_t sectorsPerTrack; // Sectors per track for interrupt 0x13. Not used otherwise.//中断0x13的每个磁道扇区。不用于其他用途。
+  uint16_t headCount;       // Number of heads for interrupt 0x13. Not used otherwise.//中断0x13的磁头数。不用于其他用途。
 
   /**
    * Count of hidden sectors preceding the partition that contains this
@@ -219,8 +220,8 @@ struct fat_boot {
    */
   uint8_t  driveNumber;
 
-  uint8_t  reserved1;       // used by Windows NT - should be zero for FAT
-  uint8_t  bootSignature;   // 0x29 if next three fields are valid
+  uint8_t  reserved1;       // used by Windows NT - should be zero for FAT//由Windows NT使用-FAT应为零
+  uint8_t  bootSignature;   // 0x29 if next three fields are valid//0x29，如果下三个字段有效
 
   /**
    * A random serial number created when formatting a disk,
@@ -239,12 +240,12 @@ struct fat_boot {
    */
   char     fileSystemType[8];
 
-  uint8_t  bootCode[448];   // X86 boot code
-  uint8_t  bootSectorSig0;  // must be 0x55
-  uint8_t  bootSectorSig1;  // must be 0xAA
+  uint8_t  bootCode[448];   // X86 boot code//X86启动代码
+  uint8_t  bootSectorSig0;  // must be 0x55//必须是0x55
+  uint8_t  bootSectorSig1;  // must be 0xAA//必须是0xAA
 } PACKED;
 
-typedef struct fat_boot fat_boot_t;   // Type name for FAT Boot Sector
+typedef struct fat_boot fat_boot_t;   // Type name for FAT Boot Sector//FAT引导扇区的类型名称
 
 /**
  * \struct fat32_boot
@@ -306,8 +307,8 @@ struct fat32_boot {
    */
   uint16_t sectorsPerFat16;
 
-  uint16_t sectorsPerTrack; // Sectors per track for interrupt 0x13. Not used otherwise.
-  uint16_t headCount;       // Number of heads for interrupt 0x13. Not used otherwise.
+  uint16_t sectorsPerTrack; // Sectors per track for interrupt 0x13. Not used otherwise.//中断0x13的每个磁道扇区。不用于其他用途。
+  uint16_t headCount;       // Number of heads for interrupt 0x13. Not used otherwise.//中断0x13的磁头数。不用于其他用途。
 
   /**
    * Count of hidden sectors preceding the partition that contains this
@@ -371,8 +372,8 @@ struct fat32_boot {
    */
   uint8_t  driveNumber;
 
-  uint8_t  reserved1;       // Used by Windows NT - should be zero for FAT
-  uint8_t  bootSignature;   // 0x29 if next three fields are valid
+  uint8_t  reserved1;       // Used by Windows NT - should be zero for FAT//由Windows NT使用-FAT应为零
+  uint8_t  bootSignature;   // 0x29 if next three fields are valid//0x29，如果下三个字段有效
 
   /**
    * A random serial number created when formatting a disk,
@@ -390,16 +391,16 @@ struct fat32_boot {
    */
   char     fileSystemType[8];
 
-  uint8_t  bootCode[420];   // X86 boot code
-  uint8_t  bootSectorSig0;  // must be 0x55
-  uint8_t  bootSectorSig1;  // must be 0xAA
+  uint8_t  bootCode[420];   // X86 boot code//X86启动代码
+  uint8_t  bootSectorSig0;  // must be 0x55//必须是0x55
+  uint8_t  bootSectorSig1;  // must be 0xAA//必须是0xAA
 
 } PACKED;
 
-typedef struct fat32_boot fat32_boot_t; // Type name for FAT32 Boot Sector
+typedef struct fat32_boot fat32_boot_t; // Type name for FAT32 Boot Sector//FAT32引导扇区的类型名称
 
-uint32_t const FSINFO_LEAD_SIG   = 0x41615252,  // 'AaRR' Lead signature for a FSINFO sector
-               FSINFO_STRUCT_SIG = 0x61417272;  // 'aArr' Struct signature for a FSINFO sector
+uint32_t const FSINFO_LEAD_SIG   = 0x41615252,  // 'AaRR' Lead signature for a FSINFO sector//FSINFO行业的“AaRR”领先签名
+               FSINFO_STRUCT_SIG = 0x61417272;  // 'aArr' Struct signature for a FSINFO sector//FSINFO扇区的“aArr”结构签名
 
 /**
  * \struct fat32_fsinfo
@@ -407,9 +408,9 @@ uint32_t const FSINFO_LEAD_SIG   = 0x41615252,  // 'AaRR' Lead signature for a F
  * \brief FSINFO sector for a FAT32 volume.
  */
 struct fat32_fsinfo {
-  uint32_t  leadSignature;    // must be 0x52, 0x52, 0x61, 0x41 'RRaA'
-  uint8_t  reserved1[480];    // must be zero
-  uint32_t  structSignature;  // must be 0x72, 0x72, 0x41, 0x61 'rrAa'
+  uint32_t  leadSignature;    // must be 0x52, 0x52, 0x61, 0x41 'RRaA'//必须是0x52、0x52、0x61、0x41“RRaA”
+  uint8_t  reserved1[480];    // must be zero//必须为零
+  uint32_t  structSignature;  // must be 0x72, 0x72, 0x41, 0x61 'rrAa'//必须为0x72、0x72、0x41、0x61“rrAa”
           /**
            * Contains the last known free cluster count on the volume.
            * If the value is 0xFFFFFFFF, then the free count is unknown
@@ -426,20 +427,20 @@ struct fat32_fsinfo {
            */
   uint32_t nextFree;
 
-  uint8_t  reserved2[12];     // must be zero
-  uint8_t  tailSignature[4];  // must be 0x00, 0x00, 0x55, 0xAA
+  uint8_t  reserved2[12];     // must be zero//必须为零
+  uint8_t  tailSignature[4];  // must be 0x00, 0x00, 0x55, 0xAA//必须是0x00、0x00、0x55、0xAA
 } PACKED;
 
-typedef struct fat32_fsinfo fat32_fsinfo_t; // Type name for FAT32 FSINFO Sector
+typedef struct fat32_fsinfo fat32_fsinfo_t; // Type name for FAT32 FSINFO Sector//FAT32 FSINFO扇区的类型名称
 
-// End Of Chain values for FAT entries
-uint16_t const FAT12EOC = 0xFFF,          // FAT12 end of chain value used by Microsoft.
-               FAT12EOC_MIN = 0xFF8,      // Minimum value for FAT12 EOC.  Use to test for EOC.
-               FAT16EOC = 0xFFFF,         // FAT16 end of chain value used by Microsoft.
-               FAT16EOC_MIN = 0xFFF8;     // Minimum value for FAT16 EOC.  Use to test for EOC.
-uint32_t const FAT32EOC = 0x0FFFFFFF,     // FAT32 end of chain value used by Microsoft.
-               FAT32EOC_MIN = 0x0FFFFFF8, // Minimum value for FAT32 EOC.  Use to test for EOC.
-               FAT32MASK = 0x0FFFFFFF;    // Mask a for FAT32 entry. Entries are 28 bits.
+// End Of Chain values for FAT entries//FAT条目的链结束值
+uint16_t const FAT12EOC = 0xFFF,          // FAT12 end of chain value used by Microsoft.//FAT12微软使用的链末端价值。
+               FAT12EOC_MIN = 0xFF8,      // Minimum value for FAT12 EOC.  Use to test for EOC.//FAT12 EOC的最小值。用于测试EOC。
+               FAT16EOC = 0xFFFF,         // FAT16 end of chain value used by Microsoft.//FAT16微软使用的链末端价值。
+               FAT16EOC_MIN = 0xFFF8;     // Minimum value for FAT16 EOC.  Use to test for EOC.//FAT16 EOC的最小值。用于测试EOC。
+uint32_t const FAT32EOC = 0x0FFFFFFF,     // FAT32 end of chain value used by Microsoft.//FAT32 Microsoft使用的链末端价值。
+               FAT32EOC_MIN = 0x0FFFFFF8, // Minimum value for FAT32 EOC.  Use to test for EOC.//FAT32 EOC的最小值。用于测试EOC。
+               FAT32MASK = 0x0FFFFFFF;    // Mask a for FAT32 entry. Entries are 28 bits.//为FAT32条目屏蔽a。条目为28位。
 
 /**
  * \struct directoryEntry
@@ -499,8 +500,8 @@ struct directoryEntry {
    */
   uint8_t  creationTimeTenths;
 
-  uint16_t creationTime;    // Time file was created.
-  uint16_t creationDate;    // Date file was created.
+  uint16_t creationTime;    // Time file was created.//创建文件的时间。
+  uint16_t creationDate;    // Date file was created.//创建文件的日期。
 
   /**
    * Last access date. Note that there is no last access time, only
@@ -514,10 +515,10 @@ struct directoryEntry {
    */
   uint16_t firstClusterHigh;
 
-  uint16_t lastWriteTime;   // Time of last write. File creation is considered a write.
-  uint16_t lastWriteDate;   // Date of last write. File creation is considered a write.
-  uint16_t firstClusterLow; // Low word of this entry's first cluster number.
-  uint32_t fileSize;        // 32-bit unsigned holding this file's size in bytes.
+  uint16_t lastWriteTime;   // Time of last write. File creation is considered a write.//最后一次写入的时间。文件创建被认为是一种写操作。
+  uint16_t lastWriteDate;   // Date of last write. File creation is considered a write.//上次写信的日期。文件创建被认为是一种写操作。
+  uint16_t firstClusterLow; // Low word of this entry's first cluster number.//此条目的第一个群集编号的低位字。
+  uint32_t fileSize;        // 32-bit unsigned holding this file's size in bytes.//32位无符号，以字节表示此文件的大小。
 } PACKED;
 
 /**
@@ -538,32 +539,32 @@ struct directoryVFATEntry {
    */
   uint8_t  sequenceNumber;
 
-  uint16_t name1[5];        // First set of UTF-16 characters
-  uint8_t  attributes;      // attributes (at the same location as in directoryEntry), always 0x0F
-  uint8_t  reservedNT;      // Reserved for use by Windows NT. Always 0.
-  uint8_t  checksum;        // Checksum of the short 8.3 filename, can be used to checked if the file system as modified by a not-long-filename aware implementation.
-  uint16_t name2[6];        // Second set of UTF-16 characters
-  uint16_t firstClusterLow; // firstClusterLow is always zero for longFilenames
-  uint16_t name3[2];        // Third set of UTF-16 characters
+  uint16_t name1[5];        // First set of UTF-16 characters//第一组UTF-16字符
+  uint8_t  attributes;      // attributes (at the same location as in directoryEntry), always 0x0F//属性（与directoryEntry中的位置相同），始终为0x0F
+  uint8_t  reservedNT;      // Reserved for use by Windows NT. Always 0.//保留供Windows NT使用。总是0。
+  uint8_t  checksum;        // Checksum of the short 8.3 filename, can be used to checked if the file system as modified by a not-long-filename aware implementation.//短8.3文件名的校验和，可用于检查文件系统是否被不长的文件名感知实现修改。
+  uint16_t name2[6];        // Second set of UTF-16 characters//第二组UTF-16字符
+  uint16_t firstClusterLow; // firstClusterLow is always zero for longFilenames//对于长文件名，firstClusterLow始终为零
+  uint16_t name3[2];        // Third set of UTF-16 characters//第三组UTF-16字符
 } PACKED;
 
-// Definitions for directory entries
-//
-typedef struct directoryEntry dir_t;          // Type name for directoryEntry
-typedef struct directoryVFATEntry vfat_t;     // Type name for directoryVFATEntry
+// Definitions for directory entries//目录项的定义
+////
+typedef struct directoryEntry dir_t;          // Type name for directoryEntry//directoryEntry的类型名称
+typedef struct directoryVFATEntry vfat_t;     // Type name for directoryVFATEntry//DirectoryvFaentry的类型名称
 
-uint8_t const DIR_NAME_0xE5     = 0x05,       // escape for name[0] = 0xE5
-              DIR_NAME_DELETED  = 0xE5,       // name[0] value for entry that is free after being "deleted"
-              DIR_NAME_FREE     = 0x00,       // name[0] value for entry that is free and no allocated entries follow
-              DIR_ATT_READ_ONLY = 0x01,       // file is read-only
-              DIR_ATT_HIDDEN    = 0x02,       // File should hidden in directory listings
-              DIR_ATT_SYSTEM    = 0x04,       // Entry is for a system file
-              DIR_ATT_VOLUME_ID = 0x08,       // Directory entry contains the volume label
-              DIR_ATT_DIRECTORY = 0x10,       // Entry is for a directory
-              DIR_ATT_ARCHIVE   = 0x20,       // Old DOS archive bit for backup support
-              DIR_ATT_LONG_NAME = 0x0F,       // Test value for long name entry.  Test is (d->attributes & DIR_ATT_LONG_NAME_MASK) == DIR_ATT_LONG_NAME.
-              DIR_ATT_LONG_NAME_MASK = 0x3F,  // Test mask for long name entry
-              DIR_ATT_DEFINED_BITS = 0x3F;    // defined attribute bits
+uint8_t const DIR_NAME_0xE5     = 0x05,       // escape for name[0] = 0xE5//名称[0]=0xE5的转义
+              DIR_NAME_DELETED  = 0xE5,       // name[0] value for entry that is free after being "deleted"//“删除”后可用的条目的名称[0]值
+              DIR_NAME_FREE     = 0x00,       // name[0] value for entry that is free and no allocated entries follow//自由项的名称[0]值，后面没有分配的项
+              DIR_ATT_READ_ONLY = 0x01,       // file is read-only//文件是只读的
+              DIR_ATT_HIDDEN    = 0x02,       // File should hidden in directory listings//文件应该隐藏在目录列表中
+              DIR_ATT_SYSTEM    = 0x04,       // Entry is for a system file//该条目用于系统文件
+              DIR_ATT_VOLUME_ID = 0x08,       // Directory entry contains the volume label//目录项包含卷标签
+              DIR_ATT_DIRECTORY = 0x10,       // Entry is for a directory//条目是一个目录
+              DIR_ATT_ARCHIVE   = 0x20,       // Old DOS archive bit for backup support//用于备份支持的旧DOS存档位
+              DIR_ATT_LONG_NAME = 0x0F,       // Test value for long name entry.  Test is (d->attributes & DIR_ATT_LONG_NAME_MASK) == DIR_ATT_LONG_NAME.//长名称项的测试值。测试是（d->attributes&DIR\u ATT\u LONG\u NAME\u MASK）==DIR\u ATT\u LONG\u NAME。
+              DIR_ATT_LONG_NAME_MASK = 0x3F,  // Test mask for long name entry//长名称条目的测试掩码
+              DIR_ATT_DEFINED_BITS = 0x3F;    // defined attribute bits//定义属性位
 
 /**
  * Directory entry is part of a long name

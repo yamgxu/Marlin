@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -51,8 +52,8 @@ MMU2 mmu2;
 
 #define MMU_TODELAY 100
 #define MMU_TIMEOUT 10
-#define MMU_CMD_TIMEOUT 45000UL // 45s timeout for mmu commands (except P0)
-#define MMU_P0_TIMEOUT 3000UL   // Timeout for P0 command: 3seconds
+#define MMU_CMD_TIMEOUT 45000UL // 45s timeout for mmu commands (except P0)//mmu命令的45秒超时（P0除外）
+#define MMU_P0_TIMEOUT 3000UL   // Timeout for P0 command: 3seconds//P0命令超时：3秒
 
 #define MMU2_COMMAND(S) tx_str_P(PSTR(S "\n"))
 
@@ -62,13 +63,13 @@ MMU2 mmu2;
 #endif
 
 #define MMU_CMD_NONE 0
-#define MMU_CMD_T0   0x10  // up to supported filaments
-#define MMU_CMD_L0   0x20  // up to supported filaments
+#define MMU_CMD_T0   0x10  // up to supported filaments//高达支撑细丝
+#define MMU_CMD_L0   0x20  // up to supported filaments//高达支撑细丝
 #define MMU_CMD_C0   0x30
 #define MMU_CMD_U0   0x40
-#define MMU_CMD_E0   0x50  // up to supported filaments
+#define MMU_CMD_E0   0x50  // up to supported filaments//高达支撑细丝
 #define MMU_CMD_R0   0x60
-#define MMU_CMD_F0   0x70  // up to supported filaments
+#define MMU_CMD_F0   0x70  // up to supported filaments//高达支撑细丝
 
 #define MMU_REQUIRED_FW_BUILDNR TERN(MMU2_MODE_12V, 132, 126)
 
@@ -88,8 +89,8 @@ millis_t MMU2::prev_request, MMU2::prev_P0_request;
 char MMU2::rx_buffer[MMU_RX_SIZE], MMU2::tx_buffer[MMU_TX_SIZE];
 
 struct E_Step {
-  float extrude;        //!< extrude distance in mm
-  feedRate_t feedRate;  //!< feed rate in mm/s
+  float extrude;        //!< extrude distance in mm//!< 挤出距离（mm）
+  feedRate_t feedRate;  //!< feed rate in mm/s//!< 进给速度（mm/s）
 };
 
 static constexpr E_Step
@@ -131,7 +132,7 @@ void MMU2::reset() {
     safe_delay(20);
     WRITE(MMU2_RST_PIN, HIGH);
   #else
-    MMU2_COMMAND("X0"); // Send soft reset
+    MMU2_COMMAND("X0"); // Send soft reset//发送软复位
   #endif
 }
 
@@ -151,15 +152,15 @@ void MMU2::mmu_loop() {
 
     case -1:
       if (rx_start()) {
-        prev_P0_request = millis();   // Initialize finda sensor timeout
+        prev_P0_request = millis();   // Initialize finda sensor timeout//初始化finda传感器超时
 
         DEBUG_ECHOLNPGM("MMU => 'start'");
         DEBUG_ECHOLNPGM("MMU <= 'S1'");
 
-        MMU2_COMMAND("S1");   // Read Version
+        MMU2_COMMAND("S1");   // Read Version//阅读版本
         state = -2;
       }
-      else if (millis() > 30000) { // 30sec after reset disable MMU
+      else if (millis() > 30000) { // 30sec after reset disable MMU//重置后30秒禁用MMU
         SERIAL_ECHOLNPGM("MMU not responding - DISABLED");
         state = 0;
       }
@@ -171,7 +172,7 @@ void MMU2::mmu_loop() {
 
         DEBUG_ECHOLNPAIR("MMU => ", version, "\nMMU <= 'S2'");
 
-        MMU2_COMMAND("S2");   // Read Build Number
+        MMU2_COMMAND("S2");   // Read Build Number//读取内部版本号
         state = -3;
       }
       break;
@@ -187,13 +188,13 @@ void MMU2::mmu_loop() {
         #if ENABLED(MMU2_MODE_12V)
           DEBUG_ECHOLNPGM("MMU <= 'M1'");
 
-          MMU2_COMMAND("M1");   // Stealth Mode
+          MMU2_COMMAND("M1");   // Stealth Mode//隐身模式
           state = -5;
 
         #else
           DEBUG_ECHOLNPGM("MMU <= 'P0'");
 
-          MMU2_COMMAND("P0");   // Read FINDA
+          MMU2_COMMAND("P0");   // Read FINDA//读芬达
           state = -4;
         #endif
       }
@@ -201,13 +202,13 @@ void MMU2::mmu_loop() {
 
     #if ENABLED(MMU2_MODE_12V)
     case -5:
-      // response to M1
+      // response to M1//对M1的反应
       if (rx_ok()) {
         DEBUG_ECHOLNPGM("MMU => ok");
 
         DEBUG_ECHOLNPGM("MMU <= 'P0'");
 
-        MMU2_COMMAND("P0");   // Read FINDA
+        MMU2_COMMAND("P0");   // Read FINDA//读芬达
         state = -4;
       }
       break;
@@ -228,88 +229,88 @@ void MMU2::mmu_loop() {
     case 1:
       if (cmd) {
         if (WITHIN(cmd, MMU_CMD_T0, MMU_CMD_T0 + EXTRUDERS - 1)) {
-          // tool change
+          // tool change//换刀
           int filament = cmd - MMU_CMD_T0;
           DEBUG_ECHOLNPAIR("MMU <= T", filament);
           tx_printf_P(PSTR("T%d\n"), filament);
-          TERN_(MMU_EXTRUDER_SENSOR, mmu_idl_sens = 1); // enable idler sensor, if any
-          state = 3; // wait for response
+          TERN_(MMU_EXTRUDER_SENSOR, mmu_idl_sens = 1); // enable idler sensor, if any//启用惰轮传感器（如有）
+          state = 3; // wait for response//等待回应
         }
         else if (WITHIN(cmd, MMU_CMD_L0, MMU_CMD_L0 + EXTRUDERS - 1)) {
-          // load
+          // load//装载
           int filament = cmd - MMU_CMD_L0;
           DEBUG_ECHOLNPAIR("MMU <= L", filament);
           tx_printf_P(PSTR("L%d\n"), filament);
-          state = 3; // wait for response
+          state = 3; // wait for response//等待回应
         }
         else if (cmd == MMU_CMD_C0) {
-          // continue loading
+          // continue loading//继续加载
           DEBUG_ECHOLNPGM("MMU <= 'C0'");
           MMU2_COMMAND("C0");
-          state = 3; // wait for response
+          state = 3; // wait for response//等待回应
         }
         else if (cmd == MMU_CMD_U0) {
-          // unload current
+          // unload current//卸载电流
           DEBUG_ECHOLNPGM("MMU <= 'U0'");
 
           MMU2_COMMAND("U0");
-          state = 3; // wait for response
+          state = 3; // wait for response//等待回应
         }
         else if (WITHIN(cmd, MMU_CMD_E0, MMU_CMD_E0 + EXTRUDERS - 1)) {
-          // eject filament
+          // eject filament//喷射灯丝
           int filament = cmd - MMU_CMD_E0;
           DEBUG_ECHOLNPAIR("MMU <= E", filament);
           tx_printf_P(PSTR("E%d\n"), filament);
-          state = 3; // wait for response
+          state = 3; // wait for response//等待回应
         }
         else if (cmd == MMU_CMD_R0) {
-          // recover after eject
+          // recover after eject//弹射后恢复
           DEBUG_ECHOLNPGM("MMU <= 'R0'");
           MMU2_COMMAND("R0");
-          state = 3; // wait for response
+          state = 3; // wait for response//等待回应
         }
         else if (WITHIN(cmd, MMU_CMD_F0, MMU_CMD_F0 + EXTRUDERS - 1)) {
-          // filament type
+          // filament type//灯丝型
           int filament = cmd - MMU_CMD_F0;
           DEBUG_ECHOLNPAIR("MMU <= F", filament, " ", cmd_arg);
           tx_printf_P(PSTR("F%d %d\n"), filament, cmd_arg);
-          state = 3; // wait for response
+          state = 3; // wait for response//等待回应
         }
 
         last_cmd = cmd;
         cmd = MMU_CMD_NONE;
       }
       else if (ELAPSED(millis(), prev_P0_request + 300)) {
-        MMU2_COMMAND("P0"); // Read FINDA
-        state = 2; // wait for response
+        MMU2_COMMAND("P0"); // Read FINDA//读芬达
+        state = 2; // wait for response//等待回应
       }
 
       TERN_(HAS_PRUSA_MMU2S, check_filament());
       break;
 
-    case 2:   // response to command P0
+    case 2:   // response to command P0//对命令P0的响应
       if (rx_ok()) {
         sscanf(rx_buffer, "%hhuok\n", &finda);
 
-        // This is super annoying. Only activate if necessary
-        // if (finda_runout_valid) DEBUG_ECHOLNPAIR_F("MMU <= 'P0'\nMMU => ", finda, 6);
+        // This is super annoying. Only activate if necessary//这太烦人了。仅在必要时激活
+        // if (finda_runout_valid) DEBUG_ECHOLNPAIR_F("MMU <= 'P0'\nMMU => ", finda, 6);//如果（finda_runout_valid）调试回声对（MMU<='P0'\nMMU=>），finda，6）；
 
         if (!finda && finda_runout_valid) filament_runout();
         if (cmd == MMU_CMD_NONE) ready = true;
         state = 1;
       }
-      else if (ELAPSED(millis(), prev_request + MMU_P0_TIMEOUT)) // Resend request after timeout (3s)
+      else if (ELAPSED(millis(), prev_request + MMU_P0_TIMEOUT)) // Resend request after timeout (3s)//超时后重新发送请求（3s）
         state = 1;
 
       TERN_(HAS_PRUSA_MMU2S, check_filament());
       break;
 
-    case 3:   // response to mmu commands
+    case 3:   // response to mmu commands//对mmu命令的响应
       #if ENABLED(MMU_EXTRUDER_SENSOR)
         if (mmu_idl_sens) {
           if (FILAMENT_PRESENT() && mmu_loading_flag) {
             DEBUG_ECHOLNPGM("MMU <= 'A'");
-            MMU2_COMMAND("A"); // send 'abort' request
+            MMU2_COMMAND("A"); // send 'abort' request//发送“中止”请求
             mmu_idl_sens = 0;
             DEBUG_ECHOLNPGM("MMU IDLER_SENSOR = 0 - ABORT");
           }
@@ -318,10 +319,10 @@ void MMU2::mmu_loop() {
 
       if (rx_ok()) {
         #if HAS_PRUSA_MMU2S
-          // Respond to C0 MMU command in MMU2S model
+          // Respond to C0 MMU command in MMU2S model//响应MMU2S型号中的C0 MMU命令
           const bool keep_trying = !mmu2s_triggered && last_cmd == MMU_CMD_C0;
           if (keep_trying) {
-            // MMU ok received but filament sensor not triggered, retrying...
+            // MMU ok received but filament sensor not triggered, retrying...//接收到MMU正常，但未触发灯丝传感器，正在重试。。。
             DEBUG_ECHOLNPGM("MMU => 'ok' (filament not present in gears)");
             DEBUG_ECHOLNPGM("MMU <= 'C0' (keep trying)");
             MMU2_COMMAND("C0");
@@ -338,7 +339,7 @@ void MMU2::mmu_loop() {
         }
       }
       else if (ELAPSED(millis(), prev_request + MMU_CMD_TIMEOUT)) {
-        // resend request after timeout
+        // resend request after timeout//超时后重新发送请求
         if (last_cmd) {
           DEBUG_ECHOLNPGM("MMU retry");
           cmd = last_cmd;
@@ -355,7 +356,7 @@ void MMU2::mmu_loop() {
  * Check if MMU was started
  */
 bool MMU2::rx_start() {
-  // check for start message
+  // check for start message//检查启动消息
   return rx_str_P(PSTR("start\n"));
 }
 
@@ -384,8 +385,8 @@ bool MMU2::rx_str_P(const char *str) {
   while (len--) {
     char c0 = pgm_read_byte(str--), c1 = rx_buffer[i--];
     if (c0 == c1) continue;
-    if (c0 == '\r' && c1 == '\n') continue;  // match cr as lf
-    if (c0 == '\n' && c1 == '\r') continue;  // match lf as cr
+    if (c0 == '\r' && c1 == '\n') continue;  // match cr as lf//将cr匹配为lf
+    if (c0 == '\n' && c1 == '\r') continue;  // match lf as cr//将lf匹配为cr
     return false;
   }
   return true;
@@ -464,7 +465,7 @@ static void mmu2_not_responding() {
   bool MMU2::load_to_gears() {
     command(MMU_CMD_C0);
     manage_response(true, true);
-    LOOP_L_N(i, MMU2_C0_RETRY) {  // Keep loading until filament reaches gears
+    LOOP_L_N(i, MMU2_C0_RETRY) {  // Keep loading until filament reaches gears//继续加载，直到灯丝到达齿轮
       if (mmu2s_triggered) break;
       command(MMU_CMD_C0);
       manage_response(true, true);
@@ -493,7 +494,7 @@ static void mmu2_not_responding() {
       manage_response(true, true);
 
       if (load_to_gears()) {
-        extruder = index; // filament change is finished
+        extruder = index; // filament change is finished//灯丝更换完毕
         active_extruder = 0;
         ENABLE_AXIS_E0();
         SERIAL_ECHO_MSG(STR_ACTIVE_EXTRUDER, extruder);
@@ -659,7 +660,7 @@ static void mmu2_not_responding() {
     mmu_idl_sens = 0;
   }
 
-#else // !HAS_PRUSA_MMU2S && !MMU_EXTRUDER_SENSOR
+#else // !HAS_PRUSA_MMU2S && !MMU_EXTRUDER_SENSOR// !有什么好消息吗！MMU_挤出机_传感器
 
   /**
    * Handle tool change
@@ -675,7 +676,7 @@ static void mmu2_not_responding() {
       command(MMU_CMD_T0 + index);
       manage_response(true, true);
       command(MMU_CMD_C0);
-      extruder = index; //filament change is finished
+      extruder = index; //filament change is finished//灯丝更换完毕
       active_extruder = 0;
       ENABLE_AXIS_E0();
       SERIAL_ECHO_MSG(STR_ACTIVE_EXTRUDER, extruder);
@@ -738,7 +739,7 @@ static void mmu2_not_responding() {
     set_runout_valid(true);
   }
 
-#endif // HAS_PRUSA_MMU2S
+#endif // HAS_PRUSA_MMU2S//你有什么想法
 
 /**
  * Set next command
@@ -781,10 +782,10 @@ void MMU2::manage_response(const bool move_axes, const bool turn_off_nozzle) {
 
   while (!response) {
 
-    response = get_response(); // wait for "ok" from mmu
+    response = get_response(); // wait for "ok" from mmu//等待mmu的“确定”
 
-    if (!response) {          // No "ok" was received in reserved time frame, user will fix the issue on mmu unit
-      if (!mmu_print_saved) { // First occurrence. Save current position, park print head, disable nozzle heater.
+    if (!response) {          // No "ok" was received in reserved time frame, user will fix the issue on mmu unit//在保留的时间范围内未收到“ok”，用户将在mmu单元上修复该问题
+      if (!mmu_print_saved) { // First occurrence. Save current position, park print head, disable nozzle heater.//第一次发生。保存当前位置，停止打印头，禁用喷嘴加热器。
 
         planner.synchronize();
 
@@ -818,10 +819,10 @@ void MMU2::manage_response(const bool move_axes, const bool turn_off_nozzle) {
         LCD_MESSAGEPGM(MSG_MMU2_RESUMING);
         BUZZ(198, 404); BUZZ(4, 0); BUZZ(198, 404);
 
-        // Move XY to starting position, then Z
+        // Move XY to starting position, then Z//将XY移动到起始位置，然后移动Z
         do_blocking_move_to_xy(resume_position, feedRate_t(NOZZLE_PARK_XY_FEEDRATE));
 
-        // Move Z_AXIS to saved position
+        // Move Z_AXIS to saved position//将Z_轴移动到保存的位置
         do_blocking_move_to_z(resume_position.z, feedRate_t(NOZZLE_PARK_Z_FEEDRATE));
       }
       else {
@@ -855,7 +856,7 @@ void MMU2::filament_runout() {
         DEBUG_ECHOLNPGM("MMU <= 'A'");
         tx_str_P(PSTR("A\n"));
       }
-      // Slowly spin the extruder during C0
+      // Slowly spin the extruder during C0//在C0期间缓慢旋转挤出机
       else {
         while (planner.movesplanned() < 3) {
           current_position.e += 0.25;
@@ -874,7 +875,7 @@ void MMU2::filament_runout() {
     DEBUG_ECHOLNPGM("MMU can_load:");
     LOOP_L_N(i, steps) {
       execute_extruder_sequence((const E_Step *)can_load_increment_sequence, COUNT(can_load_increment_sequence));
-      check_filament(); // Don't trust the idle function
+      check_filament(); // Don't trust the idle function//不要相信idle函数
       DEBUG_CHAR(mmu2s_triggered ? 'O' : 'o');
       if (mmu2s_triggered) ++filament_detected_count;
     }
@@ -890,7 +891,7 @@ void MMU2::filament_runout() {
 
 #endif
 
-// Load filament into MMU2
+// Load filament into MMU2//将灯丝装入MMU2
 void MMU2::load_filament(const uint8_t index) {
   if (!enabled) return;
 
@@ -972,7 +973,7 @@ bool MMU2::eject_filament(const uint8_t index, const bool recover) {
 
   ui.reset_status();
 
-  // no active tool
+  // no active tool//无活动刀具
   extruder = MMU2_NO_TOOL;
 
   set_runout_valid(false);
@@ -997,7 +998,7 @@ bool MMU2::unload() {
     return false;
   }
 
-  // Unload sequence to optimize shape of the tip of the unloaded filament
+  // Unload sequence to optimize shape of the tip of the unloaded filament//卸载顺序以优化卸载灯丝尖端的形状
   execute_extruder_sequence((const E_Step *)ramming_sequence, sizeof(ramming_sequence) / sizeof(E_Step));
 
   command(MMU_CMD_U0);
@@ -1005,7 +1006,7 @@ bool MMU2::unload() {
 
   BUZZ(200, 404);
 
-  // no active tool
+  // no active tool//无活动刀具
   extruder = MMU2_NO_TOOL;
 
   set_runout_valid(false);
@@ -1037,4 +1038,4 @@ void MMU2::execute_extruder_sequence(const E_Step * sequence, int steps) {
   DISABLE_AXIS_E0();
 }
 
-#endif // HAS_PRUSA_MMU2
+#endif // HAS_PRUSA_MMU2//你有什么想法

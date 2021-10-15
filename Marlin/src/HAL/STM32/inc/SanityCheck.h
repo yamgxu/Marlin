@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -24,13 +25,13 @@
 /**
  * Test STM32-specific configuration values for errors at compile-time.
  */
-//#if ENABLED(SPINDLE_LASER_PWM) && !(SPINDLE_LASER_PWM_PIN == 4 || SPINDLE_LASER_PWM_PIN == 6 || SPINDLE_LASER_PWM_PIN == 11)
-//  #error "SPINDLE_LASER_PWM_PIN must use SERVO0, SERVO1 or SERVO3 connector"
-//#endif
+//#if ENABLED(SPINDLE_LASER_PWM) && !(SPINDLE_LASER_PWM_PIN == 4 || SPINDLE_LASER_PWM_PIN == 6 || SPINDLE_LASER_PWM_PIN == 11)//#如果启用（主轴激光脉宽调制）&！（主轴|激光|PWM|引脚==4 |主轴|激光|PWM|引脚==6 |主轴|激光|PWM|引脚==11）
+//  #error "SPINDLE_LASER_PWM_PIN must use SERVO0, SERVO1 or SERVO3 connector"//#错误“主轴_激光_PWM_引脚必须使用伺服0、伺服1或伺服3接头”
+//#endif//#恩迪夫
 
 
 #if ENABLED(SDCARD_EEPROM_EMULATION) && DISABLED(SDSUPPORT)
-  #undef SDCARD_EEPROM_EMULATION // Avoid additional error noise
+  #undef SDCARD_EEPROM_EMULATION // Avoid additional error noise//避免额外的错误噪声
   #if USE_FALLBACK_EEPROM
     #warning "EEPROM type not specified. Fallback is SDCARD_EEPROM_EMULATION."
   #endif

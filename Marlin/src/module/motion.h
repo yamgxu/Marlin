@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -34,24 +35,24 @@
   #include "scara.h"
 #endif
 
-// Error margin to work around float imprecision
+// Error margin to work around float imprecision//解决浮点不精确问题的误差裕度
 constexpr float fslop = 0.0001;
 
 extern bool relative_mode;
 
-extern xyze_pos_t current_position,  // High-level current tool position
-                  destination;       // Destination for a move
+extern xyze_pos_t current_position,  // High-level current tool position//高电平当前刀具位置
+                  destination;       // Destination for a move//目的地
 
-// G60/G61 Position Save and Return
+// G60/G61 Position Save and Return//G60/G61位置保存和返回
 #if SAVED_POSITIONS
-  extern uint8_t saved_slots[(SAVED_POSITIONS + 7) >> 3]; // TODO: Add support for LINEAR_AXES >= 4
+  extern uint8_t saved_slots[(SAVED_POSITIONS + 7) >> 3]; // TODO: Add support for LINEAR_AXES >= 4//TODO:添加对线性轴>=4的支持
   extern xyze_pos_t stored_position[SAVED_POSITIONS];
 #endif
 
-// Scratch space for a cartesian result
+// Scratch space for a cartesian result//笛卡尔结果的划痕空间
 extern xyz_pos_t cartes;
 
-// Until kinematics.cpp is created, declare this here
+// Until kinematics.cpp is created, declare this here//在创建kinetics.cpp之前，请在此处声明
 #if IS_KINEMATIC
   extern abce_pos_t delta;
 #endif
@@ -102,7 +103,7 @@ extern feedRate_t feedrate_mm_s;
 extern int16_t feedrate_percentage;
 #define MMS_SCALED(V) ((V) * 0.01f * feedrate_percentage)
 
-// The active extruder (tool). Set with T<extruder> command.
+// The active extruder (tool). Set with T<extruder> command.//主动挤出机（工具）。使用T<extracter>命令进行设置。
 #if HAS_MULTI_EXTRUDER
   extern uint8_t active_extruder;
 #else
@@ -161,7 +162,7 @@ inline float home_bump_mm(const AxisEnum axis) {
 
     xyz_pos_t min, max;
     void get_manual_axis_limits(const AxisEnum axis, float &amin, float &amax) {
-      amin = -100000; amax = 100000; // "No limits"
+      amin = -100000; amax = 100000; // "No limits"//“没有限制”
       #if HAS_SOFTWARE_ENDSTOPS
         if (enabled()) switch (axis) {
           case X_AXIS:
@@ -213,12 +214,12 @@ inline float home_bump_mm(const AxisEnum axis) {
   );
   #define SET_SOFT_ENDSTOP_LOOSE(loose) (soft_endstop._loose = loose)
 
-#else // !HAS_SOFTWARE_ENDSTOPS
+#else // !HAS_SOFTWARE_ENDSTOPS// !有\u软件\u终端
 
   typedef struct {
     bool enabled() { return false; }
     void get_manual_axis_limits(const AxisEnum axis, float &amin, float &amax) {
-      // No limits
+      // No limits//无限制
       amin = current_position[axis] - 1000;
       amax = current_position[axis] + 1000;
     }
@@ -228,7 +229,7 @@ inline float home_bump_mm(const AxisEnum axis) {
   #define update_software_endstops(...) NOOP
   #define SET_SOFT_ENDSTOP_LOOSE(V)     NOOP
 
-#endif // !HAS_SOFTWARE_ENDSTOPS
+#endif // !HAS_SOFTWARE_ENDSTOPS// !有\u软件\u终端
 
 void report_real_position();
 void report_current_position();
@@ -246,18 +247,18 @@ void report_current_position_projected();
    * Machine states for GRBL or TinyG
    */
   enum M_StateEnum : uint8_t {
-    M_INIT = 0, //  0 machine is initializing
-    M_RESET,    //  1 machine is ready for use
-    M_ALARM,    //  2 machine is in alarm state (soft shut down)
-    M_IDLE,     //  3 program stop or no more blocks (M0, M1, M60)
-    M_END,      //  4 program end via M2, M30
-    M_RUNNING,  //  5 motion is running
-    M_HOLD,     //  6 motion is holding
-    M_PROBE,    //  7 probe cycle active
-    M_CYCLING,  //  8 machine is running (cycling)
-    M_HOMING,   //  9 machine is homing
-    M_JOGGING,  // 10 machine is jogging
-    M_ERROR     // 11 machine is in hard alarm state (shut down)
+    M_INIT = 0, //  0 machine is initializing//0计算机正在初始化
+    M_RESET,    //  1 machine is ready for use//1台机器已准备好使用
+    M_ALARM,    //  2 machine is in alarm state (soft shut down)//2机器处于报警状态（软关闭）
+    M_IDLE,     //  3 program stop or no more blocks (M0, M1, M60)//3个程序停止或不再有程序块（M0、M1、M60）
+    M_END,      //  4 program end via M2, M30//4通过M2、M30结束程序
+    M_RUNNING,  //  5 motion is running//运动正在进行
+    M_HOLD,     //  6 motion is holding//6动议正在进行中
+    M_PROBE,    //  7 probe cycle active//7探头循环激活
+    M_CYCLING,  //  8 machine is running (cycling)//8机器正在运行（循环）
+    M_HOMING,   //  9 machine is homing//机器正在归位
+    M_JOGGING,  // 10 machine is jogging//机器正在慢跑
+    M_ERROR     // 11 machine is in hard alarm state (shut down)//11机器处于硬报警状态（关闭）
   };
   extern M_StateEnum M_State_grbl;
   M_StateEnum grbl_state_for_marlin_state();
@@ -399,7 +400,7 @@ void set_axis_is_at_home(const AxisEnum axis);
   inline void set_axis_trusted(const AxisEnum axis)   { SBI(axis_trusted, axis); }
   inline void set_all_homed()                         { axis_homed = axis_trusted = linear_bits; }
 #else
-  constexpr linear_axis_bits_t axis_homed = linear_bits, axis_trusted = linear_bits; // Zero-endstop machines are always homed and trusted
+  constexpr linear_axis_bits_t axis_homed = linear_bits, axis_trusted = linear_bits; // Zero-endstop machines are always homed and trusted//Zero endstop机器始终处于托管状态并受信任
   inline void homeaxis(const AxisEnum axis)           {}
   inline void set_axis_never_homed(const AxisEnum)    {}
   inline linear_axis_bits_t axes_should_home(linear_axis_bits_t=linear_bits) { return false; }
@@ -492,13 +493,13 @@ void home_if_needed(const bool keeplev=false);
 /**
  * position_is_reachable family of functions
  */
-#if IS_KINEMATIC // (DELTA or SCARA)
+#if IS_KINEMATIC // (DELTA or SCARA)//（三角洲或斯卡拉）
 
   #if HAS_SCARA_OFFSET
-    extern abc_pos_t scara_home_offset; // A and B angular offsets, Z mm offset
+    extern abc_pos_t scara_home_offset; // A and B angular offsets, Z mm offset//A和B角度偏移，Z mm偏移
   #endif
 
-  // Return true if the given point is within the printable area
+  // Return true if the given point is within the printable area//如果给定点在可打印区域内，则返回true
   inline bool position_is_reachable(const_float_t rx, const_float_t ry, const float inset=0) {
     #if ENABLED(DELTA)
 
@@ -531,9 +532,9 @@ void home_if_needed(const bool keeplev=false);
     return position_is_reachable(pos.x, pos.y, inset);
   }
 
-#else // CARTESIAN
+#else // CARTESIAN//笛卡尔
 
-  // Return true if the given position is within the machine bounds.
+  // Return true if the given position is within the machine bounds.//如果给定位置在机器边界内，则返回true。
   inline bool position_is_reachable(const_float_t rx, const_float_t ry) {
     if (!COORDINATE_OKAY(ry, Y_MIN_POS - fslop, Y_MAX_POS + fslop)) return false;
     #if ENABLED(DUAL_X_CARRIAGE)
@@ -547,13 +548,13 @@ void home_if_needed(const bool keeplev=false);
   }
   inline bool position_is_reachable(const xy_pos_t &pos) { return position_is_reachable(pos.x, pos.y); }
 
-#endif // CARTESIAN
+#endif // CARTESIAN//笛卡尔
 
 /**
  * Duplication mode
  */
 #if HAS_DUPLICATION_MODE
-  extern bool extruder_duplication_enabled;       // Used in Dual X mode 2
+  extern bool extruder_duplication_enabled;       // Used in Dual X mode 2//用于双X模式2
 #endif
 
 /**
@@ -569,13 +570,13 @@ void home_if_needed(const bool keeplev=false);
   };
 
   extern DualXMode dual_x_carriage_mode;
-  extern float inactive_extruder_x,                 // Used in mode 0 & 1
-               duplicate_extruder_x_offset;         // Used in mode 2 & 3
-  extern xyz_pos_t raised_parked_position;          // Used in mode 1
-  extern bool active_extruder_parked;               // Used in mode 1, 2 & 3
-  extern millis_t delayed_move_time;                // Used in mode 1
-  extern celsius_t duplicate_extruder_temp_offset;  // Used in mode 2 & 3
-  extern bool idex_mirrored_mode;                   // Used in mode 3
+  extern float inactive_extruder_x,                 // Used in mode 0 & 1//在模式0和1中使用
+               duplicate_extruder_x_offset;         // Used in mode 2 & 3//在模式2和3中使用
+  extern xyz_pos_t raised_parked_position;          // Used in mode 1//在模式1中使用
+  extern bool active_extruder_parked;               // Used in mode 1, 2 & 3//在模式1、2和3中使用
+  extern millis_t delayed_move_time;                // Used in mode 1//在模式1中使用
+  extern celsius_t duplicate_extruder_temp_offset;  // Used in mode 2 & 3//在模式2和3中使用
+  extern bool idex_mirrored_mode;                   // Used in mode 3//在模式3中使用
 
   FORCE_INLINE bool idex_is_duplicating() { return dual_x_carriage_mode >= DXC_DUPLICATION_MODE; }
 

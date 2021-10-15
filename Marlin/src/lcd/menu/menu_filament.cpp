@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -20,9 +21,9 @@
  *
  */
 
-//
-// Filament Change Menu
-//
+////
+// Filament Change Menu//灯丝更换菜单
+////
 
 #include "../../inc/MarlinConfigPre.h"
 
@@ -36,11 +37,11 @@
   #include "../../feature/runout.h"
 #endif
 
-//
-// Change Filament > Change/Unload/Load Filament
-//
-static PauseMode _change_filament_mode; // = PAUSE_MODE_PAUSE_PRINT
-static int8_t _change_filament_extruder; // = 0
+////
+// Change Filament > Change/Unload/Load Filament//更换灯丝>更换/卸载/装载灯丝
+////
+static PauseMode _change_filament_mode; // = PAUSE_MODE_PAUSE_PRINT//=暂停\u模式\u暂停\u打印
+static int8_t _change_filament_extruder; // = 0// = 0
 
 inline PGM_P _change_filament_command() {
   switch (_change_filament_mode) {
@@ -54,7 +55,7 @@ inline PGM_P _change_filament_command() {
   return PSTR("M600 B0 T%d");
 }
 
-// Initiate Filament Load/Unload/Change at the specified temperature
+// Initiate Filament Load/Unload/Change at the specified temperature//在规定温度下开始灯丝加载/卸载/更换
 static void _change_filament_with_temp(const uint16_t celsius) {
   char cmd[11];
   sprintf_P(cmd, _change_filament_command(), _change_filament_extruder);
@@ -70,9 +71,9 @@ static void _change_filament_with_custom() {
   _change_filament_with_temp(thermalManager.degTargetHotend(MenuItemBase::itemIndex));
 }
 
-//
-// Menu to choose the temperature and start Filament Change
-//
+////
+// Menu to choose the temperature and start Filament Change//菜单选择温度并开始灯丝更换
+////
 
 inline PGM_P change_filament_header(const PauseMode mode) {
   switch (mode) {
@@ -111,7 +112,7 @@ void _menu_temp_filament_op(const PauseMode mode, const int8_t extruder) {
 
 void menu_change_filament() {
   #if E_STEPPERS > 1 || ENABLED(FILAMENT_LOAD_UNLOAD_GCODES)
-    // Say "filament change" when no print is active
+    // Say "filament change" when no print is active//当无打印激活时，说出“灯丝更换”
     editable.int8 = printingIsPaused() ? PAUSE_MODE_PAUSE_PRINT : PAUSE_MODE_CHANGE_FILAMENT;
 
     #if E_STEPPERS > 1 && ENABLED(FILAMENT_UNLOAD_ALL_EXTRUDERS)
@@ -127,7 +128,7 @@ void menu_change_filament() {
     START_MENU();
     BACK_ITEM(MSG_MAIN);
 
-    // Change filament
+    // Change filament//更换灯丝
     #if E_STEPPERS == 1
       PGM_P const msg = GET_TEXT(MSG_FILAMENTCHANGE);
       if (thermalManager.targetTooColdToExtrude(active_extruder))
@@ -152,7 +153,7 @@ void menu_change_filament() {
 
     #if ENABLED(FILAMENT_LOAD_UNLOAD_GCODES)
       if (!is_busy) {
-        // Load filament
+        // Load filament//负荷灯丝
         #if E_STEPPERS == 1
           PGM_P const msg_load = GET_TEXT(MSG_FILAMENTLOAD);
           if (thermalManager.targetTooColdToExtrude(active_extruder))
@@ -174,7 +175,7 @@ void menu_change_filament() {
           }
         #endif
 
-        // Unload filament
+        // Unload filament//卸载灯丝
         #if E_STEPPERS == 1
           PGM_P const msg_unload = GET_TEXT(MSG_FILAMENTUNLOAD);
           if (thermalManager.targetTooColdToExtrude(active_extruder))
@@ -201,7 +202,7 @@ void menu_change_filament() {
             }
           }
         #endif
-      } // !printer_busy
+      } // !printer_busy// !打印机忙
     #endif
 
     END_MENU();
@@ -228,7 +229,7 @@ static PGM_P pause_header() {
   return GET_TEXT(MSG_FILAMENT_CHANGE_HEADER_PAUSE);
 }
 
-// Portions from STATIC_ITEM...
+// Portions from STATIC_ITEM...//来自静态项目的部分。。。
 #define HOTEND_STATUS_ITEM() do { \
   if (_menuLineNr == _thisItemNr) { \
     if (ui.should_draw()) { \
@@ -265,11 +266,11 @@ void menu_pause_option() {
   END_MENU();
 }
 
-//
-// ADVANCED_PAUSE_FEATURE message screens
-//
-// Warning: msg must have three null bytes to delimit lines!
-//
+////
+// ADVANCED_PAUSE_FEATURE message screens//高级暂停功能信息屏幕
+////
+// Warning: msg must have three null bytes to delimit lines!//警告：msg必须有三个空字节才能分隔行！
+////
 void _lcd_pause_message(PGM_P const msg) {
   PGM_P const msg1 = msg;
   PGM_P const msg2 = msg1 + strlen_P(msg1) + 1;
@@ -278,13 +279,13 @@ void _lcd_pause_message(PGM_P const msg) {
              skip1 = !has2 && (LCD_HEIGHT) >= 5;
 
   START_SCREEN();
-  STATIC_ITEM_P(pause_header(), SS_DEFAULT|SS_INVERT);          // 1: Header
-  if (skip1) SKIP_ITEM();                                       // Move a single-line message down
-  STATIC_ITEM_P(msg1);                                          // 2: Message Line 1
-  if (has2) STATIC_ITEM_P(msg2);                                // 3: Message Line 2
-  if (has3 && (LCD_HEIGHT) >= 5) STATIC_ITEM_P(msg3);           // 4: Message Line 3 (if LCD has 5 lines)
-  if (skip1 + 1 + has2 + has3 < (LCD_HEIGHT) - 2) SKIP_ITEM();  // Push Hotend Status down, if needed
-  HOTEND_STATUS_ITEM();                                         // 5: Hotend Status
+  STATIC_ITEM_P(pause_header(), SS_DEFAULT|SS_INVERT);          // 1: Header//1：标题
+  if (skip1) SKIP_ITEM();                                       // Move a single-line message down//向下移动单行消息
+  STATIC_ITEM_P(msg1);                                          // 2: Message Line 1//2：消息行1
+  if (has2) STATIC_ITEM_P(msg2);                                // 3: Message Line 2//3：消息行2
+  if (has3 && (LCD_HEIGHT) >= 5) STATIC_ITEM_P(msg3);           // 4: Message Line 3 (if LCD has 5 lines)//4：消息行3（如果LCD有5行）
+  if (skip1 + 1 + has2 + has3 < (LCD_HEIGHT) - 2) SKIP_ITEM();  // Push Hotend Status down, if needed//如果需要，向下推热端状态
+  HOTEND_STATUS_ITEM();                                         // 5: Hotend Status//5：热端状态
   END_SCREEN();
 }
 
@@ -342,4 +343,4 @@ void MarlinUI::pause_show_message(
     ui.return_to_status();
 }
 
-#endif // HAS_LCD_MENU && ADVANCED_PAUSE_FEATURE
+#endif // HAS_LCD_MENU && ADVANCED_PAUSE_FEATURE//具有LCD菜单和高级暂停功能

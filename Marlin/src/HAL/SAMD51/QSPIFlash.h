@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * @file QSPIFlash.h
  *
@@ -30,9 +31,9 @@
 
 #include <Adafruit_SPIFlashBase.h>
 
-// This class extends Adafruit_SPIFlashBase by adding caching support.
-//
-// This class will use 4096 Bytes of RAM as a block cache.
+// This class extends Adafruit_SPIFlashBase by adding caching support.//这个类通过添加缓存支持扩展了Adafru\u-SPIFlashBase。
+////
+// This class will use 4096 Bytes of RAM as a block cache.//此类将使用4096字节的RAM作为块缓存。
 class QSPIFlash {
   public:
     static void begin();

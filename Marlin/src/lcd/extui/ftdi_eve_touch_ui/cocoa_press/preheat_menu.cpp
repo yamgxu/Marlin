@@ -1,3 +1,4 @@
+/** translatione by yx */
 /********************************
  * cocoa_press/preheat_menu.cpp *
  ********************************/
@@ -113,4 +114,4 @@ bool PreheatMenu::onTouchEnd(uint8_t tag) {
   return true;
 }
 
-#endif // COCOA_PREHEAT_MENU
+#endif // COCOA_PREHEAT_MENU//可可预热菜单

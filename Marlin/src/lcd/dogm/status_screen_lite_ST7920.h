@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Lightweight Status Screen for the RepRapDiscount Full
  * Graphics Smart Controller (ST7920-based 128x64 LCD)
@@ -23,8 +24,8 @@
 class ST7920_Lite_Status_Screen {
   private:
     static struct st7920_state_t {
-      uint8_t synced   : 1; // Whether a sync has been sent
-      uint8_t cmd      : 1; // Whether the sync was cmd or data
+      uint8_t synced   : 1; // Whether a sync has been sent//是否已发送同步
+      uint8_t cmd      : 1; // Whether the sync was cmd or data//同步是cmd还是data
       uint8_t extended : 1;
       uint8_t graphics : 1;
       uint8_t sa       : 1;

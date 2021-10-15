@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -68,22 +69,22 @@ void set_bed_leveling_enabled(const bool enable/*=true*/) {
     planner.synchronize();
 
     #if ENABLED(AUTO_BED_LEVELING_BILINEAR)
-      // Force bilinear_z_offset to re-calculate next time
+      // Force bilinear_z_offset to re-calculate next time//强制双线性z_偏移下次重新计算
       const xyz_pos_t reset { -9999.999, -9999.999, 0 };
       (void)bilinear_z_offset(reset);
     #endif
 
-    if (planner.leveling_active) {      // leveling from on to off
+    if (planner.leveling_active) {      // leveling from on to off//从开到关调平
       if (DEBUGGING(LEVELING)) DEBUG_POS("Leveling ON", current_position);
-      // change unleveled current_position to physical current_position without moving steppers.
+      // change unleveled current_position to physical current_position without moving steppers.//在不移动步进器的情况下，将非水平当前位置更改为物理当前位置。
       planner.apply_leveling(current_position);
-      planner.leveling_active = false;  // disable only AFTER calling apply_leveling
+      planner.leveling_active = false;  // disable only AFTER calling apply_leveling//仅在调用apply_leveling后禁用
       if (DEBUGGING(LEVELING)) DEBUG_POS("...Now OFF", current_position);
     }
-    else {                              // leveling from off to on
+    else {                              // leveling from off to on//从关到开调平
       if (DEBUGGING(LEVELING)) DEBUG_POS("Leveling OFF", current_position);
-      planner.leveling_active = true;   // enable BEFORE calling unapply_leveling, otherwise ignored
-      // change physical current_position to unleveled current_position without moving steppers.
+      planner.leveling_active = true;   // enable BEFORE calling unapply_leveling, otherwise ignored//在调用unapply_leveling之前启用，否则忽略
+      // change physical current_position to unleveled current_position without moving steppers.//在不移动步进器的情况下，将物理当前位置更改为非水平当前位置。
       planner.unapply_leveling(current_position);
       if (DEBUGGING(LEVELING)) DEBUG_POS("...Now ON", current_position);
     }
@@ -115,7 +116,7 @@ TemporaryBedLevelingState::TemporaryBedLevelingState(const bool enable) : saved(
     }
   }
 
-#endif // ENABLE_LEVELING_FADE_HEIGHT
+#endif // ENABLE_LEVELING_FADE_HEIGHT//启用\u调平\u衰减\u高度
 
 /**
  * Reset calibration results to zero.
@@ -151,7 +152,7 @@ void reset_bed_level() {
    *
    *   buildroot/shared/scripts/MarlinMesh.scad
    */
-  //#define SCAD_MESH_OUTPUT
+  //#define SCAD_MESH_OUTPUT//#定义SCAD_网格_输出
 
   /**
    * Print calibration results for plotting or manual frame adjustment.
@@ -165,11 +166,11 @@ void reset_bed_level() {
       SERIAL_EOL();
     #endif
     #ifdef SCAD_MESH_OUTPUT
-      SERIAL_ECHOLNPGM("measured_z = ["); // open 2D array
+      SERIAL_ECHOLNPGM("measured_z = ["); // open 2D array//开放二维阵列
     #endif
     LOOP_L_N(y, sy) {
       #ifdef SCAD_MESH_OUTPUT
-        SERIAL_ECHOPGM(" [");             // open sub-array
+        SERIAL_ECHOPGM(" [");             // open sub-array//开放子阵列
       #else
         if (y < 10) SERIAL_CHAR(' ');
         SERIAL_ECHO(y);
@@ -196,44 +197,44 @@ void reset_bed_level() {
         #endif
       }
       #ifdef SCAD_MESH_OUTPUT
-        SERIAL_ECHOPGM(" ]");            // close sub-array
+        SERIAL_ECHOPGM(" ]");            // close sub-array//闭子阵
         if (y < sy - 1) SERIAL_CHAR(',');
       #endif
       SERIAL_EOL();
     }
     #ifdef SCAD_MESH_OUTPUT
-      SERIAL_ECHOPGM("];");               // close 2D array
+      SERIAL_ECHOPGM("];");               // close 2D array//闭合二维阵列
     #endif
     SERIAL_EOL();
   }
 
-#endif // AUTO_BED_LEVELING_BILINEAR || MESH_BED_LEVELING
+#endif // AUTO_BED_LEVELING_BILINEAR || MESH_BED_LEVELING//自动|床|调平|双线性|网格|床|调平
 
 #if EITHER(MESH_BED_LEVELING, PROBE_MANUALLY)
 
   void _manual_goto_xy(const xy_pos_t &pos) {
 
-    // Get the resting Z position for after the XY move
+    // Get the resting Z position for after the XY move//获取XY移动后的静止Z位置
     #ifdef MANUAL_PROBE_START_Z
-      constexpr float finalz = _MAX(0, MANUAL_PROBE_START_Z); // If a MANUAL_PROBE_START_Z value is set, always respect it
+      constexpr float finalz = _MAX(0, MANUAL_PROBE_START_Z); // If a MANUAL_PROBE_START_Z value is set, always respect it//如果设置了手动探头启动Z值，请始终遵守该值
     #else
       #warning "It's recommended to set some MANUAL_PROBE_START_Z value for manual leveling."
     #endif
-    #if Z_CLEARANCE_BETWEEN_MANUAL_PROBES > 0     // A probe/obstacle clearance exists so there is a raise:
+    #if Z_CLEARANCE_BETWEEN_MANUAL_PROBES > 0     // A probe/obstacle clearance exists so there is a raise://存在探针/障碍物间隙，因此存在上升：
       #ifndef MANUAL_PROBE_START_Z
-        const float finalz = current_position.z;  // - Use the current Z for starting-Z if no MANUAL_PROBE_START_Z was provided
+        const float finalz = current_position.z;  // - Use the current Z for starting-Z if no MANUAL_PROBE_START_Z was provided//-如果未提供手动探头启动，则使用当前Z启动-Z
       #endif
-      do_blocking_move_to_xy_z(pos, Z_CLEARANCE_BETWEEN_MANUAL_PROBES); // - Raise Z, then move to the new XY
-      do_blocking_move_to_z(finalz);              // - Lower down to the starting Z height, ready for adjustment!
-    #elif defined(MANUAL_PROBE_START_Z)           // A starting-Z was provided, but there's no raise:
-      do_blocking_move_to_xy_z(pos, finalz);      // - Move in XY then down to the starting Z height, ready for adjustment!
-    #else                                         // Zero raise and no starting Z height either:
-      do_blocking_move_to_xy(pos);                // - Move over with no raise, ready for adjustment!
+      do_blocking_move_to_xy_z(pos, Z_CLEARANCE_BETWEEN_MANUAL_PROBES); // - Raise Z, then move to the new XY//-升高Z，然后移动到新XY
+      do_blocking_move_to_z(finalz);              // - Lower down to the starting Z height, ready for adjustment!//-降低至起始Z高度，准备进行调整！
+    #elif defined(MANUAL_PROBE_START_Z)           // A starting-Z was provided, but there's no raise://提供了启动-Z，但没有加薪：
+      do_blocking_move_to_xy_z(pos, finalz);      // - Move in XY then down to the starting Z height, ready for adjustment!//-向XY方向移动，然后向下移动到起始Z高度，准备进行调整！
+    #else                                         // Zero raise and no starting Z height either://零提升和无启动Z高度：
+      do_blocking_move_to_xy(pos);                // - Move over with no raise, ready for adjustment!//-在不升起的情况下移动，准备进行调整！
     #endif
 
     TERN_(LCD_BED_LEVELING, ui.wait_for_move = false);
   }
 
-#endif // MESH_BED_LEVELING || PROBE_MANUALLY
+#endif // MESH_BED_LEVELING || PROBE_MANUALLY//网床找平| |探头|手动
 
-#endif // HAS_LEVELING
+#endif // HAS_LEVELING//你有找平吗

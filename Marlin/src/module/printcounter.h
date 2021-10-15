@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -25,21 +26,21 @@
 #include "../libs/duration_t.h"
 #include "../inc/MarlinConfig.h"
 
-// Print debug messages with M111 S2
-//#define DEBUG_PRINTCOUNTER
+// Print debug messages with M111 S2//使用M111 S2打印调试消息
+//#define DEBUG_PRINTCOUNTER//#定义调试打印计数器
 
-// Round up I2C / SPI address to next page boundary (assuming 32 byte pages)
+// Round up I2C / SPI address to next page boundary (assuming 32 byte pages)//将I2C/SPI地址舍入到下一页边界（假设为32字节页）
 #define STATS_EEPROM_ADDRESS TERN(USE_WIRED_EEPROM, 0x40, 0x32)
 
-struct printStatistics {    // 16 bytes
-  //const uint8_t magic;    // Magic header, it will always be 0x16
-  uint16_t totalPrints;     // Number of prints
-  uint16_t finishedPrints;  // Number of complete prints
-  uint32_t printTime;       // Accumulated printing time
-  uint32_t longestPrint;    // Longest successful print job
-  float    filamentUsed;    // Accumulated filament consumed in mm
+struct printStatistics {    // 16 bytes//16字节
+  //const uint8_t magic;    // Magic header, it will always be 0x16//const uint8_t magic；//魔法头，它将始终为0x16
+  uint16_t totalPrints;     // Number of prints//印数
+  uint16_t finishedPrints;  // Number of complete prints//完整打印数
+  uint32_t printTime;       // Accumulated printing time//累计打印时间
+  uint32_t longestPrint;    // Longest successful print job//最长成功打印作业
+  float    filamentUsed;    // Accumulated filament consumed in mm//累计消耗的灯丝（单位：mm）
   #if SERVICE_INTERVAL_1 > 0
-    uint32_t nextService1;  // Service intervals (or placeholders)
+    uint32_t nextService1;  // Service intervals (or placeholders)//服务间隔（或占位符）
   #endif
   #if SERVICE_INTERVAL_2 > 0
     uint32_t nextService2;
@@ -197,7 +198,7 @@ class PrintCounter: public Stopwatch {
     #endif
 };
 
-// Global Print Job Timer instance
+// Global Print Job Timer instance//全局打印作业计时器实例
 #if ENABLED(PRINTCOUNTER)
   extern PrintCounter print_job_timer;
 #else

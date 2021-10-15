@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -20,7 +21,7 @@
  *
  */
 
-// 100k thermistor supplied with RPW-Ultra hotend, 4.7k pullup
+// 100k thermistor supplied with RPW-Ultra hotend, 4.7k pullup//随RPW Ultra hotend提供的100k热敏电阻，4.7k上拉
 
 constexpr temp_entry_t temptable_512[] PROGMEM = {
   { OV(26),  300 },
@@ -33,7 +34,7 @@ constexpr temp_entry_t temptable_512[] PROGMEM = {
   { OV(42),  265 },
   { OV(46),  260 },
   { OV(49),  255 },
-  { OV(53),  250 }, // 256.5
+  { OV(53),  250 }, // 256.5// 256.5
   { OV(57),  245 },
   { OV(62),  240 },
   { OV(67),  235 },
@@ -53,7 +54,7 @@ constexpr temp_entry_t temptable_512[] PROGMEM = {
   { OV(235), 165 },
   { OV(258), 160 },
   { OV(283), 155 },
-  { OV(310), 150 }, // 2040.6
+  { OV(310), 150 }, // 2040.6// 2040.6
   { OV(338), 145 },
   { OV(369), 140 },
   { OV(401), 135 },
@@ -77,7 +78,7 @@ constexpr temp_entry_t temptable_512[] PROGMEM = {
   { OV(930),  45 },
   { OV(944),  40 },
   { OV(955),  35 },
-  { OV(965),  30 }, // 78279.3
+  { OV(965),  30 }, // 78279.3// 78279.3
   { OV(974),  25 },
   { OV(981),  20 },
   { OV(988),  15 },

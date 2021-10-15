@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,7 +22,7 @@
  */
 #pragma once
 
- // 100k bed thermistor in JGAurora A5. Calibrated by Sam Pinches 21st Jan 2018 using cheap k-type thermocouple inserted into heater block, using TM-902C meter.
+ // 100k bed thermistor in JGAurora A5. Calibrated by Sam Pinches 21st Jan 2018 using cheap k-type thermocouple inserted into heater block, using TM-902C meter.//JGAurora A5中的100k床层热敏电阻。由Sam Pinches于2018年1月21日校准，使用插入加热器块的廉价k型热电偶，使用TM-902C仪表。
 constexpr temp_entry_t temptable_15[] PROGMEM = {
   { OV(  31), 275 },
   { OV(  33), 270 },

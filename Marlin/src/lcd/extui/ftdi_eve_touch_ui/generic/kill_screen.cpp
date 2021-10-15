@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*******************
  * kill_screen.cpp *
  *******************/
@@ -27,9 +28,9 @@
 
 using namespace FTDI;
 
-// The kill screen is an oddball that happens after Marlin has killed the events
-// loop. So we only have a show() method rather than onRedraw(). The KillScreen
-// should not be used as a model for other UI screens as it is an exception.
+// The kill screen is an oddball that happens after Marlin has killed the events//杀戮画面是马林杀死事件后发生的一个奇怪的画面
+// loop. So we only have a show() method rather than onRedraw(). The KillScreen//循环。所以我们只有一个show（）方法，而不是onRedraw（）。杀手屏幕
+// should not be used as a model for other UI screens as it is an exception.//不应用作其他UI屏幕的模型，因为这是一个例外。
 
 void KillScreen::show(const char *message) {
   CommandProcessor cmd;
@@ -58,4 +59,4 @@ void KillScreen::show(const char *message) {
   InterfaceSoundsScreen::playEventSound(InterfaceSoundsScreen::PRINTING_FAILED, PLAY_SYNCHRONOUS);
 }
 
-#endif // FTDI_KILL_SCREEN
+#endif // FTDI_KILL_SCREEN//FTDI_杀伤屏幕

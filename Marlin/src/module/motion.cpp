@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -74,8 +75,8 @@
 #define DEBUG_OUT ENABLED(DEBUG_LEVELING_FEATURE)
 #include "../core/debug_out.h"
 
-// Relative Mode. Enable with G91, disable with G90.
-bool relative_mode; // = false;
+// Relative Mode. Enable with G91, disable with G90.//相对模式。使用G91启用，使用G90禁用。
+bool relative_mode; // = false;//=假；
 
 /**
  * Cartesian Current Position
@@ -97,33 +98,33 @@ xyze_pos_t current_position = LOGICAL_AXIS_ARRAY(0, X_HOME_POS, Y_HOME_POS, Z_IN
  *   and expected by functions like 'prepare_line_to_destination'.
  *   G-codes can set destination using 'get_destination_from_command'
  */
-xyze_pos_t destination; // {0}
+xyze_pos_t destination; // {0}// {0}
 
-// G60/G61 Position Save and Return
+// G60/G61 Position Save and Return//G60/G61位置保存和返回
 #if SAVED_POSITIONS
   uint8_t saved_slots[(SAVED_POSITIONS + 7) >> 3];
   xyze_pos_t stored_position[SAVED_POSITIONS];
 #endif
 
-// The active extruder (tool). Set with T<extruder> command.
+// The active extruder (tool). Set with T<extruder> command.//主动挤出机（工具）。使用T<extracter>命令进行设置。
 #if HAS_MULTI_EXTRUDER
-  uint8_t active_extruder = 0; // = 0
+  uint8_t active_extruder = 0; // = 0// = 0
 #endif
 
 #if ENABLED(LCD_SHOW_E_TOTAL)
-  float e_move_accumulator; // = 0
+  float e_move_accumulator; // = 0// = 0
 #endif
 
-// Extruder offsets
+// Extruder offsets//挤出机补偿
 #if HAS_HOTEND_OFFSET
-  xyz_pos_t hotend_offset[HOTENDS]; // Initialized by settings.load()
+  xyz_pos_t hotend_offset[HOTENDS]; // Initialized by settings.load()//由settings.load（）初始化
   void reset_hotend_offsets() {
     constexpr float tmp[XYZ][HOTENDS] = { HOTEND_OFFSET_X, HOTEND_OFFSET_Y, HOTEND_OFFSET_Z };
     static_assert(
       !tmp[X_AXIS][0] && !tmp[Y_AXIS][0] && !tmp[Z_AXIS][0],
       "Offsets for the first hotend must be 0.0."
     );
-    // Transpose from [XYZ][HOTENDS] to [HOTENDS][XYZ]
+    // Transpose from [XYZ][HOTENDS] to [HOTENDS][XYZ]//从[XYZ][HOTENDS]转置到[HOTENDS][XYZ]
     HOTEND_LOOP() LOOP_LINEAR_AXES(a) hotend_offset[e][a] = tmp[a][e];
     #if ENABLED(DUAL_X_CARRIAGE)
       hotend_offset[1].x = _MAX(X2_HOME_POS, X2_MAX_POS);
@@ -131,14 +132,14 @@ xyze_pos_t destination; // {0}
   }
 #endif
 
-// The feedrate for the current move, often used as the default if
-// no other feedrate is specified. Overridden for special moves.
-// Set by the last G0 through G5 command's "F" parameter.
-// Functions that override this for custom moves *must always* restore it!
+// The feedrate for the current move, often used as the default if//当前移动的进给速度，通常用作默认值
+// no other feedrate is specified. Overridden for special moves.//未指定其他进给速度。为特殊动作而覆盖。
+// Set by the last G0 through G5 command's "F" parameter.//由最后一个G0到G5命令的“F”参数设置。
+// Functions that override this for custom moves *must always* restore it!//为自定义移动*覆盖此的函数必须始终*还原它！
 feedRate_t feedrate_mm_s = MMM_TO_MMS(1500);
 int16_t feedrate_percentage = 100;
 
-// Cartesian conversion result goes here:
+// Cartesian conversion result goes here://笛卡尔转换结果如下：
 xyz_pos_t cartes;
 
 #if IS_KINEMATIC
@@ -154,7 +155,7 @@ xyz_pos_t cartes;
   #elif IS_SCARA
     constexpr float delta_max_radius = SCARA_PRINTABLE_RADIUS,
                     delta_max_radius_2 = sq(SCARA_PRINTABLE_RADIUS);
-  #else // DELTA
+  #else // DELTA//三角洲
     constexpr float delta_max_radius = DELTA_PRINTABLE_RADIUS,
                     delta_max_radius_2 = sq(DELTA_PRINTABLE_RADIUS);
   #endif
@@ -166,16 +167,16 @@ xyz_pos_t cartes;
  * these offsets may be omitted to save on computation.
  */
 #if HAS_POSITION_SHIFT
-  // The distance that XYZ has been offset by G92. Reset by G28.
+  // The distance that XYZ has been offset by G92. Reset by G28.//XYZ被G92偏移的距离。由G28重置。
   xyz_pos_t position_shift{0};
 #endif
 #if HAS_HOME_OFFSET
-  // This offset is added to the configured home position.
-  // Set by M206, M428, or menu item. Saved to EEPROM.
+  // This offset is added to the configured home position.//该偏移量被添加到配置的初始位置。
+  // Set by M206, M428, or menu item. Saved to EEPROM.//由M206、M428或菜单项设置。保存到EEPROM。
   xyz_pos_t home_offset{0};
 #endif
 #if HAS_HOME_OFFSET && HAS_POSITION_SHIFT
-  // The above two are combined to save on computes
+  // The above two are combined to save on computes//以上两种方法结合起来可以节省计算时间
   xyz_pos_t workspace_offset{0};
 #endif
 
@@ -192,7 +193,7 @@ inline void report_more_positions() {
   TERN_(IS_SCARA, scara_report_positions());
 }
 
-// Report the logical position for a given machine position
+// Report the logical position for a given machine position//报告给定机器位置的逻辑位置
 inline void report_logical_position(const xyze_pos_t &rpos) {
   const xyze_pos_t lpos = rpos.asLogical();
   SERIAL_ECHOPAIR_P(
@@ -210,8 +211,8 @@ inline void report_logical_position(const xyze_pos_t &rpos) {
   );
 }
 
-// Report the real current position according to the steppers.
-// Forward kinematics and un-leveling are applied.
+// Report the real current position according to the steppers.//根据步进器报告实际的当前位置。
+// Forward kinematics and un-leveling are applied.//采用正向运动学和不调平。
 void report_real_position() {
   get_cartesian_from_steppers();
   xyze_pos_t npos = LOGICAL_AXIS_ARRAY(
@@ -228,7 +229,7 @@ void report_real_position() {
   report_more_positions();
 }
 
-// Report the logical current position according to the most recent G-code command
+// Report the logical current position according to the most recent G-code command//根据最近的G-code命令报告逻辑当前位置
 void report_current_position() {
   report_logical_position(current_position);
   report_more_positions();
@@ -246,7 +247,7 @@ void report_current_position_projected() {
 }
 
 #if ENABLED(AUTO_REPORT_POSITION)
-  //struct PositionReport { void report() { report_current_position_projected(); } };
+  //struct PositionReport { void report() { report_current_position_projected(); } };//结构位置报告{void report（）{report_current_position_projected（）；}；
   AutoReporter<PositionReport> position_auto_reporter;
 #endif
 
@@ -324,12 +325,12 @@ void quickstop_stepper() {
 
   void quickpause_stepper() {
     planner.quick_pause();
-    //planner.synchronize();
+    //planner.synchronize();//planner.synchronize（）；
   }
 
   void quickresume_stepper() {
     planner.quick_resume();
-    //planner.synchronize();
+    //planner.synchronize();//planner.synchronize（）；
   }
 
 #endif
@@ -428,7 +429,7 @@ void line_to_current_position(const_feedRate_t fr_mm_s/*=feedrate_mm_s*/) {
     if (DEBUGGING(LEVELING)) DEBUG_POS("prepare_fast_move_to_destination", destination);
 
     #if UBL_SEGMENTED
-      // UBL segmented line will do Z-only moves in single segment
+      // UBL segmented line will do Z-only moves in single segment//UBL分段线将在单个分段中仅执行Z移动
       ubl.line_to_destination_segmented(scaled_fr_mm_s);
     #else
       if (current_position == destination) return;
@@ -439,7 +440,7 @@ void line_to_current_position(const_feedRate_t fr_mm_s/*=feedrate_mm_s*/) {
     current_position = destination;
   }
 
-#endif // IS_KINEMATIC
+#endif // IS_KINEMATIC//是运动学的吗
 
 /**
  * Do a fast or normal move to 'destination' with an optional FR.
@@ -491,7 +492,7 @@ void do_blocking_move_to(LINEAR_AXIS_ARGS(const float), const_feedRate_t fr_mm_s
 
   #if EITHER(DELTA, IS_SCARA)
     if (!position_is_reachable(x, y)) return;
-    destination = current_position;          // sync destination at the start
+    destination = current_position;          // sync destination at the start//在开始时同步目标
   #endif
 
   #if ENABLED(DELTA)
@@ -500,38 +501,38 @@ void do_blocking_move_to(LINEAR_AXIS_ARGS(const float), const_feedRate_t fr_mm_s
 
     if (DEBUGGING(LEVELING)) DEBUG_POS("destination = current_position", destination);
 
-    // when in the danger zone
+    // when in the danger zone//当处于危险区域时
     if (current_position.z > delta_clip_start_height) {
-      if (z > delta_clip_start_height) {                     // staying in the danger zone
-        destination.set(x, y, z);                          // move directly (uninterpolated)
-        prepare_internal_fast_move_to_destination();          // set current_position from destination
+      if (z > delta_clip_start_height) {                     // staying in the danger zone//留在危险区
+        destination.set(x, y, z);                          // move directly (uninterpolated)//直接移动（非专用）
+        prepare_internal_fast_move_to_destination();          // set current_position from destination//从目的地设置当前位置
         if (DEBUGGING(LEVELING)) DEBUG_POS("danger zone move", current_position);
         return;
       }
       destination.z = delta_clip_start_height;
-      prepare_internal_fast_move_to_destination();            // set current_position from destination
+      prepare_internal_fast_move_to_destination();            // set current_position from destination//从目的地设置当前位置
       if (DEBUGGING(LEVELING)) DEBUG_POS("zone border move", current_position);
     }
 
-    if (z > current_position.z) {                            // raising?
+    if (z > current_position.z) {                            // raising?//抚养？
       destination.z = z;
-      prepare_internal_fast_move_to_destination(z_feedrate);  // set current_position from destination
+      prepare_internal_fast_move_to_destination(z_feedrate);  // set current_position from destination//从目的地设置当前位置
       if (DEBUGGING(LEVELING)) DEBUG_POS("z raise move", current_position);
     }
 
     destination.set(x, y);
-    prepare_internal_move_to_destination();                   // set current_position from destination
+    prepare_internal_move_to_destination();                   // set current_position from destination//从目的地设置当前位置
     if (DEBUGGING(LEVELING)) DEBUG_POS("xy move", current_position);
 
-    if (z < current_position.z) {                            // lowering?
+    if (z < current_position.z) {                            // lowering?//降低？
       destination.z = z;
-      prepare_internal_fast_move_to_destination(z_feedrate);  // set current_position from destination
+      prepare_internal_fast_move_to_destination(z_feedrate);  // set current_position from destination//从目的地设置当前位置
       if (DEBUGGING(LEVELING)) DEBUG_POS("z lower move", current_position);
     }
 
   #elif IS_SCARA
 
-    // If Z needs to raise, do it before moving XY
+    // If Z needs to raise, do it before moving XY//如果Z需要升高，请在移动XY之前进行此操作
     if (destination.z < z) {
       destination.z = z;
       prepare_internal_fast_move_to_destination(z_feedrate);
@@ -540,7 +541,7 @@ void do_blocking_move_to(LINEAR_AXIS_ARGS(const float), const_feedRate_t fr_mm_s
     destination.set(x, y);
     prepare_internal_fast_move_to_destination(xy_feedrate);
 
-    // If Z needs to lower, do it after moving XY
+    // If Z needs to lower, do it after moving XY//如果Z需要降低，请在移动XY后进行
     if (destination.z > z) {
       destination.z = z;
       prepare_internal_fast_move_to_destination(z_feedrate);
@@ -549,7 +550,7 @@ void do_blocking_move_to(LINEAR_AXIS_ARGS(const float), const_feedRate_t fr_mm_s
   #else
 
     #if HAS_Z_AXIS
-      // If Z needs to raise, do it before moving XY
+      // If Z needs to raise, do it before moving XY//如果Z需要升高，请在移动XY之前进行此操作
       if (current_position.z < z) {
         current_position.z = z;
         line_to_current_position(z_feedrate);
@@ -560,7 +561,7 @@ void do_blocking_move_to(LINEAR_AXIS_ARGS(const float), const_feedRate_t fr_mm_s
     line_to_current_position(xy_feedrate);
 
     #if HAS_Z_AXIS
-      // If Z needs to lower, do it after moving XY
+      // If Z needs to lower, do it after moving XY//如果Z需要降低，请在移动XY后进行
       if (current_position.z > z) {
         current_position.z = z;
         line_to_current_position(z_feedrate);
@@ -665,10 +666,10 @@ void do_blocking_move_to_x(const_float_t rx, const_feedRate_t fr_mm_s/*=0.0*/) {
   }
 #endif
 
-//
-// Prepare to do endstop or probe moves with custom feedrates.
-//  - Save / restore current feedrate and multiplier
-//
+////
+// Prepare to do endstop or probe moves with custom feedrates.//准备使用自定义进给速率进行末端停止或探针移动。
+//  - Save / restore current feedrate and multiplier//-保存/恢复当前进给速度和倍增器
+////
 static float saved_feedrate_mm_s;
 static int16_t saved_feedrate_percentage;
 void remember_feedrate_and_scaling() {
@@ -686,7 +687,7 @@ void restore_feedrate_and_scaling() {
 
 #if HAS_SOFTWARE_ENDSTOPS
 
-  // Software Endstops are based on the configured limits.
+  // Software Endstops are based on the configured limits.//软件终止基于配置的限制。
   soft_endstops_t soft_endstop = {
     true, false,
     LINEAR_AXIS_ARRAY(X_MIN_POS, Y_MIN_POS, Z_MIN_POS, I_MIN_POS, J_MIN_POS, K_MIN_POS),
@@ -711,22 +712,22 @@ void restore_feedrate_and_scaling() {
 
       if (axis == X_AXIS) {
 
-        // In Dual X mode hotend_offset[X] is T1's home position
+        // In Dual X mode hotend_offset[X] is T1's home position//在双X模式下，热端_偏移量[X]是T1的起始位置
         const float dual_max_x = _MAX(hotend_offset[1].x, X2_MAX_POS);
 
         if (new_tool_index != 0) {
-          // T1 can move from X2_MIN_POS to X2_MAX_POS or X2 home position (whichever is larger)
+          // T1 can move from X2_MIN_POS to X2_MAX_POS or X2 home position (whichever is larger)//T1可以从X2_最小位置移动到X2_最大位置或X2初始位置（以较大者为准）
           soft_endstop.min.x = X2_MIN_POS;
           soft_endstop.max.x = dual_max_x;
         }
         else if (idex_is_duplicating()) {
-          // In Duplication Mode, T0 can move as far left as X1_MIN_POS
-          // but not so far to the right that T1 would move past the end
+          // In Duplication Mode, T0 can move as far left as X1_MIN_POS//在复制模式下，T0可以向左移动到X1_MIN_POS
+          // but not so far to the right that T1 would move past the end//但离右边不远，T1会移过末端
           soft_endstop.min.x = X1_MIN_POS;
           soft_endstop.max.x = _MIN(X1_MAX_POS, dual_max_x - duplicate_extruder_x_offset);
         }
         else {
-          // In other modes, T0 can move from X1_MIN_POS to X1_MAX_POS
+          // In other modes, T0 can move from X1_MIN_POS to X1_MAX_POS//在其他模式下，T0可以从X1_最小位置移动到X1_最大位置
           soft_endstop.min.x = X1_MIN_POS;
           soft_endstop.max.x = X1_MAX_POS;
         }
@@ -741,7 +742,7 @@ void restore_feedrate_and_scaling() {
       switch (axis) {
         case X_AXIS:
         case Y_AXIS:
-          // Get a minimum radius for clamping
+          // Get a minimum radius for clamping//获得夹紧的最小半径
           delta_max_radius = _MIN(ABS(_MAX(soft_endstop.min.x, soft_endstop.min.y)), soft_endstop.max.x, soft_endstop.max.y);
           delta_max_radius_2 = sq(delta_max_radius);
           break;
@@ -752,11 +753,11 @@ void restore_feedrate_and_scaling() {
 
     #elif HAS_HOTEND_OFFSET
 
-      // Software endstops are relative to the tool 0 workspace, so
-      // the movement limits must be shifted by the tool offset to
-      // retain the same physical limit when other tools are selected.
+      // Software endstops are relative to the tool 0 workspace, so//软件终点相对于工具0工作区，因此
+      // the movement limits must be shifted by the tool offset to//移动限制必须通过刀具偏移移动到
+      // retain the same physical limit when other tools are selected.//选择其他工具时，保持相同的物理限制。
 
-      if (new_tool_index == old_tool_index || axis == Z_AXIS) { // The Z axis is "special" and shouldn't be modified
+      if (new_tool_index == old_tool_index || axis == Z_AXIS) { // The Z axis is "special" and shouldn't be modified//Z轴是“特殊的”，不应修改
         const float offs = (axis == Z_AXIS) ? 0 : hotend_offset[active_extruder][axis];
         soft_endstop.min[axis] = base_min_pos(axis) + offs;
         soft_endstop.max[axis] = base_max_pos(axis) + offs;
@@ -793,17 +794,17 @@ void restore_feedrate_and_scaling() {
       if (TERN0(DELTA, !all_axes_homed())) return;
 
       #if BOTH(HAS_HOTEND_OFFSET, DELTA)
-        // The effector center position will be the target minus the hotend offset.
+        // The effector center position will be the target minus the hotend offset.//效应器中心位置将是目标减去热端偏移。
         const xy_pos_t offs = hotend_offset[active_extruder];
       #else
-        // SCARA needs to consider the angle of the arm through the entire move, so for now use no tool offset.
+        // SCARA needs to consider the angle of the arm through the entire move, so for now use no tool offset./ SCARA需要考虑整个动作中的臂的角度，所以现在不用工具偏移。
         constexpr xy_pos_t offs{0};
       #endif
 
       if (TERN1(IS_SCARA, axis_was_homed(X_AXIS) && axis_was_homed(Y_AXIS))) {
         const float dist_2 = HYPOT2(target.x - offs.x, target.y - offs.y);
         if (dist_2 > delta_max_radius_2)
-          target *= float(delta_max_radius / SQRT(dist_2)); // 200 / 300 = 0.66
+          target *= float(delta_max_radius / SQRT(dist_2)); // 200 / 300 = 0.66// 200 / 300 = 0.66
       }
 
     #else
@@ -872,11 +873,11 @@ void restore_feedrate_and_scaling() {
     #endif
   }
 
-#else // !HAS_SOFTWARE_ENDSTOPS
+#else // !HAS_SOFTWARE_ENDSTOPS// !有\u软件\u终端
 
   soft_endstops_t soft_endstop;
 
-#endif // !HAS_SOFTWARE_ENDSTOPS
+#endif // !HAS_SOFTWARE_ENDSTOPS// !有\u软件\u终端
 
 #if !UBL_SEGMENTED
 
@@ -886,7 +887,7 @@ FORCE_INLINE void segment_idle(millis_t &next_idle_ms) {
     next_idle_ms = ms + 200UL;
     return idle();
   }
-  thermalManager.manage_heater();  // Returns immediately on most calls
+  thermalManager.manage_heater();  // Returns immediately on most calls//大多数呼叫都会立即返回
 }
 
 #if IS_KINEMATIC
@@ -922,45 +923,45 @@ FORCE_INLINE void segment_idle(millis_t &next_idle_ms) {
    */
   inline bool line_to_destination_kinematic() {
 
-    // Get the top feedrate of the move in the XY plane
+    // Get the top feedrate of the move in the XY plane//获取XY平面中移动的最高进给速度
     const float scaled_fr_mm_s = MMS_SCALED(feedrate_mm_s);
 
     const xyze_float_t diff = destination - current_position;
 
-    // If the move is only in Z/E don't split up the move
+    // If the move is only in Z/E don't split up the move//如果移动仅在Z/E中，则不要拆分移动
     if (!diff.x && !diff.y) {
       planner.buffer_line(destination, scaled_fr_mm_s);
-      return false; // caller will update current_position
+      return false; // caller will update current_position//调用者将更新当前位置
     }
 
-    // Fail if attempting move outside printable radius
+    // Fail if attempting move outside printable radius//如果尝试移动到可打印半径之外，则失败
     if (!position_is_reachable(destination)) return true;
 
-    // Get the linear distance in XYZ
+    // Get the linear distance in XYZ//以XYZ为单位获取线性距离
     float cartesian_mm = diff.magnitude();
 
-    // If the move is very short, check the E move distance
+    // If the move is very short, check the E move distance//如果移动非常短，请检查E移动距离
     TERN_(HAS_EXTRUDERS, if (UNEAR_ZERO(cartesian_mm)) cartesian_mm = ABS(diff.e));
 
-    // No E move either? Game over.
+    // No E move either? Game over.//也不动吗？比赛结束了。
     if (UNEAR_ZERO(cartesian_mm)) return true;
 
-    // Minimum number of seconds to move the given distance
+    // Minimum number of seconds to move the given distance//移动给定距离的最小秒数
     const float seconds = cartesian_mm / scaled_fr_mm_s;
 
-    // The number of segments-per-second times the duration
-    // gives the number of segments
+    // The number of segments-per-second times the duration//每秒持续时间的分段数
+    // gives the number of segments//给出段数
     uint16_t segments = segments_per_second * seconds;
 
-    // For SCARA enforce a minimum segment size
+    // For SCARA enforce a minimum segment size//对于SCARA，强制执行最小段大小
     #if IS_SCARA
       NOMORE(segments, cartesian_mm * RECIPROCAL(SCARA_MIN_SEGMENT_LENGTH));
     #endif
 
-    // At least one segment is required
+    // At least one segment is required//至少需要一个段
     NOLESS(segments, 1U);
 
-    // The approximate length of each segment
+    // The approximate length of each segment//每段的大致长度
     const float inv_segments = 1.0f / float(segments),
                 cartesian_segment_mm = cartesian_mm * inv_segments;
     const xyze_float_t segment_distance = diff * inv_segments;
@@ -975,12 +976,12 @@ FORCE_INLINE void segment_idle(millis_t &next_idle_ms) {
     SERIAL_ECHOPAIR(" segments=", segments);
     SERIAL_ECHOPAIR(" segment_mm=", cartesian_segment_mm);
     SERIAL_EOL();
-    //*/
+    //*///*/
 
-    // Get the current position as starting point
+    // Get the current position as starting point//获取当前位置作为起点
     xyze_pos_t raw = current_position;
 
-    // Calculate and execute the segments
+    // Calculate and execute the segments//计算并执行段
     millis_t next_idle_ms = millis() + 200UL;
     while (--segments) {
       segment_idle(next_idle_ms);
@@ -988,13 +989,13 @@ FORCE_INLINE void segment_idle(millis_t &next_idle_ms) {
       if (!planner.buffer_line(raw, scaled_fr_mm_s, active_extruder, cartesian_segment_mm OPTARG(SCARA_FEEDRATE_SCALING, inv_duration))) break;
     }
 
-    // Ensure last segment arrives at target location.
+    // Ensure last segment arrives at target location.//确保最后一段到达目标位置。
     planner.buffer_line(destination, scaled_fr_mm_s, active_extruder, cartesian_segment_mm OPTARG(SCARA_FEEDRATE_SCALING, inv_duration));
 
-    return false; // caller will update current_position
+    return false; // caller will update current_position//调用者将更新当前位置
   }
 
-#else // !IS_KINEMATIC
+#else // !IS_KINEMATIC// !是运动学的吗
 
   #if ENABLED(SEGMENT_LEVELED_MOVES)
 
@@ -1009,25 +1010,25 @@ FORCE_INLINE void segment_idle(millis_t &next_idle_ms) {
 
       const xyze_float_t diff = destination - current_position;
 
-      // If the move is only in Z/E don't split up the move
+      // If the move is only in Z/E don't split up the move//如果移动仅在Z/E中，则不要拆分移动
       if (!diff.x && !diff.y) {
         planner.buffer_line(destination, fr_mm_s);
         return;
       }
 
-      // Get the linear distance in XYZ
-      // If the move is very short, check the E move distance
-      // No E move either? Game over.
+      // Get the linear distance in XYZ//以XYZ为单位获取线性距离
+      // If the move is very short, check the E move distance//如果移动非常短，请检查E移动距离
+      // No E move either? Game over.//也不动吗？比赛结束了。
       float cartesian_mm = diff.magnitude();
       TERN_(HAS_EXTRUDERS, if (UNEAR_ZERO(cartesian_mm)) cartesian_mm = ABS(diff.e));
       if (UNEAR_ZERO(cartesian_mm)) return;
 
-      // The length divided by the segment size
-      // At least one segment is required
+      // The length divided by the segment size//长度除以线段大小
+      // At least one segment is required//至少需要一个段
       uint16_t segments = cartesian_mm / segment_size;
       NOLESS(segments, 1U);
 
-      // The approximate length of each segment
+      // The approximate length of each segment//每段的大致长度
       const float inv_segments = 1.0f / float(segments),
                   cartesian_segment_mm = cartesian_mm * inv_segments;
       const xyze_float_t segment_distance = diff * inv_segments;
@@ -1036,14 +1037,14 @@ FORCE_INLINE void segment_idle(millis_t &next_idle_ms) {
         const float inv_duration = scaled_fr_mm_s / cartesian_segment_mm;
       #endif
 
-      // SERIAL_ECHOPAIR("mm=", cartesian_mm);
-      // SERIAL_ECHOLNPAIR(" segments=", segments);
-      // SERIAL_ECHOLNPAIR(" segment_mm=", cartesian_segment_mm);
+      // SERIAL_ECHOPAIR("mm=", cartesian_mm);//序列回波对（“mm=”，笛卡尔回波对）；
+      // SERIAL_ECHOLNPAIR(" segments=", segments);//序列回波对（“段=”，段）；
+      // SERIAL_ECHOLNPAIR(" segment_mm=", cartesian_segment_mm);//串行回声对（“段毫米=”，笛卡儿式段毫米）；
 
-      // Get the raw current position as starting point
+      // Get the raw current position as starting point//获取原始当前位置作为起点
       xyze_pos_t raw = current_position;
 
-      // Calculate and execute the segments
+      // Calculate and execute the segments//计算并执行段
       millis_t next_idle_ms = millis() + 200UL;
       while (--segments) {
         segment_idle(next_idle_ms);
@@ -1051,12 +1052,12 @@ FORCE_INLINE void segment_idle(millis_t &next_idle_ms) {
         if (!planner.buffer_line(raw, fr_mm_s, active_extruder, cartesian_segment_mm OPTARG(SCARA_FEEDRATE_SCALING, inv_duration))) break;
       }
 
-      // Since segment_distance is only approximate,
-      // the final move must be to the exact destination.
+      // Since segment_distance is only approximate,//由于段_距离仅为近似值，
+      // the final move must be to the exact destination.//最后一步必须到达确切的目的地。
       planner.buffer_line(destination, fr_mm_s, active_extruder, cartesian_segment_mm OPTARG(SCARA_FEEDRATE_SCALING, inv_duration));
     }
 
-  #endif // SEGMENT_LEVELED_MOVES
+  #endif // SEGMENT_LEVELED_MOVES//段\水平\移动
 
   /**
    * Prepare a linear move in a Cartesian setup.
@@ -1071,11 +1072,11 @@ FORCE_INLINE void segment_idle(millis_t &next_idle_ms) {
     #if HAS_MESH
       if (planner.leveling_active && planner.leveling_active_at_z(destination.z)) {
         #if ENABLED(AUTO_BED_LEVELING_UBL)
-          ubl.line_to_destination_cartesian(scaled_fr_mm_s, active_extruder); // UBL's motion routine needs to know about
-          return true;                                                        // all moves, including Z-only moves.
+          ubl.line_to_destination_cartesian(scaled_fr_mm_s, active_extruder); // UBL's motion routine needs to know about//UBL的动作程序需要了解
+          return true;                                                        // all moves, including Z-only moves.//所有移动，包括仅Z移动。
         #elif ENABLED(SEGMENT_LEVELED_MOVES)
           segmented_line_to_destination(scaled_fr_mm_s);
-          return false; // caller will update current_position
+          return false; // caller will update current_position//调用者将更新当前位置
         #else
           /**
            * For MBL and ABL-BILINEAR only segment moves when X or Y are involved.
@@ -1091,32 +1092,32 @@ FORCE_INLINE void segment_idle(millis_t &next_idle_ms) {
           }
         #endif
       }
-    #endif // HAS_MESH
+    #endif // HAS_MESH//有网格吗
 
     planner.buffer_line(destination, scaled_fr_mm_s);
-    return false; // caller will update current_position
+    return false; // caller will update current_position//调用者将更新当前位置
   }
 
-#endif // !IS_KINEMATIC
-#endif // !UBL_SEGMENTED
+#endif // !IS_KINEMATIC// !是运动学的吗
+#endif // !UBL_SEGMENTED// !分段的
 
 #if HAS_DUPLICATION_MODE
   bool extruder_duplication_enabled;
   #if ENABLED(MULTI_NOZZLE_DUPLICATION)
-    uint8_t duplication_e_mask; // = 0
+    uint8_t duplication_e_mask; // = 0// = 0
   #endif
 #endif
 
 #if ENABLED(DUAL_X_CARRIAGE)
 
   DualXMode dual_x_carriage_mode         = DEFAULT_DUAL_X_CARRIAGE_MODE;
-  float inactive_extruder_x              = X2_MAX_POS,                    // Used in mode 0 & 1
-        duplicate_extruder_x_offset      = DEFAULT_DUPLICATION_X_OFFSET;  // Used in mode 2 & 3
-  xyz_pos_t raised_parked_position;                                       // Used in mode 1
-  bool active_extruder_parked            = false;                         // Used in mode 1, 2 & 3
-  millis_t delayed_move_time             = 0;                             // Used in mode 1
-  celsius_t duplicate_extruder_temp_offset = 0;                           // Used in mode 2 & 3
-  bool idex_mirrored_mode                = false;                         // Used in mode 3
+  float inactive_extruder_x              = X2_MAX_POS,                    // Used in mode 0 & 1//在模式0和1中使用
+        duplicate_extruder_x_offset      = DEFAULT_DUPLICATION_X_OFFSET;  // Used in mode 2 & 3//在模式2和3中使用
+  xyz_pos_t raised_parked_position;                                       // Used in mode 1//在模式1中使用
+  bool active_extruder_parked            = false;                         // Used in mode 1, 2 & 3//在模式1、2和3中使用
+  millis_t delayed_move_time             = 0;                             // Used in mode 1//在模式1中使用
+  celsius_t duplicate_extruder_temp_offset = 0;                           // Used in mode 2 & 3//在模式2和3中使用
+  bool idex_mirrored_mode                = false;                         // Used in mode 3//在模式3中使用
 
   float x_home_pos(const uint8_t extruder) {
     if (extruder == 0)
@@ -1145,7 +1146,7 @@ FORCE_INLINE void segment_idle(millis_t &next_idle_ms) {
   void idex_set_parked(const bool park/*=true*/) {
     delayed_move_time = 0;
     active_extruder_parked = park;
-    if (park) raised_parked_position = current_position;  // Remember current raised toolhead position for use by unpark
+    if (park) raised_parked_position = current_position;  // Remember current raised toolhead position for use by unpark//记住当前提升的刀头位置，以便unpark使用
   }
 
   /**
@@ -1161,9 +1162,9 @@ FORCE_INLINE void segment_idle(millis_t &next_idle_ms) {
 
         case DXC_AUTO_PARK_MODE: {
           if (current_position.e == destination.e) {
-            // This is a travel move (with no extrusion)
-            // Skip it, but keep track of the current position
-            // (so it can be used as the start of the next non-travel move)
+            // This is a travel move (with no extrusion)//这是一个移动（无拉伸）
+            // Skip it, but keep track of the current position//跳过它，但要跟踪当前位置
+            // (so it can be used as the start of the next non-travel move)//（因此它可以用作下一个非行程移动的开始）
             if (delayed_move_time != 0xFFFFFFFFUL) {
               current_position = destination;
               NOLESS(raised_parked_position.z, destination.z);
@@ -1171,17 +1172,17 @@ FORCE_INLINE void segment_idle(millis_t &next_idle_ms) {
               return true;
             }
           }
-          //
-          // Un-park the active extruder
-          //
+          ////
+          // Un-park the active extruder//取消激活挤出机的停车
+          ////
           const feedRate_t fr_zfast = planner.settings.max_feedrate_mm_s[Z_AXIS];
-          //  1. Move to the raised parked XYZ. Presumably the tool is already at XY.
+          //  1. Move to the raised parked XYZ. Presumably the tool is already at XY.//  1. 移动到升起的驻车XYZ。该工具可能已经处于XY位置。
           xyze_pos_t raised = raised_parked_position; raised.e = current_position.e;
           if (planner.buffer_line(raised, fr_zfast)) {
-            //  2. Move to the current native XY and raised Z. Presumably this is a null move.
+            //  2. Move to the current native XY and raised Z. Presumably this is a null move.//  2. 移动到当前本地XY并升高Z。这可能是一个空移动。
             xyze_pos_t curpos = current_position; curpos.z = raised_parked_position.z;
             if (planner.buffer_line(curpos, PLANNER_XY_FEEDRATE())) {
-              //  3. Lower Z back down
+              //  3. Lower Z back down//  3. 向下降Z
               line_to_current_position(fr_zfast);
             }
           }
@@ -1194,24 +1195,24 @@ FORCE_INLINE void segment_idle(millis_t &next_idle_ms) {
         case DXC_MIRRORED_MODE:
         case DXC_DUPLICATION_MODE:
           if (active_extruder == 0) {
-            // Restore planner to parked head (T1) X position
+            // Restore planner to parked head (T1) X position//将计划器恢复到停驻车头（T1）X位置
             xyze_pos_t pos_now = current_position;
             pos_now.x = inactive_extruder_x;
             planner.set_position_mm(pos_now);
 
-            // Keep the same X or add the duplication X offset
+            // Keep the same X or add the duplication X offset//保持相同的X或添加重复的X偏移
             xyze_pos_t new_pos = pos_now;
             if (dual_x_carriage_mode == DXC_DUPLICATION_MODE)
               new_pos.x += duplicate_extruder_x_offset;
 
-            // Move duplicate extruder into the correct position
+            // Move duplicate extruder into the correct position//将复制挤出机移至正确位置
             if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPAIR("Set planner X", inactive_extruder_x, " ... Line to X", new_pos.x);
             if (!planner.buffer_line(new_pos, planner.settings.max_feedrate_mm_s[X_AXIS], 1)) break;
             planner.synchronize();
 
-            sync_plan_position();             // Extra sync for good measure
-            set_duplication_enabled(true);    // Enable Duplication
-            idex_set_parked(false);           // No longer parked
+            sync_plan_position();             // Extra sync for good measure//额外的同步好措施
+            set_duplication_enabled(true);    // Enable Duplication//允许复制
+            idex_set_parked(false);           // No longer parked//不再停车
             if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPGM("set_duplication_enabled(true)\nidex_set_parked(false)");
           }
           else if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPGM("Active extruder not 0");
@@ -1221,7 +1222,7 @@ FORCE_INLINE void segment_idle(millis_t &next_idle_ms) {
     return false;
   }
 
-#endif // DUAL_X_CARRIAGE
+#endif // DUAL_X_CARRIAGE//双_X_车厢
 
 /**
  * Prepare a single move and get ready for the next one
@@ -1268,18 +1269,18 @@ void prepare_line_to_destination() {
       #endif
 
       if (ignore_e) {
-        current_position.e = destination.e;       // Behave as if the E move really took place
-        planner.set_e_position_mm(destination.e); // Prevent the planner from complaining too
+        current_position.e = destination.e;       // Behave as if the E move really took place//表现得好像真的发生了E移动
+        planner.set_e_position_mm(destination.e); // Prevent the planner from complaining too//防止规划者也抱怨
       }
     }
 
-  #endif // PREVENT_COLD_EXTRUSION || PREVENT_LENGTHY_EXTRUDE
+  #endif // PREVENT_COLD_EXTRUSION || PREVENT_LENGTHY_EXTRUDE//防止冷挤压防止长挤压
 
   if (TERN0(DUAL_X_CARRIAGE, dual_x_carriage_unpark())) return;
 
   if (
     #if UBL_SEGMENTED
-      #if IS_KINEMATIC // UBL using Kinematic / Cartesian cases as a workaround for now.
+      #if IS_KINEMATIC // UBL using Kinematic / Cartesian cases as a workaround for now.//UBL使用运动学/笛卡尔情形作为目前的解决方法。
         ubl.line_to_destination_segmented(MMS_SCALED(feedrate_mm_s))
       #else
         line_to_destination_cartesian()
@@ -1296,14 +1297,14 @@ void prepare_line_to_destination() {
 
 #if HAS_ENDSTOPS
 
-  linear_axis_bits_t axis_homed, axis_trusted; // = 0
+  linear_axis_bits_t axis_homed, axis_trusted; // = 0// = 0
 
   linear_axis_bits_t axes_should_home(linear_axis_bits_t axis_bits/*=linear_bits*/) {
     auto set_should = [](linear_axis_bits_t &b, AxisEnum a) {
       if (TEST(b, a) && TERN(HOME_AFTER_DEACTIVATE, axis_is_trusted, axis_was_homed)(a))
         CBI(b, a);
     };
-    // Clear test bits that are trusted
+    // Clear test bits that are trusted//清除受信任的测试位
     LINEAR_AXIS_CODE(
       set_should(axis_bits, X_AXIS), set_should(axis_bits, Y_AXIS), set_should(axis_bits, Z_AXIS),
       set_should(axis_bits, I_AXIS), set_should(axis_bits, J_AXIS), set_should(axis_bits, K_AXIS)
@@ -1505,7 +1506,7 @@ void prepare_line_to_destination() {
       #endif
     }
 
-  #endif // SENSORLESS_HOMING
+  #endif // SENSORLESS_HOMING//无传感器寻的
 
   /**
    * Home an individual linear axis
@@ -1524,7 +1525,7 @@ void prepare_line_to_destination() {
       DEBUG_ECHOLNPGM(")");
     }
 
-    // Only do some things when moving towards an endstop
+    // Only do some things when moving towards an endstop//仅在向终点移动时执行某些操作
     const int8_t axis_home_dir = TERN0(DUAL_X_CARRIAGE, axis == X_AXIS)
                   ? TOOL_X_HOME_DIR(active_extruder) : home_dir(axis);
     const bool is_home_dir = (axis_home_dir > 0) == (distance > 0);
@@ -1537,41 +1538,41 @@ void prepare_line_to_destination() {
 
       if (TERN0(HOMING_Z_WITH_PROBE, axis == Z_AXIS)) {
         #if BOTH(HAS_HEATED_BED, WAIT_FOR_BED_HEATER)
-          // Wait for bed to heat back up between probing points
+          // Wait for bed to heat back up between probing points//等待床在探测点之间重新加热
           thermalManager.wait_for_bed_heating();
         #endif
 
         #if BOTH(HAS_HOTEND, WAIT_FOR_HOTEND)
-          // Wait for the hotend to heat back up between probing points
+          // Wait for the hotend to heat back up between probing points//等待热端在探测点之间重新加热
           thermalManager.wait_for_hotend_heating(active_extruder);
         #endif
 
         TERN_(HAS_QUIET_PROBING, if (final_approach) probe.set_probing_paused(true));
       }
 
-      // Disable stealthChop if used. Enable diag1 pin on driver.
+      // Disable stealthChop if used. Enable diag1 pin on driver.//禁用隐形斩波（如果使用）。启用驱动器上的diag1引脚。
       TERN_(SENSORLESS_HOMING, stealth_states = start_sensorless_homing_per_axis(axis));
     }
 
     #if EITHER(MORGAN_SCARA, MP_SCARA)
-      // Tell the planner the axis is at 0
+      // Tell the planner the axis is at 0//告诉计划员轴位于0
       current_position[axis] = 0;
       sync_plan_position();
       current_position[axis] = distance;
       line_to_current_position(home_fr_mm_s);
     #else
-      // Get the ABC or XYZ positions in mm
+      // Get the ABC or XYZ positions in mm//以毫米为单位获取ABC或XYZ位置
       abce_pos_t target = planner.get_axis_positions_mm();
 
-      target[axis] = 0;                         // Set the single homing axis to 0
-      planner.set_machine_position_mm(target);  // Update the machine position
+      target[axis] = 0;                         // Set the single homing axis to 0//将单回原点轴设置为0
+      planner.set_machine_position_mm(target);  // Update the machine position//更新机器位置
 
       #if HAS_DIST_MM_ARG
         const xyze_float_t cart_dist_mm{0};
       #endif
 
-      // Set delta/cartesian axes directly
-      target[axis] = distance;                  // The move will be towards the endstop
+      // Set delta/cartesian axes directly//直接设置三角形/笛卡尔坐标轴
+      target[axis] = distance;                  // The move will be towards the endstop//移动将朝向终点
       planner.buffer_segment(target OPTARG(HAS_DIST_MM_ARG, cart_dist_mm), home_fr_mm_s, active_extruder);
     #endif
 
@@ -1585,7 +1586,7 @@ void prepare_line_to_destination() {
 
       endstops.validate_homing_move();
 
-      // Re-enable stealthChop if used. Disable diag1 pin on driver.
+      // Re-enable stealthChop if used. Disable diag1 pin on driver.//重新启用隐身斩波（如果使用）。禁用驱动器上的diag1引脚。
       TERN_(SENSORLESS_HOMING, end_sensorless_homing_per_axis(axis, stealth_states));
     }
   }
@@ -1617,13 +1618,13 @@ void prepare_line_to_destination() {
     void backout_to_tmc_homing_phase(const AxisEnum axis) {
       const xyz_long_t home_phase = TMC_HOME_PHASE;
 
-      // check if home phase is disabled for this axis.
+      // check if home phase is disabled for this axis.//检查此轴的主相位是否已禁用。
       if (home_phase[axis] < 0) return;
 
-      int16_t phasePerUStep,      // TMC µsteps(phase) per Marlin µsteps
-              phaseCurrent,       // The TMC µsteps(phase) count of the current position
-              effectorBackoutDir, // Direction in which the effector mm coordinates move away from endstop.
-              stepperBackoutDir;  // Direction in which the TMC µstep count(phase) move away from endstop.
+      int16_t phasePerUStep,      // TMC µsteps(phase) per Marlin µsteps//每马林µ步数的TMCµ步数（相位）
+              phaseCurrent,       // The TMC µsteps(phase) count of the current position//当前位置的TMCµ步数（相位）计数
+              effectorBackoutDir, // Direction in which the effector mm coordinates move away from endstop.//效应器mm坐标远离endstop的方向。
+              stepperBackoutDir;  // Direction in which the TMC µstep count(phase) move away from endstop.//TMCµ步进计数（相位）从endstop移出的方向。
 
       #define PHASE_PER_MICROSTEP(N) (256 / _MAX(1, N##_MICROSTEPS))
 
@@ -1679,22 +1680,22 @@ void prepare_line_to_destination() {
         default: return;
       }
 
-      // Phase distance to nearest home phase position when moving in the backout direction from endstop(may be negative).
+      // Phase distance to nearest home phase position when moving in the backout direction from endstop(may be negative).//当从末端停止沿后退方向移动时，到最近原点相位位置的相位距离（可能为负值）。
       int16_t phaseDelta = (home_phase[axis] - phaseCurrent) * stepperBackoutDir;
 
-      // Check if home distance within endstop assumed repeatability noise of .05mm and warn.
+      // Check if home distance within endstop assumed repeatability noise of .05mm and warn.//检查终点内的起始距离是否假定重复性噪声为.05mm，并发出警告。
       if (ABS(phaseDelta) * planner.steps_to_mm[axis] / phasePerUStep < 0.05f)
         SERIAL_ECHOLNPAIR("Selected home phase ", home_phase[axis],
                          " too close to endstop trigger phase ", phaseCurrent,
                          ". Pick a different phase for ", AS_CHAR(AXIS_CHAR(axis)));
 
-      // Skip to next if target position is behind current. So it only moves away from endstop.
+      // Skip to next if target position is behind current. So it only moves away from endstop.//如果目标位置落后于当前位置，则跳到下一步。所以它只会离开终点。
       if (phaseDelta < 0) phaseDelta += 1024;
 
-      // Convert TMC µsteps(phase) to whole Marlin µsteps to effector backout direction to mm
+      // Convert TMC µsteps(phase) to whole Marlin µsteps to effector backout direction to mm//将TMCµ步数（相位）转换为整个马林µ步数，使效应器后退方向为mm
       const float mmDelta = int16_t(phaseDelta / phasePerUStep) * effectorBackoutDir * planner.steps_to_mm[axis];
 
-      // Optional debug messages
+      // Optional debug messages//可选调试消息
       if (DEBUGGING(LEVELING)) {
         DEBUG_ECHOLNPAIR(
           "Endstop ", AS_CHAR(AXIS_CHAR(axis)), " hit at Phase:", phaseCurrent,
@@ -1703,7 +1704,7 @@ void prepare_line_to_destination() {
       }
 
       if (mmDelta != 0) {
-        // Retrace by the amount computed in mmDelta.
+        // Retrace by the amount computed in mmDelta.//按以mmDelta为单位计算的量进行回程。
         do_homing_move(axis, mmDelta, get_homing_bump_feedrate(axis));
       }
     }
@@ -1723,7 +1724,7 @@ void prepare_line_to_destination() {
   void homeaxis(const AxisEnum axis) {
 
     #if EITHER(MORGAN_SCARA, MP_SCARA)
-      // Only Z homing (with probe) is permitted
+      // Only Z homing (with probe) is permitted//仅允许Z归位（带探头）
       if (axis != Z_AXIS) { BUZZ(100, 880); return; }
     #else
       #define _CAN_HOME(A) (axis == _AXIS(A) && ( \
@@ -1747,13 +1748,13 @@ void prepare_line_to_destination() {
     const int axis_home_dir = TERN0(DUAL_X_CARRIAGE, axis == X_AXIS)
                 ? TOOL_X_HOME_DIR(active_extruder) : home_dir(axis);
 
-    //
-    // Homing Z with a probe? Raise Z (maybe) and deploy the Z probe.
-    //
+    ////
+    // Homing Z with a probe? Raise Z (maybe) and deploy the Z probe.//用探测器探测Z？升起Z（可能）并展开Z探头。
+    ////
     if (TERN0(HOMING_Z_WITH_PROBE, axis == Z_AXIS && probe.deploy()))
       return;
 
-    // Set flags for X, Y, Z motor locking
+    // Set flags for X, Y, Z motor locking//为X、Y、Z电机锁定设置标志
     #if HAS_EXTRA_ENDSTOPS
       switch (axis) {
         TERN_(X_DUAL_ENDSTOPS, case X_AXIS:)
@@ -1764,19 +1765,19 @@ void prepare_line_to_destination() {
       }
     #endif
 
-    //
-    // Deploy BLTouch or tare the probe just before probing
-    //
+    ////
+    // Deploy BLTouch or tare the probe just before probing//在探测之前，展开BLTouch或给探头去皮
+    ////
     #if HOMING_Z_WITH_PROBE
       if (axis == Z_AXIS) {
-        if (TERN0(BLTOUCH, bltouch.deploy())) return;   // BLTouch was deployed above, but get the alarm state.
+        if (TERN0(BLTOUCH, bltouch.deploy())) return;   // BLTouch was deployed above, but get the alarm state.//BLTouch已在上面部署，但获得报警状态。
         if (TERN0(PROBE_TARE, probe.tare())) return;
       }
     #endif
 
-    //
-    // Back away to prevent an early sensorless trigger
-    //
+    ////
+    // Back away to prevent an early sensorless trigger//后退以防止早期无传感器触发
+    ////
     #if DISABLED(DELTA) && defined(SENSORLESS_BACKOFF_MM)
       const xyz_float_t backoff = SENSORLESS_BACKOFF_MM;
       if ((TERN0(X_SENSORLESS, axis == X_AXIS) || TERN0(Y_SENSORLESS, axis == Y_AXIS) || TERN0(Z_SENSORLESS, axis == Z_AXIS) || TERN0(I_SENSORLESS, axis == I_AXIS) || TERN0(J_SENSORLESS, axis == J_AXIS) || TERN0(K_SENSORLESS, axis == K_AXIS)) && backoff[axis]) {
@@ -1786,32 +1787,32 @@ void prepare_line_to_destination() {
       }
     #endif
 
-    // Determine if a homing bump will be done and the bumps distance
-    // When homing Z with probe respect probe clearance
+    // Determine if a homing bump will be done and the bumps distance//确定是否将进行归位碰撞以及碰撞距离
+    // When homing Z with probe respect probe clearance//当使用探针相对于探针间隙对Z进行归位时
     const bool use_probe_bump = TERN0(HOMING_Z_WITH_PROBE, axis == Z_AXIS && home_bump_mm(axis));
     const float bump = axis_home_dir * (
       use_probe_bump ? _MAX(TERN0(HOMING_Z_WITH_PROBE, Z_CLEARANCE_BETWEEN_PROBES), home_bump_mm(axis)) : home_bump_mm(axis)
     );
 
-    //
-    // Fast move towards endstop until triggered
-    //
+    ////
+    // Fast move towards endstop until triggered//快速向endstop移动，直到触发
+    ////
     const float move_length = 1.5f * max_length(TERN(DELTA, Z_AXIS, axis)) * axis_home_dir;
     if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPAIR("Home Fast: ", move_length, "mm");
     do_homing_move(axis, move_length, 0.0, !use_probe_bump);
 
     #if BOTH(HOMING_Z_WITH_PROBE, BLTOUCH_SLOW_MODE)
-      if (axis == Z_AXIS) bltouch.stow(); // Intermediate STOW (in LOW SPEED MODE)
+      if (axis == Z_AXIS) bltouch.stow(); // Intermediate STOW (in LOW SPEED MODE)//中间收起（低速模式下）
     #endif
 
-    // If a second homing move is configured...
+    // If a second homing move is configured...//如果配置了第二个归位移动。。。
     if (bump) {
-      // Move away from the endstop by the axis HOMING_BUMP_MM
+      // Move away from the endstop by the axis HOMING_BUMP_MM//通过轴归位_BUMP _MM从末端止动块移开
       if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPAIR("Move Away: ", -bump, "mm");
       do_homing_move(axis, -bump, TERN(HOMING_Z_WITH_PROBE, (axis == Z_AXIS ? z_probe_fast_mm_s : 0), 0), false);
 
       #if ENABLED(DETECT_BROKEN_ENDSTOP)
-        // Check for a broken endstop
+        // Check for a broken endstop//检查有无断开的止动块
         EndstopEnum es;
         switch (axis) {
           default:
@@ -1835,16 +1836,16 @@ void prepare_line_to_destination() {
       #endif
 
       #if BOTH(HOMING_Z_WITH_PROBE, BLTOUCH_SLOW_MODE)
-        if (axis == Z_AXIS && bltouch.deploy()) return; // Intermediate DEPLOY (in LOW SPEED MODE)
+        if (axis == Z_AXIS && bltouch.deploy()) return; // Intermediate DEPLOY (in LOW SPEED MODE)//中间展开（在低速模式下）
       #endif
 
-      // Slow move towards endstop until triggered
+      // Slow move towards endstop until triggered//缓慢向endstop移动，直到触发
       const float rebump = bump * 2;
       if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPAIR("Re-bump: ", rebump, "mm");
       do_homing_move(axis, rebump, get_homing_bump_feedrate(axis), true);
 
       #if BOTH(HOMING_Z_WITH_PROBE, BLTOUCH)
-        if (axis == Z_AXIS) bltouch.stow(); // The final STOW
+        if (axis == Z_AXIS) bltouch.stow(); // The final STOW//最后的积载
       #endif
     }
 
@@ -1888,7 +1889,7 @@ void prepare_line_to_destination() {
 
           #else
 
-            // Handy arrays of stepper lock function pointers
+            // Handy arrays of stepper lock function pointers//方便的步进锁函数指针数组
 
             typedef void (*adjustFunc_t)(const bool);
 
@@ -1908,7 +1909,7 @@ void prepare_line_to_destination() {
             adjustFunc_t tempLock;
             float tempAdj;
 
-            // Manual bubble sort by adjust value
+            // Manual bubble sort by adjust value//按调整值手动气泡排序
             if (adj[1] < adj[0]) {
               tempLock = lock[0], tempAdj = adj[0];
               lock[0] = lock[1], adj[0] = adj[1];
@@ -1938,14 +1939,14 @@ void prepare_line_to_destination() {
             }
 
             if (pos_dir) {
-              // normalize adj to smallest value and do the first move
+              // normalize adj to smallest value and do the first move//将adj规格化为最小值并执行第一步
               (*lock[0])(true);
               do_homing_move(axis, adj[1] - adj[0]);
-              // lock the second stepper for the final correction
+              // lock the second stepper for the final correction//锁定第二个步进器进行最终校正
               (*lock[1])(true);
               do_homing_move(axis, adj[2] - adj[1]);
               #if NUM_Z_STEPPER_DRIVERS >= 4
-                // lock the third stepper for the final correction
+                // lock the third stepper for the final correction//锁定第三步进器进行最终校正
                 (*lock[2])(true);
                 do_homing_move(axis, adj[3] - adj[2]);
               #endif
@@ -1972,7 +1973,7 @@ void prepare_line_to_destination() {
         }
       #endif
 
-      // Reset flags for X, Y, Z motor locking
+      // Reset flags for X, Y, Z motor locking//重置X、Y、Z电机锁定标志
       switch (axis) {
         default: break;
         TERN_(X_DUAL_ENDSTOPS, case X_AXIS:)
@@ -1981,10 +1982,10 @@ void prepare_line_to_destination() {
           stepper.set_separate_multi_axis(false);
       }
 
-    #endif // HAS_EXTRA_ENDSTOPS
+    #endif // HAS_EXTRA_ENDSTOPS//有额外的终点站吗
 
     #ifdef TMC_HOME_PHASE
-      // move back to homing phase if configured and capable
+      // move back to homing phase if configured and capable//如果已配置且具备能力，则返回回原点阶段
       backout_to_tmc_homing_phase(axis);
     #endif
 
@@ -1995,20 +1996,20 @@ void prepare_line_to_destination() {
 
     #elif ENABLED(DELTA)
 
-      // Delta has already moved all three towers up in G28
-      // so here it re-homes each tower in turn.
-      // Delta homing treats the axes as normal linear axes.
+      // Delta has already moved all three towers up in G28//达美航空已经将G28的三座塔楼全部搬上了楼
+      // so here it re-homes each tower in turn.//在这里，它依次为每座塔重新安家。
+      // Delta homing treats the axes as normal linear axes.//增量归位将轴视为正常线性轴。
 
       const float adjDistance = delta_endstop_adj[axis],
                   minDistance = (MIN_STEPS_PER_SEGMENT) * planner.steps_to_mm[axis];
 
-      // Retrace by the amount specified in delta_endstop_adj if more than min steps.
-      if (adjDistance * (Z_HOME_DIR) < 0 && ABS(adjDistance) > minDistance) { // away from endstop, more than min distance
+      // Retrace by the amount specified in delta_endstop_adj if more than min steps.//如果超过最小步数，则按delta_endstop_adj中指定的量进行回程。
+      if (adjDistance * (Z_HOME_DIR) < 0 && ABS(adjDistance) > minDistance) { // away from endstop, more than min distance//远离终点，超过最小距离
         if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPAIR("adjDistance:", adjDistance);
         do_homing_move(axis, adjDistance, get_homing_bump_feedrate(axis));
       }
 
-    #else // CARTESIAN / CORE / MARKFORGED_XY
+    #else // CARTESIAN / CORE / MARKFORGED_XY//笛卡尔坐标/核心/标记x
 
       set_axis_is_at_home(axis);
       sync_plan_position();
@@ -2019,7 +2020,7 @@ void prepare_line_to_destination() {
 
     #endif
 
-    // Put away the Z probe
+    // Put away the Z probe//把Z探头收起来
     #if HOMING_Z_WITH_PROBE
       if (axis == Z_AXIS && probe.stow()) return;
     #endif
@@ -2041,21 +2042,21 @@ void prepare_line_to_destination() {
             #if EITHER(IS_CORE, MARKFORGED_XY)
               || axis != NORMAL_AXIS
             #endif
-          ) safe_delay(200);  // Short delay to allow belts to spring back
+          ) safe_delay(200);  // Short delay to allow belts to spring back//允许皮带回弹的短暂延迟
         #endif
       }
     #endif
 
-    // Clear retracted status if homing the Z axis
+    // Clear retracted status if homing the Z axis//如果Z轴归零，清除缩回状态
     #if ENABLED(FWRETRACT)
       if (axis == Z_AXIS) fwretract.current_hop = 0.0;
     #endif
 
     if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPAIR("<<< homeaxis(", AS_CHAR(AXIS_CHAR(axis)), ")");
 
-  } // homeaxis()
+  } // homeaxis()//homeaxis（）
 
-#endif // HAS_ENDSTOPS
+#endif // HAS_ENDSTOPS//有终点站吗
 
 /**
  * Set an axis' current position to its home position (after homing).

@@ -1,6 +1,7 @@
+/** translatione by yx */
 /*
  * Marlin 3D Printer Firmware
- * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+ * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]//github.com/MarlinFirmware/Marlin]
  *
  * Based on Sprinter and grbl.
  * Copyright (c) 2011 Camiel Gubbels / Erik van der Zalm
@@ -16,7 +17,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.//www.gnu.org/licenses/>。
  *
  */
 #pragma once
@@ -30,10 +31,10 @@
 
 #define ENABLE_I2C_PULLUPS
 
-// Chip address (for Wire)
+// Chip address (for Wire)//芯片地址（用于线路）
 #define PCA9533_Addr        0xC4
 
-// Control registers
+// Control registers//控制寄存器
 #define PCA9533_REG_READ    0x00
 #define PCA9533_REG_PSC0    0x01
 #define PCA9533_REG_PWM0    0x02
@@ -42,13 +43,13 @@
 #define PCA9533_REG_SEL     0x05
 #define PCA9533_REGM_AI     0x10
 
-// LED selector operation
+// LED selector operation//LED选择器操作
 #define PCA9533_LED_OP_OFF  0B00
 #define PCA9533_LED_OP_ON   0B01
 #define PCA9533_LED_OP_PWM0 0B10
 #define PCA9533_LED_OP_PWM1 0B11
 
-// Select register bit offsets for LED colors
+// Select register bit offsets for LED colors//选择LED颜色的寄存器位偏移
 #define PCA9533_LED_OFS_RED 0
 #define PCA9533_LED_OFS_GRN 2
 #define PCA9533_LED_OFS_BLU 4

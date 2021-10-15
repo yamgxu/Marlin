@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -99,4 +100,4 @@ void SdFile::writeln_P(PGM_P str) {
   write_P(PSTR("\r\n"));
 }
 
-#endif // SDSUPPORT
+#endif // SDSUPPORT//SDSUPPORT

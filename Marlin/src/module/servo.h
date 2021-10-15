@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,7 +32,7 @@
 #if HAS_SERVO_ANGLES
 
   #if ENABLED(SWITCHING_EXTRUDER)
-    // Switching extruder can have 2 or 4 angles
+    // Switching extruder can have 2 or 4 angles//切换挤出机可以有2个或4个角度
     #if EXTRUDERS > 3
       #define REQ_ANGLES 4
     #else
@@ -107,7 +108,7 @@
     #define STOW_Z_SERVO() MOVE_SERVO(Z_PROBE_SERVO_NR, servo_angles[Z_PROBE_SERVO_NR][1])
   #endif
 
-#endif // HAS_SERVO_ANGLES
+#endif // HAS_SERVO_ANGLES//有伺服角度
 
 #define MOVE_SERVO(I, P) servo[I].move(P)
 

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -52,4 +53,4 @@ void fanmux_init() {
   fanmux_switch(0);
 }
 
-#endif // HAS_FANMUX
+#endif // HAS_FANMUX//哈苏·范穆克斯

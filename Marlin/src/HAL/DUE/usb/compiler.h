@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * \file
  *
@@ -41,7 +42,7 @@
  *
  */
 /*
- * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>
+ * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>//www.atmel.com/design support/“>atmel支持</a>
  */
 
 #ifndef UTILS_COMPILER_H
@@ -77,9 +78,9 @@
 #include <sam.h>
 #include "preprocessor.h"
 
-//_____ D E C L A R A T I O N S ____________________________________________
+//_____ D E C L A R A T I O N S ____________________________________________//_____D E C L A R A T O N S____________________________________________
 
-#ifndef __ASSEMBLY__ // Not defined for assembling.
+#ifndef __ASSEMBLY__ // Not defined for assembling.//没有为装配定义。
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -91,11 +92,11 @@
  *
  * Port of some keywords from GCC to IAR Embedded Workbench.
  */
-//! @{
+//! @{//! @{
 #define __asm__             asm
 #define __inline__          inline
 #define __volatile__
-//! @}
+//! @}//! @}
 
 #endif
 
@@ -206,7 +207,7 @@
  */
 #ifdef _ASSERT_ENABLE_
 #  if defined(TEST_SUITE_DEFINE_ASSERT_MACRO)
-     // Assert() is defined in unit_test/suite.h
+     // Assert() is defined in unit_test/suite.h//Assert（）在unit_test/suite.h中定义
 #    include "unit_test/suite.h"
 #  else
 #undef TEST_SUITE_DEFINE_ASSERT_MACRO
@@ -229,7 +230,7 @@
 #endif
 
 /* Define NO_INIT attribute */
-#if 0 //ndef NO_INIT
+#if 0 //ndef NO_INIT//无损检测
 #ifdef __CC_ARM
 #   define NO_INIT __attribute__((zero_init))
 #elif defined ( __ICCARM__ )
@@ -259,44 +260,44 @@
 
 /*! \name Usual Types
  */
-//! @{
-typedef unsigned char           Bool; //!< Boolean.
+//! @{//! @{
+typedef unsigned char           Bool; //!< Boolean.//！<布尔值。
 #ifndef __cplusplus
 #ifndef __bool_true_false_are_defined
-typedef unsigned char           bool; //!< Boolean.
+typedef unsigned char           bool; //!< Boolean.//！<布尔值。
 #endif
 #endif
-typedef int8_t                  S8 ;  //!< 8-bit signed integer.
-typedef uint8_t                 U8 ;  //!< 8-bit unsigned integer.
-typedef int16_t                 S16;  //!< 16-bit signed integer.
-typedef uint16_t                U16;  //!< 16-bit unsigned integer.
+typedef int8_t                  S8 ;  //!< 8-bit signed integer.//！<8位有符号整数。
+typedef uint8_t                 U8 ;  //!< 8-bit unsigned integer.//！<8位无符号整数。
+typedef int16_t                 S16;  //!< 16-bit signed integer.//！<16位有符号整数。
+typedef uint16_t                U16;  //!< 16-bit unsigned integer.//！<16位无符号整数。
 typedef uint16_t                le16_t;
 typedef uint16_t                be16_t;
-typedef int32_t                 S32;  //!< 32-bit signed integer.
-typedef uint32_t                U32;  //!< 32-bit unsigned integer.
+typedef int32_t                 S32;  //!< 32-bit signed integer.//!< 32位有符号整数。
+typedef uint32_t                U32;  //!< 32-bit unsigned integer.//!< 32位无符号整数。
 typedef uint32_t                le32_t;
 typedef uint32_t                be32_t;
-typedef int64_t                 S64;  //!< 64-bit signed integer.
-typedef uint64_t                U64;  //!< 64-bit unsigned integer.
-typedef float                   F32;  //!< 32-bit floating-point number.
-typedef double                  F64;  //!< 64-bit floating-point number.
+typedef int64_t                 S64;  //!< 64-bit signed integer.//!< 64位有符号整数。
+typedef uint64_t                U64;  //!< 64-bit unsigned integer.//!< 64位无符号整数。
+typedef float                   F32;  //!< 32-bit floating-point number.//!< 32位浮点数。
+typedef double                  F64;  //!< 64-bit floating-point number.//!< 64位浮点数。
 typedef uint32_t                iram_size_t;
-//! @}
+//! @}//! @}
 
 
 /*! \name Status Types
  */
-//! @{
-typedef bool                Status_bool_t;  //!< Boolean status.
-typedef U8                  Status_t;       //!< 8-bit-coded status.
-//! @}
+//! @{//! @{
+typedef bool                Status_bool_t;  //!< Boolean status.//！<布尔状态。
+typedef U8                  Status_t;       //!< 8-bit-coded status.//！<8位编码状态。
+//! @}//! @}
 
 
 /*! \name Aliasing Aggregate Types
  */
-//! @{
+//! @{//! @{
 
-//! 16-bit union.
+//! 16-bit union.//！16位并集。
 typedef union
 {
   S16 s16   ;
@@ -305,7 +306,7 @@ typedef union
   U8  u8 [2];
 } Union16;
 
-//! 32-bit union.
+//! 32-bit union.//！32位并集。
 typedef union
 {
   S32 s32   ;
@@ -316,7 +317,7 @@ typedef union
   U8  u8 [4];
 } Union32;
 
-//! 64-bit union.
+//! 64-bit union.//！64位并集。
 typedef union
 {
   S64 s64   ;
@@ -329,7 +330,7 @@ typedef union
   U8  u8 [8];
 } Union64;
 
-//! Union of pointers to 64-, 32-, 16- and 8-bit unsigned integers.
+//! Union of pointers to 64-, 32-, 16- and 8-bit unsigned integers.//！指向64、32、16和8位无符号整数的指针的并集。
 typedef union
 {
   S64 *s64ptr;
@@ -342,7 +343,7 @@ typedef union
   U8  *u8ptr ;
 } UnionPtr;
 
-//! Union of pointers to volatile 64-, 32-, 16- and 8-bit unsigned integers.
+//! Union of pointers to volatile 64-, 32-, 16- and 8-bit unsigned integers.//！指向易失性64、32、16和8位无符号整数的指针的并集。
 typedef union
 {
   volatile S64 *s64ptr;
@@ -355,7 +356,7 @@ typedef union
   volatile U8  *u8ptr ;
 } UnionVPtr;
 
-//! Union of pointers to constant 64-, 32-, 16- and 8-bit unsigned integers.
+//! Union of pointers to constant 64-, 32-, 16- and 8-bit unsigned integers.//！指向常量64、32、16和8位无符号整数的指针的并集。
 typedef union
 {
   const S64 *s64ptr;
@@ -368,7 +369,7 @@ typedef union
   const U8  *u8ptr ;
 } UnionCPtr;
 
-//! Union of pointers to constant volatile 64-, 32-, 16- and 8-bit unsigned integers.
+//! Union of pointers to constant volatile 64-, 32-, 16- and 8-bit unsigned integers.//！指向常量易失性64、32、16和8位无符号整数的指针的并集。
 typedef union
 {
   const volatile S64 *s64ptr;
@@ -381,7 +382,7 @@ typedef union
   const volatile U8  *u8ptr ;
 } UnionCVPtr;
 
-//! Structure of pointers to 64-, 32-, 16- and 8-bit unsigned integers.
+//! Structure of pointers to 64-, 32-, 16- and 8-bit unsigned integers.//！指向64、32、16和8位无符号整数的指针的结构。
 typedef struct
 {
   S64 *s64ptr;
@@ -394,7 +395,7 @@ typedef struct
   U8  *u8ptr ;
 } StructPtr;
 
-//! Structure of pointers to volatile 64-, 32-, 16- and 8-bit unsigned integers.
+//! Structure of pointers to volatile 64-, 32-, 16- and 8-bit unsigned integers.//！指向易失性64、32、16和8位无符号整数的指针的结构。
 typedef struct
 {
   volatile S64 *s64ptr;
@@ -407,7 +408,7 @@ typedef struct
   volatile U8  *u8ptr ;
 } StructVPtr;
 
-//! Structure of pointers to constant 64-, 32-, 16- and 8-bit unsigned integers.
+//! Structure of pointers to constant 64-, 32-, 16- and 8-bit unsigned integers.//！指向常量64、32、16和8位无符号整数的指针的结构。
 typedef struct
 {
   const S64 *s64ptr;
@@ -420,7 +421,7 @@ typedef struct
   const U8  *u8ptr ;
 } StructCPtr;
 
-//! Structure of pointers to constant volatile 64-, 32-, 16- and 8-bit unsigned integers.
+//! Structure of pointers to constant volatile 64-, 32-, 16- and 8-bit unsigned integers.//！指向常量易失性64、32、16和8位无符号整数的指针的结构。
 typedef struct
 {
   const volatile S64 *s64ptr;
@@ -433,13 +434,13 @@ typedef struct
   const volatile U8  *u8ptr ;
 } StructCVPtr;
 
-//! @}
+//! @}//! @}
 
-#endif  // #ifndef __ASSEMBLY__
+#endif  // #ifndef __ASSEMBLY__//#ifndef u组件__
 
 /*! \name Usual Constants
  */
-//! @{
+//! @{//! @{
 #define DISABLE   0
 #define ENABLE    1
 #ifndef __cplusplus
@@ -460,13 +461,13 @@ typedef struct
 #ifndef HIGH
 #define HIGH 0x1
 #endif
-//! @}
+//! @}//! @}
 
 
-#ifndef __ASSEMBLY__ // not for assembling.
+#ifndef __ASSEMBLY__ // not for assembling.//不适合组装。
 
-//! \name Optimization Control
-//@{
+//! \name Optimization Control//！\name优化控制
+//@{//@{
 
 /**
  * \def likely(exp)
@@ -498,11 +499,11 @@ typedef struct
 #   define is_constant(exp)       (0)
 #endif
 
-//! @}
+//! @}//! @}
 
 /*! \name Bit-Field Handling
  */
-//! @{
+//! @{//! @{
 
 /*! \brief Reads the bits of a value specified by a given bit-mask.
  *
@@ -579,7 +580,7 @@ typedef struct
  */
 #define Wr_bitfield(lvalue, mask, bitfield) (Wr_bits(lvalue, mask, (U32)(bitfield) << ctz(mask)))
 
-//! @}
+//! @}//! @}
 
 
 /*! \name Zero-Bit Counting
@@ -594,7 +595,7 @@ typedef struct
  * ensure a possible and optimized behavior for both constant and non-constant
  * expressions.
  */
-//! @{
+//! @{//! @{
 
 /*! \brief Counts the leading zero bits of the given value considered as a 32-bit integer.
  *
@@ -690,12 +691,12 @@ typedef struct
 #endif
 #endif
 
-//! @}
+//! @}//! @}
 
 
 /*! \name Bit Reversing
  */
-//! @{
+//! @{//! @{
 
 /*! \brief Reverses the bits of \a u8.
  *
@@ -730,12 +731,12 @@ typedef struct
 #define bit_reverse64(u64)  ((U64)(((U64)bit_reverse32((U64)(u64) >> 32)) |\
                                    ((U64)bit_reverse32((U64)(u64)) << 32)))
 
-//! @}
+//! @}//! @}
 
 
 /*! \name Alignment
  */
-//! @{
+//! @{//! @{
 
 /*! \brief Tests alignment of the number \a val with the \a n boundary.
  *
@@ -783,7 +784,7 @@ typedef struct
  */
 #define Align_down(val, n     ) ( (val)              & ~((n) - 1))
 
-//! @}
+//! @}//! @}
 
 /*! \brief Calls the routine at address \a addr.
  *
@@ -802,47 +803,47 @@ typedef struct
 /*! \name MCU Endianism Handling
  * ARM is MCU little endianism.
  */
-//! @{
-#define  MSB(u16)       (((U8  *)&(u16))[1]) //!< Most significant byte of \a u16.
-#define  LSB(u16)       (((U8  *)&(u16))[0]) //!< Least significant byte of \a u16.
+//! @{//! @{
+#define  MSB(u16)       (((U8  *)&(u16))[1]) //!< Most significant byte of \a u16.//！<u16的\n最高有效字节。
+#define  LSB(u16)       (((U8  *)&(u16))[0]) //!< Least significant byte of \a u16.//！<u16的最低有效字节。
 
-#define  MSH(u32)       (((U16 *)&(u32))[1]) //!< Most significant half-word of \a u32.
-#define  LSH(u32)       (((U16 *)&(u32))[0]) //!< Least significant half-word of \a u32.
-#define  MSB0W(u32)     (((U8  *)&(u32))[3]) //!< Most significant byte of 1st rank of \a u32.
-#define  MSB1W(u32)     (((U8  *)&(u32))[2]) //!< Most significant byte of 2nd rank of \a u32.
-#define  MSB2W(u32)     (((U8  *)&(u32))[1]) //!< Most significant byte of 3rd rank of \a u32.
-#define  MSB3W(u32)     (((U8  *)&(u32))[0]) //!< Most significant byte of 4th rank of \a u32.
-#define  LSB3W(u32)     MSB0W(u32)           //!< Least significant byte of 4th rank of \a u32.
-#define  LSB2W(u32)     MSB1W(u32)           //!< Least significant byte of 3rd rank of \a u32.
-#define  LSB1W(u32)     MSB2W(u32)           //!< Least significant byte of 2nd rank of \a u32.
-#define  LSB0W(u32)     MSB3W(u32)           //!< Least significant byte of 1st rank of \a u32.
+#define  MSH(u32)       (((U16 *)&(u32))[1]) //!< Most significant half-word of \a u32.//！<u32中最有效的半个字。
+#define  LSH(u32)       (((U16 *)&(u32))[0]) //!< Least significant half-word of \a u32.//！<u32的最低有效半字。
+#define  MSB0W(u32)     (((U8  *)&(u32))[3]) //!< Most significant byte of 1st rank of \a u32.//！<u32第1列的最高有效字节。
+#define  MSB1W(u32)     (((U8  *)&(u32))[2]) //!< Most significant byte of 2nd rank of \a u32.//！<u32第二级的最高有效字节。
+#define  MSB2W(u32)     (((U8  *)&(u32))[1]) //!< Most significant byte of 3rd rank of \a u32.//！<u32第3列的最高有效字节。
+#define  MSB3W(u32)     (((U8  *)&(u32))[0]) //!< Most significant byte of 4th rank of \a u32.//！<u32第4列的最高有效字节。
+#define  LSB3W(u32)     MSB0W(u32)           //!< Least significant byte of 4th rank of \a u32.//！<u32第4列的最低有效字节。
+#define  LSB2W(u32)     MSB1W(u32)           //!< Least significant byte of 3rd rank of \a u32.//！<u32第3列的最低有效字节。
+#define  LSB1W(u32)     MSB2W(u32)           //!< Least significant byte of 2nd rank of \a u32.//！<u32第二级的最低有效字节。
+#define  LSB0W(u32)     MSB3W(u32)           //!< Least significant byte of 1st rank of \a u32.//！<u32第1列的最低有效字节。
 
-#define  MSW(u64)       (((U32 *)&(u64))[1]) //!< Most significant word of \a u64.
-#define  LSW(u64)       (((U32 *)&(u64))[0]) //!< Least significant word of \a u64.
-#define  MSH0(u64)      (((U16 *)&(u64))[3]) //!< Most significant half-word of 1st rank of \a u64.
-#define  MSH1(u64)      (((U16 *)&(u64))[2]) //!< Most significant half-word of 2nd rank of \a u64.
-#define  MSH2(u64)      (((U16 *)&(u64))[1]) //!< Most significant half-word of 3rd rank of \a u64.
-#define  MSH3(u64)      (((U16 *)&(u64))[0]) //!< Most significant half-word of 4th rank of \a u64.
-#define  LSH3(u64)      MSH0(u64)            //!< Least significant half-word of 4th rank of \a u64.
-#define  LSH2(u64)      MSH1(u64)            //!< Least significant half-word of 3rd rank of \a u64.
-#define  LSH1(u64)      MSH2(u64)            //!< Least significant half-word of 2nd rank of \a u64.
-#define  LSH0(u64)      MSH3(u64)            //!< Least significant half-word of 1st rank of \a u64.
-#define  MSB0D(u64)     (((U8  *)&(u64))[7]) //!< Most significant byte of 1st rank of \a u64.
-#define  MSB1D(u64)     (((U8  *)&(u64))[6]) //!< Most significant byte of 2nd rank of \a u64.
-#define  MSB2D(u64)     (((U8  *)&(u64))[5]) //!< Most significant byte of 3rd rank of \a u64.
-#define  MSB3D(u64)     (((U8  *)&(u64))[4]) //!< Most significant byte of 4th rank of \a u64.
-#define  MSB4D(u64)     (((U8  *)&(u64))[3]) //!< Most significant byte of 5th rank of \a u64.
-#define  MSB5D(u64)     (((U8  *)&(u64))[2]) //!< Most significant byte of 6th rank of \a u64.
-#define  MSB6D(u64)     (((U8  *)&(u64))[1]) //!< Most significant byte of 7th rank of \a u64.
-#define  MSB7D(u64)     (((U8  *)&(u64))[0]) //!< Most significant byte of 8th rank of \a u64.
-#define  LSB7D(u64)     MSB0D(u64)           //!< Least significant byte of 8th rank of \a u64.
-#define  LSB6D(u64)     MSB1D(u64)           //!< Least significant byte of 7th rank of \a u64.
-#define  LSB5D(u64)     MSB2D(u64)           //!< Least significant byte of 6th rank of \a u64.
-#define  LSB4D(u64)     MSB3D(u64)           //!< Least significant byte of 5th rank of \a u64.
-#define  LSB3D(u64)     MSB4D(u64)           //!< Least significant byte of 4th rank of \a u64.
-#define  LSB2D(u64)     MSB5D(u64)           //!< Least significant byte of 3rd rank of \a u64.
-#define  LSB1D(u64)     MSB6D(u64)           //!< Least significant byte of 2nd rank of \a u64.
-#define  LSB0D(u64)     MSB7D(u64)           //!< Least significant byte of 1st rank of \a u64.
+#define  MSW(u64)       (((U32 *)&(u64))[1]) //!< Most significant word of \a u64.//！<u64中最重要的单词。
+#define  LSW(u64)       (((U32 *)&(u64))[0]) //!< Least significant word of \a u64.//！<u64中的最低有效字。
+#define  MSH0(u64)      (((U16 *)&(u64))[3]) //!< Most significant half-word of 1st rank of \a u64.//！<u64第一级的最有效半个字。
+#define  MSH1(u64)      (((U16 *)&(u64))[2]) //!< Most significant half-word of 2nd rank of \a u64.//！<u64第二级最有效的半个字。
+#define  MSH2(u64)      (((U16 *)&(u64))[1]) //!< Most significant half-word of 3rd rank of \a u64.//！<u64第三级最有效的半个字。
+#define  MSH3(u64)      (((U16 *)&(u64))[0]) //!< Most significant half-word of 4th rank of \a u64.//！<u64第4级最有效的半个字。
+#define  LSH3(u64)      MSH0(u64)            //!< Least significant half-word of 4th rank of \a u64.//！<u64第4级的最低有效半字。
+#define  LSH2(u64)      MSH1(u64)            //!< Least significant half-word of 3rd rank of \a u64.//！<u64第三级的最低有效半字。
+#define  LSH1(u64)      MSH2(u64)            //!< Least significant half-word of 2nd rank of \a u64.//！<u64第二级的最低有效半字。
+#define  LSH0(u64)      MSH3(u64)            //!< Least significant half-word of 1st rank of \a u64.//！<u64第1级的最低有效半字。
+#define  MSB0D(u64)     (((U8  *)&(u64))[7]) //!< Most significant byte of 1st rank of \a u64.//！<u64第1列的最高有效字节。
+#define  MSB1D(u64)     (((U8  *)&(u64))[6]) //!< Most significant byte of 2nd rank of \a u64.//！<u64第二级的最高有效字节。
+#define  MSB2D(u64)     (((U8  *)&(u64))[5]) //!< Most significant byte of 3rd rank of \a u64.//！<u64第3列的最高有效字节。
+#define  MSB3D(u64)     (((U8  *)&(u64))[4]) //!< Most significant byte of 4th rank of \a u64.//！<u64第4列的最高有效字节。
+#define  MSB4D(u64)     (((U8  *)&(u64))[3]) //!< Most significant byte of 5th rank of \a u64.//！<u64第5列的最高有效字节。
+#define  MSB5D(u64)     (((U8  *)&(u64))[2]) //!< Most significant byte of 6th rank of \a u64.//！<u64第6列的最高有效字节。
+#define  MSB6D(u64)     (((U8  *)&(u64))[1]) //!< Most significant byte of 7th rank of \a u64.//！<u64第7列的最高有效字节。
+#define  MSB7D(u64)     (((U8  *)&(u64))[0]) //!< Most significant byte of 8th rank of \a u64.//！<u64第8列的最高有效字节。
+#define  LSB7D(u64)     MSB0D(u64)           //!< Least significant byte of 8th rank of \a u64.//！<u64第8列的最低有效字节。
+#define  LSB6D(u64)     MSB1D(u64)           //!< Least significant byte of 7th rank of \a u64.//！<u64第7列的最低有效字节。
+#define  LSB5D(u64)     MSB2D(u64)           //!< Least significant byte of 6th rank of \a u64.//！<u64第6列的最低有效字节。
+#define  LSB4D(u64)     MSB3D(u64)           //!< Least significant byte of 5th rank of \a u64.//！<u64第5列的最低有效字节。
+#define  LSB3D(u64)     MSB4D(u64)           //!< Least significant byte of 4th rank of \a u64.//！<u64第4列的最低有效字节。
+#define  LSB2D(u64)     MSB5D(u64)           //!< Least significant byte of 3rd rank of \a u64.//！<u64第3列的最低有效字节。
+#define  LSB1D(u64)     MSB6D(u64)           //!< Least significant byte of 2nd rank of \a u64.//！<u64第二级的最低有效字节。
+#define  LSB0D(u64)     MSB7D(u64)           //!< Least significant byte of 1st rank of \a u64.//！<u64第1列的最低有效字节。
 
 #define  BE16(x)        swap16(x)
 #define  LE16(x)        (x)
@@ -866,7 +867,7 @@ typedef struct
 #define  cpu_to_be32(x) swap32(x)
 #define  BE32_TO_CPU(x) swap32(x)
 #define  CPU_TO_BE32(x) swap32(x)
-//! @}
+//! @}//! @}
 
 
 /*! \name Endianism Conversion
@@ -879,7 +880,7 @@ typedef struct
  *   - swap16, swap32 and swap64 to apply to non-constant expressions (values
  *     unknown at compile time).
  */
-//! @{
+//! @{//! @{
 
 /*! \brief Toggles the endianism of \a u16 (by swapping its bytes).
  *
@@ -953,36 +954,36 @@ typedef struct
                            ((U64)swap32((U64)(u64)) << 32)))
 #endif
 
-//! @}
+//! @}//! @}
 
 
 /*! \name Target Abstraction
  */
-//! @{
+//! @{//! @{
 
-#define _GLOBEXT_           extern      //!< extern storage-class specifier.
-#define _CONST_TYPE_        const       //!< const type qualifier.
-#define _MEM_TYPE_SLOW_                 //!< Slow memory type.
-#define _MEM_TYPE_MEDFAST_              //!< Fairly fast memory type.
-#define _MEM_TYPE_FAST_                 //!< Fast memory type.
+#define _GLOBEXT_           extern      //!< extern storage-class specifier.//！<外部存储类说明符。
+#define _CONST_TYPE_        const       //!< const type qualifier.//！<常量类型限定符。
+#define _MEM_TYPE_SLOW_                 //!< Slow memory type.//！<慢速内存类型。
+#define _MEM_TYPE_MEDFAST_              //!< Fairly fast memory type.//！<相当快的内存类型。
+#define _MEM_TYPE_FAST_                 //!< Fast memory type.//！<快速内存类型。
 
-typedef U8                  Byte;       //!< 8-bit unsigned integer.
+typedef U8                  Byte;       //!< 8-bit unsigned integer.//！<8位无符号整数。
 
-#define memcmp_ram2ram      memcmp      //!< Target-specific memcmp of RAM to RAM.
-#define memcmp_code2ram     memcmp      //!< Target-specific memcmp of RAM to NVRAM.
-#define memcpy_ram2ram      memcpy      //!< Target-specific memcpy from RAM to RAM.
-#define memcpy_code2ram     memcpy      //!< Target-specific memcpy from NVRAM to RAM.
+#define memcmp_ram2ram      memcmp      //!< Target-specific memcmp of RAM to RAM.//！<RAM到RAM的目标特定memcmp。
+#define memcmp_code2ram     memcmp      //!< Target-specific memcmp of RAM to NVRAM.//！<RAM到NVRAM的目标特定memcmp。
+#define memcpy_ram2ram      memcpy      //!< Target-specific memcpy from RAM to RAM.//！<从一个RAM到另一个RAM的目标特定内存。
+#define memcpy_code2ram     memcpy      //!< Target-specific memcpy from NVRAM to RAM.//！<从NVRAM到RAM的目标特定内存。
 
-#define LSB0(u32)           LSB0W(u32)  //!< Least significant byte of 1st rank of \a u32.
-#define LSB1(u32)           LSB1W(u32)  //!< Least significant byte of 2nd rank of \a u32.
-#define LSB2(u32)           LSB2W(u32)  //!< Least significant byte of 3rd rank of \a u32.
-#define LSB3(u32)           LSB3W(u32)  //!< Least significant byte of 4th rank of \a u32.
-#define MSB3(u32)           MSB3W(u32)  //!< Most significant byte of 4th rank of \a u32.
-#define MSB2(u32)           MSB2W(u32)  //!< Most significant byte of 3rd rank of \a u32.
-#define MSB1(u32)           MSB1W(u32)  //!< Most significant byte of 2nd rank of \a u32.
-#define MSB0(u32)           MSB0W(u32)  //!< Most significant byte of 1st rank of \a u32.
+#define LSB0(u32)           LSB0W(u32)  //!< Least significant byte of 1st rank of \a u32.//！<u32第1列的最低有效字节。
+#define LSB1(u32)           LSB1W(u32)  //!< Least significant byte of 2nd rank of \a u32.//！<u32第二级的最低有效字节。
+#define LSB2(u32)           LSB2W(u32)  //!< Least significant byte of 3rd rank of \a u32.//！<u32第3列的最低有效字节。
+#define LSB3(u32)           LSB3W(u32)  //!< Least significant byte of 4th rank of \a u32.//！<u32第4列的最低有效字节。
+#define MSB3(u32)           MSB3W(u32)  //!< Most significant byte of 4th rank of \a u32.//！<u32第4列的最高有效字节。
+#define MSB2(u32)           MSB2W(u32)  //!< Most significant byte of 3rd rank of \a u32.//！<u32第3列的最高有效字节。
+#define MSB1(u32)           MSB1W(u32)  //!< Most significant byte of 2nd rank of \a u32.//！<u32第二级的最高有效字节。
+#define MSB0(u32)           MSB0W(u32)  //!< Most significant byte of 1st rank of \a u32.//！<u32第1列的最高有效字节。
 
-//! @}
+//! @}//! @}
 
 /**
  * \brief Calculate \f$ \left\lceil \frac{a}{b} \right\rceil \f$ using
@@ -995,7 +996,7 @@ typedef U8                  Byte;       //!< 8-bit unsigned integer.
  */
 #define div_ceil(a, b)      (((a) + (b) - 1) / (b))
 
-#endif  // #ifndef __ASSEMBLY__
+#endif  // #ifndef __ASSEMBLY__//#ifndef u组件__
 
 
 #ifdef __ICCARM__

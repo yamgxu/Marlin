@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,19 +32,19 @@
 
 #define BOARD_INFO_NAME "2PrintBeta Due"
 
-//
-// M3/M4/M5 - Spindle/Laser Control
-//
-#define SPINDLE_LASER_ENA_PIN                 66  // Pullup or pulldown!
+////
+// M3/M4/M5 - Spindle/Laser Control//M3/M4/M5-主轴/激光控制
+////
+#define SPINDLE_LASER_ENA_PIN                 66  // Pullup or pulldown!//拉起还是拉下！
 #define SPINDLE_DIR_PIN                       67
-#define SPINDLE_LASER_PWM_PIN                 44  // Hardware PWM
+#define SPINDLE_LASER_PWM_PIN                 44  // Hardware PWM//硬件脉宽调制
 
 #include "pins_RAMPS.h"
 
-//
-// Temperature Sensors
-//
+////
+// Temperature Sensors//温度传感器
+////
 #undef TEMP_0_PIN
 #undef TEMP_1_PIN
-#define TEMP_0_PIN                             9  // Analog Input
-#define TEMP_1_PIN                            11  // Analog Input
+#define TEMP_0_PIN                             9  // Analog Input//模拟输入
+#define TEMP_1_PIN                            11  // Analog Input//模拟输入

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*
   Fontname: -Adobe-Helvetica-Medium-R-Normal--25-180-100-100-P-130-ISO10646-1
   Copyright: Copyright (c) 1984, 1987 Adobe Systems Incorporated. All Rights Reserved. Copyright (c) 1988, 1991 Digital Equipment Corporation. All Rights Reserved.
@@ -17,20 +18,20 @@
 #include <stdint.h>
 
 extern const uint8_t Helvetica18_symbols[71] = {
-  0,28,37,253,248,19,4,37,9,49,1,9,251,24,251,19,251,  // tFont
-  0,0,0,0,0,0,  // 0x01 - LCD_STR_REFRESH
-  0,0,0,0,0,0,  // 0x02 - LCD_STR_FOLDER
-  255,  // 0x03 - LCD_STR_ARROW_RIGHT
-  255,  // 0x04 - LCD_STR_UPLEVEL
-  255,  // 0x05 - LCD_STR_CLOCK
-  255,  // 0x06 - LCD_STR_FEEDRATE
-  255,  // 0x07 - LCD_STR_BEDTEMP
-  7,18,18,8,0,1, 0,56, 68,68,68,68,68,84,84,84,84,84, 214,186,186,186,198,124,  // 0x08 - LCD_STR_THERMOMETER
-  7,7,7,7,0,15,56,124,198,198,198,124,56,  // 0x09 - LCD_STR_DEGREE
+  0,28,37,253,248,19,4,37,9,49,1,9,251,24,251,19,251,  // tFont//特丰
+  0,0,0,0,0,0,  // 0x01 - LCD_STR_REFRESH//0x01-LCD_STR_刷新
+  0,0,0,0,0,0,  // 0x02 - LCD_STR_FOLDER//0x02-LCD_STR_文件夹
+  255,  // 0x03 - LCD_STR_ARROW_RIGHT//0x03-液晶显示屏箭头向右
+  255,  // 0x04 - LCD_STR_UPLEVEL//0x04-液晶显示上一级
+  255,  // 0x05 - LCD_STR_CLOCK//0x05-液晶显示时钟
+  255,  // 0x06 - LCD_STR_FEEDRATE//0x06-LCD_STR_进给速度
+  255,  // 0x07 - LCD_STR_BEDTEMP//0x07-LCD_STR_BEDTEMP
+  7,18,18,8,0,1, 0,56, 68,68,68,68,68,84,84,84,84,84, 214,186,186,186,198,124,  // 0x08 - LCD_STR_THERMOMETER//0x08-LCD_-STR_温度计
+  7,7,7,7,0,15,56,124,198,198,198,124,56,  // 0x09 - LCD_STR_DEGREE//0x09-液晶显示器强度等级
 };
 
 extern const uint8_t Helvetica18[7307] = {
-  0,28,37,253,248,19,4,37,9,49,32,255,251,24,251,19,251,  // tFont
+  0,28,37,253,248,19,4,37,9,49,32,255,251,24,251,19,251,  // tFont//特丰
   0,0,0,6,0,1,2,19,19,6,2,0,192,192,192,
   192,192,192,192,192,192,192,192,192,128,128,0,0,192,192,192,
   6,6,6,8,1,13,204,204,204,204,204,68,11,17,34,14,
@@ -489,4 +490,4 @@ extern const uint8_t Helvetica18[7307] = {
   0,6,0,6,0,12,0,60,0,56,0
 };
 
-#endif // HAS_GRAPHICAL_TFT
+#endif // HAS_GRAPHICAL_TFT//有图形化的TFT

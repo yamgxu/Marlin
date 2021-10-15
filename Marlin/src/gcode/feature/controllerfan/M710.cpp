@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -78,4 +79,4 @@ void GcodeSuite::M710() {
     M710_report(false);
 }
 
-#endif // CONTROLLER_FAN_EDITABLE
+#endif // CONTROLLER_FAN_EDITABLE//控制器\u风扇\u可编辑

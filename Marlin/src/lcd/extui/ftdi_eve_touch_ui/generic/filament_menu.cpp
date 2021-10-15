@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*********************
  * filament_menu.cpp *
  *********************/
@@ -81,4 +82,4 @@ bool FilamentMenu::onTouchEnd(uint8_t tag) {
   return true;
 }
 
-#endif // FTDI_FILAMENT_MENU
+#endif // FTDI_FILAMENT_MENU//FTDI_灯丝_菜单

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /******************
  * tiny_timer.cpp *
  ******************/
@@ -36,4 +37,4 @@ void tiny_timer_t::start() {
     TERN(__MARLIN_FIRMWARE__, ExtUI::safe_millis(), millis())
   );
 }
-#endif // FTDI_EXTENDED
+#endif // FTDI_EXTENDED//FTDI_扩展

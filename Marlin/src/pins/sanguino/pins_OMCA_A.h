@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -79,16 +80,16 @@
 
 #define BOARD_INFO_NAME "Alpha OMCA"
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_STOP_PIN                             0
 #define Y_STOP_PIN                             1
 #define Z_STOP_PIN                             2
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                            21
 #define X_DIR_PIN                             20
 #define X_ENABLE_PIN                          24
@@ -105,31 +106,31 @@
 #define E0_DIR_PIN                            27
 #define E0_ENABLE_PIN                         24
 
-#define E1_STEP_PIN                           -1  // 19
-#define E1_DIR_PIN                            -1  // 18
+#define E1_STEP_PIN                           -1  // 19// 19
+#define E1_DIR_PIN                            -1  // 18// 18
 #define E1_ENABLE_PIN                         24
 
-#define E2_STEP_PIN                           -1  // 17
-#define E2_DIR_PIN                            -1  // 16
+#define E2_STEP_PIN                           -1  // 17// 17
+#define E2_DIR_PIN                            -1  // 16// 16
 #define E2_ENABLE_PIN                         24
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                             0  // Analog Input (D27)
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                             0  // Analog Input (D27)//模拟输入（D27）
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_0_PIN                           4
 
 #ifndef FAN_PIN
   #define FAN_PIN                              3
 #endif
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define SDSS                                  11
 
 /*  Unused (1) (2) (3) 4 5 6 7 8 9 10 11 12 13 (14) (15) (16) 17 (18) (19) (20) (21) (22) (23) 24 (25) (26) (27) 28 (29) (30) (31)  */

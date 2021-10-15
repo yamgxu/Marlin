@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,26 +30,26 @@
   #define BOARD_INFO_NAME "RigidBoard"
 #endif
 
-//
-// Z Probe (when not Z_MIN_PIN)
-//
+////
+// Z Probe (when not Z_MIN_PIN)//Z探头（非Z_MIN_引脚时）
+////
 #ifndef Z_MIN_PROBE_PIN
-  #define Z_MIN_PROBE_PIN                     19  // Z-MAX pin J14 End Stops
+  #define Z_MIN_PROBE_PIN                     19  // Z-MAX pin J14 End Stops//Z-MAX引脚J14端部止动块
 #endif
 
-//
-// MOSFET changes
-//
-#define RAMPS_D9_PIN                           8  // FAN (by default)
-#define RAMPS_D10_PIN                          9  // EXTRUDER 1
-#define MOSFET_D_PIN                          12  // EXTRUDER 2 or FAN
+////
+// MOSFET changes//MOSFET变化
+////
+#define RAMPS_D9_PIN                           8  // FAN (by default)//风扇（默认情况下）
+#define RAMPS_D10_PIN                          9  // EXTRUDER 1//挤出机1
+#define MOSFET_D_PIN                          12  // EXTRUDER 2 or FAN//挤出机2或风扇
 
 #include "pins_RAMPS.h"
 
-//
-// Steppers
-//
-// RigidBot swaps E0 / E1 plugs vs RAMPS 1.3
+////
+// Steppers//踏步机
+////
+// RigidBot swaps E0 / E1 plugs vs RAMPS 1.3//RigidBot交换E0/E1插头与坡道1.3
 #undef E0_STEP_PIN
 #undef E0_DIR_PIN
 #undef E0_ENABLE_PIN
@@ -63,61 +64,61 @@
 #define E1_DIR_PIN                            28
 #define E1_ENABLE_PIN                         24
 
-#define STEPPER_RESET_PIN                     41  // Stepper drivers have a reset on RigidBot
+#define STEPPER_RESET_PIN                     41  // Stepper drivers have a reset on RigidBot//步进驱动程序在RigidBot上重置
 
-//
-// Temperature Sensors
-//
+////
+// Temperature Sensors//温度传感器
+////
 #undef TEMP_0_PIN
 #undef TEMP_1_PIN
 #undef TEMP_BED_PIN
-#define TEMP_0_PIN                            14  // Analog Input
-#define TEMP_1_PIN                            13  // Analog Input
-#define TEMP_BED_PIN                          15  // Analog Input
+#define TEMP_0_PIN                            14  // Analog Input//模拟输入
+#define TEMP_1_PIN                            13  // Analog Input//模拟输入
+#define TEMP_BED_PIN                          15  // Analog Input//模拟输入
 
-// SPI for Max6675 or Max31855 Thermocouple
+// SPI for Max6675 or Max31855 Thermocouple//Max6675或Max31855热电偶的SPI
 #undef MAX6675_SS_PIN
 #if DISABLED(SDSUPPORT)
-  #define MAX6675_SS_PIN                      53  // Don't use pin 53 if there is even the remote possibility of using Display/SD card
+  #define MAX6675_SS_PIN                      53  // Don't use pin 53 if there is even the remote possibility of using Display/SD card//如果存在使用显示卡/SD卡的远程可能性，请不要使用pin 53
 #else
-  #define MAX6675_SS_PIN                      49  // Don't use pin 49 as this is tied to the switch inside the SD card socket to detect if there is an SD card present
+  #define MAX6675_SS_PIN                      49  // Don't use pin 49 as this is tied to the switch inside the SD card socket to detect if there is an SD card present//不要使用针脚49，因为它与SD卡插槽内的开关相连，用于检测是否存在SD卡
 #endif
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #undef HEATER_BED_PIN
 #define HEATER_BED_PIN                        10
 
 #ifndef FAN_PIN
-  #define FAN_PIN                              8  // Same as RAMPS_13_EEF
+  #define FAN_PIN                              8  // Same as RAMPS_13_EEF//与坡道（13）EEF相同
 #endif
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #undef PS_ON_PIN
 
-//
-// LCD / Controller
-//
-// LCD Panel options for the RigidBoard
+////
+// LCD / Controller//液晶显示器/控制器
+////
+// LCD Panel options for the RigidBoard//用于刚性板的LCD面板选项
 #if ENABLED(RIGIDBOT_PANEL)
 
   #undef BEEPER_PIN
   #define BEEPER_PIN                          -1
 
-  // Direction buttons
+  // Direction buttons//方向按钮
   #define BTN_UP                              37
   #define BTN_DWN                             35
   #define BTN_LFT                             33
   #define BTN_RT                              32
 
-  // 'R' button
+  // 'R' button//“R”按钮
   #undef BTN_ENC
   #define BTN_ENC                             31
 
-  // Disable encoder
+  // Disable encoder//禁用编码器
   #undef BTN_EN1
   #undef BTN_EN2
 

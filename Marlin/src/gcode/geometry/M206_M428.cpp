@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -56,8 +57,8 @@ void GcodeSuite::M206() {
       set_home_offset((AxisEnum)i, parser.value_linear_units());
 
   #if ENABLED(MORGAN_SCARA)
-    if (parser.seen('T')) set_home_offset(A_AXIS, parser.value_float()); // Theta
-    if (parser.seen('P')) set_home_offset(B_AXIS, parser.value_float()); // Psi
+    if (parser.seen('T')) set_home_offset(A_AXIS, parser.value_float()); // Theta//西塔
+    if (parser.seen('P')) set_home_offset(B_AXIS, parser.value_float()); // Psi//防扩散安全倡议
   #endif
 
   if (!parser.seen(LINEAR_AXIS_GANG("X", "Y", "Z", "I", "J", "K")))
@@ -100,4 +101,4 @@ void GcodeSuite::M428() {
   BUZZ(100, 698);
 }
 
-#endif // HAS_M206_COMMAND
+#endif // HAS_M206_COMMAND//有_M206_命令

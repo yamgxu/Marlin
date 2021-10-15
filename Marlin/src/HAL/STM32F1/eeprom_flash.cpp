@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  *
@@ -38,7 +39,7 @@
 #include <flash_stm32.h>
 #include <EEPROM.h>
 
-// Store settings in the last two pages
+// Store settings in the last two pages//在最后两页中存储设置
 #ifndef MARLIN_EEPROM_SIZE
   #define MARLIN_EEPROM_SIZE ((EEPROM_PAGE_SIZE) * 2)
 #endif
@@ -51,7 +52,7 @@ bool PersistentStore::access_start() {
   const uint32_t *source = reinterpret_cast<const uint32_t*>(EEPROM_PAGE0_BASE);
   uint32_t *destination = reinterpret_cast<uint32_t*>(ram_eeprom);
 
-  static_assert(0 == (MARLIN_EEPROM_SIZE) % 4, "MARLIN_EEPROM_SIZE is corrupted. (Must be a multiple of 4.)"); // Ensure copying as uint32_t is safe
+  static_assert(0 == (MARLIN_EEPROM_SIZE) % 4, "MARLIN_EEPROM_SIZE is corrupted. (Must be a multiple of 4.)"); // Ensure copying as uint32_t is safe//确保按uint32进行复制是安全的
   constexpr size_t eeprom_size_u32 = (MARLIN_EEPROM_SIZE) / 4;
 
   for (size_t i = 0; i < eeprom_size_u32; ++i, ++destination, ++source)
@@ -66,12 +67,12 @@ bool PersistentStore::access_finish() {
   if (eeprom_dirty) {
     FLASH_Status status;
 
-    // Instead of erasing all (both) pages, maybe in the loop we check what page we are in, and if the
-    // data has changed in that page. We then erase the first time we "detect" a change. In theory, if
-    // nothing changed in a page, we wouldn't need to erase/write it.
-    // Or, instead of checking at this point, turn eeprom_dirty into an array of bool the size of number
-    // of pages. Inside write_data, we set the flag to true at that time if something in that
-    // page changes...either way, something to look at later.
+    // Instead of erasing all (both) pages, maybe in the loop we check what page we are in, and if the//与其擦除所有（两个）页面，不如在循环中检查我们所处的页面，以及
+    // data has changed in that page. We then erase the first time we "detect" a change. In theory, if//该页中的数据已更改。然后，当我们第一次“检测”到一个变化时，我们就删除它。理论上，如果
+    // nothing changed in a page, we wouldn't need to erase/write it.//页面中没有任何更改，我们不需要擦除/写入它。
+    // Or, instead of checking at this point, turn eeprom_dirty into an array of bool the size of number//或者，不要在此时进行检查，而是将eeprom_dirty转换为一个大小为数字的布尔数组
+    // of pages. Inside write_data, we set the flag to true at that time if something in that//页数。在write_数据中，如果该数据中有某些内容，我们将该标志设置为true
+    // page changes...either way, something to look at later.//页面更改…无论哪种方式，都需要稍后查看。
     FLASH_Unlock();
 
     #define ACCESS_FINISHED(TF) { FLASH_Lock(); eeprom_dirty = false; return TF; }
@@ -98,7 +99,7 @@ bool PersistentStore::write_data(int &pos, const uint8_t *value, size_t size, ui
   eeprom_dirty = true;
   crc16(crc, value, size);
   pos += size;
-  return false;  // return true for any error
+  return false;  // return true for any error//对于任何错误，返回true
 }
 
 bool PersistentStore::read_data(int &pos, uint8_t *value, const size_t size, uint16_t *crc, const bool writing/*=true*/) {
@@ -106,8 +107,8 @@ bool PersistentStore::read_data(int &pos, uint8_t *value, const size_t size, uin
   if (writing) for (size_t i = 0; i < size; i++) value[i] = ram_eeprom[pos + i];
   crc16(crc, buff, size);
   pos += size;
-  return false;  // return true for any error
+  return false;  // return true for any error//对于任何错误，返回true
 }
 
-#endif // FLASH_EEPROM_EMULATION
-#endif // __STM32F1__
+#endif // FLASH_EEPROM_EMULATION//闪存EEPROM模拟
+#endif // __STM32F1__//_uustm32f1__

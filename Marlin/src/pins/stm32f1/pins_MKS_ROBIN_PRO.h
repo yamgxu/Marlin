@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -35,24 +36,24 @@
 
 #define BOARD_NO_NATIVE_USB
 
-//
-// Release PB4 (Y_ENABLE_PIN) from JTAG NRST role
-//
+////
+// Release PB4 (Y_ENABLE_PIN) from JTAG NRST role//从JTAG NRST角色中释放PB4（Y_启用_引脚）
+////
 #define DISABLE_DEBUG
 
-//
-// Note: MKS Robin board is using SPI2 interface.
-//
+////
+// Note: MKS Robin board is using SPI2 interface.//注：MKS Robin板使用SPI2接口。
+////
 #define SPI_DEVICE                             2
 
-//
-// Servos
-//
-#define SERVO0_PIN                          PA8   // Enable BLTOUCH
+////
+// Servos//伺服
+////
+#define SERVO0_PIN                          PA8   // Enable BLTOUCH//启用BLTOUCH
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_MIN_PIN                           PA15
 #define X_MAX_PIN                           PG7
 #define Y_MIN_PIN                           PA12
@@ -60,9 +61,9 @@
 #define Z_MIN_PIN                           PA11
 #define Z_MAX_PIN                           PC4
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_ENABLE_PIN                        PE4
 #define X_STEP_PIN                          PE3
 #define X_DIR_PIN                           PE2
@@ -104,9 +105,9 @@
 #ifndef E2_CS_PIN
   #define E2_CS_PIN                         PG9
 #endif
-//
-// Software SPI pins for TMC2130 stepper drivers
-//
+////
+// Software SPI pins for TMC2130 stepper drivers//TMC2130步进驱动器的软件SPI引脚
+////
 #if ENABLED(TMC_USE_SW_SPI)
   #ifndef TMC_SW_MOSI
     #define TMC_SW_MOSI                     PB15
@@ -126,16 +127,16 @@
    * Hardware serial communication ports.
    * If undefined software serial is used according to the pins below
    */
-  //#define X_HARDWARE_SERIAL  MSerial1
-  //#define Y_HARDWARE_SERIAL  MSerial1
-  //#define Z_HARDWARE_SERIAL  MSerial1
-  //#define E0_HARDWARE_SERIAL MSerial1
-  //#define E1_HARDWARE_SERIAL MSerial1
-  //#define E2_HARDWARE_SERIAL MSerial1
+  //#define X_HARDWARE_SERIAL  MSerial1//#定义X_硬件_串行MSerial1
+  //#define Y_HARDWARE_SERIAL  MSerial1//#定义Y_硬件_串行MSerial1
+  //#define Z_HARDWARE_SERIAL  MSerial1//#定义Z_硬件_串行MSerial1
+  //#define E0_HARDWARE_SERIAL MSerial1//#定义E0_硬件_串行MSerial1
+  //#define E1_HARDWARE_SERIAL MSerial1//#定义E1_硬件_串行MSerial1
+  //#define E2_HARDWARE_SERIAL MSerial1//#定义E2_硬件_串行MSerial1
 
-  //
-  // Software serial
-  //
+  ////
+  // Software serial//软件系列
+  ////
   #define X_SERIAL_TX_PIN                   PF7
   #define X_SERIAL_RX_PIN                   PF8
 
@@ -155,38 +156,38 @@
   #define E2_SERIAL_RX_PIN                  PG9
 #endif
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                          PC1   // TH1
-#define TEMP_1_PIN                          PC2   // TH2
-#define TEMP_2_PIN                          PC3   // TH3
-#define TEMP_BED_PIN                        PC0   // TB1
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                          PC1   // TH1//TH1
+#define TEMP_1_PIN                          PC2   // TH2//TH2
+#define TEMP_2_PIN                          PC3   // TH3//TH3
+#define TEMP_BED_PIN                        PC0   // TB1//TB1
 
-//
-// Heaters / Fans
-//
-#define HEATER_0_PIN                        PF10  // +HE0-
-#define HEATER_1_PIN                        PB0   // +HE1-
-#define HEATER_2_PIN                        PF9   // +HE2-
-#define HEATER_BED_PIN                      PA0   // +HOT-BED-
-#define FAN_PIN                             PB1   // +FAN-
+////
+// Heaters / Fans//加热器/风扇
+////
+#define HEATER_0_PIN                        PF10  // +HE0-//+HE0-
+#define HEATER_1_PIN                        PB0   // +HE1-//+HE1-
+#define HEATER_2_PIN                        PF9   // +HE2-//+HE2-
+#define HEATER_BED_PIN                      PA0   // +HOT-BED-//+热床-
+#define FAN_PIN                             PB1   // +FAN-//+风扇-
 
 /**
  * Note: MKS Robin Pro board is using SPI2 interface. Make sure your stm32duino library is configured accordingly
  */
-//#define MAX6675_SS_PIN                    PE5   // TC1 - CS1
-//#define MAX6675_SS_PIN                    PF11  // TC2 - CS2
+//#define MAX6675_SS_PIN                    PE5   // TC1 - CS1//#定义MAX6675_不锈钢_引脚PE5//TC1-CS1
+//#define MAX6675_SS_PIN                    PF11  // TC2 - CS2//#定义MAX6675_不锈钢_引脚PF11//TC2-CS2
 
-#define POWER_LOSS_PIN                      PA2   // PW_DET
-#define PS_ON_PIN                           PG11  // PW_OFF
-#define FIL_RUNOUT_PIN                      PA4   // MT_DET1
-//#define FIL_RUNOUT_PIN                    PE6   // MT_DET2
-//#define FIL_RUNOUT_PIN                    PG14  // MT_DET3
+#define POWER_LOSS_PIN                      PA2   // PW_DET//普华永道
+#define PS_ON_PIN                           PG11  // PW_OFF//普华永道
+#define FIL_RUNOUT_PIN                      PA4   // MT_DET1//德图山1
+//#define FIL_RUNOUT_PIN                    PE6   // MT_DET2//#定义FIL_跳动引脚PE6//MT_DET2
+//#define FIL_RUNOUT_PIN                    PG14  // MT_DET3//#定义FIL_跳动引脚PG14//MT_DET3
 
-//
-// SD Card
-//
+////
+// SD Card//SD卡
+////
 #ifndef SDCARD_CONNECTION
   #define SDCARD_CONNECTION              ONBOARD
 #endif
@@ -211,11 +212,11 @@
  * to let the bootloader init the screen.
  */
 #if HAS_FSMC_TFT
-  #define FSMC_CS_PIN                       PD7   // NE4
-  #define FSMC_RS_PIN                       PD11  // A0
+  #define FSMC_CS_PIN                       PD7   // NE4//NE4
+  #define FSMC_RS_PIN                       PD11  // A0//A0
   #define FSMC_DMA_DEV                      DMA2
   #define FSMC_DMA_CHANNEL               DMA_CH5
-  #define LCD_USE_DMA_FSMC                        // Use DMA transfers to send data to the TFT
+  #define LCD_USE_DMA_FSMC                        // Use DMA transfers to send data to the TFT//使用DMA传输将数据发送到TFT
   #define TFT_CS_PIN                 FSMC_CS_PIN
   #define TFT_RS_PIN                 FSMC_RS_PIN
 
@@ -229,10 +230,10 @@
   #if NEED_TOUCH_PINS
     #define TOUCH_BUTTONS_HW_SPI
     #define TOUCH_BUTTONS_HW_SPI_DEVICE        2
-    #define TOUCH_CS_PIN                    PA7   // SPI2_NSS
-    #define TOUCH_SCK_PIN                   PB13  // SPI2_SCK
-    #define TOUCH_MISO_PIN                  PB14  // SPI2_MISO
-    #define TOUCH_MOSI_PIN                  PB15  // SPI2_MOSI
+    #define TOUCH_CS_PIN                    PA7   // SPI2_NSS//SPI2\U NSS
+    #define TOUCH_SCK_PIN                   PB13  // SPI2_SCK//SPI2_SCK
+    #define TOUCH_MISO_PIN                  PB14  // SPI2_MISO//味噌
+    #define TOUCH_MOSI_PIN                  PB15  // SPI2_MOSI//SPI2_MOSI
   #else
     #define BEEPER_PIN                      PC5
     #define BTN_ENC                         PG2
@@ -255,7 +256,7 @@
   #define BTN_EN1                           PG5
   #define BTN_EN2                           PG4
 
-  // MKS MINI12864 and MKS LCD12864B. If using MKS LCD12864A (Need to remove RPK2 resistor)
+  // MKS MINI12864 and MKS LCD12864B. If using MKS LCD12864A (Need to remove RPK2 resistor)//MKS MINI12864和MKS LCD12864B。如果使用MKS LCD12864A（需要拆除RPK2电阻器）
   #if ENABLED(MKS_MINI_12864)
 
     #define LCD_BACKLIGHT_PIN               -1
@@ -265,7 +266,7 @@
     #define DOGLCD_SCK                      PB13
     #define DOGLCD_MOSI                     PB15
 
-  #else                                           // !MKS_MINI_12864 && !ENDER2_STOCKDISPLAY
+  #else                                           // !MKS_MINI_12864 && !ENDER2_STOCKDISPLAY// !MKS_MINI_12864&&！ENDER2_STOCKDISPLAY
 
     #define LCD_PINS_D4                     PF14
     #if IS_ULTIPANEL
@@ -274,12 +275,12 @@
       #define LCD_PINS_D7                   PF13
 
       #if ENABLED(REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER)
-        #define BTN_ENC_EN           LCD_PINS_D7  // Detect the presence of the encoder
+        #define BTN_ENC_EN           LCD_PINS_D7  // Detect the presence of the encoder//检测编码器的存在
       #endif
 
     #endif
 
-  #endif // !MKS_MINI_12864 && !ENDER2_STOCKDISPLAY
+  #endif // !MKS_MINI_12864 && !ENDER2_STOCKDISPLAY// !MKS_MINI_12864&&！ENDER2_STOCKDISPLAY
 
 #endif
 
@@ -295,8 +296,8 @@
 
 #define HAS_SPI_FLASH                          1
 #if HAS_SPI_FLASH
-  #define SPI_FLASH_SIZE               0x1000000  // 16MB
-  #define W25QXX_CS_PIN                     PB12  // Flash chip-select
+  #define SPI_FLASH_SIZE               0x1000000  // 16MB//16MB
+  #define W25QXX_CS_PIN                     PB12  // Flash chip-select//闪存芯片选择
   #define W25QXX_MOSI_PIN                   PB15
   #define W25QXX_MISO_PIN                   PB14
   #define W25QXX_SCK_PIN                    PB13

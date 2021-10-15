@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * @file    fontutils.cpp
  * @brief   help functions for font and char
@@ -172,7 +173,7 @@ static inline uint8_t utf8_byte_pos_by_char_num_cb(const char *pstart, read_byte
   uint8_t byte_idx = 0;
   for (;;) {
     const uint8_t b = cb_read_byte(p + byte_idx);
-    if (!b) return byte_idx; // Termination byte of string
+    if (!b) return byte_idx; // Termination byte of string//字符串的终止字节
     if (utf8_is_start_byte_of_char(b)) {
       char_idx++;
       if (char_idx == charnum + 1) return byte_idx;

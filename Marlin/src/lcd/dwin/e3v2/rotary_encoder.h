@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -42,16 +43,16 @@ typedef struct {
 extern ENCODER_Rate EncoderRate;
 
 typedef enum {
-  ENCODER_DIFF_NO    = 0,  // no state
-  ENCODER_DIFF_CW    = 1,  // clockwise rotation
-  ENCODER_DIFF_CCW   = 2,  // counterclockwise rotation
-  ENCODER_DIFF_ENTER = 3   // click
+  ENCODER_DIFF_NO    = 0,  // no state//无州
+  ENCODER_DIFF_CW    = 1,  // clockwise rotation//顺时针旋转
+  ENCODER_DIFF_CCW   = 2,  // counterclockwise rotation//逆时针旋转
+  ENCODER_DIFF_ENTER = 3   // click//点击
 } ENCODER_DiffState;
 
-// Encoder initialization
+// Encoder initialization//编码器初始化
 void Encoder_Configuration();
 
-// Analyze encoder value and return state
+// Analyze encoder value and return state//分析编码器值和返回状态
 ENCODER_DiffState Encoder_ReceiveAnalyze();
 
 /*********************** Encoder LED ***********************/
@@ -71,24 +72,24 @@ ENCODER_DiffState Encoder_ReceiveAnalyze();
 
   extern unsigned int LED_DataArray[LED_NUM];
 
-  // LED light operation
+  // LED light operation//LED灯操作
   void LED_Action();
 
-  // LED initialization
+  // LED initialization//LED初始化
   void LED_Configuration();
 
-  // LED write data
+  // LED write data//LED写入数据
   void LED_WriteData();
 
-  // LED control
-  //  RGB_Scale: RGB color ratio
-  //  luminance: brightness (0~0xFF)
+  // LED control//LED控制
+  //  RGB_Scale: RGB color ratio//RGB_比例：RGB颜色比率
+  //  luminance: brightness (0~0xFF)//亮度：亮度（0~0xFF）
   void LED_Control(const uint8_t RGB_Scale, const uint8_t luminance);
 
-  // LED gradient control
-  //  RGB_Scale: RGB color ratio
-  //  luminance: brightness (0~0xFF)
-  //  change_Time: gradient time (ms)
+  // LED gradient control//LED梯度控制
+  //  RGB_Scale: RGB color ratio//RGB_比例：RGB颜色比率
+  //  luminance: brightness (0~0xFF)//亮度：亮度（0~0xFF）
+  //  change_Time: gradient time (ms)//更改时间：渐变时间（ms）
   void LED_GraduallyControl(const uint8_t RGB_Scale, const uint8_t luminance, const uint16_t change_Interval);
 
-#endif // LCD_LED
+#endif // LCD_LED//液晶显示器

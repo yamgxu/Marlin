@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -82,87 +83,87 @@
 
 #define BOARD_INFO_NAME "Teensylu"
 
-//
-// Limit Switch definitions that match the SCHEMATIC
-//
-//#define X_STOP_PIN                          25  // B5
-//#define Y_STOP_PIN                          26  // B6
-//#define Z_STOP_PIN                          27  // B7
-//#define E_STOP_PIN                          36  // E4
+////
+// Limit Switch definitions that match the SCHEMATIC//符合原理图的限位开关定义
+////
+//#define X_STOP_PIN                          25  // B5//#定义X_停止_引脚25//B5
+//#define Y_STOP_PIN                          26  // B6//#定义Y_停止_引脚26//B6
+//#define Z_STOP_PIN                          27  // B7//#定义Z_停止针27//B7
+//#define E_STOP_PIN                          36  // E4//#定义E_停止针36//E4
 
-//
-// Limit Switch definitions that match the SILKSCREEN
-//
-#define X_STOP_PIN                            26  // B6
-#define Y_STOP_PIN                            27  // B7
-#define Z_STOP_PIN                            36  // E4
-//#define E_STOP_PIN                          25  // B5
+////
+// Limit Switch definitions that match the SILKSCREEN//符合丝网印刷的限位开关定义
+////
+#define X_STOP_PIN                            26  // B6//B6
+#define Y_STOP_PIN                            27  // B7//B7
+#define Z_STOP_PIN                            36  // E4//E4
+//#define E_STOP_PIN                          25  // B5//#定义E_停止针25//B5
 
-//
-// Steppers
-//
-#define X_STEP_PIN                            28  // A0
-#define X_DIR_PIN                             29  // A1
-#define X_ENABLE_PIN                          19  // E7
+////
+// Steppers//踏步机
+////
+#define X_STEP_PIN                            28  // A0//A0
+#define X_DIR_PIN                             29  // A1//A1
+#define X_ENABLE_PIN                          19  // E7//E7
 
-#define Y_STEP_PIN                            30  // A2
-#define Y_DIR_PIN                             31  // A3
-#define Y_ENABLE_PIN                          18  // E6
+#define Y_STEP_PIN                            30  // A2//A2
+#define Y_DIR_PIN                             31  // A3//A3
+#define Y_ENABLE_PIN                          18  // E6//E6
 
-#define Z_STEP_PIN                            32  // A4
-#define Z_DIR_PIN                             33  // A5
-#define Z_ENABLE_PIN                          17  // C7
+#define Z_STEP_PIN                            32  // A4//A4
+#define Z_DIR_PIN                             33  // A5//A5
+#define Z_ENABLE_PIN                          17  // C7//C7
 
-#define E0_STEP_PIN                           34  // A6
-#define E0_DIR_PIN                            35  // A7
-#define E0_ENABLE_PIN                         13  // C3
+#define E0_STEP_PIN                           34  // A6//A6
+#define E0_DIR_PIN                            35  // A7//A7
+#define E0_ENABLE_PIN                         13  // C3//C3
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                             7  // Analog Input (Extruder)
-#define TEMP_BED_PIN                           6  // Analog Input (Bed)
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                             7  // Analog Input (Extruder)//模拟输入（挤出机）
+#define TEMP_BED_PIN                           6  // Analog Input (Bed)//模拟输入（Bed）
 
-//
-// Heaters / Fans
-//
-#define HEATER_0_PIN                          15  // C5 PWM3B - Extruder
-#define HEATER_BED_PIN                        14  // C4 PWM3C
+////
+// Heaters / Fans//加热器/风扇
+////
+#define HEATER_0_PIN                          15  // C5 PWM3B - Extruder//C5 PWM3B-挤出机
+#define HEATER_BED_PIN                        14  // C4 PWM3C//C4 PWM3C
 
 #ifndef FAN_PIN
-  #define FAN_PIN                             16  // C6 PWM3A
+  #define FAN_PIN                             16  // C6 PWM3A//C6 PWM3A
 #endif
 
-//
-// Misc. Functions
-//
-#define SDSS                                  20  // B0 JP31-6
+////
+// Misc. Functions//杂项。功能
+////
+#define SDSS                                  20  // B0 JP31-6//B0 JP31-6
 
 #ifndef CASE_LIGHT_PIN
-  #define CASE_LIGHT_PIN                       0  // D0 IO-14  PWM0B
+  #define CASE_LIGHT_PIN                       0  // D0 IO-14  PWM0B//D0 IO-14 PWM0B
 #endif
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 #if IS_ULTRA_LCD && IS_NEWPANEL
 
   #define BEEPER_PIN                          -1
 
   #if ENABLED(LCD_I2C_PANELOLU2)
-    #define BTN_EN1                            3  // D3 IO-8
-    #define BTN_EN2                            2  // D2 IO-10
-    #define BTN_ENC                           41  // F3 IO-7
-    #define SDSS                              38  // F0 IO-13 use SD card on Panelolu2
+    #define BTN_EN1                            3  // D3 IO-8//D3IO-8
+    #define BTN_EN2                            2  // D2 IO-10//D2 IO-10
+    #define BTN_ENC                           41  // F3 IO-7//F3 IO-7
+    #define SDSS                              38  // F0 IO-13 use SD card on Panelolu2//F0 IO-13使用Panelolu2上的SD卡
   #endif
 
   #define SD_DETECT_PIN                       -1
 
-#endif // IS_ULTRA_LCD && IS_NEWPANEL
+#endif // IS_ULTRA_LCD && IS_NEWPANEL//IS_ULTRA_LCD和IS_NEWPANEL
 
-//
-// M3/M4/M5 - Spindle/Laser Control
-//
-#define SPINDLE_LASER_PWM_PIN                 24  // B4 IO-3 PWM2A - MUST BE HARDWARE PWM
-#define SPINDLE_LASER_ENA_PIN                 39  // F1 IO-11 - Pin should have a pullup!
-#define SPINDLE_DIR_PIN                       40  // F2 IO-9
+////
+// M3/M4/M5 - Spindle/Laser Control//M3/M4/M5-主轴/激光控制
+////
+#define SPINDLE_LASER_PWM_PIN                 24  // B4 IO-3 PWM2A - MUST BE HARDWARE PWM//B4 IO-3 PWM2A-必须为硬件PWM
+#define SPINDLE_LASER_ENA_PIN                 39  // F1 IO-11 - Pin should have a pullup!//F1 IO-11-引脚应具有上拉功能！
+#define SPINDLE_DIR_PIN                       40  // F2 IO-9//F2 IO-9

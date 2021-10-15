@@ -1,3 +1,4 @@
+/** translatione by yx */
 /* Copyright (C) 2015-2016 Andrew J. Kroll
    and
 Copyright (C) 2011 Circuits At Home, LTD. All rights reserved.
@@ -20,7 +21,7 @@ Contact information
 -------------------
 
 Circuits At Home, LTD
-Web      :  https://www.circuitsathome.com
+Web      :  https://www.circuitsathome.com//www.circuitsathome.com
 e-mail   :  support@circuitsathome.com
  */
 #if !defined(_usb_h_) || defined(__HEXDUMP_H__)
@@ -50,7 +51,7 @@ public:
 
 template <class BASE_CLASS, class LEN_TYPE, class OFFSET_TYPE>
 void HexDumper<BASE_CLASS, LEN_TYPE, OFFSET_TYPE>::Parse(const LEN_TYPE len, const uint8_t *pbuf, const OFFSET_TYPE &offset) {
-        if(UsbDEBUGlvl >= 0x80) { // Fully bypass this block of code if we do not debug.
+        if(UsbDEBUGlvl >= 0x80) { // Fully bypass this block of code if we do not debug.//如果我们不调试，完全绕过这段代码。
                 for(LEN_TYPE j = 0; j < len; j++, byteCount++, byteTotal++) {
                         if(!byteCount) {
                                 PrintHex<OFFSET_TYPE > (byteTotal, 0x80);
@@ -67,4 +68,4 @@ void HexDumper<BASE_CLASS, LEN_TYPE, OFFSET_TYPE>::Parse(const LEN_TYPE len, con
         }
 }
 
-#endif // __HEXDUMP_H__
+#endif // __HEXDUMP_H__//_uuuhextump_H__

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,18 +30,18 @@
   #error "Always include 'leds.h' and not 'neopixel.h' directly."
 #endif
 
-// ------------------------
-// Includes
-// ------------------------
+// ------------------------// ------------------------
+// Includes//包括
+// ------------------------// ------------------------
 
 #include "../../inc/MarlinConfig.h"
 
 #include <Adafruit_NeoPixel.h>
 #include <stdint.h>
 
-// ------------------------
-// Defines
-// ------------------------
+// ------------------------// ------------------------
+// Defines//定义
+// ------------------------// ------------------------
 
 #define _NEO_IS_RGB(N) (N == NEO_RGB || N == NEO_RBG || N == NEO_GRB || N == NEO_GBR || N == NEO_BRG || N == NEO_BGR)
 
@@ -62,9 +63,9 @@
   #define CONJOINED_NEOPIXEL 1
 #endif
 
-// ------------------------
-// Function prototypes
-// ------------------------
+// ------------------------// ------------------------
+// Function prototypes//功能原型
+// ------------------------// ------------------------
 
 class Marlin_NeoPixel {
 private:
@@ -107,7 +108,7 @@ public:
   }
 
   static inline void show() {
-    // Some platforms cannot maintain PWM output when NeoPixel disables interrupts for long durations.
+    // Some platforms cannot maintain PWM output when NeoPixel disables interrupts for long durations.//当Neopix长时间禁用中断时，某些平台无法保持PWM输出。
     TERN_(HAS_PAUSE_SERVO_OUTPUT, PAUSE_SERVO_OUTPUT());
     adaneo1.show();
     #if PIN_EXISTS(NEOPIXEL2)
@@ -121,7 +122,7 @@ public:
     TERN_(HAS_PAUSE_SERVO_OUTPUT, RESUME_SERVO_OUTPUT());
   }
 
-  // Accessors
+  // Accessors//访问者
   static inline uint16_t pixels() { return adaneo1.numPixels() * TERN1(NEOPIXEL2_INSERIES, 2); }
 
   static inline uint8_t brightness() { return adaneo1.getBrightness(); }
@@ -133,7 +134,7 @@ public:
 
 extern Marlin_NeoPixel neo;
 
-// Neo pixel channel 2
+// Neo pixel channel 2//新像素频道2
 #if ENABLED(NEOPIXEL2_SEPARATE)
 
   #if _NEO_IS_RGB(NEOPIXEL2_TYPE)
@@ -141,7 +142,7 @@ extern Marlin_NeoPixel neo;
     #define NEO2_WHITE 255, 255, 255
   #else
     #define NEOPIXEL2_IS_RGBW 1
-    #define HAS_WHITE_LED2 1      // A white component can be passed for NEOPIXEL2
+    #define HAS_WHITE_LED2 1      // A white component can be passed for NEOPIXEL2//NEOPIXEL2可以传递白色组件
     #define NEO2_WHITE 0, 0, 0, 255
   #endif
 
@@ -165,7 +166,7 @@ extern Marlin_NeoPixel neo;
       adaneo.setPin(NEOPIXEL2_PIN);
     }
 
-    // Accessors
+    // Accessors//访问者
     static inline uint16_t pixels() { return adaneo.numPixels();}
     static inline uint8_t brightness() { return adaneo.getBrightness(); }
     static inline uint32_t Color(uint8_t r, uint8_t g, uint8_t b OPTARG(HAS_WHITE_LED2, uint8_t w)) {
@@ -175,6 +176,6 @@ extern Marlin_NeoPixel neo;
 
   extern Marlin_NeoPixel2 neo2;
 
-#endif // NEOPIXEL2_SEPARATE
+#endif // NEOPIXEL2_SEPARATE//NEOPIXEL2_分离
 
 #undef _NEO_IS_RGB

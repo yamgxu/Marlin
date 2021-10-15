@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*********************
  * text_ellipsis.cpp *
  *********************/
@@ -32,9 +33,9 @@ namespace FTDI {
     FontMetrics fm(font);
     const int16_t ellipsisWidth = fm.get_char_width('.') * 3;
 
-    // Compute the total line length, as well as
-    // the location in the string where it can
-    // split and still allow the ellipsis to fit.
+    // Compute the total line length, as well as//计算总行长，以及
+    // the location in the string where it can//字符串中它可以访问的位置
+    // split and still allow the ellipsis to fit.//拆分并仍保留省略号。
     int16_t lineWidth = 0;
     char *breakPoint   = str;
     #ifdef TOUCH_UI_USE_UTF8
@@ -86,6 +87,6 @@ namespace FTDI {
     strcpy_P(tmp, (const char*)pstr);
     _draw_text_with_ellipsis(cmd, x, y, w, h, tmp, options, font);
   }
-} // namespace FTDI
+} // namespace FTDI//名称空间FTDI
 
-#endif // FTDI_EXTENDED
+#endif // FTDI_EXTENDED//FTDI_扩展

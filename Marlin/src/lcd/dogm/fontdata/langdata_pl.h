@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Generated automatically by buildroot/share/fonts/uxggenpages.sh
  * Contents will be REPLACED by future processing!
@@ -31,10 +32,10 @@ const u8g_fntpgm_uint8_t fontpage_2_252_252[30] U8G_FONT_SECTION("fontpage_2_252
 
 #define FONTDATA_ITEM(page, begin, end, data) { page, begin, end, COUNT(data), data }
 static const uxg_fontinfo_t g_fontinfo[] PROGMEM = {
-    FONTDATA_ITEM(2, 132, 133, fontpage_2_132_133), // 'Ą' -- 'ą'
-    FONTDATA_ITEM(2, 135, 135, fontpage_2_135_135), // 'ć' -- 'ć'
-    FONTDATA_ITEM(2, 153, 153, fontpage_2_153_153), // 'ę' -- 'ę'
-    FONTDATA_ITEM(2, 193, 196, fontpage_2_193_196), // 'Ł' -- 'ń'
-    FONTDATA_ITEM(2, 218, 219, fontpage_2_218_219), // 'Ś' -- 'ś'
-    FONTDATA_ITEM(2, 252, 252, fontpage_2_252_252), // 'ż' -- 'ż'
+    FONTDATA_ITEM(2, 132, 133, fontpage_2_132_133), // 'Ą' -- 'ą'// 'Ą' -- 'ą'
+    FONTDATA_ITEM(2, 135, 135, fontpage_2_135_135), // 'ć' -- 'ć'// 'ć' -- 'ć'
+    FONTDATA_ITEM(2, 153, 153, fontpage_2_153_153), // 'ę' -- 'ę'// 'ę' -- 'ę'
+    FONTDATA_ITEM(2, 193, 196, fontpage_2_193_196), // 'Ł' -- 'ń'// 'Ł' -- 'ń'
+    FONTDATA_ITEM(2, 218, 219, fontpage_2_218_219), // 'Ś' -- 'ś'// 'Ś' -- 'ś'
+    FONTDATA_ITEM(2, 252, 252, fontpage_2_252_252), // 'ż' -- 'ż'// 'ż' -- 'ż'
 };

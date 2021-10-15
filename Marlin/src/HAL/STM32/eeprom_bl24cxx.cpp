@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -33,9 +34,9 @@
 #include "../shared/eeprom_if.h"
 #include "../shared/eeprom_api.h"
 
-//
-// PersistentStore
-//
+////
+// PersistentStore//持久存储
+////
 
 #ifndef MARLIN_EEPROM_SIZE
   #error "MARLIN_EEPROM_SIZE is required for IIC_BL24CXX_EEPROM."
@@ -51,9 +52,9 @@ bool PersistentStore::write_data(int &pos, const uint8_t *value, size_t size, ui
   while (size--) {
     uint8_t v = *value;
     uint8_t * const p = (uint8_t * const)pos;
-    if (v != eeprom_read_byte(p)) { // EEPROM has only ~100,000 write cycles, so only write bytes that have changed!
+    if (v != eeprom_read_byte(p)) { // EEPROM has only ~100,000 write cycles, so only write bytes that have changed!//EEPROM只有约100000个写入周期，因此只有已更改的写入字节！
       eeprom_write_byte(p, v);
-      if (++written & 0x7F) delay(2); else safe_delay(2); // Avoid triggering watchdog during long EEPROM writes
+      if (++written & 0x7F) delay(2); else safe_delay(2); // Avoid triggering watchdog during long EEPROM writes//避免在长时间EEPROM写入期间触发看门狗
       if (eeprom_read_byte(p) != v) {
         SERIAL_ECHO_MSG(STR_ERR_EEPROM_WRITE);
         return true;
@@ -78,5 +79,5 @@ bool PersistentStore::read_data(int &pos, uint8_t *value, size_t size, uint16_t 
   return false;
 }
 
-#endif // IIC_BL24CXX_EEPROM
-#endif // STM32F1
+#endif // IIC_BL24CXX_EEPROM//IIC_BL24CXX_EEPROM
+#endif // STM32F1//STM32F1

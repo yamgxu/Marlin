@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -42,29 +43,29 @@
   #define STM32_XL_DENSITY
 #endif
 
-//#define MCU_STM32F103ZE // not yet required
-// Enable EEPROM Emulation for this board, so that we don't overwrite factory data
+//#define MCU_STM32F103ZE // not yet required//#定义MCU_STM32F103ZE//尚不需要
+// Enable EEPROM Emulation for this board, so that we don't overwrite factory data//为此电路板启用EEPROM仿真，这样我们就不会覆盖出厂数据
 
-//#define I2C_EEPROM                              // AT24C64
-//#define MARLIN_EEPROM_SIZE            0x8000UL  // 64KB
+//#define I2C_EEPROM                              // AT24C64//#定义I2C_EEPROM//AT24C64
+//#define MARLIN_EEPROM_SIZE            0x8000UL  // 64KB//#定义MARLIN_EEPROM_大小0x8000UL//64KB
 
-//#define FLASH_EEPROM_EMULATION
-//#define MARLIN_EEPROM_SIZE            0x1000UL  // 4KB
-//#define MARLIN_EEPROM_SIZE (EEPROM_START_ADDRESS + (EEPROM_PAGE_SIZE) * 2UL)
+//#define FLASH_EEPROM_EMULATION//#定义FLASH_EEPROM_仿真
+//#define MARLIN_EEPROM_SIZE            0x1000UL  // 4KB//#定义MARLIN_EEPROM_大小0x1000UL//4KB
+//#define MARLIN_EEPROM_SIZE (EEPROM_START_ADDRESS + (EEPROM_PAGE_SIZE) * 2UL)//#定义MARLIN_EEPROM_大小（EEPROM_开始_地址+（EEPROM_页面_大小）*2UL）
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_STOP_PIN                          PC6
 #define Y_STOP_PIN                          PG8
 #define Z_STOP_PIN                          PG7
-//#define X_MAX_PIN                         PC5
-//#define Y_MAX_PIN                         PC4
-//#define Z_MAX_PIN                         PB0
+//#define X_MAX_PIN                         PC5//#定义X_最大值_引脚PC5
+//#define Y_MAX_PIN                         PC4//#定义Y_MAX_引脚PC4
+//#define Z_MAX_PIN                         PB0//#定义Z_MAX_引脚PB0
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                          PD6
 #define X_DIR_PIN                           PD3
 #define X_ENABLE_PIN                        PG9
@@ -85,15 +86,15 @@
 #define E1_DIR_PIN                          PE4
 #define E1_ENABLE_PIN                       PE6
 
-//
-// Temperature Sensors
-//
+////
+// Temperature Sensors//温度传感器
+////
 #define TEMP_0_PIN                          PC2
 #define TEMP_BED_PIN                        PC1
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_0_PIN                        PA2
 #define HEATER_BED_PIN                      PA3
 
@@ -101,31 +102,31 @@
 
 #define FIL_RUNOUT_PIN                      PC7
 
-//
-// LCD
-//
+////
+// LCD//液晶显示器
+////
 #define LCD_BACKLIGHT_PIN                   PF11
 #define FSMC_CS_PIN                         PD7
 #define FSMC_RS_PIN                         PG0
 
-#define LCD_USE_DMA_FSMC                          // Use DMA transfers to send data to the TFT
+#define LCD_USE_DMA_FSMC                          // Use DMA transfers to send data to the TFT//使用DMA传输将数据发送到TFT
 #define FSMC_DMA_DEV                        DMA2
 #define FSMC_DMA_CHANNEL                 DMA_CH5
 
-//
-// SD Card
-//
+////
+// SD Card//SD卡
+////
 #define SD_DETECT_PIN                       PF10
 
-//
-// Misc.
-//
-#define BEEPER_PIN                          PC3   // use PB7 to shut up if desired
+////
+// Misc.//杂项。
+////
+#define BEEPER_PIN                          PC3   // use PB7 to shut up if desired//如果需要，使用PB7关闭
 #define LED_PIN                             PC13
 
-//
-// Touch support
-//
+////
+// Touch support//触摸支架
+////
 #if NEED_TOUCH_PINS
   #define TOUCH_CS_PIN                      PA4
   #define TOUCH_INT_PIN                     PC4

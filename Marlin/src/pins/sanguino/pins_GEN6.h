@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -57,16 +58,16 @@
   #define BOARD_INFO_NAME "Gen6"
 #endif
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_STOP_PIN                            20
 #define Y_STOP_PIN                            25
 #define Z_STOP_PIN                            30
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                            15
 #define X_DIR_PIN                             18
 #define X_ENABLE_PIN                          19
@@ -79,42 +80,42 @@
 #define Z_DIR_PIN                             28
 #define Z_ENABLE_PIN                          29
 
-#define E0_STEP_PIN                            4  // Edited @ EJE Electronics 20100715
-#define E0_DIR_PIN                             2  // Edited @ EJE Electronics 20100715
-#define E0_ENABLE_PIN                          3  // Added @ EJE Electronics 20100715
+#define E0_STEP_PIN                            4  // Edited @ EJE Electronics 20100715//编辑@EJE Electronics 20100715
+#define E0_DIR_PIN                             2  // Edited @ EJE Electronics 20100715//编辑@EJE Electronics 20100715
+#define E0_ENABLE_PIN                          3  // Added @ EJE Electronics 20100715//新增@EJE Electronics 20100715
 
-//
-// Temperature Sensor
-//
-#define TEMP_0_PIN                             5  // Analog Input
+////
+// Temperature Sensor//温度传感器
+////
+#define TEMP_0_PIN                             5  // Analog Input//模拟输入
 
-//
-// Heaters
-//
-#define HEATER_0_PIN                          14  // changed @ rkoeppl 20110410
+////
+// Heaters//加热器
+////
+#define HEATER_0_PIN                          14  // changed @ rkoeppl 20110410//更改@rkoeppl 20110410
 
 #if !MB(GEN6)
-  #define HEATER_BED_PIN                       1  // changed @ rkoeppl 20110410
-  #define TEMP_BED_PIN                         0  // Analog Input
+  #define HEATER_BED_PIN                       1  // changed @ rkoeppl 20110410//更改@rkoeppl 20110410
+  #define TEMP_BED_PIN                         0  // Analog Input//模拟输入
 #endif
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define SDSS                                  17
 #define DEBUG_PIN                              0
 
 #ifndef CASE_LIGHT_PIN
-  #define CASE_LIGHT_PIN                      16  // Hardware PWM
+  #define CASE_LIGHT_PIN                      16  // Hardware PWM//硬件脉宽调制
 #endif
 
-// RS485 pins
+// RS485 pins//RS485引脚
 #define TX_ENABLE_PIN                         12
 #define RX_ENABLE_PIN                         13
 
-//
-// M3/M4/M5 - Spindle/Laser Control
-//
-#define SPINDLE_LASER_ENA_PIN                  5  // Pullup or pulldown!
-#define SPINDLE_LASER_PWM_PIN                 16  // Hardware PWM
+////
+// M3/M4/M5 - Spindle/Laser Control//M3/M4/M5-主轴/激光控制
+////
+#define SPINDLE_LASER_ENA_PIN                  5  // Pullup or pulldown!//拉起还是拉下！
+#define SPINDLE_LASER_PWM_PIN                 16  // Hardware PWM//硬件脉宽调制
 #define SPINDLE_DIR_PIN                        6

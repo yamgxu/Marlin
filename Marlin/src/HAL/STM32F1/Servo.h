@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -22,7 +23,7 @@
  */
 #pragma once
 
-// Pin number of unattached pins
+// Pin number of unattached pins//未连接管脚的管脚数
 #define NOT_ATTACHED                    (-1)
 #define INVALID_SERVO                   255
 
@@ -48,7 +49,7 @@ class libServo {
   private:
     void servoWrite(uint8_t pin, const uint16_t duty_cycle);
 
-    uint8_t servoIndex;               // index into the channel data for this servo
+    uint8_t servoIndex;               // index into the channel data for this servo//索引到此伺服的通道数据
     int32_t pin = NOT_ATTACHED;
     int32_t minAngle;
     int32_t maxAngle;

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -27,19 +28,19 @@
 
 #define BOARD_INFO_NAME "Anycubic RAMPS 1.4"
 
-// Board labeled pins:
+// Board labeled pins://板标签引脚：
 
 #define TG_HEATER_BED_PIN                      8
 #define TG_HEATER_0_PIN                       10
-#define TG_HEATER_1_PIN                       45  // Anycubic Kossel: Unused
+#define TG_HEATER_1_PIN                       45  // Anycubic Kossel: Unused//任何立方科塞尔：未使用
 
-#define TG_FAN0_PIN                            9  // Anycubic Kossel: Usually the part cooling fan
-#define TG_FAN1_PIN                            7  // Anycubic Kossel: Unused
-#define TG_FAN2_PIN                           44  // Anycubic Kossel: Hotend fan
+#define TG_FAN0_PIN                            9  // Anycubic Kossel: Usually the part cooling fan//Anycubic Kossel：通常是部分冷却风扇
+#define TG_FAN1_PIN                            7  // Anycubic Kossel: Unused//任何立方科塞尔：未使用
+#define TG_FAN2_PIN                           44  // Anycubic Kossel: Hotend fan//Anycubic Kossel：热端风扇
 
-//
-// Servos
-//
+////
+// Servos//伺服
+////
 #if MB(TRIGORILLA_14_11)
   #define SERVO0_PIN                           5
   #define SERVO1_PIN                           4
@@ -47,60 +48,60 @@
   #define SERVO3_PIN                           6
 #endif
 
-// Remap MOSFET pins to common usages:
+// Remap MOSFET pins to common usages://将MOSFET引脚重新映射到常见用途：
 
-#define RAMPS_D10_PIN            TG_HEATER_0_PIN  // HEATER_0_PIN is always RAMPS_D10_PIN in pins_RAMPS.h
+#define RAMPS_D10_PIN            TG_HEATER_0_PIN  // HEATER_0_PIN is always RAMPS_D10_PIN in pins_RAMPS.h//加热器\u 0\u引脚在引脚\u RAMPS.h中始终为RAMPS\u D10\u引脚
 
-#if HAS_MULTI_HOTEND                              // EEF and EEB
+#if HAS_MULTI_HOTEND                              // EEF and EEB//EEF和EEB
   #define RAMPS_D9_PIN           TG_HEATER_1_PIN
   #if !TEMP_SENSOR_BED
-    // EEF
+    // EEF//EEF
     #define RAMPS_D8_PIN             TG_FAN0_PIN
   #else
-    // EEB
+    // EEB//EEB
     #define RAMPS_D8_PIN       TG_HEATER_BED_PIN
-    #define FAN_PIN                  TG_FAN0_PIN  // Override pin 4 in pins_RAMPS.h
+    #define FAN_PIN                  TG_FAN0_PIN  // Override pin 4 in pins_RAMPS.h//超越引脚h中的引脚4
   #endif
 #elif TEMP_SENSOR_BED
-  // EFB (Anycubic Kossel default)
+  // EFB (Anycubic Kossel default)//EFB（任意立方Kossel默认值）
   #define RAMPS_D9_PIN               TG_FAN0_PIN
   #if ENABLED(ANYCUBIC_LCD_CHIRON)
-    #define RAMPS_D8_PIN         TG_HEATER_1_PIN  // Heated bed is connected to HEATER1 output
+    #define RAMPS_D8_PIN         TG_HEATER_1_PIN  // Heated bed is connected to HEATER1 output//加热床连接至加热器1输出
   #else
     #define RAMPS_D8_PIN       TG_HEATER_BED_PIN
   #endif
 #else
-  // EFF
+  // EFF//效率
   #define RAMPS_D9_PIN               TG_FAN1_PIN
   #define RAMPS_D8_PIN               TG_FAN0_PIN
 #endif
 
-#if HAS_MULTI_HOTEND || TEMP_SENSOR_BED           // EEF, EEB, EFB
+#if HAS_MULTI_HOTEND || TEMP_SENSOR_BED           // EEF, EEB, EFB//EEF，EEB，EFB
   #define FAN1_PIN                   TG_FAN1_PIN
 #endif
 #define FAN2_PIN                     TG_FAN2_PIN
 
 #ifndef E0_AUTO_FAN_PIN
-  #define E0_AUTO_FAN_PIN            TG_FAN2_PIN  // Used in Anycubic Kossel example config
+  #define E0_AUTO_FAN_PIN            TG_FAN2_PIN  // Used in Anycubic Kossel example config//用于任何立方体Kossel示例配置
 #endif
 
 #if ENABLED(ANYCUBIC_LCD_I3MEGA)
   #define CONTROLLER_FAN_PIN         TG_FAN1_PIN
 #endif
 
-//
-// AnyCubic standard pin mappings
-//
-//  On most printers, endstops are NOT all wired to the appropriate pins on the Trigorilla board.
-//  For instance, on a Chiron, Y axis goes to an aux connector.
-//  There are also other things that have been wired in creative ways.
-//  To enable PIN definitions for a specific printer model, #define the appropriate symbol after
-//  MOTHERBOARD in Configuration.h
+////
+// AnyCubic standard pin mappings//任意三次标准pin映射
+////
+//  On most printers, endstops are NOT all wired to the appropriate pins on the Trigorilla board.//在大多数打印机上，末端挡块并非全部连接到Trigorilla板上的相应引脚。
+//  For instance, on a Chiron, Y axis goes to an aux connector.//例如，在凯龙上，Y轴连接到辅助连接器。
+//  There are also other things that have been wired in creative ways.//还有其他一些东西是以创造性的方式连接起来的。
+//  To enable PIN definitions for a specific printer model, #define the appropriate symbol after//要为特定打印机型号启用PIN定义，请在
+//  MOTHERBOARD in Configuration.h//配置中的主板
 
-//
-// Limit Switches
-//
-//#define ANYCUBIC_4_MAX_PRO_ENDSTOPS
+////
+// Limit Switches//限位开关
+////
+//#define ANYCUBIC_4_MAX_PRO_ENDSTOPS//#定义任意立方\u 4\u MAX\u PRO\u端点
 
 #if ENABLED(ANYCUBIC_4_MAX_PRO_ENDSTOPS)
   #define X_MAX_PIN                           43
@@ -124,19 +125,19 @@
 
 #include "pins_RAMPS.h"
 
-//
-// AnyCubic made the following changes to 1.1.0-RC8
-// If these are appropriate for your LCD let us know.
-//
+////
+// AnyCubic made the following changes to 1.1.0-RC8//AnyCubic对1.1.0-RC8进行了以下更改
+// If these are appropriate for your LCD let us know.//如果这些适合您的LCD，请告知我们。
+////
 #if 0 && HAS_WIRED_LCD
 
-  // LCD Display output pins
+  // LCD Display output pins//液晶显示器输出引脚
   #if BOTH(IS_NEWPANEL, PANEL_ONE)
     #undef LCD_PINS_D6
     #define LCD_PINS_D6                       57
   #endif
 
-  // LCD Display input pins
+  // LCD Display input pins//液晶显示器输入引脚
   #if IS_NEWPANEL
     #if ANY(VIKI2, miniVIKI)
       #undef DOGLCD_A0
@@ -154,4 +155,4 @@
     #define DOGLCD_A0                         42
   #endif
 
-#endif // HAS_WIRED_LCD
+#endif // HAS_WIRED_LCD//有有线液晶显示器吗

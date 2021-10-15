@@ -1,3 +1,4 @@
+/** translatione by yx */
 /***************************************************************************
  * ARM Stack Unwinder, Michael.McTernan.2001@cs.bris.ac.uk
  * Updated, adapted and several bug fixes on 2018 by Eduardo José Tagle
@@ -31,8 +32,8 @@ static int32_t signExtend11(const uint16_t value) {
 
 UnwResult UnwStartThumb(UnwState * const state) {
   uint16_t t = UNW_MAX_INSTR_COUNT;
-  uint32_t lastJumpAddr = 0;  // Last JUMP address, to try to detect infinite loops
-  bool loopDetected = false;  // If a loop was detected
+  uint32_t lastJumpAddr = 0;  // Last JUMP address, to try to detect infinite loops//最后一个跳转地址，尝试检测无限循环
+  bool loopDetected = false;  // If a loop was detected//如果检测到循环
 
   for (;;) {
     uint16_t instr;
@@ -244,7 +245,7 @@ UnwResult UnwStartThumb(UnwState * const state) {
 
         UnwPrintd5("TB%c [r%d,r%d%s]\n", H ? 'H' : 'B', rn, (instr2 & 0xF), H ? ",LSL #1" : "");
 
-        // We are only interested if the RN is the PC. Let's choose the 1st destination
+        // We are only interested if the RN is the PC. Let's choose the 1st destination//我们只对RN是PC感兴趣。让我们选择第一个目的地
         if (rn == 15) {
           if (H) {
             uint16_t rv;
@@ -1063,4 +1064,4 @@ UnwResult UnwStartThumb(UnwState * const state) {
   return UNWIND_SUCCESS;
 }
 
-#endif // __arm__ || __thumb__
+#endif // __arm__ || __thumb__//手臂拇指__

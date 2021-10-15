@@ -1,3 +1,4 @@
+/** translatione by yx */
 /******************************************************************************
  * The MIT License
  *
@@ -33,12 +34,12 @@
 #include <stdint.h>
 #include <wirish.h>
 
-// SPI_HAS_TRANSACTION means SPI has
-//   - beginTransaction()
-//   - endTransaction()
-//   - usingInterrupt()
-//   - SPISetting(clock, bitOrder, dataMode)
-//#define SPI_HAS_TRANSACTION
+// SPI_HAS_TRANSACTION means SPI has//SPI_HAS_事务表示SPI已
+//   - beginTransaction()//-beginTransaction（）
+//   - endTransaction()//-endTransaction（）
+//   - usingInterrupt()//-使用中断（）
+//   - SPISetting(clock, bitOrder, dataMode)//-SPI设置（时钟、位顺序、数据模式）
+//#define SPI_HAS_TRANSACTION//#定义SPI_HAS_事务
 
 #define SPI_CLOCK_DIV2   SPI_BAUD_PCLK_DIV_2
 #define SPI_CLOCK_DIV4   SPI_BAUD_PCLK_DIV_4
@@ -53,11 +54,11 @@
  * Roger Clark. 20150106
  * Commented out redundant AVR defined
  *
-#define SPI_MODE_MASK 0x0C     // CPOL = bit 3, CPHA = bit 2 on SPCR
-#define SPI_CLOCK_MASK 0x03    // SPR1 = bit 1, SPR0 = bit 0 on SPCR
-#define SPI_2XCLOCK_MASK 0x01  // SPI2X = bit 0 on SPSR
+#define SPI_MODE_MASK 0x0C     // CPOL = bit 3, CPHA = bit 2 on SPCR//SPCR上的CPOL=位3，CPHA=位2
+#define SPI_CLOCK_MASK 0x03    // SPR1 = bit 1, SPR0 = bit 0 on SPCR//SPR1=位1，SPR0=SPCR上的位0
+#define SPI_2XCLOCK_MASK 0x01  // SPI2X = bit 0 on SPSR//SPI2X=SPSR上的位0
 
-// define SPI_AVR_EIMSK for AVR boards with external interrupt pins
+// define SPI_AVR_EIMSK for AVR boards with external interrupt pins//为带有外部中断引脚的AVR板定义SPI_AVR_EIMSK
 #ifdef EIMSK
   #define SPI_AVR_EIMSK EIMSK
 #elif defined(GICR)
@@ -74,9 +75,9 @@
   #define STM32_MSBFIRST 1
 #endif
 
-// PC13 or PA4
+// PC13 or PA4//PC13或PA4
 #define BOARD_SPI_DEFAULT_SS PA4
-//#define BOARD_SPI_DEFAULT_SS PC13
+//#define BOARD_SPI_DEFAULT_SS PC13//#定义电路板\u SPI\u默认值\u SS PC13
 
 #define SPI_MODE0 SPI_MODE_0
 #define SPI_MODE1 SPI_MODE_1
@@ -126,7 +127,7 @@ private:
     bitOrder = inBitOrder;
     dataMode = inDataMode;
     dataSize = inDataSize;
-    //state    = SPI_STATE_IDLE;
+    //state    = SPI_STATE_IDLE;//状态=SPI_状态_空闲；
   }
   uint32_t clock;
   uint32_t dataSize;
@@ -203,7 +204,7 @@ public:
   void setBitOrder(BitOrder bitOrder);
   void setDataMode(uint8_t dataMode);
 
-  // SPI Configuration methods
+  // SPI Configuration methods//SPI配置方法
   void attachInterrupt();
   void detachInterrupt();
 
@@ -250,7 +251,7 @@ public:
    * @param data to transmit.
    */
   void write(uint16_t data);
-  void write16(uint16_t data); // write 2 bytes in 8 bit mode (DFF=0)
+  void write16(uint16_t data); // write 2 bytes in 8 bit mode (DFF=0)//以8位模式写入2字节（DFF=0）
 
   /**
    * @brief Transmit one byte/word a specified number of times.
@@ -347,7 +348,7 @@ public:
    *     or 1-3 in high density devices.
    */
   void setModule(int spi_num) {
-    _currentSetting = &_settings[spi_num - 1];// SPI channels are called 1 2 and 3 but the array is zero indexed
+    _currentSetting = &_settings[spi_num - 1];// SPI channels are called 1 2 and 3 but the array is zero indexed//SPI通道称为1、2和3，但数组的索引为零
   }
 
   /* -- The following methods are deprecated --------------------------- */
@@ -418,8 +419,8 @@ private:
  * @brief Wait until TXE (tx empty) flag is set and BSY (busy) flag unset.
  */
 static inline void waitSpiTxEnd(spi_dev *spi_d) {
-  while (spi_is_tx_empty(spi_d) == 0) { /* nada */ } // wait until TXE=1
-  while (spi_is_busy(spi_d) != 0) { /* nada */ }     // wait until BSY=0
+  while (spi_is_tx_empty(spi_d) == 0) { /* nada */ } // wait until TXE=1//等到TXE=1
+  while (spi_is_busy(spi_d) != 0) { /* nada */ }     // wait until BSY=0//等待BSY=0
 }
 
 extern SPIClass SPI;

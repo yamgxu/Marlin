@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -118,38 +119,38 @@ namespace ExtUI {
      * To keep proper time, must be called at least every 1s.
      */
     uint32_t safe_millis() {
-      // Not killed? Just call millis()
+      // Not killed? Just call millis()//没有被杀？打电话给米利斯（）
       if (!flags.printer_killed) return millis();
 
       static uint32_t currTimeHI = 0; /* Current time */
 
-      // Machine was killed, reinit SysTick so we are able to compute time without ISRs
+      // Machine was killed, reinit SysTick so we are able to compute time without ISRs//机器被杀死了，所以我们可以在没有ISR的情况下计算时间
       if (currTimeHI == 0) {
-        // Get the last time the Arduino time computed (from CMSIS) and convert it to SysTick
+        // Get the last time the Arduino time computed (from CMSIS) and convert it to SysTick//获取上次计算的Arduino时间（来自CMSIS），并将其转换为SysTick
         currTimeHI = uint32_t((GetTickCount() * uint64_t(F_CPU / 8000)) >> 24);
 
-        // Reinit the SysTick timer to maximize its period
-        SysTick->LOAD  = SysTick_LOAD_RELOAD_Msk;                    // get the full range for the systick timer
-        SysTick->VAL   = 0;                                          // Load the SysTick Counter Value
-        SysTick->CTRL  = // MCLK/8 as source
-                         // No interrupts
-                         SysTick_CTRL_ENABLE_Msk;                    // Enable SysTick Timer
+        // Reinit the SysTick timer to maximize its period//重新设置SysTick计时器以最大化其周期
+        SysTick->LOAD  = SysTick_LOAD_RELOAD_Msk;                    // get the full range for the systick timer//获取systick定时器的全量程
+        SysTick->VAL   = 0;                                          // Load the SysTick Counter Value//加载SysTick计数器值
+        SysTick->CTRL  = // MCLK/8 as source//MCLK/8作为源
+                         // No interrupts//没有中断
+                         SysTick_CTRL_ENABLE_Msk;                    // Enable SysTick Timer//启用SysTick定时器
      }
 
-      // Check if there was a timer overflow from the last read
+      // Check if there was a timer overflow from the last read//检查上次读取是否有计时器溢出
       if (SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk) {
-        // There was. This means (SysTick_LOAD_RELOAD_Msk * 1000 * 8)/F_CPU ms has elapsed
+        // There was. This means (SysTick_LOAD_RELOAD_Msk * 1000 * 8)/F_CPU ms has elapsed//有。这意味着（SysTick_LOAD_RELOAD_Msk*1000*8）/F_CPU毫秒已过
         currTimeHI++;
       }
 
-      // Calculate current time in milliseconds
-      uint32_t currTimeLO = SysTick_LOAD_RELOAD_Msk - SysTick->VAL; // (in MCLK/8)
+      // Calculate current time in milliseconds//以毫秒为单位计算当前时间
+      uint32_t currTimeLO = SysTick_LOAD_RELOAD_Msk - SysTick->VAL; // (in MCLK/8)//（单位：MCLK/8）
       uint64_t currTime = ((uint64_t)currTimeLO) | (((uint64_t)currTimeHI) << 24);
 
-      // The ms count is
+      // The ms count is//ms计数为
       return (uint32_t)(currTime / (F_CPU / 8000));
     }
-  #endif // __SAM3X8E__
+  #endif // __SAM3X8E__//_uusam3x8e__
 
   void delay_us(uint32_t us) { DELAY_US(us); }
 
@@ -179,10 +180,10 @@ namespace ExtUI {
           case BED: thermalManager.reset_bed_idle_timer(); return;
         #endif
         #if ENABLED(HAS_HEATED_CHAMBER)
-          case CHAMBER: return; // Chamber has no idle timer
+          case CHAMBER: return; // Chamber has no idle timer//腔室没有空闲计时器
         #endif
         #if ENABLED(HAS_COOLER)
-          case COOLER: return;  // Cooler has no idle timer
+          case COOLER: return;  // Cooler has no idle timer//冷却器没有空闲计时器
         #endif
         default:
           TERN_(HAS_HOTEND, thermalManager.reset_hotend_idle_timer(heater - H0));
@@ -203,24 +204,24 @@ namespace ExtUI {
      * called with all zeros.
      */
     void jog(const xyz_float_t &dir) {
-      // The "destination" variable is used as a scratchpad in
-      // Marlin by GCODE routines, but should remain untouched
-      // during manual jogging, allowing us to reuse the space
-      // for our direction vector.
+      // The "destination" variable is used as a scratchpad in//“destination”变量在中用作草稿行
+      // Marlin by GCODE routines, but should remain untouched//Marlin由GCODE例程创建，但应保持不变
+      // during manual jogging, allowing us to reuse the space//在手动慢跑期间，允许我们重复使用空间
+      // for our direction vector.//我们的方向向量。
       destination = dir;
       flags.jogging = !NEAR_ZERO(dir.x) || !NEAR_ZERO(dir.y) || !NEAR_ZERO(dir.z);
     }
 
-    // Called by the polling routine in "joystick.cpp"
+    // Called by the polling routine in "joystick.cpp"//由“mogage.cpp”中的轮询例程调用
     void _joystick_update(xyz_float_t &norm_jog) {
       if (flags.jogging) {
         #define OUT_OF_RANGE(VALUE) (VALUE < -1.0f || VALUE > 1.0f)
 
         if (OUT_OF_RANGE(destination.x) || OUT_OF_RANGE(destination.y) || OUT_OF_RANGE(destination.z)) {
-          // If destination on any axis is out of range, it
-          // probably means the UI forgot to stop jogging and
-          // ran GCODE that wrote a position to destination.
-          // To prevent a disaster, stop jogging.
+          // If destination on any axis is out of range, it//如果任何轴上的目标超出范围，则
+          // probably means the UI forgot to stop jogging and//可能意味着用户界面忘记停止慢跑和跑步
+          // ran GCODE that wrote a position to destination.//运行将位置写入目标的GCODE。
+          // To prevent a disaster, stop jogging.//为了避免灾难，停止慢跑。
           flags.jogging = false;
           return;
         }
@@ -245,7 +246,7 @@ namespace ExtUI {
           case BED: return thermalManager.heater_idle[thermalManager.IDLE_INDEX_BED].timed_out;
         #endif
         #if ENABLED(HAS_HEATED_CHAMBER)
-          case CHAMBER: return false; // Chamber has no idle timer
+          case CHAMBER: return false; // Chamber has no idle timer//腔室没有空闲计时器
         #endif
         default:
           return TERN0(HAS_HOTEND, thermalManager.heater_idle[heater - H0].timed_out);
@@ -317,15 +318,15 @@ namespace ExtUI {
   }
 
   void setAxisPosition_mm(const_float_t position, const axis_t axis, const feedRate_t feedrate/*=0*/) {
-    // Get motion limit from software endstops, if any
+    // Get motion limit from software endstops, if any//从软件endstops（如果有）获取运动限制
     float min, max;
     soft_endstop.get_manual_axis_limits((AxisEnum)axis, min, max);
 
-    // Delta limits XY based on the current offset from center
-    // This assumes the center is 0,0
+    // Delta limits XY based on the current offset from center//基于当前中心偏移量的增量限制XY
+    // This assumes the center is 0,0//这假定中心为0,0
     #if ENABLED(DELTA)
       if (axis != Z) {
-        max = SQRT(sq(float(DELTA_PRINTABLE_RADIUS)) - sq(current_position[Y - axis])); // (Y - axis) == the other axis
+        max = SQRT(sq(float(DELTA_PRINTABLE_RADIUS)) - sq(current_position[Y - axis])); // (Y - axis) == the other axis//（Y轴）==另一个轴
         min = -max;
       }
     #endif
@@ -744,7 +745,7 @@ namespace ExtUI {
       if (!babystepAxis_steps(steps, axis)) return;
 
       #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
-        // Make it so babystepping in Z adjusts the Z probe offset.
+        // Make it so babystepping in Z adjusts the Z probe offset.//使其在Z方向上babystepping调整Z探头偏移。
         if (axis == Z && TERN1(HAS_MULTI_EXTRUDER, (linked_nozzles || active_extruder == 0)))
           probe.offset.z += mm;
       #endif
@@ -782,7 +783,7 @@ namespace ExtUI {
       return steps * planner.steps_to_mm[axis];
     }
 
-  #endif // BABYSTEPPING
+  #endif // BABYSTEPPING//婴儿步
 
   float getZOffset_mm() {
     return (0.0f
@@ -827,7 +828,7 @@ namespace ExtUI {
       HOTEND_LOOP() hotend_offset[e][axis] -= offs;
     }
 
-  #endif // HAS_HOTEND_OFFSET
+  #endif // HAS_HOTEND_OFFSET//有\u热端\u偏移
 
   #if HAS_BED_PROBE
     float getProbeOffset_mm(const axis_t axis) { return probe.offset.pos[axis]; }
@@ -876,7 +877,7 @@ namespace ExtUI {
           const float x_target = MESH_MIN_X + pos.x * (MESH_X_DIST),
                       y_target = MESH_MIN_Y + pos.y * (MESH_Y_DIST);
           if (x_target != current_position.x || y_target != current_position.y) {
-            // If moving across bed, raise nozzle to safe height over bed
+            // If moving across bed, raise nozzle to safe height over bed//如果在床上移动，将喷嘴提升至床上的安全高度
             feedrate_mm_s = Z_PROBE_FEEDRATE_FAST;
             destination = current_position;
             destination.z = Z_CLEARANCE_BETWEEN_PROBES;
@@ -896,9 +897,9 @@ namespace ExtUI {
         #endif
       }
 
-    #endif // HAS_MESH
+    #endif // HAS_MESH//有网格吗
 
-  #endif // HAS_LEVELING
+  #endif // HAS_LEVELING//你有找平吗
 
   #if ENABLED(HOST_PROMPT_SUPPORT)
     void setHostResponse(const uint8_t response) { host_response_handler(response); }
@@ -1120,9 +1121,9 @@ namespace ExtUI {
     #endif
   }
 
-} // namespace ExtUI
+} // namespace ExtUI//命名空间ExtUI
 
-// At the moment we hook into MarlinUI methods, but this could be cleaned up in the future
+// At the moment we hook into MarlinUI methods, but this could be cleaned up in the future//目前，我们使用MarlinUI方法，但这可以在将来得到清理
 
 void MarlinUI::init() { ExtUI::onStartup(); }
 
@@ -1136,4 +1137,4 @@ void MarlinUI::kill_screen(PGM_P const error, PGM_P const component) {
   }
 }
 
-#endif // EXTENSIBLE_UI
+#endif // EXTENSIBLE_UI//可扩展用户界面

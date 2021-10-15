@@ -1,3 +1,4 @@
+/** translatione by yx */
 /********************************
  * save_settings_dialog_box.cpp *
  ********************************/
@@ -40,8 +41,8 @@ bool SaveSettingsDialogBox::onTouchEnd(uint8_t tag) {
     case 1:
       injectCommands_P(PSTR("M500"));
       AlertDialogBox::show(GET_TEXT_F(MSG_EEPROM_SAVED));
-      // Remove SaveSettingsDialogBox from the stack
-      // so the alert box doesn't return to me.
+      // Remove SaveSettingsDialogBox from the stack//从堆栈中删除SaveSettingsDialogBox
+      // so the alert box doesn't return to me.//所以警报框不会返回给我。
       current_screen.forget();
       return true;
     default:
@@ -51,13 +52,13 @@ bool SaveSettingsDialogBox::onTouchEnd(uint8_t tag) {
 
 void SaveSettingsDialogBox::promptToSaveSettings() {
    if (needs_save) {
-     // Remove current screen from the stack
-     // so SaveSettingsDialogBox doesn't return here.
+     // Remove current screen from the stack//从堆栈中删除当前屏幕
+     // so SaveSettingsDialogBox doesn't return here.//所以SaveSettingsDialogBox不会返回这里。
      GOTO_SCREEN(SaveSettingsDialogBox);
      current_screen.forget();
    }
    else
-     GOTO_PREVIOUS(); // No save needed.
+     GOTO_PREVIOUS(); // No save needed.//不需要保存。
 }
 
-#endif // FTDI_SAVE_SETTINGS_DIALOG_BOX
+#endif // FTDI_SAVE_SETTINGS_DIALOG_BOX//FTDI保存设置对话框

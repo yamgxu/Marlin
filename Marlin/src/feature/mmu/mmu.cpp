@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -42,4 +43,4 @@ void select_multiplexed_stepper(const uint8_t e) {
   safe_delay(100);
 }
 
-#endif // HAS_PRUSA_MMU1
+#endif // HAS_PRUSA_MMU1//你有什么想法吗

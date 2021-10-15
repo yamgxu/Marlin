@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -38,7 +39,7 @@
 #define DISPLAY_CHARSET_ISO10646_1
 
 namespace Language_it {
-  using namespace Language_en; // Inherit undefined strings from English
+  using namespace Language_en; // Inherit undefined strings from English//从英语中继承未定义的字符串
 
   constexpr uint8_t    CHARSIZE                            = 1;
   PROGMEM Language_Str LANGUAGE                            = _UxGT("Italiano");
@@ -57,7 +58,7 @@ namespace Language_it {
   PROGMEM Language_Str MSG_MEDIA_USB_REMOVED               = _UxGT("Dispos.USB rimosso");
   PROGMEM Language_Str MSG_MEDIA_USB_FAILED                = _UxGT("Avvio USB fallito");
   PROGMEM Language_Str MSG_KILL_SUBCALL_OVERFLOW           = _UxGT("Overflow subchiamate");
-  PROGMEM Language_Str MSG_LCD_ENDSTOPS                    = _UxGT("Finecor."); // Max 8 characters
+  PROGMEM Language_Str MSG_LCD_ENDSTOPS                    = _UxGT("Finecor."); // Max 8 characters//最多8个字符
   PROGMEM Language_Str MSG_LCD_SOFT_ENDSTOPS               = _UxGT("Finecorsa Soft");
   PROGMEM Language_Str MSG_MAIN                            = _UxGT("Menu principale");
   PROGMEM Language_Str MSG_ADVANCED_SETTINGS               = _UxGT("Impostaz. avanzate");
@@ -298,11 +299,11 @@ namespace Language_it {
   PROGMEM Language_Str MSG_COOLER_TOGGLE                   = _UxGT("Alterna raffreddam.");
   PROGMEM Language_Str MSG_FLOWMETER_SAFETY                = _UxGT("Sicurezza flusso");
   PROGMEM Language_Str MSG_LASER                           = _UxGT("Laser");
-  PROGMEM Language_Str MSG_FAN_SPEED                       = _UxGT("Vel. ventola");     // Max 15 characters
-  PROGMEM Language_Str MSG_FAN_SPEED_N                     = _UxGT("Vel. ventola ~");   // Max 15 characters
-  PROGMEM Language_Str MSG_STORED_FAN_N                    = _UxGT("Ventola mem. ~");   // Max 15 characters
-  PROGMEM Language_Str MSG_EXTRA_FAN_SPEED                 = _UxGT("Extra vel.vent.");  // Max 15 characters
-  PROGMEM Language_Str MSG_EXTRA_FAN_SPEED_N               = _UxGT("Extra v.vent. ~");  // Max 15 characters
+  PROGMEM Language_Str MSG_FAN_SPEED                       = _UxGT("Vel. ventola");     // Max 15 characters//最多15个字符
+  PROGMEM Language_Str MSG_FAN_SPEED_N                     = _UxGT("Vel. ventola ~");   // Max 15 characters//最多15个字符
+  PROGMEM Language_Str MSG_STORED_FAN_N                    = _UxGT("Ventola mem. ~");   // Max 15 characters//最多15个字符
+  PROGMEM Language_Str MSG_EXTRA_FAN_SPEED                 = _UxGT("Extra vel.vent.");  // Max 15 characters//最多15个字符
+  PROGMEM Language_Str MSG_EXTRA_FAN_SPEED_N               = _UxGT("Extra v.vent. ~");  // Max 15 characters//最多15个字符
   PROGMEM Language_Str MSG_CONTROLLER_FAN                  = _UxGT("Controller vent.");
   PROGMEM Language_Str MSG_CONTROLLER_FAN_IDLE_SPEED       = _UxGT("Vel. inattivo");
   PROGMEM Language_Str MSG_CONTROLLER_FAN_AUTO_ON          = _UxGT("Modo autom.");
@@ -504,7 +505,7 @@ namespace Language_it {
   PROGMEM Language_Str MSG_BABYSTEP_K                      = _UxGT("Babystep ") LCD_STR_K;
   PROGMEM Language_Str MSG_BABYSTEP_TOTAL                  = _UxGT("Totali");
   PROGMEM Language_Str MSG_ENDSTOP_ABORT                   = _UxGT("Finecorsa annullati");
-  PROGMEM Language_Str MSG_HEATING_FAILED_LCD              = _UxGT("Risc.Fallito"); // Max 12 caratteri
+  PROGMEM Language_Str MSG_HEATING_FAILED_LCD              = _UxGT("Risc.Fallito"); // Max 12 caratteri//最大12克拉
   PROGMEM Language_Str MSG_ERR_REDUNDANT_TEMP              = _UxGT("Err: TEMP RIDONDANTE");
   PROGMEM Language_Str MSG_THERMAL_RUNAWAY                 = _UxGT("TEMP FUORI CONTROLLO");
   PROGMEM Language_Str MSG_THERMAL_RUNAWAY_BED             = _UxGT("TEMP PIAT.FUORI CTRL");
@@ -515,9 +516,9 @@ namespace Language_it {
   PROGMEM Language_Str MSG_ERR_MINTEMP                     = _UxGT("Err: TEMP MINIMA");
   PROGMEM Language_Str MSG_HALTED                          = _UxGT("STAMPANTE FERMATA");
   PROGMEM Language_Str MSG_PLEASE_RESET                    = _UxGT("Riavviare prego");
-  PROGMEM Language_Str MSG_SHORT_DAY                       = _UxGT("g"); // Un solo carattere
-  PROGMEM Language_Str MSG_SHORT_HOUR                      = _UxGT("h"); // Un solo carattere
-  PROGMEM Language_Str MSG_SHORT_MINUTE                    = _UxGT("m"); // Un solo carattere
+  PROGMEM Language_Str MSG_SHORT_DAY                       = _UxGT("g"); // Un solo carattere//Un solo克拉特酒店
+  PROGMEM Language_Str MSG_SHORT_HOUR                      = _UxGT("h"); // Un solo carattere//Un solo克拉特酒店
+  PROGMEM Language_Str MSG_SHORT_MINUTE                    = _UxGT("m"); // Un solo carattere//Un solo克拉特酒店
   PROGMEM Language_Str MSG_HEATING                         = _UxGT("Riscaldamento...");
   PROGMEM Language_Str MSG_COOLING                         = _UxGT("Raffreddamento..");
   PROGMEM Language_Str MSG_BED_HEATING                     = _UxGT("Risc. piatto...");
@@ -595,7 +596,7 @@ namespace Language_it {
   PROGMEM Language_Str MSG_FILAMENT_CHANGE_OPTION_PURGE    = _UxGT("Spurga di più");
   PROGMEM Language_Str MSG_FILAMENT_CHANGE_OPTION_RESUME   = _UxGT("Riprendi stampa");
   PROGMEM Language_Str MSG_FILAMENT_CHANGE_NOZZLE          = _UxGT("  Ugello: ");
-  PROGMEM Language_Str MSG_RUNOUT_SENSOR                   = _UxGT("Sens.filo termin.");  // Max 17 characters
+  PROGMEM Language_Str MSG_RUNOUT_SENSOR                   = _UxGT("Sens.filo termin.");  // Max 17 characters//最多17个字符
   PROGMEM Language_Str MSG_RUNOUT_DISTANCE_MM              = _UxGT("Dist mm filo term.");
   PROGMEM Language_Str MSG_KILL_HOMING_FAILED              = _UxGT("Home fallito");
   PROGMEM Language_Str MSG_LCD_PROBING_FAILED              = _UxGT("Sondaggio fallito");
@@ -660,9 +661,9 @@ namespace Language_it {
   PROGMEM Language_Str MSG_REMINDER_SAVE_SETTINGS          = _UxGT("Ricordati di mem.!");
   PROGMEM Language_Str MSG_PASSWORD_REMOVED                = _UxGT("Password eliminata");
 
-  //
-  // Le schermate di Cambio Filamento possono visualizzare fino a 3 linee su un display a 4 righe
-  //                                                  ...o fino a 2 linee su un display a 3 righe.
+  ////
+  // Le schermate di Cambio Filamento possono visualizzare fino a 3 linee su un display a 4 righe//Cambio Filliamo possono的时间表显示了一个3线的屏幕和一个4线的屏幕
+  //                                                  ...o fino a 2 linee su un display a 3 righe.//…哦，找不到一个2线苏恩展示一个3线苏恩展示一个3线苏恩展示一个3线苏恩展示一个3线苏恩展示一个3线苏恩展示一个3线苏恩展示一个3线苏恩展示。
   #if LCD_HEIGHT >= 4
     PROGMEM Language_Str MSG_ADVANCED_PAUSE_WAITING        = _UxGT(MSG_3_LINE("Premi per", "riprendere", "la stampa"));
     PROGMEM Language_Str MSG_PAUSE_PRINT_PARKING           = _UxGT(MSG_1_LINE("Parcheggiando..."));
@@ -675,7 +676,7 @@ namespace Language_it {
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_PURGE         = _UxGT(MSG_3_LINE("Attendere", "lo spurgo", "del filamento"));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_CONT_PURGE    = _UxGT(MSG_3_LINE("Premi x terminare", "lo spurgo", "del filamento"));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_RESUME        = _UxGT(MSG_3_LINE("Attendere", "la ripresa", "della stampa..."));
-  #else // LCD_HEIGHT < 4
+  #else // LCD_HEIGHT < 4//LCD_高度<4
     PROGMEM Language_Str MSG_ADVANCED_PAUSE_WAITING        = _UxGT(MSG_1_LINE("Premi x continuare"));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_INIT          = _UxGT(MSG_1_LINE("Attendere..."));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_INSERT        = _UxGT(MSG_1_LINE("Inserisci e premi"));
@@ -686,7 +687,7 @@ namespace Language_it {
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_PURGE         = _UxGT(MSG_1_LINE("Spurgo filamento"));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_CONT_PURGE    = _UxGT(MSG_1_LINE("Premi x terminare"));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_RESUME        = _UxGT(MSG_1_LINE("Ripresa..."));
-  #endif // LCD_HEIGHT < 4
+  #endif // LCD_HEIGHT < 4//LCD_高度<4
 
   PROGMEM Language_Str MSG_TMC_DRIVERS                     = _UxGT("Driver TMC");
   PROGMEM Language_Str MSG_TMC_CURRENT                     = _UxGT("Correnti driver");

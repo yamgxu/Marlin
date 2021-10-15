@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -36,4 +37,4 @@ void GcodeSuite::G20() { parser.set_input_linear_units(LINEARUNIT_INCH); }
  */
 void GcodeSuite::G21() { parser.set_input_linear_units(LINEARUNIT_MM); }
 
-#endif // INCH_MODE_SUPPORT
+#endif // INCH_MODE_SUPPORT//英寸模式支持

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -151,4 +152,4 @@ uint8_t MCP4728::simpleCommand(const byte simpleCommand) {
   return Wire.endTransmission();
 }
 
-#endif // HAS_MOTOR_CURRENT_DAC
+#endif // HAS_MOTOR_CURRENT_DAC//有电机电流DAC

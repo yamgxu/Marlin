@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,23 +32,23 @@
 #define DEFAULT_MACHINE_NAME "i3 Mini"
 #define BOARD_WEBSITE_URL    "tinyurl.com/yyxw7se7"
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_STOP_PIN                            19
 #define Y_STOP_PIN                            18
 #define Z_STOP_PIN                            38
 
-//
-// Z Probe (when not Z_MIN_PIN)
-//
+////
+// Z Probe (when not Z_MIN_PIN)//Z探头（非Z_MIN_引脚时）
+////
 #ifndef Z_MIN_PROBE_PIN
   #define Z_MIN_PROBE_PIN                     38
 #endif
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                            22
 #define X_DIR_PIN                             23
 #define X_ENABLE_PIN                          57
@@ -64,45 +65,45 @@
 #define E0_DIR_PIN                            56
 #define E0_ENABLE_PIN                         54
 
-//
-// Temperature Sensors
-//
+////
+// Temperature Sensors//温度传感器
+////
 #define TEMP_0_PIN                            13
 #define TEMP_BED_PIN                          14
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_0_PIN                           4
 #define HEATER_BED_PIN                        44
-#define FAN_PIN                               12  // IO pin. Buffer needed
+#define FAN_PIN                               12  // IO pin. Buffer needed//IO引脚。需要缓冲区
 
-//
-// SD Card
-//
+////
+// SD Card//SD卡
+////
 #define SD_DETECT_PIN                         83
 #define SDSS                                  53
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define BEEPER_PIN                            37
 #define KILL_PIN                              64
 
-//
-// LCD / Controller (Integrated MINIPANEL)
-//
+////
+// LCD / Controller (Integrated MINIPANEL)//LCD/控制器（集成微型面板）
+////
 #if ENABLED(MINIPANEL)
   #define DOGLCD_A0                           40
   #define DOGLCD_CS                           41
-  #define LCD_BACKLIGHT_PIN                   65  // Backlight LED on A11/D65
+  #define LCD_BACKLIGHT_PIN                   65  // Backlight LED on A11/D65//A11/D65上的背光LED
   #define LCD_RESET_PIN                       27
 
   #define BTN_EN1                              2
   #define BTN_EN2                              3
   #define BTN_ENC                              5
 
-  // This display has adjustable contrast
+  // This display has adjustable contrast//这个显示器的对比度可调
   #define LCD_CONTRAST_MIN                     0
   #define LCD_CONTRAST_MAX                   255
   #define LCD_CONTRAST_INIT     LCD_CONTRAST_MAX

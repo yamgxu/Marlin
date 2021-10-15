@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,14 +22,14 @@
  */
 #pragma once
 
-// R25 = 100 kOhm, beta25 = 4092 K, 1 kOhm pull-up,
-// 100k EPCOS (WITH 1kohm RESISTOR FOR PULLUP, R9 ON SANGUINOLOLU! NOT FOR 4.7kohm PULLUP! THIS IS NOT NORMAL!)
-// Verified by linagee.
-// Calculated using 1kohm pullup, voltage divider math, and manufacturer provided temp/resistance
-// Advantage: Twice the resolution and better linearity from 150C to 200C
+// R25 = 100 kOhm, beta25 = 4092 K, 1 kOhm pull-up,//R25=100千欧，beta25=4092千欧，1千欧上拉，
+// 100k EPCOS (WITH 1kohm RESISTOR FOR PULLUP, R9 ON SANGUINOLOLU! NOT FOR 4.7kohm PULLUP! THIS IS NOT NORMAL!)//100k EPCOS（带有1欧姆的电阻用于上拉，R9用于SANGUINOLOLU！不适用于4.7千欧的上拉！这不正常！）
+// Verified by linagee.//经利纳吉核实。
+// Calculated using 1kohm pullup, voltage divider math, and manufacturer provided temp/resistance//使用1欧姆上拉、分压器数学和制造商提供的温度/电阻进行计算
+// Advantage: Twice the resolution and better linearity from 150C to 200C//优点：在150C到200C之间分辨率提高一倍，线性度更好
 constexpr temp_entry_t temptable_51[] PROGMEM = {
   { OV(   1), 350 },
-  { OV( 190), 250 }, // top rating 250C
+  { OV( 190), 250 }, // top rating 250C//最高额定值250C
   { OV( 203), 245 },
   { OV( 217), 240 },
   { OV( 232), 235 },

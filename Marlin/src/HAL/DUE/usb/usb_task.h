@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * \file
  *
@@ -41,7 +42,7 @@
  *
  */
 /*
- * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>
+ * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>//www.atmel.com/design support/“>atmel支持</a>
  */
 
 #ifndef _USB_TASK_H_
@@ -131,4 +132,4 @@ void usb_task_idle(void);
 }
 #endif
 
-#endif // _USB_TASK_H_
+#endif // _USB_TASK_H_//_USB_任务_H_

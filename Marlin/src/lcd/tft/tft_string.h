@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -68,8 +69,8 @@ class TFT_String {
     static font_t *font_header;
 
     static uint8_t data[MAX_STRING_LENGTH + 1];
-    static uint16_t span;   // in pixels
-    static uint8_t length;  // in characters
+    static uint16_t span;   // in pixels//以像素为单位
+    static uint8_t length;  // in characters//人物
 
     static void add_character(uint8_t character);
     static void eol() { data[length] = 0x00; }

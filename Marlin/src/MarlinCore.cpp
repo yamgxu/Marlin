@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -50,7 +51,7 @@
 #include "module/endstops.h"
 #include "module/temperature.h"
 #include "module/settings.h"
-#include "module/printcounter.h" // PrintCounter or Stopwatch
+#include "module/printcounter.h" // PrintCounter or Stopwatch//打印计数器或秒表
 
 #include "module/stepper.h"
 #include "module/stepper/indirection.h"
@@ -160,8 +161,8 @@
 #endif
 
 #if ENABLED(G38_PROBE_TARGET)
-  uint8_t G38_move; // = 0
-  bool G38_did_trigger; // = false
+  uint8_t G38_move; // = 0// = 0
+  bool G38_did_trigger; // = false//=错误
 #endif
 
 #if ENABLED(DELTA)
@@ -240,18 +241,18 @@ PGMSTR(M112_KILL_STR, "M112 Shutdown");
 
 MarlinState marlin_state = MF_INITIALIZING;
 
-// For M109 and M190, this flag may be cleared (by M108) to exit the wait loop
+// For M109 and M190, this flag may be cleared (by M108) to exit the wait loop//对于M109和M190，可以清除该标志（通过M108）以退出等待循环
 bool wait_for_heatup = true;
 
-// For M0/M1, this flag may be cleared (by M108) to exit the wait-for-user loop
+// For M0/M1, this flag may be cleared (by M108) to exit the wait-for-user loop//对于M0/M1，可以清除该标志（通过M108）以退出等待用户循环
 #if HAS_RESUME_CONTINUE
-  bool wait_for_user; // = false;
+  bool wait_for_user; // = false;//=假；
 
   void wait_for_user_response(millis_t ms/*=0*/, const bool no_sleep/*=false*/) {
     UNUSED(no_sleep);
     KEEPALIVE_STATE(PAUSED_FOR_USER);
     wait_for_user = true;
-    if (ms) ms += millis(); // expire time
+    if (ms) ms += millis(); // expire time//到期时间
     while (wait_for_user && !(ms && ELAPSED(millis(), ms)))
       idle(TERN_(ADVANCED_PAUSE_FEATURE, no_sleep));
     wait_for_user = false;
@@ -269,8 +270,8 @@ bool wait_for_heatup = true;
  * Stepper Reset (RigidBoard, et.al.)
  */
 #if HAS_STEPPER_RESET
-  void disableStepperDrivers() { OUT_WRITE(STEPPER_RESET_PIN, LOW); } // Drive down to keep motor driver chips in reset
-  void enableStepperDrivers()  { SET_INPUT(STEPPER_RESET_PIN); }      // Set to input, allowing pullups to pull the pin high
+  void disableStepperDrivers() { OUT_WRITE(STEPPER_RESET_PIN, LOW); } // Drive down to keep motor driver chips in reset//向下行驶，以保持电机驱动器芯片处于复位状态
+  void enableStepperDrivers()  { SET_INPUT(STEPPER_RESET_PIN); }      // Set to input, allowing pullups to pull the pin high//设置为输入，允许上拉将销拉高
 #endif
 
 /**
@@ -314,7 +315,7 @@ void enable_all_steppers() {
   ENABLE_AXIS_X();
   ENABLE_AXIS_Y();
   ENABLE_AXIS_Z();
-  ENABLE_AXIS_I(); // Marlin 6-axis support by DerAndere (https://github.com/DerAndere1/Marlin/wiki)
+  ENABLE_AXIS_I(); // Marlin 6-axis support by DerAndere (https://github.com/DerAndere1/Marlin/wiki)//DerAndere提供的Marlin 6轴支撑(https://github.com/DerAndere1/Marlin/wiki)
   ENABLE_AXIS_J();
   ENABLE_AXIS_K();
   enable_e_steppers();
@@ -388,7 +389,7 @@ void startOrResumeJob() {
 
     IF_DISABLED(SD_ABORT_NO_COOLDOWN, thermalManager.disable_all_heaters());
 
-    TERN(HAS_CUTTER, cutter.kill(), thermalManager.zero_fan_speeds()); // Full cutter shutdown including ISR control
+    TERN(HAS_CUTTER, cutter.kill(), thermalManager.zero_fan_speeds()); // Full cutter shutdown including ISR control//全切刀停机，包括ISR控制
 
     wait_for_heatup = false;
 
@@ -402,14 +403,14 @@ void startOrResumeJob() {
   }
 
   inline void finishSDPrinting() {
-    if (queue.enqueue_one_P(PSTR("M1001"))) { // Keep trying until it gets queued
-      marlin_state = MF_RUNNING;              // Signal to stop trying
+    if (queue.enqueue_one_P(PSTR("M1001"))) { // Keep trying until it gets queued//继续尝试，直到它排队为止
+      marlin_state = MF_RUNNING;              // Signal to stop trying//停止尝试的信号
       TERN_(PASSWORD_AFTER_SD_PRINT_END, password.lock_machine());
       TERN_(DGUS_LCD_UI_MKS, ScreenHandler.SDPrintingFinished());
     }
   }
 
-#endif // SDSUPPORT
+#endif // SDSUPPORT//SDSUPPORT
 
 /**
  * Minimal management of Marlin's core activities:
@@ -430,11 +431,11 @@ inline void manage_inactivity(const bool no_stepper_sleep=false) {
 
   const millis_t ms = millis();
 
-  // Prevent steppers timing-out
+  // Prevent steppers timing-out//防止步进电机超时
   const bool do_reset_timeout = no_stepper_sleep
                                || TERN0(PAUSE_PARK_NO_STEPPER_TIMEOUT, did_pause_print);
 
-  // Reset both the M18/M84 activity timeout and the M85 max 'kill' timeout
+  // Reset both the M18/M84 activity timeout and the M85 max 'kill' timeout//重置M18/M84活动超时和M85最大“终止”超时
   if (do_reset_timeout) gcode.reset_stepper_timeout(ms);
 
   if (gcode.stepper_max_timed_out(ms)) {
@@ -442,20 +443,20 @@ inline void manage_inactivity(const bool no_stepper_sleep=false) {
     kill();
   }
 
-  // M18 / M84 : Handle steppers inactive time timeout
+  // M18 / M84 : Handle steppers inactive time timeout//M18/M84：手柄步进器非活动时间超时
   if (gcode.stepper_inactive_time) {
 
-    static bool already_shutdown_steppers; // = false
+    static bool already_shutdown_steppers; // = false//=错误
 
-    // Any moves in the planner? Resets both the M18/M84
-    // activity timeout and the M85 max 'kill' timeout
+    // Any moves in the planner? Resets both the M18/M84//planner中的任何移动都会重置M18/M84
+    // activity timeout and the M85 max 'kill' timeout//活动超时和M85最大“终止”超时
     if (planner.has_blocks_queued())
       gcode.reset_stepper_timeout(ms);
     else if (!do_reset_timeout && gcode.stepper_inactive_timeout()) {
       if (!already_shutdown_steppers) {
-        already_shutdown_steppers = true;  // L6470 SPI will consume 99% of free time without this
+        already_shutdown_steppers = true;  // L6470 SPI will consume 99% of free time without this//L6470 SPI将占用99%的空闲时间
 
-        // Individual axes will be disabled if configured
+        // Individual axes will be disabled if configured//如果进行了配置，各个轴将被禁用
         if (ENABLED(DISABLE_INACTIVE_X)) DISABLE_AXIS_X();
         if (ENABLED(DISABLE_INACTIVE_Y)) DISABLE_AXIS_Y();
         if (ENABLED(DISABLE_INACTIVE_Z)) DISABLE_AXIS_Z();
@@ -472,7 +473,7 @@ inline void manage_inactivity(const bool no_stepper_sleep=false) {
   }
 
   #if ENABLED(PHOTO_GCODE) && PIN_EXISTS(CHDK)
-    // Check if CHDK should be set to LOW (after M240 set it HIGH)
+    // Check if CHDK should be set to LOW (after M240 set it HIGH)//检查CHDK是否应设置为低（M240后设置为高）
     extern millis_t chdk_timeout;
     if (chdk_timeout && ELAPSED(ms, chdk_timeout)) {
       chdk_timeout = 0;
@@ -482,19 +483,19 @@ inline void manage_inactivity(const bool no_stepper_sleep=false) {
 
   #if HAS_KILL
 
-    // Check if the kill button was pressed and wait just in case it was an accidental
-    // key kill key press
-    // -------------------------------------------------------------------------------
-    static int killCount = 0;   // make the inactivity button a bit less responsive
+    // Check if the kill button was pressed and wait just in case it was an accidental//检查压井按钮是否按下，并等待，以防发生意外
+    // key kill key press//击键
+    // -------------------------------------------------------------------------------// -------------------------------------------------------------------------------
+    static int killCount = 0;   // make the inactivity button a bit less responsive//使“不活动”按钮的响应性稍差一些
     const int KILL_DELAY = 750;
     if (kill_state())
       killCount++;
     else if (killCount > 0)
       killCount--;
 
-    // Exceeded threshold and we can confirm that it was not accidental
-    // KILL the machine
-    // ----------------------------------------------------------------
+    // Exceeded threshold and we can confirm that it was not accidental//超出阈值，我们可以确认这不是意外
+    // KILL the machine//杀死机器
+    // ----------------------------------------------------------------// ----------------------------------------------------------------
     if (killCount >= KILL_DELAY) {
       SERIAL_ERROR_MSG(STR_KILL_BUTTON);
       kill();
@@ -506,10 +507,10 @@ inline void manage_inactivity(const bool no_stepper_sleep=false) {
   #endif
 
   #if HAS_HOME
-    // Handle a standalone HOME button
+    // Handle a standalone HOME button//处理一个独立的主页按钮
     constexpr millis_t HOME_DEBOUNCE_DELAY = 1000UL;
-    static millis_t next_home_key_ms; // = 0
-    if (!IS_SD_PRINTING() && !READ(HOME_PIN)) { // HOME_PIN goes LOW when pressed
+    static millis_t next_home_key_ms; // = 0// = 0
+    if (!IS_SD_PRINTING() && !READ(HOME_PIN)) { // HOME_PIN goes LOW when pressed//按下主销时，主销变低
       const millis_t ms = millis();
       if (ELAPSED(ms, next_home_key_ms)) {
         next_home_key_ms = ms + HOME_DEBOUNCE_DELAY;
@@ -520,7 +521,7 @@ inline void manage_inactivity(const bool no_stepper_sleep=false) {
   #endif
 
   #if ENABLED(CUSTOM_USER_BUTTONS)
-    // Handle a custom user button if defined
+    // Handle a custom user button if defined//处理自定义用户按钮（如果已定义）
     const bool printer_not_busy = !printingIsActive();
     #define HAS_CUSTOM_USER_BUTTON(N) (PIN_EXISTS(BUTTON##N) && defined(BUTTON##N##_HIT_STATE) && defined(BUTTON##N##_GCODE) && defined(BUTTON##N##_DESC))
     #define CHECK_CUSTOM_USER_BUTTON(N) do{                            \
@@ -615,7 +616,7 @@ inline void manage_inactivity(const bool no_stepper_sleep=false) {
     #endif
   #endif
 
-  TERN_(USE_CONTROLLER_FAN, controllerFan.update()); // Check if fan should be turned on to cool stepper drivers down
+  TERN_(USE_CONTROLLER_FAN, controllerFan.update()); // Check if fan should be turned on to cool stepper drivers down//检查是否应打开风扇以冷却步进驱动器
 
   TERN_(AUTO_POWER_CONTROL, powerManager.check(!ui.on_status_screen() || printJobOngoing() || printingIsPaused()));
 
@@ -636,11 +637,11 @@ inline void manage_inactivity(const bool no_stepper_sleep=false) {
               case 4: case 5: oldstatus = E2_ENABLE_READ(); ENABLE_AXIS_E2(); break;
               #if E_STEPPERS > 3
                 case 6: case 7: oldstatus = E3_ENABLE_READ(); ENABLE_AXIS_E3(); break;
-              #endif // E_STEPPERS > 3
-            #endif // E_STEPPERS > 2
-          #endif // E_STEPPERS > 1
+              #endif // E_STEPPERS > 3//E_步进电机>3
+            #endif // E_STEPPERS > 2//E_步进电机>2
+          #endif // E_STEPPERS > 1//E_步进电机>1
         }
-      #else // !SWITCHING_EXTRUDER
+      #else // !SWITCHING_EXTRUDER//！开关式挤出机
         bool oldstatus;
         switch (active_extruder) {
           default:
@@ -663,25 +664,25 @@ inline void manage_inactivity(const bool no_stepper_sleep=false) {
             case 2: case 3: oldstatus = E1_ENABLE_WRITE(oldstatus); break;
             #if E_STEPPERS > 2
               case 4: case 5: oldstatus = E2_ENABLE_WRITE(oldstatus); break;
-            #endif // E_STEPPERS > 2
-          #endif // E_STEPPERS > 1
+            #endif // E_STEPPERS > 2//E_步进电机>2
+          #endif // E_STEPPERS > 1//E_步进电机>1
         }
-      #else // !SWITCHING_EXTRUDER
+      #else // !SWITCHING_EXTRUDER//！开关式挤出机
         switch (active_extruder) {
           #define _CASE_RESTORE(N) case N: E##N##_ENABLE_WRITE(oldstatus); break;
           REPEAT(E_STEPPERS, _CASE_RESTORE);
         }
-      #endif // !SWITCHING_EXTRUDER
+      #endif // !SWITCHING_EXTRUDER//！开关式挤出机
 
       gcode.reset_stepper_timeout(ms);
     }
-  #endif // EXTRUDER_RUNOUT_PREVENT
+  #endif // EXTRUDER_RUNOUT_PREVENT//挤出机\u跳动\u防止
 
   #if ENABLED(DUAL_X_CARRIAGE)
-    // handle delayed move timeout
+    // handle delayed move timeout//句柄延迟移动超时
     if (delayed_move_time && ELAPSED(ms, delayed_move_time) && IsRunning()) {
-      // travel moves have been received so enact them
-      delayed_move_time = 0xFFFFFFFFUL; // force moves to be done
+      // travel moves have been received so enact them//已收到旅行通知，请执行
+      delayed_move_time = 0xFFFFFFFFUL; // force moves to be done//强制执行要执行的操作
       destination = current_position;
       prepare_line_to_destination();
       planner.synchronize();
@@ -694,7 +695,7 @@ inline void manage_inactivity(const bool no_stepper_sleep=false) {
 
   TERN_(MONITOR_L6470_DRIVER_STATUS, L64xxManager.monitor_driver());
 
-  // Limit check_axes_activity frequency to 10Hz
+  // Limit check_axes_activity frequency to 10Hz//将检查轴活动频率限制为10Hz
   static millis_t next_check_axes_ms = 0;
   if (ELAPSED(ms, next_check_axes_ms)) {
     planner.check_axes_activity();
@@ -704,7 +705,7 @@ inline void manage_inactivity(const bool no_stepper_sleep=false) {
   #if PIN_EXISTS(FET_SAFETY)
     static millis_t FET_next;
     if (ELAPSED(ms, FET_next)) {
-      FET_next = ms + FET_SAFETY_DELAY;  // 2µs pulse every FET_SAFETY_DELAY mS
+      FET_next = ms + FET_SAFETY_DELAY;  // 2µs pulse every FET_SAFETY_DELAY mS//每FET\u安全延迟毫秒2µs脉冲
       OUT_WRITE(FET_SAFETY_PIN, !FET_SAFETY_INVERTED);
       DELAY_US(2);
       WRITE(FET_SAFETY_PIN, FET_SAFETY_INVERTED);
@@ -740,62 +741,62 @@ void idle(bool no_stepper_sleep/*=false*/) {
     if (++idle_depth > 5) SERIAL_ECHOLNPAIR("idle() call depth: ", idle_depth);
   #endif
 
-  // Core Marlin activities
+  // Core Marlin activities//核心马林鱼活动
   manage_inactivity(no_stepper_sleep);
 
-  // Manage Heaters (and Watchdog)
+  // Manage Heaters (and Watchdog)//管理加热器（和看门狗）
   thermalManager.manage_heater();
 
-  // Max7219 heartbeat, animation, etc
+  // Max7219 heartbeat, animation, etc//Max7219心跳、动画等
   TERN_(MAX7219_DEBUG, max7219.idle_tasks());
 
-  // Return if setup() isn't completed
+  // Return if setup() isn't completed//如果setup（）未完成，则返回
   if (marlin_state == MF_INITIALIZING) goto IDLE_DONE;
 
-  // TODO: Still causing errors
+  // TODO: Still causing errors//TODO:仍在导致错误
   (void)check_tool_sensor_stats(active_extruder, true);
 
-  // Handle filament runout sensors
+  // Handle filament runout sensors//手柄灯丝跳动传感器
   TERN_(HAS_FILAMENT_SENSOR, runout.run());
 
-  // Run HAL idle tasks
+  // Run HAL idle tasks//运行空闲任务
   TERN_(HAL_IDLETASK, HAL_idletask());
 
-  // Check network connection
+  // Check network connection//检查网络连接
   TERN_(HAS_ETHERNET, ethernet.check());
 
-  // Handle Power-Loss Recovery
+  // Handle Power-Loss Recovery//处理掉电恢复
   #if ENABLED(POWER_LOSS_RECOVERY) && PIN_EXISTS(POWER_LOSS)
     if (IS_SD_PRINTING()) recovery.outage();
   #endif
 
-  // Run StallGuard endstop checks
+  // Run StallGuard endstop checks//运行StallGuard endstop检查
   #if ENABLED(SPI_ENDSTOPS)
     if (endstops.tmc_spi_homing.any
       && TERN1(IMPROVE_HOMING_RELIABILITY, ELAPSED(millis(), sg_guard_period))
-    ) LOOP_L_N(i, 4) // Read SGT 4 times per idle loop
+    ) LOOP_L_N(i, 4) // Read SGT 4 times per idle loop//每个空闲循环读取SGT 4次
         if (endstops.tmc_spi_homing_check()) break;
   #endif
 
-  // Handle SD Card insert / remove
+  // Handle SD Card insert / remove//手柄SD卡插入/取出
   TERN_(SDSUPPORT, card.manage_media());
 
-  // Handle USB Flash Drive insert / remove
+  // Handle USB Flash Drive insert / remove//将USB闪存驱动器插入/卸下
   TERN_(USB_FLASH_DRIVE_SUPPORT, card.diskIODriver()->idle());
 
-  // Announce Host Keepalive state (if any)
+  // Announce Host Keepalive state (if any)//宣布主机保持活动状态（如果有）
   TERN_(HOST_KEEPALIVE_FEATURE, gcode.host_keepalive());
 
-  // Update the Print Job Timer state
+  // Update the Print Job Timer state//更新打印作业计时器状态
   TERN_(PRINTCOUNTER, print_job_timer.tick());
 
-  // Update the Beeper queue
+  // Update the Beeper queue//更新寻呼机队列
   TERN_(USE_BEEPER, buzzer.tick());
 
-  // Handle UI input / draw events
+  // Handle UI input / draw events//处理UI输入/绘制事件
   TERN(DWIN_CREALITY_LCD, DWIN_Update(), ui.update());
 
-  // Run i2c Position Encoders
+  // Run i2c Position Encoders//运行i2c位置编码器
   #if ENABLED(I2C_POSITION_ENCODERS)
   {
     static millis_t i2cpem_next_update_ms;
@@ -809,7 +810,7 @@ void idle(bool no_stepper_sleep/*=false*/) {
   }
   #endif
 
-  // Auto-report Temperatures / SD Status
+  // Auto-report Temperatures / SD Status//自动报告温度/SD状态
   #if HAS_AUTO_REPORTING
     if (!gcode.autoreport_paused) {
       TERN_(AUTO_REPORT_TEMPERATURES, thermalManager.auto_reporter.tick());
@@ -818,16 +819,16 @@ void idle(bool no_stepper_sleep/*=false*/) {
     }
   #endif
 
-  // Update the Průša MMU2
+  // Update the Průša MMU2//更新Průša MMU2
   TERN_(HAS_PRUSA_MMU2, mmu2.mmu_loop());
 
-  // Handle Joystick jogging
+  // Handle Joystick jogging//手柄操纵杆点动
   TERN_(POLL_JOG, joystick.inject_jog_moves());
 
-  // Direct Stepping
+  // Direct Stepping//直接步进
   TERN_(DIRECT_STEPPING, page_manager.write_responses());
 
-  // Update the LVGL interface
+  // Update the LVGL interface//更新LVGL接口
   TERN_(HAS_TFT_LVGL_UI, LV_TASK_HANDLER());
 
   IDLE_DONE:
@@ -842,9 +843,9 @@ void idle(bool no_stepper_sleep/*=false*/) {
 void kill(PGM_P const lcd_error/*=nullptr*/, PGM_P const lcd_component/*=nullptr*/, const bool steppers_off/*=false*/) {
   thermalManager.disable_all_heaters();
 
-  TERN_(HAS_CUTTER, cutter.kill()); // Full cutter shutdown including ISR control
+  TERN_(HAS_CUTTER, cutter.kill()); // Full cutter shutdown including ISR control//全切刀停机，包括ISR控制
 
-  // Echo the LCD message to serial for extra context
+  // Echo the LCD message to serial for extra context//将LCD消息回显到串行以获得额外上下文
   if (lcd_error) { SERIAL_ECHO_START(); SERIAL_ECHOLNPGM_P(lcd_error); }
 
   #if HAS_DISPLAY
@@ -855,7 +856,7 @@ void kill(PGM_P const lcd_error/*=nullptr*/, PGM_P const lcd_component/*=nullptr
 
   TERN_(HAS_TFT_LVGL_UI, lv_draw_error_message(lcd_error));
 
-  // "Error:Printer halted. kill() called!"
+  // "Error:Printer halted. kill() called!"//“错误：打印机停止。调用了kill（）！”
   SERIAL_ERROR_MSG(STR_ERR_KILLED);
 
   #ifdef ACTION_ON_KILL
@@ -867,20 +868,20 @@ void kill(PGM_P const lcd_error/*=nullptr*/, PGM_P const lcd_component/*=nullptr
 
 void minkill(const bool steppers_off/*=false*/) {
 
-  // Wait a short time (allows messages to get out before shutting down.
+  // Wait a short time (allows messages to get out before shutting down.//稍等片刻（允许消息在关机前传出）。
   for (int i = 1000; i--;) DELAY_US(600);
 
-  cli(); // Stop interrupts
+  cli(); // Stop interrupts//停止中断
 
-  // Wait to ensure all interrupts stopped
+  // Wait to ensure all interrupts stopped//等待以确保所有中断停止
   for (int i = 1000; i--;) DELAY_US(250);
 
-  // Reiterate heaters off
+  // Reiterate heaters off//请关闭加热器
   thermalManager.disable_all_heaters();
 
-  TERN_(HAS_CUTTER, cutter.kill());  // Reiterate cutter shutdown
+  TERN_(HAS_CUTTER, cutter.kill());  // Reiterate cutter shutdown//再次停机
 
-  // Power off all steppers (for M112) or just the E steppers
+  // Power off all steppers (for M112) or just the E steppers//关闭所有步进电机（对于M112）或仅关闭E步进电机
   steppers_off ? disable_all_steppers() : disable_e_steppers();
 
   TERN_(PSU_CONTROL, PSU_OFF());
@@ -889,20 +890,20 @@ void minkill(const bool steppers_off/*=false*/) {
 
   #if EITHER(HAS_KILL, SOFT_RESET_ON_KILL)
 
-    // Wait for both KILL and ENC to be released
+    // Wait for both KILL and ENC to be released//等待KILL和ENC都被释放
     while (TERN0(HAS_KILL, !kill_state()) || TERN0(SOFT_RESET_ON_KILL, !ui.button_pressed()))
       watchdog_refresh();
 
-    // Wait for either KILL or ENC press
+    // Wait for either KILL or ENC press//等待KILL或ENC按下
     while (TERN1(HAS_KILL, kill_state()) && TERN1(SOFT_RESET_ON_KILL, ui.button_pressed()))
       watchdog_refresh();
 
-    // Reboot the board
+    // Reboot the board//重新启动电路板
     HAL_reboot();
 
   #else
 
-    for (;;) watchdog_refresh();  // Wait for RESET button or power-cycle
+    for (;;) watchdog_refresh();  // Wait for RESET button or power-cycle//等待复位按钮或电源循环
 
   #endif
 }
@@ -912,18 +913,18 @@ void minkill(const bool steppers_off/*=false*/) {
  * After a stop the machine may be resumed with M999
  */
 void stop() {
-  thermalManager.disable_all_heaters(); // 'unpause' taken care of in here
+  thermalManager.disable_all_heaters(); // 'unpause' taken care of in here//“取消暂停”在这里处理
 
   print_job_timer.stop();
 
   #if EITHER(PROBING_FANS_OFF, ADVANCED_PAUSE_FANS_PAUSE)
-    thermalManager.set_fans_paused(false); // Un-pause fans for safety
+    thermalManager.set_fans_paused(false); // Un-pause fans for safety//联合国暂停风扇以确保安全
   #endif
 
   if (!IsStopped()) {
     SERIAL_ERROR_MSG(STR_ERR_STOPPED);
     LCD_MESSAGEPGM(MSG_STOPPED);
-    safe_delay(350);       // allow enough time for messages to get out before stopping
+    safe_delay(350);       // allow enough time for messages to get out before stopping//在停止前留出足够的时间让消息传出
     marlin_state = MF_STOPPED;
   }
 }
@@ -1079,10 +1080,10 @@ inline void tmc_standby_setup() {
 void setup() {
 
   #ifdef BOARD_PREINIT
-    BOARD_PREINIT(); // Low-level init (before serial init)
+    BOARD_PREINIT(); // Low-level init (before serial init)//低电平初始化（串行初始化之前）
   #endif
 
-  tmc_standby_setup();  // TMC Low Power Standby pins must be set early or they're not usable
+  tmc_standby_setup();  // TMC Low Power Standby pins must be set early or they're not usable//TMC低功耗备用引脚必须提前设置，否则无法使用
 
   #if ENABLED(MARLIN_DEV_MODE)
     auto log_current_ms = [&](PGM_P const msg) {
@@ -1118,7 +1119,7 @@ void setup() {
   #endif
   SERIAL_ECHOLNPGM("start");
 
-  // Set up these pins early to prevent suicide
+  // Set up these pins early to prevent suicide//尽早安装这些别针以防止自杀
   #if HAS_KILL
     SETUP_LOG("KILL_PIN");
     #if KILL_PIN_STATE
@@ -1145,7 +1146,7 @@ void setup() {
 
   #if EITHER(DISABLE_DEBUG, DISABLE_JTAG)
     delay(10);
-    // Disable any hardware debug to free up pins for IO
+    // Disable any hardware debug to free up pins for IO//禁用任何硬件调试以释放IO引脚
     #if ENABLED(DISABLE_DEBUG) && defined(JTAGSWD_DISABLE)
       SETUP_LOG("JTAGSWD_DISABLE");
       JTAGSWD_DISABLE();
@@ -1164,20 +1165,20 @@ void setup() {
     while (/*!WIFISERIAL && */PENDING(millis(), serial_connect_timeout)) { /*nada*/ }
   #endif
 
-  TERN_(DYNAMIC_VECTORTABLE, hook_cpu_exceptions()); // If supported, install Marlin exception handlers at runtime
+  TERN_(DYNAMIC_VECTORTABLE, hook_cpu_exceptions()); // If supported, install Marlin exception handlers at runtime//如果支持，请在运行时安装Marlin异常处理程序
 
   SETUP_RUN(HAL_init());
 
-  // Init and disable SPI thermocouples; this is still needed
+  // Init and disable SPI thermocouples; this is still needed//初始化和禁用SPI热电偶；这仍然需要
   #if TEMP_SENSOR_0_IS_MAX_TC || (TEMP_SENSOR_REDUNDANT_IS_MAX_TC && TEMP_SENSOR_REDUNDANT_SOURCE == 0)
-    OUT_WRITE(MAX6675_SS_PIN, HIGH);  // Disable
+    OUT_WRITE(MAX6675_SS_PIN, HIGH);  // Disable//禁用
   #endif
   #if TEMP_SENSOR_1_IS_MAX_TC || (TEMP_SENSOR_REDUNDANT_IS_MAX_TC && TEMP_SENSOR_REDUNDANT_SOURCE == 1)
-    OUT_WRITE(MAX6675_SS2_PIN, HIGH); // Disable
+    OUT_WRITE(MAX6675_SS2_PIN, HIGH); // Disable//禁用
   #endif
 
   #if ENABLED(DUET_SMART_EFFECTOR) && PIN_EXISTS(SMART_EFFECTOR_MOD)
-    OUT_WRITE(SMART_EFFECTOR_MOD_PIN, LOW);   // Put Smart Effector into NORMAL mode
+    OUT_WRITE(SMART_EFFECTOR_MOD_PIN, LOW);   // Put Smart Effector into NORMAL mode//将智能效应器置于正常模式
   #endif
 
   #if HAS_FILAMENT_SENSOR
@@ -1199,7 +1200,7 @@ void setup() {
   #endif
 
   #if HAS_L64XX
-    SETUP_RUN(L64xxManager.init());  // Set up SPI, init drivers
+    SETUP_RUN(L64xxManager.init());  // Set up SPI, init drivers//设置SPI、init驱动程序
   #endif
 
   #if HAS_STEPPER_RESET
@@ -1220,7 +1221,7 @@ void setup() {
 
   SETUP_RUN(esp_wifi_init());
 
-  // Check startup - does nothing if bootloader sets MCUSR to 0
+  // Check startup - does nothing if bootloader sets MCUSR to 0//检查启动-如果引导加载程序将MCUSR设置为0，则不执行任何操作
   const byte mcu = HAL_get_reset_source();
   if (mcu & RST_POWER_ON) SERIAL_ECHOLNPGM(STR_POWERUP);
   if (mcu & RST_EXTERNAL) SERIAL_ECHOLNPGM(STR_EXTERNAL_RESET);
@@ -1242,15 +1243,15 @@ void setup() {
   SERIAL_ECHO_MSG("Compiled: " __DATE__);
   SERIAL_ECHO_MSG(STR_FREE_MEMORY, freeMemory(), STR_PLANNER_BUFFER_BYTES, sizeof(block_t) * (BLOCK_BUFFER_SIZE));
 
-  // Some HAL need precise delay adjustment
+  // Some HAL need precise delay adjustment//有些HAL需要精确的延迟调整
   calibrate_delay_loop();
 
-  // Init buzzer pin(s)
+  // Init buzzer pin(s)//初始蜂鸣器引脚（s）
   #if USE_BEEPER
     SETUP_RUN(buzzer.init());
   #endif
 
-  // Set up LEDs early
+  // Set up LEDs early//尽早设置LED
   #if HAS_COLOR_LEDS
     SETUP_RUN(leds.setup());
   #endif
@@ -1259,26 +1260,26 @@ void setup() {
     SETUP_RUN(leds2.setup());
   #endif
 
-  #if ENABLED(USE_CONTROLLER_FAN)     // Set up fan controller to initialize also the default configurations.
+  #if ENABLED(USE_CONTROLLER_FAN)     // Set up fan controller to initialize also the default configurations.//设置风扇控制器以初始化默认配置。
     SETUP_RUN(controllerFan.setup());
   #endif
 
-  // UI must be initialized before EEPROM
-  // (because EEPROM code calls the UI).
+  // UI must be initialized before EEPROM//用户界面必须在EEPROM之前初始化
+  // (because EEPROM code calls the UI).//（因为EEPROM代码调用UI）。
 
   #if ENABLED(DWIN_CREALITY_LCD)
-    delay(800);   // Required delay (since boot?)
+    delay(800);   // Required delay (since boot?)//所需延迟（启动后？）
     SERIAL_ECHOPGM("\nDWIN handshake ");
     if (DWIN_Handshake()) SERIAL_ECHOLNPGM("ok."); else SERIAL_ECHOLNPGM("error.");
-    DWIN_Frame_SetDir(1); // Orientation 90°
-    DWIN_UpdateLCD();     // Show bootscreen (first image)
+    DWIN_Frame_SetDir(1); // Orientation 90°//方位90°
+    DWIN_UpdateLCD();     // Show bootscreen (first image)//显示引导屏幕（第一个图像）
   #else
     SETUP_RUN(ui.init());
     #if BOTH(HAS_WIRED_LCD, SHOW_BOOTSCREEN)
       SETUP_RUN(ui.show_bootscreen());
       const millis_t bootscreen_ms = millis();
     #endif
-    SETUP_RUN(ui.reset_status());     // Load welcome message early. (Retained if no errors exist.)
+    SETUP_RUN(ui.reset_status());     // Load welcome message early. (Retained if no errors exist.)//提前加载欢迎消息。（如果不存在错误，则保留。）
   #endif
 
   #if PIN_EXISTS(SAFE_POWER)
@@ -1295,11 +1296,11 @@ void setup() {
   #endif
 
   #if BOTH(SDSUPPORT, SDCARD_EEPROM_EMULATION)
-    SETUP_RUN(card.mount());          // Mount media with settings before first_load
+    SETUP_RUN(card.mount());          // Mount media with settings before first_load//在第一次加载之前使用设置装载媒体
   #endif
 
-  SETUP_RUN(settings.first_load());   // Load data from EEPROM if available (or use defaults)
-                                      // This also updates variables in the planner, elsewhere
+  SETUP_RUN(settings.first_load());   // Load data from EEPROM if available (or use defaults)//从EEPROM加载数据（如果可用）（或使用默认值）
+                                      // This also updates variables in the planner, elsewhere//这也会更新“计划器”中的其他变量
 
   #if HAS_ETHERNET
     SETUP_RUN(ethernet.init());
@@ -1309,18 +1310,18 @@ void setup() {
     SETUP_RUN(touch.init());
   #endif
 
-  TERN_(HAS_M206_COMMAND, current_position += home_offset); // Init current position based on home_offset
+  TERN_(HAS_M206_COMMAND, current_position += home_offset); // Init current position based on home_offset//基于原点偏移的初始当前位置
 
-  sync_plan_position();               // Vital to init stepper/planner equivalent for current_position
+  sync_plan_position();               // Vital to init stepper/planner equivalent for current_position//对当前位置的初始步进器/规划器等效物至关重要
 
-  SETUP_RUN(thermalManager.init());   // Initialize temperature loop
+  SETUP_RUN(thermalManager.init());   // Initialize temperature loop//初始化温度回路
 
-  SETUP_RUN(print_job_timer.init());  // Initial setup of print job timer
+  SETUP_RUN(print_job_timer.init());  // Initial setup of print job timer//打印作业计时器的初始设置
 
-  SETUP_RUN(endstops.init());         // Init endstops and pullups
+  SETUP_RUN(endstops.init());         // Init endstops and pullups//初始端止点和上拉
 
     SERIAL_ECHO_MSG("stepper.init()");
-    SETUP_RUN(stepper.init());          // Init stepper. This enables interrupts!
+    SETUP_RUN(stepper.init());          // Init stepper. This enables interrupts!//初始化步进器。这将启用中断！
     SERIAL_ECHO_MSG("stepper.init()ok");
 
   #if HAS_SERVOS
@@ -1340,10 +1341,10 @@ void setup() {
   #endif
 
   #if ENABLED(COOLANT_MIST)
-    OUT_WRITE(COOLANT_MIST_PIN, COOLANT_MIST_INVERT);   // Init Mist Coolant OFF
+    OUT_WRITE(COOLANT_MIST_PIN, COOLANT_MIST_INVERT);   // Init Mist Coolant OFF//初始雾冷却液关闭
   #endif
   #if ENABLED(COOLANT_FLOOD)
-    OUT_WRITE(COOLANT_FLOOD_PIN, COOLANT_FLOOD_INVERT); // Init Flood Coolant OFF
+    OUT_WRITE(COOLANT_FLOOD_PIN, COOLANT_FLOOD_INVERT); // Init Flood Coolant OFF//初始溢流冷却液关闭
   #endif
 
   #if HAS_BED_PROBE
@@ -1363,7 +1364,7 @@ void setup() {
   #endif
 
   #if EITHER(Z_PROBE_SLED, SOLENOID_PROBE) && HAS_SOLENOID_1
-    OUT_WRITE(SOL1_PIN, LOW); // OFF
+    OUT_WRITE(SOL1_PIN, LOW); // OFF//关
   #endif
 
   #if HAS_HOME
@@ -1451,10 +1452,10 @@ void setup() {
   #endif
 
   #if PIN_EXISTS(STAT_LED_RED)
-    OUT_WRITE(STAT_LED_RED_PIN, LOW); // OFF
+    OUT_WRITE(STAT_LED_RED_PIN, LOW); // OFF//关
   #endif
   #if PIN_EXISTS(STAT_LED_BLUE)
-    OUT_WRITE(STAT_LED_BLUE_PIN, LOW); // OFF
+    OUT_WRITE(STAT_LED_BLUE_PIN, LOW); // OFF//关
   #endif
 
   #if ENABLED(CASE_LIGHT_ENABLE)
@@ -1488,12 +1489,12 @@ void setup() {
   #endif
 
   #if DO_SWITCH_EXTRUDER
-    SETUP_RUN(move_extruder_servo(0));  // Initialize extruder servo
+    SETUP_RUN(move_extruder_servo(0));  // Initialize extruder servo//初始化挤出机伺服
   #endif
 
   #if ENABLED(SWITCHING_NOZZLE)
     SETUP_LOG("SWITCHING_NOZZLE");
-    // Initialize nozzle servo(s)
+    // Initialize nozzle servo(s)//初始化喷嘴伺服系统
     #if SWITCHING_NOZZLE_TWO_SERVOS
       lower_nozzle(0);
       raise_nozzle(1);
@@ -1513,7 +1514,7 @@ void setup() {
   #endif
 
   #if ENABLED(USE_WATCHDOG)
-    //SETUP_RUN(watchdog_init());       // Reinit watchdog after HAL_get_reset_source call
+    //SETUP_RUN(watchdog_init());       // Reinit watchdog after HAL_get_reset_source call//SETUP_RUN（watchdog_init（））；//在HAL_get_reset_源调用后重新初始化watchdog
   #endif
 
   #if ENABLED(EXTERNAL_CLOSED_LOOP_CONTROLLER)
@@ -1556,7 +1557,7 @@ void setup() {
   #endif
 
   #if HAS_SERVICE_INTERVALS && DISABLED(DWIN_CREALITY_LCD)
-    ui.reset_status(true);  // Show service messages or keep current status
+    ui.reset_status(true);  // Show service messages or keep current status//显示服务消息或保持当前状态
   #endif
 
   #if ENABLED(MAX7219_DEBUG)
@@ -1569,7 +1570,7 @@ void setup() {
 
   #if HAS_TFT_LVGL_UI
     #if ENABLED(SDSUPPORT)
-      if (!card.isMounted()) SETUP_RUN(card.mount()); // Mount SD to load graphics and fonts
+      if (!card.isMounted()) SETUP_RUN(card.mount()); // Mount SD to load graphics and fonts//装入SD以加载图形和字体
     #endif
     SETUP_RUN(tft_lvgl_init());
   #endif
@@ -1583,7 +1584,7 @@ void setup() {
   #endif
 
   #if ENABLED(PASSWORD_ON_STARTUP)
-    SETUP_RUN(password.lock_machine());      // Will not proceed until correct password provided
+    SETUP_RUN(password.lock_machine());      // Will not proceed until correct password provided//在提供正确的密码之前不会继续
   #endif
 
   #if BOTH(HAS_LCD_MENU, TOUCH_SCREEN_CALIBRATION) && EITHER(TFT_CLASSIC_UI, TFT_COLOR_UI)
@@ -1624,5 +1625,5 @@ void loop() {
 
     TERN_(HAS_TFT_LVGL_UI, printer_state_polling());
 
-  } while (ENABLED(__AVR__)); // Loop forever on slower (AVR) boards
+  } while (ENABLED(__AVR__)); // Loop forever on slower (AVR) boards//在较慢（AVR）板上永久循环
 }

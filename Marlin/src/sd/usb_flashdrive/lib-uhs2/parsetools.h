@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Copyright (C) 2011 Circuits At Home, LTD. All rights reserved.
  *
@@ -83,7 +84,7 @@ public:
   }
 };
 
-// Pointer to a callback function triggered for each element of PTP array when used with PTPArrayParser
+// Pointer to a callback function triggered for each element of PTP array when used with PTPArrayParser//指向在与PTPArrayParser一起使用时为PTP数组的每个元素触发的回调函数的指针
 typedef void (*PTP_ARRAY_EL_FUNC)(const MultiValueBuffer * const p, uint32_t count, const void *me);
 
 class PTPListParser {
@@ -100,12 +101,12 @@ private:
   uint32_t arLen;
   uint32_t arLenCntdn;
 
-  uint8_t lenSize; // size of the array length field in bytes
-  uint8_t valSize; // size of the array element in bytes
+  uint8_t lenSize; // size of the array length field in bytes//数组长度字段的大小（字节）
+  uint8_t valSize; // size of the array element in bytes//数组元素的大小（以字节为单位）
 
   MultiValueBuffer *pBuf;
 
-  // The only parser for both size and array element parsing
+  // The only parser for both size and array element parsing//唯一同时用于大小和数组元素分析的解析器
   MultiByteValueParser theParser;
 
   uint8_t /*ParseMode*/ prsMode;

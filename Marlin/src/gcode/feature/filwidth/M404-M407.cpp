@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -45,8 +46,8 @@ void GcodeSuite::M404() {
  * M405: Turn on filament sensor for control
  */
 void GcodeSuite::M405() {
-  // This is technically a linear measurement, but since it's quantized to centimeters and is a different
-  // unit than everything else, it uses parser.value_byte() instead of parser.value_linear_units().
+  // This is technically a linear measurement, but since it's quantized to centimeters and is a different//从技术上讲，这是一个线性测量，但因为它被量化到厘米，是一个不同的测量
+  // unit than everything else, it uses parser.value_byte() instead of parser.value_linear_units().//单位，它使用parser.value\u byte（）而不是parser.value\u linear\u units（）。
   if (parser.seenval('D'))
     filwidth.set_delay_cm(parser.value_byte());
 
@@ -58,7 +59,7 @@ void GcodeSuite::M405() {
  */
 void GcodeSuite::M406() {
   filwidth.enable(false);
-  planner.calculate_volumetric_multipliers();   // Restore correct 'volumetric_multiplier' value
+  planner.calculate_volumetric_multipliers();   // Restore correct 'volumetric_multiplier' value//恢复正确的“体积乘数”值
 }
 
 /**
@@ -68,4 +69,4 @@ void GcodeSuite::M407() {
   SERIAL_ECHOLNPAIR("Filament dia (measured mm):", filwidth.measured_mm);
 }
 
-#endif // FILAMENT_WIDTH_SENSOR
+#endif // FILAMENT_WIDTH_SENSOR//灯丝宽度传感器

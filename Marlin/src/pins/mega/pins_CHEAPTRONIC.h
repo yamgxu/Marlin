@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -28,16 +29,16 @@
 #include "env_validate.h"
 
 #define BOARD_INFO_NAME "Cheaptronic v1.0"
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_STOP_PIN                             3
 #define Y_STOP_PIN                             2
 #define Z_STOP_PIN                             5
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                            14
 #define X_DIR_PIN                             15
 #define X_ENABLE_PIN                          24
@@ -58,21 +59,21 @@
 #define E1_DIR_PIN                            34
 #define E1_ENABLE_PIN                         30
 
-//
-// Temperature sensors
-//
-#define TEMP_0_PIN                            15  // Analog Input
-#define TEMP_1_PIN                            14  // Analog Input
-#define TEMP_BED_PIN                          13  // Analog Input
+////
+// Temperature sensors//温度传感器
+////
+#define TEMP_0_PIN                            15  // Analog Input//模拟输入
+#define TEMP_1_PIN                            14  // Analog Input//模拟输入
+#define TEMP_BED_PIN                          13  // Analog Input//模拟输入
 
-//
-// Heaters / Fans
-//
-#define HEATER_0_PIN                          19  // EXTRUDER 1
-#define HEATER_1_PIN                          23  // EXTRUDER 2
+////
+// Heaters / Fans//加热器/风扇
+////
+#define HEATER_0_PIN                          19  // EXTRUDER 1//挤出机1
+#define HEATER_1_PIN                          23  // EXTRUDER 2//挤出机2
 #define HEATER_BED_PIN                        22
 
-//
-// LCD / Controller
-//
-// Cheaptronic v1.0 doesn't support LCD
+////
+// LCD / Controller//液晶显示器/控制器
+////
+// Cheaptronic v1.0 doesn't support LCD//Cheaptronic v1.0不支持LCD

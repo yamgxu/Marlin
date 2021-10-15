@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -20,9 +21,9 @@
  *
  */
 
-//
-// SD Card Menu
-//
+////
+// SD Card Menu//SD卡菜单
+////
 
 #include "../../inc/MarlinConfigPre.h"
 
@@ -65,7 +66,7 @@ class MenuItem_sdfile : public MenuItem_sdbase {
     }
     static void action(PGM_P const pstr, CardReader &) {
       #if ENABLED(SD_REPRINT_LAST_SELECTED_FILE)
-        // Save menu state for the selected file
+        // Save menu state for the selected file//保存所选文件的菜单状态
         sd_encoder_position = ui.encoderPosition;
         sd_top_line = encoderTopLine;
         sd_items = screen_items;
@@ -160,4 +161,4 @@ void menu_media() {
   TERN(MULTI_VOLUME, menu_media_select, menu_media_filelist)();
 }
 
-#endif // HAS_LCD_MENU && SDSUPPORT
+#endif // HAS_LCD_MENU && SDSUPPORT//具有LCD菜单和SDU支持

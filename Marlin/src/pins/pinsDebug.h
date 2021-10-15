@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -19,8 +20,8 @@
 
 #include "../inc/MarlinConfig.h"
 
-#define MAX_NAME_LENGTH  39    // one place to specify the format of all the sources of names
-                               // "-" left justify, "39" minimum width of name, pad with blanks
+#define MAX_NAME_LENGTH  39    // one place to specify the format of all the sources of names//一个用于指定所有名称源格式的位置
+                               // "-" left justify, "39" minimum width of name, pad with blanks//“-”左对齐，“39”最小名称宽度，空白填充
 
 /**
  *  This routine minimizes RAM usage by creating a FLASH resident array to
@@ -33,7 +34,7 @@
  *  actual macro definitions are changed depending on which pass is being done.
  */
 
-// first pass - put the name strings into FLASH
+// first pass - put the name strings into FLASH//第一步-将名称字符串放入FLASH中
 
 #define _ADD_PIN_2(PIN_NAME, ENTRY_NAME) static const char ENTRY_NAME[] PROGMEM = { PIN_NAME };
 #define _ADD_PIN(PIN_NAME, COUNTER) _ADD_PIN_2(PIN_NAME, entry_NAME_##COUNTER)
@@ -43,7 +44,7 @@
 #include "pinsDebug_list.h"
 #line 45
 
-// manually add pins that have names that are macros which don't play well with these macros
+// manually add pins that have names that are macros which don't play well with these macros//手动添加名称为宏的管脚，这些宏不能很好地与这些宏配合使用
 #if ANY(AVR_ATmega2560_FAMILY, AVR_ATmega1284_FAMILY, ARDUINO_ARCH_SAM, TARGET_LPC1768)
   #if CONF_SERIAL_IS(0)
     static const char RXD_NAME_0[] PROGMEM = { "RXD0" };
@@ -63,9 +64,9 @@
   #endif
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// second pass - create the array
+// second pass - create the array//第二步-创建数组
 
 #undef _ADD_PIN_2
 #undef _ADD_PIN
@@ -102,7 +103,7 @@ const PinInfo pin_array[] PROGMEM = {
     #elif AVR_ATmega1284_FAMILY
       { RXD_NAME_0, 8, true },
       { TXD_NAME_0, 9, true },
-    #elif defined(TARGET_LPC1768)           // TX P0_02  RX P0_03
+    #elif defined(TARGET_LPC1768)           // TX P0_02  RX P0_03//发送P0\u 02接收P0\u 03
       { RXD_NAME_0, 3, true },
       { TXD_NAME_0, 2, true },
     #endif
@@ -116,10 +117,10 @@ const PinInfo pin_array[] PROGMEM = {
       { RXD_NAME_1, 10, true },
       { TXD_NAME_1, 11, true },
     #elif defined(TARGET_LPC1768)
-      #ifdef LPC_PINCFG_UART1_P2_00         // TX P2_00  RX P2_01
+      #ifdef LPC_PINCFG_UART1_P2_00         // TX P2_00  RX P2_01//发送P2_00接收P2_01
         { RXD_NAME_1, 0x41, true },
         { TXD_NAME_1, 0x40, true },
-      #else                                 // TX P0_15  RX P0_16
+      #else                                 // TX P0_15  RX P0_16//发送P0_15接收P0_16
         { RXD_NAME_1, 16, true },
         { TXD_NAME_1, 15, true },
       #endif
@@ -131,10 +132,10 @@ const PinInfo pin_array[] PROGMEM = {
       { RXD_NAME_2, 17, true },
       { TXD_NAME_2, 16, true },
     #elif defined(TARGET_LPC1768)
-      #ifdef LPC_PINCFG_UART2_P2_08         // TX P2_08  RX P2_09
+      #ifdef LPC_PINCFG_UART2_P2_08         // TX P2_08  RX P2_09//发送P2_08接收P2_09
         { RXD_NAME_2, 0x49, true },
         { TXD_NAME_2, 0x48, true },
-      #else                                 // TX P0_10  RX P0_11
+      #else                                 // TX P0_10  RX P0_11//TX P0_10 RX P0_11
         { RXD_NAME_2, 11, true },
         { TXD_NAME_2, 10, true },
       #endif
@@ -146,13 +147,13 @@ const PinInfo pin_array[] PROGMEM = {
       { RXD_NAME_3, 15, true },
       { TXD_NAME_3, 14, true },
     #elif defined(TARGET_LPC1768)
-      #ifdef LPC_PINCFG_UART3_P0_25         // TX P0_25  RX P0_26
+      #ifdef LPC_PINCFG_UART3_P0_25         // TX P0_25  RX P0_26//TX P0_25 RX P0_26
         { RXD_NAME_3, 0x1A, true },
         { TXD_NAME_3, 0x19, true },
-      #elif defined(LPC_PINCFG_UART3_P4_28) // TX P4_28  RX P4_29
+      #elif defined(LPC_PINCFG_UART3_P4_28) // TX P4_28  RX P4_29//发送P4_28接收P4_29
         { RXD_NAME_3, 0x9D, true },
         { TXD_NAME_3, 0x9C, true },
-      #else                                 // TX P0_00  RX P0_01
+      #else                                 // TX P0_00  RX P0_01//发送P0\u 00接收P0\u 01
         { RXD_NAME_3, 1, true },
         { TXD_NAME_3, 0, true },
       #endif
@@ -164,7 +165,7 @@ const PinInfo pin_array[] PROGMEM = {
 
 };
 
-#include HAL_PATH(../HAL, pinsDebug.h)  // get the correct support file for this CPU
+#include HAL_PATH(../HAL, pinsDebug.h)  // get the correct support file for this CPU//获取此CPU的正确支持文件
 
 #ifndef M43_NEVER_TOUCH
   #define M43_NEVER_TOUCH(Q) false
@@ -174,14 +175,14 @@ static void print_input_or_output(const bool isout) {
   SERIAL_ECHOPGM_P(isout ? PSTR("Output = ") : PSTR("Input  = "));
 }
 
-// pretty report with PWM info
+// pretty report with PWM info//有PWM信息的漂亮报告
 inline void report_pin_state_extended(pin_t pin, const bool ignore, const bool extended=false, PGM_P const start_string=nullptr) {
-  char buffer[MAX_NAME_LENGTH + 1];   // for the sprintf statements
+  char buffer[MAX_NAME_LENGTH + 1];   // for the sprintf statements//对于sprintf语句
   bool found = false, multi_name_pin = false;
 
   auto alt_pin_echo = [](const pin_t &pin) {
     #if AVR_AT90USB1286_FAMILY
-      // Use FastIO for pins Teensy doesn't expose
+      // Use FastIO for pins Teensy doesn't expose//使用FastIO，以防针脚Teensy不暴露
       if (pin == 46) {
         print_input_or_output(IS_OUTPUT(46));
         SERIAL_CHAR('0' + READ(46));
@@ -196,22 +197,22 @@ inline void report_pin_state_extended(pin_t pin, const bool ignore, const bool e
     return true;
   };
 
-  LOOP_L_N(x, COUNT(pin_array))  {    // scan entire array and report all instances of this pin
+  LOOP_L_N(x, COUNT(pin_array))  {    // scan entire array and report all instances of this pin//扫描整个阵列并报告此pin的所有实例
     if (GET_ARRAY_PIN(x) == pin) {
-      if (!found) {    // report digital and analog pin number only on the first time through
+      if (!found) {    // report digital and analog pin number only on the first time through//仅在第一次使用时报告数字和模拟管脚编号
         if (start_string) SERIAL_ECHOPGM_P(start_string);
         SERIAL_ECHOPGM("PIN: ");
         PRINT_PIN(pin);
         PRINT_PORT(pin);
         if (int8_t(DIGITAL_PIN_TO_ANALOG_PIN(pin)) >= 0) {
-          sprintf_P(buffer, PSTR(" (A%2d)  "), DIGITAL_PIN_TO_ANALOG_PIN(pin));    // analog pin number
+          sprintf_P(buffer, PSTR(" (A%2d)  "), DIGITAL_PIN_TO_ANALOG_PIN(pin));    // analog pin number//模拟管脚号
           SERIAL_ECHO(buffer);
         }
-        else SERIAL_ECHO_SP(8);   // add padding if not an analog pin
+        else SERIAL_ECHO_SP(8);   // add padding if not an analog pin//如果不是模拟管脚，则添加填充
       }
       else {
         SERIAL_CHAR('.');
-        SERIAL_ECHO_SP(MULTI_NAME_PAD + (start_string ? strlen_P(start_string) : 0));  // add padding if not the first instance found
+        SERIAL_ECHO_SP(MULTI_NAME_PAD + (start_string ? strlen_P(start_string) : 0));  // add padding if not the first instance found//如果未找到第一个实例，请添加填充
       }
       PRINT_ARRAY_NAME(x);
       if (extended) {
@@ -225,29 +226,29 @@ inline void report_pin_state_extended(pin_t pin, const bool ignore, const bool e
             }
             else {
               if (!GET_PINMODE(pin)) {
-                //pinMode(pin, INPUT_PULLUP);  // make sure input isn't floating - stopped doing this
-                                               // because this could interfere with inductive/capacitive
-                                               // sensors (high impedance voltage divider) and with Pt100 amplifier
+                //pinMode(pin, INPUT_PULLUP);  // make sure input isn't floating - stopped doing this//引脚模式（引脚，输入\上拉）；//确保输入不是浮动的-停止执行此操作
+                                               // because this could interfere with inductive/capacitive//因为这可能会干扰电感/电容
+                                               // sensors (high impedance voltage divider) and with Pt100 amplifier//传感器（高阻抗分压器）和Pt100放大器
                 print_input_or_output(false);
                 SERIAL_ECHO(digitalRead_mod(pin));
               }
               else if (pwm_status(pin)) {
-                // do nothing
+                // do nothing//无所事事
               }
               else {
                 print_input_or_output(true);
                 SERIAL_ECHO(digitalRead_mod(pin));
               }
             }
-            if (!multi_name_pin && extended) pwm_details(pin);  // report PWM capabilities only on the first pass & only if doing an extended report
+            if (!multi_name_pin && extended) pwm_details(pin);  // report PWM capabilities only on the first pass & only if doing an extended report//仅在第一次通过时报告PWM功能&仅在执行扩展报告时报告
           }
         }
       }
       SERIAL_EOL();
       multi_name_pin = found;
       found = true;
-    }  // end of IF
-  } // end of for loop
+    }  // end of IF//IF结束
+  } // end of for loop//循环结束
 
   if (!found) {
     if (start_string) SERIAL_ECHOPGM_P(start_string);
@@ -255,17 +256,17 @@ inline void report_pin_state_extended(pin_t pin, const bool ignore, const bool e
     PRINT_PIN(pin);
     PRINT_PORT(pin);
     if (int8_t(DIGITAL_PIN_TO_ANALOG_PIN(pin)) >= 0) {
-      sprintf_P(buffer, PSTR(" (A%2d)  "), DIGITAL_PIN_TO_ANALOG_PIN(pin));    // analog pin number
+      sprintf_P(buffer, PSTR(" (A%2d)  "), DIGITAL_PIN_TO_ANALOG_PIN(pin));    // analog pin number//模拟管脚号
       SERIAL_ECHO(buffer);
     }
     else
-      SERIAL_ECHO_SP(8);   // add padding if not an analog pin
+      SERIAL_ECHO_SP(8);   // add padding if not an analog pin//如果不是模拟管脚，则添加填充
     SERIAL_ECHOPGM("<unused/unknown>");
     if (extended) {
 
       if (alt_pin_echo(pin)) {
         if (pwm_status(pin)) {
-          // do nothing
+          // do nothing//无所事事
         }
         else if (GET_PINMODE(pin)) {
           SERIAL_ECHO_SP(MAX_NAME_LENGTH - 16);
@@ -279,15 +280,15 @@ inline void report_pin_state_extended(pin_t pin, const bool ignore, const bool e
             SERIAL_ECHOPGM("   ");
           }
           else
-          SERIAL_ECHO_SP(MAX_NAME_LENGTH - 16);   // add padding if not an analog pin
+          SERIAL_ECHO_SP(MAX_NAME_LENGTH - 16);   // add padding if not an analog pin//如果不是模拟管脚，则添加填充
 
           print_input_or_output(false);
           SERIAL_ECHO(digitalRead_mod(pin));
         }
-        //if (!pwm_status(pin)) SERIAL_CHAR(' ');    // add padding if it's not a PWM pin
+        //if (!pwm_status(pin)) SERIAL_CHAR(' ');    // add padding if it's not a PWM pin//如果（！pwm_状态（pin））串行_字符（“”）；//如果不是PWM引脚，则添加填充
         if (extended) {
           SERIAL_ECHO_SP(MAX_NAME_LENGTH - 16);
-          pwm_details(pin);  // report PWM capabilities only if doing an extended report
+          pwm_details(pin);  // report PWM capabilities only if doing an extended report//仅在执行扩展报告时报告PWM功能
         }
       }
     }

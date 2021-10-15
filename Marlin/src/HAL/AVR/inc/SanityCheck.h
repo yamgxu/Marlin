@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -36,7 +37,7 @@
  * Sanity checks for Spindle / Laser PWM
  */
 #if ENABLED(SPINDLE_LASER_PWM)
-  #include "../ServoTimers.h"   // Needed to check timer availability (_useTimer3)
+  #include "../ServoTimers.h"   // Needed to check timer availability (_useTimer3)//需要检查计时器可用性（\u useTimer3）
   #if SPINDLE_LASER_PWM_PIN == 4 || WITHIN(SPINDLE_LASER_PWM_PIN, 11, 13)
     #error "Counter/Timer for SPINDLE_LASER_PWM_PIN is used by a system interrupt."
   #elif NUM_SERVOS > 0 && defined(_useTimer3) && (WITHIN(SPINDLE_LASER_PWM_PIN, 2, 3) || SPINDLE_LASER_PWM_PIN == 5)

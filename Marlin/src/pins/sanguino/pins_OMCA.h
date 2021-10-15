@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -81,16 +82,16 @@
 
 #define BOARD_INFO_NAME "Final OMCA"
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_STOP_PIN                             0
 #define Y_STOP_PIN                             1
 #define Z_STOP_PIN                             2
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                            26
 #define X_DIR_PIN                             25
 #define X_ENABLE_PIN                          10
@@ -107,43 +108,43 @@
 #define E0_DIR_PIN                            21
 #define E0_ENABLE_PIN                         10
 
-#define E1_STEP_PIN                           -1  // 21
-#define E1_DIR_PIN                            -1  // 20
-#define E1_ENABLE_PIN                         -1  // 19
+#define E1_STEP_PIN                           -1  // 21// 21
+#define E1_DIR_PIN                            -1  // 20// 20
+#define E1_ENABLE_PIN                         -1  // 19// 19
 
-#define E2_STEP_PIN                           -1  // 21
-#define E2_DIR_PIN                            -1  // 20
-#define E2_ENABLE_PIN                         -1  // 18
+#define E2_STEP_PIN                           -1  // 21// 21
+#define E2_DIR_PIN                            -1  // 20// 20
+#define E2_ENABLE_PIN                         -1  // 18// 18
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                             0  // Analog Input
-#define TEMP_1_PIN                             1  // Analog Input
-#define TEMP_BED_PIN                           2  // Analog Input (1,2 or I2C)
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                             0  // Analog Input//模拟输入
+#define TEMP_1_PIN                             1  // Analog Input//模拟输入
+#define TEMP_BED_PIN                           2  // Analog Input (1,2 or I2C)//模拟输入（1,2或I2C）
 
-//
-// Heaters / Fans
-//
-#define HEATER_0_PIN                           3  // DONE PWM on RIGHT connector
+////
+// Heaters / Fans//加热器/风扇
+////
+#define HEATER_0_PIN                           3  // DONE PWM on RIGHT connector//右接头上的PWM完成
 #define HEATER_BED_PIN                         4
 
 #ifndef FAN_PIN
-  #define FAN_PIN                             14  // PWM on MIDDLE connector
+  #define FAN_PIN                             14  // PWM on MIDDLE connector//中间连接器上的PWM
 #endif
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define SDSS                                  11
 
 #define I2C_SCL_PIN                           16
 #define I2C_SDA_PIN                           17
 
-// future proofing
+// future proofing//未来证明
 #define __FS                                  20
 #define __FD                                  19
 #define __GS                                  18
 #define __GD                                  13
 
-#define UNUSED_PWM                            14  // PWM on LEFT connector
+#define UNUSED_PWM                            14  // PWM on LEFT connector//左侧连接器上的PWM

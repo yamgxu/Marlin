@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Generated automatically by buildroot/share/fonts/uxggenpages.sh
  * Contents will be REPLACED by future processing!
@@ -96,16 +97,16 @@ const u8g_fntpgm_uint8_t fontpage_97_252_252[25] U8G_FONT_SECTION("fontpage_97_2
 
 #define FONTDATA_ITEM(page, begin, end, data) { page, begin, end, COUNT(data), data }
 static const uxg_fontinfo_t g_fontinfo[] PROGMEM = {
-    FONTDATA_ITEM(97, 161, 164, fontpage_97_161_164), // 'ァ' -- 'イ'
-    FONTDATA_ITEM(97, 166, 166, fontpage_97_166_166), // 'ウ' -- 'ウ'
-    FONTDATA_ITEM(97, 168, 168, fontpage_97_168_168), // 'エ' -- 'エ'
-    FONTDATA_ITEM(97, 170, 187, fontpage_97_170_187), // 'オ' -- 'セ'
-    FONTDATA_ITEM(97, 189, 193, fontpage_97_189_193), // 'ソ' -- 'チ'
-    FONTDATA_ITEM(97, 195, 211, fontpage_97_195_211), // 'ッ' -- 'ビ'
-    FONTDATA_ITEM(97, 213, 217, fontpage_97_213_217), // 'フ' -- 'ベ'
-    FONTDATA_ITEM(97, 219, 220, fontpage_97_219_220), // 'ホ' -- 'ボ'
-    FONTDATA_ITEM(97, 222, 223, fontpage_97_222_223), // 'マ' -- 'ミ'
-    FONTDATA_ITEM(97, 225, 237, fontpage_97_225_237), // 'メ' -- 'ロ'
-    FONTDATA_ITEM(97, 242, 243, fontpage_97_242_243), // 'ヲ' -- 'ン'
-    FONTDATA_ITEM(97, 252, 252, fontpage_97_252_252), // 'ー' -- 'ー'
+    FONTDATA_ITEM(97, 161, 164, fontpage_97_161_164), // 'ァ' -- 'イ'// 'ァ' -- 'イ'
+    FONTDATA_ITEM(97, 166, 166, fontpage_97_166_166), // 'ウ' -- 'ウ'// 'ウ' -- 'ウ'
+    FONTDATA_ITEM(97, 168, 168, fontpage_97_168_168), // 'エ' -- 'エ'// 'エ' -- 'エ'
+    FONTDATA_ITEM(97, 170, 187, fontpage_97_170_187), // 'オ' -- 'セ'// 'オ' -- 'セ'
+    FONTDATA_ITEM(97, 189, 193, fontpage_97_189_193), // 'ソ' -- 'チ'// 'ソ' -- 'チ'
+    FONTDATA_ITEM(97, 195, 211, fontpage_97_195_211), // 'ッ' -- 'ビ'// 'ッ' -- 'ビ'
+    FONTDATA_ITEM(97, 213, 217, fontpage_97_213_217), // 'フ' -- 'ベ'// 'フ' -- 'ベ'
+    FONTDATA_ITEM(97, 219, 220, fontpage_97_219_220), // 'ホ' -- 'ボ'// 'ホ' -- 'ボ'
+    FONTDATA_ITEM(97, 222, 223, fontpage_97_222_223), // 'マ' -- 'ミ'// 'マ' -- 'ミ'
+    FONTDATA_ITEM(97, 225, 237, fontpage_97_225_237), // 'メ' -- 'ロ'// 'メ' -- 'ロ'
+    FONTDATA_ITEM(97, 242, 243, fontpage_97_242_243), // 'ヲ' -- 'ン'// 'ヲ' -- 'ン'
+    FONTDATA_ITEM(97, 252, 252, fontpage_97_252_252), // 'ー' -- 'ー'// 'ー' -- 'ー'
 };

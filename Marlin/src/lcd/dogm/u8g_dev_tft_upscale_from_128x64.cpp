@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -83,34 +84,34 @@ TFT_IO tftio;
 #define X_HI (UPSCALE(TFT_PIXEL_OFFSET_X, WIDTH) - 1)
 #define Y_HI (UPSCALE(TFT_PIXEL_OFFSET_Y, HEIGHT) - 1)
 
-// 16 bit color generator: https://ee-programming-notepad.blogspot.com/2016/10/16-bit-color-generator-picker.html
-// RGB565 color picker:  https://trolsoft.ru/en/articles/rgb565-color-picker
+// 16 bit color generator: https://ee-programming-notepad.blogspot.com/2016/10/16-bit-color-generator-picker.html//16位颜色生成器：https://ee-programming-notepad.blogspot.com/2016/10/16-bit-color-generator-picker.html
+// RGB565 color picker:  https://trolsoft.ru/en/articles/rgb565-color-picker//RGB565颜色选择器：https://trolsoft.ru/en/articles/rgb565-color-picker
 
-#define COLOR_BLACK       0x0000  // #000000
-#define COLOR_WHITE       0xFFFF  // #FFFFFF
-#define COLOR_SILVER      0xC618  // #C0C0C0
-#define COLOR_GREY        0x7BEF  // #808080
-#define COLOR_DARKGREY    0x4208  // #404040
-#define COLOR_DARKGREY2   0x39E7  // #303030
-#define COLOR_DARK        0x0003  // #000019
+#define COLOR_BLACK       0x0000  // #000000// #000000
+#define COLOR_WHITE       0xFFFF  // #FFFFFF//#FFFFFF
+#define COLOR_SILVER      0xC618  // #C0C0C0//#C0C0
+#define COLOR_GREY        0x7BEF  // #808080// #808080
+#define COLOR_DARKGREY    0x4208  // #404040// #404040
+#define COLOR_DARKGREY2   0x39E7  // #303030// #303030
+#define COLOR_DARK        0x0003  // #000019// #000019
 
-#define COLOR_RED         0xF800  // #FF0000
-#define COLOR_LIME        0x7E00  // #00FF00
-#define COLOR_BLUE        0x001F  // #0000FF
-#define COLOR_YELLOW      0xFFE0  // #FFFF00
-#define COLOR_MAGENTA     0xF81F  // #FF00FF
-#define COLOR_FUCHSIA     0xF81F  // #FF00FF
-#define COLOR_CYAN        0x07FF  // #00FFFF
-#define COLOR_AQUA        0x07FF  // #00FFFF
+#define COLOR_RED         0xF800  // #FF0000//#FF0000
+#define COLOR_LIME        0x7E00  // #00FF00//#00FF00
+#define COLOR_BLUE        0x001F  // #0000FF//#0000FF
+#define COLOR_YELLOW      0xFFE0  // #FFFF00//#FFFF00
+#define COLOR_MAGENTA     0xF81F  // #FF00FF//#FF00FF
+#define COLOR_FUCHSIA     0xF81F  // #FF00FF//#FF00FF
+#define COLOR_CYAN        0x07FF  // #00FFFF//#00FFFF
+#define COLOR_AQUA        0x07FF  // #00FFFF//#00FFFF
 
-#define COLOR_MAROON      0x7800  // #800000
-#define COLOR_GREEN       0x03E0  // #008000
-#define COLOR_NAVY        0x000F  // #000080
-#define COLOR_OLIVE       0x8400  // #808000
-#define COLOR_PURPLE      0x8010  // #800080
-#define COLOR_TEAL        0x0410  // #008080
+#define COLOR_MAROON      0x7800  // #800000// #800000
+#define COLOR_GREEN       0x03E0  // #008000// #008000
+#define COLOR_NAVY        0x000F  // #000080// #000080
+#define COLOR_OLIVE       0x8400  // #808000// #808000
+#define COLOR_PURPLE      0x8010  // #800080// #800080
+#define COLOR_TEAL        0x0410  // #008080// #008080
 
-#define COLOR_ORANGE      0xFC00  // #FF7F00
+#define COLOR_ORANGE      0xFC00  // #FF7F00//#FF7F00
 
 #ifndef TFT_MARLINUI_COLOR
   #define TFT_MARLINUI_COLOR COLOR_WHITE
@@ -308,9 +309,9 @@ static void setWindow(u8g_t *u8g, u8g_dev_t *dev, uint16_t Xmin, uint16_t Ymin, 
     }
   }
 
-#endif // HAS_TOUCH_BUTTONS
+#endif // HAS_TOUCH_BUTTONS//有触摸按钮吗
 
-// Used to fill RGB565 (16bits) background
+// Used to fill RGB565 (16bits) background//用于填充RGB565（16位）背景
 inline void memset2(const void *ptr, uint16_t fill, size_t cnt) {
   uint16_t *wptr = (uint16_t*)ptr;
   for (size_t i = 0; i < cnt; i += 2) { *wptr = fill; wptr++; }
@@ -325,7 +326,7 @@ static uint8_t page;
     if (!redrawTouchButtons) return;
     redrawTouchButtons = false;
 
-    // Bottom buttons
+    // Bottom buttons//底部按钮
     setWindow(u8g, dev, BUTTOND_X_LO, BUTTON_Y_LO, BUTTOND_X_HI, BUTTON_Y_HI);
     drawImage(buttonD, u8g, dev, BUTTON_DRAW_WIDTH, BUTTON_DRAW_HEIGHT, TFT_BTCANCEL_COLOR);
 
@@ -338,9 +339,9 @@ static uint8_t page;
     setWindow(u8g, dev, BUTTONC_X_LO, BUTTON_Y_LO, BUTTONC_X_HI, BUTTON_Y_HI);
     drawImage(buttonC, u8g, dev, BUTTON_DRAW_WIDTH, BUTTON_DRAW_HEIGHT, TFT_BTOKMENU_COLOR);
   }
-#endif // HAS_TOUCH_BUTTONS
+#endif // HAS_TOUCH_BUTTONS//有触摸按钮吗
 
-static uint8_t msgInitCount = 2; // Ignore all messages until 2nd U8G_COM_MSG_INIT
+static uint8_t msgInitCount = 2; // Ignore all messages until 2nd U8G_COM_MSG_INIT//忽略所有消息，直到第二次U8G_COM_MSG_INIT
 
 uint8_t u8g_dev_tft_320x240_upscale_from_128x64_fn(u8g_t *u8g, u8g_dev_t *dev, uint8_t msg, void *arg) {
   u8g_pb_t *pb = (u8g_pb_t *)(dev->dev_mem);
@@ -349,7 +350,7 @@ uint8_t u8g_dev_tft_320x240_upscale_from_128x64_fn(u8g_t *u8g, u8g_dev_t *dev, u
     static uint16_t bufferA[WIDTH * sq(GRAPHICAL_TFT_UPSCALE)], bufferB[WIDTH * sq(GRAPHICAL_TFT_UPSCALE)];
     uint16_t *buffer = &bufferA[0];
   #else
-    uint16_t buffer[WIDTH * GRAPHICAL_TFT_UPSCALE]; // 16-bit RGB 565 pixel line buffer
+    uint16_t buffer[WIDTH * GRAPHICAL_TFT_UPSCALE]; // 16-bit RGB 565 pixel line buffer//16位RGB 565像素行缓冲器
   #endif
 
   switch (msg) {
@@ -366,7 +367,7 @@ uint8_t u8g_dev_tft_320x240_upscale_from_128x64_fn(u8g_t *u8g, u8g_dev_t *dev, u
       tftio.InitTFT();
       TERN_(TOUCH_SCREEN_CALIBRATION, touch_calibration.calibration_reset());
 
-      // Clear Screen
+      // Clear Screen//清屏
       setWindow(u8g, dev, 0, 0, (TFT_WIDTH) - 1, (TFT_HEIGHT) - 1);
       #if HAS_LCD_IO
         tftio.WriteMultiple(TFT_MARLINBG_COLOR, (TFT_WIDTH) * (TFT_HEIGHT));
@@ -416,10 +417,10 @@ uint8_t u8g_dev_tft_320x240_upscale_from_128x64_fn(u8g_t *u8g, u8g_dev_t *dev, u
       break;
 
     case U8G_DEV_MSG_SLEEP_ON:
-      // Enter Sleep Mode (10h)
+      // Enter Sleep Mode (10h)//进入睡眠模式（10小时）
       return 1;
     case U8G_DEV_MSG_SLEEP_OFF:
-      // Sleep Out (11h)
+      // Sleep Out (11h)//露宿（11小时）
       return 1;
   }
   return u8g_dev_pb8v1_base_fn(u8g, dev, msg, arg);
@@ -439,7 +440,7 @@ uint8_t u8g_com_hal_tft_fn(u8g_t *u8g, uint8_t msg, uint8_t arg_val, void *arg_p
       isCommand = 0;
       break;
 
-    case U8G_COM_MSG_ADDRESS: // define cmd (arg_val = 0) or data mode (arg_val = 1)
+    case U8G_COM_MSG_ADDRESS: // define cmd (arg_val = 0) or data mode (arg_val = 1)//定义cmd（arg_val=0）或数据模式（arg_val=1）
       isCommand = arg_val == 0 ? 1 : 0;
       break;
 
@@ -482,14 +483,14 @@ U8G_PB_DEV(u8g_dev_tft_320x240_upscale_from_128x64, WIDTH, HEIGHT, PAGE_HEIGHT, 
     calibrationState calibration_stage = touch_calibration.get_calibration_state();
 
     if (calibration_stage == CALIBRATION_NONE) {
-      // start and clear screen
+      // start and clear screen//启动并清除屏幕
       defer_status_screen(true);
       calibration_stage = touch_calibration.calibration_start();
       tftio.set_window(0, 0, (TFT_WIDTH) - 1, (TFT_HEIGHT) - 1);
       tftio.WriteMultiple(TFT_MARLINBG_COLOR, uint32_t(TFT_WIDTH) * (TFT_HEIGHT));
     }
     else {
-      // clear last cross
+      // clear last cross//清除最后一个十字架
       x = touch_calibration.calibration_points[_MIN(calibration_stage - 1, CALIBRATION_BOTTOM_RIGHT)].x;
       y = touch_calibration.calibration_points[_MIN(calibration_stage - 1, CALIBRATION_BOTTOM_RIGHT)].y;
       drawCross(x, y, TFT_MARLINBG_COLOR);
@@ -497,7 +498,7 @@ U8G_PB_DEV(u8g_dev_tft_320x240_upscale_from_128x64, WIDTH, HEIGHT, PAGE_HEIGHT, 
 
     const char *str = nullptr;
     if (calibration_stage < CALIBRATION_SUCCESS) {
-      // handle current state
+      // handle current state//处理当前状态
       switch (calibration_stage) {
         case CALIBRATION_TOP_LEFT: str = GET_TEXT(MSG_TOP_LEFT); break;
         case CALIBRATION_BOTTOM_LEFT: str = GET_TEXT(MSG_BOTTOM_LEFT); break;
@@ -511,14 +512,14 @@ U8G_PB_DEV(u8g_dev_tft_320x240_upscale_from_128x64, WIDTH, HEIGHT, PAGE_HEIGHT, 
       drawCross(x, y, TFT_MARLINUI_COLOR);
     }
     else {
-      // end calibration
+      // end calibration//末端校准
       str = calibration_stage == CALIBRATION_SUCCESS ? GET_TEXT(MSG_CALIBRATION_COMPLETED) : GET_TEXT(MSG_CALIBRATION_FAILED);
       defer_status_screen(false);
       touch_calibration.calibration_end();
       TERN_(HAS_TOUCH_BUTTONS, redrawTouchButtons = true);
     }
 
-    // draw current message
+    // draw current message//绘制当前消息
     tftio.set_window(TFT_PIXEL_OFFSET_X, TFT_PIXEL_OFFSET_Y, X_HI, Y_HI);
     do {
       set_font(FONT_MENU);
@@ -532,6 +533,6 @@ U8G_PB_DEV(u8g_dev_tft_320x240_upscale_from_128x64, WIDTH, HEIGHT, PAGE_HEIGHT, 
     }
   }
 
-#endif // TOUCH_SCREEN_CALIBRATION
+#endif // TOUCH_SCREEN_CALIBRATION//触摸屏校准
 
-#endif // HAS_MARLINUI_U8GLIB && (FSMC_CS_PIN || HAS_SPI_GRAPHICAL_TFT)
+#endif // HAS_MARLINUI_U8GLIB && (FSMC_CS_PIN || HAS_SPI_GRAPHICAL_TFT)//HAS_MARLINUI_U8GLIB&（FSMC_CS_PIN|HAS_SPI_图形_TFT）

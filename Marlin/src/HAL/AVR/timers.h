@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,18 +22,18 @@
 
 #include <stdint.h>
 
-// ------------------------
-// Types
-// ------------------------
+// ------------------------// ------------------------
+// Types//类型
+// ------------------------// ------------------------
 
 typedef uint16_t hal_timer_t;
 #define HAL_TIMER_TYPE_MAX 0xFFFF
 
-// ------------------------
-// Defines
-// ------------------------
+// ------------------------// ------------------------
+// Defines//定义
+// ------------------------// ------------------------
 
-#define HAL_TIMER_RATE          ((F_CPU) / 8)    // i.e., 2MHz or 2.5MHz
+#define HAL_TIMER_RATE          ((F_CPU) / 8)    // i.e., 2MHz or 2.5MHz//即2MHz或2.5MHz
 
 #ifndef STEP_TIMER_NUM
   #define STEP_TIMER_NUM        1
@@ -48,9 +49,9 @@ typedef uint16_t hal_timer_t;
 
 #define STEPPER_TIMER_RATE      HAL_TIMER_RATE
 #define STEPPER_TIMER_PRESCALE  8
-#define STEPPER_TIMER_TICKS_PER_US ((STEPPER_TIMER_RATE) / 1000000) // Cannot be of type double
+#define STEPPER_TIMER_TICKS_PER_US ((STEPPER_TIMER_RATE) / 1000000) // Cannot be of type double//不能是double类型
 
-#define PULSE_TIMER_RATE       STEPPER_TIMER_RATE   // frequency of pulse timer
+#define PULSE_TIMER_RATE       STEPPER_TIMER_RATE   // frequency of pulse timer//脉冲定时器频率
 #define PULSE_TIMER_PRESCALE   STEPPER_TIMER_PRESCALE
 #define PULSE_TIMER_TICKS_PER_US STEPPER_TIMER_TICKS_PER_US
 
@@ -65,28 +66,28 @@ typedef uint16_t hal_timer_t;
 FORCE_INLINE void HAL_timer_start(const uint8_t timer_num, const uint32_t) {
   switch (timer_num) {
     case STEP_TIMER_NUM:
-      // waveform generation = 0100 = CTC
+      // waveform generation = 0100 = CTC//波形生成=0100=CTC
       SET_WGM(1, CTC_OCRnA);
 
-      // output mode = 00 (disconnected)
+      // output mode = 00 (disconnected)//输出模式=00（断开）
       SET_COMA(1, NORMAL);
 
-      // Set the timer pre-scaler
-      // Generally we use a divider of 8, resulting in a 2MHz timer
-      // frequency on a 16MHz MCU. If you are going to change this, be
-      // sure to regenerate speed_lookuptable.h with
-      // create_speed_lookuptable.py
-      SET_CS(1, PRESCALER_8);  //  CS 2 = 1/8 prescaler
+      // Set the timer pre-scaler//设置计时器预定标器
+      // Generally we use a divider of 8, resulting in a 2MHz timer//通常我们使用8的除法器，产生一个2MHz的定时器
+      // frequency on a 16MHz MCU. If you are going to change this, be//16MHz MCU上的频率。如果你要改变这一点，请小心
+      // sure to regenerate speed_lookuptable.h with//确保重新生成速度\u lookuptable.h
+      // create_speed_lookuptable.py//创建_speed_lookuptable.py
+      SET_CS(1, PRESCALER_8);  //  CS 2 = 1/8 prescaler//CS 2=1/8预分频器
 
-      // Init Stepper ISR to 122 Hz for quick starting
-      // (F_CPU) / (STEPPER_TIMER_PRESCALE) / frequency
+      // Init Stepper ISR to 122 Hz for quick starting//初始步进电机ISR至122 Hz，用于快速启动
+      // (F_CPU) / (STEPPER_TIMER_PRESCALE) / frequency//（F_CPU）/（步进定时器预刻度）/频率
       OCR1A = 0x4000;
       TCNT1 = 0;
       break;
 
     case TEMP_TIMER_NUM:
-      // Use timer0 for temperature measurement
-      // Interleave temperature interrupt with millies interrupt
+      // Use timer0 for temperature measurement//使用定时器0进行温度测量
+      // Interleave temperature interrupt with millies interrupt//将温度中断与毫秒中断交错
       OCR0B = 128;
       break;
   }
@@ -187,7 +188,7 @@ void TIMER1_COMPA_vect() { \
 } \
 void TIMER1_COMPA_vect_bottom()
 
-#endif // HAL_STEP_TIMER_ISR
+#endif // HAL_STEP_TIMER_ISR//HAL\u步进定时器\u ISR
 
 #ifndef HAL_TEMP_TIMER_ISR
 
@@ -257,4 +258,4 @@ void TIMER0_COMPB_vect() { \
 } \
 void TIMER0_COMPB_vect_bottom()
 
-#endif // HAL_TEMP_TIMER_ISR
+#endif // HAL_TEMP_TIMER_ISR//HAL\U TEMP\U TIMER\U ISR

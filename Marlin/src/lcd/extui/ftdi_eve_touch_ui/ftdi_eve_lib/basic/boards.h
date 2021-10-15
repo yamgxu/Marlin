@@ -1,3 +1,4 @@
+/** translatione by yx */
 /************
  * boards.h *
  ************/
@@ -52,7 +53,7 @@
   #endif
   namespace FTDI {
     IS_FT800
-    constexpr bool Use_Crystal            = true;  // 0 = use internal oscillator, 1 = module has a crystal populated
+    constexpr bool Use_Crystal            = true;  // 0 = use internal oscillator, 1 = module has a crystal populated//0=使用内部振荡器，1=模块中填充了晶体
     constexpr bool GPIO_0_Audio_Enable    = false; /* 1 = does use GPIO00 for amplifier control, 0 = not in use for Audio */
     constexpr bool GPIO_1_Audio_Shutdown  = true;  /* 1 = does use GPIO01 for amplifier control, 0 = not in use for Audio */
     constexpr uint8_t Swizzle             = 2;
@@ -80,7 +81,7 @@
   #endif
   namespace FTDI {
     IS_FT800
-    constexpr bool Use_Crystal            = true; // 0 = use internal oscillator, 1 = module has a crystal populated
+    constexpr bool Use_Crystal            = true; // 0 = use internal oscillator, 1 = module has a crystal populated//0=使用内部振荡器，1=模块中填充了晶体
     constexpr bool GPIO_0_Audio_Enable    = false;
     constexpr bool GPIO_1_Audio_Shutdown  = false;
     constexpr uint8_t Swizzle             = 0;
@@ -103,7 +104,7 @@
   #endif
   namespace FTDI {
     IS_FT810
-    constexpr bool Use_Crystal            = true; // 0 = use internal oscillator, 1 = module has a crystal populated
+    constexpr bool Use_Crystal            = true; // 0 = use internal oscillator, 1 = module has a crystal populated//0=使用内部振荡器，1=模块中填充了晶体
     constexpr bool GPIO_0_Audio_Enable    = false;
     constexpr bool GPIO_1_Audio_Shutdown  = false;
     constexpr uint8_t Swizzle             = 0;
@@ -126,7 +127,7 @@
   #endif
   namespace FTDI {
     IS_FT800
-    constexpr bool Use_Crystal            = true; // 0 = use internal oscillator, 1 = module has a crystal populated
+    constexpr bool Use_Crystal            = true; // 0 = use internal oscillator, 1 = module has a crystal populated//0=使用内部振荡器，1=模块中填充了晶体
     constexpr bool GPIO_0_Audio_Enable    = false;
     constexpr bool GPIO_1_Audio_Shutdown  = true;
     constexpr uint8_t Swizzle             = 0;
@@ -147,8 +148,8 @@
   #endif
   namespace FTDI {
     IS_FT810
-    constexpr bool Use_Crystal            = false; // 0 = use internal oscillator, 1 = module has a crystal populated
-    constexpr bool GPIO_0_Audio_Enable    = true;  // The AO CLCD uses GPIO0 to enable audio
+    constexpr bool Use_Crystal            = false; // 0 = use internal oscillator, 1 = module has a crystal populated//0=使用内部振荡器，1=模块中填充了晶体
+    constexpr bool GPIO_0_Audio_Enable    = true;  // The AO CLCD uses GPIO0 to enable audio//AO CLCD使用GPIO0启用音频
     constexpr bool GPIO_1_Audio_Shutdown  = false;
     constexpr uint8_t Swizzle             = 0;
     constexpr uint8_t CSpread             = 0;
@@ -170,8 +171,8 @@
   #endif
   namespace FTDI {
     IS_FT810
-    constexpr bool Use_Crystal            = false; // 0 = use internal oscillator, 1 = module has a crystal populated
-    constexpr bool GPIO_0_Audio_Enable    = true;  // The AO CLCD uses GPIO0 to enable audio
+    constexpr bool Use_Crystal            = false; // 0 = use internal oscillator, 1 = module has a crystal populated//0=使用内部振荡器，1=模块中填充了晶体
+    constexpr bool GPIO_0_Audio_Enable    = true;  // The AO CLCD uses GPIO0 to enable audio//AO CLCD使用GPIO0启用音频
     constexpr bool GPIO_1_Audio_Shutdown  = false;
     constexpr uint8_t Swizzle             = 0;
     constexpr uint8_t CSpread             = 0;
@@ -186,17 +187,17 @@
 #elif defined(LCD_EVE3_50G)
   #if !HAS_RESOLUTION
     #define TOUCH_UI_800x480
-    #define TOUCH_UI_800x480_GENERIC    // use more common timing parameters as the original set
+    #define TOUCH_UI_800x480_GENERIC    // use more common timing parameters as the original set//使用更常见的定时参数作为原始设置
   #endif
   #ifndef FTDI_API_LEVEL
     #define FTDI_API_LEVEL                810
   #endif
   namespace FTDI {
     IS_FT810
-    constexpr bool Use_Crystal            = true; // 0 = use internal oscillator, 1 = module has a crystal populated
+    constexpr bool Use_Crystal            = true; // 0 = use internal oscillator, 1 = module has a crystal populated//0=使用内部振荡器，1=模块中填充了晶体
     constexpr bool GPIO_0_Audio_Enable    = false;
     constexpr bool GPIO_1_Audio_Shutdown  = false;
-    #define USE_GT911 // this display uses an alternative touch-controller and we need to tell the init function to switch
+    #define USE_GT911 // this display uses an alternative touch-controller and we need to tell the init function to switch//这个显示器使用了另一个触摸控制器，我们需要告诉init功能切换
     constexpr uint8_t Swizzle             = 0;
     constexpr uint8_t CSpread             = 1;
     constexpr uint8_t Pclkpol             = 1;
@@ -218,17 +219,17 @@
 #elif defined(LCD_EVE2_50G)
   #if !HAS_RESOLUTION
     #define TOUCH_UI_800x480
-    #define TOUCH_UI_800x480_GENERIC    // use more common timing parameters as the original set
+    #define TOUCH_UI_800x480_GENERIC    // use more common timing parameters as the original set//使用更常见的定时参数作为原始设置
   #endif
   #ifndef FTDI_API_LEVEL
     #define FTDI_API_LEVEL                810
   #endif
   namespace FTDI {
     IS_FT810
-    constexpr bool Use_Crystal            = false; // 0 = use internal oscillator, 1 = module has a crystal populated
+    constexpr bool Use_Crystal            = false; // 0 = use internal oscillator, 1 = module has a crystal populated//0=使用内部振荡器，1=模块中填充了晶体
     constexpr bool GPIO_0_Audio_Enable    = false;
     constexpr bool GPIO_1_Audio_Shutdown  = false;
-    #define PATCH_GT911 // this display uses an alternative touch-controller and we need to tell the init function to patch the FT813 for it
+    #define PATCH_GT911 // this display uses an alternative touch-controller and we need to tell the init function to patch the FT813 for it//该显示器使用另一种触摸控制器，我们需要通知init功能为其修补FT813
     constexpr uint8_t Pclkpol             = 1;
     constexpr uint8_t Swizzle             = 0;
     constexpr uint8_t CSpread             = 1;
@@ -278,4 +279,4 @@
     247,2,75,191,6,130,59,188,11,55,240,31,243,122,152,226,183,207,154,73,188,39,219,43,105,222,87,41,143,141,140,175,73,112,184,252,61,184,16,90,250,35,168,82,119,176,57,116,94,
     200,150,22,190,179,44,104,12,235,84,149,102,252,89,154,193,99,228,106,242,125,248,64,194,255,223,127,242,83,11,255,2,70,214,226,128,0,0
   };
-#endif // PATCH_GT911
+#endif // PATCH_GT911//贴片GT911

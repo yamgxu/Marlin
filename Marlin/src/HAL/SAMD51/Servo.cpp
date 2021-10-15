@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  *
@@ -50,7 +51,7 @@
 #define TC_COUNTER_START_VAL    0xFFFF
 
 
-static volatile int8_t currentServoIndex[_Nbr_16timers];    // index for the servo being pulsed for each timer (or -1 if refresh interval)
+static volatile int8_t currentServoIndex[_Nbr_16timers];    // index for the servo being pulsed for each timer (or -1 if refresh interval)//每个定时器脉冲伺服的索引（如果刷新间隔为-1）
 
 FORCE_INLINE static uint16_t getTimerCount() {
   Tc * const tc = TimerConfig[SERVO_TC].pTc;
@@ -61,9 +62,9 @@ FORCE_INLINE static uint16_t getTimerCount() {
   return tc->COUNT16.COUNT.reg;
 }
 
-// ----------------------------
-// Interrupt handler for the TC
-// ----------------------------
+// ----------------------------// ----------------------------
+// Interrupt handler for the TC//TC的中断处理程序
+// ----------------------------// ----------------------------
 HAL_SERVO_TIMER_ISR() {
   Tc * const tc = TimerConfig[SERVO_TC].pTc;
   const timer16_Sequence_t timer =
@@ -80,8 +81,8 @@ HAL_SERVO_TIMER_ISR() {
   if (currentServoIndex[timer] < 0) {
     #if defined(_useTimer1) && defined(_useTimer2)
       if (currentServoIndex[timer ^ 1] >= 0) {
-        // Wait for both channels
-        // Clear the interrupt
+        // Wait for both channels//等待两个频道
+        // Clear the interrupt//清除中断
         tc->COUNT16.INTFLAG.reg = (tcChannel == 0) ? TC_INTFLAG_MC0 : TC_INTFLAG_MC1;
         return;
       }
@@ -90,36 +91,36 @@ HAL_SERVO_TIMER_ISR() {
     SYNC(tc->COUNT16.SYNCBUSY.bit.COUNT);
   }
   else if (SERVO_INDEX(timer, currentServoIndex[timer]) < ServoCount && SERVO(timer, currentServoIndex[timer]).Pin.isActive)
-    digitalWrite(SERVO(timer, currentServoIndex[timer]).Pin.nbr, LOW);      // pulse this channel low if activated
+    digitalWrite(SERVO(timer, currentServoIndex[timer]).Pin.nbr, LOW);      // pulse this channel low if activated//如果激活，则将该通道脉冲调低
 
-  // Select the next servo controlled by this timer
+  // Select the next servo controlled by this timer//选择此计时器控制的下一个伺服
   currentServoIndex[timer]++;
 
   if (SERVO_INDEX(timer, currentServoIndex[timer]) < ServoCount && currentServoIndex[timer] < SERVOS_PER_TIMER) {
-    if (SERVO(timer, currentServoIndex[timer]).Pin.isActive)                // check if activated
-      digitalWrite(SERVO(timer, currentServoIndex[timer]).Pin.nbr, HIGH);   // it's an active channel so pulse it high
+    if (SERVO(timer, currentServoIndex[timer]).Pin.isActive)                // check if activated//检查是否激活
+      digitalWrite(SERVO(timer, currentServoIndex[timer]).Pin.nbr, HIGH);   // it's an active channel so pulse it high//这是一个活跃的通道，所以把它调高
 
     tc->COUNT16.CC[tcChannel].reg = getTimerCount() - (uint16_t)SERVO(timer, currentServoIndex[timer]).ticks;
   }
   else {
-    // finished all channels so wait for the refresh period to expire before starting over
-    currentServoIndex[timer] = -1;   // this will get incremented at the end of the refresh period to start again at the first channel
+    // finished all channels so wait for the refresh period to expire before starting over//已完成所有通道，请等待刷新周期到期后再重新开始
+    currentServoIndex[timer] = -1;   // this will get incremented at the end of the refresh period to start again at the first channel//这将在刷新周期结束时递增，以在第一个通道重新开始
 
     const uint16_t tcCounterValue = getTimerCount();
 
-    if ((TC_COUNTER_START_VAL - tcCounterValue) + 4UL < usToTicks(REFRESH_INTERVAL))  // allow a few ticks to ensure the next OCR1A not missed
+    if ((TC_COUNTER_START_VAL - tcCounterValue) + 4UL < usToTicks(REFRESH_INTERVAL))  // allow a few ticks to ensure the next OCR1A not missed//允许几次勾选，以确保不会错过下一个OCR1A
       tc->COUNT16.CC[tcChannel].reg = TC_COUNTER_START_VAL - (uint16_t)usToTicks(REFRESH_INTERVAL);
     else
-      tc->COUNT16.CC[tcChannel].reg = (uint16_t)(tcCounterValue - 4UL);               // at least REFRESH_INTERVAL has elapsed
+      tc->COUNT16.CC[tcChannel].reg = (uint16_t)(tcCounterValue - 4UL);               // at least REFRESH_INTERVAL has elapsed//至少已过刷新间隔
   }
   if (tcChannel == 0) {
     SYNC(tc->COUNT16.SYNCBUSY.bit.CC0);
-    // Clear the interrupt
+    // Clear the interrupt//清除中断
     tc->COUNT16.INTFLAG.reg = TC_INTFLAG_MC0;
   }
   else {
     SYNC(tc->COUNT16.SYNCBUSY.bit.CC1);
-    // Clear the interrupt
+    // Clear the interrupt//清除中断
     tc->COUNT16.INTFLAG.reg = TC_INTFLAG_MC1;
   }
 }
@@ -128,42 +129,42 @@ void initISR(timer16_Sequence_t timer) {
   Tc * const tc = TimerConfig[SERVO_TC].pTc;
   const uint8_t tcChannel = TIMER_TCCHANNEL(timer);
 
-  static bool initialized = false;  // Servo TC has been initialized
+  static bool initialized = false;  // Servo TC has been initialized//伺服TC已初始化
   if (!initialized) {
     NVIC_DisableIRQ(SERVO_IRQn);
 
-    // Disable the timer
+    // Disable the timer//禁用计时器
     tc->COUNT16.CTRLA.bit.ENABLE = false;
     SYNC(tc->COUNT16.SYNCBUSY.bit.ENABLE);
 
-    // Select GCLK0 as timer/counter input clock source
+    // Select GCLK0 as timer/counter input clock source//选择GCLK0作为定时器/计数器输入时钟源
     GCLK->PCHCTRL[TC_GCLK_ID].bit.CHEN = false;
     SYNC(GCLK->PCHCTRL[TC_GCLK_ID].bit.CHEN);
-    GCLK->PCHCTRL[TC_GCLK_ID].reg = GCLK_PCHCTRL_GEN_GCLK0 | GCLK_PCHCTRL_CHEN;   // 120MHz startup code programmed
+    GCLK->PCHCTRL[TC_GCLK_ID].reg = GCLK_PCHCTRL_GEN_GCLK0 | GCLK_PCHCTRL_CHEN;   // 120MHz startup code programmed//120MHz启动代码已编程
     SYNC(!GCLK->PCHCTRL[TC_GCLK_ID].bit.CHEN);
 
-    // Reset the timer
+    // Reset the timer//重置计时器
     tc->COUNT16.CTRLA.bit.SWRST = true;
     SYNC(tc->COUNT16.SYNCBUSY.bit.SWRST);
     SYNC(tc->COUNT16.CTRLA.bit.SWRST);
 
-    // Set timer counter mode to 16 bits
+    // Set timer counter mode to 16 bits//将计时器计数器模式设置为16位
     tc->COUNT16.CTRLA.reg = TC_CTRLA_MODE_COUNT16;
 
-    // Set timer counter mode as normal PWM
+    // Set timer counter mode as normal PWM//将定时器计数器模式设置为正常PWM
     tc->COUNT16.WAVE.bit.WAVEGEN = TCC_WAVE_WAVEGEN_NPWM_Val;
 
-    // Set the prescaler factor
+    // Set the prescaler factor//设置预分频器系数
     tc->COUNT16.CTRLA.bit.PRESCALER = TC_PRESCALER(SERVO_TIMER_PRESCALER);
 
-    // Count down
+    // Count down//倒计时
     tc->COUNT16.CTRLBSET.reg = TC_CTRLBCLR_DIR;
     SYNC(tc->COUNT16.SYNCBUSY.bit.CTRLB);
 
-    // Reset all servo indexes
+    // Reset all servo indexes//重置所有伺服索引
     memset((void *)currentServoIndex, 0xFF, sizeof(currentServoIndex));
 
-    // Configure interrupt request
+    // Configure interrupt request//配置中断请求
     NVIC_ClearPendingIRQ(SERVO_IRQn);
     NVIC_SetPriority(SERVO_IRQn, 5);
     NVIC_EnableIRQ(SERVO_IRQn);
@@ -172,31 +173,31 @@ void initISR(timer16_Sequence_t timer) {
   }
 
   if (!tc->COUNT16.CTRLA.bit.ENABLE) {
-    // Reset the timer counter
+    // Reset the timer counter//重置计时器计数器
     tc->COUNT16.COUNT.reg = TC_COUNTER_START_VAL;
     SYNC(tc->COUNT16.SYNCBUSY.bit.COUNT);
 
-    // Enable the timer and start it
+    // Enable the timer and start it//启用计时器并启动它
     tc->COUNT16.CTRLA.bit.ENABLE = true;
     SYNC(tc->COUNT16.SYNCBUSY.bit.ENABLE);
   }
-  // First interrupt request after 1 ms
+  // First interrupt request after 1 ms//1毫秒后的第一次中断请求
   tc->COUNT16.CC[tcChannel].reg = getTimerCount() - (uint16_t)usToTicks(1000UL);
 
   if (tcChannel == 0 ) {
     SYNC(tc->COUNT16.SYNCBUSY.bit.CC0);
 
-    // Clear pending match interrupt
+    // Clear pending match interrupt//清除挂起的匹配中断
     tc->COUNT16.INTFLAG.reg = TC_INTENSET_MC0;
-    // Enable the match channel interrupt request
+    // Enable the match channel interrupt request//启用匹配通道中断请求
     tc->COUNT16.INTENSET.reg = TC_INTENSET_MC0;
   }
   else {
     SYNC(tc->COUNT16.SYNCBUSY.bit.CC1);
 
-    // Clear pending match interrupt
+    // Clear pending match interrupt//清除挂起的匹配中断
     tc->COUNT16.INTFLAG.reg = TC_INTENSET_MC1;
-    // Enable the match channel interrupt request
+    // Enable the match channel interrupt request//启用匹配通道中断请求
     tc->COUNT16.INTENSET.reg = TC_INTENSET_MC1;
   }
 }
@@ -205,7 +206,7 @@ void finISR(timer16_Sequence_t timer) {
   Tc * const tc = TimerConfig[SERVO_TC].pTc;
   const uint8_t tcChannel = TIMER_TCCHANNEL(timer);
 
-  // Disable the match channel interrupt request
+  // Disable the match channel interrupt request//禁用匹配通道中断请求
   tc->COUNT16.INTENCLR.reg = (tcChannel == 0) ? TC_INTENCLR_MC0 : TC_INTENCLR_MC1;
 
   if (true
@@ -213,12 +214,12 @@ void finISR(timer16_Sequence_t timer) {
       && (tc->COUNT16.INTENCLR.reg & (TC_INTENCLR_MC0|TC_INTENCLR_MC1)) == 0
     #endif
   ) {
-    // Disable the timer if not used
+    // Disable the timer if not used//如果未使用，请禁用计时器
     tc->COUNT16.CTRLA.bit.ENABLE = false;
     SYNC(tc->COUNT16.SYNCBUSY.bit.ENABLE);
   }
 }
 
-#endif // HAS_SERVOS
+#endif // HAS_SERVOS//有伺服系统吗
 
-#endif // __SAMD51__
+#endif // __SAMD51__//_uusamd51__

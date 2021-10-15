@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -36,16 +37,16 @@
 
 #include "env_validate.h"
 
-// Custom flags and defines for the build
-//#define BOARD_CUSTOM_BUILD_FLAGS -D__FOO__
+// Custom flags and defines for the build//自定义生成的标志和定义
+//#define BOARD_CUSTOM_BUILD_FLAGS -D__FOO__//#定义线路板\自定义\构建\标志-D\ uu FOO__
 
 #ifndef BOARD_INFO_NAME
   #define BOARD_INFO_NAME "RAMPS S 1.2"
 #endif
 
-//
-// Servos
-//
+////
+// Servos//伺服
+////
 #ifndef SERVO0_PIN
   #define SERVO0_PIN                          10
 #endif
@@ -59,9 +60,9 @@
   #define SERVO3_PIN                          44
 #endif
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #ifndef X_STOP_PIN
   #ifndef X_MIN_PIN
     #define X_MIN_PIN                         37
@@ -87,23 +88,23 @@
   #endif
 #endif
 
-//
-// Z Probe (when not Z_MIN_PIN)
-//
+////
+// Z Probe (when not Z_MIN_PIN)//Z探头（非Z_MIN_引脚时）
+////
 #ifndef Z_MIN_PROBE_PIN
   #define Z_MIN_PROBE_PIN                      5
 #endif
 
-//
-// Filament Runout Sensor
-//
+////
+// Filament Runout Sensor//灯丝偏移传感器
+////
 #ifndef FIL_RUNOUT_PIN
-  #define FIL_RUNOUT_PIN                      44  // RAMPS_S S3 on the servos connector
+  #define FIL_RUNOUT_PIN                      44  // RAMPS_S S3 on the servos connector//伺服接头上的斜坡S3
 #endif
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                            17
 #define X_DIR_PIN                             16
 #define X_ENABLE_PIN                          48
@@ -130,28 +131,28 @@
 #define E2_DIR_PIN                            28
 #define E2_ENABLE_PIN                         39
 
-//
-// Temperature Sensors
-//
+////
+// Temperature Sensors//温度传感器
+////
 #ifndef TEMP_0_PIN
-  #define TEMP_0_PIN                          15  // Analog Input
+  #define TEMP_0_PIN                          15  // Analog Input//模拟输入
 #endif
 #ifndef TEMP_1_PIN
-  #define TEMP_1_PIN                          14  // Analog Input
+  #define TEMP_1_PIN                          14  // Analog Input//模拟输入
 #endif
 #ifndef TEMP_2_PIN
-  #define TEMP_2_PIN                          13  // Analog Input
+  #define TEMP_2_PIN                          13  // Analog Input//模拟输入
 #endif
 #ifndef TEMP_3_PIN
-  #define TEMP_3_PIN                          12  // Analog Input
+  #define TEMP_3_PIN                          12  // Analog Input//模拟输入
 #endif
 #ifndef TEMP_BED_PIN
-  #define TEMP_BED_PIN                        11  // Analog Input
+  #define TEMP_BED_PIN                        11  // Analog Input//模拟输入
 #endif
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #ifndef MOSFET_D_PIN
   #define MOSFET_D_PIN                        -1
 #endif
@@ -169,20 +170,20 @@
 
 #define HEATER_0_PIN                RAMPS_S_HE_0
 
-#if MB(RAMPS_S_12_EEFB)                           // Hotend0, Hotend1, Fan, Bed
+#if MB(RAMPS_S_12_EEFB)                           // Hotend0, Hotend1, Fan, Bed//Hotend0，Hotend1，风扇，床
   #define HEATER_1_PIN              RAMPS_S_HE_1
   #define FAN_PIN                   RAMPS_S_HE_2
-#elif MB(RAMPS_S_12_EEEB)                         // Hotend0, Hotend1, Hotend2, Bed
+#elif MB(RAMPS_S_12_EEEB)                         // Hotend0, Hotend1, Hotend2, Bed//Hotend0，Hotend1，Hotend2，床
   #define HEATER_1_PIN              RAMPS_S_HE_1
   #define HEATER_2_PIN              RAMPS_S_HE_2
-#elif MB(RAMPS_S_12_EFFB)                         // Hotend, Fan0, Fan1, Bed
+#elif MB(RAMPS_S_12_EFFB)                         // Hotend, Fan0, Fan1, Bed//Hotend，风扇0，风扇1，床
   #define FAN_PIN                   RAMPS_S_HE_1
   #define FAN1_PIN                  RAMPS_S_HE_2
 #endif
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define SDSS                                  53
 #define LED_PIN                               13
 
@@ -191,33 +192,33 @@
 #endif
 
 #ifndef FILWIDTH_PIN
-  #define FILWIDTH_PIN                        60  // Analog Input on EXTEND
+  #define FILWIDTH_PIN                        60  // Analog Input on EXTEND//扩展上的模拟输入
 #endif
 
 #ifndef PS_ON_PIN
-  #define PS_ON_PIN                           12  // RAMPS_S S2 on the servos connector
+  #define PS_ON_PIN                           12  // RAMPS_S S2 on the servos connector//伺服接头上的斜坡S2
 #endif
 
 #if ENABLED(CASE_LIGHT_ENABLE) && !defined(CASE_LIGHT_PIN) && !defined(SPINDLE_LASER_ENA_PIN)
-  #if NUM_SERVOS <= 1                             // Prefer the servo connector
-    #define CASE_LIGHT_PIN                    12  // Hardware PWM (RAMPS_S S1 on the servos connector)
+  #if NUM_SERVOS <= 1                             // Prefer the servo connector//首选伺服连接器
+    #define CASE_LIGHT_PIN                    12  // Hardware PWM (RAMPS_S S1 on the servos connector)//硬件PWM（伺服接头上的斜坡S1）
   #elif HAS_FREE_AUX2_PINS
-    #define CASE_LIGHT_PIN                    44  // Hardware PWM
+    #define CASE_LIGHT_PIN                    44  // Hardware PWM//硬件脉宽调制
   #endif
 #endif
 
-//
-// M3/M4/M5 - Spindle/Laser Control
-//
+////
+// M3/M4/M5 - Spindle/Laser Control//M3/M4/M5-主轴/激光控制
+////
 #if HAS_CUTTER && !defined(SPINDLE_LASER_ENA_PIN)
-  #define SPINDLE_LASER_ENA_PIN                4  // Pullup or pulldown!
-  #define SPINDLE_LASER_PWM_PIN                6  // Hardware PWM
+  #define SPINDLE_LASER_ENA_PIN                4  // Pullup or pulldown!//拉起还是拉下！
+  #define SPINDLE_LASER_PWM_PIN                6  // Hardware PWM//硬件脉宽调制
   #define SPINDLE_DIR_PIN                      5
 #endif
 
-//
-// TMC software SPI
-//
+////
+// TMC software SPI//TMC软件SPI
+////
 #if ENABLED(TMC_USE_SW_SPI)
   #ifndef TMC_SW_MOSI
     #define TMC_SW_MOSI                       51
@@ -230,26 +231,26 @@
   #endif
 #endif
 
-//
-// Průša i3 MK2 Multiplexer Support
-//
+////
+// Průša i3 MK2 Multiplexer Support//Průša i3 MK2多路复用器支持
+////
 #ifndef E_MUX0_PIN
-  #define E_MUX0_PIN                          29  // E2_STEP_PIN
+  #define E_MUX0_PIN                          29  // E2_STEP_PIN//E2_步进_销
 #endif
 #ifndef E_MUX1_PIN
-  #define E_MUX1_PIN                          28  // E2_DIR_PIN
+  #define E_MUX1_PIN                          28  // E2_DIR_PIN//E2_方向_引脚
 #endif
 #ifndef E_MUX2_PIN
-  #define E_MUX2_PIN                          39  // E2_ENABLE_PIN
+  #define E_MUX2_PIN                          39  // E2_ENABLE_PIN//E2_启用_引脚
 #endif
 
-//////////////////////////
-// LCDs and Controllers //
-//////////////////////////
+////////////////////////////////////////////////////
+// LCDs and Controllers ////液晶显示器和控制器//
+////////////////////////////////////////////////////
 
-//
-// LCD Display output pins
-//
+////
+// LCD Display output pins//液晶显示器输出引脚
+////
 #if HAS_WIRED_LCD
   #define BEEPER_PIN                          45
   #define LCD_PINS_RS                         19
@@ -263,14 +264,14 @@
   #endif
 
   #if ENABLED(REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER)
-    #define BTN_ENC_EN               LCD_PINS_D7  // Detect the presence of the encoder
+    #define BTN_ENC_EN               LCD_PINS_D7  // Detect the presence of the encoder//检测编码器的存在
   #endif
 
 #endif
 
-//
-// LCD Display input pins
-//
+////
+// LCD Display input pins//液晶显示器输入引脚
+////
 #if IS_NEWPANEL
   #define BTN_EN1                             40
   #define BTN_EN2                             42

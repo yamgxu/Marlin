@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,17 +22,17 @@
  */
 #pragma once
 
-//
-// lcd/dogm/status/combined.h - Status Screen Combined Heater bitmaps
-//
+////
+// lcd/dogm/status/combined.h - Status Screen Combined Heater bitmaps//lcd/dogm/status/combined.h-状态屏幕组合加热器位图
+////
 
 #undef STATUS_HOTEND_ANIM
 #undef STATUS_BED_ANIM
 #define STATUS_HEATERS_XSPACE 24
 
-//
-// Status Screen Combined Heater bitmaps
-//
+////
+// Status Screen Combined Heater bitmaps//状态屏幕组合加热器位图
+////
 #if HAS_HEATED_BED && HOTENDS <= 4
 
   #if HOTENDS == 0
@@ -130,7 +131,7 @@
       B00000011,B00000000,B00000000,B00000011,B00000000,B00000000,B00000011,B00000000,B00000000,B00011111,B11111111,B11111000
     };
 
-  #else // HOTENDS > 3
+  #else // HOTENDS > 3//热端>3
 
     #define STATUS_HEATERS_WIDTH 120
 
@@ -159,11 +160,11 @@
       B00000011,B00000000,B00000000,B00000011,B00000000,B00000000,B00000011,B00000000,B00000000,B00000011,B00000000,B00000000,B00011111,B11111111,B11111000
     };
 
-  #endif // HOTENDS
+  #endif // HOTENDS//热端
 
   #define STATUS_BED_TEXT_X (STATUS_HEATERS_WIDTH - 10)
 
-#else // !HAS_HEATED_BED || HOTENDS > 3
+#else // !HAS_HEATED_BED || HOTENDS > 3// !|加热床| |加热端>3个吗
 
   #if HOTENDS == 0
 
@@ -275,7 +276,7 @@
       B00000011,B00000000,B00000000,B00000011,B00000000,B00000000,B00000011,B00000000,B00000000,B00000011,B00000000
     };
 
-  #else // HOTENDS > 4
+  #else // HOTENDS > 4//热端>4
 
     #define STATUS_HEATERS_WIDTH  108
 
@@ -304,6 +305,6 @@
       B00000011,B00000000,B00000000,B00000011,B00000000,B00000000,B00000011,B00000000,B00000000,B00000011,B00000000,B00000000,B00000011,B00000000
     };
 
-  #endif // HOTENDS
+  #endif // HOTENDS//热端
 
-#endif // !HAS_HEATED_BED || HOTENDS > 3
+#endif // !HAS_HEATED_BED || HOTENDS > 3// !|加热床| |加热端>3个吗

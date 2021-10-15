@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * \file
  *
@@ -41,7 +42,7 @@
  *
  */
 /*
- * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>
+ * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>//www.atmel.com/design support/“>atmel支持</a>
  */
 
 #ifndef UOTGHS_OTG_H_INCLUDED
@@ -54,11 +55,11 @@ extern "C" {
 #endif
 
 
-//! \ingroup usb_group
-//! \defgroup otg_group UOTGHS OTG Driver
-//! UOTGHS low-level driver for OTG features
-//!
-//! @{
+//! \ingroup usb_group//！\ingroup usb\u组
+//! \defgroup otg_group UOTGHS OTG Driver//！\defgroup otg\u group UOTGHS otg驱动程序
+//! UOTGHS low-level driver for OTG features//！UOTGHS OTG功能的低级驱动程序
+//!//!
+//! @{//! @{
 
 /**
  * \brief Initialize the dual role
@@ -75,31 +76,31 @@ bool otg_dual_enable(void);
 void otg_dual_disable(void);
 
 
-//! @name UOTGHS OTG ID pin management
-//! The ID pin come from the USB OTG connector (A and B receptable) and
-//! allows to select the USB mode host or device.
-//! The UOTGHS hardware can manage it automatically. This feature is optional.
-//! When USB_ID_GPIO is defined (in board.h), this feature is enabled.
-//!
-//! @{
-   //! Enable external OTG_ID pin (listened to by USB)
+//! @name UOTGHS OTG ID pin management//！@name UOTGHS OTG ID pin管理
+//! The ID pin come from the USB OTG connector (A and B receptable) and//！ID引脚来自USB OTG连接器（A和B可接受）和
+//! allows to select the USB mode host or device.//！允许选择USB模式主机或设备。
+//! The UOTGHS hardware can manage it automatically. This feature is optional.//！UOTGHS硬件可以自动管理它。此功能是可选的。
+//! When USB_ID_GPIO is defined (in board.h), this feature is enabled.//！在board.h中定义USB_ID_GPIO时，此功能将启用。
+//!//!
+//! @{//! @{
+   //! Enable external OTG_ID pin (listened to by USB)//！启用外部OTG_ID pin（通过USB监听）
 #define otg_enable_id_pin()                 (Set_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_UIDE))
-   //! Disable external OTG_ID pin (ignored by USB)
+   //! Disable external OTG_ID pin (ignored by USB)//！禁用外部OTG_ID pin（被USB忽略）
 #define otg_disable_id_pin()                (Clr_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_UIDE))
-   //! Test if external OTG_ID pin enabled (listened to by USB)
+   //! Test if external OTG_ID pin enabled (listened to by USB)//！测试外部OTG_ID引脚是否已启用（通过USB监听）
 #define Is_otg_id_pin_enabled()             (Tst_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_UIDE))
-   //! Disable external OTG_ID pin and force device mode
+   //! Disable external OTG_ID pin and force device mode//！禁用外部OTG_ID pin和强制设备模式
 #define otg_force_device_mode()             (Set_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_UIMOD), otg_disable_id_pin())
-   //! Test if device mode is forced
+   //! Test if device mode is forced//！如果设备模式为强制模式，则测试
 #define Is_otg_device_mode_forced()         (!Is_otg_id_pin_enabled() && Tst_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_UIMOD))
-   //! Disable external OTG_ID pin and force host mode
+   //! Disable external OTG_ID pin and force host mode//！禁用外部OTG_ID pin并强制主机模式
 #define otg_force_host_mode()               (Clr_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_UIMOD), otg_disable_id_pin())
-   //! Test if host mode is forced
+   //! Test if host mode is forced//！测试是否强制主机模式
 #define Is_otg_host_mode_forced()           (!Is_otg_id_pin_enabled() && !Tst_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_UIMOD))
 
-//! @name UOTGHS OTG ID pin interrupt management
-//! These macros manage the ID pin interrupt
-//! @{
+//! @name UOTGHS OTG ID pin interrupt management//！@name UOTGHS OTG ID引脚中断管理
+//! These macros manage the ID pin interrupt//！这些宏管理ID pin中断
+//! @{//! @{
 #define otg_enable_id_interrupt()           (Set_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_IDTE))
 #define otg_disable_id_interrupt()          (Clr_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_IDTE))
 #define Is_otg_id_interrupt_enabled()       (Tst_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_IDTE))
@@ -108,11 +109,11 @@ void otg_dual_disable(void);
 #define otg_ack_id_transition()             (UOTGHS->UOTGHS_SCR = UOTGHS_SCR_IDTIC)
 #define otg_raise_id_transition()           (UOTGHS->UOTGHS_SFR = UOTGHS_SFR_IDTIS)
 #define Is_otg_id_transition()              (Tst_bits(UOTGHS->UOTGHS_SR, UOTGHS_SR_IDTI))
-//! @}
-//! @}
+//! @}//! @}
+//! @}//! @}
 
-//! @name OTG Vbus management
-//! @{
+//! @name OTG Vbus management//！@name OTG Vbus管理
+//! @{//! @{
 #define otg_enable_vbus_interrupt()         (Set_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_VBUSTE))
 #define otg_disable_vbus_interrupt()        (Clr_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_VBUSTE))
 #define Is_otg_vbus_interrupt_enabled()     (Tst_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_VBUSTE))
@@ -121,12 +122,12 @@ void otg_dual_disable(void);
 #define otg_ack_vbus_transition()           (UOTGHS->UOTGHS_SCR = UOTGHS_SCR_VBUSTIC)
 #define otg_raise_vbus_transition()         (UOTGHS->UOTGHS_SFR = UOTGHS_SFR_VBUSTIS)
 #define Is_otg_vbus_transition()            (Tst_bits(UOTGHS->UOTGHS_SR, UOTGHS_SR_VBUSTI))
-//! @}
+//! @}//! @}
 
-//! @name UOTGHS OTG main management
-//! These macros allows to enable/disable pad and UOTGHS hardware
-//! @{
-  //! Reset USB macro
+//! @name UOTGHS OTG main management//！@name UOTGHS OTG主管理层
+//! These macros allows to enable/disable pad and UOTGHS hardware//！这些宏允许启用/禁用pad和UOTGHS硬件
+//! @{//! @{
+  //! Reset USB macro//! 重置USB宏
 #define otg_reset()                         \
 	do {                                    \
 		UOTGHS->UOTGHS_CTRL = 0;            \
@@ -134,105 +135,105 @@ void otg_dual_disable(void);
 			UOTGHS->UOTGHS_SCR = 0xFFFFFFFF;\
 		}                                   \
 	} while (0)
-  //! Enable USB macro
+  //! Enable USB macro//! 启用USB宏
 #define otg_enable()                        (Set_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_USBE))
-  //! Disable USB macro
+  //! Disable USB macro//! 禁用USB宏
 #define otg_disable()                       (Clr_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_USBE))
 #define Is_otg_enabled()                    (Tst_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_USBE))
 
-  //! Enable OTG pad
+  //! Enable OTG pad//! 启用OTG焊盘
 #define otg_enable_pad()                    (Set_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_OTGPADE))
-  //! Disable OTG pad
+  //! Disable OTG pad//! 禁用OTG焊盘
 #define otg_disable_pad()                   (Clr_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_OTGPADE))
 #define Is_otg_pad_enabled()                (Tst_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_OTGPADE))
 
-  //! Check Clock Usable
-  //! For parts with HS feature, this one corresponding at UTMI clock
+  //! Check Clock Usable//! 检查时钟是否可用
+  //! For parts with HS feature, this one corresponding at UTMI clock//! 对于具有HS特征的零件，此特征对应于UTMI时钟
 #define Is_otg_clock_usable()               (Tst_bits(UOTGHS->UOTGHS_SR, UOTGHS_SR_CLKUSABLE))
 
-  //! Stop (freeze) internal USB clock
+  //! Stop (freeze) internal USB clock//! 停止（冻结）内部USB时钟
 #define otg_freeze_clock()                  (Set_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_FRZCLK))
 #define otg_unfreeze_clock()                (Clr_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_FRZCLK))
 #define Is_otg_clock_frozen()               (Tst_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_FRZCLK))
 
-  //! Configure time-out of specified OTG timer
+  //! Configure time-out of specified OTG timer//! 配置指定OTG计时器的超时
 #define otg_configure_timeout(timer, timeout) (Set_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_UNLOCK),\
 		Wr_bitfield(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_TIMPAGE_Msk, timer),\
 		Wr_bitfield(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_TIMVALUE_Msk, timeout),\
 		Clr_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_UNLOCK))
-  //! Get configured time-out of specified OTG timer
+  //! Get configured time-out of specified OTG timer//! 获取指定OTG计时器的配置超时
 #define otg_get_timeout(timer)              (Set_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_UNLOCK),\
 		Wr_bitfield(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_TIMPAGE_Msk, timer),\
 		Clr_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_UNLOCK),\
 		Rd_bitfield(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_TIMVALUE_Msk))
 
 
-  //! Get the dual-role device state of the internal USB finite state machine of the UOTGHS controller
+  //! Get the dual-role device state of the internal USB finite state machine of the UOTGHS controller//! 获取UOTGHS控制器内部USB有限状态机的双角色设备状态
 #define otg_get_fsm_drd_state()             (Rd_bitfield(UOTGHS->UOTGHS_FSM, UOTGHS_FSM_DRDSTATE_Msk))
 #define Is_otg_a_suspend()                  (4==otg_get_fsm_drd_state())
 #define Is_otg_a_wait_vrise()               (1==otg_get_fsm_drd_state())
-//! @}
+//! @}//! @}
 
-//! @name UOTGHS OTG hardware protocol
-//! These macros manages the hardware OTG protocol
-//! @{
-  //! Initiates a Host negotiation Protocol
+//! @name UOTGHS OTG hardware protocol//！@name UOTGHS OTG硬件协议
+//! These macros manages the hardware OTG protocol//！这些宏管理硬件OTG协议
+//! @{//! @{
+  //! Initiates a Host negotiation Protocol//！启动主机协商协议
 #define otg_device_initiate_hnp()             (Set_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_HNPREQ))
-  //! Accepts a Host negotiation Protocol
+  //! Accepts a Host negotiation Protocol//！接受主机协商协议
 #define otg_host_accept_hnp()                 (Set_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_HNPREQ))
-  //! Rejects a Host negotiation Protocol
+  //! Rejects a Host negotiation Protocol//！拒绝主机协商协议
 #define otg_host_reject_hnp()                 (Clr_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_HNPREQ))
-  //! initiates a Session Request Protocol
+  //! initiates a Session Request Protocol//！启动会话请求协议
 #define otg_device_initiate_srp()             (Set_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_SRPREQ))
-  //! Selects VBus as SRP method
+  //! Selects VBus as SRP method//！选择VBU作为SRP方法
 #define otg_select_vbus_srp_method()          (Set_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_SRPSEL))
 #define Is_otg_vbus_srp_method_selected()     (Tst_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_SRPSEL))
-  //! Selects data line as SRP method
+  //! Selects data line as SRP method//！选择数据行作为SRP方法
 #define otg_select_data_srp_method()          (Clr_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_SRPSEL))
 #define Is_otg_data_srp_method_selected()     (!Is_otg_vbus_srp_method_selected())
-  //! Tests if a HNP occurs
+  //! Tests if a HNP occurs//！测试是否发生HNP
 #define Is_otg_hnp()                          (Tst_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_HNPREQ))
-  //! Tests if a SRP from device occurs
+  //! Tests if a SRP from device occurs//！测试是否发生来自设备的SRP
 #define Is_otg_device_srp()                   (Tst_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_SRPREQ))
 
-  //! Enables HNP error interrupt
+  //! Enables HNP error interrupt//！启用HNP错误中断
 #define otg_enable_hnp_error_interrupt()      (Set_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_HNPERRE))
-  //! Disables HNP error interrupt
+  //! Disables HNP error interrupt//！禁用HNP错误中断
 #define otg_disable_hnp_error_interrupt()     (Clr_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_HNPERRE))
 #define Is_otg_hnp_error_interrupt_enabled()  (Tst_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_HNPERRE))
-  //! ACKs HNP error interrupt
+  //! ACKs HNP error interrupt//！ACKs HNP错误中断
 #define otg_ack_hnp_error_interrupt()         (UOTGHS->UOTGHS_SCR = UOTGHS_SCR_HNPERRIC)
-  //! Raises HNP error interrupt
+  //! Raises HNP error interrupt//！引发HNP错误中断
 #define otg_raise_hnp_error_interrupt()       (UOTGHS->UOTGHS_SFR = UOTGHS_SFR_HNPERRIS)
-  //! Tests if a HNP error occurs
+  //! Tests if a HNP error occurs//！测试是否发生HNP错误
 #define Is_otg_hnp_error_interrupt()          (Tst_bits(UOTGHS->UOTGHS_SR, UOTGHS_SR_HNPERRI))
 
-  //! Enables role exchange interrupt
+  //! Enables role exchange interrupt//！启用角色交换中断
 #define otg_enable_role_exchange_interrupt()      (Set_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_ROLEEXE))
-  //! Disables role exchange interrupt
+  //! Disables role exchange interrupt//！禁用角色交换中断
 #define otg_disable_role_exchange_interrupt()     (Clr_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_ROLEEXE))
 #define Is_otg_role_exchange_interrupt_enabled()  (Tst_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_ROLEEXE))
-  //! ACKs role exchange interrupt
+  //! ACKs role exchange interrupt//！ACKs角色交换中断
 #define otg_ack_role_exchange_interrupt()         (UOTGHS->UOTGHS_SCR = UOTGHS_SCR_ROLEEXIC)
-  //! Raises role exchange interrupt
+  //! Raises role exchange interrupt//！引发角色交换中断
 #define otg_raise_role_exchange_interrupt()       (UOTGHS->UOTGHS_SFR = UOTGHS_SFR_ROLEEXIS)
-  //! Tests if a role exchange occurs
+  //! Tests if a role exchange occurs//！测试是否发生角色交换
 #define Is_otg_role_exchange_interrupt()          (Tst_bits(UOTGHS->UOTGHS_SR, UOTGHS_SR_ROLEEXI))
 
-  //! Enables SRP interrupt
+  //! Enables SRP interrupt//！启用SRP中断
 #define otg_enable_srp_interrupt()          (Set_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_SRPE))
-  //! Disables SRP interrupt
+  //! Disables SRP interrupt//！禁用SRP中断
 #define otg_disable_srp_interrupt()         (Clr_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_SRPE))
 #define Is_otg_srp_interrupt_enabled()      (Tst_bits(UOTGHS->UOTGHS_CTRL, UOTGHS_CTRL_SRPE))
-  //! ACKs SRP interrupt
+  //! ACKs SRP interrupt//！ACKs SRP中断
 #define otg_ack_srp_interrupt()             (UOTGHS->UOTGHS_SCR = UOTGHS_SCR_SRPIC)
-  //! Raises SRP interrupt
+  //! Raises SRP interrupt//！引发SRP中断
 #define otg_raise_srp_interrupt()           (UOTGHS->UOTGHS_SFR = UOTGHS_SFR_SRPIS)
-  //! Tests if a SRP occurs
+  //! Tests if a SRP occurs//！测试是否发生SRP
 #define Is_otg_srp_interrupt()              (Tst_bits(UOTGHS->UOTGHS_SR, UOTGHS_SR_SRPI))
-//! @}
+//! @}//! @}
 
-//! @}
+//! @}//! @}
 
 #ifdef __cplusplus
 }

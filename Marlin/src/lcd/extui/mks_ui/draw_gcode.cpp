@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -54,13 +55,13 @@ static void event_handler(lv_obj_t *obj, lv_event_t event) {
 }
 
 void lv_show_gcode_output(void * that, const char * txt) {
-  // Ignore echo of command
+  // Ignore echo of command//忽略命令的回音
   if (!memcmp(txt, "echo:", 5)) {
-    public_buf[0] = 0; // Clear output buffer
+    public_buf[0] = 0; // Clear output buffer//清除输出缓冲区
     return;
    }
 
-  // Avoid overflow if the answer is too large
+  // Avoid overflow if the answer is too large//如果答案太大，请避免溢出
   size_t len = strlen((const char*)public_buf), tlen = strlen(txt);
   if (len + tlen + 1 < sizeof(public_buf)) {
     memcpy(public_buf + len, txt, tlen);
@@ -70,7 +71,7 @@ void lv_show_gcode_output(void * that, const char * txt) {
 
 void lv_serial_capt_hook(void * userPointer, uint8_t c)
 {
-  if (c == '\n' || currentWritePos == sizeof(public_buf_m) - 1) { // End of line, probably end of command anyway
+  if (c == '\n' || currentWritePos == sizeof(public_buf_m) - 1) { // End of line, probably end of command anyway//行结束了，可能是命令结束了
     public_buf_m[currentWritePos] = 0;
     lv_show_gcode_output(userPointer, public_buf_m);
     currentWritePos = 0;
@@ -79,9 +80,9 @@ void lv_serial_capt_hook(void * userPointer, uint8_t c)
 }
 void lv_eom_hook(void *)
 {
-  // Message is done, let's remove the hook now
+  // Message is done, let's remove the hook now//消息完成了，让我们现在移除钩子
   MYSERIAL1.setHook();
-  // We are back from the keyboard, so let's redraw ourselves
+  // We are back from the keyboard, so let's redraw ourselves//我们从键盘上回来了，所以让我们重新绘制我们自己
   draw_return_ui();
 }
 
@@ -106,4 +107,4 @@ void lv_clear_gcode() {
   outV = 0;
 }
 
-#endif // HAS_TFT_LVGL_UI
+#endif // HAS_TFT_LVGL_UI//有TFT\U LVGL\U用户界面

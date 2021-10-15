@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -30,11 +31,11 @@
 #define BOARD_INFO_NAME      "K8800"
 #define DEFAULT_MACHINE_NAME "Vertex Delta"
 
-//#define LCD_SCREEN_ROT_180
+//#define LCD_SCREEN_ROT_180//#定义LCD屏幕旋转180
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_STOP_PIN                             3
 #define Y_STOP_PIN                            14
 #define Z_STOP_PIN                            66
@@ -43,11 +44,11 @@
   #define Z_MIN_PROBE_PIN                     68
 #endif
 
-#define FIL_RUNOUT_PIN                        69  // PK7
+#define FIL_RUNOUT_PIN                        69  // PK7//PK7
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                            54
 #define X_DIR_PIN                             55
 #define X_ENABLE_PIN                          38
@@ -64,33 +65,33 @@
 #define E0_DIR_PIN                            28
 #define E0_ENABLE_PIN                         24
 
-//
-// Temperature Sensors
-//
+////
+// Temperature Sensors//温度传感器
+////
 #define TEMP_0_PIN                            13
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_0_PIN                          10
 #define FAN_PIN                                8
 #define CONTROLLER_FAN_PIN                     9
 
-//
-// Misc. Functions
-//
-#define KILL_PIN                              20  // PD1
+////
+// Misc. Functions//杂项。功能
+////
+#define KILL_PIN                              20  // PD1//PD1
 #define CASE_LIGHT_PIN                         7
 
-//
-// SD Card
-//
+////
+// SD Card//SD卡
+////
 #define SDSS                                  25
-#define SD_DETECT_PIN                         21  // PD0
+#define SD_DETECT_PIN                         21  // PD0//PD0
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 #define BEEPER_PIN                             6
 
 #if HAS_WIRED_LCD
@@ -117,4 +118,4 @@
     #define BTN_ENC                           23
   #endif
 
-#endif // HAS_WIRED_LCD
+#endif // HAS_WIRED_LCD//有有线液晶显示器吗

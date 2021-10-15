@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -62,7 +63,7 @@ void GcodeSuite::M140_M190(const bool isM190) {
   bool got_temp = false;
   celsius_t temp = 0;
 
-  // Accept 'I' if temperature presets are defined
+  // Accept 'I' if temperature presets are defined//如果定义了温度预设，则接受“I”
   #if PREHEAT_COUNT
     got_temp = parser.seenval('I');
     if (got_temp) {
@@ -71,7 +72,7 @@ void GcodeSuite::M140_M190(const bool isM190) {
     }
   #endif
 
-  // Get the temperature from 'S' or 'R'
+  // Get the temperature from 'S' or 'R'//从“S”或“R”获取温度
   bool no_wait_for_cooling = false;
   if (!got_temp) {
     no_wait_for_cooling = parser.seenval('S');
@@ -85,11 +86,11 @@ void GcodeSuite::M140_M190(const bool isM190) {
 
   ui.set_status_P(thermalManager.isHeatingBed() ? GET_TEXT(MSG_BED_HEATING) : GET_TEXT(MSG_BED_COOLING));
 
-  // with PRINTJOB_TIMER_AUTOSTART, M190 can start the timer, and M140 can stop it
+  // with PRINTJOB_TIMER_AUTOSTART, M190 can start the timer, and M140 can stop it//使用PRINTJOB_TIMER_AUTOSTART，M190可以启动计时器，M140可以停止计时器
   TERN_(PRINTJOB_TIMER_AUTOSTART, thermalManager.auto_job_check_timer(isM190, !isM190));
 
   if (isM190)
     thermalManager.wait_for_bed(no_wait_for_cooling);
 }
 
-#endif // HAS_HEATED_BED
+#endif // HAS_HEATED_BED//你给床加热了吗

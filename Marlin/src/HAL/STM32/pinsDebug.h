@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,7 +22,7 @@
 #include <Arduino.h>
 
 #ifndef NUM_DIGITAL_PINS
-   // Only in ST's Arduino core (STM32duino, STM32Core)
+   // Only in ST's Arduino core (STM32duino, STM32Core)//仅适用于ST的Arduino堆芯（STM32duino，STM32Core）
    #error "Expected NUM_DIGITAL_PINS not found"
 #endif
 
@@ -71,10 +72,10 @@
  *          signal.  The Arduino pin number is listed by the M43 I command.
  */
 
-////////////////////////////////////////////////////////
-//
-// make a list of the Arduino pin numbers in the Port/Pin order
-//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////
+// make a list of the Arduino pin numbers in the Port/Pin order//按端口/引脚顺序列出Arduino引脚编号
+////
 
 #define _PIN_ADD_2(NAME_ALPHA, ARDUINO_NUM) { {NAME_ALPHA}, ARDUINO_NUM },
 #define _PIN_ADD(NAME_ALPHA, ARDUINO_NUM) { NAME_ALPHA, ARDUINO_NUM },
@@ -89,12 +90,12 @@ const XrefInfo pin_xref[] PROGMEM = {
   #include "pins_Xref.h"
 };
 
-////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#define MODE_PIN_INPUT  0 // Input mode (reset state)
-#define MODE_PIN_OUTPUT 1 // General purpose output mode
-#define MODE_PIN_ALT    2 // Alternate function mode
-#define MODE_PIN_ANALOG 3 // Analog mode
+#define MODE_PIN_INPUT  0 // Input mode (reset state)//输入模式（复位状态）
+#define MODE_PIN_OUTPUT 1 // General purpose output mode//通用输出模式
+#define MODE_PIN_ALT    2 // Alternate function mode//交替功能模式
+#define MODE_PIN_ANALOG 3 // Analog mode//模拟模式
 
 #define PIN_NUM(P) (P & 0x000F)
 #define PIN_NUM_ALPHA_LEFT(P) (((P & 0x000F) < 10) ? ('0' + (P & 0x000F)) : '1')
@@ -107,20 +108,20 @@ const XrefInfo pin_xref[] PROGMEM = {
  */
 #define NUMBER_PINS_TOTAL NUM_DIGITAL_PINS
 #define VALID_PIN(ANUM) ((ANUM) >= 0 && (ANUM) < NUMBER_PINS_TOTAL)
-#define digitalRead_mod(Ard_num) extDigitalRead(Ard_num)  // must use Arduino pin numbers when doing reads
+#define digitalRead_mod(Ard_num) extDigitalRead(Ard_num)  // must use Arduino pin numbers when doing reads//进行读取时必须使用Arduino pin码
 #define PRINT_PIN(Q)
 #define PRINT_PORT(ANUM) port_print(ANUM)
-#define DIGITAL_PIN_TO_ANALOG_PIN(ANUM) -1  // will report analog pin number in the print port routine
+#define DIGITAL_PIN_TO_ANALOG_PIN(ANUM) -1  // will report analog pin number in the print port routine//将在打印端口例程中报告模拟管脚号
 #define GET_PIN_MAP_PIN_M43(Index) pin_xref[Index].Ard_num
 
-// x is a variable used to search pin_array
+// x is a variable used to search pin_array//x是用于搜索pin_数组的变量
 #define GET_ARRAY_IS_DIGITAL(x) ((bool) pin_array[x].is_digital)
 #define GET_ARRAY_PIN(x) ((pin_t) pin_array[x].pin)
 #define PRINT_ARRAY_NAME(x) do{ sprintf_P(buffer, PSTR("%-" STRINGIFY(MAX_NAME_LENGTH) "s"), pin_array[x].name); SERIAL_ECHO(buffer); }while(0)
-#define MULTI_NAME_PAD 33 // space needed to be pretty if not first name assigned to a pin
+#define MULTI_NAME_PAD 33 // space needed to be pretty if not first name assigned to a pin//如果没有为pin指定名字，则空间必须美观
 
 #ifndef M43_NEVER_TOUCH
-  #define _M43_NEVER_TOUCH(Index) (Index >= 9 && Index <= 12) // SERIAL/USB pins: PA9(TX) PA10(RX) PA11(USB_DM) PA12(USB_DP)
+  #define _M43_NEVER_TOUCH(Index) (Index >= 9 && Index <= 12) // SERIAL/USB pins: PA9(TX) PA10(RX) PA11(USB_DM) PA12(USB_DP)//串行/USB插脚：PA9（TX）PA10（RX）PA11（USB_-DM）PA12（USB_-DP）
   #ifdef KILL_PIN
     #define M43_NEVER_TOUCH(Index) m43_never_touch(Index)
 
@@ -129,7 +130,7 @@ const XrefInfo pin_xref[] PROGMEM = {
       if (M43_kill_index < 0)
         for (M43_kill_index = 0; M43_kill_index < NUMBER_PINS_TOTAL; M43_kill_index++)
           if (KILL_PIN == GET_PIN_MAP_PIN_M43(M43_kill_index)) break;
-      return _M43_NEVER_TOUCH(Index) || Index == M43_kill_index; // KILL_PIN and SERIAL/USB
+      return _M43_NEVER_TOUCH(Index) || Index == M43_kill_index; // KILL_PIN and SERIAL/USB//断开PIN和串行/USB
     }
   #else
     #define M43_NEVER_TOUCH(Index) _M43_NEVER_TOUCH(Index)
@@ -153,7 +154,7 @@ uint8_t get_pin_mode(const pin_t Ard_num) {
 
 bool GET_PINMODE(const pin_t Ard_num) {
   const uint8_t pin_mode = get_pin_mode(Ard_num);
-  return pin_mode == MODE_PIN_OUTPUT || pin_mode == MODE_PIN_ALT;  // assume all alt definitions are PWM
+  return pin_mode == MODE_PIN_OUTPUT || pin_mode == MODE_PIN_ALT;  // assume all alt definitions are PWM//假设所有alt定义均为PWM
 }
 
 int8_t digital_pin_to_analog_pin(pin_t Ard_num) {
@@ -181,7 +182,7 @@ void port_print(const pin_t Ard_num) {
   SERIAL_ECHO(buffer);
   if (ppa[3] == '\0') SERIAL_CHAR(' ');
 
-  // print analog pin number
+  // print analog pin number//打印模拟管脚号
   const int8_t Port_pin = digital_pin_to_analog_pin(Ard_num);
   if (Port_pin >= 0) {
     sprintf_P(buffer, PSTR(" (A%d) "), Port_pin);
@@ -191,7 +192,7 @@ void port_print(const pin_t Ard_num) {
   else
     SERIAL_ECHO_SP(7);
 
-  // Print number to be used with M42
+  // Print number to be used with M42//与M42一起使用的打印号码
   sprintf_P(buffer, PSTR(" M42 P%d "), Ard_num);
   SERIAL_ECHO(buffer);
   if (Ard_num < 10) SERIAL_CHAR(' ');
@@ -210,7 +211,7 @@ void pwm_details(const pin_t Ard_num) {
       pin_t pin_number = uint8_t(PIN_NUM(dp));
       const bool over_7 = pin_number >= 8;
       const uint8_t ind = over_7 ? 1 : 0;
-      switch (PORT_ALPHA(dp)) {  // get alt function
+      switch (PORT_ALPHA(dp)) {  // get alt function//获取alt函数
         case 'A' : alt_all = GPIOA->AFR[ind]; break;
         case 'B' : alt_all = GPIOB->AFR[ind]; break;
         case 'C' : alt_all = GPIOC->AFR[ind]; break;
@@ -259,6 +260,6 @@ void pwm_details(const pin_t Ard_num) {
       }
     }
   #else
-    // TODO: F1 doesn't support changing pins function, so we need to check the function of the PIN and if it's enabled
+    // TODO: F1 doesn't support changing pins function, so we need to check the function of the PIN and if it's enabled//TODO:F1不支持更改管脚功能，因此我们需要检查管脚的功能以及是否已启用
   #endif
-} // pwm_details
+} // pwm_details//pwm_详细信息

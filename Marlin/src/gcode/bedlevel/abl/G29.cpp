@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -84,7 +85,7 @@
 
 #define G29_RETURN(b) return TERN_(G29_RETRY_AND_RECOVER, b)
 
-// For manual probing values persist over multiple G29
+// For manual probing values persist over multiple G29//对于手动探测，值在多个G29上持续存在
 class G29_State {
 public:
   int       verbose_level;
@@ -112,12 +113,12 @@ public:
     xy_pos_t probe_position_lf,
              probe_position_rb;
 
-    xy_float_t gridSpacing; // = { 0.0f, 0.0f }
+    xy_float_t gridSpacing; // = { 0.0f, 0.0f }//={0.0f，0.0f}
 
     #if ENABLED(AUTO_BED_LEVELING_LINEAR)
       bool                topography_map;
       xy_uint8_t          grid_points;
-    #else // Bilinear
+    #else // Bilinear//双线性
       static constexpr xy_uint8_t grid_points = { GRID_MAX_POINTS_X, GRID_MAX_POINTS_Y };
     #endif
 
@@ -127,8 +128,8 @@ public:
 
     #if ENABLED(AUTO_BED_LEVELING_LINEAR)
       int indexIntoAB[GRID_MAX_POINTS_X][GRID_MAX_POINTS_Y];
-      float eqnAMatrix[(GRID_MAX_POINTS) * 3], // "A" matrix of the linear system of equations
-            eqnBVector[GRID_MAX_POINTS],       // "B" vector of Z points
+      float eqnAMatrix[(GRID_MAX_POINTS) * 3], // "A" matrix of the linear system of equations//线性方程组的“A”矩阵
+            eqnBVector[GRID_MAX_POINTS],       // "B" vector of Z points//Z点的“B”向量
             mean;
     #endif
   #endif
@@ -225,7 +226,7 @@ G29_TYPE GcodeSuite::G29() {
 
   const bool seenQ = EITHER(DEBUG_LEVELING_FEATURE, PROBE_MANUALLY) && parser.seen_test('Q');
 
-  // G29 Q is also available if debugging
+  // G29 Q is also available if debugging//如果进行调试，G29 Q也可用
   #if ENABLED(DEBUG_LEVELING_FEATURE)
     const uint8_t old_debug_flags = marlin_debug_flags;
     if (seenQ) marlin_debug_flags |= MARLIN_DEBUG_LEVELING;
@@ -239,16 +240,16 @@ G29_TYPE GcodeSuite::G29() {
          no_action = seenA || seenQ,
               faux = ENABLED(DEBUG_LEVELING_FEATURE) && DISABLED(PROBE_MANUALLY) ? parser.boolval('C') : no_action;
 
-  if (!no_action && planner.leveling_active && parser.boolval('O')) { // Auto-level only if needed
+  if (!no_action && planner.leveling_active && parser.boolval('O')) { // Auto-level only if needed//仅在需要时自动调平
     if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPGM("> Auto-level not needed, skip");
     G29_RETURN(false);
   }
 
-  // Send 'N' to force homing before G29 (internal only)
+  // Send 'N' to force homing before G29 (internal only)//在G29之前发送“N”强制归位（仅限内部）
   if (parser.seen_test('N'))
     process_subcommands_now_P(TERN(CAN_SET_LEVELING_AFTER_G28, PSTR("G28L0"), G28_STR));
 
-  // Don't allow auto-leveling without homing first
+  // Don't allow auto-leveling without homing first//不允许在未先归位的情况下自动调平
   if (homing_needed_error()) G29_RETURN(false);
 
   #if ENABLED(AUTO_BED_LEVELING_3POINT)
@@ -293,7 +294,7 @@ G29_TYPE GcodeSuite::G29() {
         int8_t i = parser.byteval('I', -1), j = parser.byteval('J', -1);
 
         if (!isnan(rx) && !isnan(ry)) {
-          // Get nearest i / j from rx / ry
+          // Get nearest i / j from rx / ry//从rx/ry获取最近的i/j
           i = (rx - bilinear_start.x + 0.5 * abl.gridSpacing.x) / abl.gridSpacing.x;
           j = (ry - bilinear_start.y + 0.5 * abl.gridSpacing.y) / abl.gridSpacing.y;
           LIMIT(i, 0, (GRID_MAX_POINTS_X) - 1);
@@ -308,7 +309,7 @@ G29_TYPE GcodeSuite::G29() {
           if (abl.reenable) report_current_position();
         }
         G29_RETURN(false);
-      } // parser.seen_test('W')
+      } // parser.seen_test('W')//parser.seen_测试（'W'）
 
     #else
 
@@ -316,7 +317,7 @@ G29_TYPE GcodeSuite::G29() {
 
     #endif
 
-    // Jettison bed leveling data
+    // Jettison bed leveling data//抛掷河床水准数据
     if (!seen_w && parser.seen_test('J')) {
       reset_bed_level();
       G29_RETURN(false);
@@ -336,8 +337,8 @@ G29_TYPE GcodeSuite::G29() {
 
       abl.topography_map = abl.verbose_level > 2 || parser.boolval('T');
 
-      // X and Y specify points in each direction, overriding the default
-      // These values may be saved with the completed mesh
+      // X and Y specify points in each direction, overriding the default//X和Y在每个方向上指定点，覆盖默认值
+      // These values may be saved with the completed mesh//这些值可以与完成的网格一起保存
       abl.grid_points.set(
         parser.byteval('X', GRID_MAX_POINTS_X),
         parser.byteval('Y', GRID_MAX_POINTS_Y)
@@ -388,11 +389,11 @@ G29_TYPE GcodeSuite::G29() {
         G29_RETURN(false);
       }
 
-      // Probe at the points of a lattice grid
+      // Probe at the points of a lattice grid//在晶格网格的点上进行探测
       abl.gridSpacing.set((abl.probe_position_rb.x - abl.probe_position_lf.x) / (abl.grid_points.x - 1),
                             (abl.probe_position_rb.y - abl.probe_position_lf.y) / (abl.grid_points.y - 1));
 
-    #endif // ABL_USES_GRID
+    #endif // ABL_USES_GRID//ABL_使用_网格
 
     if (abl.verbose_level > 0) {
       SERIAL_ECHOPGM("G29 Auto Bed Leveling");
@@ -404,7 +405,7 @@ G29_TYPE GcodeSuite::G29() {
 
     #if ENABLED(AUTO_BED_LEVELING_3POINT)
       if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPGM("> 3-point Leveling");
-      points[0].z = points[1].z = points[2].z = 0;  // Probe at 3 arbitrary points
+      points[0].z = points[1].z = points[2].z = 0;  // Probe at 3 arbitrary points//在3个任意点进行探测
     #endif
 
     #if BOTH(AUTO_BED_LEVELING_BILINEAR, EXTENSIBLE_UI)
@@ -419,11 +420,11 @@ G29_TYPE GcodeSuite::G29() {
       #endif
     }
 
-    // Disable auto bed leveling during G29.
-    // Be formal so G29 can be done successively without G28.
+    // Disable auto bed leveling during G29.//在G29期间禁用自动床平层。
+    // Be formal so G29 can be done successively without G28.//要正式，这样G29就可以在没有G28的情况下连续完成。
     if (!no_action) set_bed_leveling_enabled(false);
 
-    // Deploy certain probes before starting probing
+    // Deploy certain probes before starting probing//在开始探测之前部署某些探测
     #if HAS_BED_PROBE
       if (ENABLED(BLTOUCH))
         do_z_clearance(Z_CLEARANCE_DEPLOY_PROBE);
@@ -437,30 +438,30 @@ G29_TYPE GcodeSuite::G29() {
       if (TERN1(PROBE_MANUALLY, !no_action)
         && (abl.gridSpacing != bilinear_grid_spacing || abl.probe_position_lf != bilinear_start)
       ) {
-        // Reset grid to 0.0 or "not probed". (Also disables ABL)
+        // Reset grid to 0.0 or "not probed". (Also disables ABL)//将网格重置为0.0或“未探测”。（也禁用ABL）
         reset_bed_level();
 
-        // Initialize a grid with the given dimensions
+        // Initialize a grid with the given dimensions//使用给定的维度初始化网格
         bilinear_grid_spacing = abl.gridSpacing;
         bilinear_start = abl.probe_position_lf;
 
-        // Can't re-enable (on error) until the new grid is written
+        // Can't re-enable (on error) until the new grid is written//在写入新网格之前无法重新启用（错误时）
         abl.reenable = false;
       }
-    #endif // AUTO_BED_LEVELING_BILINEAR
+    #endif // AUTO_BED_LEVELING_BILINEAR//自动调平床双线性
 
-  } // !g29_in_progress
+  } // !g29_in_progress// !g29正在进行中
 
   #if ENABLED(PROBE_MANUALLY)
 
-    // For manual probing, get the next index to probe now.
-    // On the first probe this will be incremented to 0.
+    // For manual probing, get the next index to probe now.//对于手动探测，请立即获取要探测的下一个索引。
+    // On the first probe this will be incremented to 0.//在第一个探测器上，这将增加到0。
     if (!no_action) {
       ++abl.abl_probe_index;
       g29_in_progress = true;
     }
 
-    // Abort current G29 procedure, go back to idle state
+    // Abort current G29 procedure, go back to idle state//中止当前G29程序，返回空闲状态
     if (seenA && g29_in_progress) {
       SERIAL_ECHOLNPGM("Manual G29 aborted");
       SET_SOFT_ENDSTOP_LOOSE(false);
@@ -469,7 +470,7 @@ G29_TYPE GcodeSuite::G29() {
       TERN_(LCD_BED_LEVELING, ui.wait_for_move = false);
     }
 
-    // Query G29 status
+    // Query G29 status//查询G29状态
     if (abl.verbose_level || seenQ) {
       SERIAL_ECHOPGM("Manual G29 ");
       if (g29_in_progress) {
@@ -483,9 +484,9 @@ G29_TYPE GcodeSuite::G29() {
     if (no_action) G29_RETURN(false);
 
     if (abl.abl_probe_index == 0) {
-      // For the initial G29 S2 save software endstop state
+      // For the initial G29 S2 save software endstop state//对于初始G29 S2，保存软件结束停止状态
       SET_SOFT_ENDSTOP_LOOSE(true);
-      // Move close to the bed before the first point
+      // Move close to the bed before the first point//在第一个点之前靠近床移动
       do_blocking_move_to_z(0);
     }
     else {
@@ -494,8 +495,8 @@ G29_TYPE GcodeSuite::G29() {
         const uint16_t index = abl.abl_probe_index - 1;
       #endif
 
-      // For G29 after adjusting Z.
-      // Save the previous Z before going to the next point
+      // For G29 after adjusting Z.//对于调整Z后的G29。
+      // Save the previous Z before going to the next point//在转到下一点之前保存上一个Z
       abl.measured_z = current_position.z;
 
       #if ENABLED(AUTO_BED_LEVELING_LINEAR)
@@ -523,55 +524,55 @@ G29_TYPE GcodeSuite::G29() {
       #endif
     }
 
-    //
-    // If there's another point to sample, move there with optional lift.
-    //
+    ////
+    // If there's another point to sample, move there with optional lift.//如果还有另一个采样点，则使用可选提升装置移动到该点。
+    ////
 
     #if ABL_USES_GRID
 
-      // Skip any unreachable points
+      // Skip any unreachable points//跳过任何无法到达的点
       while (abl.abl_probe_index < abl.abl_points) {
 
-        // Set abl.meshCount.x, abl.meshCount.y based on abl.abl_probe_index, with zig-zag
+        // Set abl.meshCount.x, abl.meshCount.y based on abl.abl_probe_index, with zig-zag//根据abl.abl_探针_索引设置abl.meshCount.x、abl.meshCount.y，并使用之字形
         PR_OUTER_VAR = abl.abl_probe_index / PR_INNER_SIZE;
         PR_INNER_VAR = abl.abl_probe_index - (PR_OUTER_VAR * PR_INNER_SIZE);
 
-        // Probe in reverse order for every other row/column
-        const bool zig = (PR_OUTER_VAR & 1); // != ((PR_OUTER_SIZE) & 1);
+        // Probe in reverse order for every other row/column//每隔一行/列按相反顺序进行探测
+        const bool zig = (PR_OUTER_VAR & 1); // != ((PR_OUTER_SIZE) & 1);// != （（PR_外部尺寸）和1）；
         if (zig) PR_INNER_VAR = (PR_INNER_SIZE - 1) - PR_INNER_VAR;
 
         abl.probePos = abl.probe_position_lf + abl.gridSpacing * abl.meshCount.asFloat();
 
         TERN_(AUTO_BED_LEVELING_LINEAR, abl.indexIntoAB[abl.meshCount.x][abl.meshCount.y] = abl.abl_probe_index);
 
-        // Keep looping till a reachable point is found
+        // Keep looping till a reachable point is found//继续循环直到找到一个可到达的点
         if (position_is_reachable(abl.probePos)) break;
         ++abl.abl_probe_index;
       }
 
-      // Is there a next point to move to?
+      // Is there a next point to move to?//是否还有下一点需要转移？
       if (abl.abl_probe_index < abl.abl_points) {
-        _manual_goto_xy(abl.probePos); // Can be used here too!
-        // Disable software endstops to allow manual adjustment
-        // If G29 is not completed, they will not be re-enabled
+        _manual_goto_xy(abl.probePos); // Can be used here too!//这里也可以用！
+        // Disable software endstops to allow manual adjustment//禁用软件止动块以允许手动调整
+        // If G29 is not completed, they will not be re-enabled//如果G29未完成，则不会重新启用
         SET_SOFT_ENDSTOP_LOOSE(true);
         G29_RETURN(false);
       }
       else {
-        // Leveling done! Fall through to G29 finishing code below
+        // Leveling done! Fall through to G29 finishing code below//找平完成！通过以下G29完成代码
         SERIAL_ECHOLNPGM("Grid probing done.");
-        // Re-enable software endstops, if needed
+        // Re-enable software endstops, if needed//如有必要，重新启用软件终止
         SET_SOFT_ENDSTOP_LOOSE(false);
       }
 
     #elif ENABLED(AUTO_BED_LEVELING_3POINT)
 
-      // Probe at 3 arbitrary points
+      // Probe at 3 arbitrary points//在3个任意点进行探测
       if (abl.abl_probe_index < abl.abl_points) {
         abl.probePos = points[abl.abl_probe_index];
         _manual_goto_xy(abl.probePos);
-        // Disable software endstops to allow manual adjustment
-        // If G29 is not completed, they will not be re-enabled
+        // Disable software endstops to allow manual adjustment//禁用软件止动块以允许手动调整
+        // If G29 is not completed, they will not be re-enabled//如果G29未完成，则不会重新启用
         SET_SOFT_ENDSTOP_LOOSE(true);
         G29_RETURN(false);
       }
@@ -579,7 +580,7 @@ G29_TYPE GcodeSuite::G29() {
 
         SERIAL_ECHOLNPGM("3-point probing done.");
 
-        // Re-enable software endstops, if needed
+        // Re-enable software endstops, if needed//如有必要，重新启用软件终止
         SET_SOFT_ENDSTOP_LOOSE(false);
 
         if (!abl.dryrun) {
@@ -587,15 +588,15 @@ G29_TYPE GcodeSuite::G29() {
           if (planeNormal.z < 0) planeNormal *= -1;
           planner.bed_level_matrix = matrix_3x3::create_look_at(planeNormal);
 
-          // Can't re-enable (on error) until the new grid is written
+          // Can't re-enable (on error) until the new grid is written//在写入新网格之前无法重新启用（错误时）
           abl.reenable = false;
         }
 
       }
 
-    #endif // AUTO_BED_LEVELING_3POINT
+    #endif // AUTO_BED_LEVELING_3POINT//自动找平床找平点
 
-  #else // !PROBE_MANUALLY
+  #else // !PROBE_MANUALLY// !手动探测
   {
     const ProbePtRaise raise_after = parser.boolval('E') ? PROBE_PT_STOW : PROBE_PT_RAISE;
 
@@ -603,41 +604,41 @@ G29_TYPE GcodeSuite::G29() {
 
     #if ABL_USES_GRID
 
-      bool zig = PR_OUTER_SIZE & 1;  // Always end at RIGHT and BACK_PROBE_BED_POSITION
+      bool zig = PR_OUTER_SIZE & 1;  // Always end at RIGHT and BACK_PROBE_BED_POSITION//始终在右侧和后部结束\u探头\u床\u位置
 
       abl.measured_z = 0;
 
-      // Outer loop is X with PROBE_Y_FIRST enabled
-      // Outer loop is Y with PROBE_Y_FIRST disabled
+      // Outer loop is X with PROBE_Y_FIRST enabled//外部循环为X，探测_Y_首先启用
+      // Outer loop is Y with PROBE_Y_FIRST disabled//外部回路为Y，探头Y首先禁用
       for (PR_OUTER_VAR = 0; PR_OUTER_VAR < PR_OUTER_SIZE && !isnan(abl.measured_z); PR_OUTER_VAR++) {
 
         int8_t inStart, inStop, inInc;
 
-        if (zig) {                      // Zig away from origin
-          inStart = 0;                  // Left or front
-          inStop = PR_INNER_SIZE;       // Right or back
-          inInc = 1;                    // Zig right
+        if (zig) {                      // Zig away from origin//离开原点
+          inStart = 0;                  // Left or front//左边还是前面
+          inStop = PR_INNER_SIZE;       // Right or back//右边还是后面
+          inInc = 1;                    // Zig right//向右
         }
-        else {                          // Zag towards origin
-          inStart = PR_INNER_SIZE - 1;  // Right or back
-          inStop = -1;                  // Left or front
-          inInc = -1;                   // Zag left
+        else {                          // Zag towards origin//向原点弯曲
+          inStart = PR_INNER_SIZE - 1;  // Right or back//右边还是后面
+          inStop = -1;                  // Left or front//左边还是前面
+          inInc = -1;                   // Zag left//向左弯曲
         }
 
-        zig ^= true; // zag
+        zig ^= true; // zag//曲折
 
-        // An index to print current state
+        // An index to print current state//打印当前状态的索引
         uint8_t pt_index = (PR_OUTER_VAR) * (PR_INNER_SIZE) + 1;
 
-        // Inner loop is Y with PROBE_Y_FIRST enabled
-        // Inner loop is X with PROBE_Y_FIRST disabled
+        // Inner loop is Y with PROBE_Y_FIRST enabled//内部循环为Y，探测器Y首先启用
+        // Inner loop is X with PROBE_Y_FIRST disabled//内部循环为X，首先禁用探测_Y_
         for (PR_INNER_VAR = inStart; PR_INNER_VAR != inStop; pt_index++, PR_INNER_VAR += inInc) {
 
           abl.probePos = abl.probe_position_lf + abl.gridSpacing * abl.meshCount.asFloat();
 
-          TERN_(AUTO_BED_LEVELING_LINEAR, abl.indexIntoAB[abl.meshCount.x][abl.meshCount.y] = ++abl.abl_probe_index); // 0...
+          TERN_(AUTO_BED_LEVELING_LINEAR, abl.indexIntoAB[abl.meshCount.x][abl.meshCount.y] = ++abl.abl_probe_index); // 0...// 0...
 
-          // Avoid probing outside the round or hexagonal area
+          // Avoid probing outside the round or hexagonal area//避免在圆形或六角形区域外进行探测
           if (TERN0(IS_KINEMATIC, !probe.can_reach(abl.probePos))) continue;
 
           if (abl.verbose_level) SERIAL_ECHOLNPAIR("Probing mesh point ", pt_index, "/", abl.abl_points, ".");
@@ -647,7 +648,7 @@ G29_TYPE GcodeSuite::G29() {
 
           if (isnan(abl.measured_z)) {
             set_bed_leveling_enabled(abl.reenable);
-            break; // Breaks out of both loops
+            break; // Breaks out of both loops//断开两个循环
           }
 
           #if ENABLED(PROBE_TEMP_COMPENSATION)
@@ -677,18 +678,18 @@ G29_TYPE GcodeSuite::G29() {
           abl.reenable = false;
           idle_no_sleep();
 
-        } // inner
-      } // outer
+        } // inner//内在的
+      } // outer//外
 
     #elif ENABLED(AUTO_BED_LEVELING_3POINT)
 
-      // Probe at 3 arbitrary points
+      // Probe at 3 arbitrary points//在3个任意点进行探测
 
       LOOP_L_N(i, 3) {
         if (abl.verbose_level) SERIAL_ECHOLNPAIR("Probing point ", i + 1, "/3.");
         TERN_(HAS_STATUS_MESSAGE, ui.status_printf_P(0, PSTR(S_FMT " %i/3"), GET_TEXT(MSG_PROBING_MESH), int(i + 1)));
 
-        // Retain the last probe position
+        // Retain the last probe position//保留最后一个探针位置
         abl.probePos = xy_pos_t(points[i]);
         abl.measured_z = faux ? 0.001 * random(-100, 101) : probe.probe_at_point(abl.probePos, raise_after, abl.verbose_level);
         if (isnan(abl.measured_z)) {
@@ -703,31 +704,31 @@ G29_TYPE GcodeSuite::G29() {
         if (planeNormal.z < 0) planeNormal *= -1;
         planner.bed_level_matrix = matrix_3x3::create_look_at(planeNormal);
 
-        // Can't re-enable (on error) until the new grid is written
+        // Can't re-enable (on error) until the new grid is written//在写入新网格之前无法重新启用（错误时）
         abl.reenable = false;
       }
 
-    #endif // AUTO_BED_LEVELING_3POINT
+    #endif // AUTO_BED_LEVELING_3POINT//自动找平床找平点
 
     TERN_(HAS_STATUS_MESSAGE, ui.reset_status());
 
-    // Stow the probe. No raise for FIX_MOUNTED_PROBE.
+    // Stow the probe. No raise for FIX_MOUNTED_PROBE.//收起探头。固定式探头无上升。
     if (probe.stow()) {
       set_bed_leveling_enabled(abl.reenable);
       abl.measured_z = NAN;
     }
   }
-  #endif // !PROBE_MANUALLY
+  #endif // !PROBE_MANUALLY// !手动探测
 
-  //
-  // G29 Finishing Code
-  //
-  // Unless this is a dry run, auto bed leveling will
-  // definitely be enabled after this point.
-  //
-  // If code above wants to continue leveling, it should
-  // return or loop before this point.
-  //
+  ////
+  // G29 Finishing Code//G29整理代码
+  ////
+  // Unless this is a dry run, auto bed leveling will//除非这是干运行，否则自动调平床将
+  // definitely be enabled after this point.//在这一点之后肯定会启用。
+  ////
+  // If code above wants to continue leveling, it should//如果上面的代码想要继续调平，它应该
+  // return or loop before this point.//在此点之前返回或循环。
+  ////
 
   if (DEBUGGING(LEVELING)) DEBUG_POS("> probing complete", current_position);
 
@@ -736,7 +737,7 @@ G29_TYPE GcodeSuite::G29() {
     TERN_(LCD_BED_LEVELING, ui.wait_for_move = false);
   #endif
 
-  // Calculate leveling, print reports, correct the position
+  // Calculate leveling, print reports, correct the position//计算调平、打印报告、纠正位置
   if (!isnan(abl.measured_z)) {
     #if ENABLED(AUTO_BED_LEVELING_BILINEAR)
 
@@ -749,7 +750,7 @@ G29_TYPE GcodeSuite::G29() {
 
     #elif ENABLED(AUTO_BED_LEVELING_LINEAR)
 
-      // For LINEAR leveling calculate matrix, print reports, correct the position
+      // For LINEAR leveling calculate matrix, print reports, correct the position//对于线性平层计算矩阵，打印报告，更正位置
 
       /**
        * solve the plane equation ax + by + d = z
@@ -762,8 +763,8 @@ G29_TYPE GcodeSuite::G29() {
       struct { float a, b, d; } plane_equation_coefficients;
 
       finish_incremental_LSF(&lsf_results);
-      plane_equation_coefficients.a = -lsf_results.A;  // We should be able to eliminate the '-' on these three lines and down below
-      plane_equation_coefficients.b = -lsf_results.B;  // but that is not yet tested.
+      plane_equation_coefficients.a = -lsf_results.A;  // We should be able to eliminate the '-' on these three lines and down below//我们应该能够消除这三行上以及下面的“-”
+      plane_equation_coefficients.b = -lsf_results.B;  // but that is not yet tested.//但这还没有得到检验。
       plane_equation_coefficients.d = -lsf_results.D;
 
       abl.mean /= abl.abl_points;
@@ -777,13 +778,13 @@ G29_TYPE GcodeSuite::G29() {
         SERIAL_EOL();
       }
 
-      // Create the matrix but don't correct the position yet
+      // Create the matrix but don't correct the position yet//创建矩阵，但不更正位置
       if (!abl.dryrun)
         planner.bed_level_matrix = matrix_3x3::create_look_at(
-          vector_3(-plane_equation_coefficients.a, -plane_equation_coefficients.b, 1)    // We can eliminate the '-' here and up above
+          vector_3(-plane_equation_coefficients.a, -plane_equation_coefficients.b, 1)    // We can eliminate the '-' here and up above//我们可以在这里和上面去掉“-”
         );
 
-      // Show the Topography map if enabled
+      // Show the Topography map if enabled//如果启用，则显示地形图
       if (abl.topography_map) {
 
         float min_diff = 999;
@@ -799,11 +800,11 @@ G29_TYPE GcodeSuite::G29() {
               if (get_min) NOMORE(min_diff, abl.eqnBVector[ind] - tmp.z);
               const float subval = get_min ? abl.mean : tmp.z + min_diff,
                             diff = abl.eqnBVector[ind] - subval;
-              SERIAL_CHAR(' '); if (diff >= 0.0) SERIAL_CHAR('+');   // Include + for column alignment
+              SERIAL_CHAR(' '); if (diff >= 0.0) SERIAL_CHAR('+');   // Include + for column alignment//包含+用于柱对齐
               SERIAL_ECHO_F(diff, 5);
-            } // xx
+            } // xx//xx
             SERIAL_EOL();
-          } // yy
+          } // yy//yy
           SERIAL_EOL();
         };
 
@@ -821,28 +822,28 @@ G29_TYPE GcodeSuite::G29() {
         if (abl.verbose_level > 3)
           print_topo_map(PSTR("\nCorrected Bed Height vs. Bed Topology:\n"), false);
 
-      } // abl.topography_map
+      } // abl.topography_map//地形图
 
-    #endif // AUTO_BED_LEVELING_LINEAR
+    #endif // AUTO_BED_LEVELING_LINEAR//自动调平床
 
     #if ABL_PLANAR
 
-      // For LINEAR and 3POINT leveling correct the current position
+      // For LINEAR and 3POINT leveling correct the current position//对于线性和3点水准测量，请更正当前位置
 
       if (abl.verbose_level > 0)
         planner.bed_level_matrix.debug(PSTR("\n\nBed Level Correction Matrix:"));
 
       if (!abl.dryrun) {
-        //
-        // Correct the current XYZ position based on the tilted plane.
-        //
+        ////
+        // Correct the current XYZ position based on the tilted plane.//基于倾斜平面校正当前XYZ位置。
+        ////
 
         if (DEBUGGING(LEVELING)) DEBUG_POS("G29 uncorrected XYZ", current_position);
 
         xyze_pos_t converted = current_position;
-        planner.force_unapply_leveling(converted); // use conversion machinery
+        planner.force_unapply_leveling(converted); // use conversion machinery//使用转换机械
 
-        // Use the last measured distance to the bed, if possible
+        // Use the last measured distance to the bed, if possible//如有可能，使用最后测量的到床的距离
         if ( NEAR(current_position.x, abl.probePos.x - probe.offset_xy.x)
           && NEAR(current_position.y, abl.probePos.y - probe.offset_xy.y)
         ) {
@@ -851,7 +852,7 @@ G29_TYPE GcodeSuite::G29() {
           converted.z = simple_z;
         }
 
-        // The rotated XY and corrected Z are now current_position
+        // The rotated XY and corrected Z are now current_position//旋转的XY和校正的Z现在是当前位置
         current_position = converted;
 
         if (DEBUGGING(LEVELING)) DEBUG_POS("G29 corrected XYZ", current_position);
@@ -862,24 +863,24 @@ G29_TYPE GcodeSuite::G29() {
       if (!abl.dryrun) {
         if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPAIR("G29 uncorrected Z:", current_position.z);
 
-        // Unapply the offset because it is going to be immediately applied
-        // and cause compensation movement in Z
+        // Unapply the offset because it is going to be immediately applied//取消应用偏移量，因为它将立即应用
+        // and cause compensation movement in Z//并在Z方向产生补偿运动
         const float fade_scaling_factor = TERN(ENABLE_LEVELING_FADE_HEIGHT, planner.fade_scaling_factor_for_z(current_position.z), 1);
         current_position.z -= fade_scaling_factor * bilinear_z_offset(current_position);
 
         if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPAIR(" corrected Z:", current_position.z);
       }
 
-    #endif // ABL_PLANAR
+    #endif // ABL_PLANAR//ABL_平面
 
-    // Auto Bed Leveling is complete! Enable if possible.
+    // Auto Bed Leveling is complete! Enable if possible.//自动调平床完成！如果可能，启用。
     planner.leveling_active = !abl.dryrun || abl.reenable;
-  } // !isnan(abl.measured_z)
+  } // !isnan(abl.measured_z)// !伊斯南（绝对测量）
 
-  // Restore state after probing
+  // Restore state after probing//探测后恢复状态
   if (!faux) restore_feedrate_and_scaling();
 
-  // Sync the planner from the current_position
+  // Sync the planner from the current_position//从当前位置同步计划器
   if (planner.leveling_active) sync_plan_position();
 
   #if HAS_BED_PROBE
@@ -904,4 +905,4 @@ G29_TYPE GcodeSuite::G29() {
 
 }
 
-#endif // HAS_ABL_NOT_UBL
+#endif // HAS_ABL_NOT_UBL//有没有

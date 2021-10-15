@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -53,7 +54,7 @@ void unified_bed_leveling::report_current_mesh() {
       SERIAL_ECHO_START();
       SERIAL_ECHOPAIR("  M421 I", x, " J", y);
       SERIAL_ECHOLNPAIR_F_P(SP_Z_STR, z_values[x][y], 4);
-      serial_delay(75); // Prevent Printrun from exploding
+      serial_delay(75); // Prevent Printrun from exploding//防止Printrun爆炸
     }
 }
 
@@ -120,7 +121,7 @@ void unified_bed_leveling::set_all_mesh_points_to_value(const_float_t value) {
       if (isnan(z)) return Z_STEPS_NAN;
       const int32_t z_scaled = TRUNC(z * mesh_store_scaling);
       if (z_scaled == Z_STEPS_NAN || !WITHIN(z_scaled, INT16_MIN, INT16_MAX))
-        return Z_STEPS_NAN; // If Z is out of range, return our custom 'NaN'
+        return Z_STEPS_NAN; // If Z is out of range, return our custom 'NaN'//如果Z超出范围，请返回我们的自定义“NaN”
       return int16_t(z_scaled);
     };
     GRID_LOOP(x, y) stored_values[x][y] = z_to_store(in_values[x][y]);
@@ -133,7 +134,7 @@ void unified_bed_leveling::set_all_mesh_points_to_value(const_float_t value) {
     GRID_LOOP(x, y) out_values[x][y] = store_to_z(stored_values[x][y]);
   }
 
-#endif // OPTIMIZED_MESH_STORAGE
+#endif // OPTIMIZED_MESH_STORAGE//优化的网格存储
 
 static void serial_echo_xy(const uint8_t sp, const int16_t x, const int16_t y) {
   SERIAL_ECHO_SP(sp);
@@ -167,8 +168,8 @@ static void serial_echo_column_labels(const uint8_t sp) {
 void unified_bed_leveling::display_map(const uint8_t map_type) {
   const bool was = gcode.set_autoreport_paused(true);
 
-  constexpr uint8_t eachsp = 1 + 6 + 1,                           // [-3.567]
-                    twixt = eachsp * (GRID_MAX_POINTS_X) - 9 * 2; // Leading 4sp, Coordinates 9sp each
+  constexpr uint8_t eachsp = 1 + 6 + 1,                           // [-3.567]// [-3.567]
+                    twixt = eachsp * (GRID_MAX_POINTS_X) - 9 * 2; // Leading 4sp, Coordinates 9sp each//前导4sp，每个坐标为9sp
 
   const bool human = !(map_type & 0x3), csv = map_type == 1, lcd = map_type == 2, comp = map_type & 0x4;
 
@@ -185,42 +186,42 @@ void unified_bed_leveling::display_map(const uint8_t map_type) {
     SERIAL_ECHOPGM_P(csv ? PSTR("CSV:\n") : PSTR("LCD:\n"));
   }
 
-  // Add XY probe offset from extruder because probe.probe_at_point() subtracts them when
-  // moving to the XY position to be measured. This ensures better agreement between
-  // the current Z position after G28 and the mesh values.
+  // Add XY probe offset from extruder because probe.probe_at_point() subtracts them when//添加挤出机的XY探针偏移量，因为探针点处的探针点（）会在
+  // moving to the XY position to be measured. This ensures better agreement between//移动到要测量的XY位置。这可确保双方达成更好的协议
+  // the current Z position after G28 and the mesh values.//G28之后的当前Z位置和网格值。
   const xy_int8_t curr = closest_indexes(xy_pos_t(current_position) + probe.offset_xy);
 
   if (!lcd) SERIAL_EOL();
   for (int8_t j = (GRID_MAX_POINTS_Y) - 1; j >= 0; j--) {
 
-    // Row Label (J index)
+    // Row Label (J index)//行标签（J索引）
     if (human) {
       if (j < 10) SERIAL_CHAR(' ');
       SERIAL_ECHO(j);
       SERIAL_ECHOPGM(" |");
     }
 
-    // Row Values (I indexes)
+    // Row Values (I indexes)//行值（I索引）
     LOOP_L_N(i, GRID_MAX_POINTS_X) {
 
-      // Opening Brace or Space
+      // Opening Brace or Space//开括号或空格
       const bool is_current = i == curr.x && j == curr.y;
       if (human) SERIAL_CHAR(is_current ? '[' : ' ');
 
-      // Z Value at current I, J
+      // Z Value at current I, J//电流I时的Z值，J
       const float f = z_values[i][j];
       if (lcd) {
-        // TODO: Display on Graphical LCD
+        // TODO: Display on Graphical LCD//TODO:在图形LCD上显示
       }
       else if (isnan(f))
         SERIAL_ECHOPGM_P(human ? PSTR("  .   ") : PSTR("NAN"));
       else if (human || csv) {
-        if (human && f >= 0.0) SERIAL_CHAR(f > 0 ? '+' : ' ');  // Display sign also for positive numbers (' ' for 0)
-        SERIAL_ECHO_F(f, 3);                                    // Positive: 5 digits, Negative: 6 digits
+        if (human && f >= 0.0) SERIAL_CHAR(f > 0 ? '+' : ' ');  // Display sign also for positive numbers (' ' for 0)//也为正数显示符号（“”表示0）
+        SERIAL_ECHO_F(f, 3);                                    // Positive: 5 digits, Negative: 6 digits//正极：5位，负极：6位
       }
       if (csv && i < (GRID_MAX_POINTS_X) - 1) SERIAL_CHAR('\t');
 
-      // Closing Brace or Space
+      // Closing Brace or Space//闭括号或空格
       if (human) SERIAL_CHAR(is_current ? ']' : ' ');
 
       SERIAL_FLUSHTX();
@@ -228,7 +229,7 @@ void unified_bed_leveling::display_map(const uint8_t map_type) {
     }
     if (!lcd) SERIAL_EOL();
 
-    // A blank line between rows (unless compact)
+    // A blank line between rows (unless compact)//行与行之间的空行（除非紧凑）
     if (j && human && !comp) SERIAL_ECHOLNPGM("   |");
   }
 
@@ -266,25 +267,25 @@ bool unified_bed_leveling::sanity_check() {
     #define PROBE_GCODE TERN(HAS_BED_PROBE, "G29P1\nG29P3", "G29P4R")
 
     #if HAS_HOTEND
-      if (parser.seenval('H')) {                          // Handle H# parameter to set Hotend temp
-        const celsius_t hotend_temp = parser.value_int(); // Marlin never sends itself F or K, always C
+      if (parser.seenval('H')) {                          // Handle H# parameter to set Hotend temp//处理H#参数以设置热端温度
+        const celsius_t hotend_temp = parser.value_int(); // Marlin never sends itself F or K, always C//马林鱼从不给自己发F或K，总是发C
         thermalManager.setTargetHotend(hotend_temp, 0);
         thermalManager.wait_for_hotend(false);
       }
     #endif
 
     #if HAS_HEATED_BED
-      if (parser.seenval('B')) {                        // Handle B# parameter to set Bed temp
-        const celsius_t bed_temp = parser.value_int();  // Marlin never sends itself F or K, always C
+      if (parser.seenval('B')) {                        // Handle B# parameter to set Bed temp//处理B#参数以设置床温
+        const celsius_t bed_temp = parser.value_int();  // Marlin never sends itself F or K, always C//马林鱼从不给自己发F或K，总是发C
         thermalManager.setTargetBed(bed_temp);
         thermalManager.wait_for_bed(false);
       }
     #endif
 
-    process_subcommands_now_P(G28_STR);               // Home
-    process_subcommands_now_P(PSTR(ALIGN_GCODE "\n"   // Align multi z axis if available
-                                   PROBE_GCODE "\n"   // Build mesh with available hardware
-                                   "G29P3\nG29P3"));  // Ensure mesh is complete by running smart fill twice
+    process_subcommands_now_P(G28_STR);               // Home//家
+    process_subcommands_now_P(PSTR(ALIGN_GCODE "\n"   // Align multi z axis if available//对齐多个z轴（如果可用）
+                                   PROBE_GCODE "\n"   // Build mesh with available hardware//使用可用硬件构建网格
+                                   "G29P3\nG29P3"));  // Ensure mesh is complete by running smart fill twice//运行智能填充两次，确保网格完整
 
     if (parser.seenval('S')) {
       char umw_gcode[32];
@@ -292,11 +293,11 @@ bool unified_bed_leveling::sanity_check() {
       queue.inject(umw_gcode);
     }
 
-    process_subcommands_now_P(PSTR("G29A\nG29F10\n"   // Set UBL Active & Fade 10
-                                   "M140S0\nM104S0\n" // Turn off heaters
-                                   "M500"));          // Store settings
+    process_subcommands_now_P(PSTR("G29A\nG29F10\n"   // Set UBL Active & Fade 10//将UBL设置为激活和淡入10
+                                   "M140S0\nM104S0\n" // Turn off heaters//关掉加热器
+                                   "M500"));          // Store settings//商店设置
   }
 
-#endif // UBL_MESH_WIZARD
+#endif // UBL_MESH_WIZARD//UBL_网格_向导
 
-#endif // AUTO_BED_LEVELING_UBL
+#endif // AUTO_BED_LEVELING_UBL//自动调平床

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -40,7 +41,7 @@
   #error "Unknown Touch Screen Type."
 #endif
 
-// Menu Navigation
+// Menu Navigation//菜单导航
 extern int8_t encoderTopLine, encoderLine, screen_items;
 
 enum TouchControlType : uint16_t {

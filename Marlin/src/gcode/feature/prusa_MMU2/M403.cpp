@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -46,4 +47,4 @@ void GcodeSuite::M403() {
     SERIAL_ECHO_MSG("M403 - bad arguments.");
 }
 
-#endif // HAS_PRUSA_MMU2
+#endif // HAS_PRUSA_MMU2//你有什么想法

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2021 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -25,7 +26,7 @@
  * lcd/extui/nextion/nextion_tft.h
  * ****************************************
  * Extensible_UI implementation for Nextion
- * https://github.com/Skorpi08
+ * https://github.com/Skorpi08//github.com/Skorpi08
  * ***************************************/
 
 #include "nextion_tft_defs.h"

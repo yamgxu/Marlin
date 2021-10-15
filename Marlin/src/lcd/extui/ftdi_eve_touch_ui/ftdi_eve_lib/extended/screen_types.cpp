@@ -1,3 +1,4 @@
+/** translatione by yx */
 /******************
  * screen_types.h *
  ******************/
@@ -101,4 +102,4 @@ void ScreenStack::goBack() {
 
 ScreenStack current_screen;
 
-#endif // FTDI_EXTENDED
+#endif // FTDI_EXTENDED//FTDI_扩展

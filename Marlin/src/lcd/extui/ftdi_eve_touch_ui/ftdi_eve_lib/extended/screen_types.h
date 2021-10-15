@@ -1,3 +1,4 @@
+/** translatione by yx */
 /********************
  * screen_types.cpp *
  ********************/
@@ -29,12 +30,12 @@ typedef enum {
 
  /********************** VIRTUAL DISPATCH DATA TYPE  ******************************/
 
-// True virtual classes are extremely expensive on the Arduino
-// as the compiler stores the virtual function tables in RAM.
-// We invent a data type called ScreenRef that gives us
-// polymorphism by mapping an ID to virtual methods on various
-// classes. This works by keeping a table in PROGMEM of pointers
-// to static methods.
+// True virtual classes are extremely expensive on the Arduino//真正的虚拟类在Arduino上非常昂贵
+// as the compiler stores the virtual function tables in RAM.//因为编译器将虚拟函数表存储在RAM中。
+// We invent a data type called ScreenRef that gives us//我们发明了一种称为ScreenRef的数据类型
+// polymorphism by mapping an ID to virtual methods on various//通过将ID映射到各种
+// classes. This works by keeping a table in PROGMEM of pointers//上课。这是通过在指针程序中保留一个表来实现的
+// to static methods.//使用静态方法。
 
 #define DECL_SCREEN(className) { \
   className::onStartup, \
@@ -109,8 +110,8 @@ class ScreenRef {
 
 /********************** SCREEN STACK  ******************************/
 
-// To conserve dynamic memory, the screen stack is hard-coded to
-// have four values, allowing a menu of up to four levels.
+// To conserve dynamic memory, the screen stack is hard-coded to//为了节省动态内存，屏幕堆栈硬编码为
+// have four values, allowing a menu of up to four levels.//有四个值，允许最多四个级别的菜单。
 
 class ScreenStack : public ScreenRef {
   private:
@@ -188,7 +189,7 @@ class CachedScreen {
       DLCache dlcache(DL_SLOT);
       if (!dlcache.store(DL_SIZE)) {
         SERIAL_ECHO_MSG("CachedScreen::storeBackground() failed: not enough DL cache space");
-        gfxError(); // Try to cache a shorter error message instead.
+        gfxError(); // Try to cache a shorter error message instead.//请尝试缓存较短的错误消息。
         dlcache.store(DL_SIZE);
         return false;
       }

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -34,7 +35,7 @@
   #define SWITCHING_NOZZLE_TWO_SERVOS 1
 #endif
 
-// Determine NUM_SERVOS if none was supplied
+// Determine NUM_SERVOS if none was supplied//如果未提供任何伺服，则确定数量
 #ifndef NUM_SERVOS
   #define NUM_SERVOS 0
   #if ANY(HAS_Z_SERVO_PROBE, CHAMBER_VENT, SWITCHING_TOOLHEAD, SWITCHING_EXTRUDER, SWITCHING_NOZZLE, SPINDLE_SERVO)
@@ -73,7 +74,7 @@
   #endif
 #endif
 
-// Convenience override for a BLTouch alone
+// Convenience override for a BLTouch alone//仅适用于BLTouch的便利覆盖
 #if ENABLED(BLTOUCH) && NUM_SERVOS == 1
   #undef SERVO_DELAY
   #define SERVO_DELAY { 50 }
@@ -150,10 +151,10 @@
   #endif
 #endif
 
-// Let SD_FINISHED_RELEASECOMMAND stand in for SD_FINISHED_STEPPERRELEASE
+// Let SD_FINISHED_RELEASECOMMAND stand in for SD_FINISHED_STEPPERRELEASE//让SD_FINISHED_release命令代替SD_FINISHED_stepperrease
 #if ENABLED(SD_FINISHED_STEPPERRELEASE)
   #ifndef SD_FINISHED_RELEASECOMMAND
-    #define SD_FINISHED_RELEASECOMMAND "M84" // planner.finish_and_disable()
+    #define SD_FINISHED_RELEASECOMMAND "M84" // planner.finish_and_disable()//planner.finish_和_disable（）
   #endif
 #else
   #undef SD_FINISHED_RELEASECOMMAND
@@ -216,12 +217,12 @@
   #endif
 #endif
 
-// Multiple Z steppers
+// Multiple Z steppers//多Z步进器
 #ifndef NUM_Z_STEPPER_DRIVERS
   #define NUM_Z_STEPPER_DRIVERS 1
 #endif
 
-// Fallback Stepper Driver types that depend on Configuration_adv.h
+// Fallback Stepper Driver types that depend on Configuration_adv.h//取决于配置的后备步进驱动程序类型
 #if NONE(DUAL_X_CARRIAGE, X_DUAL_STEPPER_DRIVERS)
   #undef X2_DRIVER_TYPE
 #endif
@@ -242,10 +243,10 @@
   #endif
 #endif
 
-//
-// Spindle/Laser power display types
-// Defined here so sanity checks can use them
-//
+////
+// Spindle/Laser power display types//主轴/激光功率显示类型
+// Defined here so sanity checks can use them//在此处定义，以便健全性检查可以使用它们
+////
 #if EITHER(SPINDLE_FEATURE, LASER_FEATURE)
   #define HAS_CUTTER 1
   #define _CUTTER_POWER_PWM255  1
@@ -255,25 +256,25 @@
   #define CUTTER_UNIT_IS(V)    (_CUTTER_POWER(CUTTER_POWER_UNIT) == _CUTTER_POWER(V))
 #endif
 
-// Add features that need hardware PWM here
+// Add features that need hardware PWM here//在此处添加需要硬件PWM的功能
 #if ANY(FAST_PWM_FAN, SPINDLE_LASER_PWM)
   #define NEEDS_HARDWARE_PWM 1
 #endif
 
 #if !defined(__AVR__) || !defined(USBCON)
-  // Define constants and variables for buffering serial data.
-  // Use only 0 or powers of 2 greater than 1
-  // : [0, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, ...]
+  // Define constants and variables for buffering serial data.//定义用于缓冲串行数据的常量和变量。
+  // Use only 0 or powers of 2 greater than 1//仅使用0或大于1的2的幂
+  // : [0, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, ...]// : [0, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, ...]
   #ifndef RX_BUFFER_SIZE
     #define RX_BUFFER_SIZE 128
   #endif
-  // 256 is the max TX buffer limit due to uint8_t head and tail
-  // : [0, 4, 8, 16, 32, 64, 128, 256]
+  // 256 is the max TX buffer limit due to uint8_t head and tail//256是由于uint8\u t头和尾导致的最大发送缓冲区限制
+  // : [0, 4, 8, 16, 32, 64, 128, 256]// : [0, 4, 8, 16, 32, 64, 128, 256]
   #ifndef TX_BUFFER_SIZE
     #define TX_BUFFER_SIZE 32
   #endif
 #else
-  // SERIAL_XON_XOFF not supported on USB-native devices
+  // SERIAL_XON_XOFF not supported on USB-native devices//USB本机设备上不支持串行XON XOFF
   #undef SERIAL_XON_XOFF
 #endif
 
@@ -332,7 +333,7 @@
   #endif
 #endif
 
-// Set defaults for unspecified LED user colors
+// Set defaults for unspecified LED user colors//设置未指定LED用户颜色的默认值
 #if ENABLED(LED_CONTROL_MENU)
   #ifndef LED_USER_PRESET_RED
     #define LED_USER_PRESET_RED       255
@@ -377,23 +378,23 @@
   #endif
 #endif
 
-// Full Touch Screen needs 'tft/xpt2046'
+// Full Touch Screen needs 'tft/xpt2046'//全触摸屏需要“tft/xpt2046”
 #if EITHER(TFT_TOUCH_DEVICE_XPT2046, HAS_TFT_LVGL_UI)
   #define HAS_TFT_XPT2046 1
 #endif
 
-// Touch Screen or "Touch Buttons" need XPT2046 pins
-// but they use different components
+// Touch Screen or "Touch Buttons" need XPT2046 pins//触摸屏或“触摸按钮”需要XPT2046引脚
+// but they use different components//但它们使用不同的组件
 #if HAS_TFT_XPT2046 || HAS_RES_TOUCH_BUTTONS
   #define NEED_TOUCH_PINS 1
 #endif
 
-// Extensible UI pin mapping for RepRapDiscount
+// Extensible UI pin mapping for RepRapDiscount//repradiscount的可扩展UI-pin映射
 #if ENABLED(TOUCH_UI_FTDI_EVE) && ANY(AO_EXP1_PINMAP, AO_EXP2_PINMAP, CR10_TFT_PINMAP)
   #define TOUCH_UI_ULTIPANEL 1
 #endif
 
-// Poll-based jogging for joystick and other devices
+// Poll-based jogging for joystick and other devices//操纵杆和其他设备的基于轮询的点动
 #if ENABLED(JOYSTICK)
   #define POLL_JOG
 #endif
@@ -433,7 +434,7 @@
   #elif HAS_TRINAMIC_CONFIG || HAS_TRINAMIC_STANDALONE
     #define MINIMUM_STEPPER_POST_DIR_DELAY 60
   #else
-    #define MINIMUM_STEPPER_POST_DIR_DELAY 0   // Expect at least 10µS since one Stepper ISR must transpire
+    #define MINIMUM_STEPPER_POST_DIR_DELAY 0   // Expect at least 10µS since one Stepper ISR must transpire//预计至少10µS，因为必须发射一个步进机ISR
   #endif
 #endif
 
@@ -489,7 +490,7 @@
   #endif
 #endif
 
-// Remove unused STEALTHCHOP flags
+// Remove unused STEALTHCHOP flags//移除未使用的隐形印章标志
 #if LINEAR_AXES < 6
   #undef STEALTHCHOP_K
   #undef CALIBRATION_MEASURE_KMIN
@@ -520,10 +521,10 @@
   #endif
 #endif
 
-//
-// SD Card connection methods
-// Defined here so pins and sanity checks can use them
-//
+////
+// SD Card connection methods//SD卡连接方法
+// Defined here so pins and sanity checks can use them//在此处定义，以便PIN和健全性检查可以使用它们
+////
 #if ENABLED(SDSUPPORT)
   #define _SDCARD_LCD          1
   #define _SDCARD_ONBOARD      2
@@ -534,7 +535,7 @@
   #define SD_CONNECTION_IS(...) 0
 #endif
 
-// Power Monitor sensors
+// Power Monitor sensors//功率监视器传感器
 #if EITHER(POWER_MONITOR_CURRENT, POWER_MONITOR_VOLTAGE)
   #define HAS_POWER_MONITOR 1
   #if ENABLED(POWER_MONITOR_CURRENT) && (ENABLED(POWER_MONITOR_VOLTAGE) || defined(POWER_MONITOR_FIXED_VOLTAGE))
@@ -542,17 +543,17 @@
   #endif
 #endif
 
-// Flag if an EEPROM type is pre-selected
+// Flag if an EEPROM type is pre-selected//如果预先选择了EEPROM类型，则标记
 #if ENABLED(EEPROM_SETTINGS) && NONE(I2C_EEPROM, SPI_EEPROM, QSPI_EEPROM, FLASH_EEPROM_EMULATION, SRAM_EEPROM_EMULATION, SDCARD_EEPROM_EMULATION)
   #define NO_EEPROM_SELECTED 1
 #endif
 
-// Flag whether hex_print.cpp is used
+// Flag whether hex_print.cpp is used//标记是否使用十六进制打印.cpp
 #if ANY(AUTO_BED_LEVELING_UBL, M100_FREE_MEMORY_WATCHER, DEBUG_GCODE_PARSER, TMC_DEBUG, MARLIN_DEV_MODE)
   #define NEED_HEX_PRINT 1
 #endif
 
-// Flags for Case Light having a color property or a single pin
+// Flags for Case Light having a color property or a single pin//具有颜色属性或单个管脚的箱灯标志
 #if ENABLED(CASE_LIGHT_ENABLE)
   #if EITHER(CASE_LIGHT_USE_NEOPIXEL, CASE_LIGHT_USE_RGB_LED)
     #define CASE_LIGHT_IS_COLOR_LED 1
@@ -561,7 +562,7 @@
   #endif
 #endif
 
-// Flag whether least_squares_fit.cpp is used
+// Flag whether least_squares_fit.cpp is used//标记是否使用最小二乘拟合.cpp
 #if ANY(AUTO_BED_LEVELING_UBL, AUTO_BED_LEVELING_LINEAR, Z_STEPPER_ALIGN_KNOWN_STEPPER_POSITIONS)
   #define NEED_LSF 1
 #endif

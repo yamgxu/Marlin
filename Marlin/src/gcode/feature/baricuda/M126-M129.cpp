@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -39,7 +40,7 @@
    */
   void GcodeSuite::M127() { baricuda_valve_pressure = 0; }
 
-#endif // HAS_HEATER_1
+#endif // HAS_HEATER_1//有加热器吗
 
 #if HAS_HEATER_2
 
@@ -53,6 +54,6 @@
    */
   void GcodeSuite::M129() { baricuda_e_to_p_pressure = 0; }
 
-#endif // HAS_HEATER_2
+#endif // HAS_HEATER_2//有加热器2吗
 
-#endif // BARICUDA
+#endif // BARICUDA//巴里库达

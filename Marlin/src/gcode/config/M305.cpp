@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -48,32 +49,32 @@ void GcodeSuite::M305() {
   const int8_t t_index = parser.intval('P', -1);
   const bool do_set = parser.seen("BCRT");
 
-  // A valid P index is required
+  // A valid P index is required//需要有效的P索引
   if (t_index >= (USER_THERMISTORS) || (do_set && t_index < 0))
     SERIAL_ECHO_MSG("!Invalid index. (0 <= P <= ", USER_THERMISTORS - 1, ")");
   else if (do_set) {
-    if (parser.seen('R')) // Pullup resistor value
+    if (parser.seen('R')) // Pullup resistor value//上拉电阻值
       if (!thermalManager.set_pull_up_res(t_index, parser.value_float()))
         SERIAL_ECHO_MSG("!Invalid series resistance. (0 < R < 1000000)");
 
-    if (parser.seen('T')) // Resistance at 25C
+    if (parser.seen('T')) // Resistance at 25C//25℃时的电阻
       if (!thermalManager.set_res25(t_index, parser.value_float()))
         SERIAL_ECHO_MSG("!Invalid 25C resistance. (0 < T < 10000000)");
 
-    if (parser.seen('B')) // Beta value
+    if (parser.seen('B')) // Beta value//贝塔值
       if (!thermalManager.set_beta(t_index, parser.value_float()))
         SERIAL_ECHO_MSG("!Invalid beta. (0 < B < 1000000)");
 
-    if (parser.seen('C')) // Steinhart-Hart C coefficient
+    if (parser.seen('C')) // Steinhart-Hart C coefficient//斯坦哈特系数
       if (!thermalManager.set_sh_coeff(t_index, parser.value_float()))
         SERIAL_ECHO_MSG("!Invalid Steinhart-Hart C coeff. (-0.01 < C < +0.01)");
-  }                       // If not setting then report parameters
-  else if (t_index < 0) { // ...all user thermistors
+  }                       // If not setting then report parameters//如果未设置，则报告参数
+  else if (t_index < 0) { // ...all user thermistors//…所有用户热敏电阻
     LOOP_L_N(i, USER_THERMISTORS)
       thermalManager.log_user_thermistor(i);
   }
-  else                    // ...one user thermistor
+  else                    // ...one user thermistor//…单用户热敏电阻
     thermalManager.log_user_thermistor(t_index);
 }
 
-#endif // HAS_USER_THERMISTORS
+#endif // HAS_USER_THERMISTORS//有用户热敏电阻

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -56,5 +57,5 @@ void __irq_usart1() {
   } /* C-declarations for C++ */
 #endif
 
-#endif // MKS_WIFI_MODULE
-#endif // HAS_TFT_LVGL_UI
+#endif // MKS_WIFI_MODULE//MKS_无线模块
+#endif // HAS_TFT_LVGL_UI//有TFT\U LVGL\U用户界面

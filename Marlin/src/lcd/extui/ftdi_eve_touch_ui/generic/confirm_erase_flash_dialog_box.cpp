@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**************************************
  * confirm_erase_flash_dialog_box.cpp *
  **************************************/
@@ -41,8 +42,8 @@ bool ConfirmEraseFlashDialogBox::onTouchEnd(uint8_t tag) {
       UIFlashStorage::format_flash();
       SpinnerDialogBox::hide();
       AlertDialogBox::show(GET_TEXT_F(MSG_ERASED));
-      // Remove ConfirmEraseFlashDialogBox from the stack
-      // so the alert box doesn't return to me.
+      // Remove ConfirmEraseFlashDialogBox from the stack//从堆栈中删除ConfirmRaseFlashDialogBox
+      // so the alert box doesn't return to me.//所以警报框不会返回给我。
       current_screen.forget();
       return true;
     default:
@@ -50,4 +51,4 @@ bool ConfirmEraseFlashDialogBox::onTouchEnd(uint8_t tag) {
   }
 }
 
-#endif // FTDI_CONFIRM_ERASE_FLASH_DIALOG_BOX
+#endif // FTDI_CONFIRM_ERASE_FLASH_DIALOG_BOX//FTDI确认擦除闪存对话框

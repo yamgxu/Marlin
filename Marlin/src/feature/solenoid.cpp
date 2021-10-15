@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -26,9 +27,9 @@
 
 #include "solenoid.h"
 
-#include "../module/motion.h" // for active_extruder
+#include "../module/motion.h" // for active_extruder//用于主动式挤出机
 
-// PARKING_EXTRUDER options alter the default behavior of solenoids, this ensures compliance of M380-381
+// PARKING_EXTRUDER options alter the default behavior of solenoids, this ensures compliance of M380-381//停车挤出机选项可改变电磁阀的默认行为，从而确保符合M380-381的要求
 
 #if ENABLED(PARKING_EXTRUDER)
   #include "../module/tool_change.h"
@@ -36,7 +37,7 @@
 
 #define HAS_SOLENOID(N) (HAS_SOLENOID_##N && (ENABLED(MANUAL_SOLENOID_CONTROL) || N < EXTRUDERS))
 
-// Used primarily with MANUAL_SOLENOID_CONTROL
+// Used primarily with MANUAL_SOLENOID_CONTROL//主要用于手动电磁阀控制
 static void set_solenoid(const uint8_t num, const bool active) {
   const uint8_t value = active ? PE_MAGNET_ON_STATE : !PE_MAGNET_ON_STATE;
   switch (num) {
@@ -60,7 +61,7 @@ static void set_solenoid(const uint8_t num, const bool active) {
   }
 
   #if ENABLED(PARKING_EXTRUDER)
-    if (!active && active_extruder == num) // If active extruder's solenoid is disabled, carriage is considered parked
+    if (!active && active_extruder == num) // If active extruder's solenoid is disabled, carriage is considered parked//如果主动挤出机的电磁阀被禁用，则认为托架已停驻
       parking_extruder_set_parked(true);
   #endif
 }
@@ -88,4 +89,4 @@ void disable_all_solenoids() {
   #endif
 }
 
-#endif // EXT_SOLENOID || MANUAL_SOLENOID_CONTROL
+#endif // EXT_SOLENOID || MANUAL_SOLENOID_CONTROL//外部螺线管| |手动螺线管|控制

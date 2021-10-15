@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,14 +22,14 @@
  */
 #pragma once
 
-//
-// R25 = 200 kOhm, beta25 = 4338 K, 4.7 kOhm pull-up, ATC Semitec 204GT-2
-// Verified by linagee. Source: https://www.mouser.com/datasheet/2/362/semitec%20usa%20corporation_gtthermistor-1202937.pdf
-// Calculated using 4.7kohm pullup, voltage divider math, and manufacturer provided temp/resistance
-//
+////
+// R25 = 200 kOhm, beta25 = 4338 K, 4.7 kOhm pull-up, ATC Semitec 204GT-2//R25=200千欧，beta25=4338千欧，4.7千欧上拉，ATC Semitec 204GT-2
+// Verified by linagee. Source: https://www.mouser.com/datasheet/2/362/semitec%20usa%20corporation_gtthermistor-1202937.pdf//经利纳吉核实。资料来源：https://www.mouser.com/datasheet/2/362/semitec%20usa%20corporation_gtthermistor-1202937.pdf
+// Calculated using 4.7kohm pullup, voltage divider math, and manufacturer provided temp/resistance//使用4.7kohm上拉、分压器数学和制造商提供的温度/电阻进行计算
+////
 constexpr temp_entry_t temptable_2[] PROGMEM = {
   { OV(   1), 848 },
-  { OV(  30), 300 }, // top rating 300C
+  { OV(  30), 300 }, // top rating 300C//最高额定值300C
   { OV(  34), 290 },
   { OV(  39), 280 },
   { OV(  46), 270 },

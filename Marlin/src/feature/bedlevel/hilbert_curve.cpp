@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*********************
  * hilbert_curve.cpp *
  *********************/
@@ -34,8 +35,8 @@ constexpr uint8_t ord = order(_MAX(GRID_MAX_POINTS_X, GRID_MAX_POINTS_Y));
 constexpr uint8_t dim = _BV(ord);
 
 static inline bool eval_candidate(int8_t x, int8_t y, hilbert_curve::callback_ptr func, void *data) {
-  // The print bed likely has fewer points than the full Hilbert
-  // curve, so cull unecessary points
+  // The print bed likely has fewer points than the full Hilbert//打印床的点数可能比完整的希尔伯特床少
+  // curve, so cull unecessary points//曲线，所以剔除不必要的点
   return x < (GRID_MAX_POINTS_X) && y < (GRID_MAX_POINTS_Y) ? func(x, y, data) : false;
 }
 
@@ -92,7 +93,7 @@ bool hilbert_curve::search_from(uint8_t x, uint8_t y, hilbert_curve::callback_pt
   d.found_1st = false;
   d.func = func;
   d.data = data;
-  // Call twice to allow search to wrap back to the beginning and picked up points prior to the start.
+  // Call twice to allow search to wrap back to the beginning and picked up points prior to the start.//调用两次以允许搜索返回到开始，并在开始之前拾取点。
   return search(search_from_helper, &d) || search(search_from_helper, &d);
 }
 
@@ -101,10 +102,10 @@ bool hilbert_curve::search_from(uint8_t x, uint8_t y, hilbert_curve::callback_pt
  * point on the Hilbert curve.
  */
 bool hilbert_curve::search_from_closest(const xy_pos_t &pos, hilbert_curve::callback_ptr func, void *data) {
-  // Find closest grid intersection
+  // Find closest grid intersection//查找最近的网格交点
   const uint8_t grid_x = LROUND(constrain(float(pos.x - (MESH_MIN_X)) / (MESH_X_DIST), 0, (GRID_MAX_POINTS_X) - 1));
   const uint8_t grid_y = LROUND(constrain(float(pos.y - (MESH_MIN_Y)) / (MESH_Y_DIST), 0, (GRID_MAX_POINTS_Y) - 1));
   return search_from(grid_x, grid_y, func, data);
 }
 
-#endif // UBL_HILBERT_CURVE
+#endif // UBL_HILBERT_CURVE//UBL_-HILBERT_曲线

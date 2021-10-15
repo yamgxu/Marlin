@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,14 +30,14 @@
 #define DEFAULT_MACHINE_NAME "Prototype Board"
 
 #if NO_EEPROM_SELECTED
-  #define FLASH_EEPROM_EMULATION                  // Use Flash-based EEPROM emulation
+  #define FLASH_EEPROM_EMULATION                  // Use Flash-based EEPROM emulation//使用基于Flash的EEPROM仿真
 #endif
 
 #if ENABLED(FLASH_EEPROM_EMULATION)
-  // Decrease delays and flash wear by spreading writes across the
-  // 128 kB sector allocated for EEPROM emulation.
-  // Not yet supported on F7 hardware
-  //#define FLASH_EEPROM_LEVELING
+  // Decrease delays and flash wear by spreading writes across the//通过将写操作分散到整个系统来减少延迟和闪存磨损
+  // 128 kB sector allocated for EEPROM emulation.//分配给EEPROM仿真的128 kB扇区。
+  // Not yet supported on F7 hardware//F7硬件上尚不支持
+  //#define FLASH_EEPROM_LEVELING//#定义闪存EEPROM调平
 #endif
 
 /**
@@ -105,9 +106,9 @@
 #define Z_MIN_PIN                           PD1
 #define Z_MAX_PIN                           PD0
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                          PC6
 #define X_DIR_PIN                           PB15
 #define X_ENABLE_PIN                        PB8
@@ -142,34 +143,34 @@
   #define E_SERIAL_RX_PIN                   PG9
 #endif
 
-//
-// Temperature Sensors
-//
+////
+// Temperature Sensors//温度传感器
+////
 #define TEMP_0_PIN                          PA3
 #define TEMP_BED_PIN                        PC0
 
-//
-// Heaters / Fans
-//
-#define HEATER_0_PIN                        PA15  // PWM Capable, TIM2_CH1
-#define HEATER_BED_PIN                      PB3   // PWM Capable, TIM2_CH2
+////
+// Heaters / Fans//加热器/风扇
+////
+#define HEATER_0_PIN                        PA15  // PWM Capable, TIM2_CH1//具有PWM功能，TIM2\U CH1
+#define HEATER_BED_PIN                      PB3   // PWM Capable, TIM2_CH2//PWM功能，TIM2\U CH2
 
 #ifndef FAN_PIN
-  #define FAN_PIN                           PB10  // PWM Capable, TIM2_CH3
+  #define FAN_PIN                           PB10  // PWM Capable, TIM2_CH3//具有PWM功能，TIM2\U CH3
 #endif
-#define FAN1_PIN                            PB11  // PWM Capable, TIM2_CH4
+#define FAN1_PIN                            PB11  // PWM Capable, TIM2_CH4//具有PWM功能，TIM2_CH4
 
 #ifndef E0_AUTO_FAN_PIN
   #define E0_AUTO_FAN_PIN               FAN1_PIN
 #endif
 
-//
-// Servos
-//
-#define SERVO0_PIN                          PB4   // PWM Capable, TIM3_CH1
-#define SERVO1_PIN                          PB5   // PWM Capable, TIM3_CH2
+////
+// Servos//伺服
+////
+#define SERVO0_PIN                          PB4   // PWM Capable, TIM3_CH1//PWM功能，TIM3\U CH1
+#define SERVO1_PIN                          PB5   // PWM Capable, TIM3_CH2//具有PWM功能，TIM3\U CH2
 
-// SPI for external SD Card (Not entirely sure this will work)
+// SPI for external SD Card (Not entirely sure this will work)//外部SD卡的SPI（不完全确定这是否可行）
 #define SD_SCK_PIN                          PA5
 #define SD_MISO_PIN                         PA6
 #define SD_MOSI_PIN                         PA7
@@ -178,18 +179,18 @@
 
 #define LED_PIN                         LED_BLUE
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 #if IS_RRD_FG_SC
-  #define BEEPER_PIN                        PC7   // LCD_BEEPER
-  #define BTN_ENC                           PE11  // BTN_ENC
+  #define BEEPER_PIN                        PC7   // LCD_BEEPER//液晶寻呼机
+  #define BTN_ENC                           PE11  // BTN_ENC//BTN_ENC
   #define SD_DETECT_PIN                     PD14
-  #define LCD_PINS_RS                       PF12  // LCD_RS
-  #define LCD_PINS_ENABLE                   PD15  // LCD_EN
-  #define LCD_PINS_D4                       PB13  // LCD_D4
-  #define BTN_EN1                           PF13  // BTN_EN1
-  #define BTN_EN2                           PE9   // BTN_EN2
+  #define LCD_PINS_RS                       PF12  // LCD_RS//液晶显示器
+  #define LCD_PINS_ENABLE                   PD15  // LCD_EN//液晶显示器
+  #define LCD_PINS_D4                       PB13  // LCD_D4//液晶显示器D4
+  #define BTN_EN1                           PF13  // BTN_EN1//BTN_EN1
+  #define BTN_EN2                           PE9   // BTN_EN2//BTN_EN2
 
   #define BOARD_ST7920_DELAY_1  DELAY_NS(125)
   #define BOARD_ST7920_DELAY_2  DELAY_NS(63)

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,9 +32,9 @@
 
 #define BOARD_INFO_NAME "Cheaptronic v2.0"
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_MIN_PIN                             30
 #define X_MAX_PIN                             31
 #define Y_MIN_PIN                             32
@@ -41,9 +42,9 @@
 #define Z_MIN_PIN                             34
 #define Z_MAX_PIN                             35
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                            17
 #define X_DIR_PIN                             16
 #define X_ENABLE_PIN                          48
@@ -68,18 +69,18 @@
 #define E2_DIR_PIN                            28
 #define E2_ENABLE_PIN                         39
 
-//
-// Temperature sensors
-//
+////
+// Temperature sensors//温度传感器
+////
 #define TEMP_0_PIN                            15
 #define TEMP_1_PIN                            13
 #define TEMP_2_PIN                            14
-#define TEMP_3_PIN                            11  // should be used for chamber temperature control
+#define TEMP_3_PIN                            11  // should be used for chamber temperature control//应用于腔室温度控制
 #define TEMP_BED_PIN                          12
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_0_PIN                           6
 #define HEATER_1_PIN                           7
 #define HEATER_2_PIN                           8
@@ -87,29 +88,29 @@
 #ifndef FAN_PIN
   #define FAN_PIN                              3
 #endif
-#define FAN2_PIN                              58  // additional fan or light control output
+#define FAN2_PIN                              58  // additional fan or light control output//附加风扇或灯光控制输出
 
-//
-// Other board specific pins
-//
+////
+// Other board specific pins//其他特定于电路板的引脚
+////
 #ifndef FIL_RUNOUT_PIN
-  #define FIL_RUNOUT_PIN                      37  // board input labeled as F-DET
+  #define FIL_RUNOUT_PIN                      37  // board input labeled as F-DET//标记为F-DET的板输入
 #endif
-#define Z_MIN_PROBE_PIN                       36  // additional external board input labeled as E-SENS (should be used for Z-probe)
+#define Z_MIN_PROBE_PIN                       36  // additional external board input labeled as E-SENS (should be used for Z-probe)//附加外部板输入标记为E-SENS（应用于Z探头）
 #define LED_PIN                               13
-#define SPINDLE_ENABLE_PIN                     4  // additional PWM pin 1 at JP1 connector - should be used for laser control too
-#define EXT_2                                  5  // additional PWM pin 2 at JP1 connector
-#define EXT_3                                  2  // additional PWM pin 3 at JP1 connector
+#define SPINDLE_ENABLE_PIN                     4  // additional PWM pin 1 at JP1 connector - should be used for laser control too//JP1接头处的附加PWM引脚1-也应用于激光控制
+#define EXT_2                                  5  // additional PWM pin 2 at JP1 connector//JP1接头处的附加PWM针脚2
+#define EXT_3                                  2  // additional PWM pin 3 at JP1 connector//JP1接头处的附加PWM针脚3
 #define PS_ON_PIN                             45
 #define KILL_PIN                              46
 
 #ifndef FILWIDTH_PIN
-  #define FILWIDTH_PIN                        11  // shared with TEMP_3 analog input
+  #define FILWIDTH_PIN                        11  // shared with TEMP_3 analog input//与TEMP_3模拟输入共享
 #endif
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 #define LCD_PINS_RS                           19
 #define LCD_PINS_ENABLE                       42
 #define LCD_PINS_D4                           18
@@ -118,12 +119,12 @@
 #define LCD_PINS_D7                           40
 
 #if ENABLED(REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER)
-  #define BTN_ENC_EN                 LCD_PINS_D7  // Detect the presence of the encoder
+  #define BTN_ENC_EN                 LCD_PINS_D7  // Detect the presence of the encoder//检测编码器的存在
 #endif
 
-//
-// Beeper, SD Card, Encoder
-//
+////
+// Beeper, SD Card, Encoder//传呼机、SD卡、编码器
+////
 #define BEEPER_PIN                            44
 
 #if ENABLED(SDSUPPORT)

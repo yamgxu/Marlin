@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*****************************************************************************
  *
  * \file
@@ -53,7 +54,7 @@
  *
  ******************************************************************************/
 /*
- * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>
+ * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>//www.atmel.com/design support/“>atmel支持</a>
  */
 
 
@@ -80,19 +81,19 @@ extern "C" {
 #define SECTOR_SIZE  512
 #endif
 
-//! Status returned by CTRL_ACCESS interfaces.
+//! Status returned by CTRL_ACCESS interfaces.//! CTRL\u访问接口返回的状态。
 typedef enum
 {
-  CTRL_GOOD       = PASS,     //!< Success, memory ready.
-  CTRL_FAIL       = FAIL,     //!< An error occurred.
-  CTRL_NO_PRESENT = FAIL + 1, //!< Memory unplugged.
-  CTRL_BUSY       = FAIL + 2  //!< Memory not initialized or changed.
+  CTRL_GOOD       = PASS,     //!< Success, memory ready.//!< 成功，记忆准备好了。
+  CTRL_FAIL       = FAIL,     //!< An error occurred.//!< 发生了一个错误。
+  CTRL_NO_PRESENT = FAIL + 1, //!< Memory unplugged.//!< 内存被拔掉了。
+  CTRL_BUSY       = FAIL + 2  //!< Memory not initialized or changed.//!< 内存未初始化或更改。
 } Ctrl_status;
 
 
-// FYI: Each Logical Unit Number (LUN) corresponds to a memory.
+// FYI: Each Logical Unit Number (LUN) corresponds to a memory.//仅供参考：每个逻辑单元号（LUN）对应一个内存。
 
-// Check LUN defines.
+// Check LUN defines.//检查LUN定义。
 #ifndef LUN_0
   #error LUN_0 must be defined as ENABLE or DISABLE in conf_access.h
 #endif
@@ -123,8 +124,8 @@ typedef enum
 
 /*! \name LUN IDs
  */
-//! @{
-#define LUN_ID_0        (0)                 //!< First static LUN.
+//! @{//! @{
+#define LUN_ID_0        (0)                 //!< First static LUN.//！<第一个静态LUN。
 #define LUN_ID_1        (LUN_ID_0 + LUN_0)
 #define LUN_ID_2        (LUN_ID_1 + LUN_1)
 #define LUN_ID_3        (LUN_ID_2 + LUN_2)
@@ -132,12 +133,12 @@ typedef enum
 #define LUN_ID_5        (LUN_ID_4 + LUN_4)
 #define LUN_ID_6        (LUN_ID_5 + LUN_5)
 #define LUN_ID_7        (LUN_ID_6 + LUN_6)
-#define MAX_LUN         (LUN_ID_7 + LUN_7)  //!< Number of static LUNs.
-#define LUN_ID_USB      (MAX_LUN)           //!< First dynamic LUN (USB host mass storage).
-//! @}
+#define MAX_LUN         (LUN_ID_7 + LUN_7)  //!< Number of static LUNs.//!< 静态LUN的数量。
+#define LUN_ID_USB      (MAX_LUN)           //!< First dynamic LUN (USB host mass storage).//!< 第一个动态LUN（USB主机大容量存储）。
+//! @}//! @}
 
 
-// Include LUN header files.
+// Include LUN header files.//包括LUN头文件。
 #if LUN_0 == ENABLE
   #include LUN_0_INCLUDE
 #endif
@@ -167,7 +168,7 @@ typedef enum
 #endif
 
 
-// Check the configuration of write protection in conf_access.h.
+// Check the configuration of write protection in conf_access.h.//检查conf_access.h中写保护的配置。
 #ifndef GLOBAL_WR_PROTECT
   #error GLOBAL_WR_PROTECT must be defined as true or false in conf_access.h
 #endif
@@ -175,7 +176,7 @@ typedef enum
 
 #if GLOBAL_WR_PROTECT == true
 
-//! Write protect.
+//! Write protect.//！写保护。
 extern bool g_wr_protect;
 
 #endif
@@ -183,7 +184,7 @@ extern bool g_wr_protect;
 
 /*! \name Control Interface
  */
-//! @{
+//! @{//! @{
 
 #ifdef FREERTOS_USED
 
@@ -193,7 +194,7 @@ extern bool g_wr_protect;
  */
 extern bool ctrl_access_init(void);
 
-#endif  // FREERTOS_USED
+#endif  // FREERTOS_USED//弗里特斯
 
 /*! \brief Returns the number of LUNs.
  *
@@ -277,14 +278,14 @@ extern bool mem_removal(U8 lun);
  */
 extern const char *mem_name(U8 lun);
 
-//! @}
+//! @}//! @}
 
 
 #if ACCESS_USB == true
 
 /*! \name MEM <-> USB Interface
  */
-//! @{
+//! @{//! @{
 
 /*! \brief Transfers data from the memory to USB.
  *
@@ -306,16 +307,16 @@ extern Ctrl_status memory_2_usb(U8 lun, U32 addr, U16 nb_sector);
  */
 extern Ctrl_status usb_2_memory(U8 lun, U32 addr, U16 nb_sector);
 
-//! @}
+//! @}//! @}
 
-#endif  // ACCESS_USB == true
+#endif  // ACCESS_USB == true//访问\u USB==true
 
 
 #if ACCESS_MEM_TO_RAM == true
 
 /*! \name MEM <-> RAM Interface
  */
-//! @{
+//! @{//! @{
 
 /*! \brief Copies 1 data sector from the memory to RAM.
  *
@@ -337,18 +338,18 @@ extern Ctrl_status memory_2_ram(U8 lun, U32 addr, void *ram);
  */
 extern Ctrl_status ram_2_memory(U8 lun, U32 addr, const void *ram);
 
-//! @}
+//! @}//! @}
 
-#endif  // ACCESS_MEM_TO_RAM == true
+#endif  // ACCESS_MEM_TO_RAM == true//访问内存到内存==真
 
 
 #if ACCESS_STREAM == true
 
 /*! \name Streaming MEM <-> MEM Interface
  */
-//! @{
+//! @{//! @{
 
-//! Erroneous streaming data transfer ID.
+//! Erroneous streaming data transfer ID.//！流式数据传输ID错误。
 #define ID_STREAM_ERR         0xFF
 
   #if ACCESS_MEM_TO_MEM == true
@@ -365,7 +366,7 @@ extern Ctrl_status ram_2_memory(U8 lun, U32 addr, const void *ram);
  */
 extern Ctrl_status stream_mem_to_mem(U8 src_lun, U32 src_addr, U8 dest_lun, U32 dest_addr, U16 nb_sector);
 
-  #endif  // ACCESS_MEM_TO_MEM == true
+  #endif  // ACCESS_MEM_TO_MEM == true//ACCESS_MEM_TO_MEM==true
 
 /*! \brief Returns the state of a streaming data transfer.
  *
@@ -387,9 +388,9 @@ extern Ctrl_status stream_state(U8 id);
  */
 extern U16 stream_stop(U8 id);
 
-//! @}
+//! @}//! @}
 
-#endif  // ACCESS_STREAM == true
+#endif  // ACCESS_STREAM == true//访问\u流==true
 
 /**
  * \}
@@ -399,4 +400,4 @@ extern U16 stream_stop(U8 id);
 }
 #endif
 
-#endif  // _CTRL_ACCESS_H_
+#endif  // _CTRL_ACCESS_H_//\u CTRL\u访问\u H_

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -44,10 +45,10 @@
   #include "trinamic.h"
 #endif
 
-void restore_stepper_drivers();  // Called by PSU_ON
-void reset_stepper_drivers();    // Called by settings.load / settings.reset
+void restore_stepper_drivers();  // Called by PSU_ON//由PSU_于
+void reset_stepper_drivers();    // Called by settings.load / settings.reset//由settings.load/settings.reset调用
 
-// X Stepper
+// X Stepper//X步进机
 #ifndef X_ENABLE_INIT
   #define X_ENABLE_INIT() SET_OUTPUT(X_ENABLE_PIN)
   #define X_ENABLE_WRITE(STATE) WRITE(X_ENABLE_PIN,STATE)
@@ -64,7 +65,7 @@ void reset_stepper_drivers();    // Called by settings.load / settings.reset
 #endif
 #define X_STEP_READ() bool(READ(X_STEP_PIN))
 
-// Y Stepper
+// Y Stepper//Y步进机
 #if HAS_Y_AXIS
   #ifndef Y_ENABLE_INIT
     #define Y_ENABLE_INIT() SET_OUTPUT(Y_ENABLE_PIN)
@@ -83,7 +84,7 @@ void reset_stepper_drivers();    // Called by settings.load / settings.reset
   #define Y_STEP_READ() bool(READ(Y_STEP_PIN))
 #endif
 
-// Z Stepper
+// Z Stepper//Z步进机
 #if HAS_Z_AXIS
   #ifndef Z_ENABLE_INIT
     #define Z_ENABLE_INIT() SET_OUTPUT(Z_ENABLE_PIN)
@@ -102,7 +103,7 @@ void reset_stepper_drivers();    // Called by settings.load / settings.reset
   #define Z_STEP_READ() bool(READ(Z_STEP_PIN))
 #endif
 
-// X2 Stepper
+// X2 Stepper//X2步进机
 #if HAS_X2_ENABLE
   #ifndef X2_ENABLE_INIT
     #define X2_ENABLE_INIT() SET_OUTPUT(X2_ENABLE_PIN)
@@ -121,7 +122,7 @@ void reset_stepper_drivers();    // Called by settings.load / settings.reset
   #define X2_STEP_READ() bool(READ(X2_STEP_PIN))
 #endif
 
-// Y2 Stepper
+// Y2 Stepper//Y2步进机
 #if HAS_Y2_ENABLE
   #ifndef Y2_ENABLE_INIT
     #define Y2_ENABLE_INIT() SET_OUTPUT(Y2_ENABLE_PIN)
@@ -142,7 +143,7 @@ void reset_stepper_drivers();    // Called by settings.load / settings.reset
   #define Y2_DIR_WRITE(STATE) NOOP
 #endif
 
-// Z2 Stepper
+// Z2 Stepper//Z2步进机
 #if HAS_Z2_ENABLE
   #ifndef Z2_ENABLE_INIT
     #define Z2_ENABLE_INIT() SET_OUTPUT(Z2_ENABLE_PIN)
@@ -163,7 +164,7 @@ void reset_stepper_drivers();    // Called by settings.load / settings.reset
   #define Z2_DIR_WRITE(STATE) NOOP
 #endif
 
-// Z3 Stepper
+// Z3 Stepper//Z3步进电机
 #if HAS_Z3_ENABLE
   #ifndef Z3_ENABLE_INIT
     #define Z3_ENABLE_INIT() SET_OUTPUT(Z3_ENABLE_PIN)
@@ -184,7 +185,7 @@ void reset_stepper_drivers();    // Called by settings.load / settings.reset
   #define Z3_DIR_WRITE(STATE) NOOP
 #endif
 
-// Z4 Stepper
+// Z4 Stepper//Z4步进机
 #if HAS_Z4_ENABLE
   #ifndef Z4_ENABLE_INIT
     #define Z4_ENABLE_INIT() SET_OUTPUT(Z4_ENABLE_PIN)
@@ -205,7 +206,7 @@ void reset_stepper_drivers();    // Called by settings.load / settings.reset
   #define Z4_DIR_WRITE(STATE) NOOP
 #endif
 
-// I Stepper
+// I Stepper//步进电机
 #if LINEAR_AXES >= 4
   #ifndef I_ENABLE_INIT
     #define I_ENABLE_INIT() SET_OUTPUT(I_ENABLE_PIN)
@@ -224,7 +225,7 @@ void reset_stepper_drivers();    // Called by settings.load / settings.reset
   #define I_STEP_READ() bool(READ(I_STEP_PIN))
 #endif
 
-// J Stepper
+// J Stepper//J步进机
 #if LINEAR_AXES >= 5
   #ifndef J_ENABLE_INIT
     #define J_ENABLE_INIT() SET_OUTPUT(J_ENABLE_PIN)
@@ -243,7 +244,7 @@ void reset_stepper_drivers();    // Called by settings.load / settings.reset
   #define J_STEP_READ() bool(READ(J_STEP_PIN))
 #endif
 
-// K Stepper
+// K Stepper//步进电机
 #if LINEAR_AXES >= 6
   #ifndef K_ENABLE_INIT
     #define K_ENABLE_INIT() SET_OUTPUT(K_ENABLE_PIN)
@@ -262,7 +263,7 @@ void reset_stepper_drivers();    // Called by settings.load / settings.reset
   #define K_STEP_READ() bool(READ(K_STEP_PIN))
 #endif
 
-// E0 Stepper
+// E0 Stepper//E0步进机
 #ifndef E0_ENABLE_INIT
   #define E0_ENABLE_INIT() SET_OUTPUT(E0_ENABLE_PIN)
   #define E0_ENABLE_WRITE(STATE) WRITE(E0_ENABLE_PIN,STATE)
@@ -279,7 +280,7 @@ void reset_stepper_drivers();    // Called by settings.load / settings.reset
 #endif
 #define E0_STEP_READ() bool(READ(E0_STEP_PIN))
 
-// E1 Stepper
+// E1 Stepper//E1步进器
 #ifndef E1_ENABLE_INIT
   #define E1_ENABLE_INIT() SET_OUTPUT(E1_ENABLE_PIN)
   #define E1_ENABLE_WRITE(STATE) WRITE(E1_ENABLE_PIN,STATE)
@@ -296,7 +297,7 @@ void reset_stepper_drivers();    // Called by settings.load / settings.reset
 #endif
 #define E1_STEP_READ() bool(READ(E1_STEP_PIN))
 
-// E2 Stepper
+// E2 Stepper//E2步进机
 #ifndef E2_ENABLE_INIT
   #define E2_ENABLE_INIT() SET_OUTPUT(E2_ENABLE_PIN)
   #define E2_ENABLE_WRITE(STATE) WRITE(E2_ENABLE_PIN,STATE)
@@ -313,7 +314,7 @@ void reset_stepper_drivers();    // Called by settings.load / settings.reset
 #endif
 #define E2_STEP_READ() bool(READ(E2_STEP_PIN))
 
-// E3 Stepper
+// E3 Stepper//E3步进机
 #ifndef E3_ENABLE_INIT
   #define E3_ENABLE_INIT() SET_OUTPUT(E3_ENABLE_PIN)
   #define E3_ENABLE_WRITE(STATE) WRITE(E3_ENABLE_PIN,STATE)
@@ -330,7 +331,7 @@ void reset_stepper_drivers();    // Called by settings.load / settings.reset
 #endif
 #define E3_STEP_READ() bool(READ(E3_STEP_PIN))
 
-// E4 Stepper
+// E4 Stepper//E4步进机
 #ifndef E4_ENABLE_INIT
   #define E4_ENABLE_INIT() SET_OUTPUT(E4_ENABLE_PIN)
   #define E4_ENABLE_WRITE(STATE) WRITE(E4_ENABLE_PIN,STATE)
@@ -347,7 +348,7 @@ void reset_stepper_drivers();    // Called by settings.load / settings.reset
 #endif
 #define E4_STEP_READ() bool(READ(E4_STEP_PIN))
 
-// E5 Stepper
+// E5 Stepper//E5步进电机
 #ifndef E5_ENABLE_INIT
   #define E5_ENABLE_INIT() SET_OUTPUT(E5_ENABLE_PIN)
   #define E5_ENABLE_WRITE(STATE) WRITE(E5_ENABLE_PIN,STATE)
@@ -364,7 +365,7 @@ void reset_stepper_drivers();    // Called by settings.load / settings.reset
 #endif
 #define E5_STEP_READ() bool(READ(E5_STEP_PIN))
 
-// E6 Stepper
+// E6 Stepper//E6步进电机
 #ifndef E6_ENABLE_INIT
   #define E6_ENABLE_INIT() SET_OUTPUT(E6_ENABLE_PIN)
   #define E6_ENABLE_WRITE(STATE) WRITE(E6_ENABLE_PIN,STATE)
@@ -381,7 +382,7 @@ void reset_stepper_drivers();    // Called by settings.load / settings.reset
 #endif
 #define E6_STEP_READ() bool(READ(E6_STEP_PIN))
 
-// E7 Stepper
+// E7 Stepper//E7步进机
 #ifndef E7_ENABLE_INIT
   #define E7_ENABLE_INIT() SET_OUTPUT(E7_ENABLE_PIN)
   #define E7_ENABLE_WRITE(STATE) WRITE(E7_ENABLE_PIN,STATE)
@@ -401,7 +402,7 @@ void reset_stepper_drivers();    // Called by settings.load / settings.reset
 /**
  * Extruder indirection for the single E axis
  */
-#if ENABLED(SWITCHING_EXTRUDER) // One stepper driver per two extruders, reversed on odd index
+#if ENABLED(SWITCHING_EXTRUDER) // One stepper driver per two extruders, reversed on odd index//每两台挤出机一个步进驱动器，在奇数索引上反转
   #if EXTRUDERS > 7
     #define E_STEP_WRITE(E,V) do{ if (E < 2) { E0_STEP_WRITE(V); } else if (E < 4) { E1_STEP_WRITE(V); } else if (E < 6) { E2_STEP_WRITE(V); } else { E3_STEP_WRITE(V); } }while(0)
     #define   NORM_E_DIR(E)   do{ switch (E) { \
@@ -479,13 +480,13 @@ void reset_stepper_drivers();    // Called by settings.load / settings.reset
     #define    REV_E_DIR(E)   do{ E0_DIR_WRITE(E ? !INVERT_E0_DIR :  INVERT_E0_DIR); }while(0)
   #endif
 
-#elif HAS_PRUSA_MMU2  // One multiplexed stepper driver
+#elif HAS_PRUSA_MMU2  // One multiplexed stepper driver//一种多路复用步进驱动器
 
   #define E_STEP_WRITE(E,V) E0_STEP_WRITE(V)
   #define   NORM_E_DIR(E)   E0_DIR_WRITE(!INVERT_E0_DIR)
   #define    REV_E_DIR(E)   E0_DIR_WRITE( INVERT_E0_DIR)
 
-#elif HAS_PRUSA_MMU1  // One multiplexed stepper driver, reversed on odd index
+#elif HAS_PRUSA_MMU1  // One multiplexed stepper driver, reversed on odd index//一个多路复用步进驱动器，奇数索引反转
 
   #define E_STEP_WRITE(E,V) E0_STEP_WRITE(V)
   #define   NORM_E_DIR(E)   do{ E0_DIR_WRITE(TEST(E, 0) ? !INVERT_E0_DIR:  INVERT_E0_DIR); }while(0)
@@ -662,9 +663,9 @@ void reset_stepper_drivers();    // Called by settings.load / settings.reset
 
 #endif
 
-//
-// Individual stepper enable / disable macros
-//
+////
+// Individual stepper enable / disable macros//单个步进器启用/禁用宏
+////
 
 #ifndef ENABLE_STEPPER_X
   #if HAS_X_ENABLE
@@ -951,11 +952,11 @@ void reset_stepper_drivers();    // Called by settings.load / settings.reset
   #endif
 #endif
 
-//
-// Axis steppers enable / disable macros
-//
+////
+// Axis steppers enable / disable macros//轴步进器启用/禁用宏
+////
 #if ENABLED(SOFTWARE_DRIVER_ENABLE)
-  // Avoid expensive calls to enable / disable steppers
+  // Avoid expensive calls to enable / disable steppers//避免使用昂贵的调用来启用/禁用步进器
   extern xyz_bool_t axis_sw_enabled;
   #define SHOULD_ENABLE(N)  !axis_sw_enabled.N
   #define SHOULD_DISABLE(N)  axis_sw_enabled.N
@@ -1013,9 +1014,9 @@ void reset_stepper_drivers();    // Called by settings.load / settings.reset
   #define DISABLE_AXIS_K() NOOP
 #endif
 
-//
-// Extruder steppers enable / disable macros
-//
+////
+// Extruder steppers enable / disable macros//挤出机步进器启用/禁用宏
+////
 
 #if ENABLED(MIXING_EXTRUDER)
 

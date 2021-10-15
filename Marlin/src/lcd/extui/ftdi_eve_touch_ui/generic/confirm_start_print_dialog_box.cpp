@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**************************************
  * confirm_start_print_dialog_box.cpp *
  **************************************/
@@ -63,4 +64,4 @@ void ConfirmStartPrintDialogBox::show(uint8_t file_index) {
    GOTO_SCREEN(ConfirmStartPrintDialogBox);
 }
 
-#endif // FTDI_CONFIRM_START_PRINT_DIALOG_BOX
+#endif // FTDI_CONFIRM_START_PRINT_DIALOG_BOX//FTDI确认启动打印对话框

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2021 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -23,7 +24,7 @@
 
 #define BOARD_INFO_NAME "BTT SKR V2 Rev.A"
 
-#error "SKR V2 Rev.A requires modification or drivers may be damaged. See https://bit.ly/3t5d9JQ for more information. Comment out this line to continue."
+#error "SKR V2 Rev.A requires modification or drivers may be damaged. See https://bit.ly/3t5d9JQ for more information. Comment out this line to continue."//bit.ly/3t5d9JQ了解更多信息。注释掉这一行以继续。”
 #define DISABLE_DRIVER_SAFE_POWER_PROTECT
 
 #include "pins_BTT_SKR_V2_0_common.h"

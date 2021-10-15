@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -33,8 +34,8 @@
 #include "leds.h"
 #include <Wire.h>
 
-#define PCA9632_MODE1_VALUE   0b00000001 //(ALLCALL)
-#define PCA9632_MODE2_VALUE   0b00010101 //(DIMMING, INVERT, CHANGE ON STOP,TOTEM)
+#define PCA9632_MODE1_VALUE   0b00000001 //(ALLCALL)//（全部通话）
+#define PCA9632_MODE2_VALUE   0b00010101 //(DIMMING, INVERT, CHANGE ON STOP,TOTEM)//（变暗、反转、停止时更改、图腾）
 #define PCA9632_LEDOUT_VALUE  0b00101010
 
 /* Register addresses */
@@ -58,7 +59,7 @@
 #define PCA9632_AUTOGLO     0xC0
 #define PCA9632_AUTOGI      0xE0
 
-// Red=LED0   Green=LED1   Blue=LED2  White=LED3
+// Red=LED0   Green=LED1   Blue=LED2  White=LED3//红色=发光二极管0绿色=发光二极管1蓝色=发光二极管2白色=发光二极管3
 #ifndef PCA9632_RED
   #define PCA9632_RED 0x00
 #endif
@@ -72,7 +73,7 @@
   #define PCA9632_WHT 0x06
 #endif
 
-// If any of the color indexes are greater than 0x04 they can't use auto increment
+// If any of the color indexes are greater than 0x04 they can't use auto increment//如果任何颜色索引大于0x04，则不能使用自动增量
 #if !defined(PCA9632_NO_AUTO_INC) && (PCA9632_RED > 0x04 || PCA9632_GRN > 0x04 || PCA9632_BLU > 0x04 || PCA9632_WHT > 0x04)
   #define PCA9632_NO_AUTO_INC
 #endif
@@ -155,6 +156,6 @@ void PCA9632_set_led_color(const LEDColor &color) {
     Wire.endTransmission();
   }
 
-#endif // PCA9632_BUZZER
+#endif // PCA9632_BUZZER//PCA9632_蜂鸣器
 
-#endif // PCA9632
+#endif // PCA9632//PCA9632

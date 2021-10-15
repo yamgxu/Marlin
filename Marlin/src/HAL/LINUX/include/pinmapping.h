@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -36,30 +37,30 @@ constexpr uint8_t NUM_ANALOG_INPUTS = 16;
 
 constexpr uint8_t analog_offset = NUM_DIGITAL_PINS - NUM_ANALOG_INPUTS;
 
-// Get the digital pin for an analog index
+// Get the digital pin for an analog index//获取模拟索引的数字管脚
 constexpr pin_t analogInputToDigitalPin(const int8_t p) {
   return (WITHIN(p, 0, NUM_ANALOG_INPUTS) ? analog_offset + p : P_NC);
 }
 
-// Get the analog index for a digital pin
+// Get the analog index for a digital pin//获取数字管脚的模拟索引
 constexpr int8_t DIGITAL_PIN_TO_ANALOG_PIN(const pin_t p) {
   return (WITHIN(p, analog_offset, NUM_DIGITAL_PINS) ? p - analog_offset : P_NC);
 }
 
-// Return the index of a pin number
+// Return the index of a pin number//返回pin码的索引
 constexpr int16_t GET_PIN_MAP_INDEX(const pin_t pin) { return pin; }
 
-// Test whether the pin is valid
+// Test whether the pin is valid//测试pin码是否有效
 constexpr bool VALID_PIN(const pin_t p) { return WITHIN(p, 0, NUM_DIGITAL_PINS); }
 
-// Test whether the pin is PWM
+// Test whether the pin is PWM//测试引脚是否为PWM
 constexpr bool PWM_PIN(const pin_t p) { return false; }
 
-// Test whether the pin is interruptable
+// Test whether the pin is interruptable//测试引脚是否可中断
 constexpr bool INTERRUPT_PIN(const pin_t p) { return false; }
 
-// Get the pin number at the given index
+// Get the pin number at the given index//获取给定索引处的pin码
 constexpr pin_t GET_PIN_MAP_PIN(const int16_t ind) { return ind; }
 
-// Parse a G-code word into a pin index
+// Parse a G-code word into a pin index//将G代码字解析为pin索引
 int16_t PARSED_PIN_INDEX(const char code, const int16_t dval);

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -20,9 +21,9 @@
  *
  */
 
-//
-// Main Menu
-//
+////
+// Main Menu//主菜单
+////
 
 #include "../../inc/MarlinConfigPre.h"
 
@@ -240,7 +241,7 @@ void menu_configuration();
     END_MENU();
   }
 
-#endif // CUSTOM_MENU_MAIN
+#endif // CUSTOM_MENU_MAIN//自定义菜单主菜单
 
 void menu_main() {
   const bool busy = printingIsActive()
@@ -261,24 +262,24 @@ void menu_main() {
 
     auto sdcard_menu_items = [&]{
       #if ENABLED(MENU_ADDAUTOSTART)
-        ACTION_ITEM(MSG_RUN_AUTO_FILES, card.autofile_begin); // Run Auto Files
+        ACTION_ITEM(MSG_RUN_AUTO_FILES, card.autofile_begin); // Run Auto Files//运行自动文件
       #endif
 
       if (card_detected) {
         if (!card_open) {
           #if PIN_EXISTS(SD_DETECT)
-            GCODES_ITEM(MSG_CHANGE_MEDIA, PSTR("M21"));       // M21 Change Media
-          #else                                               // - or -
-            GCODES_ITEM(MSG_RELEASE_MEDIA, PSTR("M22"));      // M22 Release Media
+            GCODES_ITEM(MSG_CHANGE_MEDIA, PSTR("M21"));       // M21 Change Media//M21更换介质
+          #else                                               // - or -//-或-
+            GCODES_ITEM(MSG_RELEASE_MEDIA, PSTR("M22"));      // M22 Release Media//M22发行媒体
           #endif
-          SUBMENU(MSG_MEDIA_MENU, MEDIA_MENU_GATEWAY);        // Media Menu (or Password First)
+          SUBMENU(MSG_MEDIA_MENU, MEDIA_MENU_GATEWAY);        // Media Menu (or Password First)//媒体菜单（或先输入密码）
         }
       }
       else {
         #if PIN_EXISTS(SD_DETECT)
-          ACTION_ITEM(MSG_NO_MEDIA, nullptr);                 // "No Media"
+          ACTION_ITEM(MSG_NO_MEDIA, nullptr);                 // "No Media"//“没有媒体”
         #else
-          GCODES_ITEM(MSG_ATTACH_MEDIA, PSTR("M21"));         // M21 Attach Media
+          GCODES_ITEM(MSG_ATTACH_MEDIA, PSTR("M21"));         // M21 Attach Media//M21附加媒体
         #endif
       }
     };
@@ -382,9 +383,9 @@ void menu_main() {
     SUBMENU(MSG_LEDS, menu_led);
   #endif
 
-  //
-  // Switch power on/off
-  //
+  ////
+  // Switch power on/off//打开/关闭电源
+  ////
   #if ENABLED(PSU_CONTROL)
     if (powersupply_on)
       #if ENABLED(PS_OFF_CONFIRM)
@@ -440,7 +441,7 @@ void menu_main() {
       SKIP_ITEM();
       SKIP_ITEM();
     #endif
-    // Game sub-menu or the individual game
+    // Game sub-menu or the individual game//游戏子菜单或单个游戏
     {
       SUBMENU(
         #if HAS_GAME_MENU
@@ -465,4 +466,4 @@ void menu_main() {
   END_MENU();
 }
 
-#endif // HAS_LCD_MENU
+#endif // HAS_LCD_MENU//有LCD菜单吗

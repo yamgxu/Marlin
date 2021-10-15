@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -44,7 +45,7 @@
 const uint16_t VPList_Boot[] PROGMEM = { VP_MARLIN_VERSION, 0x0000 };
 
 const uint16_t VPList_Main[] PROGMEM = {
-  // VP_M117, for completeness, but it cannot be auto-uploaded.
+  // VP_M117, for completeness, but it cannot be auto-uploaded.//VP_M117，完整性，但无法自动上传。
   #if HAS_HOTEND
     VP_T_E0_Is, VP_T_E0_Set, VP_E0_STATUS,
   #endif
@@ -80,7 +81,7 @@ const uint16_t VPList_Temp[] PROGMEM = {
 };
 
 const uint16_t VPList_Status[] PROGMEM = {
-  // VP_M117, for completeness, but it cannot be auto-uploaded
+  // VP_M117, for completeness, but it cannot be auto-uploaded//VP_M117，完整性，但无法自动上传
   #if HAS_HOTEND
     VP_T_E0_Is, VP_T_E0_Set,
   #endif
@@ -204,7 +205,7 @@ const uint16_t VPList_SDPrintTune[] PROGMEM = {
   #if HAS_HOTEND
     VP_T_E0_Is, VP_T_E0_Set, VP_Flowrate_E0,
     #if HAS_MULTI_EXTRUDER
-      VP_T_E1_Is, VP_T_E1_Set, VP_Flowrate_E1,  // ERROR: Flowrate is per-extruder, not per-hotend
+      VP_T_E1_Is, VP_T_E1_Set, VP_Flowrate_E1,  // ERROR: Flowrate is per-extruder, not per-hotend//错误：流速为每台挤出机，而不是每台热端
     #endif
   #endif
   #if HAS_HEATED_BED
@@ -308,13 +309,13 @@ const struct VPMapping VPMap[] PROGMEM = {
   { DGUSLCD_SCREEN_PID_E, VPList_PIDE0 },
   { DGUSLCD_SCREEN_PID_BED, VPList_PIDBED },
   { DGUSLCD_SCREEN_INFOS, VPList_Infos },
-  { 0 , nullptr } // List is terminated with an nullptr as table entry.
+  { 0 , nullptr } // List is terminated with an nullptr as table entry.//列表以nullptr作为表项终止。
 };
 
 const char MarlinVersion[] PROGMEM = SHORT_BUILD_VERSION;
 
 const struct DGUS_VP_Variable ListOfVP[] PROGMEM = {
-  // Helper to detect touch events
+  // Helper to detect touch events//帮助检测触摸事件
   VPHELPER(VP_SCREENCHANGE, nullptr, ScreenHandler.ScreenChangeHook, nullptr),
   VPHELPER(VP_SCREENCHANGE_ASK, nullptr, ScreenHandler.ScreenChangeHookIfIdle, nullptr),
   #if ENABLED(SDSUPPORT)
@@ -351,10 +352,10 @@ const struct DGUS_VP_Variable ListOfVP[] PROGMEM = {
   #endif
 
   { .VP = VP_MARLIN_VERSION, .memadr = (void*)MarlinVersion, .size = VP_MARLIN_VERSION_LEN, .set_by_display_handler = nullptr, .send_to_display_handler = ScreenHandler.DGUSLCD_SendStringToDisplayPGM },
-  // M117 LCD String (We don't need the string in memory but "just" push it to the display on demand, hence the nullptr
+  // M117 LCD String (We don't need the string in memory but "just" push it to the display on demand, hence the nullptr//M117 LCD字符串（我们不需要内存中的字符串，但“只要”按需将其推送到显示器，因此为空PTR
   { .VP = VP_M117, .memadr = nullptr, .size = VP_M117_LEN, .set_by_display_handler = nullptr, .send_to_display_handler = ScreenHandler.DGUSLCD_SendStringToDisplay },
 
-  // Temperature Data
+  // Temperature Data//温度数据
   #if HAS_HOTEND
     VPHELPER(VP_T_E0_Is, &thermalManager.temp_hotend[0].celsius, nullptr, ScreenHandler.DGUSLCD_SendFloatAsLongValueToDisplay<0>),
     VPHELPER(VP_T_E0_Set, &thermalManager.temp_hotend[0].target, ScreenHandler.HandleTemperatureChanged, ScreenHandler.DGUSLCD_SendWordValueToDisplay),
@@ -379,7 +380,7 @@ const struct DGUS_VP_Variable ListOfVP[] PROGMEM = {
   #if HOTENDS >= 2
     VPHELPER(VP_T_E1_Is, &thermalManager.temp_hotend[1].celsius, nullptr, ScreenHandler.DGUSLCD_SendFloatAsLongValueToDisplay<0>),
     VPHELPER(VP_T_E1_Set, &thermalManager.temp_hotend[1].target, ScreenHandler.HandleTemperatureChanged, ScreenHandler.DGUSLCD_SendWordValueToDisplay),
-    VPHELPER(VP_Flowrate_E1, &planner.flow_percentage[ExtUI::extruder_t::E1], ScreenHandler.HandleFlowRateChanged, ScreenHandler.DGUSLCD_SendWordValueToDisplay),  // ERROR: Flow is per-extruder, not per-hotend
+    VPHELPER(VP_Flowrate_E1, &planner.flow_percentage[ExtUI::extruder_t::E1], ScreenHandler.HandleFlowRateChanged, ScreenHandler.DGUSLCD_SendWordValueToDisplay),  // ERROR: Flow is per-extruder, not per-hotend//错误：流量为每台挤出机，而不是每台热端
     VPHELPER(VP_MOVE_E1, nullptr, ScreenHandler.HandleManualExtrude, nullptr),
     VPHELPER(VP_E1_CONTROL, &thermalManager.temp_hotend[1].target, ScreenHandler.HandleHeaterControl, nullptr),
     VPHELPER(VP_E1_STATUS, &thermalManager.temp_hotend[1].target, nullptr, ScreenHandler.DGUSLCD_SendHeaterStatusToDisplay),
@@ -401,7 +402,7 @@ const struct DGUS_VP_Variable ListOfVP[] PROGMEM = {
     #endif
   #endif
 
-  // Fan Data
+  // Fan Data//风扇数据
   #if HAS_FAN
     #define FAN_VPHELPER(N) \
       VPHELPER(VP_Fan##N##_Percentage, &thermalManager.fan_speed[N], ScreenHandler.DGUSLCD_PercentageToUint8, ScreenHandler.DGUSLCD_SendPercentageToDisplay), \
@@ -410,18 +411,18 @@ const struct DGUS_VP_Variable ListOfVP[] PROGMEM = {
     REPEAT(FAN_COUNT, FAN_VPHELPER)
   #endif
 
-  // Feedrate
+  // Feedrate//进给速度
   VPHELPER(VP_Feedrate_Percentage, &feedrate_percentage, ScreenHandler.DGUSLCD_SetValueDirectly<int16_t>, ScreenHandler.DGUSLCD_SendWordValueToDisplay),
 
-  // Position Data
+  // Position Data//位置数据
   VPHELPER(VP_XPos, &current_position.x, nullptr, ScreenHandler.DGUSLCD_SendFloatAsLongValueToDisplay<2>),
   VPHELPER(VP_YPos, &current_position.y, nullptr, ScreenHandler.DGUSLCD_SendFloatAsLongValueToDisplay<2>),
   VPHELPER(VP_ZPos, &current_position.z, nullptr, ScreenHandler.DGUSLCD_SendFloatAsLongValueToDisplay<2>),
 
-  // Print Progress
+  // Print Progress//打印进度
   VPHELPER(VP_PrintProgress_Percentage, nullptr, nullptr, ScreenHandler.DGUSLCD_SendPrintProgressToDisplay),
 
-  // Print Time
+  // Print Time//打印时间
   VPHELPER_STR(VP_PrintTime, nullptr, VP_PrintTime_LEN, nullptr, ScreenHandler.DGUSLCD_SendPrintTimeToDisplay),
   #if ENABLED(PRINTCOUNTER)
     VPHELPER_STR(VP_PrintAccTime, nullptr, VP_PrintAccTime_LEN, nullptr, ScreenHandler.DGUSLCD_SendPrintAccTimeToDisplay),
@@ -438,7 +439,7 @@ const struct DGUS_VP_Variable ListOfVP[] PROGMEM = {
     #endif
   #endif
 
-  // SDCard File listing.
+  // SDCard File listing.//SD卡文件列表。
   #if ENABLED(SDSUPPORT)
     VPHELPER(VP_SD_ScrollEvent, nullptr, ScreenHandler.DGUSLCD_SD_ScrollFilelist, nullptr),
     VPHELPER(VP_SD_FileSelected, nullptr, ScreenHandler.DGUSLCD_SD_FileSelected, nullptr),
@@ -463,13 +464,13 @@ const struct DGUS_VP_Variable ListOfVP[] PROGMEM = {
     VPHELPER(VP_WAITING_STATUS, nullptr, nullptr, ScreenHandler.DGUSLCD_SendWaitingStatusToDisplay),
   #endif
 
-  // Messages for the User, shared by the popup and the kill screen. They cant be autouploaded as we do not buffer content.
+  // Messages for the User, shared by the popup and the kill screen. They cant be autouploaded as we do not buffer content.//用户的消息，由弹出窗口和kill屏幕共享。它们不能自动上载，因为我们不缓冲内容。
   { .VP = VP_MSGSTR1, .memadr = nullptr, .size = VP_MSGSTR1_LEN, .set_by_display_handler = nullptr, .send_to_display_handler = ScreenHandler.DGUSLCD_SendStringToDisplayPGM },
   { .VP = VP_MSGSTR2, .memadr = nullptr, .size = VP_MSGSTR2_LEN, .set_by_display_handler = nullptr, .send_to_display_handler = ScreenHandler.DGUSLCD_SendStringToDisplayPGM },
   { .VP = VP_MSGSTR3, .memadr = nullptr, .size = VP_MSGSTR3_LEN, .set_by_display_handler = nullptr, .send_to_display_handler = ScreenHandler.DGUSLCD_SendStringToDisplayPGM },
   { .VP = VP_MSGSTR4, .memadr = nullptr, .size = VP_MSGSTR4_LEN, .set_by_display_handler = nullptr, .send_to_display_handler = ScreenHandler.DGUSLCD_SendStringToDisplayPGM },
 
-  VPHELPER(0, 0, 0, 0)  // must be last entry.
+  VPHELPER(0, 0, 0, 0)  // must be last entry.//必须是最后一个条目。
 };
 
-#endif // DGUS_LCD_UI_FYSETC
+#endif // DGUS_LCD_UI_FYSETC//DGUS_LCD_UI_FYSETC

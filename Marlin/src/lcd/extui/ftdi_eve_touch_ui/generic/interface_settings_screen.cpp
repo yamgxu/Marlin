@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*********************************
  * interface_settings_screen.cpp *
  *********************************/
@@ -40,7 +41,7 @@ using namespace FTDI;
 using namespace ExtUI;
 using namespace Theme;
 
-constexpr bool PERSISTENT_STORE_SUCCESS = false; // persistentStore uses true for error
+constexpr bool PERSISTENT_STORE_SUCCESS = false; // persistentStore uses true for error//persistentStore使用true表示错误
 constexpr static InterfaceSettingsScreenData &mydata = screen_data.InterfaceSettingsScreen;
 
 void InterfaceSettingsScreen::onStartup() {
@@ -185,8 +186,8 @@ void InterfaceSettingsScreen::onIdle() {
 }
 
 void InterfaceSettingsScreen::failSafeSettings() {
-  // Reset settings that may make the printer interface
-  // unusable.
+  // Reset settings that may make the printer interface//重置可能使打印机界面失效的设置
+  // unusable.//无法使用。
   CLCD::mem_write_32(CLCD::REG::ROTATE, 0);
   CLCD::default_touch_transform();
   CLCD::default_display_orientation();
@@ -302,4 +303,4 @@ void InterfaceSettingsScreen::loadSettings(const char *buff) {
   }
 #endif
 
-#endif // FTDI_INTERFACE_SETTINGS_SCREEN
+#endif // FTDI_INTERFACE_SETTINGS_SCREEN//FTDI界面设置屏幕

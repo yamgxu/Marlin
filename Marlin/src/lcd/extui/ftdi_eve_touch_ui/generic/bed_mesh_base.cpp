@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*********************
  * bed_mesh_base.cpp *
  *********************/
@@ -34,7 +35,7 @@ void BedMeshBase::_drawMesh(CommandProcessor &cmd, int16_t x, int16_t y, int16_t
   #define ISVAL(X,Y)  (func ? !isnan(VALUE(X,Y)) : true)
   #define HEIGHT(X,Y) (ISVAL(X,Y) ? (VALUE(X,Y) - val_min) * scale_z : 0)
 
-  // Compute the mean, min and max for the points
+  // Compute the mean, min and max for the points//计算点的平均值、最小值和最大值
 
   float   val_mean = 0;
   float   val_max  = -INFINITY;
@@ -74,15 +75,15 @@ void BedMeshBase::_drawMesh(CommandProcessor &cmd, int16_t x, int16_t y, int16_t
    * to fit.
    */
 
-  #define TRANSFORM_5(X,Y,Z)  (X), (Y)                                                                   // No transform
-  #define TRANSFORM_4(X,Y,Z)  TRANSFORM_5((X)/(Z),(Y)/-(Z), 0)                                           // Perspective
-  #define TRANSFORM_3(X,Y,Z)  TRANSFORM_4((X), (Z), (Y))                                                 // Swap Z and Y
-  #define TRANSFORM_2(X,Y,Z)  TRANSFORM_3((X), (Y) + 2.5, (Z) - 1)                                       // Translate
-  #define TRANSFORM(X,Y,Z)    TRANSFORM_2(float(X)/(cols-1) - 0.5, float(Y)/(rows-1)  - 0.5, (Z))        // Normalize
+  #define TRANSFORM_5(X,Y,Z)  (X), (Y)                                                                   // No transform//不变换
+  #define TRANSFORM_4(X,Y,Z)  TRANSFORM_5((X)/(Z),(Y)/-(Z), 0)                                           // Perspective//透视图
+  #define TRANSFORM_3(X,Y,Z)  TRANSFORM_4((X), (Z), (Y))                                                 // Swap Z and Y//交换Z和Y
+  #define TRANSFORM_2(X,Y,Z)  TRANSFORM_3((X), (Y) + 2.5, (Z) - 1)                                       // Translate//翻译
+  #define TRANSFORM(X,Y,Z)    TRANSFORM_2(float(X)/(cols-1) - 0.5, float(Y)/(rows-1)  - 0.5, (Z))        // Normalize//正常化
 
-  // Compute the bounding box for the grid prior to scaling. Do this at compile-time by
-  // transforming the four corner points via the transformation equations and finding
-  // the min and max for each axis.
+  // Compute the bounding box for the grid prior to scaling. Do this at compile-time by//在缩放之前计算栅格的边界框。在编译时通过
+  // transforming the four corner points via the transformation equations and finding//通过变换方程变换四个角点并找到
+  // the min and max for each axis.//每个轴的最小值和最大值。
 
   constexpr float bounds[][3]  = {{TRANSFORM(0     , 0     , 0)},
                                   {TRANSFORM(cols-1, 0     , 0)},
@@ -96,21 +97,21 @@ void BedMeshBase::_drawMesh(CommandProcessor &cmd, int16_t x, int16_t y, int16_t
   constexpr float grid_cx      = grid_x + grid_w/2;
   constexpr float grid_cy      = grid_y + grid_h/2;
 
-  // Figure out scale and offset such that the grid fits within the rectangle given by (x,y,w,h)
+  // Figure out scale and offset such that the grid fits within the rectangle given by (x,y,w,h)//计算比例和偏移量，使网格适合（x，y，w，h）给定的矩形
 
   const float scale_x          = float(w)/grid_w;
   const float scale_y          = float(h)/grid_h;
   const float center_x         = x + w/2;
   const float center_y         = y + h/2;
 
-  // Now replace the last transformation in the chain with a scaling operation.
+  // Now replace the last transformation in the chain with a scaling operation.//现在用缩放操作替换链中的最后一个变换。
 
   #undef  TRANSFORM_5
-  #define TRANSFORM_6(X,Y,Z)  (X)*16, (Y)*16                                                  // Scale to 1/16 pixel units
+  #define TRANSFORM_6(X,Y,Z)  (X)*16, (Y)*16                                                  // Scale to 1/16 pixel units//缩放到1/16像素单位
   #define TRANSFORM_5(X,Y,Z)  TRANSFORM_6( center_x + ((X) - grid_cx) * scale_x, \
-                                           center_y + ((Y) - grid_cy) * scale_y, 0)           // Scale to bounds
+                                           center_y + ((Y) - grid_cy) * scale_y, 0)           // Scale to bounds//按范围缩放
 
-  // Draw the grid
+  // Draw the grid//画网格
 
   const uint16_t basePointSize = min(w,h) / max(cols,rows);
 
@@ -221,4 +222,4 @@ void BedMeshBase::drawMeshForeground(CommandProcessor &cmd, int16_t x, int16_t y
   );
 }
 
-#endif // FTDI_BED_MESH_BASE
+#endif // FTDI_BED_MESH_BASE//FTDI_床_网_底座

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,8 +22,8 @@
  */
 #pragma once
 
-#define HEATER_0_PIN                          9   // E0
-#define HEATER_1_PIN                         10   // E1
+#define HEATER_0_PIN                          9   // E0//E0
+#define HEATER_1_PIN                         10   // E1//E1
 #define FAN_PIN                              11
 #define FAN2_PIN                             12
 

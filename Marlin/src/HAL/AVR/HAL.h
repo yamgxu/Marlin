@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -28,7 +29,7 @@
 #ifdef USBCON
   #include <HardwareSerial.h>
 #else
-  #define HardwareSerial_h // Hack to prevent HardwareSerial.h header inclusion
+  #define HardwareSerial_h // Hack to prevent HardwareSerial.h header inclusion//防止HardwareSerial.h标头包含的黑客攻击
   #include "MarlinSerial.h"
 #endif
 
@@ -40,21 +41,21 @@
 #include <avr/io.h>
 
 #ifndef pgm_read_ptr
-  // Compatibility for avr-libc 1.8.0-4.1 included with Ubuntu for
-  // Windows Subsystem for Linux on Windows 10 as of 10/18/2019
+  // Compatibility for avr-libc 1.8.0-4.1 included with Ubuntu for//与Ubuntu的avr libc 1.8.0-4.1兼容
+  // Windows Subsystem for Linux on Windows 10 as of 10/18/2019//自2019年10月18日起，Windows 10上的Linux Windows子系统
   #define pgm_read_ptr_far(address_long) (void*)__ELPM_word((uint32_t)(address_long))
   #define pgm_read_ptr_near(address_short) (void*)__LPM_word((uint16_t)(address_short))
   #define pgm_read_ptr(address_short) pgm_read_ptr_near(address_short)
 #endif
 
-// ------------------------
-// Defines
-// ------------------------
+// ------------------------// ------------------------
+// Defines//定义
+// ------------------------// ------------------------
 
-// AVR PROGMEM extension for sprintf_P
+// AVR PROGMEM extension for sprintf_P//sprintf\P的AVR程序扩展
 #define S_FMT "%S"
 
-// AVR PROGMEM extension for string define
+// AVR PROGMEM extension for string define//字符串定义的AVR PROGMEM扩展
 #define PGMSTR(NAM,STR) const char NAM[] PROGMEM = STR
 
 #ifndef CRITICAL_SECTION_START
@@ -65,22 +66,22 @@
 #define ENABLE_ISRS()  sei()
 #define DISABLE_ISRS() cli()
 
-// ------------------------
-// Types
-// ------------------------
+// ------------------------// ------------------------
+// Types//类型
+// ------------------------// ------------------------
 
 typedef int8_t pin_t;
 
 #define SHARED_SERVOS HAS_SERVOS
 #define HAL_SERVO_LIB Servo
 
-// ------------------------
-// Public Variables
-// ------------------------
+// ------------------------// ------------------------
+// Public Variables//公共变量
+// ------------------------// ------------------------
 
-//extern uint8_t MCUSR;
+//extern uint8_t MCUSR;//外部uint8_t MCUSR；
 
-// Serial ports
+// Serial ports//串行端口
 #ifdef USBCON
   #include "../../core/serial_hook.h"
   typedef ForwardSerial1Class< decltype(Serial) > DefaultSerial1;
@@ -129,15 +130,15 @@ typedef int8_t pin_t;
   #endif
 #endif
 
-// ------------------------
-// Public functions
-// ------------------------
+// ------------------------// ------------------------
+// Public functions//公共职能
+// ------------------------// ------------------------
 
 void HAL_init();
 
-//void cli();
+//void cli();//void cli（）；
 
-//void _delay_ms(const int delay);
+//void _delay_ms(const int delay);//无效延迟（持续时间延迟）；
 
 inline void HAL_clear_reset_source() { MCUSR = 0; }
 inline uint8_t HAL_get_reset_source() { return MCUSR; }
@@ -155,7 +156,7 @@ extern "C" int freeMemory();
   #pragma GCC diagnostic pop
 #endif
 
-// ADC
+// ADC//模数转换器
 #ifdef DIDR2
   #define HAL_ANALOG_SELECT(ind) do{ if (ind < 8) SBI(DIDR0, ind); else SBI(DIDR2, ind & 0x07); }while(0)
 #else
@@ -192,10 +193,10 @@ inline void HAL_adc_init() {
   #define JTAG_DISABLE() do{ MCUCR = 0x80; MCUCR = 0x80; }while(0)
 #endif
 
-// AVR compatibility
+// AVR compatibility//AVR兼容性
 #define strtof strtod
 
-#define HAL_CAN_SET_PWM_FREQ   // This HAL supports PWM Frequency adjustment
+#define HAL_CAN_SET_PWM_FREQ   // This HAL supports PWM Frequency adjustment//该HAL支持PWM频率调整
 
 /**
  *  set_pwm_frequency

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -74,7 +75,7 @@ void GcodeSuite::M106() {
 
   uint16_t speed = dspeed;
 
-  // Accept 'I' if temperature presets are defined
+  // Accept 'I' if temperature presets are defined//如果定义了温度预设，则接受“I”
   #if PREHEAT_COUNT
     const bool got_preset = parser.seenval('I');
     if (got_preset) speed = ui.material_preset[_MIN(parser.value_byte(), PREHEAT_COUNT - 1)].fan_speed;
@@ -85,14 +86,14 @@ void GcodeSuite::M106() {
   if (!got_preset && parser.seenval('S'))
     speed = parser.value_ushort();
 
-  TERN_(FOAMCUTTER_XYUV, speed *= 2.55); // Get command in % of max heat
+  TERN_(FOAMCUTTER_XYUV, speed *= 2.55); // Get command in % of max heat//以最大热量的%获取命令
 
-  // Set speed, with constraint
+  // Set speed, with constraint//设定速度，有限制
   thermalManager.set_fan_speed(pfan, speed);
 
   TERN_(LASER_SYNCHRONOUS_M106_M107, planner.buffer_sync_block(BLOCK_FLAG_SYNC_FANS));
 
-  if (TERN0(DUAL_X_CARRIAGE, idex_is_duplicating()))  // pfan == 0 when duplicating
+  if (TERN0(DUAL_X_CARRIAGE, idex_is_duplicating()))  // pfan == 0 when duplicating//复制时pfan==0
     thermalManager.set_fan_speed(1 - pfan, speed);
 }
 
@@ -108,10 +109,10 @@ void GcodeSuite::M107() {
 
   thermalManager.set_fan_speed(pfan, 0);
 
-  if (TERN0(DUAL_X_CARRIAGE, idex_is_duplicating()))  // pfan == 0 when duplicating
+  if (TERN0(DUAL_X_CARRIAGE, idex_is_duplicating()))  // pfan == 0 when duplicating//复制时pfan==0
     thermalManager.set_fan_speed(1 - pfan, 0);
 
   TERN_(LASER_SYNCHRONOUS_M106_M107, planner.buffer_sync_block(BLOCK_FLAG_SYNC_FANS));
 }
 
-#endif // HAS_FAN
+#endif // HAS_FAN//范先生

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  *
@@ -31,28 +32,28 @@
 #include "../../inc/MarlinConfig.h"
 
 void HAL_timer_init() {
-  SBI(LPC_SC->PCONP, SBIT_TIMER0);  // Power ON Timer 0
-  LPC_TIM0->PR = (HAL_TIMER_RATE) / (STEPPER_TIMER_RATE) - 1; // Use prescaler to set frequency if needed
+  SBI(LPC_SC->PCONP, SBIT_TIMER0);  // Power ON Timer 0//开机计时器0
+  LPC_TIM0->PR = (HAL_TIMER_RATE) / (STEPPER_TIMER_RATE) - 1; // Use prescaler to set frequency if needed//如果需要，使用预分频器设置频率
 
-  SBI(LPC_SC->PCONP, SBIT_TIMER1);  // Power ON Timer 1
+  SBI(LPC_SC->PCONP, SBIT_TIMER1);  // Power ON Timer 1//开机计时器1
   LPC_TIM1->PR = (HAL_TIMER_RATE) / 1000000 - 1;
 }
 
 void HAL_timer_start(const uint8_t timer_num, const uint32_t frequency) {
   switch (timer_num) {
     case 0:
-      LPC_TIM0->MCR = _BV(SBIT_MR0I) | _BV(SBIT_MR0R); // Match on MR0, reset on MR0, interrupts when NVIC enables them
-      LPC_TIM0->MR0 = uint32_t(STEPPER_TIMER_RATE) / frequency; // Match value (period) to set frequency
-      LPC_TIM0->TCR = _BV(SBIT_CNTEN); // Counter Enable
+      LPC_TIM0->MCR = _BV(SBIT_MR0I) | _BV(SBIT_MR0R); // Match on MR0, reset on MR0, interrupts when NVIC enables them//MR0匹配，MR0复位，NVIC启用时中断
+      LPC_TIM0->MR0 = uint32_t(STEPPER_TIMER_RATE) / frequency; // Match value (period) to set frequency//匹配值（周期）以设置频率
+      LPC_TIM0->TCR = _BV(SBIT_CNTEN); // Counter Enable//计数器使能
 
       NVIC_SetPriority(TIMER0_IRQn, NVIC_EncodePriority(0, 1, 0));
       NVIC_EnableIRQ(TIMER0_IRQn);
       break;
 
     case 1:
-      LPC_TIM1->MCR = _BV(SBIT_MR0I) | _BV(SBIT_MR0R); // Match on MR0, reset on MR0, interrupts when NVIC enables them
+      LPC_TIM1->MCR = _BV(SBIT_MR0I) | _BV(SBIT_MR0R); // Match on MR0, reset on MR0, interrupts when NVIC enables them//MR0匹配，MR0复位，NVIC启用时中断
       LPC_TIM1->MR0 = uint32_t(TEMP_TIMER_RATE) / frequency;
-      LPC_TIM1->TCR = _BV(SBIT_CNTEN); // Counter Enable
+      LPC_TIM1->TCR = _BV(SBIT_CNTEN); // Counter Enable//计数器使能
 
       NVIC_SetPriority(TIMER1_IRQn, NVIC_EncodePriority(0, 2, 0));
       NVIC_EnableIRQ(TIMER1_IRQn);
@@ -62,4 +63,4 @@ void HAL_timer_start(const uint8_t timer_num, const uint32_t frequency) {
   }
 }
 
-#endif // TARGET_LPC1768
+#endif // TARGET_LPC1768//目标为LPC1768

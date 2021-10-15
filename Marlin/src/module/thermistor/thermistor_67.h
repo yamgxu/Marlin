@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,7 +22,7 @@
  */
 #pragma once
 
-// R25 = 500 KOhm, beta25 = 3800 K, 4.7 kOhm pull-up, SliceEngineering 450 °C Thermistor
+// R25 = 500 KOhm, beta25 = 3800 K, 4.7 kOhm pull-up, SliceEngineering 450 °C Thermistor//R25=500千欧，beta25=3800千欧，4.7千欧上拉，450°C热敏电阻
 constexpr temp_entry_t temptable_67[] PROGMEM = {
   { OV(  22 ),  500 },
   { OV(  23 ),  490 },

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,9 +22,9 @@
  */
 #pragma once
 
-//
-// Prepare a list of protected pins for M42/M43
-//
+////
+// Prepare a list of protected pins for M42/M43//准备M42/M43的受保护插脚列表
+////
 
 #if PIN_EXISTS(X_MIN)
   #define _X_MIN X_MIN_PIN,
@@ -293,11 +294,11 @@
 
 #endif
 
-//
-// Extruder Chip Select, Digital Micro-steps
-//
+////
+// Extruder Chip Select, Digital Micro-steps//挤出机芯片选择，数字微步骤
+////
 
-// Mixing stepper, Switching stepper, or regular stepper
+// Mixing stepper, Switching stepper, or regular stepper//混合步进机、切换步进机或常规步进机
 #define E_NEEDED(N) (ENABLED(MIXING_EXTRUDER) && MIXING_STEPPERS > N) \
                  || (ENABLED(SWITCHING_EXTRUDER) && E_STEPPERS > N) \
                  || (NONE(SWITCHING_EXTRUDER, MIXING_EXTRUDER) && EXTRUDERS > N)
@@ -494,9 +495,9 @@
   #endif
 #endif
 
-//
-// E Steppers
-//
+////
+// E Steppers//步进电机
+////
 
 #define _E0_PINS
 #define _E1_PINS
@@ -513,11 +514,11 @@
 #endif
 
 #if ENABLED(SWITCHING_EXTRUDER)
-                      // Tools 0 and 1 use E0
-  #if EXTRUDERS > 2   // Tools 2 and 3 use E1
+                      // Tools 0 and 1 use E0//工具0和1使用E0
+  #if EXTRUDERS > 2   // Tools 2 and 3 use E1//工具2和3使用E1
     #undef _E1_PINS
     #define _E1_PINS E1_STEP_PIN, E1_DIR_PIN, E1_ENABLE_PIN, _E1_CS _E1_MS1 _E1_MS2 _E1_MS3
-    #if EXTRUDERS > 4 // Tools 4 and 5 use E2
+    #if EXTRUDERS > 4 // Tools 4 and 5 use E2//工具4和5使用E2
       #undef _E2_PINS
       #define _E2_PINS E2_STEP_PIN, E2_DIR_PIN, E2_ENABLE_PIN, _E2_CS _E2_MS1 _E2_MS2 _E2_MS3
     #endif
@@ -545,18 +546,18 @@
             #if EXTRUDERS > 7 || (ENABLED(MIXING_EXTRUDER) && MIXING_STEPPERS > 7)
               #undef _E7_PINS
               #define _E7_PINS E7_STEP_PIN, E7_DIR_PIN, E7_ENABLE_PIN, _E7_CS _E7_MS1 _E7_MS2 _E7_MS3
-            #endif // EXTRUDERS > 7 || MIXING_EXTRUDER > 7
-          #endif // EXTRUDERS > 6 || MIXING_EXTRUDER > 6
-        #endif // EXTRUDERS > 5 || MIXING_EXTRUDER > 5
-      #endif // EXTRUDERS > 4 || MIXING_EXTRUDER > 4
-    #endif // EXTRUDERS > 3 || MIXING_EXTRUDER > 3
-  #endif // EXTRUDERS > 2 || MIXING_EXTRUDER > 2
+            #endif // EXTRUDERS > 7 || MIXING_EXTRUDER > 7//挤出机>7 | |混合|挤出机>7
+          #endif // EXTRUDERS > 6 || MIXING_EXTRUDER > 6//挤出机>6 | |混合|挤出机>6
+        #endif // EXTRUDERS > 5 || MIXING_EXTRUDER > 5//挤出机>5 | |混合|挤出机>5
+      #endif // EXTRUDERS > 4 || MIXING_EXTRUDER > 4//挤出机>4 | |混合|挤出机>4
+    #endif // EXTRUDERS > 3 || MIXING_EXTRUDER > 3//挤出机>3 | |混合|挤出机>3
+  #endif // EXTRUDERS > 2 || MIXING_EXTRUDER > 2//挤出机>2 | |混合|挤出机>2
 
-#endif // HAS_MULTI_EXTRUDER || MIXING_EXTRUDER
+#endif // HAS_MULTI_EXTRUDER || MIXING_EXTRUDER//有|多|挤出机|混合|挤出机
 
-//
-// Heaters, Fans, Temp Sensors
-//
+////
+// Heaters, Fans, Temp Sensors//加热器、风扇、温度传感器
+////
 
 #ifndef E0_AUTO_FAN_PIN
   #define E0_AUTO_FAN_PIN -1
@@ -618,19 +619,19 @@
               #if HOTENDS > 7
                 #undef _H7_PINS
                 #define _H7_PINS HEATER_7_PIN, E7_AUTO_FAN_PIN, DIO_PIN(TEMP_7_PIN),
-              #endif // HOTENDS > 7
-            #endif // HOTENDS > 6
-          #endif // HOTENDS > 5
-        #endif // HOTENDS > 4
-      #endif // HOTENDS > 3
-    #endif // HOTENDS > 2
-  #endif // HAS_MULTI_HOTEND
-#endif // HOTENDS
+              #endif // HOTENDS > 7//热端>7
+            #endif // HOTENDS > 6//热端>6
+          #endif // HOTENDS > 5//热端>5
+        #endif // HOTENDS > 4//热端>4
+      #endif // HOTENDS > 3//热端>3
+    #endif // HOTENDS > 2//热端>2
+  #endif // HAS_MULTI_HOTEND//有多个热端
+#endif // HOTENDS//热端
 
-//
-// Dual X, Dual Y, Multi-Z
-// Chip Select and Digital Micro-stepping
-//
+////
+// Dual X, Dual Y, Multi-Z//双X，双Y，多Z
+// Chip Select and Digital Micro-stepping//芯片选择与数字微步进
+////
 
 #if EITHER(DUAL_X_CARRIAGE, X_DUAL_STEPPER_DRIVERS)
   #if PIN_EXISTS(X2_CS) && AXIS_HAS_SPI(X2)
@@ -762,10 +763,10 @@
   #define _Z4_PINS
 #endif
 
-//
-// Generate the final Sensitive Pins array,
-// keeping the array as small as possible.
-//
+////
+// Generate the final Sensitive Pins array,//生成最终敏感管脚阵列，
+// keeping the array as small as possible.//使阵列尽可能小。
+////
 
 #if PIN_EXISTS(PS_ON)
   #define _PS_ON PS_ON_PIN,
@@ -872,15 +873,15 @@
 #else
   #define _SP_END -2
 
-  // Move a regular pin in front to the end
+  // Move a regular pin in front to the end//将前面的常规销移动到末端
   template<pin_t F, pin_t ...D>
   struct OnlyPins : OnlyPins<D..., F> { };
 
-  // Remove a -1 from the front
+  // Remove a -1 from the front//从前部拆下a-1
   template<pin_t ...D>
   struct OnlyPins<-1, D...> : OnlyPins<D...> { };
 
-  // Remove -2 from the front, emit the rest, cease propagation
+  // Remove -2 from the front, emit the rest, cease propagation//从前面移除-2，发射其余部分，停止传播
   template<pin_t ...D>
   struct OnlyPins<_SP_END, D...> { static constexpr size_t size = sizeof...(D); static constexpr pin_t table[sizeof...(D)] PROGMEM = { D... }; };
 #endif

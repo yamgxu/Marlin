@@ -1,3 +1,4 @@
+/** translatione by yx */
 /***************************************************************************
  * ARM Stack Unwinder, Michael.McTernan.2001@cs.bris.ac.uk
  * Updated, adapted and several bug fixes on 2018 by Eduardo José Tagle
@@ -103,4 +104,4 @@ void UnwMemHashGC(UnwState * const state) {
   }
 }
 
-#endif // __arm__ || __thumb__
+#endif // __arm__ || __thumb__//手臂拇指__

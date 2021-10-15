@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -32,24 +33,24 @@
 
 #include "pins_RAMPS.h"
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #undef FAN_PIN
-#define FAN_PIN                                5  // Using the pin for the controller fan since controller fan is always on.
+#define FAN_PIN                                5  // Using the pin for the controller fan since controller fan is always on.//使用控制器风扇的引脚，因为控制器风扇始终打开。
 #define CONTROLLER_FAN_PIN                     8
 
-//
-// Auto fans
-//
+////
+// Auto fans//汽车风扇
+////
 #ifndef E0_AUTO_FAN_PIN
-  #define E0_AUTO_FAN_PIN                      6  // Servo pin 6 for E3D Fan
+  #define E0_AUTO_FAN_PIN                      6  // Servo pin 6 for E3D Fan//E3D风扇的伺服销6
 #endif
 #ifndef E1_AUTO_FAN_PIN
-  #define E1_AUTO_FAN_PIN                      6  // Servo pin 6 for E3D Fan (same pin for both extruders since it's the same fan)
+  #define E1_AUTO_FAN_PIN                      6  // Servo pin 6 for E3D Fan (same pin for both extruders since it's the same fan)//E3D风扇的伺服引脚6（两台挤出机的引脚相同，因为它是同一个风扇）
 #endif
 
-//
-// LCDs and Controllers
-//
+////
+// LCDs and Controllers//液晶显示器和控制器
+////
 #undef BEEPER_PIN

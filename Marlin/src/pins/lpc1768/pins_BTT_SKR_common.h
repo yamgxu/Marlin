@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -23,9 +24,9 @@
 
 #include "env_validate.h"
 
-// If you have the BigTreeTech driver expansion module, enable BTT_MOTOR_EXPANSION
-// https://github.com/bigtreetech/BTT-Expansion-module/tree/master/BTT%20EXP-MOT
-//#define BTT_MOTOR_EXPANSION
+// If you have the BigTreeTech driver expansion module, enable BTT_MOTOR_EXPANSION//如果您有BigTreeTech驱动程序扩展模块，请启用BTT_电机扩展
+// https://github.com/bigtreetech/BTT-Expansion-module/tree/master/BTT%20EXP-MOT// https://github.com/bigtreetech/BTT-Expansion-module/tree/master/BTT%20EXP-莫特
+//#define BTT_MOTOR_EXPANSION//#定义BTT\u电机\u扩展
 
 #if BOTH(HAS_WIRED_LCD, BTT_MOTOR_EXPANSION)
   #if EITHER(CR10_STOCKDISPLAY, ENDER2_STOCKDISPLAY)
@@ -35,12 +36,12 @@
   #endif
 #endif
 
-// Ignore temp readings during development.
-//#define BOGUS_TEMPERATURE_GRACE_PERIOD    2000
+// Ignore temp readings during development.//在开发过程中忽略温度读数。
+//#define BOGUS_TEMPERATURE_GRACE_PERIOD    2000//#定义2000年的假温度宽限期
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #ifndef E1_STEP_PIN
   #define E1_STEP_PIN                      P0_01
 #endif
@@ -51,18 +52,18 @@
   #define E1_ENABLE_PIN                    P0_10
 #endif
 
-//
-// Temperature Sensors
-//  3.3V max when defined as an analog input
-//
+////
+// Temperature Sensors//温度传感器
+//  3.3V max when defined as an analog input//当定义为模拟输入时，最大电压为3.3V
+////
 #ifndef TEMP_0_PIN
-  #define TEMP_0_PIN                    P0_24_A1  // A1 (T1) - (68) - TEMP_0_PIN
+  #define TEMP_0_PIN                    P0_24_A1  // A1 (T1) - (68) - TEMP_0_PIN//A1（T1）-（68）-温度0针
 #endif
 #ifndef TEMP_1_PIN
-  #define TEMP_1_PIN                    P0_25_A2  // A2 (T2) - (69) - TEMP_1_PIN
+  #define TEMP_1_PIN                    P0_25_A2  // A2 (T2) - (69) - TEMP_1_PIN//A2（T2）-（69）-温度1针
 #endif
 #ifndef TEMP_BED_PIN
-  #define TEMP_BED_PIN                  P0_23_A0  // A0 (T0) - (67) - TEMP_BED_PIN
+  #define TEMP_BED_PIN                  P0_23_A0  // A0 (T0) - (67) - TEMP_BED_PIN//A0（T0）-（67）-温度床销
 #endif
 
 #if HOTENDS == 1
@@ -73,9 +74,9 @@
   #endif
 #endif
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #ifndef HEATER_0_PIN
   #define HEATER_0_PIN                     P2_07
 #endif
@@ -95,16 +96,16 @@
   #define HEATER_BED_PIN                   P2_05
 #endif
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 #if !defined(BEEPER_PIN) && HAS_WIRED_LCD && DISABLED(LCD_USE_I2C_BUZZER)
-  #define BEEPER_PIN                       P1_30  // (37) not 5V tolerant
+  #define BEEPER_PIN                       P1_30  // (37) not 5V tolerant//（37）不容忍
 #endif
 
-//
-// SD Support
-//
+////
+// SD Support//SD支持
+////
 #ifndef SDCARD_CONNECTION
   #if HAS_WIRED_LCD
     #define SDCARD_CONNECTION                LCD
@@ -114,7 +115,7 @@
 #endif
 
 
-#define ONBOARD_SD_CS_PIN                  P0_06  // Chip select for "System" SD card
+#define ONBOARD_SD_CS_PIN                  P0_06  // Chip select for "System" SD card//“系统”SD卡的芯片选择
 
 #if SD_CONNECTION_IS(LCD) && ENABLED(SKR_USE_LCD_SD_CARD_PINS_FOR_CS)
   #error "SDCARD_CONNECTION must not be 'LCD' with SKR_USE_LCD_PINS_FOR_CS."
@@ -151,7 +152,7 @@
    * NB In EXP_MOT_USE_EXP2_ONLY mode EXP1 is not used and M2EN and M3EN need to be jumpered to M1EN
    */
 
-  // M1 on Driver Expansion Module
+  // M1 on Driver Expansion Module//驱动程序扩展模块上的M1
   #define E2_STEP_PIN                EXP2_05_PIN
   #define E2_DIR_PIN                 EXP2_06_PIN
   #define E2_ENABLE_PIN              EXP2_04_PIN
@@ -164,7 +165,7 @@
     #endif
   #endif
 
-  // M2 on Driver Expansion Module
+  // M2 on Driver Expansion Module//驱动程序扩展模块上的M2
   #define E3_STEP_PIN                EXP2_08_PIN
   #define E3_DIR_PIN                 EXP2_07_PIN
   #if !EXP_MOT_USE_EXP2_ONLY
@@ -179,7 +180,7 @@
     #define E3_ENABLE_PIN            EXP2_04_PIN
   #endif
 
-  // M3 on Driver Expansion Module
+  // M3 on Driver Expansion Module//驱动程序扩展模块上的M3
   #define E4_STEP_PIN                EXP2_10_PIN
   #define E4_DIR_PIN                 EXP2_09_PIN
   #if !EXP_MOT_USE_EXP2_ONLY
@@ -194,4 +195,4 @@
     #define E4_ENABLE_PIN            EXP2_04_PIN
   #endif
 
-#endif // BTT_MOTOR_EXPANSION
+#endif // BTT_MOTOR_EXPANSION//BTT_电机_扩展

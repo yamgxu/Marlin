@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -20,9 +21,9 @@
  *
  */
 
-//
-// Power Monitor Menu
-//
+////
+// Power Monitor Menu//电源监视器菜单
+////
 
 #include "../../inc/MarlinConfigPre.h"
 
@@ -59,4 +60,4 @@ void menu_power_monitor() {
   END_MENU();
 }
 
-#endif // HAS_LCD_MENU && HAS_POWER_MONITOR
+#endif // HAS_LCD_MENU && HAS_POWER_MONITOR//有LCD菜单和电源监视器（&A）

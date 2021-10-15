@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -27,9 +28,9 @@
 
 #include "../../inc/MarlinConfig.h"
 
-//
-// TMC26X Driver objects and inits
-//
+////
+// TMC26X Driver objects and inits//TMC26X驱动程序对象和初始化
+////
 #if HAS_TMC26X
 
 #include "TMC26X.h"
@@ -159,4 +160,4 @@ void tmc26x_init_to_defaults() {
   #endif
 }
 
-#endif // HAS_TMC26X
+#endif // HAS_TMC26X//拥有TMC26X

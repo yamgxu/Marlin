@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,22 +32,22 @@
 #endif
 #define BOARD_WEBSITE_URL "tiny.cc/x5_mini"
 
-//
-// LED
-//
+////
+// LED//领导
+////
 #define LED_PIN                            P1_18
 #define LED2_PIN                           P1_20
 #define LED3_PIN                           P1_19
 #define LED4_PIN                           P1_21
 
-//
-// Servos
-//
+////
+// Servos//伺服
+////
 #define SERVO0_PIN                         P1_29
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_STOP_PIN                         P1_24
 #define Y_STOP_PIN                         P1_26
 #define Z_STOP_PIN                         P1_28
@@ -56,12 +57,12 @@
 #endif
 
 #ifndef FILWIDTH_PIN
-  #define FILWIDTH_PIN                  P0_25_A2  // Analog Input (P0_25)
+  #define FILWIDTH_PIN                  P0_25_A2  // Analog Input (P0_25)//模拟输入（P0_25）
 #endif
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                         P2_01
 #define X_DIR_PIN                          P0_11
 #define X_ENABLE_PIN                       P0_10
@@ -78,9 +79,9 @@
 #define E0_DIR_PIN                         P0_05
 #define E0_ENABLE_PIN                      P0_04
 
-//
-// DIGIPOT slave addresses (7-bit unshifted)
-//
+////
+// DIGIPOT slave addresses (7-bit unshifted)//DIGIPOT从机地址（7位非移位）
+////
 #ifndef DIGIPOT_I2C_ADDRESS_A
   #define DIGIPOT_I2C_ADDRESS_A             0x2C
 #endif
@@ -88,16 +89,16 @@
   #define DIGIPOT_I2C_ADDRESS_B             0x2E
 #endif
 
-//
-// Temperature Sensors
-// 3.3V max when defined as an analog input
-//
-#define TEMP_BED_PIN                    P0_23_A0  // A0 (TH1)
-#define TEMP_0_PIN                      P0_24_A1  // A1 (TH2)
+////
+// Temperature Sensors//温度传感器
+// 3.3V max when defined as an analog input//当定义为模拟输入时，最大电压为3.3V
+////
+#define TEMP_BED_PIN                    P0_23_A0  // A0 (TH1)//A0（TH1）
+#define TEMP_0_PIN                      P0_24_A1  // A1 (TH2)//A1（TH2）
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_BED_PIN                     P2_07
 #define HEATER_0_PIN                       P2_05
 #ifndef FAN_PIN
@@ -105,100 +106,100 @@
 #endif
 #define FAN1_PIN                           P1_25
 
-//
-// Display
-//
+////
+// Display//展示
+////
 #if HAS_WIRED_LCD
 
   #if ENABLED(CR10_STOCKDISPLAY)
 
-    // Re-Arm can support Creality stock display without SD card reader and single cable on EXP3.
-    // Re-Arm J3 pins 1 (p1.31) & 2 (P3.26) are not used. Stock cable will need to have one
-    // 10-pin IDC connector trimmed or replaced with a 12-pin IDC connector to fit J3.
-    // Requires REVERSE_ENCODER_DIRECTION in Configuration.h
+    // Re-Arm can support Creality stock display without SD card reader and single cable on EXP3.//Re-Arm可以支持Creality股票显示，无需SD卡读卡器和EXP3上的单电缆。
+    // Re-Arm J3 pins 1 (p1.31) & 2 (P3.26) are not used. Stock cable will need to have one//未使用重新装配J3销1（p1.31）和2（P3.26）。库存电缆将需要有一个
+    // 10-pin IDC connector trimmed or replaced with a 12-pin IDC connector to fit J3.//10针IDC接头修剪或更换为12针IDC接头，以适合J3。
+    // Requires REVERSE_ENCODER_DIRECTION in Configuration.h//在配置中需要反向编码器。h
 
-    #define BEEPER_PIN                     P2_11  // J3-3 & AUX-4
+    #define BEEPER_PIN                     P2_11  // J3-3 & AUX-4//J3-3和AUX-4
 
-    #define BTN_EN1                        P0_16  // J3-7 & AUX-4
-    #define BTN_EN2                        P1_23  // J3-5 & AUX-4
-    #define BTN_ENC                        P3_25  // J3-4 & AUX-4
+    #define BTN_EN1                        P0_16  // J3-7 & AUX-4//J3-7和AUX-4
+    #define BTN_EN2                        P1_23  // J3-5 & AUX-4//J3-5和AUX-4
+    #define BTN_ENC                        P3_25  // J3-4 & AUX-4//J3-4和AUX-4
 
-    #define LCD_PINS_RS                    P0_15  // J3-9 & AUX-4 (CS)
-    #define LCD_PINS_ENABLE                P0_18  // J3-10 & AUX-3 (SID, MOSI)
-    #define LCD_PINS_D4                    P2_06  // J3-8 & AUX-3 (SCK, CLK)
+    #define LCD_PINS_RS                    P0_15  // J3-9 & AUX-4 (CS)//J3-9和AUX-4（CS）
+    #define LCD_PINS_ENABLE                P0_18  // J3-10 & AUX-3 (SID, MOSI)//J3-10和AUX-3（SID、MOSI）
+    #define LCD_PINS_D4                    P2_06  // J3-8 & AUX-3 (SCK, CLK)//J3-8和AUX-3（SCK、CLK）
 
   #else
 
-    #define BTN_EN1                        P3_26  // (31) J3-2 & AUX-4
-    #define BTN_EN2                        P3_25  // (33) J3-4 & AUX-4
-    #define BTN_ENC                        P2_11  // (35) J3-3 & AUX-4
+    #define BTN_EN1                        P3_26  // (31) J3-2 & AUX-4//（31）J3-2和AUX-4
+    #define BTN_EN2                        P3_25  // (33) J3-4 & AUX-4//（33）J3-4和AUX-4
+    #define BTN_ENC                        P2_11  // (35) J3-3 & AUX-4//（35）J3-3和AUX-4
 
-    #define SD_DETECT_PIN                  P1_31  // (49) not 5V tolerant   J3-1 & AUX-3
-    #define KILL_PIN                       P1_22  // (41) J5-4 & AUX-4
-    #define LCD_PINS_RS                    P0_16  // (16) J3-7 & AUX-4
-    #define LCD_SDSS                       P0_16  // (16) J3-7 & AUX-4
-    #define LCD_BACKLIGHT_PIN              P0_16  // (16) J3-7 & AUX-4 - only used on DOGLCD controllers
-    #define LCD_PINS_ENABLE                P0_18  // (51) (MOSI) J3-10 & AUX-3
-    #define LCD_PINS_D4                    P0_15  // (52) (SCK)  J3-9 & AUX-3
+    #define SD_DETECT_PIN                  P1_31  // (49) not 5V tolerant   J3-1 & AUX-3//（49）非5V公差J3-1和AUX-3
+    #define KILL_PIN                       P1_22  // (41) J5-4 & AUX-4//（41）J5-4和AUX-4
+    #define LCD_PINS_RS                    P0_16  // (16) J3-7 & AUX-4//（16）J3-7和AUX-4
+    #define LCD_SDSS                       P0_16  // (16) J3-7 & AUX-4//（16）J3-7和AUX-4
+    #define LCD_BACKLIGHT_PIN              P0_16  // (16) J3-7 & AUX-4 - only used on DOGLCD controllers//（16）J3-7和AUX-4-仅用于DOGLCD控制器
+    #define LCD_PINS_ENABLE                P0_18  // (51) (MOSI) J3-10 & AUX-3//（51）（MOSI）J3-10和AUX-3
+    #define LCD_PINS_D4                    P0_15  // (52) (SCK)  J3-9 & AUX-3//（52）（SCK）J3-9和AUX-3
 
-    #define DOGLCD_A0                      P2_06  // (59) J3-8 & AUX-2
+    #define DOGLCD_A0                      P2_06  // (59) J3-8 & AUX-2//（59）J3-8和AUX-2
 
     #if IS_RRW_KEYPAD
-      #define SHIFT_OUT_PIN                P0_18  // (51)  (MOSI) J3-10 & AUX-3
-      #define SHIFT_CLK_PIN                P0_15  // (52)  (SCK)  J3-9 & AUX-3
-      #define SHIFT_LD_PIN                 P1_31  // (49)  not 5V tolerant   J3-1 & AUX-3
+      #define SHIFT_OUT_PIN                P0_18  // (51)  (MOSI) J3-10 & AUX-3//（51）（MOSI）J3-10和AUX-3
+      #define SHIFT_CLK_PIN                P0_15  // (52)  (SCK)  J3-9 & AUX-3//（52）（SCK）J3-9和AUX-3
+      #define SHIFT_LD_PIN                 P1_31  // (49)  not 5V tolerant   J3-1 & AUX-3//（49）非5V公差J3-1和AUX-3
     #elif !IS_NEWPANEL
-      //#define SHIFT_OUT_PIN              P2_11  // (35)  J3-3 & AUX-4
-      //#define SHIFT_CLK_PIN              P3_26  // (31)  J3-2 & AUX-4
-      //#define SHIFT_LD_PIN               P3_25  // (33)  J3-4 & AUX-4
-      //#define SHIFT_EN_PIN               P1_22  // (41)  J5-4 & AUX-4
+      //#define SHIFT_OUT_PIN              P2_11  // (35)  J3-3 & AUX-4//#定义移位针P2\U 11/（35）J3-3和AUX-4
+      //#define SHIFT_CLK_PIN              P3_26  // (31)  J3-2 & AUX-4//#定义换档锁定销P3\U 26/（31）J3-2和AUX-4
+      //#define SHIFT_LD_PIN               P3_25  // (33)  J3-4 & AUX-4//#定义换档锁定销P3\U 25//（33）J3-4和AUX-4
+      //#define SHIFT_EN_PIN               P1_22  // (41)  J5-4 & AUX-4//#定义换档插脚P1_22/（41）J5-4和AUX-4
     #endif
 
     #if ANY(VIKI2, miniVIKI)
-      //#define LCD_SCREEN_ROT_180
+      //#define LCD_SCREEN_ROT_180//#定义LCD屏幕旋转180
 
-      #define BEEPER_PIN                   P1_30  // (37) may change if cable changes
-      #define DOGLCD_CS                    P0_26  // (63) J5-3 & AUX-2
+      #define BEEPER_PIN                   P1_30  // (37) may change if cable changes//（37）如果电缆发生变化，可能会发生变化
+      #define DOGLCD_CS                    P0_26  // (63) J5-3 & AUX-2//（63）J5-3和AUX-2
       #define DOGLCD_SCK              SD_SCK_PIN
       #define DOGLCD_MOSI            SD_MOSI_PIN
 
-      #define STAT_LED_BLUE_PIN            P0_26  // (63)  may change if cable changes
-      #define STAT_LED_RED_PIN             P1_21  // ( 6)  may change if cable changes
+      #define STAT_LED_BLUE_PIN            P0_26  // (63)  may change if cable changes//（63）如果电缆发生变化，可能会发生变化
+      #define STAT_LED_RED_PIN             P1_21  // ( 6)  may change if cable changes//（6）如果电缆发生变化，可能会发生变化
     #else
       #if IS_ULTIPANEL
-        #define LCD_PINS_D5                P1_17  // (71) ENET_MDIO
-        #define LCD_PINS_D6                P1_14  // (73) ENET_RX_ER
-        #define LCD_PINS_D7                P1_10  // (75) ENET_RXD1
+        #define LCD_PINS_D5                P1_17  // (71) ENET_MDIO//（71）ENET_MDIO
+        #define LCD_PINS_D6                P1_14  // (73) ENET_RX_ER//（73）电子接收
+        #define LCD_PINS_D7                P1_10  // (75) ENET_RXD1//（75）ENET_RXD1
       #endif
-      #define BEEPER_PIN                   P1_30  // (37) not 5V tolerant
-      #define DOGLCD_CS                    P0_16  // (16)
+      #define BEEPER_PIN                   P1_30  // (37) not 5V tolerant//（37）不容忍
+      #define DOGLCD_CS                    P0_16  // (16)// (16)
 
       #if ENABLED(REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER)
-        #define BTN_ENC_EN           LCD_PINS_D7  // Detect the presence of the encoder
+        #define BTN_ENC_EN           LCD_PINS_D7  // Detect the presence of the encoder//检测编码器的存在
       #endif
 
     #endif
 
     #if ENABLED(MINIPANEL)
-      // GLCD features
-      // Uncomment screen orientation
-      //#define LCD_SCREEN_ROT_90
-      //#define LCD_SCREEN_ROT_180
-      //#define LCD_SCREEN_ROT_270
+      // GLCD features//GLCD功能
+      // Uncomment screen orientation//取消注释屏幕方向
+      //#define LCD_SCREEN_ROT_90//#定义LCD屏幕旋转90
+      //#define LCD_SCREEN_ROT_180//#定义LCD屏幕旋转180
+      //#define LCD_SCREEN_ROT_270//#定义LCD屏幕旋转270
     #endif
 
   #endif
 
-#endif // HAS_WIRED_LCD
+#endif // HAS_WIRED_LCD//有有线液晶显示器吗
 
-//
-// SD Support
-//
+////
+// SD Support//SD支持
+////
 #ifndef SDCARD_CONNECTION
   #define SDCARD_CONNECTION              ONBOARD
 #endif
 
-#define ONBOARD_SD_CS_PIN                  P0_06  // Chip select for "System" SD card
+#define ONBOARD_SD_CS_PIN                  P0_06  // Chip select for "System" SD card//“系统”SD卡的芯片选择
 
 #if SD_CONNECTION_IS(LCD)
   #define SD_SCK_PIN                       P0_15

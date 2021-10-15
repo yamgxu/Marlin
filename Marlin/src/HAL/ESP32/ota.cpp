@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -50,5 +51,5 @@ void OTA_handle() {
   ArduinoOTA.handle();
 }
 
-#endif // WIFISUPPORT && OTASUPPORT
-#endif // ARDUINO_ARCH_ESP32
+#endif // WIFISUPPORT && OTASUPPORT//WIFISUPPORT和ota支持（&O）
+#endif // ARDUINO_ARCH_ESP32//ARDUINO_ARCH_ESP32

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,12 +22,12 @@
  */
 #pragma once
 
-// R25 = 100 kOhm, beta25 = 3974 K, 4.7 kOhm pull-up, Honeywell 135-104LAF-J01
-// R0 = 100000 Ohm
-// T0 = 25 °C
-// Beta = 3974
-// R1 = 0 Ohm
-// R2 = 4700 Ohm
+// R25 = 100 kOhm, beta25 = 3974 K, 4.7 kOhm pull-up, Honeywell 135-104LAF-J01//R25=100千欧，beta25=3974千欧，4.7千欧上拉，霍尼韦尔135-104LAF-J01
+// R0 = 100000 Ohm//R0=100000欧姆
+// T0 = 25 °C//T0=25°C
+// Beta = 3974//β=3974
+// R1 = 0 Ohm//R1=0欧姆
+// R2 = 4700 Ohm//R2=4700欧姆
 constexpr temp_entry_t temptable_71[] PROGMEM = {
   { OV(  35), 300 },
   { OV(  51), 269 },

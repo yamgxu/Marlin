@@ -1,3 +1,4 @@
+/** translatione by yx */
 /********************
  * about_screen.cpp *
  ********************/
@@ -61,8 +62,8 @@ void AboutScreen::onRedraw(draw_mode_t) {
     #endif
   ];
   #ifdef TOOLHEAD_NAME
-    // If MSG_ABOUT_TOUCH_PANEL_2 has %s, substitute in the toolhead name.
-    // But this is optional, so squelch the compiler warning here.
+    // If MSG_ABOUT_TOUCH_PANEL_2 has %s, substitute in the toolhead name.//如果MSG_ABOUT_TOUCH_PANEL_2有%s，则替换为toolhead名称。
+    // But this is optional, so squelch the compiler warning here.//但这是可选的，所以请在此处消除编译器警告。
     #pragma GCC diagnostic push
     #pragma GCC diagnostic ignored "-Wformat-extra-args"
     sprintf_P(about_str, GET_TEXT(MSG_ABOUT_TOUCH_PANEL_2), TOOLHEAD_NAME);
@@ -114,4 +115,4 @@ bool AboutScreen::onTouchEnd(uint8_t tag) {
   return true;
 }
 
-#endif // FTDI_ABOUT_SCREEN
+#endif // FTDI_ABOUT_SCREEN//FTDI_关于_屏幕

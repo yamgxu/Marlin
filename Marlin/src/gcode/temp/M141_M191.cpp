@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -74,4 +75,4 @@ void GcodeSuite::M191() {
   }
 }
 
-#endif // HAS_HEATED_CHAMBER
+#endif // HAS_HEATED_CHAMBER//你有没有给房间加热

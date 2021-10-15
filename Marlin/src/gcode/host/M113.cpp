@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -42,4 +43,4 @@ void GcodeSuite::M113() {
 
 }
 
-#endif // HOST_KEEPALIVE_FEATURE
+#endif // HOST_KEEPALIVE_FEATURE//主机保存功能

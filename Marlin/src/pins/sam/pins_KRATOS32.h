@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2021 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,26 +30,26 @@
 
 #define BOARD_INFO_NAME "K.3D KRATOS32"
 
-//
-// EEPROM
-//
+////
+// EEPROM//电可擦可编程只读存储器
+////
 #if EITHER(NO_EEPROM_SELECTED, I2C_EEPROM)
   #define I2C_EEPROM
-  #define MARLIN_EEPROM_SIZE             0x1F400  //   16KB
+  #define MARLIN_EEPROM_SIZE             0x1F400  //   16KB//16KB
 #endif
 
-//
-// Servos
-//
+////
+// Servos//伺服
+////
 #define SERVO0_PIN                             6
 #define SERVO1_PIN                             5
 #define SERVO2_PIN                            39
-#define SERVO3_PIN                            40  // CAMERA_PIN (extended to the top of the LCD module)
-#define SERVO4_PIN                            45  // FIL_RUNOUT_PIN
+#define SERVO3_PIN                            40  // CAMERA_PIN (extended to the top of the LCD module)//摄像头插脚（延伸至LCD模块顶部）
+#define SERVO4_PIN                            45  // FIL_RUNOUT_PIN//薄膜跳动销
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_MIN_PIN                             28
 #define X_MAX_PIN                             34
 #define Y_MIN_PIN                             30
@@ -56,9 +57,9 @@
 #define Z_MIN_PIN                             32
 #define Z_MAX_PIN                             38
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                            24
 #define X_DIR_PIN                             23
 #define X_ENABLE_PIN                          26
@@ -108,43 +109,43 @@
   #define E3_CS_PIN                           33
 #endif
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                             0  // Analog Input
-#define TEMP_1_PIN                             1  // Analog Input
-#define TEMP_2_PIN                             2  // Analog Input
-#define TEMP_3_PIN                             3  // Analog Input
-#define TEMP_BED_PIN                           4  // Analog Input
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                             0  // Analog Input//模拟输入
+#define TEMP_1_PIN                             1  // Analog Input//模拟输入
+#define TEMP_2_PIN                             2  // Analog Input//模拟输入
+#define TEMP_3_PIN                             3  // Analog Input//模拟输入
+#define TEMP_BED_PIN                           4  // Analog Input//模拟输入
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_0_PIN                          13
 #define HEATER_1_PIN                          12
 #define HEATER_2_PIN                          11
 #define HEATER_3_PIN                          10
-#define HEATER_BED_PIN                         7  // BED
+#define HEATER_BED_PIN                         7  // BED//床
 
 #ifndef FAN_PIN
   #define FAN_PIN                              9
 #endif
 #define FAN1_PIN                               8
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #ifndef FIL_RUNOUT_PIN
-  #define FIL_RUNOUT_PIN                      45  // SERVO4_PIN
+  #define FIL_RUNOUT_PIN                      45  // SERVO4_PIN//伺服4_销
 #endif
 
 #ifndef PS_ON_PIN
   #define PS_ON_PIN                           59
 #endif
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 #if HAS_WIRED_LCD
 
   #define BTN_EN1                             48
@@ -176,4 +177,4 @@
 
   #endif
 
-#endif // HAS_WIRED_LCD
+#endif // HAS_WIRED_LCD//有有线液晶显示器吗

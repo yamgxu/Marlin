@@ -1,3 +1,4 @@
+/** translatione by yx */
 /***********************
  * command_processor.h *
  ***********************/
@@ -28,7 +29,7 @@ typedef struct {
   uint32_t rgb;
 } btn_colors;
 
-// Disable TOUCH_UI_FIT_TEXT on a case-by-case basis
+// Disable TOUCH_UI_FIT_TEXT on a case-by-case basis//根据具体情况禁用触摸屏匹配文本
 namespace FTDI {
   constexpr uint16_t OPT_NOFIT = OPT_NOTICKS;
 }
@@ -65,7 +66,7 @@ class CommandProcessor : public CLCD::CommandFifo {
     uint8_t _style = 0;
 
   protected:
-    // Returns the cannonical thickness of a widget (i.e. the height of a toggle element)
+    // Returns the cannonical thickness of a widget (i.e. the height of a toggle element)//返回小部件的管状厚度（即切换元素的高度）
     uint16_t widget_thickness() {
       CLCD::FontMetrics fm(_font);
       return fm.height * 20.0/16;
@@ -97,7 +98,7 @@ class CommandProcessor : public CLCD::CommandFifo {
     }
 
   public:
-    // Helper method for setting all colors at once
+    // Helper method for setting all colors at once//一次设置所有颜色的辅助方法
     inline CommandProcessor& colors(const btn_colors &colors) {
       cmd(FTDI::COLOR_RGB(colors.rgb))
         .gradcolor(colors.grad)
@@ -149,7 +150,7 @@ class CommandProcessor : public CLCD::CommandFifo {
     bool wait();
     uint32_t memcrc(uint32_t ptr, uint32_t num);
 
-    // Wrap all the CommandFifo routines to allow method chaining
+    // Wrap all the CommandFifo routines to allow method chaining//包装所有CommandFifo例程以允许方法链接
 
     inline CommandProcessor& cmd      (uint32_t cmd32)            {CLCD::CommandFifo::cmd(cmd32); return *this;}
     inline CommandProcessor& cmd      (void *data, uint16_t len)  {CLCD::CommandFifo::cmd(data, len); return *this;}
@@ -218,11 +219,11 @@ class CommandProcessor : public CLCD::CommandFifo {
     FORCEDINLINE CommandProcessor& toggle(int16_t x, int16_t y, int16_t w, int16_t h, T text, bool state, uint16_t options = FTDI::OPT_3D) {
       CLCD::FontMetrics fm(_font);
       const int16_t widget_h = fm.height * 20.0 / 16;
-      //const int16_t outer_bar_r = widget_h / 2;
-      //const int16_t knob_r      = outer_bar_r - 1.5;
-      // The y coordinate of the toggle is the baseline of the text,
-      // so we must introduce a fudge factor based on the line height to
-      // actually center the control.
+      //const int16_t outer_bar_r = widget_h / 2;//const int16_t outer_bar_r=widget_h/2；
+      //const int16_t knob_r      = outer_bar_r - 1.5;//const int16旋钮=外杆-1.5；
+      // The y coordinate of the toggle is the baseline of the text,//切换的y坐标是文本的基线，
+      // so we must introduce a fudge factor based on the line height to//因此，我们必须引入一个基于线高度的模糊因子
+      // actually center the control.//实际上是控制中心。
       const int16_t fudge_y = fm.height * 5 / 16;
       CLCD::CommandFifo::toggle(x + h / 2, y + (h - widget_h) / 2 + fudge_y, w - h, _font, options, state);
       CLCD::CommandFifo::str(text);
@@ -237,8 +238,8 @@ class CommandProcessor : public CLCD::CommandFifo {
       return toggle(x, y, w, h, text, state, options);
     }
 
-    // Contrained drawing routines. These constrain the widget inside a box for easier layout.
-    // The FORCEDINLINE ensures that the code is inlined so that all the math is done at compile time.
+    // Contrained drawing routines. These constrain the widget inside a box for easier layout.//约束绘图程序。这些将小部件约束在一个框中，以便于布局。
+    // The FORCEDINLINE ensures that the code is inlined so that all the math is done at compile time.//FORCEDINLINE确保代码是内联的，以便在编译时完成所有数学运算。
 
     FORCEDINLINE CommandProcessor& track_linear(int16_t x, int16_t y, int16_t w, int16_t h, int16_t tag) {
       linear_widget_box(x, y, w, h, true);
@@ -310,7 +311,7 @@ class CommandProcessor : public CLCD::CommandFifo {
       y += ((options & OPT_CENTERY) ? h/2 : h);
     }
 
-    // Reduce font size until text fits the enclosing box.
+    // Reduce font size until text fits the enclosing box.//减小字体大小，直到文本适合封闭框。
     template<typename T>
     int8_t apply_fit_text(int16_t w, int16_t h, T text) {
       using namespace FTDI;
@@ -409,13 +410,13 @@ class CommandProcessor : public CLCD::CommandFifo {
           CLCD::CommandFifo::str(F(""));
           apply_text_alignment(x, y, w, h, OPT_CENTER);
           if (!(options & FTDI::OPT_FLAT)) {
-            // Reproduce the black "shadow" the FTDI adds to the button label
+            // Reproduce the black "shadow" the FTDI adds to the button label//复制FTDI添加到按钮标签的黑色“阴影”
             CLCD::CommandFifo::cmd(SAVE_CONTEXT());
             CLCD::CommandFifo::cmd(COLOR_RGB(0x00000));
             draw_utf8_text(*this, x-1, y-1, text, font_size_t::from_romfont(font), OPT_CENTER);
             CLCD::CommandFifo::cmd(RESTORE_CONTEXT());
           }
-          // Draw the button label
+          // Draw the button label//绘制按钮标签
           draw_utf8_text(*this, x, y, text, font_size_t::from_romfont(font), OPT_CENTER);
         }
         else

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -60,12 +61,12 @@ using namespace ExtUI;
 namespace Anycubic {
 
 FileNavigator filenavigator;
-FileList  FileNavigator::filelist;                          // Instance of the Marlin file API
+FileList  FileNavigator::filelist;                          // Instance of the Marlin file API//Marlin文件API的实例
 uint16_t  FileNavigator::lastpanelindex;
-uint16_t  FileNavigator::currentindex;                      // override the panel request
+uint16_t  FileNavigator::currentindex;                      // override the panel request//覆盖面板请求
 uint8_t   FileNavigator::currentfolderdepth;
-uint16_t  FileNavigator::currentfolderindex[MAX_FOLDER_DEPTH];   // track folder pos for iteration
-char      FileNavigator::currentfoldername[MAX_PATH_LEN + 1];   // Current folder path
+uint16_t  FileNavigator::currentfolderindex[MAX_FOLDER_DEPTH];   // track folder pos for iteration//跟踪迭代的文件夹位置
+char      FileNavigator::currentfoldername[MAX_PATH_LEN + 1];   // Current folder path//当前文件夹路径
 
 FileNavigator::FileNavigator() { reset(); }
 
@@ -77,7 +78,7 @@ void FileNavigator::reset() {
   lastpanelindex = 0;
   ZERO(currentfolderindex);
 
-  // Start at root folder
+  // Start at root folder//从根文件夹开始
   while (!filelist.isAtRootDir()) filelist.upDir();
   refresh();
 }
@@ -85,7 +86,7 @@ void FileNavigator::reset() {
 void FileNavigator::refresh() { filelist.refresh(); }
 
 void FileNavigator::changeDIR(const char *folder) {
-  if (currentfolderdepth >= MAX_FOLDER_DEPTH) return; // limit the folder depth
+  if (currentfolderdepth >= MAX_FOLDER_DEPTH) return; // limit the folder depth//限制文件夹深度
   DEBUG_ECHOLNPAIR("FD:" , folderdepth, " FP:",currentindex, " currentfolder:", currentfoldername, " enter:", folder);
   currentfolderindex[currentfolderdepth] = currentindex;
   strcat(currentfoldername, folder);
@@ -100,11 +101,11 @@ void FileNavigator::upDIR() {
   if (!filelist.isAtRootDir()) {
     filelist.upDir();
     currentfolderdepth--;
-    currentindex = currentfolderindex[currentfolderdepth]; // restore last position in the folder
-    filelist.seek(currentindex); // restore file information
+    currentindex = currentfolderindex[currentfolderdepth]; // restore last position in the folder//还原文件夹中的最后一个位置
+    filelist.seek(currentindex); // restore file information//还原文件信息
   }
 
-  // Remove the child folder from the stored path
+  // Remove the child folder from the stored path//从存储路径中删除子文件夹
   if (currentfolderdepth == 0)
     currentfoldername[0] = '\0';
   else {
@@ -124,26 +125,26 @@ void FileNavigator::skiptofileindex(uint16_t skip) {
       }
       else
         changeDIR(filelist.shortFilename());
-    } // valid file
+    } // valid file//有效文件
     if (currentindex == filelist.count()) {
       if (currentfolderdepth > 0) {
         upDIR();
         currentindex++;
       }
-      else break; // end of root folder
-    } // end of folder
-  } // files needed
-  // No more files available.
+      else break; // end of root folder//根文件夹的结尾
+    } // end of folder//文件夹末尾
+  } // files needed//需要的文件
+  // No more files available.//没有更多可用文件。
 }
 
-#if ENABLED(AC_SD_FOLDER_VIEW) // SD Folder navigation
+#if ENABLED(AC_SD_FOLDER_VIEW) // SD Folder navigation//SD文件夹导航
 
   void FileNavigator::getFiles(uint16_t index, panel_type_t paneltype, uint8_t filesneeded) {
     if (index == 0) currentindex = 0;
-    // Each time we change folder we reset the file index to 0 and keep track
-    // of the current position, since the TFT panel isn't aware of folder trees.
+    // Each time we change folder we reset the file index to 0 and keep track//每次更改文件夹时，我们都会将文件索引重置为0并保持跟踪
+    // of the current position, since the TFT panel isn't aware of folder trees.//当前位置，因为TFT面板不知道文件夹树。
     if (index > 0) {
-      --currentindex; // go back a file to take account of the .. we added to the root.
+      --currentindex; // go back a file to take account of the .. we added to the root.//返回一个文件以考虑。。我们添加到根。
       if (index > lastpanelindex)
         currentindex += filesneeded;
       else
@@ -153,8 +154,8 @@ void FileNavigator::skiptofileindex(uint16_t skip) {
 
     DEBUG_ECHOLNPAIR("index=", index, " currentindex=", currentindex);
 
-    if (currentindex == 0 && currentfolderdepth > 0) { // Add a link to go up a folder
-      // The new panel ignores entries that don't end in .GCO or .gcode so add and pad them.
+    if (currentindex == 0 && currentfolderdepth > 0) { // Add a link to go up a folder//添加指向文件夹的链接
+      // The new panel ignores entries that don't end in .GCO or .gcode so add and pad them.//新面板将忽略不以.GCO或.gcode结尾的条目，因此添加并填充它们。
       if (paneltype == AC_panel_new) {
         TFTSer.println("<<.GCO");
         Chiron.SendtoTFTLN(PSTR("..                  .gcode"));
@@ -176,13 +177,13 @@ void FileNavigator::skiptofileindex(uint16_t skip) {
 
   void FileNavigator::sendFile(panel_type_t paneltype) {
     if (filelist.isDir()) {
-      // Add mandatory tags for new panel otherwise lines are ignored.
+      // Add mandatory tags for new panel otherwise lines are ignored.//为新面板添加必需的标记，否则将忽略行。
       if (paneltype == AC_panel_new) {
         TFTSer.print(filelist.shortFilename());
         TFTSer.println(".GCO");
         TFTSer.print(filelist.shortFilename());
         TFTSer.write('/');
-        // Make sure we fill all 29 chars of the display line to clear the text buffer otherwise the last line is still visible
+        // Make sure we fill all 29 chars of the display line to clear the text buffer otherwise the last line is still visible//确保填充显示行的所有29个字符以清除文本缓冲区，否则最后一行仍然可见
         for (int8_t i = strlen(filelist.shortFilename()); i < 19; i++)
           TFTSer.write(' ');
         TFTSer.println(".gcode");
@@ -194,26 +195,26 @@ void FileNavigator::skiptofileindex(uint16_t skip) {
         TFTSer.println();
       }
     }
-    else { // Not DIR
+    else { // Not DIR//不直接
       TFTSer.write('/');
       if (currentfolderdepth > 0) TFTSer.print(currentfoldername);
       TFTSer.println(filelist.shortFilename());
       TFTSer.print(filelist.longFilename());
 
-      // Make sure we fill all 29 chars of the display line to clear the text buffer otherwise the last line is still visible
+      // Make sure we fill all 29 chars of the display line to clear the text buffer otherwise the last line is still visible//确保填充显示行的所有29个字符以清除文本缓冲区，否则最后一行仍然可见
       if (paneltype == AC_panel_new)
         for (int8_t i = strlen(filelist.longFilename()); i < 26; i++)
           TFTSer.write(' ');
 
       TFTSer.println();
     }
-  }  // AC_SD_FOLDER_VIEW
+  }  // AC_SD_FOLDER_VIEW//AC_SD_文件夹_视图
 
-#else // Flat file list
+#else // Flat file list//平面文件列表
 
   void FileNavigator::getFiles(uint16_t index, panel_type_t paneltype, uint8_t filesneeded) {
     DEBUG_ECHOLNPAIR("getFiles() I:", index," L:", lastpanelindex);
-    // if we're searching backwards, jump back to start and search forward
+    // if we're searching backwards, jump back to start and search forward//如果我们在向后搜索，请跳回开始并向前搜索
     if (index < lastpanelindex) {
       reset();
       skiptofileindex(index);
@@ -229,17 +230,17 @@ void FileNavigator::skiptofileindex(uint16_t skip) {
         }
         else
           changeDIR(filelist.shortFilename());
-      } // valid file
+      } // valid file//有效文件
 
       if (currentindex == filelist.count()) {
         if (currentfolderdepth > 0) {
           upDIR();
           currentindex++;
         }
-        else break; // end of root folder
-      } // end of folder
-    } // files needed
-    // No more files available.
+        else break; // end of root folder//根文件夹的结尾
+      } // end of folder//文件夹末尾
+    } // files needed//需要的文件
+    // No more files available.//没有更多可用文件。
   }
 
   void FileNavigator::sendFile(panel_type_t paneltype) {
@@ -251,8 +252,8 @@ void FileNavigator::skiptofileindex(uint16_t skip) {
     DEBUG_ECHOLNPAIR("/", currentfoldername, "", filelist.shortFilename(), " ", filelist.longFilename());
   }
 
-#endif // Flat file list
+#endif // Flat file list//平面文件列表
 
-} // Anycubic namespace
+} // Anycubic namespace//任意立方名称空间
 
-#endif // ANYCUBIC_LCD_CHIRON
+#endif // ANYCUBIC_LCD_CHIRON//任意立方_液晶_凯龙

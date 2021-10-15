@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * @file    lcdprint_u8g.cpp
  * @brief   LCD print api for u8glib
@@ -26,8 +27,8 @@ void lcd_moveto(const lcd_uint_t col, const lcd_uint_t row) { u8g.setPrintPos(co
 
 void lcd_put_int(const int i) { u8g.print(i); }
 
-// return < 0 on error
-// return the advanced pixels
+// return < 0 on error//错误时返回<0
+// return the advanced pixels//返回高级像素
 int lcd_put_wchar_max(wchar_t c, pixel_len_t max_length) {
   if (c < 256) {
     u8g.print((char)c);
@@ -53,4 +54,4 @@ int lcd_put_u8str_max_P(PGM_P utf8_str_P, pixel_len_t max_length) {
   return ret;
 }
 
-#endif // HAS_MARLINUI_U8GLIB
+#endif // HAS_MARLINUI_U8GLIB//马林努伊能说会道吗

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**********************************
  * cocoa_press/load_chocolate.cpp *
  **********************************/
@@ -50,7 +51,7 @@ void LoadChocolateScreen::draw_syringe(draw_mode_t what) {
   PolyUI ui(cmd, what);
 
   if (what & BACKGROUND) {
-    // Paint the shadow for the syringe
+    // Paint the shadow for the syringe//给注射器涂上阴影
     ui.color(shadow_rgb);
     ui.shadow(POLY(syringe_outline), shadow_depth);
   }
@@ -58,7 +59,7 @@ void LoadChocolateScreen::draw_syringe(draw_mode_t what) {
   if (what & FOREGROUND) {
     int16_t x, y, h, v;
 
-    // Paint the syringe icon
+    // Paint the syringe icon//绘制注射器图标
     ui.color(syringe_rgb);
     ui.fill(POLY(syringe_outline));
 
@@ -162,15 +163,15 @@ bool LoadChocolateScreen::onTouchEnd(uint8_t tag) {
 }
 
 void LoadChocolateScreen::setManualFeedrateAndIncrement(float feedrate_mm_s, float &increment_mm) {
-  // Compute increment so feedrate so that the tool lags the adjuster when it is
-  // being held down, this allows enough margin for the planner to
-  // connect segments and even out the motion.
+  // Compute increment so feedrate so that the tool lags the adjuster when it is//计算进给速度的增量，使刀具在进给时滞后于调节器
+  // being held down, this allows enough margin for the planner to//这就为规划者提供了足够的空间
+  // connect segments and even out the motion.//连接线段并使运动均匀。
   ExtUI::setFeedrate_mm_s(feedrate_mm_s);
   increment_mm = feedrate_mm_s / ((TOUCH_REPEATS_PER_SECOND) * 0.80f);
 }
 
 bool LoadChocolateScreen::onTouchHeld(uint8_t tag) {
-  if (ExtUI::isMoving()) return false; // Don't allow moves to accumulate
+  if (ExtUI::isMoving()) return false; // Don't allow moves to accumulate//不要让动作累积
   float increment;
   setManualFeedrateAndIncrement(20, increment);
   #define UI_INCREMENT_AXIS(axis) UI_INCREMENT(AxisPosition_mm, axis);
@@ -215,4 +216,4 @@ void LoadChocolateScreen::onIdle() {
   }
   BaseScreen::onIdle();
 }
-#endif // COCOA_LOAD_CHOCOLATE_SCREEN
+#endif // COCOA_LOAD_CHOCOLATE_SCREEN//可可装巧克力屏

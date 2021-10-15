@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * \file
  *
@@ -41,7 +42,7 @@
  *
  */
 /*
- * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>
+ * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>//www.atmel.com/design support/“>atmel支持</a>
  */
 
 #ifndef CHIP_SYSCLK_H_INCLUDED
@@ -113,21 +114,21 @@
  *          formulas in the conf_clock.h template commented above each division define.
  */
 
-/// @cond 0
+/// @cond 0///@cond 0
 /**INDENT-OFF**/
 #ifdef __cplusplus
 extern "C" {
 #endif
 /**INDENT-ON**/
-/// @endcond
+/// @endcond///@endcond
 
 /**
  * \weakgroup sysclk_group
  * @{
  */
 
-//! \name Configuration Symbols
-//@{
+//! \name Configuration Symbols//! \名称配置符号
+//@{//@{
 /**
  * \def CONFIG_SYSCLK_SOURCE
  * \brief Initial/static main system clock source
@@ -152,39 +153,39 @@ extern "C" {
 # define CONFIG_SYSCLK_PRES  0
 #endif
 
-//@}
+//@}//@}
 
-//! \name Master Clock Sources (MCK)
-//@{
-#define SYSCLK_SRC_SLCK_RC              0       //!< Internal 32kHz RC oscillator as master source clock
-#define SYSCLK_SRC_SLCK_XTAL            1       //!< External 32kHz crystal oscillator as master source clock
-#define SYSCLK_SRC_SLCK_BYPASS          2       //!< External 32kHz bypass oscillator as master source clock
-#define SYSCLK_SRC_MAINCK_4M_RC         3       //!< Internal 4MHz RC oscillator as master source clock
-#define SYSCLK_SRC_MAINCK_8M_RC         4       //!< Internal 8MHz RC oscillator as master source clock
-#define SYSCLK_SRC_MAINCK_12M_RC        5       //!< Internal 12MHz RC oscillator as master source clock
-#define SYSCLK_SRC_MAINCK_XTAL          6       //!< External crystal oscillator as master source clock
-#define SYSCLK_SRC_MAINCK_BYPASS        7       //!< External bypass oscillator as master source clock
-#define SYSCLK_SRC_PLLACK               8       //!< Use PLLACK as master source clock
-#define SYSCLK_SRC_UPLLCK               9       //!< Use UPLLCK as master source clock
-//@}
+//! \name Master Clock Sources (MCK)//! \主时钟源名称（MCK）
+//@{//@{
+#define SYSCLK_SRC_SLCK_RC              0       //!< Internal 32kHz RC oscillator as master source clock//！<内部32kHz RC振荡器作为主源时钟
+#define SYSCLK_SRC_SLCK_XTAL            1       //!< External 32kHz crystal oscillator as master source clock//！<外部32kHz晶体振荡器作为主源时钟
+#define SYSCLK_SRC_SLCK_BYPASS          2       //!< External 32kHz bypass oscillator as master source clock//！<外部32kHz旁路振荡器作为主源时钟
+#define SYSCLK_SRC_MAINCK_4M_RC         3       //!< Internal 4MHz RC oscillator as master source clock//！<内部4MHz RC振荡器作为主源时钟
+#define SYSCLK_SRC_MAINCK_8M_RC         4       //!< Internal 8MHz RC oscillator as master source clock//！<内部8MHz RC振荡器作为主源时钟
+#define SYSCLK_SRC_MAINCK_12M_RC        5       //!< Internal 12MHz RC oscillator as master source clock//！<内部12MHz RC振荡器作为主源时钟
+#define SYSCLK_SRC_MAINCK_XTAL          6       //!< External crystal oscillator as master source clock//！<作为主源时钟的外部晶体振荡器
+#define SYSCLK_SRC_MAINCK_BYPASS        7       //!< External bypass oscillator as master source clock//！<作为主源时钟的外部旁路振荡器
+#define SYSCLK_SRC_PLLACK               8       //!< Use PLLACK as master source clock//！<使用PLLACK作为主源时钟
+#define SYSCLK_SRC_UPLLCK               9       //!< Use UPLLCK as master source clock//！<使用UPLLCK作为主源时钟
+//@}//@}
 
-//! \name Master Clock Prescalers (MCK)
-//@{
-#define SYSCLK_PRES_1           PMC_MCKR_PRES_CLK_1     //!< Set master clock prescaler to 1
-#define SYSCLK_PRES_2           PMC_MCKR_PRES_CLK_2     //!< Set master clock prescaler to 2
-#define SYSCLK_PRES_4           PMC_MCKR_PRES_CLK_4     //!< Set master clock prescaler to 4
-#define SYSCLK_PRES_8           PMC_MCKR_PRES_CLK_8     //!< Set master clock prescaler to 8
-#define SYSCLK_PRES_16          PMC_MCKR_PRES_CLK_16    //!< Set master clock prescaler to 16
-#define SYSCLK_PRES_32          PMC_MCKR_PRES_CLK_32    //!< Set master clock prescaler to 32
-#define SYSCLK_PRES_64          PMC_MCKR_PRES_CLK_64    //!< Set master clock prescaler to 64
-#define SYSCLK_PRES_3           PMC_MCKR_PRES_CLK_3     //!< Set master clock prescaler to 3
-//@}
+//! \name Master Clock Prescalers (MCK)//! \主时钟预分频器名称（MCK）
+//@{//@{
+#define SYSCLK_PRES_1           PMC_MCKR_PRES_CLK_1     //!< Set master clock prescaler to 1//！<将主时钟预分频器设置为1
+#define SYSCLK_PRES_2           PMC_MCKR_PRES_CLK_2     //!< Set master clock prescaler to 2//！<将主时钟预分频器设置为2
+#define SYSCLK_PRES_4           PMC_MCKR_PRES_CLK_4     //!< Set master clock prescaler to 4//！<将主时钟预分频器设置为4
+#define SYSCLK_PRES_8           PMC_MCKR_PRES_CLK_8     //!< Set master clock prescaler to 8//！<将主时钟预分频器设置为8
+#define SYSCLK_PRES_16          PMC_MCKR_PRES_CLK_16    //!< Set master clock prescaler to 16//！<将主时钟预分频器设置为16
+#define SYSCLK_PRES_32          PMC_MCKR_PRES_CLK_32    //!< Set master clock prescaler to 32//！<将主时钟预分频器设置为32
+#define SYSCLK_PRES_64          PMC_MCKR_PRES_CLK_64    //!< Set master clock prescaler to 64//！<将主时钟预分频器设置为64
+#define SYSCLK_PRES_3           PMC_MCKR_PRES_CLK_3     //!< Set master clock prescaler to 3//！<将主时钟预分频器设置为3
+//@}//@}
 
-//! \name USB Clock Sources
-//@{
-#define USBCLK_SRC_PLL0       0     //!< Use PLLA
-#define USBCLK_SRC_UPLL       1     //!< Use UPLL
-//@}
+//! \name USB Clock Sources//！\name USB时钟源
+//@{//@{
+#define USBCLK_SRC_PLL0       0     //!< Use PLLA//！<使用PLLA
+#define USBCLK_SRC_UPLL       1     //!< Use UPLL//！<使用UPLL
+//@}//@}
 
 /**
  * \def CONFIG_USBCLK_SOURCE
@@ -216,14 +217,14 @@ extern "C" {
 extern void sysclk_enable_usb(void);
 extern void sysclk_disable_usb(void);
 
-//! @}
+//! @}//! @}
 
-/// @cond 0
+/// @cond 0///@cond 0
 /**INDENT-OFF**/
 #ifdef __cplusplus
 }
 #endif
 /**INDENT-ON**/
-/// @endcond
+/// @endcond///@endcond
 
 #endif /* CHIP_SYSCLK_H_INCLUDED */

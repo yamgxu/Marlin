@@ -1,3 +1,4 @@
+/** translatione by yx */
 /******************************
  * change_filament_screen.cpp *
  ******************************/
@@ -258,7 +259,7 @@ void ChangeFilamentScreen::doPurge() {
 }
 
 bool ChangeFilamentScreen::onTouchStart(uint8_t tag) {
-  // Make the Momentary and Continuous buttons slightly more responsive
+  // Make the Momentary and Continuous buttons slightly more responsive//使瞬时和连续按钮稍微更灵敏
   switch (tag) {
     case 5: case 6: case 7: case 8:
       #if FILAMENT_UNLOAD_PURGE_LENGTH > 0
@@ -277,7 +278,7 @@ bool ChangeFilamentScreen::onTouchEnd(uint8_t tag) {
     case 2:
     case 3:
     case 4:
-      // Change temperature
+      // Change temperature//变温
       mydata.t_tag = tag;
       setTargetTemp_celsius(getSoftenTemp(), getExtruder());
       break;
@@ -289,7 +290,7 @@ bool ChangeFilamentScreen::onTouchEnd(uint8_t tag) {
       break;
     case 10:
     case 11:
-      // Change extruder
+      // Change extruder//更换挤出机
       mydata.e_tag      = tag;
       mydata.t_tag      = 0;
       mydata.repeat_tag = 0;
@@ -304,7 +305,7 @@ bool ChangeFilamentScreen::onTouchEnd(uint8_t tag) {
 }
 
 bool ChangeFilamentScreen::onTouchHeld(uint8_t tag) {
-  if (ExtUI::isMoving()) return false; // Don't allow moves to accumulate
+  if (ExtUI::isMoving()) return false; // Don't allow moves to accumulate//不要让动作累积
   constexpr float increment = 1;
   #define UI_INCREMENT_AXIS(axis) UI_INCREMENT(AxisPosition_mm, axis);
   #define UI_DECREMENT_AXIS(axis) UI_DECREMENT(AxisPosition_mm, axis);
@@ -328,4 +329,4 @@ void ChangeFilamentScreen::onIdle() {
   BaseScreen::onIdle();
 }
 
-#endif // FTDI_CHANGE_FILAMENT_SCREEN
+#endif // FTDI_CHANGE_FILAMENT_SCREEN//FTDI更换灯丝屏幕

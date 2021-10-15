@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * \file
  *
@@ -45,7 +46,7 @@
  */
 
 /*
- * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>
+ * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>//www.atmel.com/design support/“>atmel支持</a>
  */
 #ifndef _SPC_PROTOCOL_H_
 #define _SPC_PROTOCOL_H_
@@ -57,8 +58,8 @@
  * @{
  */
 
-//! \name SCSI commands defined by SPC-2
-//@{
+//! \name SCSI commands defined by SPC-2//！\name由SPC-2定义的SCSI命令
+//@{//@{
 #define  SPC_TEST_UNIT_READY              0x00
 #define  SPC_REQUEST_SENSE                0x03
 #define  SPC_INQUIRY                      0x12
@@ -68,15 +69,15 @@
 #define  SPC_PREVENT_ALLOW_MEDIUM_REMOVAL 0x1E
 #define  SPC_MODE_SENSE10                 0x5A
 #define  SPC_REPORT_LUNS                  0xA0
-//@}
+//@}//@}
 
-//! \brief May be set in byte 0 of the INQUIRY CDB
-//@{
-//! Enable Vital Product Data
+//! \brief May be set in byte 0 of the INQUIRY CDB//！\BRIENT可设置在查询CDB的字节0中
+//@{//@{
+//! Enable Vital Product Data//！启用重要的产品数据
 #define  SCSI_INQ_REQ_EVPD    0x01
-//! Command Support Data specified by the PAGE OR OPERATION CODE field
+//! Command Support Data specified by the PAGE OR OPERATION CODE field//！页面或操作代码字段指定的命令支持数据
 #define  SCSI_INQ_REQ_CMDT    0x02
-//@}
+//@}//@}
 
 COMPILER_PACK_SET(1)
 
@@ -84,55 +85,55 @@ COMPILER_PACK_SET(1)
  * \brief SCSI Standard Inquiry data structure
  */
 struct scsi_inquiry_data {
-	uint8_t pq_pdt; //!< Peripheral Qual / Peripheral Dev Type
-#define  SCSI_INQ_PQ_CONNECTED   0x00   //!< Peripheral connected
-#define  SCSI_INQ_PQ_NOT_CONN    0x20   //!< Peripheral not connected
-#define  SCSI_INQ_PQ_NOT_SUPP    0x60   //!< Peripheral not supported
-#define  SCSI_INQ_DT_DIR_ACCESS  0x00   //!< Direct Access (SBC)
-#define  SCSI_INQ_DT_SEQ_ACCESS  0x01   //!< Sequential Access
-#define  SCSI_INQ_DT_PRINTER     0x02   //!< Printer
-#define  SCSI_INQ_DT_PROCESSOR   0x03   //!< Processor device
-#define  SCSI_INQ_DT_WRITE_ONCE  0x04   //!< Write-once device
-#define  SCSI_INQ_DT_CD_DVD      0x05   //!< CD/DVD device
-#define  SCSI_INQ_DT_OPTICAL     0x07   //!< Optical Memory
-#define  SCSI_INQ_DT_MC          0x08   //!< Medium Changer
-#define  SCSI_INQ_DT_ARRAY       0x0C   //!< Storage Array Controller
-#define  SCSI_INQ_DT_ENCLOSURE   0x0D   //!< Enclosure Services
-#define  SCSI_INQ_DT_RBC         0x0E   //!< Simplified Direct Access
-#define  SCSI_INQ_DT_OCRW        0x0F   //!< Optical card reader/writer
-#define  SCSI_INQ_DT_BCC         0x10   //!< Bridge Controller Commands
-#define  SCSI_INQ_DT_OSD         0x11   //!< Object-based Storage
-#define  SCSI_INQ_DT_NONE        0x1F   //!< No Peripheral
-	uint8_t flags1; //!< Flags (byte 1)
-#define  SCSI_INQ_RMB            0x80   //!< Removable Medium
-	uint8_t version; //!< Version
-#define  SCSI_INQ_VER_NONE       0x00   //!< No standards conformance
-#define  SCSI_INQ_VER_SPC        0x03   //!< SCSI Primary Commands     (link to SBC)
-#define  SCSI_INQ_VER_SPC2       0x04   //!< SCSI Primary Commands - 2 (link to SBC-2)
-#define  SCSI_INQ_VER_SPC3       0x05   //!< SCSI Primary Commands - 3 (link to SBC-2)
-#define  SCSI_INQ_VER_SPC4       0x06   //!< SCSI Primary Commands - 4 (link to SBC-3)
-	uint8_t flags3; //!< Flags (byte 3)
-#define  SCSI_INQ_NORMACA        0x20   //!< Normal ACA Supported
-#define  SCSI_INQ_HISUP          0x10   //!< Hierarchal LUN addressing
-#define  SCSI_INQ_RSP_SPC2       0x02   //!< SPC-2 / SPC-3 response format
-	uint8_t addl_len; //!< Additional Length (n-4)
-#define  SCSI_INQ_ADDL_LEN(tot)  ((tot)-5) //!< Total length is \a tot
-	uint8_t flags5; //!< Flags (byte 5)
+	uint8_t pq_pdt; //!< Peripheral Qual / Peripheral Dev Type//！<外围设备质量/外围设备开发类型
+#define  SCSI_INQ_PQ_CONNECTED   0x00   //!< Peripheral connected//！<外设已连接
+#define  SCSI_INQ_PQ_NOT_CONN    0x20   //!< Peripheral not connected//！<外围设备未连接
+#define  SCSI_INQ_PQ_NOT_SUPP    0x60   //!< Peripheral not supported//！<不支持外围设备
+#define  SCSI_INQ_DT_DIR_ACCESS  0x00   //!< Direct Access (SBC)//！<直接访问（SBC）
+#define  SCSI_INQ_DT_SEQ_ACCESS  0x01   //!< Sequential Access//！<顺序存取
+#define  SCSI_INQ_DT_PRINTER     0x02   //!< Printer//！<打印机
+#define  SCSI_INQ_DT_PROCESSOR   0x03   //!< Processor device//处理器设备
+#define  SCSI_INQ_DT_WRITE_ONCE  0x04   //!< Write-once device//！<一次写入设备
+#define  SCSI_INQ_DT_CD_DVD      0x05   //!< CD/DVD device//！<CD/DVD设备
+#define  SCSI_INQ_DT_OPTICAL     0x07   //!< Optical Memory//！<光存储器
+#define  SCSI_INQ_DT_MC          0x08   //!< Medium Changer//！<媒体转换器
+#define  SCSI_INQ_DT_ARRAY       0x0C   //!< Storage Array Controller//！<存储阵列控制器
+#define  SCSI_INQ_DT_ENCLOSURE   0x0D   //!< Enclosure Services//！<附件服务
+#define  SCSI_INQ_DT_RBC         0x0E   //!< Simplified Direct Access//！<简化的直接访问
+#define  SCSI_INQ_DT_OCRW        0x0F   //!< Optical card reader/writer//！<光卡读写器
+#define  SCSI_INQ_DT_BCC         0x10   //!< Bridge Controller Commands//！<桥接器控制器命令
+#define  SCSI_INQ_DT_OSD         0x11   //!< Object-based Storage//！<基于对象的存储
+#define  SCSI_INQ_DT_NONE        0x1F   //!< No Peripheral//！<没有外设
+	uint8_t flags1; //!< Flags (byte 1)//！<标志（字节1）
+#define  SCSI_INQ_RMB            0x80   //!< Removable Medium//！<可移动介质
+	uint8_t version; //!< Version//！<版本
+#define  SCSI_INQ_VER_NONE       0x00   //!< No standards conformance//！<不符合标准
+#define  SCSI_INQ_VER_SPC        0x03   //!< SCSI Primary Commands     (link to SBC)//！<SCSI主命令（链接到SBC）
+#define  SCSI_INQ_VER_SPC2       0x04   //!< SCSI Primary Commands - 2 (link to SBC-2)//！<SCSI主命令-2（链接到SBC-2）
+#define  SCSI_INQ_VER_SPC3       0x05   //!< SCSI Primary Commands - 3 (link to SBC-2)//！<SCSI主命令-3（链接到SBC-2）
+#define  SCSI_INQ_VER_SPC4       0x06   //!< SCSI Primary Commands - 4 (link to SBC-3)//！<SCSI主命令-4（链接到SBC-3）
+	uint8_t flags3; //!< Flags (byte 3)//！<标志（字节3）
+#define  SCSI_INQ_NORMACA        0x20   //!< Normal ACA Supported//！<支持正常ACA
+#define  SCSI_INQ_HISUP          0x10   //!< Hierarchal LUN addressing//！<分层LUN寻址
+#define  SCSI_INQ_RSP_SPC2       0x02   //!< SPC-2 / SPC-3 response format//！<SPC-2/SPC-3响应格式
+	uint8_t addl_len; //!< Additional Length (n-4)//！<附加长度（n-4）
+#define  SCSI_INQ_ADDL_LEN(tot)  ((tot)-5) //!< Total length is \a tot//！<总长度为\a总长度
+	uint8_t flags5; //!< Flags (byte 5)//！<标志（字节5）
 #define  SCSI_INQ_SCCS           0x80
-	uint8_t flags6; //!< Flags (byte 6)
+	uint8_t flags6; //!< Flags (byte 6)//！<标志（字节6）
 #define  SCSI_INQ_BQUE           0x80
 #define  SCSI_INQ_ENCSERV        0x40
 #define  SCSI_INQ_MULTIP         0x10
 #define  SCSI_INQ_MCHGR          0x08
 #define  SCSI_INQ_ADDR16         0x01
-	uint8_t flags7; //!< Flags (byte 7)
+	uint8_t flags7; //!< Flags (byte 7)//！<标志（字节7）
 #define  SCSI_INQ_WBUS16         0x20
 #define  SCSI_INQ_SYNC           0x10
 #define  SCSI_INQ_LINKED         0x08
 #define  SCSI_INQ_CMDQUE         0x02
-	uint8_t vendor_id[8];   //!< T10 Vendor Identification
-	uint8_t product_id[16]; //!< Product Identification
-	uint8_t product_rev[4]; //!< Product Revision Level
+	uint8_t vendor_id[8];   //!< T10 Vendor Identification//!< T10供应商标识
+	uint8_t product_id[16]; //!< Product Identification//!< 产品标识
+	uint8_t product_rev[4]; //!< Product Revision Level//!< 产品修订级别
 };
 
 /**
@@ -141,9 +142,9 @@ struct scsi_inquiry_data {
 struct scsi_request_sense_data {
 	/* 1st byte: REQUEST SENSE response flags*/
 	uint8_t valid_reponse_code;
-#define  SCSI_SENSE_VALID              0x80 //!< Indicates the INFORMATION field contains valid information
+#define  SCSI_SENSE_VALID              0x80 //!< Indicates the INFORMATION field contains valid information//!< 指示信息字段包含有效信息
 #define  SCSI_SENSE_RESPONSE_CODE_MASK 0x7F
-#define  SCSI_SENSE_CURRENT            0x70 //!< Response code 70h (current errors)
+#define  SCSI_SENSE_CURRENT            0x70 //!< Response code 70h (current errors)//!< 响应代码70h（当前错误）
 #define  SCSI_SENSE_DEFERRED           0x71
 
 	/* 2nd byte */
@@ -151,11 +152,11 @@ struct scsi_request_sense_data {
 
 	/* 3rd byte */
 	uint8_t sense_flag_key;
-#define  SCSI_SENSE_FILEMARK        0x80 //!< Indicates that the current command has read a filemark or setmark.
-#define  SCSI_SENSE_EOM             0x40 //!< Indicates that an end-of-medium condition exists.
-#define  SCSI_SENSE_ILI             0x20 //!< Indicates that the requested logical block length did not match the logical block length of the data on the medium.
-#define  SCSI_SENSE_RESERVED        0x10 //!< Reserved
-#define  SCSI_SENSE_KEY(x)          (x&0x0F) //!< Sense Key
+#define  SCSI_SENSE_FILEMARK        0x80 //!< Indicates that the current command has read a filemark or setmark.//!< 指示当前命令已读取文件标记或设置标记。
+#define  SCSI_SENSE_EOM             0x40 //!< Indicates that an end-of-medium condition exists.//!< 指示存在介质结束条件。
+#define  SCSI_SENSE_ILI             0x20 //!< Indicates that the requested logical block length did not match the logical block length of the data on the medium.//!< 指示请求的逻辑块长度与介质上数据的逻辑块长度不匹配。
+#define  SCSI_SENSE_RESERVED        0x10 //!< Reserved//!< 含蓄的
+#define  SCSI_SENSE_KEY(x)          (x&0x0F) //!< Sense Key//!< 感知键
 
 	/* 4th to 7th bytes - INFORMATION field */
 	uint8_t information[4];
@@ -178,7 +179,7 @@ struct scsi_request_sense_data {
 
 	/* 16th byte */
 	uint8_t SenseKeySpec[3];
-#define  SCSI_SENSE_SKSV            0x80 //!< Indicates the SENSE-KEY SPECIFIC field contains valid information
+#define  SCSI_SENSE_SKSV            0x80 //!< Indicates the SENSE-KEY SPECIFIC field contains valid information//！<表示传感键特定字段包含有效信息
 };
 
 COMPILER_PACK_RESET()
@@ -241,7 +242,7 @@ enum scsi_asc_ascq {
  */
 enum scsi_spc_mode {
 	SCSI_MS_MODE_VENDOR_SPEC = 0x00,
-	SCSI_MS_MODE_INFEXP = 0x1C,    // Informational exceptions control page
+	SCSI_MS_MODE_INFEXP = 0x1C,    // Informational exceptions control page//信息性异常控制页
 	SCSI_MS_MODE_ALL = 0x3F,
 };
 
@@ -254,12 +255,12 @@ struct spc_control_page_info_execpt {
 	uint8_t page_length;
 #define  SPC_MP_INFEXP_PAGE_LENGTH     0x0A
 	uint8_t flags1;
-#define  SPC_MP_INFEXP_PERF            (1<<7)   //!< Initiator Control
-#define  SPC_MP_INFEXP_EBF             (1<<5)   //!< Caching Analysis Permitted
-#define  SPC_MP_INFEXP_EWASC           (1<<4)   //!< Discontinuity
-#define  SPC_MP_INFEXP_DEXCPT          (1<<3)   //!< Size enable
-#define  SPC_MP_INFEXP_TEST            (1<<2)   //!< Writeback Cache Enable
-#define  SPC_MP_INFEXP_LOGERR          (1<<0)   //!< Log errors bit
+#define  SPC_MP_INFEXP_PERF            (1<<7)   //!< Initiator Control//!< 启动器控制
+#define  SPC_MP_INFEXP_EBF             (1<<5)   //!< Caching Analysis Permitted//!< 允许进行缓存分析
+#define  SPC_MP_INFEXP_EWASC           (1<<4)   //!< Discontinuity//!< 间断
+#define  SPC_MP_INFEXP_DEXCPT          (1<<3)   //!< Size enable//!< 大小启用
+#define  SPC_MP_INFEXP_TEST            (1<<2)   //!< Writeback Cache Enable//!< 写回缓存启用
+#define  SPC_MP_INFEXP_LOGERR          (1<<0)   //!< Log errors bit//!< 日志错误位
 	uint8_t mrie;
 #define  SPC_MP_INFEXP_MRIE_NO_REPORT           0x00
 #define  SPC_MP_INFEXP_MRIE_ASYNC_EVENT         0x01
@@ -302,10 +303,10 @@ static inline uint8_t scsi_mode_sense_get_pc(const uint8_t * cdb)
  * SENSE(6)
  */
 struct scsi_mode_param_header6 {
-	uint8_t mode_data_length;	//!< Number of bytes after this
-	uint8_t medium_type;	//!< Medium Type
-	uint8_t device_specific_parameter;	//!< Defined by command set
-	uint8_t block_descriptor_length;	//!< Length of block descriptors
+	uint8_t mode_data_length;	//!< Number of bytes after this//！<在此之后的字节数
+	uint8_t medium_type;	//!< Medium Type//！<中型
+	uint8_t device_specific_parameter;	//!< Defined by command set//！<由命令集定义
+	uint8_t block_descriptor_length;	//!< Length of block descriptors//！<块描述符的长度
 };
 
 /**
@@ -313,12 +314,12 @@ struct scsi_mode_param_header6 {
  * SENSE(10)
  */
 struct scsi_mode_param_header10 {
-	be16_t mode_data_length;	//!< Number of bytes after this
-	uint8_t medium_type;	//!< Medium Type
-	uint8_t device_specific_parameter;	//!< Defined by command set
-	uint8_t flags4;	//!< LONGLBA in bit 0
+	be16_t mode_data_length;	//!< Number of bytes after this//！<在此之后的字节数
+	uint8_t medium_type;	//!< Medium Type//！<中型
+	uint8_t device_specific_parameter;	//!< Defined by command set//！<由命令集定义
+	uint8_t flags4;	//!< LONGLBA in bit 0//！<位0中的LONGLBA
 	uint8_t reserved;
-	be16_t block_descriptor_length;	//!< Length of block descriptors
+	be16_t block_descriptor_length;	//!< Length of block descriptors//！<块描述符的长度
 };
 
 /**
@@ -326,12 +327,12 @@ struct scsi_mode_param_header10 {
  */
 struct scsi_mode_page_0_header {
 	uint8_t page_code;
-#define  SCSI_PAGE_CODE_PS          (1 << 7)	//!< Parameters Saveable
-#define  SCSI_PAGE_CODE_SPF         (1 << 6)	//!< SubPage Format
-	uint8_t page_length;	//!< Number of bytes after this
+#define  SCSI_PAGE_CODE_PS          (1 << 7)	//!< Parameters Saveable//！<可保存的参数
+#define  SCSI_PAGE_CODE_SPF         (1 << 6)	//!< SubPage Format//！<子页面格式
+	uint8_t page_length;	//!< Number of bytes after this//！<在此之后的字节数
 #define  SCSI_MS_PAGE_LEN(total)   ((total) - 2)
 };
 
-//@}
+//@}//@}
 
-#endif // SPC_PROTOCOL_H_
+#endif // SPC_PROTOCOL_H_//SPC_协议_

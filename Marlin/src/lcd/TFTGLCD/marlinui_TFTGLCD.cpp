@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -64,15 +65,15 @@
 TFTGLCD lcd;
 
 #define ICON_LOGO       B00000001
-#define ICON_TEMP1      B00000010    //hotend 1
-#define ICON_TEMP2      B00000100    //hotend 2
-#define ICON_TEMP3      B00001000    //hotend 3
+#define ICON_TEMP1      B00000010    //hotend 1//热端1
+#define ICON_TEMP2      B00000100    //hotend 2//热端2
+#define ICON_TEMP3      B00001000    //hotend 3//热端3
 #define ICON_BED        B00010000
 #define ICON_FAN        B00100000
-#define ICON_HOT        B01000000    //when any T > 50deg
+#define ICON_HOT        B01000000    //when any T > 50deg//当任何温度>50度时
 #define PIC_MASK        0x7F
 
-// LEDs not used, for compatibility with Smoothieware
+// LEDs not used, for compatibility with Smoothieware//未使用LED，与Smoothieware兼容
 #define LED_HOTEND_ON   B00000001
 #define LED_BED_ON      B00000010
 #define LED_FAN_ON      B00000100
@@ -82,41 +83,41 @@ TFTGLCD lcd;
 #define FBSIZE          (LCD_WIDTH * LCD_HEIGHT + 2)
 #define MIDDLE_Y        ((LCD_HEIGHT - 1) / 2)
 
-// Markers for change line colors
+// Markers for change line colors//用于更改线条颜色的标记
 #define COLOR_EDIT      '#'
 #define COLOR_ERROR     '!'
 
-#ifdef CONVERT_TO_EXT_ASCII   //use standart pseudographic symbols in ASCII table
-  #define LR            179   //vertical line
-  #define TRC           191   //top right corner
-  #define BLC           192   //bottom left corner
-  #define GL            196   //horizontal line
-  #define BRC           217   //bottom right corner, should be replaced to 12 for some languages
-  #define TLC           218   //top left corner, should be replaced to 13 for some languages
-#else //next symbols must be present in panel font
-  #define LR            8     //equal to 179
-  #define TRC           9     //equal to 191
-  #define BLC           10    //equal to 192
-  #define GL            11    //equal to 196
-  #define BRC           12    //equal to 217
-  #define TLC           13    //equal to 218
+#ifdef CONVERT_TO_EXT_ASCII   //use standart pseudographic symbols in ASCII table//在ASCII表中使用标准伪图形符号
+  #define LR            179   //vertical line//垂直线
+  #define TRC           191   //top right corner//右上角
+  #define BLC           192   //bottom left corner//左下角
+  #define GL            196   //horizontal line//水平线
+  #define BRC           217   //bottom right corner, should be replaced to 12 for some languages//右下角，对于某些语言应替换为12
+  #define TLC           218   //top left corner, should be replaced to 13 for some languages//左上角，对于某些语言应替换为13
+#else //next symbols must be present in panel font//下一个符号必须以面板字体显示
+  #define LR            8     //equal to 179//等于179
+  #define TRC           9     //equal to 191//等于191
+  #define BLC           10    //equal to 192//等于192
+  #define GL            11    //equal to 196//等于196
+  #define BRC           12    //equal to 217//等于217
+  #define TLC           13    //equal to 218//等于218
 #endif
 
 #define Marlin  0x01
 
-enum Commands {         // based on Smoothieware commands
+enum Commands {         // based on Smoothieware commands//基于Smoothieware命令
   GET_SPI_DATA = 0,
-  READ_BUTTONS,         // read buttons
-  READ_ENCODER,         // read encoder
-  LCD_WRITE,            // write all screen to LCD
-  BUZZER,               // beep buzzer
-  CONTRAST,             // set contrast (brightnes)
-  // Other commands... 0xE0 thru 0xFF
-  GET_LCD_ROW = 0xE0,   // for detect panel
-  GET_LCD_COL,          // reserved for compatibility with Smoothieware, not used
-  LCD_PUT,              // write one line to LCD
+  READ_BUTTONS,         // read buttons//阅读按钮
+  READ_ENCODER,         // read encoder//读编码器
+  LCD_WRITE,            // write all screen to LCD//将所有屏幕写入LCD
+  BUZZER,               // beep buzzer//蜂鸣器
+  CONTRAST,             // set contrast (brightnes)//设置对比度（布莱恩斯）
+  // Other commands... 0xE0 thru 0xFF//其他命令。。。0xE0至0xFF
+  GET_LCD_ROW = 0xE0,   // for detect panel//用于检测面板
+  GET_LCD_COL,          // reserved for compatibility with Smoothieware, not used//保留用于与Smoothieware兼容，未使用
+  LCD_PUT,              // write one line to LCD//将一行写入LCD
   CLR_SCREEN,
-  INIT_SCREEN = 0xFE    // clear panel buffer
+  INIT_SCREEN = 0xFE    // clear panel buffer//清除面板缓冲区
 };
 
 static unsigned char framebuffer[FBSIZE];
@@ -125,7 +126,7 @@ static uint8_t cour_line;
 static uint8_t picBits, ledBits, hotBits;
 static uint8_t PanelDetected = 0;
 
-// Different platforms use different SPI methods
+// Different platforms use different SPI methods//不同的平台使用不同的SPI方法
 #if ANY(__AVR__, TARGET_LPC1768, __STM32F1__, ARDUINO_ARCH_SAM, __SAMD51__, __MK20DX256__, __MK64FX512__)
   #define SPI_SEND_ONE(V) SPI.transfer(V);
   #define SPI_SEND_TWO(V) SPI.transfer16(V);
@@ -145,17 +146,17 @@ static uint8_t PanelDetected = 0;
   #define SPI_SEND_SOME(V,L,Z)  do{ for (uint16_t i = 0; i < L; i++) SPI_SEND_ONE(V[(Z)+i]); }while(0)
 #endif
 
-// Constructor
+// Constructor//建造师
 TFTGLCD::TFTGLCD() {}
 
-// Clear local buffer
+// Clear local buffer//清除本地缓冲区
 void TFTGLCD::clear_buffer() {
   memset(&framebuffer[0], ' ', FBSIZE - 2);
   framebuffer[FBSIZE - 1] = framebuffer[FBSIZE - 2] = 0;
   picBits = ledBits = 0;
 }
 
-// Clear panel's screen
+// Clear panel's screen//清除面板的屏幕
 void TFTGLCD::clr_screen() {
   if (!PanelDetected) return;
   #if ENABLED(TFTGLCD_PANEL_SPI)
@@ -163,29 +164,29 @@ void TFTGLCD::clr_screen() {
     SPI_SEND_ONE(CLR_SCREEN);
     WRITE(TFTGLCD_CS, HIGH);
   #else
-    Wire.beginTransmission((uint8_t)LCD_I2C_ADDRESS);  //set I2C device address
+    Wire.beginTransmission((uint8_t)LCD_I2C_ADDRESS);  //set I2C device address//设置I2C设备地址
     Wire.write(CLR_SCREEN);
-    Wire.endTransmission(); //transmit data
+    Wire.endTransmission(); //transmit data//传输数据
   #endif
 }
 
-// Set new text cursor position
+// Set new text cursor position//设置新文本光标位置
 void TFTGLCD::setCursor(uint8_t col, uint8_t row) {
   fb = &framebuffer[0] + col + row * LCD_WIDTH;
   cour_line = row;
 }
 
-// Send char to buffer
+// Send char to buffer//将字符发送到缓冲区
 void TFTGLCD::write(char c) {
   *fb++ = c;
 }
 
-// Send text line to buffer
+// Send text line to buffer//将文本行发送到缓冲区
 void TFTGLCD::print(const char *line) {
   while (*line) *fb++ = *line++;
 }
 
-// For menu
+// For menu//菜单
 void TFTGLCD::print_line() {
   if (!PanelDetected) return;
   #if ENABLED(TFTGLCD_PANEL_SPI)
@@ -195,11 +196,11 @@ void TFTGLCD::print_line() {
     SPI_SEND_SOME(framebuffer, LCD_WIDTH, cour_line * LCD_WIDTH);
     WRITE(TFTGLCD_CS, HIGH);
   #else
-    Wire.beginTransmission((uint8_t)LCD_I2C_ADDRESS);  //set I2C device address
+    Wire.beginTransmission((uint8_t)LCD_I2C_ADDRESS);  //set I2C device address//设置I2C设备地址
     Wire.write(LCD_PUT);
     Wire.write(cour_line);
-    Wire.write(&framebuffer[cour_line * LCD_WIDTH], LCD_WIDTH);  //transfer 1 line to txBuffer
-    Wire.endTransmission(); //transmit data
+    Wire.write(&framebuffer[cour_line * LCD_WIDTH], LCD_WIDTH);  //transfer 1 line to txBuffer//将1条线路转接至txBuffer
+    Wire.endTransmission(); //transmit data//传输数据
     safe_delay(1);
   #endif
 }
@@ -209,16 +210,16 @@ void TFTGLCD::print_screen() {
   framebuffer[FBSIZE - 2] = picBits & PIC_MASK;
   framebuffer[FBSIZE - 1] = ledBits;
   #if ENABLED(TFTGLCD_PANEL_SPI)
-    // Send all framebuffer to panel
+    // Send all framebuffer to panel//将所有帧缓冲区发送到面板
     WRITE(TFTGLCD_CS, LOW);
     SPI_SEND_ONE(LCD_WRITE);
     SPI_SEND_SOME(framebuffer, FBSIZE, 0);
     WRITE(TFTGLCD_CS, HIGH);
   #else
     uint8_t r;
-    // Send framebuffer to panel by line
+    // Send framebuffer to panel by line//按行将帧缓冲区发送到面板
     Wire.beginTransmission((uint8_t)LCD_I2C_ADDRESS);
-    // First line
+    // First line//一线
     Wire.write(LCD_WRITE);
     Wire.write(&framebuffer[0], LCD_WIDTH);
     Wire.endTransmission();
@@ -227,7 +228,7 @@ void TFTGLCD::print_screen() {
       Wire.write(&framebuffer[r * LCD_WIDTH], LCD_WIDTH);
       Wire.endTransmission();
     }
-    // Last line
+    // Last line//最后一行
     Wire.beginTransmission((uint8_t)LCD_I2C_ADDRESS);
     Wire.write(&framebuffer[r * LCD_WIDTH], LCD_WIDTH);
     Wire.write(&framebuffer[FBSIZE - 2], 2);
@@ -252,7 +253,7 @@ void TFTGLCD::setContrast(uint16_t contrast) {
 
 extern volatile int8_t encoderDiff;
 
-// Read buttons and encoder states
+// Read buttons and encoder states//读取按钮和编码器状态
 uint8_t MarlinUI::read_slow_buttons(void) {
   if (!PanelDetected)    return 0;
   #if ENABLED(TFTGLCD_PANEL_SPI)
@@ -260,11 +261,11 @@ uint8_t MarlinUI::read_slow_buttons(void) {
     WRITE(TFTGLCD_CS, LOW);
     SPI_SEND_ONE(READ_ENCODER);
     #ifndef STM32F4xx
-      WRITE(TFTGLCD_CS, LOW); // for delay
+      WRITE(TFTGLCD_CS, LOW); // for delay//耽搁
     #endif
     encoderDiff += SPI_SEND_ONE(READ_BUTTONS);
     #ifndef STM32F4xx
-      WRITE(TFTGLCD_CS, LOW); // for delay
+      WRITE(TFTGLCD_CS, LOW); // for delay//耽搁
       WRITE(TFTGLCD_CS, LOW);
     #endif
     b = SPI_SEND_ONE(GET_SPI_DATA);
@@ -282,11 +283,11 @@ uint8_t MarlinUI::read_slow_buttons(void) {
       Wire.requestFrom(LCD_I2C_ADDRESS, 2);
     #endif
     encoderDiff += Wire.read();
-    return Wire.read();   //buttons
+    return Wire.read();   //buttons//钮扣
   #endif
 }
 
-// Duration in ms, freq in Hz
+// Duration in ms, freq in Hz//持续时间（毫秒），频率（赫兹）
 void MarlinUI::buzz(const long duration, const uint16_t freq) {
   if (!PanelDetected) return;
   if (!buzzer_enabled) return;
@@ -312,7 +313,7 @@ void MarlinUI::init_lcd() {
   lcd.clear_buffer();
   t = 0;
   #if ENABLED(TFTGLCD_PANEL_SPI)
-    // SPI speed must be less 10MHz
+    // SPI speed must be less 10MHz//SPI速度必须小于10MHz
     SET_OUTPUT(TFTGLCD_CS);
     WRITE(TFTGLCD_CS, HIGH);
     spiInit(TERN(__STM32F1__, SPI_QUARTER_SPEED, SPI_FULL_SPEED));
@@ -321,13 +322,13 @@ void MarlinUI::init_lcd() {
     t = SPI_SEND_ONE(GET_SPI_DATA);
   #else
     #ifdef TARGET_LPC1768
-      Wire.begin();   //init twi/I2C
+      Wire.begin();   //init twi/I2C//初始化twi/I2C
     #else
-      Wire.begin((uint8_t)LCD_I2C_ADDRESS); //init twi/I2C
+      Wire.begin((uint8_t)LCD_I2C_ADDRESS); //init twi/I2C//初始化twi/I2C
     #endif
     Wire.beginTransmission((uint8_t)LCD_I2C_ADDRESS);
-    Wire.write((uint8_t)GET_LCD_ROW); // put command to buffer
-    Wire.endTransmission(); // send buffer
+    Wire.write((uint8_t)GET_LCD_ROW); // put command to buffer//将命令放入缓冲区
+    Wire.endTransmission(); // send buffer//发送缓冲区
     #ifdef __AVR__
       Wire.requestFrom((uint8_t)LCD_I2C_ADDRESS, 1, 0, 0, 1);
     #elif ANY(STM32F1, STM32F4xx, TARGET_LPC1768)
@@ -364,7 +365,7 @@ void MarlinUI::clear_lcd() {
   lcd.clear_buffer();
 }
 
-int16_t MarlinUI::contrast; // Initialized by settings.load()
+int16_t MarlinUI::contrast; // Initialized by settings.load()//由settings.load（）初始化
 
 void MarlinUI::set_contrast(const int16_t value) {
   contrast = constrain(value, LCD_CONTRAST_MIN, LCD_CONTRAST_MAX);
@@ -384,12 +385,12 @@ static void center_text_P(PGM_P pstart, uint8_t y) {
 
   void MarlinUI::show_bootscreen() {
     if (!PanelDetected) return;
-    //
-    // Show the Marlin logo, splash line1, and splash line 2
-    //
+    ////
+    // Show the Marlin logo, splash line1, and splash line 2//显示马林鱼徽标、飞溅线1和飞溅线2
+    ////
     uint8_t indent = (LCD_WIDTH - 8) / 2;
-    // symbols 217 (bottom right corner) and 218 (top left corner) are using for letters in some languages
-    // and they should be moved to begining ASCII table as spetial symbols
+    // symbols 217 (bottom right corner) and 218 (top left corner) are using for letters in some languages//符号217（右下角）和218（左上角）用于某些语言中的字母
+    // and they should be moved to begining ASCII table as spetial symbols//它们应该作为特殊符号移到ASCII表的开头
     lcd.setCursor(indent, 0); lcd.write(TLC); lcd_put_u8str_P(PSTR("------"));  lcd.write(TRC);
     lcd.setCursor(indent, 1); lcd.write(LR);  lcd_put_u8str_P(PSTR("Marlin"));  lcd.write(LR);
     lcd.setCursor(indent, 2); lcd.write(BLC); lcd_put_u8str_P(PSTR("------"));  lcd.write(BRC);
@@ -403,7 +404,7 @@ static void center_text_P(PGM_P pstart, uint8_t y) {
     if ((BOOTSCREEN_TIMEOUT) > sofar) safe_delay((BOOTSCREEN_TIMEOUT) - sofar);
   }
 
-#endif // SHOW_BOOTSCREEN
+#endif // SHOW_BOOTSCREEN//显示启动屏幕
 
 void MarlinUI::draw_kill_screen() {
   if (!PanelDetected) return;
@@ -416,11 +417,11 @@ void MarlinUI::draw_kill_screen() {
   lcd.print_screen();
 }
 
-//
-// Before homing, blink '123' <-> '???'.
-// Homed but unknown... '123' <-> '   '.
-// Homed and known, display constantly.
-//
+////
+// Before homing, blink '123' <-> '???'.//归位前，闪烁“123”<->“？？”。
+// Homed but unknown... '123' <-> '   './/有家但不知道……”123' <-> '   '.
+// Homed and known, display constantly.//家喻户晓，不断展示。
+////
 FORCE_INLINE void _draw_axis_value(const AxisEnum axis, const char *value, const bool blink) {
   lcd.write('X' + uint8_t(axis));
   if (blink)
@@ -445,27 +446,27 @@ FORCE_INLINE void _draw_heater_status(const heater_id_t heater_id, const char *p
 
   #if HOTENDS < 2
     if (heater_id == H_E0) {
-      lcd.setCursor(2, 5);  lcd.print(prefix); //HE
+      lcd.setCursor(2, 5);  lcd.print(prefix); //HE//他
       lcd.setCursor(1, 6);  lcd.print(i16tostr3rj(t1));
       lcd.setCursor(1, 7);
     }
     else {
-      lcd.setCursor(6, 5);  lcd.print(prefix); //BED
+      lcd.setCursor(6, 5);  lcd.print(prefix); //BED//床
       lcd.setCursor(6, 6);  lcd.print(i16tostr3rj(t1));
       lcd.setCursor(6, 7);
     }
   #else
     if (heater_id > H_BED) {
-      lcd.setCursor(heater_id * 4, 5);  lcd.print(prefix); // HE1 or HE2 or HE3
+      lcd.setCursor(heater_id * 4, 5);  lcd.print(prefix); // HE1 or HE2 or HE3//HE1或HE2或HE3
       lcd.setCursor(heater_id * 4, 6);  lcd.print(i16tostr3rj(t1));
       lcd.setCursor(heater_id * 4, 7);
     }
     else {
-      lcd.setCursor(13, 5);  lcd.print(prefix); //BED
+      lcd.setCursor(13, 5);  lcd.print(prefix); //BED//床
       lcd.setCursor(13, 6);  lcd.print(i16tostr3rj(t1));
       lcd.setCursor(13, 7);
     }
-  #endif // HOTENDS <= 1
+  #endif // HOTENDS <= 1//热端<=1
 
   #if !HEATER_IDLE_HANDLER
     UNUSED(blink);
@@ -476,7 +477,7 @@ FORCE_INLINE void _draw_heater_status(const heater_id_t heater_id, const char *p
       if (t2 >= 100) lcd.write(' ');
     }
     else
-  #endif // !HEATER_IDLE_HANDLER
+  #endif // !HEATER_IDLE_HANDLER// !加热器\空闲\处理器
       lcd.print(i16tostr3rj(t2));
 
   switch (heater_id) {
@@ -514,16 +515,16 @@ FORCE_INLINE void _draw_heater_status(const heater_id_t heater_id, const char *p
     lcd.write('%');
   }
 
-#endif // HAS_PRINT_PROGRESS
+#endif // HAS_PRINT_PROGRESS//有进展吗
 
 #if ENABLED(LCD_PROGRESS_BAR)
 
   void MarlinUI::draw_progress_bar(const uint8_t percent) {
     if (!PanelDetected) return;
-    if (fb == &framebuffer[0] + LCD_WIDTH * 2) {  // For status screen
+    if (fb == &framebuffer[0] + LCD_WIDTH * 2) {  // For status screen//用于状态屏幕
       lcd.write('%'); lcd.write(percent);
     }
-    else { // For progress bar test
+    else { // For progress bar test//用于进度条测试
       lcd.setCursor(LCD_WIDTH / 2 - 2, MIDDLE_Y);
       lcd.print(i16tostr3rj(percent));  lcd.write('%');
       lcd.print_line();
@@ -540,7 +541,7 @@ void MarlinUI::draw_status_message(const bool blink) {
   lcd.setCursor(0, 3);
   #if BOTH(FILAMENT_LCD_DISPLAY, SDSUPPORT)
 
-    // Alternate Status message and Filament display
+    // Alternate Status message and Filament display//备用状态信息和灯丝显示
     if (ELAPSED(millis(), next_filament_display)) {
       lcd_put_u8str_P(PSTR("Dia "));
       lcd.print(ftostr12ns(filament_width_meas));
@@ -555,43 +556,43 @@ void MarlinUI::draw_status_message(const bool blink) {
       return;
     }
 
-  #endif // FILAMENT_LCD_DISPLAY && SDSUPPORT
+  #endif // FILAMENT_LCD_DISPLAY && SDSUPPORT//灯丝\u LCD\u显示器和SDU支持
 
-  // Get the UTF8 character count of the string
+  // Get the UTF8 character count of the string//获取字符串的UTF8字符计数
   uint8_t slen = utf8_strlen(status_message);
 
   #if ENABLED(STATUS_MESSAGE_SCROLLING)
 
     static bool last_blink = false;
 
-    // If the string fits into the LCD, just print it and do not scroll it
+    // If the string fits into the LCD, just print it and do not scroll it//如果字符串适合LCD，只需打印它，不要滚动它
     if (slen <= LCD_WIDTH) {
 
-      // The string isn't scrolling and may not fill the screen
+      // The string isn't scrolling and may not fill the screen//字符串没有滚动，可能无法填充屏幕
       lcd_put_u8str(status_message);
 
-      // Fill the rest with spaces
+      // Fill the rest with spaces//用空格填充其余部分
       while (slen < LCD_WIDTH) { lcd.write(' '); ++slen; }
     }
     else {
-      // String is larger than the available space in screen.
+      // String is larger than the available space in screen.//字符串大于屏幕中的可用空间。
 
-      // Get a pointer to the next valid UTF8 character
-      // and the string remaining length
+      // Get a pointer to the next valid UTF8 character//获取指向下一个有效UTF8字符的指针
+      // and the string remaining length//和字符串的剩余长度
       uint8_t rlen;
       const char *stat = status_and_len(rlen);
-      lcd_put_u8str_max(stat, LCD_WIDTH);     // The string leaves space
+      lcd_put_u8str_max(stat, LCD_WIDTH);     // The string leaves space//字符串留下了空间
 
-      // If the remaining string doesn't completely fill the screen
+      // If the remaining string doesn't completely fill the screen//如果剩余的字符串没有完全填满屏幕
       if (rlen < LCD_WIDTH) {
-        uint8_t chars = LCD_WIDTH - rlen;     // Amount of space left in characters
-        lcd.write(' ');                       // Always at 1+ spaces left, draw a space
-        if (--chars) {                        // Draw a second space if there's room
+        uint8_t chars = LCD_WIDTH - rlen;     // Amount of space left in characters//字符中剩余的空间量
+        lcd.write(' ');                       // Always at 1+ spaces left, draw a space//始终在左1+空格处，绘制一个空格
+        if (--chars) {                        // Draw a second space if there's room//如果有空间，再画一个空格
           lcd.write(' ');
-          if (--chars) {                      // Draw a third space if there's room
+          if (--chars) {                      // Draw a third space if there's room//如果有空间，画第三个空格
             lcd.write(' ');
             if (--chars)
-              lcd_put_u8str_max(status_message, chars); // Print a second copy of the message
+              lcd_put_u8str_max(status_message, chars); // Print a second copy of the message//打印邮件的第二份副本
           }
         }
       }
@@ -605,10 +606,10 @@ void MarlinUI::draw_status_message(const bool blink) {
 
     UNUSED(blink);
 
-    // Just print the string to the LCD
+    // Just print the string to the LCD//只需将字符串打印到LCD上
     lcd_put_u8str_max(status_message, LCD_WIDTH);
 
-    // Fill the rest with spaces if there are missing spaces
+    // Fill the rest with spaces if there are missing spaces//如果缺少空格，则用空格填充其余部分
     while (slen < LCD_WIDTH) {
       lcd.write(' ');
       ++slen;
@@ -669,9 +670,9 @@ void MarlinUI::draw_status_screen() {
 
   lcd.clear_buffer();
 
-  //
-  // Line 1 - XYZ coordinates
-  //
+  ////
+  // Line 1 - XYZ coordinates//第1行-XYZ坐标
+  ////
 
   lcd.setCursor(0, 0);
   _draw_axis_value(X_AXIS, ftostr4sign(LOGICAL_X_POSITION(current_position.x)), blink); lcd.write(' ');
@@ -682,9 +683,9 @@ void MarlinUI::draw_status_screen() {
     lcd.write(planner.leveling_active || blink ? '_' : ' ');
   #endif
 
-  //
-  // Line 2 - feedrate, , time
-  //
+  ////
+  // Line 2 - feedrate, , time//第2行-进给速度、时间
+  ////
 
   lcd.setCursor(0, 1);
   lcd_put_u8str_P(PSTR("FR")); lcd.print(i16tostr3rj(feedrate_percentage)); lcd.write('%');
@@ -701,9 +702,9 @@ void MarlinUI::draw_status_screen() {
   lcd.setCursor((LCD_WIDTH - 1) - len, 1);
   lcd.write(LCD_STR_CLOCK[0]); lcd.print(buffer);
 
-  //
-  // Line 3 - progressbar
-  //
+  ////
+  // Line 3 - progressbar//第3行-进度条
+  ////
 
   lcd.setCursor(0, 2);
   #if ENABLED(LCD_PROGRESS_BAR)
@@ -712,20 +713,20 @@ void MarlinUI::draw_status_screen() {
     lcd.write('%'); lcd.write(0);
   #endif
 
-  //
-  // Line 4 - Status Message (which may be a Filament display)
-  //
+  ////
+  // Line 4 - Status Message (which may be a Filament display)//第4行-状态信息（可能是灯丝显示屏）
+  ////
 
   draw_status_message(blink);
 
-  //
-  // Line 5
-  //
+  ////
+  // Line 5//第5行
+  ////
 
   #if HOTENDS <= 1 || (HOTENDS <= 2 && !HAS_HEATED_BED)
     #if DUAL_MIXING_EXTRUDER
       lcd.setCursor(0, 4);
-      // Two-component mix / gradient instead of XY
+      // Two-component mix / gradient instead of XY//双组分混合/渐变，而不是XY
       char mixer_messages[12];
       const char *mix_label;
       #if ENABLED(GRADIENT_MIX)
@@ -744,17 +745,17 @@ void MarlinUI::draw_status_screen() {
     #endif
   #endif
 
-  //
-  // Line 6..8 Temperatures, FAN
-  //
+  ////
+  // Line 6..8 Temperatures, FAN//第6.8行风扇温度
+  ////
 
   #if HOTENDS < 2
-    _draw_heater_status(H_E0, "HE", blink);    // Hotend Temperature
+    _draw_heater_status(H_E0, "HE", blink);    // Hotend Temperature//热端温度
   #else
-    _draw_heater_status(H_E0, "HE1", blink);   // Hotend 1 Temperature
-    _draw_heater_status(H_E1, "HE2", blink);   // Hotend 2 Temperature
+    _draw_heater_status(H_E0, "HE1", blink);   // Hotend 1 Temperature//热端1温度
+    _draw_heater_status(H_E1, "HE2", blink);   // Hotend 2 Temperature//热端2温度
     #if HOTENDS > 2
-      _draw_heater_status(H_E2, "HE3", blink); // Hotend 3 Temperature
+      _draw_heater_status(H_E2, "HE3", blink); // Hotend 3 Temperature//热端3温度
     #endif
   #endif
 
@@ -788,11 +789,11 @@ void MarlinUI::draw_status_screen() {
     else
       picBits &= ~ICON_FAN;
 
-  #endif // HAS_FAN
+  #endif // HAS_FAN//范先生
 
-  //
-  // Line 9, 10 - icons
-  //
+  ////
+  // Line 9, 10 - icons//第9行，第10行-图标
+  ////
   lcd.print_screen();
 }
 
@@ -813,7 +814,7 @@ void MarlinUI::draw_status_screen() {
 
   #endif
 
-  // Draw a static item with no left-right margin required. Centered by default.
+  // Draw a static item with no left-right margin required. Centered by default.//绘制不需要左右边距的静态项。默认情况下居中。
   void MenuItem_static::draw(const uint8_t row, PGM_P const pstr, const uint8_t style/*=SS_DEFAULT*/, const char * const valstr/*=nullptr*/) {
     if (!PanelDetected) return;
     uint8_t n = LCD_WIDTH;
@@ -828,7 +829,7 @@ void MarlinUI::draw_status_screen() {
     lcd.print_line();
   }
 
-  // Draw a generic menu item with pre_char (if selected) and post_char
+  // Draw a generic menu item with pre_char (if selected) and post_char//用pre_char（如果选中）和post_char绘制通用菜单项
   void MenuItemBase::_draw(const bool sel, const uint8_t row, PGM_P const pstr, const char pre_char, const char post_char) {
     if (!PanelDetected) return;
     lcd.setCursor(0, row);
@@ -839,7 +840,7 @@ void MarlinUI::draw_status_screen() {
     lcd.print_line();
   }
 
-  // Draw a menu item with a (potentially) editable value
+  // Draw a menu item with a (potentially) editable value//绘制具有（可能）可编辑值的菜单项
   void MenuEditItemBase::draw(const bool sel, const uint8_t row, PGM_P const pstr, const char * const data, const bool pgm) {
     if (!PanelDetected) return;
     const uint8_t vlen = data ? (pgm ? utf8_strlen_P(data) : utf8_strlen(data)) : 0;
@@ -854,8 +855,8 @@ void MarlinUI::draw_status_screen() {
     lcd.print_line();
   }
 
-  // Low-level draw_edit_screen can be used to draw an edit screen from anyplace
-  // This line moves to the last line of the screen for UBL plot screen on the panel side
+  // Low-level draw_edit_screen can be used to draw an edit screen from anyplace//低级绘制编辑屏幕可用于从任何位置绘制编辑屏幕
+  // This line moves to the last line of the screen for UBL plot screen on the panel side//该行移到面板侧UBL plot屏幕的最后一行
   void MenuEditItemBase::draw_edit_screen(PGM_P const pstr, const char * const value/*=nullptr*/) {
     if (!PanelDetected) return;
     ui.encoder_direction_normal();
@@ -865,15 +866,15 @@ void MarlinUI::draw_status_screen() {
     lcd_put_u8str_P(pstr);
     if (value) {
       lcd.write(':');
-      lcd.setCursor((LCD_WIDTH - 1) - (utf8_strlen(value) + 1), y); // Right-justified, padded by spaces
-      lcd.write(' ');                                               // Overwrite char if value gets shorter
+      lcd.setCursor((LCD_WIDTH - 1) - (utf8_strlen(value) + 1), y); // Right-justified, padded by spaces//右对齐，由空格填充
+      lcd.write(' ');                                               // Overwrite char if value gets shorter//如果值变短，则覆盖字符
       lcd.print(value);
       lcd.write(' ');
       lcd.print_line();
     }
   }
 
-  // The Select Screen presents a prompt and two "buttons"
+  // The Select Screen presents a prompt and two "buttons"//选择屏幕显示一个提示和两个“按钮”
   void MenuItem_confirm::draw_select_screen(PGM_P const yes, PGM_P const no, const bool yesno, PGM_P const pref, const char * const string, PGM_P const suff) {
     if (!PanelDetected) return;
     ui.draw_select_screen_prompt(pref, string, suff);
@@ -898,13 +899,13 @@ void MarlinUI::draw_status_screen() {
       lcd.print_line();
     }
 
-  #endif // SDSUPPORT
+  #endif // SDSUPPORT//SDSUPPORT
 
   #if ENABLED(LCD_HAS_STATUS_INDICATORS)
 
     void MarlinUI::update_indicators() {}
 
-  #endif  // LCD_HAS_STATUS_INDICATORS
+  #endif  // LCD_HAS_STATUS_INDICATORS//LCD_有_状态_指示灯
 
   #if ENABLED(AUTO_BED_LEVELING_UBL)
     /**
@@ -927,23 +928,23 @@ void MarlinUI::draw_status_screen() {
 
       lcd.clear_buffer();
 
-      //print only top left corner. All frame with grid points will be printed by panel
+      //print only top left corner. All frame with grid points will be printed by panel//只打印左上角。所有带有网格点的框架将由面板打印
       lcd.setCursor(0, 0);
-      *fb++ = TLC;   //top left corner - marker for plot parameters
-      *fb = (GRID_MAX_POINTS_X << 4) + GRID_MAX_POINTS_Y; //set mesh size
+      *fb++ = TLC;   //top left corner - marker for plot parameters//左上角-打印参数的标记
+      *fb = (GRID_MAX_POINTS_X << 4) + GRID_MAX_POINTS_Y; //set mesh size//设置网格大小
 
-      // Print plot position
+      // Print plot position//打印打印位置
       lcd.setCursor(_LCD_W_POS, 0);
       *fb++ = '(';  lcd.print(i16tostr3left(x_plot));
       *fb++ = ',';  lcd.print(i16tostr3left(y_plot)); *fb = ')';
 
-      // Show all values
+      // Show all values//显示所有值
       lcd.setCursor(_LCD_W_POS, 1); lcd_put_u8str_P(PSTR("X:"));
       lcd.print(ftostr52(LOGICAL_X_POSITION(pgm_read_float(&ubl._mesh_index_to_xpos[x_plot]))));
       lcd.setCursor(_LCD_W_POS, 2); lcd_put_u8str_P(PSTR("Y:"));
       lcd.print(ftostr52(LOGICAL_Y_POSITION(pgm_read_float(&ubl._mesh_index_to_ypos[y_plot]))));
 
-      // Show the location value
+      // Show the location value//显示位置值
       lcd.setCursor(_LCD_W_POS, 3); lcd_put_u8str_P(PSTR("Z:"));
 
       if (!isnan(ubl.z_values[x_plot][y_plot]))
@@ -956,8 +957,8 @@ void MarlinUI::draw_status_screen() {
       lcd.print_screen();
     }
 
-  #endif // AUTO_BED_LEVELING_UBL
+  #endif // AUTO_BED_LEVELING_UBL//自动调平床
 
-#endif // HAS_LCD_MENU
+#endif // HAS_LCD_MENU//有LCD菜单吗
 
-#endif // IS_TFTGLCD_PANEL
+#endif // IS_TFTGLCD_PANEL//是TFTGLCD面板吗

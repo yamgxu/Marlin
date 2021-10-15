@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,7 +32,7 @@
 /**
  * Detect an old pins file by checking for old ADC pins values.
  */
-#define _OLD_TEMP_PIN(P) PIN_EXISTS(P) && _CAT(P,_PIN) <= 7 && !WITHIN(_CAT(P,_PIN), TERN(LPC1768_IS_SKRV1_3, 0, 2), 3)  // Include P0_00 and P0_01 for SKR V1.3 board
+#define _OLD_TEMP_PIN(P) PIN_EXISTS(P) && _CAT(P,_PIN) <= 7 && !WITHIN(_CAT(P,_PIN), TERN(LPC1768_IS_SKRV1_3, 0, 2), 3)  // Include P0_00 and P0_01 for SKR V1.3 board//包括SKR V1.3板的P0_00和P0_01
 #if _OLD_TEMP_PIN(TEMP_BED)
   #error "TEMP_BED_PIN must be defined using the Pn_nn or Pn_nn_An format. (See the included pins files)."
 #elif _OLD_TEMP_PIN(TEMP_0)
@@ -67,9 +68,9 @@ static_assert(!(NUM_SERVOS && ENABLED(FAST_PWM_FAN)), "BLTOUCH and Servos are in
  * Test LPC176x-specific configuration values for errors at compile-time.
  */
 
-//#if ENABLED(SPINDLE_LASER_PWM) && !(SPINDLE_LASER_PWM_PIN == 4 || SPINDLE_LASER_PWM_PIN == 6 || SPINDLE_LASER_PWM_PIN == 11)
-//  #error "SPINDLE_LASER_PWM_PIN must use SERVO0, SERVO1 or SERVO3 connector"
-//#endif
+//#if ENABLED(SPINDLE_LASER_PWM) && !(SPINDLE_LASER_PWM_PIN == 4 || SPINDLE_LASER_PWM_PIN == 6 || SPINDLE_LASER_PWM_PIN == 11)//#如果启用（主轴激光脉宽调制）&！（主轴|激光|PWM|引脚==4 |主轴|激光|PWM|引脚==6 |主轴|激光|PWM|引脚==11）
+//  #error "SPINDLE_LASER_PWM_PIN must use SERVO0, SERVO1 or SERVO3 connector"//#错误“主轴_激光_PWM_引脚必须使用伺服0、伺服1或伺服3接头”
+//#endif//#恩迪夫
 
 #if MB(RAMPS_14_RE_ARM_EFB, RAMPS_14_RE_ARM_EEB, RAMPS_14_RE_ARM_EFF, RAMPS_14_RE_ARM_EEF, RAMPS_14_RE_ARM_SF)
   #if IS_RRD_FG_SC && HAS_DRIVER(TMC2130) && DISABLED(TMC_USE_SW_SPI)
@@ -188,13 +189,13 @@ static_assert(DISABLED(BAUD_RATE_GCODE), "BAUD_RATE_GCODE is not yet supported o
 #undef ANY_TX
 #undef ANY_RX
 
-//
-// Flag any i2c pin conflicts
-//
+////
+// Flag any i2c pin conflicts//标记任何i2c引脚冲突
+////
 #if ANY(HAS_MOTOR_CURRENT_I2C, HAS_MOTOR_CURRENT_DAC, EXPERIMENTAL_I2CBUS, I2C_POSITION_ENCODERS, PCA9632, I2C_EEPROM)
-  #define USEDI2CDEV_M 1  // <Arduino>/Wire.cpp
+  #define USEDI2CDEV_M 1  // <Arduino>/Wire.cpp//<Arduino>/Wire.cpp
 
-  #if USEDI2CDEV_M == 0         // P0_27 [D57] (AUX-1) .......... P0_28 [D58] (AUX-1)
+  #if USEDI2CDEV_M == 0         // P0_27 [D57] (AUX-1) .......... P0_28 [D58] (AUX-1)//P0_27[D57]（AUX-1）。。。。。。。。。。P0_28[D58]（AUX-1）
     #define PIN_IS_SDA0(P) (P##_PIN == P0_27)
     #define IS_SCL0(P)     (P == P0_28)
     #if ENABLED(SDSUPPORT) && PIN_IS_SDA0(SD_DETECT)
@@ -212,7 +213,7 @@ static_assert(DISABLED(BAUD_RATE_GCODE), "BAUD_RATE_GCODE is not yet supported o
     #endif
     #undef PIN_IS_SDA0
     #undef IS_SCL0
-  #elif USEDI2CDEV_M == 1       // P0_00 [D20] (SCA) ............ P0_01 [D21] (SCL)
+  #elif USEDI2CDEV_M == 1       // P0_00 [D20] (SCA) ............ P0_01 [D21] (SCL)//P0_00[D20]（SCA）。。。。。。。。。。。。P0_01[D21]（症状自评量表）
     #define PIN_IS_SDA1(P) (PIN_EXISTS(P) && P##_PIN == P0_00)
     #define PIN_IS_SCL1(P) (P##_PIN == P0_01)
     #if PIN_IS_SDA1(X_MIN) || PIN_IS_SCL1(X_MAX)
@@ -232,7 +233,7 @@ static_assert(DISABLED(BAUD_RATE_GCODE), "BAUD_RATE_GCODE is not yet supported o
     #endif
     #undef PIN_IS_SDA1
     #undef PIN_IS_SCL1
-  #elif USEDI2CDEV_M == 2     // P0_10 [D38] (X_ENABLE_PIN) ... P0_11 [D55] (X_DIR_PIN)
+  #elif USEDI2CDEV_M == 2     // P0_10 [D38] (X_ENABLE_PIN) ... P0_11 [D55] (X_DIR_PIN)//P0_10[D38]（X_启用_引脚）。。。P0_11[D55]（X_方向销）
     #define PIN_IS_SDA2(P) (P##_PIN == P0_10)
     #define PIN_IS_SCL2(P) (P##_PIN == P0_11)
     #if PIN_IS_SDA2(Y_STOP)

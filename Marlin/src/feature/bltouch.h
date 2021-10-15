@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -27,7 +28,7 @@
   #define BLTOUCH_SLOW_MODE 1
 #endif
 
-// BLTouch commands are sent as servo angles
+// BLTouch commands are sent as servo angles//BLTouch命令作为伺服角度发送
 typedef unsigned char BLTCommand;
 
 #define STOW_ALARM            true
@@ -71,14 +72,14 @@ typedef unsigned char BLTCommand;
 class BLTouch {
 public:
   static void init(const bool set_voltage=false);
-  static bool last_written_mode; // Initialized by settings.load, 0 = Open Drain; 1 = 5V Drain
+  static bool last_written_mode; // Initialized by settings.load, 0 = Open Drain; 1 = 5V Drain//由settings.load初始化，0=排水明渠；1=5V漏极
 
-  // DEPLOY and STOW are wrapped for error handling - these are used by homing and by probing
+  // DEPLOY and STOW are wrapped for error handling - these are used by homing and by probing//DEPLOY和STOW是为错误处理而包装的-它们用于归位和探测
   static bool deploy()              { return deploy_proc(); }
   static bool stow()                { return stow_proc(); }
   static bool status()              { return status_proc(); }
 
-  // Native BLTouch commands ("Underscore"...), used in lcd menus and internally
+  // Native BLTouch commands ("Underscore"...), used in lcd menus and internally//本机BLTouch命令（“下划线”…），用于lcd菜单和内部
   static void _reset()              { command(BLTOUCH_RESET, BLTOUCH_RESET_DELAY); }
 
   static void _selftest()           { command(BLTOUCH_SELFTEST, BLTOUCH_DELAY); }

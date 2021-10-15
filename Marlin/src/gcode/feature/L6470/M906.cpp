@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -52,10 +53,10 @@
  */
 void L64XX_report_current(L64XX &motor, const L64XX_axis_t axis) {
 
-  if (L64xxManager.spi_abort) return;  // don't do anything if set_directions() has occurred
+  if (L64xxManager.spi_abort) return;  // don't do anything if set_directions() has occurred//如果发生set_directions（），请不要执行任何操作
 
   const L64XX_Marlin::L64XX_shadow_t &sh = L64xxManager.shadow;
-  const uint16_t status = L64xxManager.get_status(axis);    //also populates shadow structure
+  const uint16_t status = L64xxManager.get_status(axis);    //also populates shadow structure//也填充阴影结构
   const uint8_t OverCurrent_Threshold = uint8_t(motor.GetParam(L6470_OCD_TH));
 
   auto say_axis_status = [](const L64XX_axis_t axis, const uint16_t status) {
@@ -74,8 +75,8 @@ void L64XX_report_current(L64XX &motor, const L64XX_axis_t axis) {
   char temp_buf[10];
 
   switch (sh.STATUS_AXIS_LAYOUT) {
-    case L6470_STATUS_LAYOUT:       // L6470
-    case L6480_STATUS_LAYOUT: {     // L6480 & powerstep01
+    case L6470_STATUS_LAYOUT:       // L6470//L6470
+    case L6480_STATUS_LAYOUT: {     // L6480 & powerstep01//L6480和功率步骤01
       const uint16_t Stall_Threshold = (uint8_t)motor.GetParam(L6470_STALL_TH),
                      motor_status = (status & (STATUS_MOT_STATUS)) >> 5,
                      L6470_ADC_out = motor.GetParam(L6470_ADC_OUT),
@@ -150,7 +151,7 @@ void L64XX_report_current(L64XX &motor, const L64XX_axis_t axis) {
       break;
     }
 
-    case L6474_STATUS_LAYOUT: {  // L6474
+    case L6474_STATUS_LAYOUT: {  // L6474//L6474
       const uint16_t L6470_ADC_out = motor.GetParam(L6470_ADC_OUT) & 0x1F,
                      L6474_TVAL_val = motor.GetParam(L6474_TVAL) & 0x7F;
 
@@ -167,7 +168,7 @@ void L64XX_report_current(L64XX &motor, const L64XX_axis_t axis) {
       SERIAL_ECHO((L6474_TVAL_val + 1) * motor.STALL_CURRENT_CONSTANT_INV);
       SERIAL_ECHOLNPGM(" mA)   Motor Status: NA");
 
-      const uint16_t MicroSteps = _BV(motor.GetParam(L6470_STEP_MODE) & 0x07); //NOMORE(MicroSteps, 16);
+      const uint16_t MicroSteps = _BV(motor.GetParam(L6470_STEP_MODE) & 0x07); //NOMORE(MicroSteps, 16);//诺莫尔（微步，16）；
       SERIAL_ECHOPAIR("...MicroSteps: ", MicroSteps,
                       "   ADC_OUT: ", L6470_ADC_out);
 
@@ -219,7 +220,7 @@ void L64XX_report_current(L64XX &motor, const L64XX_axis_t axis) {
  */
 void GcodeSuite::M906() {
 
-  L64xxManager.pause_monitor(true); // Keep monitor_driver() from stealing status
+  L64xxManager.pause_monitor(true); // Keep monitor_driver() from stealing status//防止监视器_驱动程序（）窃取状态
 
   #define L6470_SET_KVAL_HOLD(Q) (AXIS_IS_L64XX(Q) ? stepper##Q.setTVALCurrent(value) : stepper##Q.SetParam(L6470_KVAL_HOLD, uint8_t(value)))
 
@@ -316,7 +317,7 @@ void GcodeSuite::M906() {
   if (report_current) {
     #define L64XX_REPORT_CURRENT(Q) L64XX_report_current(stepper##Q, Q)
 
-    L64xxManager.spi_active = true; // Tell set_directions() a series of SPI transfers is underway
+    L64xxManager.spi_active = true; // Tell set_directions() a series of SPI transfers is underway//告诉set_directions（）一系列SPI传输正在进行中
 
     #if AXIS_IS_L64XX(X)
       L64XX_REPORT_CURRENT(X);
@@ -367,10 +368,10 @@ void GcodeSuite::M906() {
       L64XX_REPORT_CURRENT(E7);
     #endif
 
-    L64xxManager.spi_active = false;   // done with all SPI transfers - clear handshake flags
+    L64xxManager.spi_active = false;   // done with all SPI transfers - clear handshake flags//完成所有SPI传输-清除握手标志
     L64xxManager.spi_abort = false;
     L64xxManager.pause_monitor(false);
   }
 }
 
-#endif // HAS_L64XX
+#endif // HAS_L64XX//有"L64XX"吗?

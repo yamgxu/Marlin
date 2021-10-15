@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,14 +32,14 @@
 
 #define BOARD_INFO_NAME "Intamsys 4.0"
 
-//
-// Servos
-//
-#define SERVO0_PIN                            12  // Uses High Temp Present Jumper Pin
+////
+// Servos//伺服
+////
+#define SERVO0_PIN                            12  // Uses High Temp Present Jumper Pin//使用高温电流跳线引脚
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_STOP_PIN                            22
 #define Y_STOP_PIN                            26
 #define Z_MIN_PIN                             29
@@ -50,20 +51,20 @@
 
 #define FIL_RUNOUT_PIN                        10
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                            25
 #define X_DIR_PIN                             23
-#define X_ENABLE_PIN                          27  // 44
+#define X_ENABLE_PIN                          27  // 44// 44
 
-#define Y_STEP_PIN                            32  // 33
-#define Y_DIR_PIN                             33  // 31, 32
-#define Y_ENABLE_PIN                          31  // 32
+#define Y_STEP_PIN                            32  // 33// 33
+#define Y_DIR_PIN                             33  // 31, 32// 31, 32
+#define Y_ENABLE_PIN                          31  // 32// 32
 
-#define Z_STEP_PIN                            35  // 35
+#define Z_STEP_PIN                            35  // 35// 35
 #define Z_DIR_PIN                             36
-#define Z_ENABLE_PIN                          34  // 34
+#define Z_ENABLE_PIN                          34  // 34// 34
 
 #define E0_STEP_PIN                           42
 #define E0_DIR_PIN                            43
@@ -78,31 +79,31 @@
 #define MOTOR_CURRENT_PWM_Z_PIN               45
 #define MOTOR_CURRENT_PWM_E_PIN               46
 
-// Motor current PWM conversion, PWM value = MotorCurrentSetting * 255 / range
+// Motor current PWM conversion, PWM value = MotorCurrentSetting * 255 / range//电机电流PWM转换，PWM值=电机电流设置*255/范围
 #ifndef MOTOR_CURRENT_PWM_RANGE
   #define MOTOR_CURRENT_PWM_RANGE            2000
 #endif
 #define DEFAULT_PWM_MOTOR_CURRENT  { 1300, 1300, 1250 }
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                             8  // Analog Input D62
-#define TEMP_BED_PIN                          10  // Analog Input D64
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                             8  // Analog Input D62//模拟输入D62
+#define TEMP_BED_PIN                          10  // Analog Input D64//模拟输入D64
 
-#define TEMP_CHAMBER_PIN                       9  // Analog Input D63
+#define TEMP_CHAMBER_PIN                       9  // Analog Input D63//模拟输入D63
 
-//
-// Heaters / Fans
-//
-#define HEATER_0_PIN                           2  // PWM
-#define HEATER_BED_PIN                         4  // PWM
-#define HEATER_CHAMBER_PIN                     3  // PWM
-#define FAN_PIN                                7  // PWM
+////
+// Heaters / Fans//加热器/风扇
+////
+#define HEATER_0_PIN                           2  // PWM//脉宽调制
+#define HEATER_BED_PIN                         4  // PWM//脉宽调制
+#define HEATER_CHAMBER_PIN                     3  // PWM//脉宽调制
+#define FAN_PIN                                7  // PWM//脉宽调制
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define SDSS                                  53
 #define SD_DETECT_PIN                         39
 
@@ -111,12 +112,12 @@
 #endif
 
 #if ENABLED(PSU_CONTROL)
-  #define PS_ON_PIN                           38  // UPS Module
+  #define PS_ON_PIN                           38  // UPS Module//UPS模块
 #endif
 
-//
-// LCD Controller
-//
+////
+// LCD Controller//液晶控制器
+////
 
 #define BEEPER_PIN                            18
 
@@ -132,7 +133,7 @@
   #define BTN_ENC                             19
 #endif
 
-///////////////////// SPARE HEADERS //////////////
+///////////////////// SPARE HEADERS ///////////////////////////////////备用集管//////////////
 
 /**
  * J25

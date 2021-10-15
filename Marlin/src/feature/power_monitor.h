@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -55,7 +56,7 @@ private:
   #endif
 
 public:
-  static uint8_t flags;  // M430 flags to display current
+  static uint8_t flags;  // M430 flags to display current//M430用于显示当前数据的标志
 
   static millis_t display_item_ms;
   static uint8_t display_item;
@@ -63,9 +64,9 @@ public:
   PowerMonitor() { reset(); }
 
   enum PM_Display_Bit : uint8_t {
-    PM_DISP_BIT_I, // Current display enable bit
-    PM_DISP_BIT_V, // Voltage display enable bit
-    PM_DISP_BIT_P  // Power display enable bit
+    PM_DISP_BIT_I, // Current display enable bit//当前显示启用位
+    PM_DISP_BIT_V, // Voltage display enable bit//电压显示使能位
+    PM_DISP_BIT_P  // Power display enable bit//电源显示启用位
   };
 
   #if ENABLED(POWER_MONITOR_CURRENT)

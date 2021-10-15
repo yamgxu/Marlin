@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,9 +22,9 @@
  */
 #pragma once
 
-//
-// lcd/dogm/status/fan.h - Status Screen Fan bitmaps
-//
+////
+// lcd/dogm/status/fan.h - Status Screen Fan bitmaps//lcd/dogm/status/fan.h-状态屏幕风扇位图
+////
 
 #undef STATUS_FAN_WIDTH
 #define STATUS_FAN_WIDTH 20
@@ -78,7 +79,7 @@
       };
     #endif
 
-  #else // !STATUS_ALT_FAN_BITMAP
+  #else // !STATUS_ALT_FAN_BITMAP// !状态\可选\风扇\位图
 
     const unsigned char status_fan0_bmp[] PROGMEM = {
       B00111111,B11111111,B11110000,
@@ -124,7 +125,7 @@
       };
     #endif
 
-  #endif // !STATUS_ALT_FAN_BITMAP
+  #endif // !STATUS_ALT_FAN_BITMAP// !状态\可选\风扇\位图
 
 #elif STATUS_FAN_FRAMES == 3
 
@@ -194,7 +195,7 @@
       B00000001,B11111111,B00000000
     };
 
-  #else // !STATUS_ALT_FAN_BITMAP
+  #else // !STATUS_ALT_FAN_BITMAP// !状态\可选\风扇\位图
 
     const unsigned char status_fan0_bmp[] PROGMEM = {
       B00111111,B11111111,B11111000,
@@ -260,7 +261,7 @@
       B00111111,B11111111,B11111000
     };
 
-  #endif // !STATUS_ALT_FAN_BITMAP
+  #endif // !STATUS_ALT_FAN_BITMAP// !状态\可选\风扇\位图
 
 #elif STATUS_FAN_FRAMES == 4
 
@@ -351,7 +352,7 @@
       B00000001,B11111111,B00000000
     };
 
-  #else // !STATUS_ALT_FAN_BITMAP
+  #else // !STATUS_ALT_FAN_BITMAP// !状态\可选\风扇\位图
 
     const unsigned char status_fan0_bmp[] PROGMEM = {
       B00111111,B11111111,B11111000,
@@ -438,6 +439,6 @@
       B00111111,B11111111,B11111000
     };
 
-  #endif // !STATUS_ALT_FAN_BITMAP
+  #endif // !STATUS_ALT_FAN_BITMAP// !状态\可选\风扇\位图
 
 #endif

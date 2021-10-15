@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -32,7 +33,7 @@
  * G6: Direct Stepper Move
  */
 void GcodeSuite::G6() {
-  // TODO: feedrate support?
+  // TODO: feedrate support?//TODO:进给速度支持？
   if (parser.seen('R'))
     planner.last_page_step_rate = parser.value_ulong();
 
@@ -43,10 +44,10 @@ void GcodeSuite::G6() {
     if (parser.seen('E')) planner.last_page_dir.e = !!parser.value_byte();
   }
 
-  // No index means we just set the state
+  // No index means we just set the state//没有索引意味着我们只是设置状态
   if (!parser.seen('I')) return;
 
-  // No speed is set, can't schedule the move
+  // No speed is set, can't schedule the move//未设置速度，无法计划移动
   if (!planner.last_page_step_rate) return;
 
   const page_idx_t page_idx = (page_idx_t) parser.value_ulong();
@@ -58,4 +59,4 @@ void GcodeSuite::G6() {
   reset_stepper_timeout();
 }
 
-#endif // DIRECT_STEPPING
+#endif // DIRECT_STEPPING//直接步进

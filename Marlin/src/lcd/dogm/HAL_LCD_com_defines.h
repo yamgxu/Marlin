@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,11 +22,11 @@
  */
 #pragma once
 
-// Use this file to select the com driver for device drivers that are NOT in the U8G library
+// Use this file to select the com driver for device drivers that are NOT in the U8G library//使用此文件为不在U8G库中的设备驱动程序选择com驱动程序
 
 #include <U8glib.h>
 
-#ifndef U8G_HAL_LINKS   // Defined by LPC1768/9 environments in platform.ini
+#ifndef U8G_HAL_LINKS   // Defined by LPC1768/9 environments in platform.ini//由platform.ini中的LPC1768/9环境定义
 
   #ifdef __SAM3X8E__
 
@@ -77,7 +78,7 @@
     #define U8G_COM_ST7920_HAL_HW_SPI u8g_com_arduino_st7920_hw_spi_fn
   #endif
 
-  // This can't be invoked from the current platformio.ini
+  // This can't be invoked from the current platformio.ini//无法从当前platformio.ini调用此命令
   #ifdef TARGET_LPC1768
     uint8_t u8g_com_HAL_LPC1768_ssd_hw_i2c_fn(u8g_t *u8g, uint8_t msg, uint8_t arg_val, void *arg_ptr);
   #endif

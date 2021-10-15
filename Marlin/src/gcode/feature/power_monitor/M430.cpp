@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -67,4 +68,4 @@ void GcodeSuite::M430() {
   }
 }
 
-#endif // HAS_POWER_MONITOR
+#endif // HAS_POWER_MONITOR//有电源监视器吗

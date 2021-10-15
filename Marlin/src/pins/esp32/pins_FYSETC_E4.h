@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -38,24 +39,24 @@
 #define BOARD_INFO_NAME       "FYSETC_E4"
 #define DEFAULT_MACHINE_NAME  BOARD_INFO_NAME
 
-//
-// Disable I2S stepper stream
-//
+////
+// Disable I2S stepper stream//禁用I2S步进器流
+////
 #undef I2S_STEPPER_STREAM
 #define I2S_WS                                -1
 #define I2S_BCK                               -1
 #define I2S_DATA                              -1
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_STOP_PIN                            34
 #define Y_STOP_PIN                            35
 #define Z_STOP_PIN                            15
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                            27
 #define X_DIR_PIN                             26
 #define X_ENABLE_PIN                          25
@@ -73,13 +74,13 @@
 #define E0_ENABLE_PIN               X_ENABLE_PIN
 
 #if HAS_TMC_UART
-  //
-  // TMC2209 stepper drivers
-  //
+  ////
+  // TMC2209 stepper drivers//TMC2209步进驱动器
+  ////
 
-  //
-  // Hardware serial 1
-  //
+  ////
+  // Hardware serial 1//硬件串行1
+  ////
   #define X_HARDWARE_SERIAL              Serial1
   #define Y_HARDWARE_SERIAL              Serial1
   #define Z_HARDWARE_SERIAL              Serial1
@@ -88,27 +89,27 @@
   #define TMC_BAUD_RATE 115200
 #endif
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                            36  // Analog Input
-#define TEMP_BED_PIN                          39  // Analog Input
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                            36  // Analog Input//模拟输入
+#define TEMP_BED_PIN                          39  // Analog Input//模拟输入
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_0_PIN                           2
 #define FAN_PIN                               13
 #define HEATER_BED_PIN                         4
 
-//
-// MicroSD card
-//
+////
+// MicroSD card//MicroSD卡
+////
 #define SD_MOSI_PIN                           23
 #define SD_MISO_PIN                           19
 #define SD_SCK_PIN                            18
 #define SDSS                                   5
-#define USES_SHARED_SPI                           // SPI is shared by SD card with TMC SPI drivers
+#define USES_SHARED_SPI                           // SPI is shared by SD card with TMC SPI drivers//SD卡与TMC SPI驱动程序共享SPI
 
 /**
  * Hardware serial pins

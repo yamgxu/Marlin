@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -48,7 +49,7 @@ typedef uint8_t byte;
 #define PSTR(v) (v)
 #define PGM_P const char *
 
-// Used for libraries, preprocessor, and constants
+// Used for libraries, preprocessor, and constants//用于库、预处理器和常量
 #define abs(x) ((x)>0?(x):-(x))
 
 #ifndef isnan
@@ -62,9 +63,9 @@ typedef uint8_t byte;
 #define square(v) sq(v)
 #define constrain(value, arg_min, arg_max) ((value) < (arg_min) ? (arg_min) :((value) > (arg_max) ? (arg_max) : (value)))
 
-//Interrupts
-void cli(); // Disable
-void sei(); // Enable
+//Interrupts//打断
+void cli(); // Disable//禁用
+void sei(); // Enable//使能
 void attachInterrupt(uint32_t pin, void (*callback)(), uint32_t mode);
 void detachInterrupt(uint32_t pin);
 
@@ -73,13 +74,13 @@ extern "C" {
   void GpioDisableInt(uint32_t port, uint32_t pin);
 }
 
-// Time functions
+// Time functions//时间函数
 extern "C" void delay(const int milis);
 void _delay_ms(const int delay);
 void delayMicroseconds(unsigned long);
 uint32_t millis();
 
-//IO functions
+//IO functions//IO功能
 void pinMode(const pin_t, const uint8_t);
 void digitalWrite(pin_t, uint8_t);
 bool digitalRead(pin_t);

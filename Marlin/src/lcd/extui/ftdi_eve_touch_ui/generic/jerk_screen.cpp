@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*******************
  * jerk_screen.cpp *
  *******************/
@@ -61,4 +62,4 @@ bool JerkScreen::onTouchHeld(uint8_t tag) {
   return true;
 }
 
-#endif // FTDI_JERK_SCREEN
+#endif // FTDI_JERK_SCREEN//FTDI_升降屏幕

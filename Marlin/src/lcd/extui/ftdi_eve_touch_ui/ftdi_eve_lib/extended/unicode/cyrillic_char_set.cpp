@@ -1,3 +1,4 @@
+/** translatione by yx */
 /************************
  * cyrillic_char_set.cpp *
  ************************/
@@ -51,7 +52,7 @@
     if (addr % 4 != 0)
       addr += 4 - (addr % 4);
 
-    // Load the alternative font metrics
+    // Load the alternative font metrics//加载替代字体度量
     CLCD::FontMetrics cyrillic_fm;
     cyrillic_fm.ptr    = addr + 148;
     cyrillic_fm.format = L4;
@@ -61,13 +62,13 @@
     LOOP_L_N(i, 127)
       cyrillic_fm.char_widths[i] = 0;
 
-    // For cyrillic characters, copy the character widths from the widths tables
+    // For cyrillic characters, copy the character widths from the widths tables//对于西里尔文字字符，请从宽度表中复制字符宽度
     LOOP_L_N(i, NUM_ELEMENTS(cyrillic_font_widths)) {
       cyrillic_fm.char_widths[i] = cyrillic_font_widths[i];
     }
     CLCD::mem_write_bulk(addr, &cyrillic_fm,  148);
 
-    // Decode the RLE data and load it into RAMG as a bitmap
+    // Decode the RLE data and load it into RAMG as a bitmap//解码RLE数据并将其作为位图加载到RAMG中
     uint32_t lastaddr = write_rle_data(addr + 148, cyrillic_font, sizeof(cyrillic_font));
 
     bitmap_addr = addr;
@@ -117,7 +118,7 @@
    */
 
   bool FTDI::CyrillicCharSet::render_glyph(CommandProcessor* cmd, int &x, int &y, font_size_t fs, utf8_char_t c) {
-    // A supported character?
+    // A supported character?//支持的字符？
     if ((c < UTF8('А') || c > UTF8('я')) && (c != UTF8('Ё')) && (c != UTF8('ё'))) return false;
 
     uint8_t idx = (c == UTF8('Ё')) ? 64 :
@@ -128,12 +129,12 @@
 
     uint8_t width = cyrillic_font_widths[idx];
 
-    // Draw the character
+    // Draw the character//画人物
     if (cmd) ext_vertex2ii(*cmd, x, y, cyrillic_font_handle, idx);
 
-    // Increment X to the next character position
+    // Increment X to the next character position//将X增加到下一个字符位置
     x += fs.scale(width);
     return true;
   }
 
-#endif // FTDI_EXTENDED && TOUCH_UI_USE_UTF8 && TOUCH_UI_UTF8_WESTERN_CHARSET
+#endif // FTDI_EXTENDED && TOUCH_UI_USE_UTF8 && TOUCH_UI_UTF8_WESTERN_CHARSET//FTDI扩展和触摸用户界面使用UTF8和触摸用户界面使用UTF8西部字符集

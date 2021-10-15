@@ -1,3 +1,4 @@
+/** translatione by yx */
 /******************
  * sound_player.h *
  ******************/
@@ -34,9 +35,9 @@ namespace FTDI {
 
     public:
       struct sound_t {
-        effect_t  effect;      // The sound effect number
-        note_t    note;        // The MIDI note value
-        uint16_t  sixteenths;  // Duration of note, in sixteeths of a second, or zero to play to completion
+        effect_t  effect;      // The sound effect number//音效数
+        note_t    note;        // The MIDI note value//MIDI音符值
+        uint16_t  sixteenths;  // Duration of note, in sixteeths of a second, or zero to play to completion//音符的持续时间，以十六分之一秒为单位，或以零为单位播放至完成
       };
 
       const uint8_t WAIT = 0;

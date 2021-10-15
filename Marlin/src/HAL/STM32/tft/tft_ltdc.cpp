@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2021 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -28,10 +29,10 @@
 #include "tft_ltdc.h"
 #include "pinconfig.h"
 
-#define FRAME_BUFFER_ADDRESS 0XC0000000  // SDRAM address
+#define FRAME_BUFFER_ADDRESS 0XC0000000  // SDRAM address//SDRAM地址
 
 #define SDRAM_TIMEOUT                            ((uint32_t)0xFFFF)
-#define REFRESH_COUNT                            ((uint32_t)0x02A5)  // SDRAM refresh counter
+#define REFRESH_COUNT                            ((uint32_t)0x02A5)  // SDRAM refresh counter//SDRAM刷新计数器
 
 #define SDRAM_MODEREG_BURST_LENGTH_1             ((uint16_t)0x0000)
 #define SDRAM_MODEREG_BURST_LENGTH_2             ((uint16_t)0x0001)
@@ -246,18 +247,18 @@ volatile uint16_t* TFT_LTDC::framebuffer = (volatile uint16_t* )FRAME_BUFFER_ADD
 
 void TFT_LTDC::Init() {
 
-  // SDRAM pins init
+  // SDRAM pins init//SDRAM引脚初始化
   for (uint16_t i = 0; PinMap_SDRAM[i].pin != NC; i++)
     pinmap_pinout(PinMap_SDRAM[i].pin, PinMap_SDRAM);
 
-  // SDRAM peripheral config
+  // SDRAM peripheral config//SDRAM外设配置
   SDRAM_Config();
 
-  // LTDC pins init
+  // LTDC pins init//LTDC引脚初始化
   for (uint16_t i = 0; PinMap_LTDC[i].pin != NC; i++)
     pinmap_pinout(PinMap_LTDC[i].pin, PinMap_LTDC);
 
-  // LTDC peripheral config
+  // LTDC peripheral config//外设配置
   LTDC_Config();
 }
 
@@ -383,5 +384,5 @@ void TFT_LTDC::TransmitDMA(uint32_t MemoryIncrease, uint16_t *Data, uint16_t Cou
   }
 }
 
-#endif // HAS_LTDC_TFT
-#endif // ARDUINO_ARCH_STM32 && !STM32GENERIC
+#endif // HAS_LTDC_TFT//有_LTDC _TFT
+#endif // ARDUINO_ARCH_STM32 && !STM32GENERIC//ARDUINO_ARCH_STM32&&！STM32通用

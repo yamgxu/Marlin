@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**********************
  * developer_menu.cpp *
  **********************/
@@ -146,4 +147,4 @@ bool DeveloperMenu::onTouchEnd(uint8_t tag) {
   return true;
 }
 
-#endif // FTDI_DEVELOPER_MENU
+#endif // FTDI_DEVELOPER_MENU//FTDI_开发者_菜单

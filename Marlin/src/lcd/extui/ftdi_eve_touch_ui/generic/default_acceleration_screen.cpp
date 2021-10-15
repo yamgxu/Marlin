@@ -1,3 +1,4 @@
+/** translatione by yx */
 /***********************************
  * default_acceleration_screen.cpp *
  ***********************************/
@@ -59,4 +60,4 @@ bool DefaultAccelerationScreen::onTouchHeld(uint8_t tag) {
   return true;
 }
 
-#endif // FTDI_DEFAULT_ACCELERATION_SCREEN
+#endif // FTDI_DEFAULT_ACCELERATION_SCREEN//FTDI默认加速屏幕

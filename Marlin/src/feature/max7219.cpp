@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -39,7 +40,7 @@
 
 #if ENABLED(MAX7219_DEBUG)
 
-#define MAX7219_ERRORS // Disable to save 406 bytes of Program Memory
+#define MAX7219_ERRORS // Disable to save 406 bytes of Program Memory//禁用以保存406字节的程序内存
 
 #include "max7219.h"
 
@@ -64,8 +65,8 @@
 
 Max7219 max7219;
 
-uint8_t Max7219::led_line[MAX7219_LINES]; // = { 0 };
-uint8_t Max7219::suspended; // = 0;
+uint8_t Max7219::led_line[MAX7219_LINES]; // = { 0 };// = { 0 };
+uint8_t Max7219::suspended; // = 0;// = 0;
 
 #define LINE_REG(Q)     (max7219_reg_digit0 + ((Q) & 0x7))
 
@@ -115,7 +116,7 @@ uint8_t Max7219::suspended; // = 0;
 #define BIT_7219(X,Y) TEST(led_line[LED_IND(X,Y)], LED_BIT(X,Y))
 
 #ifdef CPU_32_BIT
-  #define SIG_DELAY() DELAY_US(1)   // Approximate a 1µs delay on 32-bit ARM
+  #define SIG_DELAY() DELAY_US(1)   // Approximate a 1µs delay on 32-bit ARM//32位ARM上的延迟约为1µs
   #undef CRITICAL_SECTION_START
   #undef CRITICAL_SECTION_END
   #define CRITICAL_SECTION_START() NOOP
@@ -174,11 +175,11 @@ void Max7219::putbyte(uint8_t data) {
   CRITICAL_SECTION_START();
   for (uint8_t i = 8; i--;) {
     SIG_DELAY();
-    WRITE(MAX7219_CLK_PIN, LOW);       // tick
+    WRITE(MAX7219_CLK_PIN, LOW);       // tick//滴答声
     SIG_DELAY();
-    WRITE(MAX7219_DIN_PIN, (data & 0x80) ? HIGH : LOW);  // send 1 or 0 based on data bit
+    WRITE(MAX7219_DIN_PIN, (data & 0x80) ? HIGH : LOW);  // send 1 or 0 based on data bit//根据数据位发送1或0
     SIG_DELAY();
-    WRITE(MAX7219_CLK_PIN, HIGH);      // tock
+    WRITE(MAX7219_CLK_PIN, HIGH);      // tock//托克
     SIG_DELAY();
     data <<= 1;
   }
@@ -187,7 +188,7 @@ void Max7219::putbyte(uint8_t data) {
 
 void Max7219::pulse_load() {
   SIG_DELAY();
-  WRITE(MAX7219_LOAD_PIN, LOW);  // tell the chip to load the data
+  WRITE(MAX7219_LOAD_PIN, LOW);  // tell the chip to load the data//告诉芯片加载数据
   SIG_DELAY();
   WRITE(MAX7219_LOAD_PIN, HIGH);
   SIG_DELAY();
@@ -197,13 +198,13 @@ void Max7219::send(const uint8_t reg, const uint8_t data) {
   SIG_DELAY();
   CRITICAL_SECTION_START();
   SIG_DELAY();
-  putbyte(reg);          // specify register
+  putbyte(reg);          // specify register//指定寄存器
   SIG_DELAY();
-  putbyte(data);         // put data
+  putbyte(data);         // put data//放置数据
   CRITICAL_SECTION_END();
 }
 
-// Send out a single native row of bits to just one unit
+// Send out a single native row of bits to just one unit//仅向一个单元发送一行本机位
 void Max7219::refresh_unit_line(const uint8_t line) {
   if (suspended) return;
   #if MAX7219_NUMBER_UNITS == 1
@@ -215,7 +216,7 @@ void Max7219::refresh_unit_line(const uint8_t line) {
   pulse_load();
 }
 
-// Send out a single native row of bits to all units
+// Send out a single native row of bits to all units//向所有单元发送一行本机位
 void Max7219::refresh_line(const uint8_t line) {
   if (suspended) return;
   #if MAX7219_NUMBER_UNITS == 1
@@ -234,7 +235,7 @@ void Max7219::set(const uint8_t line, const uint8_t bits) {
 
 #if ENABLED(MAX7219_NUMERIC)
 
-  // Draw an integer with optional leading zeros and optional decimal point
+  // Draw an integer with optional leading zeros and optional decimal point//绘制一个带可选前导零和可选小数点的整数
   void Max7219::print(const uint8_t start, int16_t value, uint8_t size, const bool leadzero=false, bool dec=false) {
     if (suspended) return;
     constexpr uint8_t led_numeral[10] = { 0x7E, 0x60, 0x6D, 0x79, 0x63, 0x5B, 0x5F, 0x70, 0x7F, 0x7A },
@@ -248,14 +249,14 @@ void Max7219::set(const uint8_t line, const uint8_t bits) {
         max7219_reg_digit0 + start + size,
         minus ? led_minus : blank ? 0x00 : led_numeral[value % 10] | (dec ? led_decimal : 0x00)
       );
-      pulse_load();  // tell the chips to load the clocked out data
+      pulse_load();  // tell the chips to load the clocked out data//告诉芯片加载时钟输出的数据
       value /= 10;
       if (!value && !leadzero) blank = true;
       dec = false;
     }
   }
 
-  // Draw a float with a decimal point and optional digits
+  // Draw a float with a decimal point and optional digits//绘制带有小数点和可选数字的浮点
   void Max7219::print(const uint8_t start, const_float_t value, const uint8_t pre_size, const uint8_t post_size, const bool leadzero=false) {
     if (pre_size) print(start, value, pre_size, leadzero, !!post_size);
     if (post_size) {
@@ -264,9 +265,9 @@ void Max7219::set(const uint8_t line, const uint8_t bits) {
     }
   }
 
-#endif // MAX7219_NUMERIC
+#endif // MAX7219_NUMERIC//MAX7219_数字
 
-// Modify a single LED bit and send the changed line
+// Modify a single LED bit and send the changed line//修改单个LED位并发送更改的线路
 void Max7219::led_set(const uint8_t x, const uint8_t y, const bool on) {
   if (x >= MAX7219_X_LEDS || y >= MAX7219_Y_LEDS) return error(PSTR("led_set"), x, y);
   if (BIT_7219(x, y) == on) return;
@@ -291,29 +292,29 @@ void Max7219::led_toggle(const uint8_t x, const uint8_t y) {
 
 void Max7219::send_row(const uint8_t row) {
   if (suspended) return;
-  #if _ROT == 0 || _ROT == 180            // Native Lines are horizontal too
+  #if _ROT == 0 || _ROT == 180            // Native Lines are horizontal too//原生线也是水平的
     #if MAX7219_X_LEDS <= 8
-      refresh_unit_line(LED_IND(0, row)); // A single unit line
+      refresh_unit_line(LED_IND(0, row)); // A single unit line//单件生产线
     #else
-      refresh_line(LED_IND(0, row));      // Same line, all units
+      refresh_line(LED_IND(0, row));      // Same line, all units//同一条线，所有单位
     #endif
-  #else                                   // Native lines are vertical
+  #else                                   // Native lines are vertical//原生线是垂直的
     UNUSED(row);
-    refresh();                            // Actually a column
+    refresh();                            // Actually a column//实际上是一个专栏
   #endif
 }
 
 void Max7219::send_column(const uint8_t col) {
   if (suspended) return;
-  #if _ROT == 90 || _ROT == 270           // Native Lines are vertical too
+  #if _ROT == 90 || _ROT == 270           // Native Lines are vertical too//原生线也是垂直的
     #if MAX7219_Y_LEDS <= 8
-      refresh_unit_line(LED_IND(col, 0)); // A single unit line
+      refresh_unit_line(LED_IND(col, 0)); // A single unit line//单件生产线
     #else
-      refresh_line(LED_IND(col, 0));      // Same line, all units
+      refresh_line(LED_IND(col, 0));      // Same line, all units//同一条线，所有单位
     #endif
-  #else                                   // Native lines are horizontal
+  #else                                   // Native lines are horizontal//原生线是水平的
     UNUSED(col);
-    refresh();                            // Actually a row
+    refresh();                            // Actually a row//实际上是一场争吵
   #endif
 }
 
@@ -374,7 +375,7 @@ void Max7219::set_rows_16bits(const uint8_t y, uint32_t val) {
     if (y > MAX7219_Y_LEDS - 2) return error(PSTR("set_rows_16bits"), y, val);
     set_row(y + 1, val); val >>= 8;
     set_row(y + 0, val);
-  #else // at least 16 bits on each row
+  #else // at least 16 bits on each row//每行至少16位
     if (y > MAX7219_Y_LEDS - 1) return error(PSTR("set_rows_16bits"), y, val);
     set_row(y, val);
   #endif
@@ -391,7 +392,7 @@ void Max7219::set_rows_32bits(const uint8_t y, uint32_t val) {
     if (y > MAX7219_Y_LEDS - 2) return error(PSTR("set_rows_32bits"), y, val);
     set_row(y + 1, val); val >>= 16;
     set_row(y + 0, val);
-  #else // at least 24 bits on each row.  In the 3 matrix case, just display the low 24 bits
+  #else // at least 24 bits on each row.  In the 3 matrix case, just display the low 24 bits//每行至少24位。在3矩阵的情况下，只显示低24位
     if (y > MAX7219_Y_LEDS - 1) return error(PSTR("set_rows_32bits"), y, val);
     set_row(y, val);
   #endif
@@ -402,7 +403,7 @@ void Max7219::set_columns_16bits(const uint8_t x, uint32_t val) {
     if (x > MAX7219_X_LEDS - 2) return error(PSTR("set_columns_16bits"), x, val);
     set_column(x + 0, val); val >>= 8;
     set_column(x + 1, val);
-  #else // at least 16 bits in each column
+  #else // at least 16 bits in each column//每列中至少有16位
     if (x > MAX7219_X_LEDS - 1) return error(PSTR("set_columns_16bits"), x, val);
     set_column(x, val);
   #endif
@@ -419,34 +420,34 @@ void Max7219::set_columns_32bits(const uint8_t x, uint32_t val) {
     if (x > MAX7219_X_LEDS - 2) return error(PSTR("set_rows_32bits"), x, val);
     set_column(x + 1, val); val >>= 16;
     set_column(x + 0, val);
-  #else // at least 24 bits on each row.  In the 3 matrix case, just display the low 24 bits
+  #else // at least 24 bits on each row.  In the 3 matrix case, just display the low 24 bits//每行至少24位。在3矩阵的情况下，只显示低24位
     if (x > MAX7219_X_LEDS - 1) return error(PSTR("set_rows_32bits"), x, val);
     set_column(x, val);
   #endif
 }
 
-// Initialize the Max7219
+// Initialize the Max7219//初始化Max7219
 void Max7219::register_setup() {
   LOOP_L_N(i, MAX7219_NUMBER_UNITS)
     send(max7219_reg_scanLimit, 0x07);
-  pulse_load();                               // Tell the chips to load the clocked out data
+  pulse_load();                               // Tell the chips to load the clocked out data//告诉芯片加载时钟输出的数据
 
   LOOP_L_N(i, MAX7219_NUMBER_UNITS)
-    send(max7219_reg_decodeMode, 0x00);       // Using an led matrix (not digits)
-  pulse_load();                               // Tell the chips to load the clocked out data
+    send(max7219_reg_decodeMode, 0x00);       // Using an led matrix (not digits)//使用led矩阵（非数字）
+  pulse_load();                               // Tell the chips to load the clocked out data//告诉芯片加载时钟输出的数据
 
   LOOP_L_N(i, MAX7219_NUMBER_UNITS)
-    send(max7219_reg_shutdown, 0x01);         // Not in shutdown mode
-  pulse_load();                               // Tell the chips to load the clocked out data
+    send(max7219_reg_shutdown, 0x01);         // Not in shutdown mode//未处于关机模式
+  pulse_load();                               // Tell the chips to load the clocked out data//告诉芯片加载时钟输出的数据
 
   LOOP_L_N(i, MAX7219_NUMBER_UNITS)
-    send(max7219_reg_displayTest, 0x00);      // No display test
-  pulse_load();                               // Tell the chips to load the clocked out data
+    send(max7219_reg_displayTest, 0x00);      // No display test//无显示测试
+  pulse_load();                               // Tell the chips to load the clocked out data//告诉芯片加载时钟输出的数据
 
   LOOP_L_N(i, MAX7219_NUMBER_UNITS)
-    send(max7219_reg_intensity, 0x01 & 0x0F); // The first 0x0F is the value you can set
-                                              // Range: 0x00 to 0x0F
-  pulse_load();                               // Tell the chips to load the clocked out data
+    send(max7219_reg_intensity, 0x01 & 0x0F); // The first 0x0F is the value you can set//第一个0x0F是可以设置的值
+                                              // Range: 0x00 to 0x0F//范围：0x00至0x0F
+  pulse_load();                               // Tell the chips to load the clocked out data//告诉芯片加载时钟输出的数据
 }
 
 #ifdef MAX7219_INIT_TEST
@@ -527,7 +528,7 @@ void Max7219::register_setup() {
     #endif
   }
 
-#endif // MAX7219_INIT_TEST
+#endif // MAX7219_INIT_TEST//MAX7219_初始_测试
 
 void Max7219::init() {
   SET_OUTPUT(MAX7219_DIN_PIN);
@@ -537,10 +538,10 @@ void Max7219::init() {
 
   register_setup();
 
-  LOOP_LE_N(i, 7) {  // Empty registers to turn all LEDs off
+  LOOP_LE_N(i, 7) {  // Empty registers to turn all LEDs off//清空寄存器以关闭所有LED
     led_line[i] = 0x00;
     send(max7219_reg_digit0 + i, 0);
-    pulse_load();                     // Tell the chips to load the clocked out data
+    pulse_load();                     // Tell the chips to load the clocked out data//告诉芯片加载时钟输出的数据
   }
 
   #ifdef MAX7219_INIT_TEST
@@ -554,33 +555,33 @@ void Max7219::init() {
  * ideal for debugging when realtime feedback is important but serial output can't be used.
  */
 
-// Apply changes to update a marker
+// Apply changes to update a marker//应用更改以更新标记
 void Max7219::mark16(const uint8_t pos, const uint8_t v1, const uint8_t v2) {
-  #if MAX7219_X_LEDS > 8    // At least 16 LEDs on the X-Axis. Use single line.
+  #if MAX7219_X_LEDS > 8    // At least 16 LEDs on the X-Axis. Use single line.//X轴上至少有16个LED。使用单行线。
     led_off(v1 & 0xF, pos);
      led_on(v2 & 0xF, pos);
-  #elif MAX7219_Y_LEDS > 8  // At least 16 LEDs on the Y-Axis. Use a single column.
+  #elif MAX7219_Y_LEDS > 8  // At least 16 LEDs on the Y-Axis. Use a single column.//Y轴上至少有16个LED。使用单个列。
     led_off(pos, v1 & 0xF);
      led_on(pos, v2 & 0xF);
-  #else                     // Single 8x8 LED matrix. Use two lines to get 16 LEDs.
+  #else                     // Single 8x8 LED matrix. Use two lines to get 16 LEDs.//单个8x8 LED矩阵。使用两条线获得16个LED。
     led_off(v1 & 0x7, pos + (v1 >= 8));
      led_on(v2 & 0x7, pos + (v2 >= 8));
   #endif
 }
 
-// Apply changes to update a tail-to-head range
+// Apply changes to update a tail-to-head range//应用更改以更新从尾部到头部的范围
 void Max7219::range16(const uint8_t y, const uint8_t ot, const uint8_t nt, const uint8_t oh, const uint8_t nh) {
-  #if MAX7219_X_LEDS > 8    // At least 16 LEDs on the X-Axis. Use single line.
+  #if MAX7219_X_LEDS > 8    // At least 16 LEDs on the X-Axis. Use single line.//X轴上至少有16个LED。使用单行线。
     if (ot != nt) for (uint8_t n = ot & 0xF; n != (nt & 0xF) && n != (nh & 0xF); n = (n + 1) & 0xF)
       led_off(n & 0xF, y);
     if (oh != nh) for (uint8_t n = (oh + 1) & 0xF; n != ((nh + 1) & 0xF); n = (n + 1) & 0xF)
        led_on(n & 0xF, y);
-  #elif MAX7219_Y_LEDS > 8  // At least 16 LEDs on the Y-Axis. Use a single column.
+  #elif MAX7219_Y_LEDS > 8  // At least 16 LEDs on the Y-Axis. Use a single column.//Y轴上至少有16个LED。使用单个列。
     if (ot != nt) for (uint8_t n = ot & 0xF; n != (nt & 0xF) && n != (nh & 0xF); n = (n + 1) & 0xF)
       led_off(y, n & 0xF);
     if (oh != nh) for (uint8_t n = (oh + 1) & 0xF; n != ((nh + 1) & 0xF); n = (n + 1) & 0xF)
        led_on(y, n & 0xF);
-  #else                     // Single 8x8 LED matrix. Use two lines to get 16 LEDs.
+  #else                     // Single 8x8 LED matrix. Use two lines to get 16 LEDs.//单个8x8 LED矩阵。使用两条线获得16个LED。
     if (ot != nt) for (uint8_t n = ot & 0xF; n != (nt & 0xF) && n != (nh & 0xF); n = (n + 1) & 0xF)
       led_off(n & 0x7, y + (n >= 8));
     if (oh != nh) for (uint8_t n = (oh + 1) & 0xF; n != ((nh + 1) & 0xF); n = (n + 1) & 0xF)
@@ -588,15 +589,15 @@ void Max7219::range16(const uint8_t y, const uint8_t ot, const uint8_t nt, const
   #endif
 }
 
-// Apply changes to update a quantity
+// Apply changes to update a quantity//应用更改以更新数量
 void Max7219::quantity16(const uint8_t pos, const uint8_t ov, const uint8_t nv) {
   for (uint8_t i = _MIN(nv, ov); i < _MAX(nv, ov); i++)
     led_set(
-      #if MAX7219_X_LEDS > 8    // At least 16 LEDs on the X-Axis. Use single line.
+      #if MAX7219_X_LEDS > 8    // At least 16 LEDs on the X-Axis. Use single line.//X轴上至少有16个LED。使用单行线。
         i, pos
-      #elif MAX7219_Y_LEDS > 8  // At least 16 LEDs on the Y-Axis. Use a single column.
+      #elif MAX7219_Y_LEDS > 8  // At least 16 LEDs on the Y-Axis. Use a single column.//Y轴上至少有16个LED。使用单个列。
         pos, i
-      #else                     // Single 8x8 LED matrix. Use two lines to get 16 LEDs.
+      #else                     // Single 8x8 LED matrix. Use two lines to get 16 LEDs.//单个8x8 LED矩阵。使用两条线获得16个LED。
         i >> 1, pos + (i & 1)
       #endif
       , nv >= ov
@@ -618,20 +619,20 @@ void Max7219::idle_tasks() {
   #endif
 
   #if ENABLED(MAX7219_DEBUG_PRINTER_ALIVE)
-    static uint8_t refresh_cnt; // = 0
+    static uint8_t refresh_cnt; // = 0// = 0
     constexpr uint16_t refresh_limit = 5;
     static millis_t next_blink = 0;
     const millis_t ms = millis();
     const bool do_blink = ELAPSED(ms, next_blink);
   #else
-    static uint16_t refresh_cnt; // = 0
+    static uint16_t refresh_cnt; // = 0// = 0
     constexpr bool do_blink = true;
     constexpr uint16_t refresh_limit = 50000;
   #endif
 
-  // Some Max7219 units are vulnerable to electrical noise, especially
-  // with long wires next to high current wires. If the display becomes
-  // corrupted, this will fix it within a couple seconds.
+  // Some Max7219 units are vulnerable to electrical noise, especially//某些Max7219单元容易受到电气噪声的影响，尤其是
+  // with long wires next to high current wires. If the display becomes//长电线紧挨着高电流电线。如果显示变为
+  // corrupted, this will fix it within a couple seconds.//损坏，这将在几秒钟内修复。
   if (do_blink && ++refresh_cnt >= refresh_limit) {
     refresh_cnt = 0;
     register_setup();
@@ -690,11 +691,11 @@ void Max7219::idle_tasks() {
     }
   #endif
 
-  // After resume() automatically do a refresh()
+  // After resume() automatically do a refresh()//在resume（）之后自动执行刷新（）
   if (suspended == 0x80) {
     suspended = 0;
     refresh();
   }
 }
 
-#endif // MAX7219_DEBUG
+#endif // MAX7219_DEBUG//MAX7219_调试

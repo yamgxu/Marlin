@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  *
@@ -41,13 +42,13 @@
   #include "../../feature/ethernet.h"
 #endif
 
-//#define ST7920_DELAY_1 DELAY_NS(600)
-//#define ST7920_DELAY_2 DELAY_NS(750)
-//#define ST7920_DELAY_3 DELAY_NS(750)
+//#define ST7920_DELAY_1 DELAY_NS(600)//#定义ST7920延迟1延迟（600）
+//#define ST7920_DELAY_2 DELAY_NS(750)//#定义ST7920延迟2延迟（750）
+//#define ST7920_DELAY_3 DELAY_NS(750)//#定义ST7920延迟3延迟（750）
 
-// ------------------------
-// Defines
-// ------------------------
+// ------------------------// ------------------------
+// Defines//定义
+// ------------------------// ------------------------
 
 #define IS_32BIT_TEENSY 1
 #define IS_TEENSY_40_41 1
@@ -106,19 +107,19 @@ typedef int8_t pin_t;
 #undef sq
 #define sq(x) ((x)*(x))
 
-// Don't place string constants in PROGMEM
+// Don't place string constants in PROGMEM//不要在PROGMEM中放置字符串常量
 #undef PSTR
 #define PSTR(str) ({static const char *data = (str); &data[0];})
 
-// Enable hooks into idle and setup for HAL
+// Enable hooks into idle and setup for HAL//为HAL启用空闲挂钩和设置
 #define HAL_IDLETASK 1
 FORCE_INLINE void HAL_idletask() {}
 FORCE_INLINE void HAL_init() {}
 
-// Clear reset reason
+// Clear reset reason//清除重置原因
 void HAL_clear_reset_source();
 
-// Reset reason
+// Reset reason//重置原因
 uint8_t HAL_get_reset_source();
 
 void HAL_reboot();
@@ -136,13 +137,13 @@ extern "C" uint32_t freeMemory();
   #pragma GCC diagnostic pop
 #endif
 
-// ADC
+// ADC//模数转换器
 
 void HAL_adc_init();
 
 #define HAL_ADC_VREF         3.3
 #define HAL_ADC_RESOLUTION  10
-#define HAL_ADC_FILTERED      // turn off ADC oversampling
+#define HAL_ADC_FILTERED      // turn off ADC oversampling//关闭ADC过采样
 #define HAL_START_ADC(pin)  HAL_adc_start_conversion(pin)
 #define HAL_READ_ADC()      HAL_adc_get_result()
 #define HAL_ADC_READY()     true

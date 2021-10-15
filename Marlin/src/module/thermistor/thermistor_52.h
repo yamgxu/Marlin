@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,14 +22,14 @@
  */
 #pragma once
 
-// R25 = 200 kOhm, beta25 = 4338 K, 1 kOhm pull-up,
-// 200k ATC Semitec 204GT-2 (WITH 1kohm RESISTOR FOR PULLUP, R9 ON SANGUINOLOLU! NOT FOR 4.7kohm PULLUP! THIS IS NOT NORMAL!)
-// Verified by linagee. Source: https://www.mouser.com/datasheet/2/362/semitec%20usa%20corporation_gtthermistor-1202937.pdf
-// Calculated using 1kohm pullup, voltage divider math, and manufacturer provided temp/resistance
-// Advantage: More resolution and better linearity from 150C to 200C
+// R25 = 200 kOhm, beta25 = 4338 K, 1 kOhm pull-up,//R25=200千欧，beta25=4338千欧，1千欧上拉，
+// 200k ATC Semitec 204GT-2 (WITH 1kohm RESISTOR FOR PULLUP, R9 ON SANGUINOLOLU! NOT FOR 4.7kohm PULLUP! THIS IS NOT NORMAL!)//200k ATC Semitec 204GT-2（带1欧姆电阻用于上拉，R9用于SANGUINOLOLU！不适用于4.7千欧的上拉！这不正常！）
+// Verified by linagee. Source: https://www.mouser.com/datasheet/2/362/semitec%20usa%20corporation_gtthermistor-1202937.pdf//经利纳吉核实。资料来源：https://www.mouser.com/datasheet/2/362/semitec%20usa%20corporation_gtthermistor-1202937.pdf
+// Calculated using 1kohm pullup, voltage divider math, and manufacturer provided temp/resistance//使用1欧姆上拉、分压器数学和制造商提供的温度/电阻进行计算
+// Advantage: More resolution and better linearity from 150C to 200C//优点：更高的分辨率和更好的线性从150摄氏度到200摄氏度
 constexpr temp_entry_t temptable_52[] PROGMEM = {
   { OV(   1), 500 },
-  { OV( 125), 300 }, // top rating 300C
+  { OV( 125), 300 }, // top rating 300C//最高额定值300C
   { OV( 142), 290 },
   { OV( 162), 280 },
   { OV( 185), 270 },

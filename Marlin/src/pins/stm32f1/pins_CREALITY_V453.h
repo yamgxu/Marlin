@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,9 +32,9 @@
 
 #define BOARD_NAME "Creality v4.5.3"
 
-#define HEATER_0_PIN                        PB14  // HEATER1
-#define HEATER_BED_PIN                      PB13  // HOT BED
-#define FAN_PIN                             PB15  // FAN
-#define PROBE_ACTIVATION_SWITCH_PIN         PB2   // Optoswitch to Enable Z Probe
+#define HEATER_0_PIN                        PB14  // HEATER1//加热器1
+#define HEATER_BED_PIN                      PB13  // HOT BED//热床
+#define FAN_PIN                             PB15  // FAN//扇子
+#define PROBE_ACTIVATION_SWITCH_PIN         PB2   // Optoswitch to Enable Z Probe//用于启用Z探头的光电开关
 
 #include "pins_CREALITY_V45x.h"

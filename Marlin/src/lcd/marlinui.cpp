@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -22,7 +23,7 @@
 
 #include "../inc/MarlinConfig.h"
 
-#include "../MarlinCore.h" // for printingIsPaused
+#include "../MarlinCore.h" // for printingIsPaused//用于打印
 
 #ifdef LED_BACKLIGHT_TIMEOUT
   #include "../feature/leds/leds.h"
@@ -36,7 +37,7 @@
   #include "../feature/password/password.h"
 #endif
 
-// All displays share the MarlinUI class
+// All displays share the MarlinUI class//所有显示共享MarlinUI类
 #include "marlinui.h"
 MarlinUI ui;
 
@@ -59,7 +60,7 @@ MarlinUI ui;
 #endif
 
 #if LCD_HAS_WAIT_FOR_MOVE
-  bool MarlinUI::wait_for_move; // = false
+  bool MarlinUI::wait_for_move; // = false//=错误
 #endif
 
 constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
@@ -67,7 +68,7 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
 #if HAS_STATUS_MESSAGE
   #if HAS_WIRED_LCD
     #if ENABLED(STATUS_MESSAGE_SCROLLING)
-      uint8_t MarlinUI::status_scroll_offset; // = 0
+      uint8_t MarlinUI::status_scroll_offset; // = 0// = 0
       constexpr uint8_t MAX_MESSAGE_LENGTH = _MAX(LONG_FILENAME_LENGTH, MAX_LANG_CHARSIZE * 2 * (LCD_WIDTH));
     #else
       constexpr uint8_t MAX_MESSAGE_LENGTH = MAX_LANG_CHARSIZE * (LCD_WIDTH);
@@ -76,18 +77,18 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
     constexpr uint8_t MAX_MESSAGE_LENGTH = 63;
   #endif
   char MarlinUI::status_message[MAX_MESSAGE_LENGTH + 1];
-  uint8_t MarlinUI::alert_level; // = 0
+  uint8_t MarlinUI::alert_level; // = 0// = 0
 #endif
 
 #if ENABLED(LCD_SET_PROGRESS_MANUALLY)
-  MarlinUI::progress_t MarlinUI::progress_override; // = 0
+  MarlinUI::progress_t MarlinUI::progress_override; // = 0// = 0
   #if ENABLED(USE_M73_REMAINING_TIME)
     uint32_t MarlinUI::remaining_time;
   #endif
 #endif
 
 #if HAS_MULTI_LANGUAGE
-  uint8_t MarlinUI::language; // Initialized by settings.load()
+  uint8_t MarlinUI::language; // Initialized by settings.load()//由settings.load（）初始化
 #endif
 
 #if ENABLED(SOUND_MENU_ITEM)
@@ -95,7 +96,7 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
 #endif
 
 #if EITHER(PCA9632_BUZZER, USE_BEEPER)
-  #include "../libs/buzzer.h" // for BUZZ() macro
+  #include "../libs/buzzer.h" // for BUZZ() macro//对于BUZZ（）宏
   #if ENABLED(PCA9632_BUZZER)
     #include "../feature/leds/pca9632.h"
   #endif
@@ -110,7 +111,7 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
 #endif
 
 #if PREHEAT_COUNT
-  preheat_t MarlinUI::material_preset[PREHEAT_COUNT];  // Initialized by settings.load()
+  preheat_t MarlinUI::material_preset[PREHEAT_COUNT];  // Initialized by settings.load()//由settings.load（）初始化
   PGM_P MarlinUI::get_preheat_label(const uint8_t m) {
     #define _PDEF(N) static PGMSTR(preheat_##N##_label, PREHEAT_##N##_LABEL);
     #define _PLBL(N) preheat_##N##_label,
@@ -174,22 +175,22 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
     millis_t MarlinUI::return_to_status_ms = 0;
   #endif
 
-  uint8_t MarlinUI::lcd_status_update_delay = 1; // First update one loop delayed
+  uint8_t MarlinUI::lcd_status_update_delay = 1; // First update one loop delayed//第一次更新一个循环延迟
 
   #if BOTH(FILAMENT_LCD_DISPLAY, SDSUPPORT)
-    millis_t MarlinUI::next_filament_display; // = 0
+    millis_t MarlinUI::next_filament_display; // = 0// = 0
   #endif
 
-  millis_t MarlinUI::next_button_update_ms; // = 0
+  millis_t MarlinUI::next_button_update_ms; // = 0// = 0
 
   #if HAS_MARLINUI_U8GLIB
-    bool MarlinUI::drawing_screen, MarlinUI::first_page; // = false
+    bool MarlinUI::drawing_screen, MarlinUI::first_page; // = false//=错误
   #endif
 
-  // Encoder Handling
+  // Encoder Handling//编码器处理
   #if HAS_ENCODER_ACTION
     uint32_t MarlinUI::encoderPosition;
-    volatile int8_t encoderDiff; // Updated in update_buttons, added to encoderPosition every LCD update
+    volatile int8_t encoderDiff; // Updated in update_buttons, added to encoderPosition every LCD update//在更新按钮中更新，在每次LCD更新时添加到编码器位置
   #endif
 
   #if ENABLED(SDSUPPORT)
@@ -206,21 +207,21 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
         #if MARLINUI_SCROLL_NAME
           if (doScroll) {
             for (uint8_t l = FILENAME_LENGTH; l--;)
-              hash = ((hash << 1) | (hash >> 7)) ^ theCard.filename[l];      // rotate, xor
+              hash = ((hash << 1) | (hash >> 7)) ^ theCard.filename[l];      // rotate, xor//旋转，异或
             static uint8_t filename_scroll_hash;
-            if (filename_scroll_hash != hash) {                              // If the hash changed...
-              filename_scroll_hash = hash;                                   // Save the new hash
-              filename_scroll_max = _MAX(0, utf8_strlen(theCard.longFilename) - maxlen); // Update the scroll limit
-              filename_scroll_pos = 0;                                       // Reset scroll to the start
-              lcd_status_update_delay = 8;                                   // Don't scroll right away
+            if (filename_scroll_hash != hash) {                              // If the hash changed...//如果哈希改变了。。。
+              filename_scroll_hash = hash;                                   // Save the new hash//保存新的散列
+              filename_scroll_max = _MAX(0, utf8_strlen(theCard.longFilename) - maxlen); // Update the scroll limit//更新滚动限制
+              filename_scroll_pos = 0;                                       // Reset scroll to the start//重置滚动至开始位置
+              lcd_status_update_delay = 8;                                   // Don't scroll right away//不要马上滚动
             }
-            // Advance byte position corresponding to filename_scroll_pos char position
+            // Advance byte position corresponding to filename_scroll_pos char position//与文件名\u滚动\u位置字符位置相对应的高级字节位置
             outstr += TERN(UTF_FILENAME_SUPPORT, utf8_byte_pos_by_char_num(outstr, filename_scroll_pos), filename_scroll_pos);
           }
         #else
           theCard.longFilename[
             TERN(UTF_FILENAME_SUPPORT, utf8_byte_pos_by_char_num(theCard.longFilename, maxlen), maxlen)
-          ] = '\0'; // cutoff at screen edge
+          ] = '\0'; // cutoff at screen edge//屏幕边缘切断
         #endif
       }
       return outstr;
@@ -231,7 +232,7 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
   #if HAS_LCD_MENU
     #include "menu/menu.h"
 
-    screenFunc_t MarlinUI::currentScreen; // Initialized in CTOR
+    screenFunc_t MarlinUI::currentScreen; // Initialized in CTOR//在CTOR中初始化
     bool MarlinUI::screen_changed;
 
     #if ENABLED(ENCODER_RATE_MULTIPLIER)
@@ -254,7 +255,7 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
 
     #if EITHER(AUTO_BED_LEVELING_UBL, G26_MESH_VALIDATION)
 
-      bool MarlinUI::external_control; // = false
+      bool MarlinUI::external_control; // = false//=错误
 
       void MarlinUI::wait_for_release() {
         while (button_pressed()) safe_delay(50);
@@ -270,35 +271,35 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
         if (!string) return;
 
         auto _newline = [&col, &row]{
-          col = 0; row++;                 // Move col to string len (plus space)
-          SETCURSOR(0, row);              // Simulate carriage return
+          col = 0; row++;                 // Move col to string len (plus space)//将列移动到字符串len（加空格）
+          SETCURSOR(0, row);              // Simulate carriage return//模拟回车
         };
 
         uint8_t *p = (uint8_t*)string;
         wchar_t ch;
         if (wordwrap) {
           uint8_t *wrd = nullptr, c = 0;
-          // find the end of the part
+          // find the end of the part//找到零件的结尾
           for (;;) {
-            if (!wrd) wrd = p;            // Get word start /before/ advancing
+            if (!wrd) wrd = p;            // Get word start /before/ advancing//让word开始/开始/前进
             p = get_utf8_value_cb(p, cb_read_byte, &ch);
-            const bool eol = !ch;         // zero ends the string
-            // End or a break between phrases?
+            const bool eol = !ch;         // zero ends the string//零结束字符串
+            // End or a break between phrases?//词组之间是结束还是中断？
             if (eol || ch == ' ' || ch == '-' || ch == '+' || ch == '.') {
-              if (!c && ch == ' ') { if (wrd) wrd++; continue; } // collapse extra spaces
-              // Past the right and the word is not too long?
-              if (col + c > LCD_WIDTH && col >= (LCD_WIDTH) / 4) _newline(); // should it wrap?
-              c += !eol;                  // +1 so the space will be printed
-              col += c;                   // advance col to new position
-              while (c) {                 // character countdown
-                --c;                      // count down to zero
-                wrd = get_utf8_value_cb(wrd, cb_read_byte, &ch); // get characters again
-                lcd_put_wchar(ch);        // character to the LCD
+              if (!c && ch == ' ') { if (wrd) wrd++; continue; } // collapse extra spaces//折叠额外空间
+              // Past the right and the word is not too long?//过了右边这个字是不是太长了？
+              if (col + c > LCD_WIDTH && col >= (LCD_WIDTH) / 4) _newline(); // should it wrap?//应该包起来吗？
+              c += !eol;                  // +1 so the space will be printed//+1，因此将打印空间
+              col += c;                   // advance col to new position//晋升到新职位
+              while (c) {                 // character countdown//字符倒计时
+                --c;                      // count down to zero//倒计时到零
+                wrd = get_utf8_value_cb(wrd, cb_read_byte, &ch); // get characters again//再次获取字符
+                lcd_put_wchar(ch);        // character to the LCD//将字符添加到LCD
               }
-              if (eol) break;             // all done!
-              wrd = nullptr;              // set up for next word
+              if (eol) break;             // all done!//全部完成！
+              wrd = nullptr;              // set up for next word//为下一个单词做准备
             }
-            else c++;                     // count word characters
+            else c++;                     // count word characters//计算单词字符数
           }
         }
         else {
@@ -321,15 +322,15 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
         }
         wrap_string_P(col, row, pref, true);
         if (string) {
-          if (col) { col = 0; row++; } // Move to the start of the next line
+          if (col) { col = 0; row++; } // Move to the start of the next line//移到下一行的开头
           wrap_string(col, row, string);
         }
         if (suff) wrap_string_P(col, row, suff);
       }
 
-    #endif // !HAS_GRAPHICAL_TFT
+    #endif // !HAS_GRAPHICAL_TFT// !有图形化的TFT
 
-  #endif // HAS_LCD_MENU
+  #endif // HAS_LCD_MENU//有LCD菜单吗
 
   void MarlinUI::init() {
 
@@ -367,7 +368,7 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
 
     #if HAS_SHIFT_ENCODER
 
-      #if ENABLED(SR_LCD_2W_NL) // Non latching 2 wire shift register
+      #if ENABLED(SR_LCD_2W_NL) // Non latching 2 wire shift register//非锁存2线移位寄存器
 
         SET_OUTPUT(SR_DATA_PIN);
         SET_OUTPUT(SR_CLK_PIN);
@@ -383,7 +384,7 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
 
       #endif
 
-    #endif // HAS_SHIFT_ENCODER
+    #endif // HAS_SHIFT_ENCODER//有移位编码器吗
 
     #if BOTH(HAS_ENCODER_ACTION, HAS_SLOW_BUTTONS)
       slow_buttons = 0;
@@ -405,9 +406,9 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
     return blink != 0;
   }
 
-  ////////////////////////////////////////////
-  ///////////// Keypad Handling //////////////
-  ////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////
+  ///////////// Keypad Handling ///////////////////////////键盘操作//////////////
+  ////////////////////////////////////////////////////////////////////////////////////////
 
   #if IS_RRW_KEYPAD && HAS_ENCODER_ACTION
 
@@ -441,7 +442,7 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
           #if HAS_ENCODER_ACTION
             refresh(LCDVIEW_REDRAW_NOW);
             #if HAS_LCD_MENU
-              if (encoderDirection == -(ENCODERBASE)) { // HAS_ADC_BUTTONS forces REVERSE_MENU_DIRECTION, so this indicates menu navigation
+              if (encoderDirection == -(ENCODERBASE)) { // HAS_ADC_BUTTONS forces REVERSE_MENU_DIRECTION, so this indicates menu navigation//具有ADC按钮强制反转菜单方向，因此这表示菜单导航
                      if (RRK(EN_KEYPAD_UP))     encoderPosition += ENCODER_STEPS_PER_MENU_ITEM;
                 else if (RRK(EN_KEYPAD_DOWN))   encoderPosition -= ENCODER_STEPS_PER_MENU_ITEM;
                 else if (RRK(EN_KEYPAD_LEFT))   { MenuItem_back::action(); quick_feedback(); }
@@ -465,7 +466,7 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
           return true;
         }
 
-      #else // !HAS_ADC_BUTTONS
+      #else // !HAS_ADC_BUTTONS// !有\u ADC\u按钮
 
         static uint8_t keypad_debounce = 0;
 
@@ -500,18 +501,18 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
               if (RRK(EN_KEYPAD_UP))    _reprapworld_keypad_move(Y_AXIS, -1);
             }
 
-          #endif // HAS_LCD_MENU
+          #endif // HAS_LCD_MENU//有LCD菜单吗
 
           if (!homed && RRK(EN_KEYPAD_F1)) queue.inject_P(G28_STR);
           return true;
         }
 
-      #endif // !HAS_ADC_BUTTONS
+      #endif // !HAS_ADC_BUTTONS// !有\u ADC\u按钮
 
       return false;
     }
 
-  #endif // IS_RRW_KEYPAD && HAS_ENCODER_ACTION
+  #endif // IS_RRW_KEYPAD && HAS_ENCODER_ACTION//键盘是否有编码器动作（&U）
 
   /**
    * Status Screen
@@ -520,9 +521,9 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
    */
 
   #if BASIC_PROGRESS_BAR
-    millis_t MarlinUI::progress_bar_ms; // = 0
+    millis_t MarlinUI::progress_bar_ms; // = 0// = 0
     #if PROGRESS_MSG_EXPIRE > 0
-      millis_t MarlinUI::expire_status_ms; // = 0
+      millis_t MarlinUI::expire_status_ms; // = 0// = 0
     #endif
   #endif
 
@@ -532,18 +533,18 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
 
     #if BASIC_PROGRESS_BAR
 
-      //
-      // HD44780 implements the following message blinking and
-      // message expiration because Status Line and Progress Bar
-      // share the same line on the display.
-      //
+      ////
+      // HD44780 implements the following message blinking and//HD44780实现以下消息闪烁和
+      // message expiration because Status Line and Progress Bar//消息过期，因为状态行和进度条
+      // share the same line on the display.//在显示器上共享同一行。
+      ////
 
       #if DISABLED(PROGRESS_MSG_ONCE) || (PROGRESS_MSG_EXPIRE > 0)
         #define GOT_MS
         const millis_t ms = millis();
       #endif
 
-      // If the message will blink rather than expire...
+      // If the message will blink rather than expire...//如果消息将闪烁而不是过期。。。
       #if DISABLED(PROGRESS_MSG_ONCE)
         if (ELAPSED(ms, progress_bar_ms + PROGRESS_BAR_MSG_TIME + PROGRESS_BAR_BAR_TIME))
           progress_bar_ms = ms;
@@ -551,10 +552,10 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
 
       #if PROGRESS_MSG_EXPIRE > 0
 
-        // Handle message expire
+        // Handle message expire//句柄消息过期
         if (expire_status_ms) {
 
-          // Expire the message if a job is active and the bar has ticks
+          // Expire the message if a job is active and the bar has ticks//如果作业处于活动状态且条上有记号，则消息将过期
           if (get_progress_percent() > 2 && !print_job_timer.isPaused()) {
             if (ELAPSED(ms, expire_status_ms)) {
               status_message[0] = '\0';
@@ -562,24 +563,24 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
             }
           }
           else {
-            // Defer message expiration before bar appears
-            // and during any pause (not just SD)
+            // Defer message expiration before bar appears//在工具栏出现之前延迟消息过期
+            // and during any pause (not just SD)//在任何暂停期间（不仅仅是SD）
             expire_status_ms += LCD_UPDATE_INTERVAL;
           }
         }
 
-      #endif // PROGRESS_MSG_EXPIRE
+      #endif // PROGRESS_MSG_EXPIRE//进度消息过期
 
-    #endif // BASIC_PROGRESS_BAR
+    #endif // BASIC_PROGRESS_BAR//基本进度条
 
     #if HAS_LCD_MENU
       if (use_click()) {
         #if BOTH(FILAMENT_LCD_DISPLAY, SDSUPPORT)
-          next_filament_display = millis() + 5000UL;  // Show status message for 5s
+          next_filament_display = millis() + 5000UL;  // Show status message for 5s//显示5s的状态信息
         #endif
         goto_screen(menu_main);
         #if DISABLED(NO_LCD_REINIT)
-          init_lcd(); // May revive the LCD if static electricity killed it
+          init_lcd(); // May revive the LCD if static electricity killed it//如果静电杀死了LCD，它可能会复活
         #endif
         return;
       }
@@ -591,7 +592,7 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
       const int16_t old_frm = feedrate_percentage;
             int16_t new_frm = old_frm + int16_t(encoderPosition);
 
-      // Dead zone at 100% feedrate
+      // Dead zone at 100% feedrate//100%进给速度下的死区
       if (old_frm == 100) {
         if (int16_t(encoderPosition) > ENCODER_FEEDRATE_DEADZONE)
           new_frm -= ENCODER_FEEDRATE_DEADZONE;
@@ -620,7 +621,7 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
         #endif
       }
 
-    #endif // ULTIPANEL_FEEDMULTIPLY
+    #endif // ULTIPANEL_FEEDMULTIPLY//多面板馈电电路
 
     draw_status_screen();
   }
@@ -630,7 +631,7 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
     status_printf_P(1, PSTR(S_FMT ": " S_FMT), lcd_error, lcd_component);
     TERN_(HAS_LCD_MENU, return_to_status());
 
-    // RED ALERT. RED ALERT.
+    // RED ALERT. RED ALERT.//红色警报。红色警报。
     #ifdef LED_BACKLIGHT_TIMEOUT
       leds.set_color(LEDColorRed());
       #ifdef NEOPIXEL_BKGD_INDEX_FIRST
@@ -654,7 +655,7 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
     #endif
 
     #if HAS_CHIRP
-      chirp(); // Buzz and wait. Is the delay needed for buttons to settle?
+      chirp(); // Buzz and wait. Is the delay needed for buttons to settle?//嗡嗡叫，等待。按钮设置是否需要延迟？
       #if BOTH(HAS_LCD_MENU, USE_BEEPER)
         for (int8_t i = 5; i--;) { buzzer.tick(); delay(2); }
       #elif HAS_LCD_MENU
@@ -663,9 +664,9 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
     #endif
   }
 
-  ////////////////////////////////////////////
-  /////////////// Manual Move ////////////////
-  ////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////
+  /////////////// Manual Move ///////////////////////////////手动移动////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////
 
   #if HAS_LCD_MENU
 
@@ -704,9 +705,9 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
      */
     void ManualMove::task() {
 
-      if (processing) return;   // Prevent re-entry from idle() calls
+      if (processing) return;   // Prevent re-entry from idle() calls//防止从idle（）调用重新进入
 
-      // Add a manual move to the queue?
+      // Add a manual move to the queue?//是否将手动移动添加到队列？
       if (axis != NO_AXIS_ENUM && ELAPSED(millis(), start_time) && !planner.is_full()) {
 
         const feedRate_t fr_mm_s = (axis <= LOGICAL_AXES) ? manual_feedrate_mm_s[axis] : XY_PROBE_FEEDRATE_MM_S;
@@ -720,7 +721,7 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
             #endif
           #endif
 
-          // Apply a linear offset to a single axis
+          // Apply a linear offset to a single axis//将线性偏移应用于单个轴
           if (axis == ALL_AXES_ENUM)
             destination = all_axes_destination;
           else if (axis <= XYZE) {
@@ -728,26 +729,26 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
             destination[axis] += offset;
           }
 
-          // Reset for the next move
+          // Reset for the next move//为下一步重置
           offset = 0;
           axis = NO_AXIS_ENUM;
 
-          // DELTA and SCARA machines use segmented moves, which could fill the planner during the call to
-          // move_to_destination. This will cause idle() to be called, which can then call this function while the
-          // previous invocation is being blocked. Modifications to offset shouldn't be made while
-          // processing is true or the planner will get out of sync.
+          // DELTA and SCARA machines use segmented moves, which could fill the planner during the call to//DELTA和SCARA机器使用分段移动，这可能会在调用
+          // move_to_destination. This will cause idle() to be called, which can then call this function while the//移动到目的地。这将导致调用idle（），然后在
+          // previous invocation is being blocked. Modifications to offset shouldn't be made while//正在阻止以前的调用。对偏移量的修改不应在
+          // processing is true or the planner will get out of sync.//处理为true，否则计划器将不同步。
           processing = true;
-          prepare_internal_move_to_destination(fr_mm_s);  // will set current_position from destination
+          prepare_internal_move_to_destination(fr_mm_s);  // will set current_position from destination//将从目的地设置当前位置
           processing = false;
 
         #else
 
-          // For Cartesian / Core motion simply move to the current_position
+          // For Cartesian / Core motion simply move to the current_position//对于笛卡尔/核心运动，只需移动到当前位置
           planner.buffer_line(current_position, fr_mm_s,
             TERN_(MULTI_E_MANUAL, axis == E_AXIS ? e_index :) active_extruder
           );
 
-          //SERIAL_ECHOLNPAIR("Add planner.move with Axis ", AS_CHAR(axis_codes[axis]), " at FR ", fr_mm_s);
+          //SERIAL_ECHOLNPAIR("Add planner.move with Axis ", AS_CHAR(axis_codes[axis]), " at FR ", fr_mm_s);//序列回波对（“添加计划器。随轴移动”，如字符（轴代码[Axis]），“在FR”，FR\u mm\u s）；
 
           axis = NO_AXIS_ENUM;
 
@@ -755,31 +756,31 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
       }
     }
 
-    //
-    // Tell ui.update() to start a move to current_position after a short delay.
-    //
+    ////
+    // Tell ui.update() to start a move to current_position after a short delay.//告诉ui.update（）在短暂延迟后开始移动到当前位置。
+    ////
     void ManualMove::soon(const AxisEnum move_axis
       OPTARG(MULTI_E_MANUAL, const int8_t eindex/*=active_extruder*/)
     ) {
       TERN_(MULTI_E_MANUAL, if (move_axis == E_AXIS) e_index = eindex);
-      start_time = millis() + (menu_scale < 0.99f ? 0UL : 250UL); // delay for bigger moves
+      start_time = millis() + (menu_scale < 0.99f ? 0UL : 250UL); // delay for bigger moves//拖延更大的行动
       axis = move_axis;
-      //SERIAL_ECHOLNPAIR("Post Move with Axis ", AS_CHAR(axis_codes[axis]), " soon.");
+      //SERIAL_ECHOLNPAIR("Post Move with Axis ", AS_CHAR(axis_codes[axis]), " soon.");//串行回波对（“轴后移动”，如字符（轴代码[Axis]），“很快”）；
     }
 
     #if ENABLED(AUTO_BED_LEVELING_UBL)
 
       void MarlinUI::external_encoder() {
         if (external_control && encoderDiff) {
-          ubl.encoder_diff += encoderDiff;  // Encoder for UBL G29 mesh editing
-          encoderDiff = 0;                  // Hide encoder events from the screen handler
-          refresh(LCDVIEW_REDRAW_NOW);      // ...but keep the refresh.
+          ubl.encoder_diff += encoderDiff;  // Encoder for UBL G29 mesh editing//UBL G29网格编辑编码器
+          encoderDiff = 0;                  // Hide encoder events from the screen handler//从屏幕处理程序隐藏编码器事件
+          refresh(LCDVIEW_REDRAW_NOW);      // ...but keep the refresh.//…但要保持清醒。
         }
       }
 
     #endif
 
-  #endif // HAS_LCD_MENU
+  #endif // HAS_LCD_MENU//有LCD菜单吗
 
   /**
    * Update the LCD, read encoder buttons, etc.
@@ -818,7 +819,7 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
   millis_t next_lcd_update_ms;
 
   inline bool can_encode() {
-    return !BUTTON_PRESSED(ENC_EN); // Update encoder only when ENC_EN is not LOW (pressed)
+    return !BUTTON_PRESSED(ENC_EN); // Update encoder only when ENC_EN is not LOW (pressed)//仅当ENC_EN不低（按下）时更新编码器
   }
 
   void MarlinUI::update() {
@@ -832,49 +833,49 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
 
     #if HAS_LCD_MENU
 
-      // Handle any queued Move Axis motion
+      // Handle any queued Move Axis motion//处理任何排队的移动轴运动
       manual_move.task();
 
-      // Update button states for button_pressed(), etc.
-      // If the state changes the next update may be delayed 300-500ms.
+      // Update button states for button_pressed(), etc.//更新按钮_pressed（）的按钮状态等。
+      // If the state changes the next update may be delayed 300-500ms.//如果状态改变，下一次更新可能延迟300-500毫秒。
       update_buttons();
 
-      // If the action button is pressed...
-      static bool wait_for_unclick; // = false
+      // If the action button is pressed...//如果按下操作按钮。。。
+      static bool wait_for_unclick; // = false//=错误
 
       auto do_click = [&]{
-        wait_for_unclick = true;                        //  - Set debounce flag to ignore continuous clicks
-        lcd_clicked = !wait_for_user;                   //  - Keep the click if not waiting for a user-click
-        wait_for_user = false;                          //  - Any click clears wait for user
-        quick_feedback();                               //  - Always make a click sound
+        wait_for_unclick = true;                        //  - Set debounce flag to ignore continuous clicks//-设置去抖动标志以忽略连续单击
+        lcd_clicked = !wait_for_user;                   //  - Keep the click if not waiting for a user-click//-如果不等待用户单击，请保持单击
+        wait_for_user = false;                          //  - Any click clears wait for user//-任何单击都会清除等待用户
+        quick_feedback();                               //  - Always make a click sound//-始终发出咔嗒声
       };
 
       #if HAS_TOUCH_BUTTONS
         if (touch_buttons) {
           reset_status_timeout(ms);
-          if (touch_buttons & (EN_A | EN_B)) {              // Menu arrows, in priority
+          if (touch_buttons & (EN_A | EN_B)) {              // Menu arrows, in priority//优先选择菜单箭头
             if (ELAPSED(ms, next_button_update_ms)) {
               encoderDiff = (ENCODER_STEPS_PER_MENU_ITEM) * epps * encoderDirection;
               if (touch_buttons & EN_A) encoderDiff *= -1;
               TERN_(AUTO_BED_LEVELING_UBL, external_encoder());
-              next_button_update_ms = ms + repeat_delay;    // Assume the repeat delay
+              next_button_update_ms = ms + repeat_delay;    // Assume the repeat delay//假设重复延迟
               if (!wait_for_unclick) {
-                next_button_update_ms += 250;               // Longer delay on first press
-                wait_for_unclick = true;                    // Avoid Back/Select click while repeating
+                next_button_update_ms += 250;               // Longer delay on first press//首次按下时延迟更长
+                wait_for_unclick = true;                    // Avoid Back/Select click while repeating//避免重复时返回/选择单击
                 chirp();
               }
             }
           }
-          else if (!wait_for_unclick && (buttons & EN_C))   // OK button, if not waiting for a debounce release:
+          else if (!wait_for_unclick && (buttons & EN_C))   // OK button, if not waiting for a debounce release://OK（确定）按钮，如果未等待去盎司释放：
             do_click();
         }
-        // keep wait_for_unclick value
+        // keep wait_for_unclick value//保持等待\u，等待\u取消单击值
       #endif
 
       if (!touch_buttons) {
-        // Integrated LCD click handling via button_pressed
+        // Integrated LCD click handling via button_pressed//通过按下按钮进行集成LCD点击处理
         if (!external_control && button_pressed()) {
-          if (!wait_for_unclick) do_click();              // Handle the click
+          if (!wait_for_unclick) do_click();              // Handle the click//处理点击
         }
         else
           wait_for_unclick = false;
@@ -885,7 +886,7 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
         goto_previous_screen();
       }
 
-    #endif // HAS_LCD_MENU
+    #endif // HAS_LCD_MENU//有LCD菜单吗
 
     if (ELAPSED(ms, next_lcd_update_ms) || TERN0(HAS_MARLINUI_U8GLIB, drawing_screen)) {
 
@@ -903,7 +904,7 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
 
       #if HAS_ENCODER_ACTION
 
-        TERN_(HAS_SLOW_BUTTONS, slow_buttons = read_slow_buttons()); // Buttons that take too long to read in interrupt context
+        TERN_(HAS_SLOW_BUTTONS, slow_buttons = read_slow_buttons()); // Buttons that take too long to read in interrupt context//在中断上下文中读取时间过长的按钮
 
         if (TERN0(IS_RRW_KEYPAD, handle_keypad()))
           reset_status_timeout(ms);
@@ -911,18 +912,18 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
         uint8_t abs_diff = ABS(encoderDiff);
 
         #if ENCODER_PULSES_PER_STEP > 1
-          // When reversing the encoder direction, a movement step can be missed because
-          // encoderDiff has a non-zero residual value, making the controller unresponsive.
-          // The fix clears the residual value when the encoder is idle.
-          // Also check if past half the threshold to compensate for missed single steps.
+          // When reversing the encoder direction, a movement step can be missed because//当反转编码器方向时，可能会错过移动步骤，因为
+          // encoderDiff has a non-zero residual value, making the controller unresponsive.//encoderDiff具有非零残值，使控制器无响应。
+          // The fix clears the residual value when the encoder is idle.//当编码器空闲时，修复程序清除剩余值。
+          // Also check if past half the threshold to compensate for missed single steps.//还要检查是否超过阈值的一半，以补偿遗漏的单个步骤。
           static int8_t lastEncoderDiff;
 
-          // Timeout? No decoder change since last check. 10 or 20 times per second.
-          if (encoderDiff == lastEncoderDiff && abs_diff <= epps / 2)   // Same direction & size but not over a half-step?
-            encoderDiff = 0;                                            // Clear residual pulses.
-          else if (WITHIN(abs_diff, epps / 2 + 1, epps - 1)) {          // Past half of threshold?
-            abs_diff = epps;                                            // Treat as a full step size
-            encoderDiff = (encoderDiff < 0 ? -1 : 1) * abs_diff;        // ...in the spin direction.
+          // Timeout? No decoder change since last check. 10 or 20 times per second.//暂停？自上次检查以来没有解码器更改。每秒10或20次。
+          if (encoderDiff == lastEncoderDiff && abs_diff <= epps / 2)   // Same direction & size but not over a half-step?//方向和尺寸相同，但不超过半步？
+            encoderDiff = 0;                                            // Clear residual pulses.//清除残余脉冲。
+          else if (WITHIN(abs_diff, epps / 2 + 1, epps - 1)) {          // Past half of threshold?//超过门槛的一半？
+            abs_diff = epps;                                            // Treat as a full step size//视为完整的步长
+            encoderDiff = (encoderDiff < 0 ? -1 : 1) * abs_diff;        // ...in the spin direction.//…在旋转方向。
           }
           lastEncoderDiff = encoderDiff;
         #endif
@@ -939,15 +940,15 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
                 const float encoderMovementSteps = float(abs_diff) / epps;
 
                 if (lastEncoderMovementMillis) {
-                  // Note that the rate is always calculated between two passes through the
-                  // loop and that the abs of the encoderDiff value is tracked.
+                  // Note that the rate is always calculated between two passes through the//请注意，速率始终是在两次通过之间计算的
+                  // loop and that the abs of the encoderDiff value is tracked.//循环并跟踪encoderDiff值的abs。
                   const float encoderStepRate = encoderMovementSteps / float(ms - lastEncoderMovementMillis) * 1000;
 
                   if (encoderStepRate >= ENCODER_100X_STEPS_PER_SEC)     encoderMultiplier = 100;
                   else if (encoderStepRate >= ENCODER_10X_STEPS_PER_SEC) encoderMultiplier = 10;
 
-                  // Enable to output the encoder steps per second value
-                  //#define ENCODER_RATE_MULTIPLIER_DEBUG
+                  // Enable to output the encoder steps per second value//启用以每秒输出编码器步数值
+                  //#define ENCODER_RATE_MULTIPLIER_DEBUG//#定义编码器\速率\乘法器\调试
                   #if ENABLED(ENCODER_RATE_MULTIPLIER_DEBUG)
                     SERIAL_ECHO_START();
                     SERIAL_ECHOPAIR("Enc Step Rate: ", encoderStepRate);
@@ -959,13 +960,13 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
                 }
 
                 lastEncoderMovementMillis = ms;
-              } // encoderRateMultiplierEnabled
+              } // encoderRateMultiplierEnabled//EncoderRatemultipleEnabled
 
             #else
 
               constexpr int32_t encoderMultiplier = 1;
 
-            #endif // ENCODER_RATE_MULTIPLIER
+            #endif // ENCODER_RATE_MULTIPLIER//编码器\速率\乘法器
 
             if (can_encode()) encoderPosition += (encoderDiff * encoderMultiplier) / epps;
 
@@ -983,31 +984,31 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
 
       #endif
 
-      // This runs every ~100ms when idling often enough.
-      // Instead of tracking changes just redraw the Status Screen once per second.
+      // This runs every ~100ms when idling often enough.//当怠速足够频繁时，每100毫秒运行一次。
+      // Instead of tracking changes just redraw the Status Screen once per second.//与其跟踪更改，不如每秒重新绘制一次状态屏幕。
       if (on_status_screen() && !lcd_status_update_delay--) {
         lcd_status_update_delay = TERN(HAS_MARLINUI_U8GLIB, 12, 9);
-        if (max_display_update_time) max_display_update_time--;  // Be sure never go to a very big number
+        if (max_display_update_time) max_display_update_time--;  // Be sure never go to a very big number//千万不要去一个很大的数字
         refresh(LCDVIEW_REDRAW_NOW);
       }
 
       #if BOTH(HAS_LCD_MENU, SCROLL_LONG_FILENAMES)
-        // If scrolling of long file names is enabled and we are in the sd card menu,
-        // cause a refresh to occur until all the text has scrolled into view.
+        // If scrolling of long file names is enabled and we are in the sd card menu,//如果启用了长文件名滚动，并且我们在sd卡菜单中，
+        // cause a refresh to occur until all the text has scrolled into view.//使刷新发生，直到所有文本都滚动到视图中。
         if (currentScreen == menu_media && !lcd_status_update_delay--) {
-          lcd_status_update_delay = ++filename_scroll_pos >= filename_scroll_max ? 12 : 4; // Long delay at end and start
+          lcd_status_update_delay = ++filename_scroll_pos >= filename_scroll_max ? 12 : 4; // Long delay at end and start//结束和开始时的长延迟
           if (filename_scroll_pos > filename_scroll_max) filename_scroll_pos = 0;
           refresh(LCDVIEW_REDRAW_NOW);
           reset_status_timeout(ms);
         }
       #endif
 
-      // Then we want to use only 50% of the time
+      // Then we want to use only 50% of the time//那么我们只想利用50%的时间
       const uint16_t bbr2 = planner.block_buffer_runtime() >> 1;
 
       if ((should_draw() || drawing_screen) && (!bbr2 || bbr2 > max_display_update_time)) {
 
-        // Change state of drawing flag between screen updates
+        // Change state of drawing flag between screen updates//在屏幕更新之间更改图形标志的状态
         if (!drawing_screen) switch (lcdDrawUpdate) {
           case LCDVIEW_CALL_NO_REDRAW:
             refresh(LCDVIEW_NONE);
@@ -1015,10 +1016,10 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
           case LCDVIEW_CLEAR_CALL_REDRAW:
           case LCDVIEW_CALL_REDRAW_NEXT:
             refresh(LCDVIEW_REDRAW_NOW);
-          case LCDVIEW_REDRAW_NOW:        // set above, or by a handler through LCDVIEW_CALL_REDRAW_NEXT
+          case LCDVIEW_REDRAW_NOW:        // set above, or by a handler through LCDVIEW_CALL_REDRAW_NEXT//设置，或由处理程序通过LCDVIEW\u调用\u REDRAW\u NEXT
           case LCDVIEW_NONE:
             break;
-        } // switch
+        } // switch//开关
 
         TERN_(HAS_ADC_BUTTONS, keypad_buttons = 0);
 
@@ -1034,18 +1035,18 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
           #endif
 
           if (do_u8g_loop) {
-            if (!drawing_screen) {                // If not already drawing pages
-              u8g.firstPage();                    // Start the first page
-              drawing_screen = first_page = true; // Flag as drawing pages
+            if (!drawing_screen) {                // If not already drawing pages//如果尚未绘制图纸页
+              u8g.firstPage();                    // Start the first page//开始第一页
+              drawing_screen = first_page = true; // Flag as drawing pages//标记为绘图页
             }
-            set_font(FONT_MENU);                  // Setup font for every page draw
-            u8g.setColorIndex(1);                 // And reset the color
-            run_current_screen();                 // Draw and process the current screen
+            set_font(FONT_MENU);                  // Setup font for every page draw//为每个页面绘制设置字体
+            u8g.setColorIndex(1);                 // And reset the color//并重新设置颜色
+            run_current_screen();                 // Draw and process the current screen//绘制并处理当前屏幕
             first_page = false;
 
-            // The screen handler can clear drawing_screen for an action that changes the screen.
-            // If still drawing and there's another page, update max-time and return now.
-            // The nextPage will already be set up on the next call.
+            // The screen handler can clear drawing_screen for an action that changes the screen.//屏幕处理程序可以清除绘图屏幕以执行更改屏幕的操作。
+            // If still drawing and there's another page, update max-time and return now.//如果仍在绘图，并且还有另一页，请更新max time并立即返回。
+            // The nextPage will already be set up on the next call.//下一页将在下次通话时设置。
             if (drawing_screen && (drawing_screen = u8g.nextPage())) {
               if (on_status_screen())
                 NOLESS(max_display_update_time, millis() - ms);
@@ -1061,21 +1062,21 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
 
         TERN_(HAS_LCD_MENU, lcd_clicked = false);
 
-        // Keeping track of the longest time for an individual LCD update.
-        // Used to do screen throttling when the planner starts to fill up.
+        // Keeping track of the longest time for an individual LCD update.//跟踪单个LCD更新的最长时间。
+        // Used to do screen throttling when the planner starts to fill up.//用于在计划器开始填充时进行屏幕节流。
         if (on_status_screen())
           NOLESS(max_display_update_time, millis() - ms);
       }
 
       #if SCREENS_CAN_TIME_OUT
-        // Return to Status Screen after a timeout
+        // Return to Status Screen after a timeout//超时后返回状态屏幕
         if (on_status_screen() || defer_return_to_status)
           reset_status_timeout(ms);
         else if (ELAPSED(ms, return_to_status_ms))
           return_to_status();
       #endif
 
-      // Change state of drawing flag between screen updates
+      // Change state of drawing flag between screen updates//在屏幕更新之间更改图形标志的状态
       if (!drawing_screen) switch (lcdDrawUpdate) {
         case LCDVIEW_CLEAR_CALL_REDRAW:
           clear_lcd(); break;
@@ -1085,9 +1086,9 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
         case LCDVIEW_CALL_REDRAW_NEXT:
         case LCDVIEW_CALL_NO_REDRAW:
         default: break;
-      } // switch
+      } // switch//开关
 
-    } // ELAPSED(ms, next_lcd_update_ms)
+    } // ELAPSED(ms, next_lcd_update_ms)//已用时间（毫秒，下一次更新）
 
     TERN_(HAS_GRAPHICAL_TFT, tft_idle());
   }
@@ -1100,47 +1101,47 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
     } _stADCKeypadTable_;
 
     #ifndef ADC_BUTTONS_VALUE_SCALE
-      #define ADC_BUTTONS_VALUE_SCALE       1.0  // for the power voltage equal to the reference voltage
+      #define ADC_BUTTONS_VALUE_SCALE       1.0  // for the power voltage equal to the reference voltage//对于等于参考电压的电源电压
     #endif
     #ifndef ADC_BUTTONS_R_PULLUP
-      #define ADC_BUTTONS_R_PULLUP          4.7  // common pull-up resistor in the voltage divider
+      #define ADC_BUTTONS_R_PULLUP          4.7  // common pull-up resistor in the voltage divider//分压器中的公共上拉电阻器
     #endif
     #ifndef ADC_BUTTONS_LEFT_R_PULLDOWN
-      #define ADC_BUTTONS_LEFT_R_PULLDOWN   0.47 // pull-down resistor for LEFT button voltage divider
+      #define ADC_BUTTONS_LEFT_R_PULLDOWN   0.47 // pull-down resistor for LEFT button voltage divider//左按钮分压器的下拉电阻器
     #endif
     #ifndef ADC_BUTTONS_RIGHT_R_PULLDOWN
-      #define ADC_BUTTONS_RIGHT_R_PULLDOWN  4.7  // pull-down resistor for RIGHT button voltage divider
+      #define ADC_BUTTONS_RIGHT_R_PULLDOWN  4.7  // pull-down resistor for RIGHT button voltage divider//右按钮分压器的下拉电阻器
     #endif
     #ifndef ADC_BUTTONS_UP_R_PULLDOWN
-      #define ADC_BUTTONS_UP_R_PULLDOWN     1.0  // pull-down resistor for UP button voltage divider
+      #define ADC_BUTTONS_UP_R_PULLDOWN     1.0  // pull-down resistor for UP button voltage divider//向上按钮分压器的下拉电阻器
     #endif
     #ifndef ADC_BUTTONS_DOWN_R_PULLDOWN
-      #define ADC_BUTTONS_DOWN_R_PULLDOWN   10.0 // pull-down resistor for DOWN button voltage divider
+      #define ADC_BUTTONS_DOWN_R_PULLDOWN   10.0 // pull-down resistor for DOWN button voltage divider//向下按钮分压器的下拉电阻器
     #endif
     #ifndef ADC_BUTTONS_MIDDLE_R_PULLDOWN
-      #define ADC_BUTTONS_MIDDLE_R_PULLDOWN 2.2  // pull-down resistor for MIDDLE button voltage divider
+      #define ADC_BUTTONS_MIDDLE_R_PULLDOWN 2.2  // pull-down resistor for MIDDLE button voltage divider//中间按钮分压器的下拉电阻器
     #endif
 
-    // Calculate the ADC value for the voltage divider with specified pull-down resistor value
+    // Calculate the ADC value for the voltage divider with specified pull-down resistor value//使用指定的下拉电阻值计算分压器的ADC值
     #define ADC_BUTTON_VALUE(r)  int(HAL_ADC_RANGE * (ADC_BUTTONS_VALUE_SCALE) * r / (r + ADC_BUTTONS_R_PULLUP))
 
     static constexpr uint16_t adc_button_tolerance = HAL_ADC_RANGE *   25 / 1024,
                                   adc_other_button = HAL_ADC_RANGE * 1000 / 1024;
     static const _stADCKeypadTable_ stADCKeyTable[] PROGMEM = {
-      // VALUE_MIN, VALUE_MAX, KEY
-      { adc_other_button, HAL_ADC_RANGE, 1 + BLEN_KEYPAD_F1     }, // F1
-      { adc_other_button, HAL_ADC_RANGE, 1 + BLEN_KEYPAD_F2     }, // F2
-      { adc_other_button, HAL_ADC_RANGE, 1 + BLEN_KEYPAD_F3     }, // F3
+      // VALUE_MIN, VALUE_MAX, KEY//最小值，最大值，键
+      { adc_other_button, HAL_ADC_RANGE, 1 + BLEN_KEYPAD_F1     }, // F1//F1
+      { adc_other_button, HAL_ADC_RANGE, 1 + BLEN_KEYPAD_F2     }, // F2//F2
+      { adc_other_button, HAL_ADC_RANGE, 1 + BLEN_KEYPAD_F3     }, // F3//F3
       {  ADC_BUTTON_VALUE(ADC_BUTTONS_LEFT_R_PULLDOWN)   - adc_button_tolerance,
-         ADC_BUTTON_VALUE(ADC_BUTTONS_LEFT_R_PULLDOWN)   + adc_button_tolerance, 1 + BLEN_KEYPAD_LEFT   }, // LEFT  ( 272 ...  472)
+         ADC_BUTTON_VALUE(ADC_BUTTONS_LEFT_R_PULLDOWN)   + adc_button_tolerance, 1 + BLEN_KEYPAD_LEFT   }, // LEFT  ( 272 ...  472)//左（272…472）
       {  ADC_BUTTON_VALUE(ADC_BUTTONS_RIGHT_R_PULLDOWN)  - adc_button_tolerance,
-         ADC_BUTTON_VALUE(ADC_BUTTONS_RIGHT_R_PULLDOWN)  + adc_button_tolerance, 1 + BLEN_KEYPAD_RIGHT  }, // RIGHT (1948 ... 2148)
+         ADC_BUTTON_VALUE(ADC_BUTTONS_RIGHT_R_PULLDOWN)  + adc_button_tolerance, 1 + BLEN_KEYPAD_RIGHT  }, // RIGHT (1948 ... 2148)//右（1948…2148）
       {  ADC_BUTTON_VALUE(ADC_BUTTONS_UP_R_PULLDOWN)     - adc_button_tolerance,
-         ADC_BUTTON_VALUE(ADC_BUTTONS_UP_R_PULLDOWN)     + adc_button_tolerance, 1 + BLEN_KEYPAD_UP     }, // UP    ( 618 ...  818)
+         ADC_BUTTON_VALUE(ADC_BUTTONS_UP_R_PULLDOWN)     + adc_button_tolerance, 1 + BLEN_KEYPAD_UP     }, // UP    ( 618 ...  818)//上升（618…818）
       {  ADC_BUTTON_VALUE(ADC_BUTTONS_DOWN_R_PULLDOWN)   - adc_button_tolerance,
-         ADC_BUTTON_VALUE(ADC_BUTTONS_DOWN_R_PULLDOWN)   + adc_button_tolerance, 1 + BLEN_KEYPAD_DOWN   }, // DOWN  (2686 ... 2886)
+         ADC_BUTTON_VALUE(ADC_BUTTONS_DOWN_R_PULLDOWN)   + adc_button_tolerance, 1 + BLEN_KEYPAD_DOWN   }, // DOWN  (2686 ... 2886)//下降（2686…2886）
       {  ADC_BUTTON_VALUE(ADC_BUTTONS_MIDDLE_R_PULLDOWN) - adc_button_tolerance,
-         ADC_BUTTON_VALUE(ADC_BUTTONS_MIDDLE_R_PULLDOWN) + adc_button_tolerance, 1 + BLEN_KEYPAD_MIDDLE }, // ENTER (1205 ... 1405)
+         ADC_BUTTON_VALUE(ADC_BUTTONS_MIDDLE_R_PULLDOWN) + adc_button_tolerance, 1 + BLEN_KEYPAD_MIDDLE }, // ENTER (1205 ... 1405)//输入（1205…1405）
     };
 
     uint8_t get_ADC_keyValue() {
@@ -1158,7 +1159,7 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
       return 0;
     }
 
-  #endif // HAS_ADC_BUTTONS
+  #endif // HAS_ADC_BUTTONS//有\u ADC\u按钮
 
   #if HAS_ENCODER_ACTION
 
@@ -1186,9 +1187,9 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
 
           #endif
 
-          //
-          // Directional buttons
-          //
+          ////
+          // Directional buttons//方向按钮
+          ////
           #if ANY_BUTTON(UP, DWN, LFT, RT)
 
             const int8_t pulses = epps * encoderDirection;
@@ -1210,7 +1211,7 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
               next_button_update_ms = now + 300;
             }
 
-          #endif // UP || DWN || LFT || RT
+          #endif // UP || DWN || LFT || RT//向上| | DWN | | LFT | | RT
 
           buttons = (newbutton | TERN0(HAS_SLOW_BUTTONS, slow_buttons)
             #if BOTH(HAS_TOUCH_BUTTONS, HAS_ENCODER_ACTION)
@@ -1255,12 +1256,12 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
           TERN_(AUTO_BED_LEVELING_UBL, external_encoder());
         #endif
 
-      } // next_button_update_ms
+      } // next_button_update_ms//下一步按钮更新
 
       #if HAS_ENCODER_WHEEL
         static uint8_t lastEncoderBits;
 
-        // Manage encoder rotation
+        // Manage encoder rotation//管理编码器旋转
         #define ENCODER_SPIN(_E1, _E2) switch (lastEncoderBits) { case _E1: encoderDiff += encoderDirection; break; case _E2: encoderDiff -= encoderDirection; }
 
         uint8_t enc = 0;
@@ -1279,18 +1280,18 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
           lastEncoderBits = enc;
         }
 
-      #endif // HAS_ENCODER_WHEEL
+      #endif // HAS_ENCODER_WHEEL//有编码器和转轮
     }
 
-  #endif // HAS_ENCODER_ACTION
+  #endif // HAS_ENCODER_ACTION//有编码器动作吗
 
-#endif // HAS_WIRED_LCD
+#endif // HAS_WIRED_LCD//有有线液晶显示器吗
 
 #if HAS_STATUS_MESSAGE
 
-  ////////////////////////////////////////////
-  ////////////// Status Message //////////////
-  ////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////
+  ////////////// Status Message ////////////////////////////状态消息//////////////
+  ////////////////////////////////////////////////////////////////////////////////////////
 
   #if ENABLED(EXTENSIBLE_UI)
     #include "extui/ui_api.h"
@@ -1303,21 +1304,21 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
 
     TERN_(HOST_PROMPT_SUPPORT, host_action_notify(message));
 
-    // Here we have a problem. The message is encoded in UTF8, so
-    // arbitrarily cutting it will be a problem. We MUST be sure
-    // that there is no cutting in the middle of a multibyte character!
+    // Here we have a problem. The message is encoded in UTF8, so//这里有个问题。消息以UTF8编码，因此
+    // arbitrarily cutting it will be a problem. We MUST be sure//任意切割将是一个问题。我们必须确定
+    // that there is no cutting in the middle of a multibyte character!/在多字节字符的中间没有切割！
 
-    // Get a pointer to the null terminator
+    // Get a pointer to the null terminator//获取指向空终止符的指针
     const char* pend = message + strlen(message);
 
-    //  If length of supplied UTF8 string is greater than
-    // our buffer size, start cutting whole UTF8 chars
+    //  If length of supplied UTF8 string is greater than//如果提供的UTF8字符串的长度大于
+    // our buffer size, start cutting whole UTF8 chars//我们的缓冲区大小，开始切割整个UTF8字符
     while ((pend - message) > MAX_MESSAGE_LENGTH) {
       --pend;
       while (!START_OF_UTF8_CHAR(*pend)) --pend;
     };
 
-    // At this point, we have the proper cut point. Use it
+    // At this point, we have the proper cut point. Use it//在这一点上，我们有一个合适的切点。使用它
     uint8_t maxLen = pend - message;
     strncpy(status_message, message, maxLen);
     status_message[maxLen] = '\0';
@@ -1374,20 +1375,20 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
 
     TERN_(HOST_PROMPT_SUPPORT, host_action_notify_P(message));
 
-    // Since the message is encoded in UTF8 it must
-    // only be cut on a character boundary.
+    // Since the message is encoded in UTF8 it must//由于消息是用UTF8编码的，因此必须
+    // only be cut on a character boundary.//只能在字符边界上剪切。
 
-    // Get a pointer to the null terminator
+    // Get a pointer to the null terminator//获取指向空终止符的指针
     PGM_P pend = message + strlen_P(message);
 
-    // If length of supplied UTF8 string is greater than
-    // the buffer size, start cutting whole UTF8 chars
+    // If length of supplied UTF8 string is greater than//如果提供的UTF8字符串的长度大于
+    // the buffer size, start cutting whole UTF8 chars//缓冲区大小，开始切割整个UTF8字符
     while ((pend - message) > MAX_MESSAGE_LENGTH) {
       --pend;
       while (!START_OF_UTF8_CHAR(pgm_read_byte(pend))) --pend;
     };
 
-    // At this point, we have the proper cut point. Use it
+    // At this point, we have the proper cut point. Use it//在这一点上，我们有一个合适的切点。使用它
     uint8_t maxLen = pend - message;
     strncpy_P(status_message, message, maxLen);
     status_message[maxLen] = '\0';
@@ -1432,13 +1433,13 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
       #endif
 
       #if BOTH(FILAMENT_LCD_DISPLAY, SDSUPPORT)
-        next_filament_display = ms + 5000UL; // Show status message for 5s
+        next_filament_display = ms + 5000UL; // Show status message for 5s//显示5s的状态信息
       #endif
 
       #if ENABLED(STATUS_MESSAGE_SCROLLING)
         status_scroll_offset = 0;
       #endif
-    #else // HAS_WIRED_LCD
+    #else // HAS_WIRED_LCD//有有线液晶显示器吗
       UNUSED(persist);
     #endif
 
@@ -1449,7 +1450,7 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
   #if ENABLED(STATUS_MESSAGE_SCROLLING)
 
     void MarlinUI::advance_status_scroll() {
-      // Advance by one UTF8 code-word
+      // Advance by one UTF8 code-word//前进一个UTF8码字
       if (status_scroll_offset < utf8_strlen(status_message))
         while (!START_OF_UTF8_CHAR(status_message[++status_scroll_offset]));
       else
@@ -1514,7 +1515,7 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
     LCD_MESSAGEPGM(MSG_PRINT_PAUSED);
 
     #if ENABLED(PARK_HEAD_ON_PAUSE)
-      pause_show_message(PAUSE_MESSAGE_PARKING, PAUSE_MODE_PAUSE_PRINT); // Show message immediately to let user know about pause in progress
+      pause_show_message(PAUSE_MESSAGE_PARKING, PAUSE_MODE_PAUSE_PRINT); // Show message immediately to let user know about pause in progress//立即显示消息，让用户知道正在暂停
       queue.inject_P(PSTR("M25 P\nM24"));
     #elif ENABLED(SDSUPPORT)
       queue.inject_P(PSTR("M25"));
@@ -1530,7 +1531,7 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
     #ifdef ACTION_ON_RESUME
       host_action_resume();
     #endif
-    print_job_timer.start(); // Also called by M24
+    print_job_timer.start(); // Also called by M24//也被称为M24
   }
 
   #if HAS_PRINT_PROGRESS
@@ -1548,25 +1549,25 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
 
   #if HAS_TOUCH_BUTTONS
 
-    //
-    // Screen Click
-    //  - On menu screens move directly to the touched item
-    //  - On menu screens, right side (last 3 cols) acts like a scroll - half up => prev page, half down = next page
-    //  - On select screens (and others) touch the Right Half for +, Left Half for -
-    //  - On edit screens, touch Up Half for -,  Bottom Half to +
-    //
+    ////
+    // Screen Click//屏幕点击
+    //  - On menu screens move directly to the touched item//-在菜单屏幕上直接移动到触摸的项目
+    //  - On menu screens, right side (last 3 cols) acts like a scroll - half up => prev page, half down = next page//-在菜单屏幕上，右侧（最后3列）的作用类似于滚动-半向上=>上一页，半向下=下一页
+    //  - On select screens (and others) touch the Right Half for +, Left Half for -//-在选择屏幕（和其他屏幕）上，触摸右半部分表示+，触摸左半部分表示-
+    //  - On edit screens, touch Up Half for -,  Bottom Half to +//-在编辑屏幕上，将上半部分触摸至-，下半部分触摸至+
+    ////
     void MarlinUI::screen_click(const uint8_t row, const uint8_t col, const uint8_t, const uint8_t) {
       const millis_t now = millis();
       if (PENDING(now, next_button_update_ms)) return;
-      next_button_update_ms = now + repeat_delay;    // Assume the repeat delay
+      next_button_update_ms = now + repeat_delay;    // Assume the repeat delay//假设重复延迟
       const int8_t xdir = col < (LCD_WIDTH ) / 2 ? -1 : 1,
                    ydir = row < (LCD_HEIGHT) / 2 ? -1 : 1;
       if (on_edit_screen)
         encoderDiff = epps * ydir;
       else if (screen_items > 0) {
-        // Last 5 cols act as a scroll :-)
+        // Last 5 cols act as a scroll :-)//最后5列作为滚动条：-）
         if (col > (LCD_WIDTH) - 5)
-          // 2 * LCD_HEIGHT to scroll to bottom of next page. (LCD_HEIGHT would only go 1 item down.)
+          // 2 * LCD_HEIGHT to scroll to bottom of next page. (LCD_HEIGHT would only go 1 item down.)//2*LCD_高度可滚动至下一页底部。（LCD_高度仅下降1项。）
           encoderDiff = epps * (encoderLine - encoderTopLine + 2 * (LCD_HEIGHT)) * ydir;
         else
           encoderDiff = epps * (row - encoderPosition + encoderTopLine);
@@ -1577,11 +1578,11 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
 
   #endif
 
-#elif !HAS_STATUS_MESSAGE // && !HAS_DISPLAY
+#elif !HAS_STATUS_MESSAGE // && !HAS_DISPLAY// && !你有什么显示器吗
 
-  //
-  // Send the status line as a host notification
-  //
+  ////
+  // Send the status line as a host notification//将状态行作为主机通知发送
+  ////
   void MarlinUI::set_status(const char * const message, const bool) {
     TERN(HOST_PROMPT_SUPPORT, host_action_notify(message), UNUSED(message));
   }
@@ -1592,7 +1593,7 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
     TERN(HOST_PROMPT_SUPPORT, host_action_notify_P(message), UNUSED(message));
   }
 
-#endif // !HAS_DISPLAY && !HAS_STATUS_MESSAGE
+#endif // !HAS_DISPLAY && !HAS_STATUS_MESSAGE// !已显示&！有\u状态\u消息
 
 #if ENABLED(SDSUPPORT)
 
@@ -1602,7 +1603,7 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
 
   void MarlinUI::media_changed(const uint8_t old_status, const uint8_t status) {
     if (old_status == status) {
-      TERN_(EXTENSIBLE_UI, ExtUI::onMediaError()); // Failed to mount/unmount
+      TERN_(EXTENSIBLE_UI, ExtUI::onMediaError()); // Failed to mount/unmount//无法装载/卸载
       return;
     }
 
@@ -1633,7 +1634,7 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
     }
 
     #if PIN_EXISTS(SD_DETECT) && DISABLED(NO_LCD_REINIT)
-      init_lcd(); // Revive a noisy shared SPI LCD
+      init_lcd(); // Revive a noisy shared SPI LCD//重振嘈杂的共享SPI LCD
     #endif
 
     refresh();
@@ -1642,14 +1643,14 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
       const millis_t ms = millis();
     #endif
 
-    TERN_(HAS_WIRED_LCD, next_lcd_update_ms = ms + LCD_UPDATE_INTERVAL); // Delay LCD update for SD activity
+    TERN_(HAS_WIRED_LCD, next_lcd_update_ms = ms + LCD_UPDATE_INTERVAL); // Delay LCD update for SD activity//延迟SD活动的LCD更新
 
     #ifdef LED_BACKLIGHT_TIMEOUT
       leds.reset_timeout(ms);
     #endif
   }
 
-#endif // SDSUPPORT
+#endif // SDSUPPORT//SDSUPPORT
 
 #if HAS_LCD_MENU
   void MarlinUI::reset_settings() {
@@ -1708,6 +1709,6 @@ constexpr uint8_t epps = ENCODER_PULSES_PER_STEP;
       #endif
     }
 
-  #endif // EEPROM_AUTO_INIT
+  #endif // EEPROM_AUTO_INIT//EEPROM自动初始化
 
-#endif // EEPROM_SETTINGS
+#endif // EEPROM_SETTINGS//EEPROM_设置

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * \file
  *
@@ -41,7 +42,7 @@
  *
  */
 /*
- * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>
+ * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>//www.atmel.com/design support/“>atmel支持</a>
  */
 
 #ifndef _UDC_DESC_H_
@@ -78,7 +79,7 @@ extern "C" {
  * For Mega application used "code".
  */
 #define  UDC_DESC_STORAGE
-	// Descriptor storage in internal RAM
+	// Descriptor storage in internal RAM//内部RAM中的描述符存储
 #if (defined UDC_DATA_USE_HRAM_SUPPORT)
 #	if defined(__GNUC__)
 #		define UDC_DATA(x)              COMPILER_WORD_ALIGNED __attribute__((__section__(".data_hram0")))
@@ -98,9 +99,9 @@ extern "C" {
  * \brief Configuration descriptor and UDI link for one USB speed
  */
 typedef struct {
-	//! USB configuration descriptor
+	//! USB configuration descriptor//! USB配置描述符
 	usb_conf_desc_t UDC_DESC_STORAGE *desc;
-	//! Array of UDI API pointer
+	//! Array of UDI API pointer//! udiapi指针数组
 	udi_api_t UDC_DESC_STORAGE *UDC_DESC_STORAGE * udi_apis;
 } udc_config_speed_t;
 
@@ -109,27 +110,27 @@ typedef struct {
  * \brief All information about the USB Device
  */
 typedef struct {
-	//! USB device descriptor for low or full speed
+	//! USB device descriptor for low or full speed//！用于低速或全速的USB设备描述符
 	usb_dev_desc_t UDC_DESC_STORAGE *confdev_lsfs;
-	//! USB configuration descriptor and UDI API pointers for low or full speed
+	//! USB configuration descriptor and UDI API pointers for low or full speed//! 用于低速或全速的USB配置描述符和UDI API指针
 	udc_config_speed_t UDC_DESC_STORAGE *conf_lsfs;
 #ifdef USB_DEVICE_HS_SUPPORT
-	//! USB device descriptor for high speed
+	//! USB device descriptor for high speed//! 高速USB设备描述符
 	usb_dev_desc_t UDC_DESC_STORAGE *confdev_hs;
-	//! USB device qualifier, only use in high speed mode
+	//! USB device qualifier, only use in high speed mode//! USB设备限定符，仅在高速模式下使用
 	usb_dev_qual_desc_t UDC_DESC_STORAGE *qualifier;
-	//! USB configuration descriptor and UDI API pointers for high speed
+	//! USB configuration descriptor and UDI API pointers for high speed//! 高速USB配置描述符和UDI API指针
 	udc_config_speed_t UDC_DESC_STORAGE *conf_hs;
 #endif
 	usb_dev_bos_desc_t UDC_DESC_STORAGE *conf_bos;
 } udc_config_t;
 
-//! Global variables of USB Device Descriptor and UDI links
+//! Global variables of USB Device Descriptor and UDI links//！USB设备描述符和UDI链接的全局变量
 extern UDC_DESC_STORAGE udc_config_t udc_config;
 
-//@}
+//@}//@}
 
 #ifdef __cplusplus
 }
 #endif
-#endif // _UDC_DESC_H_
+#endif // _UDC_DESC_H_//_UDC_DESC_H_

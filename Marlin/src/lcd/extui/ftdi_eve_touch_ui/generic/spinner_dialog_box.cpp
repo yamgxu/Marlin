@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**************************
  * spinner_dialog_box.cpp *
  **************************/
@@ -66,4 +67,4 @@ void SpinnerDialogBox::onIdle() {
   }
 }
 
-#endif // FTDI_SPINNER_DIALOG_BOX
+#endif // FTDI_SPINNER_DIALOG_BOX//FTDI微调器对话框

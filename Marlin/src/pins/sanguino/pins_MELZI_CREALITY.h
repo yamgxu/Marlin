@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -35,7 +36,7 @@
 
 #define BOARD_INFO_NAME "Melzi (Creality)"
 
-// Alter timing for graphical display
+// Alter timing for graphical display//改变图形显示的时间
 #if HAS_MARLINUI_U8GLIB
   #ifndef BOARD_ST7920_DELAY_1
     #define BOARD_ST7920_DELAY_1 DELAY_NS(125)
@@ -50,9 +51,9 @@
 
 #include "pins_MELZI.h"
 
-//
-// For the stock CR-10 enable CR10_STOCKDISPLAY in Configuration.h
-//
+////
+// For the stock CR-10 enable CR10_STOCKDISPLAY in Configuration.h//对于库存CR-10，启用配置中的CR10\U库存显示
+////
 #undef LCD_SDSS
 #undef LED_PIN
 #undef LCD_PINS_RS
@@ -62,10 +63,10 @@
 #undef LCD_PINS_D6
 #undef LCD_PINS_D7
 
-#define LCD_SDSS                              31  // Smart Controller SD card reader (rather than the Melzi)
-#define LCD_PINS_RS                           28  // ST9720 CS
-#define LCD_PINS_ENABLE                       17  // ST9720 DAT
-#define LCD_PINS_D4                           30  // ST9720 CLK
+#define LCD_SDSS                              31  // Smart Controller SD card reader (rather than the Melzi)//智能控制器SD卡读卡器（而非Melzi）
+#define LCD_PINS_RS                           28  // ST9720 CS//ST9720 CS
+#define LCD_PINS_ENABLE                       17  // ST9720 DAT//ST9720 DAT
+#define LCD_PINS_D4                           30  // ST9720 CLK//ST9720时钟
 
 #if ENABLED(BLTOUCH)
   #ifndef SERVO0_PIN

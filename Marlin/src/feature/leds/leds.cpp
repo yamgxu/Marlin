@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -112,15 +113,15 @@ void LEDLights::set_color(const LEDColor &incol
 
   #if ENABLED(BLINKM)
 
-    // This variant uses i2c to send the RGB components to the device.
+    // This variant uses i2c to send the RGB components to the device.//此变体使用i2c将RGB组件发送到设备。
     blinkm_set_led_color(incol);
 
   #endif
 
   #if EITHER(RGB_LED, RGBW_LED)
 
-    // This variant uses 3-4 separate pins for the RGB(W) components.
-    // If the pins can do PWM then their intensity will be set.
+    // This variant uses 3-4 separate pins for the RGB(W) components.//此变体为RGB（W）组件使用3-4个单独的管脚。
+    // If the pins can do PWM then their intensity will be set.//如果引脚可以进行PWM，则将设置其强度。
     #define _UPDATE_RGBW(C,c) do {                \
       if (PWM_PIN(RGB_LED_##C##_PIN))             \
         analogWrite(pin_t(RGB_LED_##C##_PIN), c); \
@@ -135,12 +136,12 @@ void LEDLights::set_color(const LEDColor &incol
 
   #endif
 
-  // Update I2C LED driver
+  // Update I2C LED driver//更新I2C LED驱动器
   TERN_(PCA9632, PCA9632_set_led_color(incol));
   TERN_(PCA9533, PCA9533_set_rgb(incol.r, incol.g, incol.b));
 
   #if EITHER(LED_CONTROL_MENU, PRINTER_EVENT_LEDS)
-    // Don't update the color when OFF
+    // Don't update the color when OFF//禁用时不更新颜色
     lights_on = !incol.is_off();
     if (lights_on) color = incol;
   #endif
@@ -152,7 +153,7 @@ void LEDLights::set_color(const LEDColor &incol
 
 #ifdef LED_BACKLIGHT_TIMEOUT
 
-  millis_t LEDLights::led_off_time; // = 0
+  millis_t LEDLights::led_off_time; // = 0// = 0
 
   void LEDLights::update_timeout(const bool power_on) {
     if (lights_on) {
@@ -196,7 +197,7 @@ void LEDLights::set_color(const LEDColor &incol
     neo2.set_color(neocolor);
 
     #if ENABLED(LED_CONTROL_MENU)
-      // Don't update the color when OFF
+      // Don't update the color when OFF//禁用时不更新颜色
       lights_on = !incol.is_off();
       if (lights_on) color = incol;
     #endif
@@ -206,6 +207,6 @@ void LEDLights::set_color(const LEDColor &incol
     void LEDLights2::toggle() { if (lights_on) set_off(); else update(); }
   #endif
 
-#endif  // NEOPIXEL2_SEPARATE
+#endif  // NEOPIXEL2_SEPARATE//NEOPIXEL2_分离
 
-#endif  // HAS_COLOR_LEDS
+#endif  // HAS_COLOR_LEDS//有彩色发光二极管

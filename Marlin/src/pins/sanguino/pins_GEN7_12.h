@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -58,12 +59,12 @@
 #endif
 
 #ifndef GEN7_VERSION
-  #define GEN7_VERSION                        12  // v1.x
+  #define GEN7_VERSION                        12  // v1.x//v1.x
 #endif
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_MIN_PIN                              7
 #define Y_MIN_PIN                              5
 #define Z_MIN_PIN                              1
@@ -71,16 +72,16 @@
 #define Y_MAX_PIN                              2
 #define X_MAX_PIN                              6
 
-//
-// Z Probe (when not Z_MIN_PIN)
-//
+////
+// Z Probe (when not Z_MIN_PIN)//Z探头（非Z_MIN_引脚时）
+////
 #ifndef Z_MIN_PROBE_PIN
   #define Z_MIN_PROBE_PIN                      0
 #endif
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                            19
 #define X_DIR_PIN                             18
 #define X_ENABLE_PIN                          24
@@ -97,50 +98,50 @@
 #define E0_DIR_PIN                            27
 #define E0_ENABLE_PIN                         24
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                             1  // Analog Input
-#define TEMP_BED_PIN                           2  // Analog Input
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                             1  // Analog Input//模拟输入
+#define TEMP_BED_PIN                           2  // Analog Input//模拟输入
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_0_PIN                           4
 #define HEATER_BED_PIN                         3
 
-#if !defined(FAN_PIN) && GEN7_VERSION < 13        // Gen7 v1.3 removed the fan pin
+#if !defined(FAN_PIN) && GEN7_VERSION < 13        // Gen7 v1.3 removed the fan pin//Gen7 v1.3已卸下风扇销
   #define FAN_PIN                             31
 #endif
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define PS_ON_PIN                             15
 
 #if GEN7_VERSION < 13
-  #define CASE_LIGHT_PIN                      16  // Hardware PWM
-#else                                             // Gen7 v1.3 removed the I2C connector & signals so need to get PWM off the PC power supply header
-  #define CASE_LIGHT_PIN                      15  // Hardware PWM
+  #define CASE_LIGHT_PIN                      16  // Hardware PWM//硬件脉宽调制
+#else                                             // Gen7 v1.3 removed the I2C connector & signals so need to get PWM off the PC power supply header//Gen7 v1.3删除了I2C连接器和信号，因此需要将PWM从PC电源头上取下
+  #define CASE_LIGHT_PIN                      15  // Hardware PWM//硬件脉宽调制
 #endif
 
-// All these generations of Gen7 supply thermistor power
-// via PS_ON, so ignore bad thermistor readings
-//#define BOGUS_TEMPERATURE_GRACE_PERIOD     2000
+// All these generations of Gen7 supply thermistor power//所有这些代Gen7都提供热敏电阻电源
+// via PS_ON, so ignore bad thermistor readings//通过PS_开启，因此忽略坏的热敏电阻读数
+//#define BOGUS_TEMPERATURE_GRACE_PERIOD     2000//#定义2000年的假温度宽限期
 
 #define DEBUG_PIN                              0
 
-// RS485 pins
+// RS485 pins//RS485引脚
 #define TX_ENABLE_PIN                         12
 #define RX_ENABLE_PIN                         13
 
-//
-// M3/M4/M5 - Spindle/Laser Control
-//
-#define SPINDLE_LASER_ENA_PIN                 10  // Pullup or pulldown!
+////
+// M3/M4/M5 - Spindle/Laser Control//M3/M4/M5-主轴/激光控制
+////
+#define SPINDLE_LASER_ENA_PIN                 10  // Pullup or pulldown!//拉起还是拉下！
 #define SPINDLE_DIR_PIN                       11
 #if GEN7_VERSION < 13
-  #define SPINDLE_LASER_PWM_PIN               16  // Hardware PWM
-#else                                             // Gen7 v1.3 removed the I2C connector & signals so need to get PWM off the PC power supply header
-  #define SPINDLE_LASER_PWM_PIN               15  // Hardware PWM
+  #define SPINDLE_LASER_PWM_PIN               16  // Hardware PWM//硬件脉宽调制
+#else                                             // Gen7 v1.3 removed the I2C connector & signals so need to get PWM off the PC power supply header//Gen7 v1.3删除了I2C连接器和信号，因此需要将PWM从PC电源头上取下
+  #define SPINDLE_LASER_PWM_PIN               15  // Hardware PWM//硬件脉宽调制
 #endif

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -36,9 +37,9 @@
 
 void eeprom_init() { BL24CXX::init(); }
 
-// ------------------------
-// Public functions
-// ------------------------
+// ------------------------// ------------------------
+// Public functions//公共职能
+// ------------------------// ------------------------
 
 void eeprom_write_byte(uint8_t *pos, uint8_t value) {
   const unsigned eeprom_address = (unsigned)pos;
@@ -50,5 +51,5 @@ uint8_t eeprom_read_byte(uint8_t *pos) {
   return BL24CXX::readOneByte(eeprom_address);
 }
 
-#endif // IIC_BL24CXX_EEPROM
-#endif // __STM32F1__
+#endif // IIC_BL24CXX_EEPROM//IIC_BL24CXX_EEPROM
+#endif // __STM32F1__//_uustm32f1__

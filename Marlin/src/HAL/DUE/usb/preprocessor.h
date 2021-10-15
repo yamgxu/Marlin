@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * \file
  *
@@ -41,7 +42,7 @@
  *
  */
 /*
- * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>
+ * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>//www.atmel.com/design support/“>atmel支持</a>
  */
 
 #ifndef _PREPROCESSOR_H_
@@ -52,4 +53,4 @@
 #include "mrepeat.h"
 
 
-#endif  // _PREPROCESSOR_H_
+#endif  // _PREPROCESSOR_H_//预处理器_

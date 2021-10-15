@@ -1,3 +1,4 @@
+/** translatione by yx */
 /****************
  * commands.cpp *
  ****************/
@@ -79,7 +80,7 @@ uint16_t CLCD::FontMetrics::get_text_width(progmem_str str, size_t n) const {
 
 /************************** HOST COMMAND FUNCTION *********************************/
 
-void CLCD::host_cmd(unsigned char host_command, unsigned char byte2) {  // Sends 24-Bit Host Command to LCD
+void CLCD::host_cmd(unsigned char host_command, unsigned char byte2) {  // Sends 24-Bit Host Command to LCD//向LCD发送24位主机命令
   if (host_command != FTDI::ACTIVE) {
     host_command |= 0x40;
   }
@@ -93,13 +94,13 @@ void CLCD::host_cmd(unsigned char host_command, unsigned char byte2) {  // Sends
 /************************** MEMORY READ FUNCTIONS *********************************/
 
 void CLCD::spi_read_addr(uint32_t reg_address) {
-  spi_send((reg_address >> 16) & 0x3F);  // Address [21:16]
-  spi_send((reg_address >> 8 ) & 0xFF);  // Address [15:8]
-  spi_send((reg_address >> 0)  & 0xFF);  // Address [7:0]
-  spi_send(0x00);                        // Dummy Byte
+  spi_send((reg_address >> 16) & 0x3F);  // Address [21:16]//地址[21:16]
+  spi_send((reg_address >> 8 ) & 0xFF);  // Address [15:8]//地址[15:8]
+  spi_send((reg_address >> 0)  & 0xFF);  // Address [7:0]//地址[7:0]
+  spi_send(0x00);                        // Dummy Byte//伪字节
 }
 
-// Write 4-Byte Address, Read Multiple Bytes
+// Write 4-Byte Address, Read Multiple Bytes//写入4字节地址，读取多个字节
 void CLCD::mem_read_bulk(uint32_t reg_address, uint8_t *data, uint16_t len) {
   spi_ftdi_select();
   spi_read_addr(reg_address);
@@ -107,7 +108,7 @@ void CLCD::mem_read_bulk(uint32_t reg_address, uint8_t *data, uint16_t len) {
   spi_ftdi_deselect();
 }
 
-// Write 4-Byte Address, Read 1-Byte Data
+// Write 4-Byte Address, Read 1-Byte Data//写入4字节地址，读取1字节数据
 uint8_t CLCD::mem_read_8(uint32_t reg_address) {
   spi_ftdi_select();
   spi_read_addr(reg_address);
@@ -116,7 +117,7 @@ uint8_t CLCD::mem_read_8(uint32_t reg_address) {
   return r_data;
 }
 
-// Write 4-Byte Address, Read 2-Bytes Data
+// Write 4-Byte Address, Read 2-Bytes Data//写入4字节地址，读取2字节数据
 uint16_t CLCD::mem_read_16(uint32_t reg_address) {
   using namespace SPI::least_significant_byte_first;
   spi_ftdi_select();
@@ -126,7 +127,7 @@ uint16_t CLCD::mem_read_16(uint32_t reg_address) {
   return r_data;
 }
 
-// Write 4-Byte Address, Read 4-Bytes Data
+// Write 4-Byte Address, Read 4-Bytes Data//写入4字节地址，读取4字节数据
 uint32_t CLCD::mem_read_32(uint32_t reg_address) {
   using namespace SPI::least_significant_byte_first;
   spi_ftdi_select();
@@ -138,7 +139,7 @@ uint32_t CLCD::mem_read_32(uint32_t reg_address) {
 
 /************************** MEMORY WRITE FUNCTIONS *********************************/
 
-// Generic operations for transforming a byte, for use with _mem_write_bulk:
+// Generic operations for transforming a byte, for use with _mem_write_bulk://用于转换字节的通用操作，用于_mem_write_bulk：
 static inline uint8_t reverse_byte(uint8_t a) {
   return ((a & 0x1)  << 7) | ((a & 0x2)  << 5) |
          ((a & 0x4)  << 3) | ((a & 0x8)  << 1) |
@@ -148,12 +149,12 @@ static inline uint8_t reverse_byte(uint8_t a) {
 static inline uint8_t xbm_write(const uint8_t *p) {return reverse_byte(pgm_read_byte(p));}
 
 void CLCD::spi_write_addr(uint32_t reg_address) {
-  spi_send((reg_address >> 16) | 0x80);  // Address [21:16]
-  spi_send((reg_address >> 8 ) & 0xFF);  // Address [15:8]
-  spi_send((reg_address >> 0)  & 0xFF);  // Address [7:0]
+  spi_send((reg_address >> 16) | 0x80);  // Address [21:16]//地址[21:16]
+  spi_send((reg_address >> 8 ) & 0xFF);  // Address [15:8]//地址[15:8]
+  spi_send((reg_address >> 0)  & 0xFF);  // Address [7:0]//地址[7:0]
 }
 
-// Write 3-Byte Address, Multiple Bytes, plus padding bytes, from RAM
+// Write 3-Byte Address, Multiple Bytes, plus padding bytes, from RAM//从RAM写入3字节地址、多个字节以及填充字节
 void CLCD::mem_write_bulk(uint32_t reg_address, const void *data, uint16_t len, uint8_t padding) {
   spi_ftdi_select();
   spi_write_addr(reg_address);
@@ -161,7 +162,7 @@ void CLCD::mem_write_bulk(uint32_t reg_address, const void *data, uint16_t len, 
   spi_ftdi_deselect();
 }
 
-// Write 3-Byte Address, Multiple Bytes, plus padding bytes, from PROGMEM
+// Write 3-Byte Address, Multiple Bytes, plus padding bytes, from PROGMEM//从PROGMEM写入3字节地址、多个字节以及填充字节
 void CLCD::mem_write_bulk(uint32_t reg_address, progmem_str str, uint16_t len, uint8_t padding) {
   spi_ftdi_select();
   spi_write_addr(reg_address);
@@ -169,7 +170,7 @@ void CLCD::mem_write_bulk(uint32_t reg_address, progmem_str str, uint16_t len, u
   spi_ftdi_deselect();
 }
 
- // Write 3-Byte Address, Multiple Bytes, plus padding bytes, from PROGMEM
+ // Write 3-Byte Address, Multiple Bytes, plus padding bytes, from PROGMEM//从PROGMEM写入3字节地址、多个字节以及填充字节
 void CLCD::mem_write_pgm(uint32_t reg_address, const void *data, uint16_t len, uint8_t padding) {
   spi_ftdi_select();
   spi_write_addr(reg_address);
@@ -177,7 +178,7 @@ void CLCD::mem_write_pgm(uint32_t reg_address, const void *data, uint16_t len, u
   spi_ftdi_deselect();
 }
 
-// Write 3-Byte Address, Multiple Bytes, plus padding bytes, from PROGMEM, reversing bytes (suitable for loading XBM images)
+// Write 3-Byte Address, Multiple Bytes, plus padding bytes, from PROGMEM, reversing bytes (suitable for loading XBM images)//从PROGMEM写入3字节地址，多个字节，加上填充字节，反转字节（适用于加载XBM映像）
 void CLCD::mem_write_xbm(uint32_t reg_address, progmem_str data, uint16_t len, uint8_t padding) {
   spi_ftdi_select();
   spi_write_addr(reg_address);
@@ -185,7 +186,7 @@ void CLCD::mem_write_xbm(uint32_t reg_address, progmem_str data, uint16_t len, u
   spi_ftdi_deselect();
 }
 
-// Write 3-Byte Address, Write 1-Byte Data
+// Write 3-Byte Address, Write 1-Byte Data//写入3字节地址，写入1字节数据
 void CLCD::mem_write_8(uint32_t reg_address, uint8_t data) {
   spi_ftdi_select();
   spi_write_addr(reg_address);
@@ -193,7 +194,7 @@ void CLCD::mem_write_8(uint32_t reg_address, uint8_t data) {
   spi_ftdi_deselect();
 }
 
-// Write 3-Byte Address, Write 2-Bytes Data
+// Write 3-Byte Address, Write 2-Bytes Data//写入3字节地址，写入2字节数据
 void CLCD::mem_write_16(uint32_t reg_address, uint16_t data) {
   using namespace SPI::least_significant_byte_first;
   spi_ftdi_select();
@@ -202,7 +203,7 @@ void CLCD::mem_write_16(uint32_t reg_address, uint16_t data) {
   spi_ftdi_deselect();
 }
 
-// Write 3-Byte Address, Write 4-Bytes Data
+// Write 3-Byte Address, Write 4-Bytes Data//写入3字节地址，写入4字节数据
 void CLCD::mem_write_32(uint32_t reg_address, uint32_t data) {
   using namespace SPI::least_significant_byte_first;
   spi_ftdi_select();
@@ -211,7 +212,7 @@ void CLCD::mem_write_32(uint32_t reg_address, uint32_t data) {
   spi_ftdi_deselect();
 }
 
-// Fill area of len size with repeated data bytes
+// Fill area of len size with repeated data bytes//用重复的数据字节填充len大小的区域
 void CLCD::mem_write_fill(uint32_t reg_address, uint8_t data, uint16_t len) {
   spi_ftdi_select();
   spi_write_addr(reg_address);
@@ -248,7 +249,7 @@ void CLCD::CommandFifo::gradcolor(uint32_t rgb) {
   cmd(rgb);
 }
 
-// This sends the a text command to the command preprocessor, must be followed by str()
+// This sends the a text command to the command preprocessor, must be followed by str()//这会将文本命令发送到命令预处理器，后面必须跟str（）
 void CLCD::CommandFifo::button(int16_t x, int16_t y, int16_t w, int16_t h, int16_t font,  uint16_t option) {
   struct {
     int32_t type = CMD_BUTTON;
@@ -270,7 +271,7 @@ void CLCD::CommandFifo::button(int16_t x, int16_t y, int16_t w, int16_t h, int16
   cmd( &cmd_data, sizeof(cmd_data) );
 }
 
-// This sends the a text command to the command preprocessor, must be followed by str()
+// This sends the a text command to the command preprocessor, must be followed by str()//这会将文本命令发送到命令预处理器，后面必须跟str（）
 void CLCD::CommandFifo::text(int16_t x, int16_t y, int16_t font,  uint16_t options) {
   struct {
     int32_t type = CMD_TEXT;
@@ -288,7 +289,7 @@ void CLCD::CommandFifo::text(int16_t x, int16_t y, int16_t font,  uint16_t optio
   cmd( &cmd_data, sizeof(cmd_data) );
 }
 
-// This sends the a toggle command to the command preprocessor, must be followed by str()
+// This sends the a toggle command to the command preprocessor, must be followed by str()//这会将a toggle命令发送到命令预处理器，后面必须跟str（）
 void CLCD::CommandFifo::toggle(int16_t x, int16_t y, int16_t w, int16_t font, uint16_t options, bool state) {
   struct {
     int32_t type = CMD_TOGGLE;
@@ -310,7 +311,7 @@ void CLCD::CommandFifo::toggle(int16_t x, int16_t y, int16_t w, int16_t font, ui
   cmd( &cmd_data, sizeof(cmd_data) );
 }
 
-// This sends the a keys command to the command preprocessor, must be followed by str()
+// This sends the a keys command to the command preprocessor, must be followed by str()//这会将a keys命令发送到命令预处理器，后面必须跟str（）
 void CLCD::CommandFifo::keys(int16_t x, int16_t y, int16_t w, int16_t h, int16_t font, uint16_t options) {
   struct {
     int32_t type = CMD_KEYS;
@@ -945,7 +946,7 @@ template <class T> bool CLCD::CommandFifo::_write_unaligned(T data, uint16_t len
       bytes_tail = command_read_ptr - command_write_ptr;
       bytes_head = 0;
     }
-    // Check for faults which can lock up the command processor
+    // Check for faults which can lock up the command processor//检查是否存在可锁定命令处理器的故障
     if (has_fault()) {
       #if ENABLED(TOUCH_UI_DEBUG)
         SERIAL_ECHOLNPGM("Fault waiting for space in the command processor");
@@ -973,9 +974,9 @@ template <class T> bool CLCD::CommandFifo::_write_unaligned(T data, uint16_t len
   return true;
 }
 
-// Writes len bytes into the FIFO, if len is not
-// divisible by four, zero bytes will be written
-// to align to the boundary.
+// Writes len bytes into the FIFO, if len is not//将len字节写入FIFO（如果len不是
+// divisible by four, zero bytes will be written//可被四整除，将写入零字节
+// to align to the boundary.//与边界对齐。
 
 template <class T> bool CLCD::CommandFifo::write(T data, uint16_t len) {
   const uint8_t padding = MULTIPLE_OF_4(len) - len;
@@ -1003,9 +1004,9 @@ void CLCD::CommandFifo::reset() {
   safe_delay(300);
 };
 
-// Writes len bytes into the FIFO, if len is not
-// divisible by four, zero bytes will be written
-// to align to the boundary.
+// Writes len bytes into the FIFO, if len is not//将len字节写入FIFO（如果len不是
+// divisible by four, zero bytes will be written//可被四整除，将写入零字节
+// to align to the boundary.//与边界对齐。
 
 template <class T> bool CLCD::CommandFifo::write(T data, uint16_t len) {
   const uint8_t padding = MULTIPLE_OF_4(len) - len;
@@ -1016,9 +1017,9 @@ template <class T> bool CLCD::CommandFifo::write(T data, uint16_t len) {
     #endif
     return false;
   }
-  // The FT810 provides a special register that can be used
-  // for writing data without us having to do our own FIFO
-  // management.
+  // The FT810 provides a special register that can be used//FT810提供了一个可以使用的特殊寄存器
+  // for writing data without us having to do our own FIFO//用于写入数据而无需我们自己进行FIFO
+  // management.//管理层。
   uint16_t Command_Space = mem_read_32(REG::CMDB_SPACE) & 0x0FFF;
   if (Command_Space < (len + padding)) {
     #if ENABLED(TOUCH_UI_DEBUG)
@@ -1047,7 +1048,7 @@ template <class T> bool CLCD::CommandFifo::write(T data, uint16_t len) {
 template bool CLCD::CommandFifo::write(const void*, uint16_t);
 template bool CLCD::CommandFifo::write(progmem_str, uint16_t);
 
-// CO_PROCESSOR COMMANDS
+// CO_PROCESSOR COMMANDS//协处理器命令
 
 void CLCD::CommandFifo::str(const char * data) {
   write(data, strlen(data)+1);
@@ -1060,18 +1061,18 @@ void CLCD::CommandFifo::str(progmem_str data) {
 /******************* LCD INITIALIZATION ************************/
 
 void CLCD::init() {
-  spi_init();                                  // Set Up I/O Lines for SPI and FT800/810 Control
-  ftdi_reset();                                // Power down/up the FT8xx with the apropriate delays
+  spi_init();                                  // Set Up I/O Lines for SPI and FT800/810 Control//为SPI和FT800/810控制设置I/O线
+  ftdi_reset();                                // Power down/up the FT8xx with the apropriate delays//使用适当的延迟关闭/打开FT8xx电源
 
   host_cmd(Use_Crystal ? CLKEXT : CLKINT, 0);
-  host_cmd(FTDI::ACTIVE, 0);                        // Activate the System Clock
+  host_cmd(FTDI::ACTIVE, 0);                        // Activate the System Clock//启动系统时钟
 
-  delay(40); // FTDI/BRT recommendation: no SPI traffic during startup. EVE needs at the very least 45ms to start, so leave her alone for a little while.
+  delay(40); // FTDI/BRT recommendation: no SPI traffic during startup. EVE needs at the very least 45ms to start, so leave her alone for a little while.//FTDI/BRT建议：启动期间无SPI流量。伊芙至少需要45毫秒才能开始，所以让她单独呆一会儿。
 
   /* read the device-id until it returns 0x7C or times out, should take less than 150ms */
   uint8_t counter;
   for (counter = 0; counter < 250; counter++) {
-   uint8_t device_id = mem_read_8(REG::ID);            // Read Device ID, Should Be 0x7C;
+   uint8_t device_id = mem_read_8(REG::ID);            // Read Device ID, Should Be 0x7C;//读取设备ID，应为0x7C；
    if (device_id == 0x7C) {
      if (ENABLED(TOUCH_UI_DEBUG)) SERIAL_ECHO_MSG("FTDI chip initialized ");
      break;
@@ -1115,7 +1116,7 @@ void CLCD::init() {
     mem_write_16(REG::GPIOX_DIR,0x8000); /* setting GPIO3 back to input */
   #endif
 
-  mem_write_8(REG::PWM_DUTY, 0);   // turn off Backlight, Frequency already is set to 250Hz default
+  mem_write_8(REG::PWM_DUTY, 0);   // turn off Backlight, Frequency already is set to 250Hz default//关闭背光，频率已设置为250Hz默认值
 
   /* Configure the FT8xx Registers */
   mem_write_16(REG::HCYCLE,  FTDI::Hcycle);
@@ -1137,13 +1138,13 @@ void CLCD::init() {
   mem_write_32(MAP::RAM_DL + 4, (DL::CLEAR | 0x07)); /* clear color, stencil and tag buffer */
   mem_write_32(MAP::RAM_DL + 8,  DL::DL_DISPLAY);    /* end of display list */
 
-  mem_write_8(REG::DLSWAP, 0x02); // activate display list, Bad Magic Cookie 2 = switch to new list after current frame is scanned out
+  mem_write_8(REG::DLSWAP, 0x02); // activate display list, Bad Magic Cookie 2 = switch to new list after current frame is scanned out//激活显示列表，Bad Magic Cookie 2=扫描出当前帧后切换到新列表
 
-  //mem_write_8(REG::TOUCH_MODE, 0x03);      // Configure the Touch Screen, Bad Magic Cookie, 3 = CONTINUOUS = Reset Default
-  //mem_write_8(REG::TOUCH_ADC_MODE, 0x01);  // Bad Magic Cookie, 1 = single touch = Reset Default
-  //mem_write_8(REG::TOUCH_OVERSAMPLE, 0x0F); // Reset Default = 7 - why 15?
+  //mem_write_8(REG::TOUCH_MODE, 0x03);      // Configure the Touch Screen, Bad Magic Cookie, 3 = CONTINUOUS = Reset Default//mem_write_8（注册表：：触摸模式，0x03）；//配置触摸屏，坏魔法Cookie，3=连续=重置默认值
+  //mem_write_8(REG::TOUCH_ADC_MODE, 0x01);  // Bad Magic Cookie, 1 = single touch = Reset Default//mem_write_8（REG:：TOUCH_ADC_MODE，0x01）；//坏魔法Cookie，1=单触=重置默认值
+  //mem_write_8(REG::TOUCH_OVERSAMPLE, 0x0F); // Reset Default = 7 - why 15?//mem_write_8（REG:：TOUCH_OVERSAMPLE，0x0F）；//重置默认值=7-为什么是15？
   mem_write_16(REG::TOUCH_RZTHRESH, touch_threshold); /* setup touch sensitivity */
-  mem_write_8(REG::VOL_SOUND, 0x00);       // Turn Synthesizer Volume Off
+  mem_write_8(REG::VOL_SOUND, 0x00);       // Turn Synthesizer Volume Off//关闭合成器音量
 
   /* turn on the display by setting DISP high */
   /* turn on the Audio Amplifier by setting GPIO_1 high for the select few modules supporting this */
@@ -1159,11 +1160,11 @@ void CLCD::init() {
   else
     mem_write_8(REG::GPIO, GPIO_DISP); /* REG::GPIO_DIR is set to output for GPIO_DISP by default */
 
-  mem_write_8(REG::PCLK, Pclk); // Turns on Clock by setting PCLK Register to the value necessary for the module
+  mem_write_8(REG::PCLK, Pclk); // Turns on Clock by setting PCLK Register to the value necessary for the module//通过将PCLK寄存器设置为模块所需的值来开启时钟
 
   mem_write_16(REG::PWM_HZ, 0x00FA);
 
-  // Turning off dithering seems to help prevent horizontal line artifacts on certain colors
+  // Turning off dithering seems to help prevent horizontal line artifacts on certain colors//关闭抖动似乎有助于防止某些颜色上出现水平线瑕疵
   mem_write_8(REG::DITHER,  0);
 
   default_touch_transform();
@@ -1171,7 +1172,7 @@ void CLCD::init() {
 }
 
 void CLCD::default_touch_transform() {
-  // Set Initial Values for Touch Transform Registers
+  // Set Initial Values for Touch Transform Registers//设置触摸变换寄存器的初始值
   mem_write_32(REG::ROTATE, 0);
   mem_write_32(REG::TOUCH_TRANSFORM_A, FTDI::default_transform_a);
   mem_write_32(REG::TOUCH_TRANSFORM_B, FTDI::default_transform_b);
@@ -1183,8 +1184,8 @@ void CLCD::default_touch_transform() {
 
 void CLCD::default_display_orientation() {
   #if FTDI_API_LEVEL >= 810
-    // Set the initial display orientation. On the FT810, we use the command
-    // processor to do this since it will also update the transform matrices.
+    // Set the initial display orientation. On the FT810, we use the command//设置初始显示方向。在FT810上，我们使用命令
+    // processor to do this since it will also update the transform matrices.//处理器执行此操作，因为它还将更新变换矩阵。
     CommandFifo cmd;
     cmd.setrotate(
         ENABLED(TOUCH_UI_MIRRORED) * 4
@@ -1199,4 +1200,4 @@ void CLCD::default_display_orientation() {
   #endif
 }
 
-#endif // FTDI_BASIC
+#endif // FTDI_BASIC//基本的

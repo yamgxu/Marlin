@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,56 +32,56 @@
 #define DEFAULT_MACHINE_NAME "STM32F446VET6"
 #define BOARD_INFO_NAME      "STM32F4 VAkE"
 
-//#define I2C_EEPROM
-#define MARLIN_EEPROM_SIZE                0x1000  // 4KB
+//#define I2C_EEPROM//#定义I2C_EEPROM
+#define MARLIN_EEPROM_SIZE                0x1000  // 4KB//4KB
 
-//
-// Servos
-//
-//#define SERVO0_PIN                        PE13
-//#define SERVO1_PIN                        PE14
+////
+// Servos//伺服
+////
+//#define SERVO0_PIN                        PE13//#定义伺服0_引脚PE13
+//#define SERVO1_PIN                        PE14//#定义伺服1_引脚PE14
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_STOP_PIN                          PE10
 #define Y_STOP_PIN                          PE9
 #define Z_STOP_PIN                          PE8
 
-//
-// Z Probe (when not Z_MIN_PIN)
-//
+////
+// Z Probe (when not Z_MIN_PIN)//Z探头（非Z_MIN_引脚时）
+////
 #ifndef Z_MIN_PROBE_PIN
   #define Z_MIN_PROBE_PIN                   PA4
 #endif
 
-//
-// Filament runout
-//
+////
+// Filament runout//灯丝跳动
+////
 #define FIL_RUNOUT_PIN                      PA3
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 
 #define STEPPER_ENABLE_PIN                  PB2
 
-#define X_STEP_PIN                          PC6   // X_STEP
-#define X_DIR_PIN                           PC7   // X_DIR
-#define X_ENABLE_PIN                        PB2   //
+#define X_STEP_PIN                          PC6   // X_STEP//X_步
+#define X_DIR_PIN                           PC7   // X_DIR//X_DIR
+#define X_ENABLE_PIN                        PB2   ////
 #ifndef X_CS_PIN
-  #define X_CS_PIN                          PC8   // X_CS
+  #define X_CS_PIN                          PC8   // X_CS//X_CS
 #endif
 
-#define Y_STEP_PIN                          PD9   // Y_STEP
-#define Y_DIR_PIN                           PD10  // Y_DIR
-#define Y_ENABLE_PIN                        PB2   //
+#define Y_STEP_PIN                          PD9   // Y_STEP//Y_步
+#define Y_DIR_PIN                           PD10  // Y_DIR//尤迪尔
+#define Y_ENABLE_PIN                        PB2   ////
 #ifndef Y_CS_PIN
-  #define Y_CS_PIN                          PD11  // Y_CS
+  #define Y_CS_PIN                          PD11  // Y_CS//Y_CS
 #endif
 
-#define Z_STEP_PIN                          PE15  // Z_STEP
-#define Z_DIR_PIN                           PB10  // Z_DIR
+#define Z_STEP_PIN                          PE15  // Z_STEP//Z_阶
+#define Z_DIR_PIN                           PB10  // Z_DIR//Z_DIR
 #define Z_ENABLE_PIN                        PB2
 #ifndef Z_CS_PIN
   #define Z_CS_PIN                          PD8
@@ -100,30 +101,30 @@
   #define E1_CS_PIN                         PB0
 #endif
 
-#define SD_SCK_PIN                          PE12  // PA5   // SPI1 for SD card
-#define SD_MISO_PIN                         PE13  // PA6
-#define SD_MOSI_PIN                         PE14  // PA7
+#define SD_SCK_PIN                          PE12  // PA5   // SPI1 for SD card//用于SD卡的PA5//SPI1
+#define SD_MISO_PIN                         PE13  // PA6//尼龙6
+#define SD_MOSI_PIN                         PE14  // PA7//PA7
 
-// added for SD card : optional or not ???
-//#define SD_CHIP_SELECT_PIN                SDSS  // The default chip select pin for the SD card is SS.
-// The following three pins must not be redefined for hardware SPI.
-//#define SPI_MOSI_PIN               SD_MOSI_PIN  // SPI Master Out Slave In pin
-//#define SPI_MISO_PIN               SD_MISO_PIN  // SPI Master In Slave Out pin
-//#define SPI_SCK_PIN                 SD_SCK_PIN  // SPI Clock pin
+// added for SD card : optional or not ???//为SD卡添加：是否可选？？？
+//#define SD_CHIP_SELECT_PIN                SDSS  // The default chip select pin for the SD card is SS.//#定义SD卡芯片选择引脚SDSS//SD卡的默认芯片选择引脚为SS。
+// The following three pins must not be redefined for hardware SPI.//不得为硬件SPI重新定义以下三个引脚。
+//#define SPI_MOSI_PIN               SD_MOSI_PIN  // SPI Master Out Slave In pin//#定义SPI_MOSI_引脚SD_MOSI_引脚//SPI主输出从输入引脚
+//#define SPI_MISO_PIN               SD_MISO_PIN  // SPI Master In Slave Out pin//#定义SPI_MISO_引脚SD_MISO_引脚//SPI主输入从输出引脚
+//#define SPI_SCK_PIN                 SD_SCK_PIN  // SPI Clock pin//#定义SPI_SCK_引脚SD_SCK_引脚//SPI时钟引脚
 
-//
-// Temperature Sensors (Analog inputs)
-//
+////
+// Temperature Sensors (Analog inputs)//温度传感器（模拟输入）
+////
 
-#define TEMP_0_PIN                          PC0   // Analog Input
-#define TEMP_1_PIN                          PC1   // Analog Input
-#define TEMP_2_PIN                          PC2   // Analog Input
-#define TEMP_3_PIN                          PC3   // Analog Input
-#define TEMP_BED_PIN                        PC3   // Analog Input
+#define TEMP_0_PIN                          PC0   // Analog Input//模拟输入
+#define TEMP_1_PIN                          PC1   // Analog Input//模拟输入
+#define TEMP_2_PIN                          PC2   // Analog Input//模拟输入
+#define TEMP_3_PIN                          PC3   // Analog Input//模拟输入
+#define TEMP_BED_PIN                        PC3   // Analog Input//模拟输入
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 
 #define HEATER_0_PIN                        PD15
 #define HEATER_1_PIN                        PD14
@@ -132,43 +133,43 @@
 #ifndef FAN_PIN
   #define FAN_PIN                           PD13
 #endif
-#define FAN1_PIN                            PB5   // PA0
-#define FAN2_PIN                            PB4   // PA1
+#define FAN1_PIN                            PB5   // PA0//PA0
+#define FAN2_PIN                            PB4   // PA1//PA1
 
 #ifndef E0_AUTO_FAN_PIN
   #define E0_AUTO_FAN_PIN                   PD13
 #endif
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 
-//#define CASE_LIGHT_PIN_CI                 PF13
-//#define CASE_LIGHT_PIN_DO                 PF14
-//#define NEOPIXEL_PIN                      PF13
+//#define CASE_LIGHT_PIN_CI                 PF13//#定义案例\灯\插脚\ CI PF13
+//#define CASE_LIGHT_PIN_DO                 PF14//#定义案例\灯\插脚\ DO PF14
+//#define NEOPIXEL_PIN                      PF13//#定义Neopix_引脚PF13
 
-//
-// Průša i3 MK2 Multi Material Multiplexer Support
-//
-//#define E_MUX0_PIN                        PG3
-//#define E_MUX1_PIN                        PG4
+////
+// Průša i3 MK2 Multi Material Multiplexer Support//Průša i3 MK2多材料多路复用器支持
+////
+//#define E_MUX0_PIN                        PG3//#定义E_MUX0_引脚PG3
+//#define E_MUX1_PIN                        PG4//#定义E_MUX1_引脚PG4
 
-#define LED_PIN                             PB14  // Alive
+#define LED_PIN                             PB14  // Alive//活的
 #define PS_ON_PIN                           PE0
 #define KILL_PIN                            PD5
-#define POWER_LOSS_PIN                      PA4   // ?? Power loss / nAC_FAULT
+#define POWER_LOSS_PIN                      PA4   // ?? Power loss / nAC_FAULT// ?? 电源丢失/nAC_故障
 
 #if ENABLED(SDSUPPORT)
   #define SD_DETECT_PIN                     PB7
-  #define SD_SS_PIN                        PB_15  // USD_CS -> CS for onboard SD
+  #define SD_SS_PIN                        PB_15  // USD_CS -> CS for onboard SD//USD_CS->CS用于车载SD
 #endif
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 #if HAS_WIRED_LCD
   #if ENABLED(SDSUPPORT)
-    #define SDSS                            PB6   // CS for SD card in LCD
+    #define SDSS                            PB6   // CS for SD card in LCD//LCD中SD卡的CS
   #endif
   #define BEEPER_PIN                        PC9
   #define LCD_PINS_RS                       PC12
@@ -182,9 +183,9 @@
   #define BTN_ENC                           PB12
 #endif
 
-//
-// ST7920 Delays
-//
+////
+// ST7920 Delays//ST7920延迟
+////
 #ifndef BOARD_ST7920_DELAY_1
   #define BOARD_ST7920_DELAY_1      DELAY_NS(96)
 #endif

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,14 +30,14 @@
 
 #define BOARD_INFO_NAME "Azteeg X5 MINI WIFI"
 
-//
-// DIGIPOT slave addresses
-//
+////
+// DIGIPOT slave addresses//DIGIPOT从机地址
+////
 #ifndef DIGIPOT_I2C_ADDRESS_A
-  #define DIGIPOT_I2C_ADDRESS_A 0x58   // shifted slave address for first DIGIPOT (0x58 <- 0x2C << 1)
+  #define DIGIPOT_I2C_ADDRESS_A 0x58   // shifted slave address for first DIGIPOT (0x58 <- 0x2C << 1)//第一个数字端口的移位从属地址（0x58<-0x2C<<1）
 #endif
 #ifndef DIGIPOT_I2C_ADDRESS_B
-  #define DIGIPOT_I2C_ADDRESS_B 0x5C   // shifted slave address for second DIGIPOT (0x5C <- 0x2E << 1)
+  #define DIGIPOT_I2C_ADDRESS_B 0x5C   // shifted slave address for second DIGIPOT (0x5C <- 0x2E << 1)//第二个数字端口的移位从属地址（0x5C<-0x2E<<1）
 #endif
 
 #include "pins_AZTEEG_X5_MINI.h"

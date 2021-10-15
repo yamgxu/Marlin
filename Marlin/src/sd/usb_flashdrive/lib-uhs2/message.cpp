@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Copyright (C) 2011 Circuits At Home, LTD. All rights reserved.
  *
@@ -29,9 +30,9 @@
 
 #include "Usb.h"
 
-// 0x80 is the default (i.e. trace) to turn off set this global to something lower.
-// this allows for 126 other debugging levels.
-// TO-DO: Allow assignment to a different serial port by software
+// 0x80 is the default (i.e. trace) to turn off set this global to something lower.//0x80是关闭此全局设置的默认值（即跟踪），将其设置为更低的值。
+// this allows for 126 other debugging levels.//这允许126个其他调试级别。
+// TO-DO: Allow assignment to a different serial port by software//待办事项：允许通过软件分配到不同的串行端口
 int UsbDEBUGlvl = 0x80;
 
 void E_Notifyc(char c, int lvl) {
@@ -41,7 +42,7 @@ void E_Notifyc(char c, int lvl) {
       , BYTE
     #endif
   );
-  //USB_HOST_SERIAL.flush();
+  //USB_HOST_SERIAL.flush();//USB_HOST_SERIAL.flush（）；
 }
 
 void E_Notify(char const * msg, int lvl) {
@@ -63,13 +64,13 @@ void E_Notify(uint8_t b, int lvl) {
       , DEC
     #endif
   );
-  //USB_HOST_SERIAL.flush();
+  //USB_HOST_SERIAL.flush();//USB_HOST_SERIAL.flush（）；
 }
 
 void E_Notify(double d, int lvl) {
   if (UsbDEBUGlvl < lvl) return;
   USB_HOST_SERIAL.print(d);
-  //USB_HOST_SERIAL.flush();
+  //USB_HOST_SERIAL.flush();//USB_HOST_SERIAL.flush（）；
 }
 
 #ifdef DEBUG_USB_HOST
@@ -123,6 +124,6 @@ void E_Notify(double d, int lvl) {
     Notify(PSTR("\r\n"), 0x80);
   }
 
-#endif // DEBUG_USB_HOST
+#endif // DEBUG_USB_HOST//调试USB主机
 
-#endif // USB_FLASH_DRIVE_SUPPORT
+#endif // USB_FLASH_DRIVE_SUPPORT//USB闪存驱动器支持

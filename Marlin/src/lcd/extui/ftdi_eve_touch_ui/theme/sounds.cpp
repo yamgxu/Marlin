@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**************
  * sounds.cpp *
  **************/
@@ -111,7 +112,7 @@ namespace Theme {
     {ORGAN,        NOTE_D2,  32},
     {SILENCE,      REST,     52},
 
-    //{ORGAN,        NOTE_D1,  28},
+    //{ORGAN,        NOTE_D1,  28},//{机关，注1，28}，
     {ORGAN,        NOTE_C3S, 9},
     {ORGAN,        NOTE_E3,  9},
     {ORGAN,        NOTE_G3,  9},
@@ -385,7 +386,7 @@ namespace Theme {
     {CHACK},
     {SILENCE, END_SONG, 0}
   };
-}; // namespace Theme
+}; // namespace Theme//名称空间主题
 
 #define N_ELEMENTS(a) (sizeof(a)/sizeof(a[0]))
 
@@ -407,4 +408,4 @@ const SoundList::list_t SoundList::list[] = {
 
 const uint8_t SoundList::n = N_ELEMENTS(SoundList::list);
 
-#endif // TOUCH_UI_FTDI_EVE
+#endif // TOUCH_UI_FTDI_EVE//触摸屏

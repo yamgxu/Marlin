@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * \file
  *
@@ -52,7 +53,7 @@
  *
  */
 /*
- * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>
+ * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>//www.atmel.com/design support/“>atmel支持</a>
  */
 #ifndef _SBC_PROTOCOL_H_
 #define _SBC_PROTOCOL_H_
@@ -65,8 +66,8 @@
  * @{
  */
 
-//! \name SCSI commands defined by SBC-2
-//@{
+//! \name SCSI commands defined by SBC-2//! \命名SBC-2定义的SCSI命令
+//@{//@{
 #define  SBC_FORMAT_UNIT         0x04
 #define  SBC_READ6               0x08
 #define  SBC_WRITE6              0x0A
@@ -75,32 +76,32 @@
 #define  SBC_READ10              0x28
 #define  SBC_WRITE10             0x2A
 #define  SBC_VERIFY10            0x2F
-//@}
+//@}//@}
 
-//! \name SBC-2 Mode page definitions
-//@{
+//! \name SBC-2 Mode page definitions//! \名称SBC-2模式页面定义
+//@{//@{
 
 enum scsi_sbc_mode {
-	SCSI_MS_MODE_RW_ERR_RECOV = 0x01,	//!< Read-Write Error Recovery mode page
-	SCSI_MS_MODE_FORMAT_DEVICE = 0x03,	//!< Format Device mode page
-	SCSI_MS_MODE_FLEXIBLE_DISK = 0x05,	//!< Flexible Disk mode page
-	SCSI_MS_MODE_CACHING = 0x08,	//!< Caching mode page
+	SCSI_MS_MODE_RW_ERR_RECOV = 0x01,	//!< Read-Write Error Recovery mode page//！<读写错误恢复模式页面
+	SCSI_MS_MODE_FORMAT_DEVICE = 0x03,	//!< Format Device mode page//！<格式化设备模式页面
+	SCSI_MS_MODE_FLEXIBLE_DISK = 0x05,	//!< Flexible Disk mode page//！<软盘模式页面
+	SCSI_MS_MODE_CACHING = 0x08,	//!< Caching mode page//！<缓存模式页面
 };
 
 
-//! \name SBC-2 Device-Specific Parameter
-//@{
-#define SCSI_MS_SBC_WP              0x80	//!< Write Protected
-#define SCSI_MS_SBC_DPOFUA          0x10	//!< DPO and FUA supported
-//@}
+//! \name SBC-2 Device-Specific Parameter//！\name SBC-2设备特定参数
+//@{//@{
+#define SCSI_MS_SBC_WP              0x80	//!< Write Protected//！<写保护
+#define SCSI_MS_SBC_DPOFUA          0x10	//!< DPO and FUA supported//！<支持DPO和FUA
+//@}//@}
 
 /**
  * \brief SBC-2 Short LBA mode parameter block descriptor
  */
 struct sbc_slba_block_desc {
-	be32_t nr_blocks;	//!< Number of Blocks
-	be32_t block_len;	//!< Block Length
-#define SBC_SLBA_BLOCK_LEN_MASK   0x00FFFFFFU	//!< Mask reserved bits
+	be32_t nr_blocks;	//!< Number of Blocks//!< 街区数
+	be32_t block_len;	//!< Block Length//!< 块长度
+#define SBC_SLBA_BLOCK_LEN_MASK   0x00FFFFFFU	//!< Mask reserved bits//!< 掩码保留位
 };
 
 /**
@@ -110,24 +111,24 @@ struct sbc_caching_mode_page {
 	uint8_t page_code;
 	uint8_t page_length;
 	uint8_t flags2;
-#define  SBC_MP_CACHE_IC      (1 << 7)	//!< Initiator Control
-#define  SBC_MP_CACHE_ABPF    (1 << 6)	//!< Abort Pre-Fetch
-#define  SBC_MP_CACHE_CAP     (1 << 5)	//!< Catching Analysis Permitted
-#define  SBC_MP_CACHE_DISC    (1 << 4)	//!< Discontinuity
-#define  SBC_MP_CACHE_SIZE    (1 << 3)	//!< Size enable
-#define  SBC_MP_CACHE_WCE     (1 << 2)	//!< Write back Cache Enable
-#define  SBC_MP_CACHE_MF      (1 << 1)	//!< Multiplication Factor
-#define  SBC_MP_CACHE_RCD     (1 << 0)	//!< Read Cache Disable
+#define  SBC_MP_CACHE_IC      (1 << 7)	//!< Initiator Control//!< 启动器控制
+#define  SBC_MP_CACHE_ABPF    (1 << 6)	//!< Abort Pre-Fetch//!< 中止预取
+#define  SBC_MP_CACHE_CAP     (1 << 5)	//!< Catching Analysis Permitted//!< 允许捕获分析
+#define  SBC_MP_CACHE_DISC    (1 << 4)	//!< Discontinuity//!< 间断
+#define  SBC_MP_CACHE_SIZE    (1 << 3)	//!< Size enable//!< 大小启用
+#define  SBC_MP_CACHE_WCE     (1 << 2)	//!< Write back Cache Enable//!< 回写缓存启用
+#define  SBC_MP_CACHE_MF      (1 << 1)	//!< Multiplication Factor//！<乘法因子
+#define  SBC_MP_CACHE_RCD     (1 << 0)	//!< Read Cache Disable//！<读缓存禁用
 	uint8_t retention;
 	be16_t dis_pf_transfer_len;
 	be16_t min_prefetch;
 	be16_t max_prefetch;
 	be16_t max_prefetch_ceil;
 	uint8_t flags12;
-#define  SBC_MP_CACHE_FSW     (1 << 7)	//!< Force Sequential Write
-#define  SBC_MP_CACHE_LBCSS   (1 << 6)	//!< Logical Blk Cache Seg Sz
-#define  SBC_MP_CACHE_DRA     (1 << 5)	//!< Disable Read-Ahead
-#define  SBC_MP_CACHE_NV_DIS  (1 << 0)	//!< Non-Volatile Cache Disable
+#define  SBC_MP_CACHE_FSW     (1 << 7)	//!< Force Sequential Write//！<强制顺序写入
+#define  SBC_MP_CACHE_LBCSS   (1 << 6)	//!< Logical Blk Cache Seg Sz//！<逻辑Blk缓存Seg Sz
+#define  SBC_MP_CACHE_DRA     (1 << 5)	//!< Disable Read-Ahead//!< 禁用预读
+#define  SBC_MP_CACHE_NV_DIS  (1 << 0)	//!< Non-Volatile Cache Disable//!< 非易失性缓存禁用
 	uint8_t nr_cache_segments;
 	be16_t cache_segment_size;
 	uint8_t reserved[4];
@@ -158,16 +159,16 @@ struct sbc_rdwr_error_recovery_mode_page {
 	uint8_t flags3;
 	be16_t recovery_time_limit;
 };
-//@}
+//@}//@}
 
 /**
  * \brief SBC-2 READ CAPACITY (10) parameter data
  */
 struct sbc_read_capacity10_data {
-	be32_t max_lba;	//!< LBA of last logical block
-	be32_t block_len;	//!< Number of bytes in the last logical block
+	be32_t max_lba;	//!< LBA of last logical block//!< 最后一个逻辑块的LBA
+	be32_t block_len;	//!< Number of bytes in the last logical block//!< 最后一个逻辑块中的字节数
 };
 
-//@}
+//@}//@}
 
-#endif // _SBC_PROTOCOL_H_
+#endif // _SBC_PROTOCOL_H_//SBC协议_

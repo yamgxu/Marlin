@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -57,16 +58,16 @@
   #define BOARD_INFO_NAME "Sanguinololu <1.2"
 #endif
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_STOP_PIN                            18
 #define Y_STOP_PIN                            19
 #define Z_STOP_PIN                            20
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                            15
 #define X_DIR_PIN                             21
 
@@ -79,32 +80,32 @@
 #define E0_STEP_PIN                            1
 #define E0_DIR_PIN                             0
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                             7  // Analog Input (pin 33 extruder)
-#define TEMP_BED_PIN                           6  // Analog Input (pin 34 bed)
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                             7  // Analog Input (pin 33 extruder)//模拟输入（引脚33挤出机）
+#define TEMP_BED_PIN                           6  // Analog Input (pin 34 bed)//模拟输入（引脚34）
 
-//
-// Heaters / Fans
-//
-#define HEATER_0_PIN                          13  // (extruder)
+////
+// Heaters / Fans//加热器/风扇
+////
+#define HEATER_0_PIN                          13  // (extruder)//（挤压机）
 
 #if ENABLED(SANGUINOLOLU_V_1_2)
 
-  #define HEATER_BED_PIN                      12  // (bed)
+  #define HEATER_BED_PIN                      12  // (bed)//（床）
   #define X_ENABLE_PIN                        14
   #define Y_ENABLE_PIN                        14
   #define Z_ENABLE_PIN                        26
   #define E0_ENABLE_PIN                       14
 
   #if !defined(FAN_PIN) && ENABLED(LCD_I2C_PANELOLU2)
-    #define FAN_PIN                            4  // Uses Transistor1 (PWM) on Panelolu2's Sanguino Adapter Board to drive the fan
+    #define FAN_PIN                            4  // Uses Transistor1 (PWM) on Panelolu2's Sanguino Adapter Board to drive the fan//使用Panelolu2的Sanguino适配器板上的晶体管1（PWM）驱动风扇
   #endif
 
 #else
 
-  #define HEATER_BED_PIN                      14  // (bed)
+  #define HEATER_BED_PIN                      14  // (bed)//（床）
   #define X_ENABLE_PIN                         4
   #define Y_ENABLE_PIN                         4
   #define Z_ENABLE_PIN                         4
@@ -113,12 +114,12 @@
 #endif
 
 #if !defined(FAN_PIN) && (MB(AZTEEG_X1, STB_11) || IS_MELZI)
-  #define FAN_PIN                              4  // Works for Panelolu2 too
+  #define FAN_PIN                              4  // Works for Panelolu2 too//也适用于Panelolu2
 #endif
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 
 /**
  * In some versions of the Sanguino libraries the pin
@@ -126,17 +127,17 @@
  * If you encounter issues with these pins, upgrade your
  * Sanguino libraries! See #368.
  */
-//#define SDSS                                24
+//#define SDSS                                24//#定义SDSS 24
 #define SDSS                                  31
 
 #if IS_MELZI
   #define LED_PIN                             27
 #elif MB(STB_11)
-  #define LCD_BACKLIGHT_PIN                   17  // LCD backlight LED
+  #define LCD_BACKLIGHT_PIN                   17  // LCD backlight LED//LCD背光LED
 #endif
 
-#if NONE(SPINDLE_FEATURE, LASER_FEATURE) && ENABLED(SANGUINOLOLU_V_1_2) && !BOTH(IS_ULTRA_LCD, IS_NEWPANEL) // try to use IO Header
-  #define CASE_LIGHT_PIN                       4  // Hardware PWM  - see if IO Header is available
+#if NONE(SPINDLE_FEATURE, LASER_FEATURE) && ENABLED(SANGUINOLOLU_V_1_2) && !BOTH(IS_ULTRA_LCD, IS_NEWPANEL) // try to use IO Header//尝试使用IO头
+  #define CASE_LIGHT_PIN                       4  // Hardware PWM  - see if IO Header is available//硬件PWM-查看IO标头是否可用
 #endif
 
 /**
@@ -148,9 +149,9 @@
  *            A4   A3   A2   A1   A0
  */
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 #if HAS_WIRED_LCD
 
   #define SD_DETECT_PIN                       -1
@@ -175,15 +176,15 @@
         #define BOARD_ST7920_DELAY_3 DELAY_NS(0)
       #endif
 
-    #elif ENABLED(U8GLIB_ST7920)                  // SPI GLCD 12864 ST7920 ( like [www.digole.com] ) For Melzi V2.0
+    #elif ENABLED(U8GLIB_ST7920)                  // SPI GLCD 12864 ST7920 ( like [www.digole.com] ) For Melzi V2.0//适用于Melzi V2.0的SPI GLCD 12864 ST7920（如[www.digole.com]）
 
       #if IS_MELZI
-        #define LCD_PINS_RS                   30  // CS chip select /SS chip slave select
-        #define LCD_PINS_ENABLE               29  // SID (MOSI)
-        #define LCD_PINS_D4                   17  // SCK (CLK) clock
-        // Pin 27 is taken by LED_PIN, but Melzi LED does nothing with
-        // Marlin so this can be used for BEEPER_PIN. You can use this pin
-        // with M42 instead of BEEPER_PIN.
+        #define LCD_PINS_RS                   30  // CS chip select /SS chip slave select//CS芯片选择/SS芯片从属选择
+        #define LCD_PINS_ENABLE               29  // SID (MOSI)//SID（MOSI）
+        #define LCD_PINS_D4                   17  // SCK (CLK) clock//时钟
+        // Pin 27 is taken by LED_PIN, but Melzi LED does nothing with//引脚27由LED_引脚占据，但Melzi LED对其不起任何作用
+        // Marlin so this can be used for BEEPER_PIN. You can use this pin//Marlin，所以这可以用于寻呼机PIN。你可以用这个别针
+        // with M42 instead of BEEPER_PIN.//使用M42而不是蜂鸣器_引脚。
         #define BEEPER_PIN                    27
 
         #if IS_RRD_FG_SC
@@ -198,7 +199,7 @@
           #endif
         #endif
 
-      #else                                       // Sanguinololu >=1.3
+      #else                                       // Sanguinololu >=1.3//Sanguinololu>=1.3
         #define LCD_PINS_RS                    4
         #define LCD_PINS_ENABLE               17
         #define LCD_PINS_D4                   30
@@ -215,14 +216,14 @@
 
         #define BEEPER_PIN                    29
         #define DOGLCD_CS                     17
-        #define LCD_BACKLIGHT_PIN             28  // PA3
+        #define LCD_BACKLIGHT_PIN             28  // PA3//PA3
 
       #elif IS_MELZI
 
         #define BEEPER_PIN                    27
         #define DOGLCD_CS                     28
 
-      #else                                       // !MAKRPANEL
+      #else                                       // !MAKRPANEL// !马克帕内尔
 
         #define DOGLCD_CS                     29
 
@@ -230,13 +231,13 @@
 
     #endif
 
-    // Uncomment screen orientation
-    //#define LCD_SCREEN_ROT_0
-    //#define LCD_SCREEN_ROT_90
-    //#define LCD_SCREEN_ROT_180
-    //#define LCD_SCREEN_ROT_270
+    // Uncomment screen orientation//取消注释屏幕方向
+    //#define LCD_SCREEN_ROT_0//#定义LCD\u屏幕\u旋转\u 0
+    //#define LCD_SCREEN_ROT_90//#定义LCD屏幕旋转90
+    //#define LCD_SCREEN_ROT_180//#定义LCD屏幕旋转180
+    //#define LCD_SCREEN_ROT_270//#定义LCD屏幕旋转270
 
-  #elif ENABLED(ZONESTAR_LCD)                     // For the Tronxy Melzi boards
+  #elif ENABLED(ZONESTAR_LCD)                     // For the Tronxy Melzi boards//对于Tronxy Melzi板
 
     #define LCD_PINS_RS                       28
     #define LCD_PINS_ENABLE                   29
@@ -262,7 +263,7 @@
     #define BTN_EN1                           29
     #define BTN_EN2                           30
 
-  #elif ENABLED(ZONESTAR_LCD)                     // For the Tronxy Melzi boards
+  #elif ENABLED(ZONESTAR_LCD)                     // For the Tronxy Melzi boards//对于Tronxy Melzi板
 
     #define ADC_KEYPAD_PIN                     1
     #define BTN_EN1                           -1
@@ -272,15 +273,15 @@
 
     #if IS_MELZI
       #define BTN_ENC                         29
-      #define LCD_SDSS                        30  // Panelolu2 SD card reader rather than the Melzi
+      #define LCD_SDSS                        30  // Panelolu2 SD card reader rather than the Melzi//Panelolu2 SD卡读卡器而非Melzi
     #else
       #define BTN_ENC                         30
     #endif
 
-  #else                                           // !LCD_FOR_MELZI && !ZONESTAR_LCD && !LCD_I2C_PANELOLU2
+  #else                                           // !LCD_FOR_MELZI && !ZONESTAR_LCD && !LCD_I2C_PANELOLU2// !LCD___MELZI&&！ZONESTAR_LCD&amp！LCD_I2C_面板2
 
     #define BTN_ENC                           16
-    #define LCD_SDSS                          28  // Smart Controller SD card reader rather than the Melzi
+    #define LCD_SDSS                          28  // Smart Controller SD card reader rather than the Melzi//智能控制器SD卡读卡器而非Melzi
 
   #endif
 
@@ -289,19 +290,19 @@
     #define BTN_EN2                           10
   #endif
 
-#endif // HAS_WIRED_LCD
+#endif // HAS_WIRED_LCD//有有线液晶显示器吗
 
-//
-// M3/M4/M5 - Spindle/Laser Control
-//
+////
+// M3/M4/M5 - Spindle/Laser Control//M3/M4/M5-主轴/激光控制
+////
 #if HAS_CUTTER
-  #if !MB(AZTEEG_X1) && ENABLED(SANGUINOLOLU_V_1_2) && !BOTH(IS_ULTRA_LCD, IS_NEWPANEL) // try to use IO Header
+  #if !MB(AZTEEG_X1) && ENABLED(SANGUINOLOLU_V_1_2) && !BOTH(IS_ULTRA_LCD, IS_NEWPANEL) // try to use IO Header//尝试使用IO头
 
-    #define SPINDLE_LASER_ENA_PIN             10  // Pullup or pulldown!
-    #define SPINDLE_LASER_PWM_PIN              4  // Hardware PWM
+    #define SPINDLE_LASER_ENA_PIN             10  // Pullup or pulldown!//拉起还是拉下！
+    #define SPINDLE_LASER_PWM_PIN              4  // Hardware PWM//硬件脉宽调制
     #define SPINDLE_DIR_PIN                   11
 
-  #elif !MB(MELZI)                                // use X stepper motor socket
+  #elif !MB(MELZI)                                // use X stepper motor socket//使用X步进电机插座
 
     /**
      *  To control the spindle speed and have an LCD you must sacrifice
@@ -336,8 +337,8 @@
     #define X_DIR_PIN                          0
     #define X_ENABLE_PIN                      14
     #define X_STEP_PIN                         1
-    #define SPINDLE_LASER_PWM_PIN             15  // Hardware PWM
-    #define SPINDLE_LASER_ENA_PIN             21  // Pullup!
-    #define SPINDLE_DIR_PIN                   -1  // No pin available on the socket for the direction pin
+    #define SPINDLE_LASER_PWM_PIN             15  // Hardware PWM//硬件脉宽调制
+    #define SPINDLE_LASER_ENA_PIN             21  // Pullup!//拉起！
+    #define SPINDLE_DIR_PIN                   -1  // No pin available on the socket for the direction pin//插座上没有用于方向插针的插针
   #endif
 #endif

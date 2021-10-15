@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -138,4 +139,4 @@ void GcodeSuite::M569() {
     say_stealth_status();
 }
 
-#endif // HAS_STEALTHCHOP
+#endif // HAS_STEALTHCHOP//你偷了吗

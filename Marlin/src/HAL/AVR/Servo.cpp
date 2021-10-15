@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -61,38 +62,38 @@
 #include "../shared/servo.h"
 #include "../shared/servo_private.h"
 
-static volatile int8_t Channel[_Nbr_16timers];              // counter for the servo being pulsed for each timer (or -1 if refresh interval)
+static volatile int8_t Channel[_Nbr_16timers];              // counter for the servo being pulsed for each timer (or -1 if refresh interval)//每个定时器的伺服脉冲计数器（如果刷新间隔为-1）
 
 
 /************ static functions common to all instances ***********************/
 
 static inline void handle_interrupts(timer16_Sequence_t timer, volatile uint16_t* TCNTn, volatile uint16_t* OCRnA) {
   if (Channel[timer] < 0)
-    *TCNTn = 0; // channel set to -1 indicated that refresh interval completed so reset the timer
+    *TCNTn = 0; // channel set to -1 indicated that refresh interval completed so reset the timer//通道设置为-1表示刷新间隔已完成，因此请重置计时器
   else {
     if (SERVO_INDEX(timer, Channel[timer]) < ServoCount && SERVO(timer, Channel[timer]).Pin.isActive)
-      extDigitalWrite(SERVO(timer, Channel[timer]).Pin.nbr, LOW); // pulse this channel low if activated
+      extDigitalWrite(SERVO(timer, Channel[timer]).Pin.nbr, LOW); // pulse this channel low if activated//如果激活，则将该通道脉冲调低
   }
 
-  Channel[timer]++;    // increment to the next channel
+  Channel[timer]++;    // increment to the next channel//增量到下一个通道
   if (SERVO_INDEX(timer, Channel[timer]) < ServoCount && Channel[timer] < SERVOS_PER_TIMER) {
     *OCRnA = *TCNTn + SERVO(timer, Channel[timer]).ticks;
-    if (SERVO(timer, Channel[timer]).Pin.isActive)    // check if activated
-      extDigitalWrite(SERVO(timer, Channel[timer]).Pin.nbr, HIGH); // it's an active channel so pulse it high
+    if (SERVO(timer, Channel[timer]).Pin.isActive)    // check if activated//检查是否激活
+      extDigitalWrite(SERVO(timer, Channel[timer]).Pin.nbr, HIGH); // it's an active channel so pulse it high//这是一个活跃的通道，所以把它调高
   }
   else {
-    // finished all channels so wait for the refresh period to expire before starting over
-    if (((unsigned)*TCNTn) + 4 < usToTicks(REFRESH_INTERVAL))    // allow a few ticks to ensure the next OCR1A not missed
+    // finished all channels so wait for the refresh period to expire before starting over//已完成所有通道，请等待刷新周期到期后再重新开始
+    if (((unsigned)*TCNTn) + 4 < usToTicks(REFRESH_INTERVAL))    // allow a few ticks to ensure the next OCR1A not missed//允许几次勾选，以确保不会错过下一个OCR1A
       *OCRnA = (unsigned int)usToTicks(REFRESH_INTERVAL);
     else
-      *OCRnA = *TCNTn + 4;  // at least REFRESH_INTERVAL has elapsed
-    Channel[timer] = -1; // this will get incremented at the end of the refresh period to start again at the first channel
+      *OCRnA = *TCNTn + 4;  // at least REFRESH_INTERVAL has elapsed//至少已过刷新间隔
+    Channel[timer] = -1; // this will get incremented at the end of the refresh period to start again at the first channel//这将在刷新周期结束时递增，以在第一个通道重新开始
   }
 }
 
-#ifndef WIRING // Wiring pre-defines signal handlers so don't define any if compiling for the Wiring platform
+#ifndef WIRING // Wiring pre-defines signal handlers so don't define any if compiling for the Wiring platform//布线预先定义了信号处理程序，因此不为布线平台定义任何if编译
 
-  // Interrupt handlers for Arduino
+  // Interrupt handlers for Arduino//Arduino的中断处理程序
   #ifdef _useTimer1
     SIGNAL(TIMER1_COMPA_vect) { handle_interrupts(_timer1, &TCNT1, &OCR1A); }
   #endif
@@ -109,9 +110,9 @@ static inline void handle_interrupts(timer16_Sequence_t timer, volatile uint16_t
     SIGNAL(TIMER5_COMPA_vect) { handle_interrupts(_timer5, &TCNT5, &OCR5A); }
   #endif
 
-#else // WIRING
+#else // WIRING//接线
 
-  // Interrupt handlers for Wiring
+  // Interrupt handlers for Wiring//布线中断处理程序
   #ifdef _useTimer1
     void Timer1Service() { handle_interrupts(_timer1, &TCNT1, &OCR1A); }
   #endif
@@ -119,23 +120,23 @@ static inline void handle_interrupts(timer16_Sequence_t timer, volatile uint16_t
     void Timer3Service() { handle_interrupts(_timer3, &TCNT3, &OCR3A); }
   #endif
 
-#endif // WIRING
+#endif // WIRING//接线
 
 /****************** end of static functions ******************************/
 
 void initISR(timer16_Sequence_t timer) {
   #ifdef _useTimer1
     if (timer == _timer1) {
-      TCCR1A = 0;             // normal counting mode
-      TCCR1B = _BV(CS11);     // set prescaler of 8
-      TCNT1 = 0;              // clear the timer count
+      TCCR1A = 0;             // normal counting mode//正常计数模式
+      TCCR1B = _BV(CS11);     // set prescaler of 8//将预分频器设置为8
+      TCNT1 = 0;              // clear the timer count//清除计时器计数
       #if defined(__AVR_ATmega8__) || defined(__AVR_ATmega128__)
-        SBI(TIFR, OCF1A);      // clear any pending interrupts;
-        SBI(TIMSK, OCIE1A);    // enable the output compare interrupt
+        SBI(TIFR, OCF1A);      // clear any pending interrupts;//清除任何挂起的中断；
+        SBI(TIMSK, OCIE1A);    // enable the output compare interrupt//启用输出比较中断
       #else
-        // here if not ATmega8 or ATmega128
-        SBI(TIFR1, OCF1A);     // clear any pending interrupts;
-        SBI(TIMSK1, OCIE1A);   // enable the output compare interrupt
+        // here if not ATmega8 or ATmega128//如果不是ATmega8或ATmega128，请点击此处
+        SBI(TIFR1, OCF1A);     // clear any pending interrupts;//清除任何挂起的中断；
+        SBI(TIMSK1, OCIE1A);   // enable the output compare interrupt//启用输出比较中断
       #endif
       #ifdef WIRING
         timerAttach(TIMER1OUTCOMPAREA_INT, Timer1Service);
@@ -145,45 +146,45 @@ void initISR(timer16_Sequence_t timer) {
 
   #ifdef _useTimer3
     if (timer == _timer3) {
-      TCCR3A = 0;             // normal counting mode
-      TCCR3B = _BV(CS31);     // set prescaler of 8
-      TCNT3 = 0;              // clear the timer count
+      TCCR3A = 0;             // normal counting mode//正常计数模式
+      TCCR3B = _BV(CS31);     // set prescaler of 8//将预分频器设置为8
+      TCNT3 = 0;              // clear the timer count//清除计时器计数
       #ifdef __AVR_ATmega128__
-        SBI(TIFR, OCF3A);     // clear any pending interrupts;
-        SBI(ETIMSK, OCIE3A);  // enable the output compare interrupt
+        SBI(TIFR, OCF3A);     // clear any pending interrupts;//清除任何挂起的中断；
+        SBI(ETIMSK, OCIE3A);  // enable the output compare interrupt//启用输出比较中断
       #else
-        SBI(TIFR3, OCF3A);   // clear any pending interrupts;
-        SBI(TIMSK3, OCIE3A); // enable the output compare interrupt
+        SBI(TIFR3, OCF3A);   // clear any pending interrupts;//清除任何挂起的中断；
+        SBI(TIMSK3, OCIE3A); // enable the output compare interrupt//启用输出比较中断
       #endif
       #ifdef WIRING
-        timerAttach(TIMER3OUTCOMPAREA_INT, Timer3Service);  // for Wiring platform only
+        timerAttach(TIMER3OUTCOMPAREA_INT, Timer3Service);  // for Wiring platform only//仅适用于接线平台
       #endif
     }
   #endif
 
   #ifdef _useTimer4
     if (timer == _timer4) {
-      TCCR4A = 0;             // normal counting mode
-      TCCR4B = _BV(CS41);     // set prescaler of 8
-      TCNT4 = 0;              // clear the timer count
-      TIFR4 = _BV(OCF4A);     // clear any pending interrupts;
-      TIMSK4 = _BV(OCIE4A);   // enable the output compare interrupt
+      TCCR4A = 0;             // normal counting mode//正常计数模式
+      TCCR4B = _BV(CS41);     // set prescaler of 8//将预分频器设置为8
+      TCNT4 = 0;              // clear the timer count//清除计时器计数
+      TIFR4 = _BV(OCF4A);     // clear any pending interrupts;//清除任何挂起的中断；
+      TIMSK4 = _BV(OCIE4A);   // enable the output compare interrupt//启用输出比较中断
     }
   #endif
 
   #ifdef _useTimer5
     if (timer == _timer5) {
-      TCCR5A = 0;             // normal counting mode
-      TCCR5B = _BV(CS51);     // set prescaler of 8
-      TCNT5 = 0;              // clear the timer count
-      TIFR5 = _BV(OCF5A);     // clear any pending interrupts;
-      TIMSK5 = _BV(OCIE5A);   // enable the output compare interrupt
+      TCCR5A = 0;             // normal counting mode//正常计数模式
+      TCCR5B = _BV(CS51);     // set prescaler of 8//将预分频器设置为8
+      TCNT5 = 0;              // clear the timer count//清除计时器计数
+      TIFR5 = _BV(OCF5A);     // clear any pending interrupts;//清除任何挂起的中断；
+      TIMSK5 = _BV(OCIE5A);   // enable the output compare interrupt//启用输出比较中断
     }
   #endif
 }
 
 void finISR(timer16_Sequence_t timer) {
-  // Disable use of the given timer
+  // Disable use of the given timer//禁用给定计时器的使用
   #ifdef WIRING
     if (timer == _timer1) {
       CBI(
@@ -192,7 +193,7 @@ void finISR(timer16_Sequence_t timer) {
         #else
           TIMSK
         #endif
-          , OCIE1A);    // disable timer 1 output compare interrupt
+          , OCIE1A);    // disable timer 1 output compare interrupt//禁用定时器1输出比较中断
       timerDetach(TIMER1OUTCOMPAREA_INT);
     }
     else if (timer == _timer3) {
@@ -202,15 +203,15 @@ void finISR(timer16_Sequence_t timer) {
         #else
           ETIMSK
         #endif
-          , OCIE3A);    // disable the timer3 output compare A interrupt
+          , OCIE3A);    // disable the timer3 output compare A interrupt//禁用定时器3输出比较中断
       timerDetach(TIMER3OUTCOMPAREA_INT);
     }
-  #else // !WIRING
-    // For arduino - in future: call here to a currently undefined function to reset the timer
+  #else // !WIRING// !装电线
+    // For arduino - in future: call here to a currently undefined function to reset the timer//对于arduino-将来：在此处调用当前未定义的函数以重置计时器
     UNUSED(timer);
   #endif
 }
 
-#endif // HAS_SERVOS
+#endif // HAS_SERVOS//有伺服系统吗
 
-#endif // __AVR__
+#endif // __AVR__//_uuuavr__

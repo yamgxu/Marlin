@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -54,10 +55,10 @@ void GcodeSuite::G61(void) {
     }
   #endif
 
-  // No saved position? No axes being restored?
+  // No saved position? No axes being restored?//没有保存位置？没有轴被恢复？
   if (!TEST(saved_slots[slot >> 3], slot & 0x07)) return;
 
-  // Apply any given feedrate over 0.0
+  // Apply any given feedrate over 0.0//在0.0以上应用任何给定的进给速度
   feedRate_t saved_feedrate = feedrate_mm_s;
   const float fr = parser.linearval('F');
   if (fr > 0.0) feedrate_mm_s = MMM_TO_MMS(fr);
@@ -78,7 +79,7 @@ void GcodeSuite::G61(void) {
         DEBUG_ECHO_F(destination[i]);
       }
       DEBUG_EOL();
-      // Move to the saved position
+      // Move to the saved position//移动到保存的位置
       prepare_line_to_destination();
     }
     #if HAS_EXTRUDERS
@@ -92,4 +93,4 @@ void GcodeSuite::G61(void) {
   feedrate_mm_s = saved_feedrate;
 }
 
-#endif // SAVED_POSITIONS
+#endif // SAVED_POSITIONS//保存的位置

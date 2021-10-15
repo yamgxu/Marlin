@@ -1,3 +1,4 @@
+/** translatione by yx */
 /****************
  * commands.cpp *
  ****************/
@@ -166,7 +167,7 @@ class CLCD::FontMetrics {
 
     void load(uint8_t font);
 
-    // Returns width of string, up to a maximum of n characters.
+    // Returns width of string, up to a maximum of n characters.//返回字符串的宽度，最多n个字符。
     uint16_t get_text_width(const char *str, size_t n = SIZE_MAX) const;
     uint16_t get_text_width(progmem_str str, size_t n = SIZE_MAX) const;
 };
@@ -241,13 +242,13 @@ class CLCD::CommandFifo {
       void romfont   (uint8_t font, uint8_t romslot);
     #endif
 
-    // All the following must be followed by str()
+    // All the following must be followed by str()//以下所有内容必须后跟str（）
     void text      (int16_t x, int16_t y,                       int16_t font, uint16_t options);
     void button    (int16_t x, int16_t y, int16_t w, int16_t h, int16_t font, uint16_t option);
     void toggle    (int16_t x, int16_t y, int16_t w,            int16_t font, uint16_t options, bool state);
     void keys      (int16_t x, int16_t y, int16_t w, int16_t h, int16_t font, uint16_t options);
 
-    // Sends the string portion of text, button, toggle and keys.
+    // Sends the string portion of text, button, toggle and keys.//发送文本、按钮、切换和键的字符串部分。
     void str (const char * data);
     void str (progmem_str data);
 

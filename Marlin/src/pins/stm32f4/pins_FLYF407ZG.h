@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -32,39 +33,39 @@
 #define BOARD_WEBSITE_URL    "github.com/FLYmaker/FLYF407ZG"
 #define DEFAULT_MACHINE_NAME BOARD_INFO_NAME
 
-// Avoid conflict with fans and TIMER_TONE
+// Avoid conflict with fans and TIMER_TONE//避免与风扇和定时器声音冲突
 #define TEMP_TIMER 3
 #define STEP_TIMER 5
 
-//
-// EEPROM Emulation
-//
+////
+// EEPROM Emulation//EEPROM仿真
+////
 #if NO_EEPROM_SELECTED
   #define FLASH_EEPROM_EMULATION
-  //#define SRAM_EEPROM_EMULATION
-  //#define I2C_EEPROM
+  //#define SRAM_EEPROM_EMULATION//#定义SRAM_EEPROM_仿真
+  //#define I2C_EEPROM//#定义I2C_EEPROM
 #endif
 
 #if ENABLED(FLASH_EEPROM_EMULATION)
-  // Decrease delays and flash wear by spreading writes across
-  // the 128kB sector allocated for EEPROM emulation.
+  // Decrease delays and flash wear by spreading writes across//通过将写操作分散到多个应用程序来减少延迟和闪存磨损
+  // the 128kB sector allocated for EEPROM emulation.//分配给EEPROM仿真的128kB扇区。
   #define FLASH_EEPROM_LEVELING
 #elif ENABLED(I2C_EEPROM)
-  #define MARLIN_EEPROM_SIZE              0x2000  // 8KB
+  #define MARLIN_EEPROM_SIZE              0x2000  // 8KB//8KB
 #endif
 
 #ifndef MARLIN_EEPROM_SIZE
-  #define MARLIN_EEPROM_SIZE              0x1000  // 4KB
+  #define MARLIN_EEPROM_SIZE              0x1000  // 4KB//4KB
 #endif
 
-//
-// Servos
-//
+////
+// Servos//伺服
+////
 #define SERVO0_PIN                          PE11
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_MIN_PIN                           PC3
 #define X_MAX_PIN                           PC2
 #define Y_MIN_PIN                           PF2
@@ -72,14 +73,14 @@
 #define Z_MIN_PIN                           PF0
 #define Z_MAX_PIN                           PC15
 
-//
-// Z Probe (when not Z_MIN_PIN)
-//
-#define Z_MIN_PROBE_PIN                     PC14  // Z3_PIN
+////
+// Z Probe (when not Z_MIN_PIN)//Z探头（非Z_MIN_引脚时）
+////
+#define Z_MIN_PROBE_PIN                     PC14  // Z3_PIN//Z3_销
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 
 #define X_STEP_PIN                          PB9
 #define X_DIR_PIN                           PE0
@@ -144,20 +145,20 @@
   #define E5_CS_PIN                         PB12
 #endif
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                          PA0   // Analog Input
-#define TEMP_1_PIN                          PC1   // Analog Input
-#define TEMP_2_PIN                          PC0   // Analog Input
-#define TEMP_3_PIN                          PF10  // Analog Input
-#define TEMP_4_PIN                          PF5   // Analog Input
-#define TEMP_5_PIN                          PF4   // Analog Input
-#define TEMP_BED_PIN                        PF3   // Analog Input
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                          PA0   // Analog Input//模拟输入
+#define TEMP_1_PIN                          PC1   // Analog Input//模拟输入
+#define TEMP_2_PIN                          PC0   // Analog Input//模拟输入
+#define TEMP_3_PIN                          PF10  // Analog Input//模拟输入
+#define TEMP_4_PIN                          PF5   // Analog Input//模拟输入
+#define TEMP_5_PIN                          PF4   // Analog Input//模拟输入
+#define TEMP_BED_PIN                        PF3   // Analog Input//模拟输入
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_0_PIN                        PF7
 #define HEATER_1_PIN                        PF6
 #define HEATER_2_PIN                        PE6
@@ -175,13 +176,13 @@
 #define FAN4_PIN                            PE13
 #define FAN5_PIN                            PB11
 
-//
-// Onboard SD support
-//
+////
+// Onboard SD support//机载SD支持
+////
 
 #define SDIO_D0_PIN                         PC8
 #define SDIO_D1_PIN                         PC9
-//#define SD_CARD_DETECT_PIN                PC13
+//#define SD_CARD_DETECT_PIN                PC13//#定义SD_卡_检测_引脚PC13
 #define SDIO_D2_PIN                         PC10
 #define SDIO_D3_PIN                         PC11
 #define SDIO_CK_PIN                         PC12
@@ -193,9 +194,9 @@
 
 #if SD_CONNECTION_IS(ONBOARD)
 
-  #define SDIO_SUPPORT                            // Use SDIO for onboard SD
+  #define SDIO_SUPPORT                            // Use SDIO for onboard SD//将SDIO用于车载SD
   #ifndef SDIO_SUPPORT
-    #define SOFTWARE_SPI                          // Use soft SPI for onboard SD
+    #define SOFTWARE_SPI                          // Use soft SPI for onboard SD//对车载SD使用软SPI
     #define SDSS                     SDIO_D3_PIN
     #define SD_SCK_PIN               SDIO_CK_PIN
     #define SD_MISO_PIN              SDIO_D0_PIN
@@ -212,9 +213,9 @@
 
 #endif
 
-//
-// Trinamic Software SPI
-//
+////
+// Trinamic Software SPI//Trinamic软件SPI
+////
 
 #if ENABLED(TMC_USE_SW_SPI)
   #ifndef TMC_SW_MOSI
@@ -228,9 +229,9 @@
   #endif
 #endif
 
-//
-// Trinamic Software Serial
-//
+////
+// Trinamic Software Serial//Trinamic软件系列
+////
 
 #if HAS_TMC_UART
   #define X_SERIAL_TX_PIN                   PG13
@@ -262,9 +263,9 @@
 
 #endif
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 
 #define BEEPER_PIN                          PB10
 #define LCD_PINS_RS                         PE12
@@ -277,15 +278,15 @@
 #define BTN_EN2                             PC5
 #define BTN_ENC                             PE15
 
-//
-// Filament runout
-//
+////
+// Filament runout//灯丝跳动
+////
 
 #define FIL_RUNOUT_PIN                      PA3
 
-//
-// ST7920 Delays
-//
+////
+// ST7920 Delays//ST7920延迟
+////
 #ifndef BOARD_ST7920_DELAY_1
   #define BOARD_ST7920_DELAY_1      DELAY_NS(96)
 #endif

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2021 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -66,4 +67,4 @@ extern const uint8_t btn_rounded_42x39x4[819] = {
   0x87, 0x87, 0x77, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x67, 0x78
 };
 
-#endif // HAS_GRAPHICAL_TFT
+#endif // HAS_GRAPHICAL_TFT//有图形化的TFT

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -52,9 +53,9 @@
  */
 
 vector_3 vector_3::cross(const vector_3 &left, const vector_3 &right) {
-  return vector_3(left.y * right.z - left.z * right.y,  // YZ cross
-                  left.z * right.x - left.x * right.z,  // ZX cross
-                  left.x * right.y - left.y * right.x); // XY cross
+  return vector_3(left.y * right.z - left.z * right.y,  // YZ cross//YZ交叉
+                  left.z * right.x - left.x * right.z,  // ZX cross//ZX交叉
+                  left.x * right.y - left.y * right.x); // XY cross//XY交叉
 }
 
 vector_3 vector_3::get_normal() const {
@@ -67,7 +68,7 @@ float vector_3::magnitude() const { return SQRT(sq(x) + sq(y) + sq(z)); }
 
 void vector_3::normalize() { *this *= RSQRT(sq(x) + sq(y) + sq(z)); }
 
-// Apply a rotation to the matrix
+// Apply a rotation to the matrix//对矩阵应用旋转
 void vector_3::apply_rotation(const matrix_3x3 &matrix) {
   const float _x = x, _y = y, _z = z;
   *this = { matrix.vectors[0].x * _x + matrix.vectors[1].x * _y + matrix.vectors[2].x * _z,
@@ -91,44 +92,44 @@ void matrix_3x3::apply_rotation_xyz(float &_x, float &_y, float &_z) {
   _x = vec.x; _y = vec.y; _z = vec.z;
 }
 
-// Reset to identity. No rotate or translate.
+// Reset to identity. No rotate or translate.//重置为标识。没有旋转或平移。
 void matrix_3x3::set_to_identity() {
   LOOP_L_N(i, 3)
     LOOP_L_N(j, 3)
       vectors[i][j] = float(i == j);
 }
 
-// Create a matrix from 3 vector_3 inputs
+// Create a matrix from 3 vector_3 inputs//从3个矢量输入创建一个矩阵
 matrix_3x3 matrix_3x3::create_from_rows(const vector_3 &row_0, const vector_3 &row_1, const vector_3 &row_2) {
-  //row_0.debug(PSTR("row_0"));
-  //row_1.debug(PSTR("row_1"));
-  //row_2.debug(PSTR("row_2"));
+  //row_0.debug(PSTR("row_0"));//第0行调试（PSTR（“第0行”）；
+  //row_1.debug(PSTR("row_1"));//第1行调试（PSTR（“第1行”）；
+  //row_2.debug(PSTR("row_2"));//第2行调试（PSTR（“第2行”）；
   matrix_3x3 new_matrix;
   new_matrix.vectors[0].x = row_0.x; new_matrix.vectors[1].y = row_0.y; new_matrix.vectors[2].z = row_0.z;
   new_matrix.vectors[3].x = row_1.x; new_matrix.vectors[4].y = row_1.y; new_matrix.vectors[5].z = row_1.z;
   new_matrix.vectors[6].x = row_2.x; new_matrix.vectors[7].y = row_2.y; new_matrix.vectors[8].z = row_2.z;
-  //new_matrix.debug(PSTR("new_matrix"));
+  //new_matrix.debug(PSTR("new_matrix"));//新矩阵调试（PSTR（“新矩阵”）；
   return new_matrix;
 }
 
-// Create a matrix rotated to point towards a target
+// Create a matrix rotated to point towards a target//创建旋转以指向目标的矩阵
 matrix_3x3 matrix_3x3::create_look_at(const vector_3 &target) {
   const vector_3 z_row = target.get_normal(),
                  x_row = vector_3(1, 0, -target.x / target.z).get_normal(),
                  y_row = vector_3::cross(z_row, x_row).get_normal();
 
-  // x_row.debug(PSTR("x_row"));
-  // y_row.debug(PSTR("y_row"));
-  // z_row.debug(PSTR("z_row"));
+  // x_row.debug(PSTR("x_row"));//x_行调试（PSTR（“x_行”）；
+  // y_row.debug(PSTR("y_row"));//y_行调试（PSTR（“y_行”）；
+  // z_row.debug(PSTR("z_row"));//z_行调试（PSTR（“z_行”）；
 
-  // create the matrix already correctly transposed
+  // create the matrix already correctly transposed//创建已正确转置的矩阵
   matrix_3x3 rot = matrix_3x3::create_from_rows(x_row, y_row, z_row);
 
-  // rot.debug(PSTR("rot"));
+  // rot.debug(PSTR("rot"));//rot.debug（PSTR（“rot”））；
   return rot;
 }
 
-// Get a transposed copy of the matrix
+// Get a transposed copy of the matrix//获取矩阵的转置副本
 matrix_3x3 matrix_3x3::transpose(const matrix_3x3 &original) {
   matrix_3x3 new_matrix;
   LOOP_L_N(i, 3)
@@ -149,4 +150,4 @@ void matrix_3x3::debug(PGM_P const title) {
   }
 }
 
-#endif // HAS_ABL_OR_UBL
+#endif // HAS_ABL_OR_UBL//有ABL或UBL吗

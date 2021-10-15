@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -72,10 +73,10 @@ static uint8_t rs_last_state = 255;
 
 static void u8g_com_LPC1768_st7920_write_byte_hw_spi(uint8_t rs, uint8_t val) {
 
-  if (rs != rs_last_state) {      // Time to send a command/data byte
+  if (rs != rs_last_state) {      // Time to send a command/data byte//发送命令/数据字节的时间
     rs_last_state = rs;
-    spiSend(rs ? 0x0FA : 0x0F8);  // Send data or command
-    DELAY_US(40);                 // Give the controller some time: 20 is bad, 30 is OK, 40 is safe
+    spiSend(rs ? 0x0FA : 0x0F8);  // Send data or command//发送数据或命令
+    DELAY_US(40);                 // Give the controller some time: 20 is bad, 30 is OK, 40 is safe//给控制器一些时间：20坏，30好，40安全
   }
 
   spiSend(val & 0xF0);
@@ -89,8 +90,8 @@ uint8_t u8g_com_HAL_LPC1768_ST7920_hw_spi_fn(u8g_t *u8g, uint8_t msg, uint8_t ar
       u8g_SetPIOutput(u8g, U8G_PI_CS);
       u8g_Delay(5);
       spiBegin();
-      spiInit(SPI_EIGHTH_SPEED);            // ST7920 max speed is about 1.1 MHz
-      u8g->pin_list[U8G_PI_A0_STATE] = 0;   // initial RS state: command mode
+      spiInit(SPI_EIGHTH_SPEED);            // ST7920 max speed is about 1.1 MHz//ST7920的最大速度约为1.1MHz
+      u8g->pin_list[U8G_PI_A0_STATE] = 0;   // initial RS state: command mode//初始RS状态：命令模式
       break;
 
     case U8G_COM_MSG_STOP:
@@ -100,12 +101,12 @@ uint8_t u8g_com_HAL_LPC1768_ST7920_hw_spi_fn(u8g_t *u8g, uint8_t msg, uint8_t ar
       u8g_SetPILevel(u8g, U8G_PI_RESET, arg_val);
       break;
 
-    case U8G_COM_MSG_ADDRESS:                   // Define cmd (arg_val = 0) or data mode (arg_val = 1)
+    case U8G_COM_MSG_ADDRESS:                   // Define cmd (arg_val = 0) or data mode (arg_val = 1)//定义cmd（arg_val=0）或数据模式（arg_val=1）
       u8g->pin_list[U8G_PI_A0_STATE] = arg_val;
       break;
 
     case U8G_COM_MSG_CHIP_SELECT:
-      u8g_SetPILevel(u8g, U8G_PI_CS, arg_val);  // Note: the ST7920 has an active high chip-select
+      u8g_SetPILevel(u8g, U8G_PI_CS, arg_val);  // Note: the ST7920 has an active high chip-select//注：ST7920有一个有源高电平芯片选择
       break;
 
     case U8G_COM_MSG_WRITE_BYTE:
@@ -133,6 +134,6 @@ uint8_t u8g_com_HAL_LPC1768_ST7920_hw_spi_fn(u8g_t *u8g, uint8_t msg, uint8_t ar
   return 1;
 }
 
-#endif // HAS_MARLINUI_U8GLIB
+#endif // HAS_MARLINUI_U8GLIB//马林努伊能说会道吗
 
-#endif // TARGET_LPC1768
+#endif // TARGET_LPC1768//目标为LPC1768

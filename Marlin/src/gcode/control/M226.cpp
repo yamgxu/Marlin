@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -25,7 +26,7 @@
 #if ENABLED(DIRECT_PIN_CONTROL)
 
 #include "../gcode.h"
-#include "../../MarlinCore.h" // for pin_is_protected and idle()
+#include "../../MarlinCore.h" // for pin_is_protected and idle()//对于引脚，受保护且空闲（）
 #include "../../module/stepper.h"
 
 void protected_pin_err();
@@ -36,7 +37,7 @@ void protected_pin_err();
 void GcodeSuite::M226() {
   if (parser.seen('P')) {
     const int pin_number = PARSED_PIN_INDEX('P', 0),
-              pin_state = parser.intval('S', -1); // required pin state - default is inverted
+              pin_state = parser.intval('S', -1); // required pin state - default is inverted//所需引脚状态-默认值为反向
     const pin_t pin = GET_PIN_MAP_PIN(pin_number);
 
     if (WITHIN(pin_state, -1, 1) && pin > -1) {
@@ -53,8 +54,8 @@ void GcodeSuite::M226() {
         }
         while (int(extDigitalRead(pin)) != target) idle();
       }
-    } // pin_state -1 0 1 && pin > -1
-  } // parser.seen('P')
+    } // pin_state -1 0 1 && pin > -1//插脚状态-1 0 1和插脚>-1
+  } // parser.seen('P')//seen（'P'）
 }
 
-#endif // DIRECT_PIN_CONTROL
+#endif // DIRECT_PIN_CONTROL//直接引脚控制

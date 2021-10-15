@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -37,12 +38,12 @@
 #include "../MarlinCore.h"
 #include "../gcode/queue.h"
 
-// See the meaning in the documentation of cubic_b_spline().
+// See the meaning in the documentation of cubic_b_spline().//请参见三次b_样条（）文档中的含义。
 #define MIN_STEP 0.002f
 #define MAX_STEP 0.1f
 #define SIGMA 0.1f
 
-// Compute the linear interpolation between two real numbers.
+// Compute the linear interpolation between two real numbers.//计算两个实数之间的线性插值。
 static inline float interp(const_float_t a, const_float_t b, const_float_t t) { return (1 - t) * a + t * b; }
 
 /**
@@ -106,13 +107,13 @@ static inline float dist1(const_float_t x1, const_float_t y1, const_float_t x2, 
  * power available on Arduino, I think it is not wise to implement it.
  */
 void cubic_b_spline(
-  const xyze_pos_t &position,       // current position
-  const xyze_pos_t &target,         // target position
-  const xy_pos_t (&offsets)[2],     // a pair of offsets
-  const_feedRate_t scaled_fr_mm_s,  // mm/s scaled by feedrate %
+  const xyze_pos_t &position,       // current position//当前位置
+  const xyze_pos_t &target,         // target position//目标位置
+  const xy_pos_t (&offsets)[2],     // a pair of offsets//一对偏移量
+  const_feedRate_t scaled_fr_mm_s,  // mm/s scaled by feedrate %//毫米/秒，按进给速度%缩放
   const uint8_t extruder
 ) {
-  // Absolute first and second control points are recovered.
+  // Absolute first and second control points are recovered.//恢复绝对第一和第二控制点。
   const xy_pos_t first = position + offsets[0], second = target + offsets[1];
 
   xyze_pos_t bez_target;
@@ -130,8 +131,8 @@ void cubic_b_spline(
       idle();
     }
 
-    // First try to reduce the step in order to make it sufficiently
-    // close to a linear interpolation.
+    // First try to reduce the step in order to make it sufficiently//首先，尽量减少步骤，使其充分发挥作用
+    // close to a linear interpolation.//接近线性插值。
     bool did_reduce = false;
     float new_t = t + step;
     NOMORE(new_t, 1);
@@ -151,7 +152,7 @@ void cubic_b_spline(
       did_reduce = true;
     }
 
-    // If we did not reduce the step, maybe we should enlarge it.
+    // If we did not reduce the step, maybe we should enlarge it.//如果我们不减少步骤，也许我们应该扩大它。
     if (!did_reduce) for (;;) {
       if (new_t - t > MAX_STEP) break;
       const float candidate_t = t + 2 * (new_t - t);
@@ -166,9 +167,9 @@ void cubic_b_spline(
       new_pos1 = candidate_pos1;
     }
 
-    // Check some postcondition; they are disabled in the actual
-    // Marlin build, but if you test the same code on a computer you
-    // may want to check they are respect.
+    // Check some postcondition; they are disabled in the actual//检查一些后置条件；它们在实际应用中被禁用
+    // Marlin build, but if you test the same code on a computer you//Marlin构建，但如果在计算机上测试相同的代码，则
+    // may want to check they are respect.//可能要检查他们是否受到尊重。
     /*
       assert(new_t <= 1.0);
       if (new_t < 1.0) {
@@ -180,15 +181,15 @@ void cubic_b_spline(
     step = new_t - t;
     t = new_t;
 
-    // Compute and send new position
+    // Compute and send new position//计算并发送新位置
     xyze_pos_t new_bez = LOGICAL_AXIS_ARRAY(
-      interp(position.e, target.e, t),  // FIXME. Wrong, since t is not linear in the distance.
+      interp(position.e, target.e, t),  // FIXME. Wrong, since t is not linear in the distance.//修理我。错了，因为t在距离上不是线性的。
       new_pos0,
       new_pos1,
-      interp(position.z, target.z, t),  // FIXME. Wrong, since t is not linear in the distance.
-      interp(position.i, target.i, t),  // FIXME. Wrong, since t is not linear in the distance.
-      interp(position.j, target.j, t),  // FIXME. Wrong, since t is not linear in the distance.
-      interp(position.k, target.k, t)   // FIXME. Wrong, since t is not linear in the distance.
+      interp(position.z, target.z, t),  // FIXME. Wrong, since t is not linear in the distance.//修理我。错了，因为t在距离上不是线性的。
+      interp(position.i, target.i, t),  // FIXME. Wrong, since t is not linear in the distance.//修理我。错了，因为t在距离上不是线性的。
+      interp(position.j, target.j, t),  // FIXME. Wrong, since t is not linear in the distance.//修理我。错了，因为t在距离上不是线性的。
+      interp(position.k, target.k, t)   // FIXME. Wrong, since t is not linear in the distance.//修理我。错了，因为t在距离上不是线性的。
     );
     apply_motion_limits(new_bez);
     bez_target = new_bez;
@@ -205,4 +206,4 @@ void cubic_b_spline(
   }
 }
 
-#endif // BEZIER_CURVE_SUPPORT
+#endif // BEZIER_CURVE_SUPPORT//贝塞尔曲线支持

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -53,9 +54,9 @@ void libServo::move(const int value) {
 }
 
 void libServo::detach() {
-  // PWMServo library does not have detach() function
-  //super::detach();
+  // PWMServo library does not have detach() function//PWMServo库没有detach（）函数
+  //super::detach();//super:：detach（）；
 }
 
-#endif // HAS_SERVOS
-#endif // __IMXRT1062__
+#endif // HAS_SERVOS//有伺服系统吗
+#endif // __IMXRT1062__//_uuimxrt1062__

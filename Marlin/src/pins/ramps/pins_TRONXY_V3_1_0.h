@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -34,14 +35,14 @@
 
 #define BOARD_INFO_NAME "TRONXY-V3-1.0"
 
-//
-// Servos
-//
-#define SERVO1_PIN         12   // 2560 PIN 25/PB6
+////
+// Servos//伺服
+////
+#define SERVO1_PIN         12   // 2560 PIN 25/PB6//2560引脚25/PB6
 
-//
-// Import RAMPS 1.4 pins
-//
+////
+// Import RAMPS 1.4 pins//导入坡道1.4引脚
+////
 #include "pins_RAMPS.h"
 
 /**

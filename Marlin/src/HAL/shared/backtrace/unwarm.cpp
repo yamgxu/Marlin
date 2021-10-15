@@ -1,3 +1,4 @@
+/** translatione by yx */
 /***************************************************************************
  * ARM Stack Unwinder, Michael.McTernan.2001@cs.bris.ac.uk
  * Updated, adapted and several bug fixes on 2018 by Eduardo José Tagle
@@ -77,7 +78,7 @@ void UnwInitState(UnwState * const state,     /**< Pointer to structure to fill.
   memset(state->memData.used, 0, sizeof(state->memData.used));
 }
 
-// Detect if function names are available
+// Detect if function names are available//检测函数名是否可用
 static int __attribute__ ((noinline)) has_function_names() {
   uint32_t flag_word = ((uint32_t*)(((uint32_t)(&has_function_names)) & (-4))) [-1];
   return ((flag_word & 0xFF000000) == 0xFF000000) ? 1 : 0;
@@ -92,32 +93,32 @@ bool UnwReportRetAddr(UnwState * const state, uint32_t addr) {
 
   UnwReport entry;
 
-  // We found two acceptable values.
+  // We found two acceptable values.//我们发现了两个可接受的值。
   entry.name = nullptr;
-  entry.address = addr & 0xFFFFFFFE; // Remove Thumb bit
+  entry.address = addr & 0xFFFFFFFE; // Remove Thumb bit//取下拇指钻头
   entry.function = 0;
 
-  // If there are function names, try to solve name
+  // If there are function names, try to solve name//如果有函数名，请尝试解析函数名
   if (has_function_names()) {
 
-    // Lets find the function name, if possible
+    // Lets find the function name, if possible//如果可能，让我们查找函数名
 
-    // Align address to 4 bytes
+    // Align address to 4 bytes//将地址对齐到4字节
     uint32_t pf = addr & (-4);
 
-    // Scan backwards until we find the function name
+    // Scan backwards until we find the function name//向后扫描，直到找到函数名
     uint32_t v;
     while (state->cb->readW(pf-4,&v)) {
 
-      // Check if name descriptor is valid
+      // Check if name descriptor is valid//检查名称描述符是否有效
       if ((v & 0xFFFFFF00) == 0xFF000000 && (v & 0xFF) > 1) {
-        // Assume the name was found!
+        // Assume the name was found!//假设找到了这个名字！
         entry.name = ((const char*)pf) - 4 - (v & 0xFF);
         entry.function = pf;
         break;
       }
 
-      // Go backwards to the previous word
+      // Go backwards to the previous word//回到上一个单词
       pf -= 4;
     }
   }
@@ -160,16 +161,16 @@ bool UnwMemWriteRegister(UnwState * const state, const uint32_t addr, const RegD
 bool UnwMemReadRegister(UnwState * const state, const uint32_t addr, RegData * const reg) {
   bool tracked;
 
-  // Check if the value can be found in the hash
+  // Check if the value can be found in the hash//检查是否可以在哈希中找到该值
   if (UnwMemHashRead(&state->memData, addr, &reg->v, &tracked)) {
     reg->o = tracked ? REG_VAL_FROM_MEMORY : REG_VAL_INVALID;
     return true;
   }
-  else if (state->cb->readW(addr, &reg->v)) {   // Not in the hash, so read from real memory
+  else if (state->cb->readW(addr, &reg->v)) {   // Not in the hash, so read from real memory//不在散列中，所以从实际内存中读取
     reg->o = REG_VAL_FROM_MEMORY;
     return true;
   }
-  else return false;                            // Not in the hash, and failed to read from memory
+  else return false;                            // Not in the hash, and failed to read from memory//不在哈希中，无法从内存中读取
 }
 
-#endif // __arm__ || __thumb__
+#endif // __arm__ || __thumb__//手臂拇指__

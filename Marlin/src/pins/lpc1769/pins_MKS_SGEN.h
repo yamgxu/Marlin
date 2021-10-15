@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -39,17 +40,17 @@
    * TMC2208/TMC2209 stepper drivers
    */
 
-  #define X_SERIAL_TX_PIN                  P1_22  // J8-2
-  #define X_SERIAL_RX_PIN                  P1_22  // J8-2
-  #define Y_SERIAL_TX_PIN                  P1_23  // J8-3
-  #define Y_SERIAL_RX_PIN                  P1_23  // J8-3
-  #define Z_SERIAL_TX_PIN                  P2_12  // J8-4
-  #define Z_SERIAL_RX_PIN                  P2_12  // J8-4
-  #define E0_SERIAL_TX_PIN                 P2_11  // J8-5
-  #define E0_SERIAL_RX_PIN                 P2_11  // J8-5
-  #define E1_SERIAL_TX_PIN                 P4_28  // J8-6
-  #define E1_SERIAL_RX_PIN                 P4_28  // J8-6
+  #define X_SERIAL_TX_PIN                  P1_22  // J8-2//J8-2
+  #define X_SERIAL_RX_PIN                  P1_22  // J8-2//J8-2
+  #define Y_SERIAL_TX_PIN                  P1_23  // J8-3//J8-3
+  #define Y_SERIAL_RX_PIN                  P1_23  // J8-3//J8-3
+  #define Z_SERIAL_TX_PIN                  P2_12  // J8-4//J8-4
+  #define Z_SERIAL_RX_PIN                  P2_12  // J8-4//J8-4
+  #define E0_SERIAL_TX_PIN                 P2_11  // J8-5//J8-5
+  #define E0_SERIAL_RX_PIN                 P2_11  // J8-5//J8-5
+  #define E1_SERIAL_TX_PIN                 P4_28  // J8-6//J8-6
+  #define E1_SERIAL_RX_PIN                 P4_28  // J8-6//J8-6
 
-  // Reduce baud rate to improve software serial reliability
+  // Reduce baud rate to improve software serial reliability//降低波特率以提高软件串行可靠性
   #define TMC_BAUD_RATE                    19200
 #endif

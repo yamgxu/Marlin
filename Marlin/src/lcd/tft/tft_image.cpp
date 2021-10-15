@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -110,4 +111,4 @@ const tImage Images[imgCount] = {
   BtnRounded_42x39x4,
 };
 
-#endif // HAS_GRAPHICAL_TFT
+#endif // HAS_GRAPHICAL_TFT//有图形化的TFT

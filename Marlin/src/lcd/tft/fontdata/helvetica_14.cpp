@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -50,20 +51,20 @@ typedef struct __attribute__((__packed__)) {
 */
 
 extern const uint8_t Helvetica14_symbols[63] = {
-  0,18,19,0,252,14,0,0,0,0,1,9,252,16,252,14,252, // tFont
-  0,0,0,0,0,0,  // 0x01 - LCD_STR_REFRESH
-  0,0,0,0,0,0,  // 0x02 - LCD_STR_FOLDER
-  255,  // 0x03 - LCD_STR_ARROW_RIGHT
-  255,  // 0x04 - LCD_STR_UPLEVEL
-  255,  // 0x05 - LCD_STR_CLOCK
-  255,  // 0x06 - LCD_STR_FEEDRATE
-  255,  // 0x07 - LCD_STR_BEDTEMP
-  5,12,12,6,0,1,32,80,80,80,80,80,80,80,136,136,136,112,  // 0x08 - LCD_STR_THERMOMETER
-  5,5,5,5,0,11,112,216,136,216,112,  // 0x09 - LCD_STR_DEGREE
+  0,18,19,0,252,14,0,0,0,0,1,9,252,16,252,14,252, // tFont//特丰
+  0,0,0,0,0,0,  // 0x01 - LCD_STR_REFRESH//0x01-LCD_STR_刷新
+  0,0,0,0,0,0,  // 0x02 - LCD_STR_FOLDER//0x02-LCD_STR_文件夹
+  255,  // 0x03 - LCD_STR_ARROW_RIGHT//0x03-液晶显示屏箭头向右
+  255,  // 0x04 - LCD_STR_UPLEVEL//0x04-液晶显示上一级
+  255,  // 0x05 - LCD_STR_CLOCK//0x05-液晶显示时钟
+  255,  // 0x06 - LCD_STR_FEEDRATE//0x06-LCD_STR_进给速度
+  255,  // 0x07 - LCD_STR_BEDTEMP//0x07-LCD_STR_BEDTEMP
+  5,12,12,6,0,1,32,80,80,80,80,80,80,80,136,136,136,112,  // 0x08 - LCD_STR_THERMOMETER//0x08-LCD_-STR_温度计
+  5,5,5,5,0,11,112,216,136,216,112,  // 0x09 - LCD_STR_DEGREE//0x09-液晶显示器强度等级
 };
 
 extern const uint8_t Helvetica14[5005] = {
-  0,18,19,0,252,14,2,150,6,83,32,255,252,16,252,14,252,  // tFont
+  0,18,19,0,252,14,2,150,6,83,32,255,252,16,252,14,252,  // tFont//特丰
   0,0,0,5,0,0,2,14,14,6,2,0,192,192,192,
   192,192,192,192,192,192,192,0,0,192,192,5,5,5,5,0,
   9,216,216,216,216,216,10,13,26,10,0,0,9,0,9,0,
@@ -378,4 +379,4 @@ extern const uint8_t Helvetica14[5005] = {
   195,195,102,102,102,36,60,24,24,24,24,112,112
 };
 
-#endif // HAS_GRAPHICAL_TFT
+#endif // HAS_GRAPHICAL_TFT//有图形化的TFT

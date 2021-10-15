@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -32,13 +33,13 @@ void safe_delay(millis_t ms) {
     thermalManager.manage_heater();
   }
   delay(ms);
-  thermalManager.manage_heater(); // This keeps us safe if too many small safe_delay() calls are made
+  thermalManager.manage_heater(); // This keeps us safe if too many small safe_delay() calls are made//如果进行了太多小的safe_delay（）调用，这将保证我们的安全
 }
 
-// A delay to provide brittle hosts time to receive bytes
+// A delay to provide brittle hosts time to receive bytes//为主机提供接收字节时间的延迟
 #if ENABLED(SERIAL_OVERRUN_PROTECTION)
 
-  #include "../gcode/gcode.h" // for set_autoreport_paused
+  #include "../gcode/gcode.h" // for set_autoreport_paused//对于设置\自动报告\已暂停
 
   void serial_delay(const millis_t ms) {
     const bool was = gcode.set_autoreport_paused(true);
@@ -171,7 +172,7 @@ void safe_delay(millis_t ms) {
 
       SERIAL_EOL();
 
-    #endif // MESH_BED_LEVELING
+    #endif // MESH_BED_LEVELING//网床找平
   }
 
-#endif // DEBUG_LEVELING_FEATURE
+#endif // DEBUG_LEVELING_FEATURE//调试功能

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -36,17 +37,17 @@
 /**
  *  The watchdog clock is 40Khz. So for a 4s or 8s interval use a /256 preescaler and 625 or 1250 reload value (counts down to 0).
  */
-#define STM32F1_WD_RELOAD TERN(WATCHDOG_DURATION_8S, 1250, 625) // 4 or 8 second timeout
+#define STM32F1_WD_RELOAD TERN(WATCHDOG_DURATION_8S, 1250, 625) // 4 or 8 second timeout//4或8秒超时
 
 void HAL_watchdog_refresh() {
   #if DISABLED(PINS_DEBUGGING) && PIN_EXISTS(LED)
-    TOGGLE(LED_PIN);  // heartbeat indicator
+    TOGGLE(LED_PIN);  // heartbeat indicator//心跳指示器
   #endif
   iwdg_feed();
 }
 
 void watchdogSetup() {
-  // do whatever. don't remove this function.
+  // do whatever. don't remove this function.//做什么都行。不要删除此函数。
 }
 
 /**
@@ -62,5 +63,5 @@ void watchdog_init() {
   #endif
 }
 
-#endif // USE_WATCHDOG
-#endif // __STM32F1__
+#endif // USE_WATCHDOG//使用看门狗
+#endif // __STM32F1__//_uustm32f1__

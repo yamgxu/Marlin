@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -33,9 +34,9 @@
  * G27: Park the nozzle
  */
 void GcodeSuite::G27() {
-  // Don't allow nozzle parking without homing first
+  // Don't allow nozzle parking without homing first//不允许喷嘴在未首先归位的情况下停车
   if (homing_needed_error()) return;
   nozzle.park(parser.ushortval('P'));
 }
 
-#endif // NOZZLE_PARK_FEATURE
+#endif // NOZZLE_PARK_FEATURE//喷嘴（驻车）功能

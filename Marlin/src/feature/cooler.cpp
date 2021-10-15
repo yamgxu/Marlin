@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2021 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -34,7 +35,7 @@ bool Cooler::enabled = false;
 
 #if ENABLED(LASER_COOLANT_FLOW_METER)
   bool Cooler::flowmeter = false;
-  millis_t Cooler::flowmeter_next_ms; // = 0
+  millis_t Cooler::flowmeter_next_ms; // = 0// = 0
   volatile uint16_t Cooler::flowpulses;
   float Cooler::flowrate;
 #endif
@@ -44,4 +45,4 @@ bool Cooler::enabled = false;
   bool Cooler::fault = false;
 #endif
 
-#endif // HAS_COOLER
+#endif // HAS_COOLER//你有冷却器吗

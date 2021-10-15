@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -55,5 +56,5 @@ void libServo::move(const int value) {
   }
 }
 
-#endif // HAS_SERVOS
-#endif // __MK64FX512__ || __MK66FX1M0__
+#endif // HAS_SERVOS//有伺服系统吗
+#endif // __MK64FX512__ || __MK66FX1M0__//_uu MK64FX512__124; 124; _uumk66fx1m0__

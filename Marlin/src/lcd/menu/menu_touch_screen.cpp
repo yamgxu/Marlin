@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -33,4 +34,4 @@ void touch_screen_calibration() {
 
 }
 
-#endif // TOUCH_SCREEN_CALIBRATION
+#endif // TOUCH_SCREEN_CALIBRATION//触摸屏校准

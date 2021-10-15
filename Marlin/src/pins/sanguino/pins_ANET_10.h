@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -92,16 +93,16 @@
 
 #define BOARD_INFO_NAME "Anet 1.0"
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_STOP_PIN                            18
 #define Y_STOP_PIN                            19
 #define Z_STOP_PIN                            20
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                            15
 #define X_DIR_PIN                             21
 #define X_ENABLE_PIN                          14
@@ -118,25 +119,25 @@
 #define E0_DIR_PIN                             0
 #define E0_ENABLE_PIN                         14
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                             7  // Analog Input (pin 33 extruder)
-#define TEMP_BED_PIN                           6  // Analog Input (pin 34 bed)
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                             7  // Analog Input (pin 33 extruder)//模拟输入（引脚33挤出机）
+#define TEMP_BED_PIN                           6  // Analog Input (pin 34 bed)//模拟输入（引脚34）
 
-//
-// Heaters / Fans
-//
-#define HEATER_0_PIN                          13  // (extruder)
-#define HEATER_BED_PIN                        12  // (bed)
+////
+// Heaters / Fans//加热器/风扇
+////
+#define HEATER_0_PIN                          13  // (extruder)//（挤压机）
+#define HEATER_BED_PIN                        12  // (bed)//（床）
 
 #ifndef FAN_PIN
   #define FAN_PIN                              4
 #endif
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define SDSS                                  31
 #define LED_PIN                               -1
 
@@ -155,7 +156,7 @@
 
   #if HAS_ADC_BUTTONS
 
-    #define SERVO0_PIN                        27  // free for BLTouch/3D-Touch
+    #define SERVO0_PIN                        27  // free for BLTouch/3D-Touch//免费使用BLTouch/3D Touch
     #define LCD_PINS_RS                       28
     #define LCD_PINS_ENABLE                   29
     #define LCD_PINS_D4                       10
@@ -166,9 +167,9 @@
 
   #elif IS_RRD_FG_SC
 
-    // Pin definitions for the Anet A6 Full Graphics display and the RepRapDiscount Full Graphics
-    // display using an adapter board  // https://go.aisler.net/benlye/anet-lcd-adapter/pcb
-    // See below for alternative pin definitions for use with https://www.thingiverse.com/thing:2103748
+    // Pin definitions for the Anet A6 Full Graphics display and the RepRapDiscount Full Graphics//Anet A6全图形显示和RepraDiscount全图形的引脚定义
+    // display using an adapter board  // https://go.aisler.net/benlye/anet-lcd-adapter/pcb//使用适配器板显示//https://go.aisler.net/benlye/anet-lcd-adapter/pcb
+    // See below for alternative pin definitions for use with https://www.thingiverse.com/thing:2103748//请参见下文，以了解与一起使用的其他管脚定义https://www.thingiverse.com/thing:2103748
 
     #if ENABLED(ANET_FULL_GRAPHICS_LCD_ALT_WIRING)
       #define SERVO0_PIN                      30
@@ -183,7 +184,7 @@
       #define BOARD_ST7920_DELAY_2 DELAY_NS(250)
       #define BOARD_ST7920_DELAY_3 DELAY_NS(250)
     #else
-      #define SERVO0_PIN                      29  // free for BLTouch/3D-Touch
+      #define SERVO0_PIN                      29  // free for BLTouch/3D-Touch//免费使用BLTouch/3D Touch
       #define BEEPER_PIN                      17
       #define LCD_PINS_RS                     27
       #define LCD_PINS_ENABLE                 28

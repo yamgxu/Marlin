@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -57,16 +58,16 @@
 #include "servo.h"
 #include "servo_private.h"
 
-ServoInfo_t servo_info[MAX_SERVOS];             // static array of servo info structures
-uint8_t ServoCount = 0;                         // the total number of attached servos
+ServoInfo_t servo_info[MAX_SERVOS];             // static array of servo info structures//伺服信息结构的静态阵列
+uint8_t ServoCount = 0;                         // the total number of attached servos//已连接伺服的总数
 
-#define SERVO_MIN(v) (MIN_PULSE_WIDTH - (v) * 4) // minimum value in uS for this servo
-#define SERVO_MAX(v) (MAX_PULSE_WIDTH - (v) * 4) // maximum value in uS for this servo
+#define SERVO_MIN(v) (MIN_PULSE_WIDTH - (v) * 4) // minimum value in uS for this servo//此伺服的最小值（单位：uS）
+#define SERVO_MAX(v) (MAX_PULSE_WIDTH - (v) * 4) // maximum value in uS for this servo//此伺服的最大值为uS
 
 /************ static functions common to all instances ***********************/
 
 static boolean isTimerActive(timer16_Sequence_t timer) {
-  // returns true if any servo is active on this timer
+  // returns true if any servo is active on this timer//如果任何伺服在此计时器上处于活动状态，则返回true
   LOOP_L_N(channel, SERVOS_PER_TIMER) {
     if (SERVO(timer, channel).Pin.isActive)
       return true;
@@ -78,11 +79,11 @@ static boolean isTimerActive(timer16_Sequence_t timer) {
 
 Servo::Servo() {
   if (ServoCount < MAX_SERVOS) {
-    servoIndex = ServoCount++;                    // assign a servo index to this instance
-    servo_info[servoIndex].ticks = usToTicks(DEFAULT_PULSE_WIDTH);   // store default values  - 12 Aug 2009
+    servoIndex = ServoCount++;                    // assign a servo index to this instance//为此实例指定一个伺服索引
+    servo_info[servoIndex].ticks = usToTicks(DEFAULT_PULSE_WIDTH);   // store default values  - 12 Aug 2009//存储默认值-2009年8月12日
   }
   else
-    servoIndex = INVALID_SERVO;  // too many servos
+    servoIndex = INVALID_SERVO;  // too many servos//伺服太多
 }
 
 int8_t Servo::attach(const int inPin) {
@@ -94,16 +95,16 @@ int8_t Servo::attach(const int inPin, const int inMin, const int inMax) {
   if (servoIndex >= MAX_SERVOS) return -1;
 
   if (inPin > 0) servo_info[servoIndex].Pin.nbr = inPin;
-  pinMode(servo_info[servoIndex].Pin.nbr, OUTPUT); // set servo pin to output
+  pinMode(servo_info[servoIndex].Pin.nbr, OUTPUT); // set servo pin to output//将伺服销设置为输出
 
-  // TODO: min/max check: ABS(min - MIN_PULSE_WIDTH) / 4 < 128
-  min = (MIN_PULSE_WIDTH - inMin) / 4; //resolution of min/max is 4 uS
+  // TODO: min/max check: ABS(min - MIN_PULSE_WIDTH) / 4 < 128//TODO:最小/最大检查：ABS（最小-最小脉冲宽度）/4<128
+  min = (MIN_PULSE_WIDTH - inMin) / 4; //resolution of min/max is 4 uS//最小/最大分辨率为4 uS
   max = (MAX_PULSE_WIDTH - inMax) / 4;
 
-  // initialize the timer if it has not already been initialized
+  // initialize the timer if it has not already been initialized//如果计时器尚未初始化，则初始化计时器
   timer16_Sequence_t timer = SERVO_INDEX_TO_TIMER(servoIndex);
   if (!isTimerActive(timer)) initISR(timer);
-  servo_info[servoIndex].Pin.isActive = true;  // this must be set after the check for isTimerActive
+  servo_info[servoIndex].Pin.isActive = true;  // this must be set after the check for isTimerActive//这必须在检查isTimerActive后设置
 
   return servoIndex;
 }
@@ -115,18 +116,18 @@ void Servo::detach() {
 }
 
 void Servo::write(int value) {
-  if (value < MIN_PULSE_WIDTH)    // treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds)
+  if (value < MIN_PULSE_WIDTH)    // treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds)//将小于544的值视为角度（以度为单位）（以微秒为单位的有效值被视为微秒）
     value = map(constrain(value, 0, 180), 0, 180, SERVO_MIN(min), SERVO_MAX(max));
   writeMicroseconds(value);
 }
 
 void Servo::writeMicroseconds(int value) {
-  // calculate and store the values for the given channel
+  // calculate and store the values for the given channel//计算并存储给定通道的值
   byte channel = servoIndex;
-  if (channel < MAX_SERVOS) {  // ensure channel is valid
-    // ensure pulse width is valid
+  if (channel < MAX_SERVOS) {  // ensure channel is valid//确保通道有效
+    // ensure pulse width is valid//确保脉冲宽度有效
     value = constrain(value, SERVO_MIN(min), SERVO_MAX(max)) - (TRIM_DURATION);
-    value = usToTicks(value);  // convert to ticks after compensating for interrupt overhead - 12 Aug 2009
+    value = usToTicks(value);  // convert to ticks after compensating for interrupt overhead - 12 Aug 2009//补偿中断开销后转换为滴答声-2009年8月12日
 
     CRITICAL_SECTION_START();
     servo_info[channel].ticks = value;
@@ -134,7 +135,7 @@ void Servo::writeMicroseconds(int value) {
   }
 }
 
-// return the value as degrees
+// return the value as degrees//将值返回为度
 int Servo::read() { return map(readMicroseconds() + 1, SERVO_MIN(min), SERVO_MAX(max), 0, 180); }
 
 int Servo::readMicroseconds() {
@@ -153,4 +154,4 @@ void Servo::move(const int value) {
   }
 }
 
-#endif // SHARED_SERVOS
+#endif // SHARED_SERVOS//共享伺服

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -87,4 +88,4 @@ void print_hex_long(const uint32_t w, const char delimiter) {
   print_hex_byte(w);
 }
 
-#endif // NEED_HEX_PRINT
+#endif // NEED_HEX_PRINT//需要十六进制打印吗

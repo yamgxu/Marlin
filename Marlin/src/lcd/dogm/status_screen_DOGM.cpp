@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -20,10 +21,10 @@
  *
  */
 
-//
-// status_screen_DOGM.cpp
-// Standard Status Screen for Graphical Display
-//
+////
+// status_screen_DOGM.cpp//状态\u屏幕\u DOGM.cpp
+// Standard Status Screen for Graphical Display//用于图形显示的标准状态屏幕
+////
 
 #include "../../inc/MarlinConfigPre.h"
 
@@ -38,10 +39,10 @@
 #include "../../module/motion.h"
 #include "../../module/temperature.h"
 
-#include "../../gcode/parser.h" // for units (and volumetric)
+#include "../../gcode/parser.h" // for units (and volumetric)//单位（和体积）
 
 #if ENABLED(LCD_SHOW_E_TOTAL)
-  #include "../../MarlinCore.h" // for printingIsActive()
+  #include "../../MarlinCore.h" // for printingIsActive()//用于打印ISACTIVE（）
 #endif
 
 #if ENABLED(FILAMENT_LCD_DISPLAY)
@@ -141,7 +142,7 @@
     #endif
 
     #if HAS_POWER_MONITOR_WATTS
-      // Cycle between current, voltage, and power
+      // Cycle between current, voltage, and power//电流、电压和功率之间的循环
       if (ELAPSED(millis(), power_monitor.display_item_ms)) {
         power_monitor.display_item_ms = millis() + 1000UL;
         ++power_monitor.display_item;
@@ -152,7 +153,7 @@
       power_monitor.display_item = 1;
     #endif
 
-    // ensure we have the right one selected for display
+    // ensure we have the right one selected for display//确保我们选择了正确的一个进行显示
     for (uint8_t i = 0; i < 3; i++) {
       #if ENABLED(POWER_MONITOR_CURRENT)
         if (power_monitor.display_item == 0 && !iflag) ++power_monitor.display_item;
@@ -167,13 +168,13 @@
     }
 
     switch (power_monitor.display_item) {
-      #if ENABLED(POWER_MONITOR_CURRENT)                // Current
+      #if ENABLED(POWER_MONITOR_CURRENT)                // Current//当前
         case 0: if (iflag) power_monitor.draw_current(); break;
       #endif
-      #if ENABLED(POWER_MONITOR_VOLTAGE)                        // Voltage
+      #if ENABLED(POWER_MONITOR_VOLTAGE)                        // Voltage//电压
         case 1: if (vflag) power_monitor.draw_voltage(); break;
       #endif
-      #if HAS_POWER_MONITOR_WATTS                       // Power
+      #if HAS_POWER_MONITOR_WATTS                       // Power//权力
         case 2: if (wflag) power_monitor.draw_power(); break;
       #endif
       default: break;
@@ -215,7 +216,7 @@ FORCE_INLINE void _draw_centered_temp(const celsius_t temp, const uint8_t tx, co
 
 #if DO_DRAW_HOTENDS
 
-  // Draw hotend bitmap with current and target temperatures
+  // Draw hotend bitmap with current and target temperatures//使用当前和目标温度绘制热端位图
   FORCE_INLINE void _draw_hotend_status(const heater_id_t heater_id, const bool blink) {
     #if !HEATER_IDLE_HANDLER
       UNUSED(blink);
@@ -269,7 +270,7 @@ FORCE_INLINE void _draw_centered_temp(const celsius_t temp, const uint8_t tx, co
       uint8_t tall = uint8_t(perc * BAR_TALL + 0.5f);
       NOMORE(tall, BAR_TALL);
 
-      // Draw hotend bitmap, either whole or split by the heating percent
+      // Draw hotend bitmap, either whole or split by the heating percent//绘制热端位图，按加热百分比绘制整个位图或分割位图
       const uint8_t hx = STATUS_HOTEND_X(heater_id),
                     bw = STATUS_HOTEND_BYTEWIDTH(heater_id);
       #if ENABLED(STATUS_HEAT_PERCENT)
@@ -282,7 +283,7 @@ FORCE_INLINE void _draw_centered_temp(const celsius_t temp, const uint8_t tx, co
       #endif
           u8g.drawBitmapP(hx, STATUS_HEATERS_Y, bw, STATUS_HEATERS_HEIGHT, HOTEND_BITMAP(TERN(HAS_MMU, active_extruder, heater_id), isHeat));
 
-    } // PAGE_CONTAINS
+    } // PAGE_CONTAINS//第u页包含
 
     if (PAGE_UNDER(7)) {
       #if HEATER_IDLE_HANDLER
@@ -297,18 +298,18 @@ FORCE_INLINE void _draw_centered_temp(const celsius_t temp, const uint8_t tx, co
       _draw_centered_temp(temp, tx, 28);
 
     if (STATIC_HOTEND && HOTEND_DOT && PAGE_CONTAINS(17, 19)) {
-      u8g.setColorIndex(0); // set to white on black
+      u8g.setColorIndex(0); // set to white on black//设置为黑白相间
       u8g.drawBox(tx, 20 - 3, 2, 2);
-      u8g.setColorIndex(1); // restore black on white
+      u8g.setColorIndex(1); // restore black on white//白纸黑字
     }
 
   }
 
-#endif // DO_DRAW_HOTENDS
+#endif // DO_DRAW_HOTENDS//你画火头吗
 
 #if DO_DRAW_BED
 
-  // Draw bed bitmap with current and target temperatures
+  // Draw bed bitmap with current and target temperatures//使用当前和目标温度绘制床位图
   FORCE_INLINE void _draw_bed_status(const bool blink) {
     #if !HEATER_IDLE_HANDLER
       UNUSED(blink);
@@ -340,7 +341,7 @@ FORCE_INLINE void _draw_centered_temp(const celsius_t temp, const uint8_t tx, co
       uint8_t tall = uint8_t(perc * BAR_TALL + 0.5f);
       NOMORE(tall, BAR_TALL);
 
-      // Draw a heating progress bar, if specified
+      // Draw a heating progress bar, if specified//绘制加热进度条（如果指定）
       #if ENABLED(STATUS_HEAT_PERCENT)
 
         if (isHeat) {
@@ -355,7 +356,7 @@ FORCE_INLINE void _draw_centered_temp(const celsius_t temp, const uint8_t tx, co
 
       #endif
 
-    } // PAGE_CONTAINS
+    } // PAGE_CONTAINS//第u页包含
 
     if (PAGE_UNDER(7)) {
       #if HEATER_IDLE_HANDLER
@@ -370,14 +371,14 @@ FORCE_INLINE void _draw_centered_temp(const celsius_t temp, const uint8_t tx, co
       _draw_centered_temp(temp, tx, 28);
 
     if (STATIC_BED && BED_DOT && PAGE_CONTAINS(17, 19)) {
-      u8g.setColorIndex(0); // set to white on black
+      u8g.setColorIndex(0); // set to white on black//设置为黑白相间
       u8g.drawBox(tx, 20 - 2, 2, 2);
-      u8g.setColorIndex(1); // restore black on white
+      u8g.setColorIndex(1); // restore black on white//白纸黑字
     }
 
   }
 
-#endif // DO_DRAW_BED
+#endif // DO_DRAW_BED//你拉床吗
 
 #if DO_DRAW_CHAMBER
   FORCE_INLINE void _draw_chamber_status() {
@@ -411,11 +412,11 @@ FORCE_INLINE void _draw_centered_temp(const celsius_t temp, const uint8_t tx, co
   }
 #endif
 
-//
-// Before homing, blink '123' <-> '???'.
-// Homed but unknown... '123' <-> '   '.
-// Homed and known, display constantly.
-//
+////
+// Before homing, blink '123' <-> '???'.//归位前，闪烁“123”<->“？？”。
+// Homed but unknown... '123' <-> '   './/有家但不知道……”123' <-> '   '.
+// Homed and known, display constantly.//家喻户晓，不断展示。
+////
 FORCE_INLINE void _draw_axis_value(const AxisEnum axis, const char *value, const bool blink) {
   const bool is_inch = parser.using_inch_units();
   const AxisEnum a = TERN(LCD_SHOW_E_TOTAL, axis == E_AXIS ? X_AXIS : axis, axis);
@@ -473,7 +474,7 @@ void MarlinUI::draw_status_screen() {
 
   const bool show_e_total = TERN0(LCD_SHOW_E_TOTAL, printingIsActive());
 
-  // At the first page, generate new display values
+  // At the first page, generate new display values//在第一页，生成新的显示值
   if (first_page) {
     #if ANIM_HBCC
       uint8_t new_bits = 0;
@@ -494,8 +495,8 @@ void MarlinUI::draw_status_screen() {
 
     if (show_e_total) {
       #if ENABLED(LCD_SHOW_E_TOTAL)
-        const uint8_t escale = e_move_accumulator >= 100000.0f ? 10 : 1; // After 100m switch to cm
-        sprintf_P(xstring, PSTR("%ld%cm"), uint32_t(_MAX(e_move_accumulator, 0.0f)) / escale, escale == 10 ? 'c' : 'm'); // 1234567mm
+        const uint8_t escale = e_move_accumulator >= 100000.0f ? 10 : 1; // After 100m switch to cm//100米后切换到厘米
+        sprintf_P(xstring, PSTR("%ld%cm"), uint32_t(_MAX(e_move_accumulator, 0.0f)) / escale, escale == 10 ? 'c' : 'm'); // 1234567mm//1234567毫米
       #endif
     }
     else {
@@ -508,7 +509,7 @@ void MarlinUI::draw_status_screen() {
       strcpy(mstring, i16tostr3rj(planner.volumetric_percent(parser.volumetric_enabled)));
     #endif
 
-    // Progress / elapsed / estimation updates and string formatting to avoid float math on each LCD draw
+    // Progress / elapsed / estimation updates and string formatting to avoid float math on each LCD draw//进度/已用/估算更新和字符串格式，以避免每个LCD绘图上的浮点运算
     #if HAS_PRINT_PROGRESS
       const progress_t progress = TERN(HAS_PRINT_PROGRESS_PERMYRIAD, get_progress_permyriad, get_progress_percent)();
       duration_t elapsed = print_job_timer.duration();
@@ -529,7 +530,7 @@ void MarlinUI::draw_status_screen() {
           else
             strcpy(progress_string, TERN(PRINT_PROGRESS_SHOW_DECIMALS, permyriadtostr4(progress), ui8tostr3rj(progress / (PROGRESS_SCALE))));
 
-          #if BOTH(SHOW_REMAINING_TIME, ROTATE_PROGRESS_DISPLAY) // Tri-state progress display mode
+          #if BOTH(SHOW_REMAINING_TIME, ROTATE_PROGRESS_DISPLAY) // Tri-state progress display mode//三态进度显示模式
             progress_x_pos = _SD_INFO_X(strlen(progress_string) + 1);
           #endif
         #endif
@@ -570,7 +571,7 @@ void MarlinUI::draw_status_screen() {
 
   const bool blink = get_blink();
 
-  // Status Menu Font
+  // Status Menu Font//状态菜单字体
   set_font(FONT_STATUSMENU);
 
   #if DO_DRAW_LOGO
@@ -579,7 +580,7 @@ void MarlinUI::draw_status_screen() {
   #endif
 
   #if STATUS_HEATERS_WIDTH
-    // Draw all heaters (and maybe the bed) in one go
+    // Draw all heaters (and maybe the bed) in one go//一次性抽出所有加热器（可能还有床）
     if (PAGE_CONTAINS(STATUS_HEATERS_Y, STATUS_HEATERS_Y + STATUS_HEATERS_HEIGHT - 1))
       u8g.drawBitmapP(STATUS_HEATERS_X, STATUS_HEATERS_Y, STATUS_HEATERS_BYTEWIDTH, STATUS_HEATERS_HEIGHT, status_heaters_bmp);
   #endif
@@ -644,17 +645,17 @@ void MarlinUI::draw_status_screen() {
       );
   #endif
 
-  //
-  // Temperature Graphics and Info
-  //
+  ////
+  // Temperature Graphics and Info//温度图形和信息
+  ////
   if (PAGE_UNDER(6 + 1 + 12 + 1 + 6 + 1)) {
-    // Extruders
+    // Extruders//挤出机
     #if DO_DRAW_HOTENDS
       LOOP_L_N(e, MAX_HOTEND_DRAW)
         _draw_hotend_status((heater_id_t)e, blink);
     #endif
 
-    // Laser / Spindle
+    // Laser / Spindle//激光/主轴
     #if DO_DRAW_CUTTER
       if (cutter.isReady && PAGE_CONTAINS(STATUS_CUTTER_TEXT_Y - INFO_FONT_ASCENT, STATUS_CUTTER_TEXT_Y - 1)) {
         #if CUTTER_UNIT_IS(PERCENT)
@@ -668,7 +669,7 @@ void MarlinUI::draw_status_screen() {
       }
     #endif
 
-    // Laser Cooler
+    // Laser Cooler//激光冷却器
     #if DO_DRAW_COOLER
       const uint8_t coolery = STATUS_COOLER_Y(status_cooler_bmp1),
                     coolerh = STATUS_COOLER_HEIGHT(status_cooler_bmp1);
@@ -676,7 +677,7 @@ void MarlinUI::draw_status_screen() {
         u8g.drawBitmapP(STATUS_COOLER_X, coolery, STATUS_COOLER_BYTEWIDTH, coolerh, blink && cooler.enabled ? status_cooler_bmp2 : status_cooler_bmp1);
     #endif
 
-    // Laser Cooler Flow Meter
+    // Laser Cooler Flow Meter//激光冷却器流量计
     #if DO_DRAW_FLOWMETER
       const uint8_t flowmetery = STATUS_FLOWMETER_Y(status_flowmeter_bmp1),
                     flowmeterh = STATUS_FLOWMETER_HEIGHT(status_flowmeter_bmp1);
@@ -684,7 +685,7 @@ void MarlinUI::draw_status_screen() {
         u8g.drawBitmapP(STATUS_FLOWMETER_X, flowmetery, STATUS_FLOWMETER_BYTEWIDTH, flowmeterh, blink && cooler.flowpulses ? status_flowmeter_bmp2 : status_flowmeter_bmp1);
     #endif
 
-    // Laser Ammeter
+    // Laser Ammeter//激光安培计
     #if DO_DRAW_AMMETER
       const uint8_t ammetery = STATUS_AMMETER_Y(status_ammeter_bmp_mA),
                     ammeterh = STATUS_AMMETER_HEIGHT(status_ammeter_bmp_mA);
@@ -692,22 +693,22 @@ void MarlinUI::draw_status_screen() {
         u8g.drawBitmapP(STATUS_AMMETER_X, ammetery, STATUS_AMMETER_BYTEWIDTH, ammeterh, (ammeter.current < 0.1f) ? status_ammeter_bmp_mA : status_ammeter_bmp_A);
     #endif
 
-    // Heated Bed
+    // Heated Bed//加热床
     TERN_(DO_DRAW_BED, _draw_bed_status(blink));
 
-    // Heated Chamber
+    // Heated Chamber//加热室
     TERN_(DO_DRAW_CHAMBER, _draw_chamber_status());
 
-    // Cooler
+    // Cooler//冷冻机
     TERN_(DO_DRAW_COOLER, _draw_cooler_status());
 
-    // Flowmeter
+    // Flowmeter//流量计
     TERN_(DO_DRAW_FLOWMETER, _draw_flowmeter_status());
 
-    // Flowmeter
+    // Flowmeter//流量计
     TERN_(DO_DRAW_AMMETER, _draw_ammeter_status());
 
-    // Fan, if a bitmap was provided
+    // Fan, if a bitmap was provided//风扇，如果提供了位图
     #if DO_DRAW_FAN
       if (PAGE_CONTAINS(STATUS_FAN_TEXT_Y - INFO_FONT_ASCENT, STATUS_FAN_TEXT_Y - 1)) {
         char c = '%';
@@ -727,32 +728,32 @@ void MarlinUI::draw_status_screen() {
   }
 
   #if ENABLED(SDSUPPORT)
-    //
-    // SD Card Symbol
-    //
+    ////
+    // SD Card Symbol//SD卡符号
+    ////
     if (card.isFileOpen() && PAGE_CONTAINS(42, 51)) {
-      // Upper box
-      u8g.drawBox(42, 42, 8, 7);     // 42-48 (or 41-47)
-      // Right edge
-      u8g.drawBox(50, 44, 2, 5);     // 44-48 (or 43-47)
-      // Bottom hollow box
-      u8g.drawFrame(42, 49, 10, 4);  // 49-52 (or 48-51)
-      // Corner pixel
-      u8g.drawPixel(50, 43);         // 43 (or 42)
+      // Upper box//上框
+      u8g.drawBox(42, 42, 8, 7);     // 42-48 (or 41-47)//42-48（或41-47）
+      // Right edge//右边缘
+      u8g.drawBox(50, 44, 2, 5);     // 44-48 (or 43-47)//44-48（或43-47）
+      // Bottom hollow box//底部空心盒
+      u8g.drawFrame(42, 49, 10, 4);  // 49-52 (or 48-51)//49-52（或48-51）
+      // Corner pixel//角点像素
+      u8g.drawPixel(50, 43);         // 43 (or 42)//43（或42）
     }
-  #endif // SDSUPPORT
+  #endif // SDSUPPORT//SDSUPPORT
 
   #if HAS_PRINT_PROGRESS
-    //
-    // Progress bar frame
-    //
+    ////
+    // Progress bar frame//进度条框架
+    ////
 
     if (PAGE_CONTAINS(PROGRESS_BAR_Y, PROGRESS_BAR_Y + 3))
       u8g.drawFrame(PROGRESS_BAR_X, PROGRESS_BAR_Y, PROGRESS_BAR_WIDTH, 4);
 
-    //
-    // Progress bar solid part
-    //
+    ////
+    // Progress bar solid part//进度条实体部分
+    ////
 
     if (PAGE_CONTAINS(PROGRESS_BAR_Y + 1, PROGRESS_BAR_Y + 2))
       u8g.drawBox(PROGRESS_BAR_X + 1, PROGRESS_BAR_Y + 1, progress_bar_solid_width, 2);
@@ -781,22 +782,22 @@ void MarlinUI::draw_status_screen() {
           lcd_put_u8str(elapsed_x_pos, EXTRAS_BASELINE, elapsed_string);
         }
 
-      #else // !DOGM_SD_PERCENT || !SHOW_REMAINING_TIME || !ROTATE_PROGRESS_DISPLAY
+      #else // !DOGM_SD_PERCENT || !SHOW_REMAINING_TIME || !ROTATE_PROGRESS_DISPLAY// !狗的百分比！显示剩余时间！旋转\进度\显示
 
-        //
-        // SD Percent Complete
-        //
+        ////
+        // SD Percent Complete//SD完成百分比
+        ////
 
         #if ENABLED(DOGM_SD_PERCENT)
           if (progress_string[0]) {
-            lcd_put_u8str(55, EXTRAS_BASELINE, progress_string); // Percent complete
+            lcd_put_u8str(55, EXTRAS_BASELINE, progress_string); // Percent complete//完成百分比
             lcd_put_wchar('%');
           }
         #endif
 
-        //
-        // Elapsed Time
-        //
+        ////
+        // Elapsed Time//经过的时间
+        ////
 
         #if ENABLED(SHOW_REMAINING_TIME)
           if (blink && estimation_string[0]) {
@@ -807,14 +808,14 @@ void MarlinUI::draw_status_screen() {
         #endif
             lcd_put_u8str(elapsed_x_pos, EXTRAS_BASELINE, elapsed_string);
 
-      #endif // !DOGM_SD_PERCENT || !SHOW_REMAINING_TIME || !ROTATE_PROGRESS_DISPLAY
+      #endif // !DOGM_SD_PERCENT || !SHOW_REMAINING_TIME || !ROTATE_PROGRESS_DISPLAY// !狗的百分比！显示剩余时间！旋转\进度\显示
     }
 
-  #endif // HAS_PRINT_PROGRESS
+  #endif // HAS_PRINT_PROGRESS//有进展吗
 
-  //
-  // XYZ Coordinates
-  //
+  ////
+  // XYZ Coordinates//XYZ坐标
+  ////
 
   #if EITHER(XYZ_NO_FRAME, XYZ_HOLLOW_FRAME)
     #define XYZ_FRAME_TOP 29
@@ -828,21 +829,21 @@ void MarlinUI::draw_status_screen() {
 
     #if DISABLED(XYZ_NO_FRAME)
       #if ENABLED(XYZ_HOLLOW_FRAME)
-        u8g.drawFrame(0, XYZ_FRAME_TOP, LCD_PIXEL_WIDTH, XYZ_FRAME_HEIGHT); // 8: 29-40  7: 29-39
+        u8g.drawFrame(0, XYZ_FRAME_TOP, LCD_PIXEL_WIDTH, XYZ_FRAME_HEIGHT); // 8: 29-40  7: 29-39// 8: 29-40  7: 29-39
       #else
-        u8g.drawBox(0, XYZ_FRAME_TOP, LCD_PIXEL_WIDTH, XYZ_FRAME_HEIGHT);   // 8: 30-39  7: 30-37
+        u8g.drawBox(0, XYZ_FRAME_TOP, LCD_PIXEL_WIDTH, XYZ_FRAME_HEIGHT);   // 8: 30-39  7: 30-37// 8: 30-39  7: 30-37
       #endif
     #endif
 
     if (PAGE_CONTAINS(XYZ_BASELINE - (INFO_FONT_ASCENT - 1), XYZ_BASELINE)) {
 
       #if NONE(XYZ_NO_FRAME, XYZ_HOLLOW_FRAME)
-        u8g.setColorIndex(0); // white on black
+        u8g.setColorIndex(0); // white on black//黑白相间
       #endif
 
       #if HAS_DUAL_MIXING
 
-        // Two-component mix / gradient instead of XY
+        // Two-component mix / gradient instead of XY//双组分混合/渐变，而不是XY
 
         char mixer_messages[15];
         PGM_P mix_label;
@@ -888,14 +889,14 @@ void MarlinUI::draw_status_screen() {
       _draw_axis_value(Z_AXIS, zstring, blink);
 
       #if NONE(XYZ_NO_FRAME, XYZ_HOLLOW_FRAME)
-        u8g.setColorIndex(1); // black on white
+        u8g.setColorIndex(1); // black on white//黑白相间
       #endif
     }
   }
 
-  //
-  // Feedrate
-  //
+  ////
+  // Feedrate//进给速度
+  ////
   #define EXTRAS_2_BASELINE (EXTRAS_BASELINE + 3)
 
   if (PAGE_CONTAINS(EXTRAS_2_BASELINE - INFO_FONT_ASCENT, EXTRAS_2_BASELINE - 1)) {
@@ -906,27 +907,27 @@ void MarlinUI::draw_status_screen() {
     lcd_put_u8str(12, EXTRAS_2_BASELINE, i16tostr3rj(feedrate_percentage));
     lcd_put_wchar('%');
 
-    //
-    // Filament sensor display if SD is disabled
-    //
+    ////
+    // Filament sensor display if SD is disabled//如果SD被禁用，灯丝传感器显示
+    ////
     #if ENABLED(FILAMENT_LCD_DISPLAY) && DISABLED(SDSUPPORT)
       lcd_put_u8str(56, EXTRAS_2_BASELINE, wstring);
       lcd_put_u8str(102, EXTRAS_2_BASELINE, mstring);
       lcd_put_wchar('%');
       set_font(FONT_MENU);
-      lcd_put_wchar(47, EXTRAS_2_BASELINE, LCD_STR_FILAM_DIA[0]); // lcd_put_u8str_P(PSTR(LCD_STR_FILAM_DIA));
+      lcd_put_wchar(47, EXTRAS_2_BASELINE, LCD_STR_FILAM_DIA[0]); // lcd_put_u8str_P(PSTR(LCD_STR_FILAM_DIA));//液晶显示器（PSTR（液晶显示器）的输入信号；
       lcd_put_wchar(93, EXTRAS_2_BASELINE, LCD_STR_FILAM_MUL[0]);
     #endif
   }
 
-  //
-  // Status line
-  //
+  ////
+  // Status line//状态行
+  ////
   if (PAGE_CONTAINS(STATUS_BASELINE - INFO_FONT_ASCENT, STATUS_BASELINE + INFO_FONT_DESCENT)) {
     lcd_moveto(0, STATUS_BASELINE);
 
     #if BOTH(FILAMENT_LCD_DISPLAY, SDSUPPORT)
-      // Alternate Status message and Filament display
+      // Alternate Status message and Filament display//备用状态信息和灯丝显示
       if (ELAPSED(millis(), next_filament_display)) {
         lcd_put_u8str_P(PSTR(LCD_STR_FILAM_DIA));
         lcd_put_wchar(':');
@@ -948,13 +949,13 @@ void MarlinUI::draw_status_screen() {
  */
 void MarlinUI::draw_status_message(const bool blink) {
 
-  // Get the UTF8 character count of the string
+  // Get the UTF8 character count of the string//获取字符串的UTF8字符计数
   uint8_t lcd_width = LCD_WIDTH, pixel_width = LCD_PIXEL_WIDTH,
           slen = utf8_strlen(status_message);
 
   #if HAS_POWER_MONITOR
     if (power_monitor.display_enabled()) {
-      // make room at the end of the status line for the power monitor reading
+      // make room at the end of the status line for the power monitor reading//在状态行的末尾留出空间，以便读取电源监视器读数
       lcd_width -= 6;
       pixel_width -= (MENU_FONT_WIDTH) * 6;
     }
@@ -965,32 +966,32 @@ void MarlinUI::draw_status_message(const bool blink) {
     static bool last_blink = false;
 
     if (slen <= lcd_width) {
-      // The string fits within the line. Print with no scrolling
+      // The string fits within the line. Print with no scrolling//这根线正好在这条线上。不滚动打印
       lcd_put_u8str(status_message);
       while (slen < lcd_width) { lcd_put_wchar(' '); ++slen; }
     }
     else {
-      // String is longer than the available space
+      // String is longer than the available space//字符串比可用空间长
       if (blink != last_blink) {
         last_blink = blink;
         advance_status_scroll();
       }
 
-      // Get a pointer to the next valid UTF8 character
-      // and the string remaining length
+      // Get a pointer to the next valid UTF8 character//获取指向下一个有效UTF8字符的指针
+      // and the string remaining length//和字符串的剩余长度
       uint8_t rlen;
       const char *stat = status_and_len(rlen);
       lcd_put_u8str_max(stat, pixel_width);
 
-      // If the remaining string doesn't completely fill the screen
+      // If the remaining string doesn't completely fill the screen//如果剩余的字符串没有完全填满屏幕
       if (rlen < lcd_width) {
-        uint8_t chars = lcd_width - rlen;       // Amount of space left in characters
-        lcd_put_wchar(' ');                     // Always at 1+ spaces left, draw a space
-        if (--chars) {                          // Draw a second space if there's room
+        uint8_t chars = lcd_width - rlen;       // Amount of space left in characters//字符中剩余的空间量
+        lcd_put_wchar(' ');                     // Always at 1+ spaces left, draw a space//始终在左1+空格处，绘制一个空格
+        if (--chars) {                          // Draw a second space if there's room//如果有空间，再画一个空格
           lcd_put_wchar(' ');
-          if (--chars) {                        // Draw a third space if there's room
+          if (--chars) {                        // Draw a third space if there's room//如果有空间，画第三个空格
             lcd_put_wchar(' ');
-            if (--chars) {                      // Print a second copy of the message
+            if (--chars) {                      // Print a second copy of the message//打印邮件的第二份副本
               lcd_put_u8str_max(status_message, pixel_width - (rlen + 2) * (MENU_FONT_WIDTH));
               lcd_put_wchar(' ');
             }
@@ -999,21 +1000,21 @@ void MarlinUI::draw_status_message(const bool blink) {
       }
     }
 
-  #else // !STATUS_MESSAGE_SCROLLING
+  #else // !STATUS_MESSAGE_SCROLLING// !状态\消息\滚动
 
     UNUSED(blink);
 
-    // Just print the string to the LCD
+    // Just print the string to the LCD//只需将字符串打印到LCD上
     lcd_put_u8str_max(status_message, pixel_width);
 
-    // Fill the rest with spaces
+    // Fill the rest with spaces//用空格填充其余部分
     for (; slen < lcd_width; ++slen) lcd_put_wchar(' ');
 
-  #endif // !STATUS_MESSAGE_SCROLLING
+  #endif // !STATUS_MESSAGE_SCROLLING// !状态\消息\滚动
 
   #if HAS_POWER_MONITOR
     display_power_monitor(pixel_width + MENU_FONT_WIDTH, STATUS_BASELINE);
   #endif
 }
 
-#endif // HAS_MARLINUI_U8GLIB && !LIGHTWEIGHT_UI
+#endif // HAS_MARLINUI_U8GLIB && !LIGHTWEIGHT_UI//马林努伊的口齿不清！轻量级用户界面

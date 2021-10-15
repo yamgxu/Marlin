@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -43,14 +44,14 @@
   #warning "Serial 3 is originally reserved to Y limit switches. Hardware changes are required to use it."
 #endif
 
-// Custom flags and defines for the build
-//#define BOARD_CUSTOM_BUILD_FLAGS -D__FOO__
+// Custom flags and defines for the build//自定义生成的标志和定义
+//#define BOARD_CUSTOM_BUILD_FLAGS -D__FOO__//#定义线路板\自定义\构建\标志-D\ uu FOO__
 
 #define BOARD_INFO_NAME "LGT KIT V1.0"
 
-//
-// Servos
-//
+////
+// Servos//伺服
+////
 #if !MB(LONGER3D_LK1_PRO)
   #define SERVO0_PIN                           7
 #endif
@@ -58,9 +59,9 @@
 #define SERVO2_PIN -1
 #define SERVO3_PIN -1
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_STOP_PIN                             3
 
 #ifdef CHANGE_Y_LIMIT_PINS
@@ -82,38 +83,38 @@
   #define Z_MAX_PIN                           37
 #endif
 
-//
-// Z Probe (when not Z_MIN_PIN)
-//
+////
+// Z Probe (when not Z_MIN_PIN)//Z探头（非Z_MIN_引脚时）
+////
 #define Z_MIN_PROBE_PIN                       -1
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define SD_DETECT_PIN                         49
 #define FIL_RUNOUT_PIN                         2
 
-//
-// Other RAMPS 1.3 pins
-//
-#define IS_RAMPS_EFB                              // Override autodetection. Bed will be undefined.
+////
+// Other RAMPS 1.3 pins//其他斜坡1.3引脚
+////
+#define IS_RAMPS_EFB                              // Override autodetection. Bed will be undefined.//覆盖自动检测。床将是未定义的。
 #include "pins_RAMPS_13.h"
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #undef E1_STEP_PIN
 #undef E1_DIR_PIN
 #undef E1_ENABLE_PIN
 #undef E1_CS_PIN
 
-//
-// Temperature Sensors
-//
+////
+// Temperature Sensors//温度传感器
+////
 #undef TEMP_1_PIN
 
-//
-// Průša i3 MK2 Multiplexer Support
-//
+////
+// Průša i3 MK2 Multiplexer Support//Průša i3 MK2多路复用器支持
+////
 #undef E_MUX2_PIN
 #undef CHANGE_Y_LIMIT_PINS

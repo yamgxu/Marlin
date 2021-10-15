@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2021 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -24,7 +25,7 @@
  * lcd/extui/nextion/nextion_tft.h
  * ****************************************
  * Extensible_UI implementation for Nextion
- * https://github.com/Skorpi08
+ * https://github.com/Skorpi08//github.com/Skorpi08
  * ***************************************/
 
 #include "../../../inc/MarlinConfigPre.h"
@@ -109,7 +110,7 @@ void NextionTFT::StatusChange(const char * const msg) {
   SEND_VALasTXT("tmppage.M117", msg);
 }
 
-void NextionTFT::SendtoTFT(PGM_P str) { // A helper to print PROGMEM string to the panel
+void NextionTFT::SendtoTFT(PGM_P str) { // A helper to print PROGMEM string to the panel//将PROGMEM字符串打印到面板的助手
   #if NEXDEBUG(N_SOME)
     DEBUG_ECHOPGM_P(str);
   #endif
@@ -149,7 +150,7 @@ bool NextionTFT::ReadTFTCommand() {
 }
 
 void NextionTFT::SendFileList(int8_t startindex) {
-  // respond to panel request for 7 files starting at index
+  // respond to panel request for 7 files starting at index//响应从索引开始的7个文件的面板请求
   #if NEXDEBUG(N_INFO)
     DEBUG_ECHOLNPAIR("## SendFileList ## ", startindex);
   #endif
@@ -163,14 +164,14 @@ void NextionTFT::SelectFile() {
     DEBUG_ECHOLNPAIR_F(" Selected File: ", selectedfile);
   #endif
   switch (selectedfile[0]) {
-  case '/': // Valid file selected
-    //SEND_TXT("tmppage.M117", msg_sd_file_open_success);
+  case '/': // Valid file selected//已选择有效文件
+    //SEND_TXT("tmppage.M117", msg_sd_file_open_success);//发送TXT（“tmppage.M117”，msg\u sd\u file\u open\u success）；
     break;
-  case '<': // .. (go up folder level)
+  case '<': // .. (go up folder level)// .. （上升到文件夹级别）
     filenavigator.upDIR();
     SendFileList(0);
     break;
-  default: // enter sub folder
+  default: // enter sub folder//输入子文件夹
     filenavigator.changeDIR(selectedfile);
     SendFileList(0);
     break;
@@ -188,15 +189,15 @@ void NextionTFT::_format_time(char *outstr, uint32_t time) {
 }
 
 void NextionTFT::ProcessPanelRequest() {
-  // Break these up into logical blocks as its easier to navigate than one huge switch case!
+  // Break these up into logical blocks as its easier to navigate than one huge switch case!//将它们分解成逻辑块，因为它比一个巨大的交换机外壳更容易导航！
   if (nextion_command[0] == 'X') {
     int8_t req = atoi(&nextion_command[1]);
 
-    // Information requests
+    // Information requests//信息请求
     if (req <= 49)
       PanelInfo(req);
 
-    // Simple Actions
+    // Simple Actions//简单动作
     else if (req >= 50)
       PanelAction(req);
   }
@@ -208,18 +209,18 @@ void NextionTFT::PanelInfo(uint8_t req) {
   switch (req) {
   case 0: break;
 
-  case 1: // Get SD Card list
+  case 1: // Get SD Card list//获取SD卡列表
     if (!isPrinting()) {
       if (!isMediaInserted()) safe_delay(500);
-      if (!isMediaInserted()) { // Make sure the card is removed
-        //SEND_TXT("tmppage.M117", msg_no_sd_card);
+      if (!isMediaInserted()) { // Make sure the card is removed//确保卡已卸下
+        //SEND_TXT("tmppage.M117", msg_no_sd_card);//发送TXT（“tmppage.M117”，信息号sd卡）；
       }
       else if (nextion_command[3] == 'S')
         SendFileList(atoi(&nextion_command[4]));
     }
     break;
 
-  case 2: // Printer Info
+  case 2: // Printer Info//打印机信息
     if (!isPrinting()) {
       SEND_VAL("tmppage.connected", 1);
       SEND_VALasTXT("tmppage.marlin", SHORT_BUILD_VERSION);
@@ -254,7 +255,7 @@ void NextionTFT::PanelInfo(uint8_t req) {
     }
     break;
 
-  case 23: // Linear Advance
+  case 23: // Linear Advance//线性推进
     #if ENABLED(LIN_ADVANCE)
       SEND_VALasTXT("linadvance", getLinearAdvance_mm_mm_s(getActiveTool()));
     #else
@@ -262,7 +263,7 @@ void NextionTFT::PanelInfo(uint8_t req) {
     #endif
     break;
 
-  case 24: // TMC Motor Current
+  case 24: // TMC Motor Current//TMC电机电流
     #if HAS_TRINAMIC_CONFIG
       #define SEND_TRINAMIC_CURR(A, B) SEND_VALasTXT(A, getAxisCurrent_mA(B))
     #else
@@ -278,7 +279,7 @@ void NextionTFT::PanelInfo(uint8_t req) {
     SEND_TRINAMIC_CURR("e1", E1);
     break;
 
-  case 25: // TMC Bump Sensitivity
+  case 25: // TMC Bump Sensitivity//碰撞灵敏度
     #if HAS_TRINAMIC_CONFIG
       #define SEND_TRINAMIC_BUMP(A, B) SEND_VALasTXT(A, getTMCBumpSensitivity(B))
     #else
@@ -292,7 +293,7 @@ void NextionTFT::PanelInfo(uint8_t req) {
     SEND_TRINAMIC_BUMP("z2", Z2);
     break;
 
-  case 26: // TMC Hybrid Threshold Speed
+  case 26: // TMC Hybrid Threshold Speed//混合阈值速度
     #if 0 && BOTH(HAS_TRINAMIC_CONFIG, HYBRID_THRESHOLD)
       #define SEND_TRINAMIC_THRS(A, B) SEND_VALasTXT(A, getAxisPWMthrs(B))
     #else
@@ -308,7 +309,7 @@ void NextionTFT::PanelInfo(uint8_t req) {
     SEND_TRINAMIC_THRS("e1", E1);
     break;
 
-  case 27: // Printcounter
+  case 27: // Printcounter//打印计数器
     #if ENABLED(PRINTCOUNTER)
       char buffer[21];
       #define SEND_PRINT_INFO(A, B) SEND_VALasTXT(A, B(buffer))
@@ -323,7 +324,7 @@ void NextionTFT::PanelInfo(uint8_t req) {
     SEND_PRINT_INFO("t8", getFilamentUsed_str);
     break;
 
-  case 28: // Filament laod/unload
+  case 28: // Filament laod/unload//拆下/卸下灯丝
     #if ENABLED(ADVANCED_PAUSE_FEATURE)
       #define SEND_PAUSE_INFO(A, B) SEND_VALasTXT(A, fc_settings[getActiveTool()].B)
     #else
@@ -333,10 +334,10 @@ void NextionTFT::PanelInfo(uint8_t req) {
     SEND_PAUSE_INFO("filamentout", unload_length);
     break;
 
-  case 29: // Preheat
+  case 29: // Preheat//预热
     #if PREHEAT_COUNT
       if (!isPrinting()) {
-        // Preheat PLA
+        // Preheat PLA//预热聚乳酸
         if (nextion_command[4] == 'P') {
           SEND_VALasTXT("pe", getMaterial_preset_E(0));
           #if HAS_HEATED_BED
@@ -344,7 +345,7 @@ void NextionTFT::PanelInfo(uint8_t req) {
           #endif
         }
 
-        // Preheat ABS
+        // Preheat ABS//预热腹肌
         if (nextion_command[4] == 'A') {
           SEND_VALasTXT("ae", getMaterial_preset_E(1));
           #if HAS_HEATED_BED
@@ -352,7 +353,7 @@ void NextionTFT::PanelInfo(uint8_t req) {
           #endif
         }
 
-        // Preheat PETG
+        // Preheat PETG//预热PETG
         if (nextion_command[4] == 'G') {
           #ifdef PREHEAT_3_TEMP_HOTEND
             SEND_VALasTXT("ge", getMaterial_preset_E(2));
@@ -365,7 +366,7 @@ void NextionTFT::PanelInfo(uint8_t req) {
     #endif
     break;
 
-  case 30: // Velocity
+  case 30: // Velocity//速度
     SEND_VALasTXT("x",    getAxisMaxFeedrate_mm_s(X));
     SEND_VALasTXT("y",    getAxisMaxFeedrate_mm_s(Y));
     SEND_VALasTXT("z",    getAxisMaxFeedrate_mm_s(Z));
@@ -374,12 +375,12 @@ void NextionTFT::PanelInfo(uint8_t req) {
     SEND_VALasTXT("tmin", getMinTravelFeedrate_mm_s());
     break;
 
-  case 31: // Jerk
+  case 31: // Jerk//猛拉
     #if ENABLED(CLASSIC_JERK)
       #define SEND_JERK_INFO(A, B) SEND_VALasTXT(A, getAxisMaxJerk_mm_s(B))
     #else
       #define SEND_JERK_INFO(A, B) SEND_NA(A)
-      //SEND_VALasTXT("x", getJunctionDeviation_mm());
+      //SEND_VALasTXT("x", getJunctionDeviation_mm());//SEND_valasText（“x”，getJunctionDeviation_mm（））；
       SEND_TXT("tmppage.M117", "classic Jerk not enabled");
     #endif
     SEND_JERK_INFO("x", X);
@@ -388,7 +389,7 @@ void NextionTFT::PanelInfo(uint8_t req) {
     SEND_JERK_INFO("e", getActiveTool());
     break;
 
-  case 32: // Steps-per-mm
+  case 32: // Steps-per-mm//每毫米步数
     SEND_VALasTXT("x",  getAxisSteps_per_mm(X));
     SEND_VALasTXT("y",  getAxisSteps_per_mm(Y));
     SEND_VALasTXT("z",  getAxisSteps_per_mm(Z));
@@ -396,7 +397,7 @@ void NextionTFT::PanelInfo(uint8_t req) {
     SEND_VALasTXT("e1", getAxisSteps_per_mm(E1));
     break;
 
-  case 33: // Acceleration
+  case 33: // Acceleration//加速
     SEND_VALasTXT("x", ui16tostr5rj(getAxisMaxAcceleration_mm_s2(X)));
     SEND_VALasTXT("y", ui16tostr5rj(getAxisMaxAcceleration_mm_s2(Y)));
     SEND_VALasTXT("z", ui16tostr5rj(getAxisMaxAcceleration_mm_s2(Z)));
@@ -406,7 +407,7 @@ void NextionTFT::PanelInfo(uint8_t req) {
     SEND_VALasTXT("travel",  ui16tostr5rj(getTravelAcceleration_mm_s2()));
     break;
 
-  case 34: // Dual X carriage offset
+  case 34: // Dual X carriage offset//双X机架偏移
     #if ENABLED(DUAL_X_CARRIAGE)
       #define SEND_IDEX_INFO(A, B) SEND_VALasTXT(A, getNozzleOffset_mm(B, getActiveTool()))
     #else
@@ -417,7 +418,7 @@ void NextionTFT::PanelInfo(uint8_t req) {
     SEND_IDEX_INFO("z", Z);
     break;
 
-  case 35: // Probe offset
+  case 35: // Probe offset//探头偏移量
     #if HAS_PROBE_XY_OFFSET
       #define SEND_PROBE_INFO(A, B) SEND_VALasTXT(A, getProbeOffset_mm(B))
     #else
@@ -428,7 +429,7 @@ void NextionTFT::PanelInfo(uint8_t req) {
     SEND_VALasTXT("z", getZOffset_mm());
     break;
 
-  case 36: // Endstop Info
+  case 36: // Endstop Info//终点信息
     #if HAS_X_MIN
       SEND_VALasTXT("x1", READ(X_MIN_PIN) != X_MIN_ENDSTOP_INVERTING ? "triggered" : "open");
     #endif
@@ -451,13 +452,13 @@ void NextionTFT::PanelInfo(uint8_t req) {
       SEND_VALasTXT("z2", READ(Z2_MAX_PIN) != Z2_MAX_ENDSTOP_INVERTING ? "triggered" : "open");
     #endif
     #if HAS_BED_PROBE
-      //SEND_VALasTXT("bltouch", READ(Z_MIN_PROBE_PIN) != Z_MIN_PROBE_ENDSTOP_INVERTING ? "triggered" : "open");
+      //SEND_VALasTXT("bltouch", READ(Z_MIN_PROBE_PIN) != Z_MIN_PROBE_ENDSTOP_INVERTING ? "triggered" : "open");//发送虚拟文本（“bltouch”，读取（Z_MIN_PROBE_PIN）！=Z_MIN_PROBE_ENDSTOP_Inversing？”触发：“打开”）；
     #else
       SEND_NA("bltouch");
     #endif
     break;
 
-  case 37: // PID
+  case 37: // PID//PID
     #if ENABLED(PIDTEMP)
       #define SEND_PID_INFO_0(A, B) SEND_VALasTXT(A, getPIDValues_K##B(E0))
     #else
@@ -491,42 +492,42 @@ void NextionTFT::PanelInfo(uint8_t req) {
 void NextionTFT::PanelAction(uint8_t req) {
   switch (req) {
 
-    case 50: // Pause SD print
-      //if (isPrintingFromMedia()) {
-        //SEND_TXT("tmppage.M117", "Paused");
+    case 50: // Pause SD print//暂停SD打印
+      //if (isPrintingFromMedia()) {//如果（isPrintingFromMedia（））{
+        //SEND_TXT("tmppage.M117", "Paused");//发送文本（“tmppage.M117”，“暂停”）；
         pausePrint();
         SEND_TXT_END("qpause.picc=29");
-      //}
+      //}//}
       break;
 
-    case 51: // Resume SD Print
+    case 51: // Resume SD Print//恢复SD打印
       resumePrint();
       SEND_TXT_END("qpause.picc=28");
       break;
 
-    case 52: // Stop SD print
-      //if (isPrintingFromMedia()) {
+    case 52: // Stop SD print//停止SD打印
+      //if (isPrintingFromMedia()) {//如果（isPrintingFromMedia（））{
         stopPrint();
         SEND_TXT_END("page prepare");
-      //}
+      //}//}
       break;
 
-    case 54: // A13 Select file
+    case 54: // A13 Select file//A13选择文件
       SelectFile();
       break;
 
-    case 65: // Cool Down
+    case 65: // Cool Down//冷静下来
       if (!isPrinting()) coolDown();
       break;
 
-    case 66: // Refresh SD
+    case 66: // Refresh SD//刷新SD
       if (!isPrinting()) {
         injectCommands_P(PSTR("M21"));
         filenavigator.reset();
       }
       break;
 
-    case 56: // Set Fan, Flow, Print Speed
+    case 56: // Set Fan, Flow, Print Speed//设置风扇、流量、打印速度
       switch (nextion_command[4]) {
         case 'S': setTargetFan_percent(atof(&nextion_command[5]), FAN0); break;
         case 'P': setFeedrate_percent(atoi(&nextion_command[5])); break;
@@ -534,14 +535,14 @@ void NextionTFT::PanelAction(uint8_t req) {
       }
       break;
 
-    case 57: // Disable Motors
+    case 57: // Disable Motors//禁用电机
       if (!isPrinting()) {
-        disable_all_steppers(); // from marlincore.h
+        disable_all_steppers(); // from marlincore.h//来自marlincore.h
         SEND_TXT("tmppage.M117", "Motors disabled");
       }
       break;
 
-    case 58: // Load/Unload Filament
+    case 58: // Load/Unload Filament//加载/卸载灯丝
       #if ENABLED(FILAMENT_LOAD_UNLOAD_GCODES)
         if (canMove(getActiveTool())) {
           switch (nextion_command[4]) {
@@ -558,10 +559,10 @@ void NextionTFT::PanelAction(uint8_t req) {
       #endif
       break;
 
-    case 63: // Preheat // Temps defined in configuration.h
+    case 63: // Preheat // Temps defined in configuration.h//预热//在configuration.h中定义的温度
       #if PREHEAT_COUNT
         if (!isPrinting()) switch (nextion_command[4]) {
-          // Preheat PLA
+          // Preheat PLA//预热聚乳酸
           case 'P':
             #if HAS_HEATED_BED
               setTargetTemp_celsius(getMaterial_preset_B(0), BED);
@@ -569,7 +570,7 @@ void NextionTFT::PanelAction(uint8_t req) {
             setTargetTemp_celsius(getMaterial_preset_E(0), getActiveTool());
             break;
 
-          // Preheat ABS
+          // Preheat ABS//预热腹肌
           case 'A':
             #if HAS_HEATED_BED
               setTargetTemp_celsius(getMaterial_preset_B(1), BED);
@@ -577,7 +578,7 @@ void NextionTFT::PanelAction(uint8_t req) {
             setTargetTemp_celsius(getMaterial_preset_E(1), getActiveTool());
             break;
 
-          // Preheat PETG
+          // Preheat PETG//预热PETG
           case 'G':
             #if HAS_HEATED_BED
               setTargetTemp_celsius(getMaterial_preset_B(2), BED);
@@ -598,7 +599,7 @@ void NextionTFT::UpdateOnChange() {
   static celsius_float_t last_degBed = 999, last_degHotend0 = 999, last_degHotend1 = 999,
                          last_degTargetBed = 999, last_degTargetHotend0 = 999, last_degTargetHotend1 = 999;
 
-  // tmppage Temperature
+  // tmppage Temperature//温度
   if (!WITHIN(last_degHotend0 - getActualTemp_celsius(E0), -0.2, 0.2) || !WITHIN(last_degTargetHotend0 - getTargetTemp_celsius(E0), -0.5, 0.5)) {
     SEND_TEMP("tmppage.t0", ui8tostr3rj(getActualTemp_celsius(E0)), " / ", ui8tostr3rj(getTargetTemp_celsius(E0)));
     last_degHotend0 = getActualTemp_celsius(E0);
@@ -617,38 +618,38 @@ void NextionTFT::UpdateOnChange() {
     last_degTargetBed = getTargetTemp_celsius(BED);
   }
 
-  // tmppage Tool
+  // tmppage Tool//tmppage工具
   static uint8_t last_active_extruder = 99;
   if (last_active_extruder != getActiveTool()) {
     SEND_VALasTXT("tmppage.tool", getActiveTool());
     last_active_extruder = getActiveTool();
   }
 
-  // tmppage Fan Speed
+  // tmppage Fan Speed//t安装风扇转速
   static uint8_t last_fan_speed = 99;
   if (last_fan_speed != getActualFan_percent(FAN0)) {
     SEND_VALasTXT("tmppage.fan", ui8tostr3rj(getActualFan_percent(FAN0)));
     last_fan_speed = getActualFan_percent(FAN0);
   }
 
-  // tmppage Print Speed
+  // tmppage Print Speed//tmppage打印速度
   static uint8_t last_print_speed = 99;
   if (last_print_speed != getFeedrate_percent()) {
     SEND_VALasTXT("tmppage.speed", ui8tostr3rj(getFeedrate_percent()));
     last_print_speed = getFeedrate_percent();
   }
 
-  // tmppage Flow
+  // tmppage Flow//生产流程
   static uint8_t last_flow_speed = 99;
   if (last_flow_speed != getFlow_percent(getActiveTool())) {
     SEND_VALasTXT("tmppage.flow", getFlow_percent(getActiveTool()));
     last_flow_speed = getFlow_percent(getActiveTool());
   }
 
-  // tmppage Axis
+  // tmppage Axis//tmppage轴
   static float last_get_axis_position_mmX = 999, last_get_axis_position_mmY = 999, last_get_axis_position_mmZ = 999;
 
-  // tmppage Progress + Layer + Time
+  // tmppage Progress + Layer + Time//tmppage进度+层+时间
   if (isPrinting()) {
 
     if (ELAPSED(ms, next_event_ms)) {
@@ -703,7 +704,7 @@ void NextionTFT::UpdateOnChange() {
     last_get_axis_position_mmZ = getAxisPosition_mm(Z);
   }
 
-  // tmppage homed
+  // tmppage homed//tmppage主页
   static bool last_homed = false, last_homedX = false, last_homedY = false, last_homedZ = false;
 
   if (last_homed != isPositionKnown()) {
@@ -724,7 +725,7 @@ void NextionTFT::UpdateOnChange() {
   }
 
   #if ENABLED(DUAL_X_CARRIAGE)
-    // tmppage IDEX Mode
+    // tmppage IDEX Mode//tmppage IDEX模式
     static uint8_t last_IDEX_Mode = 99;
     if (last_IDEX_Mode != getIDEX_Mode()) {
       SEND_VAL("tmppage.idexmode", getIDEX_Mode());
@@ -733,4 +734,4 @@ void NextionTFT::UpdateOnChange() {
   #endif
 }
 
-#endif // NEXTION_TFT
+#endif // NEXTION_TFT//NEXTION_TFT

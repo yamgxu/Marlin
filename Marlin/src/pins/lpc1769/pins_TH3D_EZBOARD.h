@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -30,28 +31,28 @@
 #define BOARD_INFO_NAME   "TH3D EZBoard"
 #define BOARD_WEBSITE_URL "th3dstudio.com"
 
-//
-// Servos
-//
+////
+// Servos//伺服
+////
 #define SERVO0_PIN                         P2_04
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_STOP_PIN                         P1_24
 #define Y_STOP_PIN                         P1_25
 #define Z_STOP_PIN                         P1_26
 
-//
-// Filament Runout Sensor
-//
+////
+// Filament Runout Sensor//灯丝偏移传感器
+////
 #ifndef FIL_RUNOUT_PIN
   #define FIL_RUNOUT_PIN                   P1_27
 #endif
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                         P2_00
 #define X_DIR_PIN                          P1_16
 #define X_ENABLE_PIN                       P1_17
@@ -73,10 +74,10 @@
 #define E1_ENABLE_PIN                      P4_29
 
 #if HAS_TMC_UART
-  //
-  // TMC220x stepper drivers
-  // Software serial
-  //
+  ////
+  // TMC220x stepper drivers//TMC220x步进驱动器
+  // Software serial//软件系列
+  ////
   #define X_SERIAL_TX_PIN                  P0_04
   #define X_SERIAL_RX_PIN                  P0_05
   #define Y_SERIAL_TX_PIN                  P0_10
@@ -86,32 +87,32 @@
   #define E0_SERIAL_TX_PIN                 P0_22
   #define E0_SERIAL_RX_PIN                 P0_21
 
-  // Reduce baud rate to improve software serial reliability
+  // Reduce baud rate to improve software serial reliability//降低波特率以提高软件串行可靠性
   #define TMC_BAUD_RATE                    19200
 #endif
 
-//
-// Temp Sensors
-//  3.3V max when defined as an Analog Input!
-//
-#if TEMP_SENSOR_0 == 20                           // PT100 Adapter
-  #define TEMP_0_PIN                    P0_02_A7  // Analog Input
+////
+// Temp Sensors//温度传感器
+//  3.3V max when defined as an Analog Input!//当定义为模拟输入时，最大电压为3.3V！
+////
+#if TEMP_SENSOR_0 == 20                           // PT100 Adapter//PT100适配器
+  #define TEMP_0_PIN                    P0_02_A7  // Analog Input//模拟输入
 #else
-  #define TEMP_0_PIN                    P0_23_A0  // Analog Input P0_23
+  #define TEMP_0_PIN                    P0_23_A0  // Analog Input P0_23//模拟输入P0_23
 #endif
 
-#define TEMP_BED_PIN                    P0_24_A1  // Analog Input P0_24
-#define TEMP_1_PIN                      P0_25_A2  // Analog Input P0_25
+#define TEMP_BED_PIN                    P0_24_A1  // Analog Input P0_24//模拟输入P0_24
+#define TEMP_1_PIN                      P0_25_A2  // Analog Input P0_25//模拟输入P0_25
 
 #if ENABLED(FILAMENT_WIDTH_SENSOR)
-  #define FILWIDTH_PIN                  P0_26_A3  // Analog Input P0_26
+  #define FILWIDTH_PIN                  P0_26_A3  // Analog Input P0_26//模拟输入P0_26
 #else
-  #define TEMP_2_PIN                    P0_26_A3  // Analog Input P0_26
+  #define TEMP_2_PIN                    P0_26_A3  // Analog Input P0_26//模拟输入P0_26
 #endif
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_BED_PIN                     P2_05
 #define HEATER_0_PIN                       P2_07
 #ifndef FAN_PIN
@@ -119,10 +120,10 @@
 #endif
 #define FAN1_PIN                           P1_22
 
-//
-// Auto fans
-//
-#define AUTO_FAN_PIN                       P1_22  // FET 3
+////
+// Auto fans//汽车风扇
+////
+#define AUTO_FAN_PIN                       P1_22  // FET 3//场效应晶体管3
 #ifndef E0_AUTO_FAN_PIN
   #define E0_AUTO_FAN_PIN           AUTO_FAN_PIN
 #endif
@@ -133,9 +134,9 @@
   #define E2_AUTO_FAN_PIN           AUTO_FAN_PIN
 #endif
 
-//
-// SD Card
-//
+////
+// SD Card//SD卡
+////
 
 #define SDCARD_CONNECTION                ONBOARD
 
@@ -145,9 +146,9 @@
 #define ONBOARD_SD_CS_PIN                  P0_06
 #define SD_SS_PIN              ONBOARD_SD_CS_PIN
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 
 /**
  *                  _____

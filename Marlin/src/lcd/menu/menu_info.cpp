@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -20,9 +21,9 @@
  *
  */
 
-//
-// Info Menu
-//
+////
+// Info Menu//信息菜单
+////
 
 #include "../../inc/MarlinConfigPre.h"
 
@@ -41,9 +42,9 @@
 
   #include "../../module/printcounter.h"
 
-  //
-  // About Printer > Printer Stats
-  //
+  ////
+  // About Printer > Printer Stats//关于打印机>打印机统计信息
+  ////
   void menu_info_stats() {
     if (ui.use_click()) return ui.go_back();
 
@@ -51,30 +52,30 @@
 
     char buffer[21];
 
-    START_SCREEN();                                                                         // 12345678901234567890
-    VALUE_ITEM(MSG_INFO_PRINT_COUNT, i16tostr3left(stats.totalPrints), SS_LEFT);            // Print Count: 999
-    VALUE_ITEM(MSG_INFO_COMPLETED_PRINTS, i16tostr3left(stats.finishedPrints), SS_LEFT);    // Completed  : 666
+    START_SCREEN();                                                                         // 12345678901234567890// 12345678901234567890
+    VALUE_ITEM(MSG_INFO_PRINT_COUNT, i16tostr3left(stats.totalPrints), SS_LEFT);            // Print Count: 999//印数：999
+    VALUE_ITEM(MSG_INFO_COMPLETED_PRINTS, i16tostr3left(stats.finishedPrints), SS_LEFT);    // Completed  : 666//完成日期：666
 
-    STATIC_ITEM(MSG_INFO_PRINT_TIME, SS_LEFT);                                              // Total print Time:
-    STATIC_ITEM_P(PSTR("> "), SS_LEFT, duration_t(stats.printTime).toString(buffer));       // > 99y 364d 23h 59m 59s
+    STATIC_ITEM(MSG_INFO_PRINT_TIME, SS_LEFT);                                              // Total print Time://总打印时间：
+    STATIC_ITEM_P(PSTR("> "), SS_LEFT, duration_t(stats.printTime).toString(buffer));       // > 99y 364d 23h 59m 59s//>99y 364d 23h 59m 59s
 
-    STATIC_ITEM(MSG_INFO_PRINT_LONGEST, SS_LEFT);                                           // Longest job time:
-    STATIC_ITEM_P(PSTR("> "), SS_LEFT, duration_t(stats.longestPrint).toString(buffer));    // > 99y 364d 23h 59m 59s
+    STATIC_ITEM(MSG_INFO_PRINT_LONGEST, SS_LEFT);                                           // Longest job time://最长工作时间：
+    STATIC_ITEM_P(PSTR("> "), SS_LEFT, duration_t(stats.longestPrint).toString(buffer));    // > 99y 364d 23h 59m 59s//>99y 364d 23h 59m 59s
 
-    STATIC_ITEM(MSG_INFO_PRINT_FILAMENT, SS_LEFT);                                          // Extruded total:
+    STATIC_ITEM(MSG_INFO_PRINT_FILAMENT, SS_LEFT);                                          // Extruded total://挤出总量：
     sprintf_P(buffer, PSTR("%ld.%im")
       , long(stats.filamentUsed / 1000)
       , int16_t(stats.filamentUsed / 100) % 10
     );
-    STATIC_ITEM_P(PSTR("> "), SS_LEFT, buffer);                                             // > 125m
+    STATIC_ITEM_P(PSTR("> "), SS_LEFT, buffer);                                             // > 125m//>125m
 
     #if SERVICE_INTERVAL_1 > 0 || SERVICE_INTERVAL_2 > 0 || SERVICE_INTERVAL_3 > 0
       strcpy_P(buffer, GET_TEXT(MSG_SERVICE_IN));
     #endif
 
     #if SERVICE_INTERVAL_1 > 0
-      STATIC_ITEM_P(PSTR(SERVICE_NAME_1 " "), SS_LEFT, buffer);                             // Service X in:
-      STATIC_ITEM_P(PSTR("> "), SS_LEFT, duration_t(stats.nextService1).toString(buffer));  // > 7d 12h 11m 10s
+      STATIC_ITEM_P(PSTR(SERVICE_NAME_1 " "), SS_LEFT, buffer);                             // Service X in://服务X在：
+      STATIC_ITEM_P(PSTR("> "), SS_LEFT, duration_t(stats.nextService1).toString(buffer));  // > 7d 12h 11m 10s//>7d 12h 11m 10s
     #endif
 
     #if SERVICE_INTERVAL_2 > 0
@@ -92,9 +93,9 @@
 
 #endif
 
-//
-// About Printer > Thermistors
-//
+////
+// About Printer > Thermistors//关于打印机>热敏电阻
+////
 void menu_info_thermistors() {
   if (ui.use_click()) return ui.go_back();
 
@@ -208,26 +209,26 @@ void menu_info_thermistors() {
   END_SCREEN();
 }
 
-//
-// About Printer > Board Info
-//
+////
+// About Printer > Board Info//关于打印机>电路板信息
+////
 void menu_info_board() {
   if (ui.use_click()) return ui.go_back();
 
   START_SCREEN();
-  STATIC_ITEM_P(PSTR(BOARD_INFO_NAME), SS_DEFAULT|SS_INVERT);      // MyPrinterController
+  STATIC_ITEM_P(PSTR(BOARD_INFO_NAME), SS_DEFAULT|SS_INVERT);      // MyPrinterController//我的打印机控制器
   #ifdef BOARD_WEBSITE_URL
-    STATIC_ITEM_P(PSTR(BOARD_WEBSITE_URL), SS_LEFT);               // www.my3dprinter.com
+    STATIC_ITEM_P(PSTR(BOARD_WEBSITE_URL), SS_LEFT);               // www.my3dprinter.com//www.my3dprinter.com
   #endif
-  PSTRING_ITEM(MSG_INFO_BAUDRATE, STRINGIFY(BAUDRATE), SS_CENTER); // Baud: 250000
-  PSTRING_ITEM(MSG_INFO_PROTOCOL, PROTOCOL_VERSION, SS_CENTER);    // Protocol: 1.0
+  PSTRING_ITEM(MSG_INFO_BAUDRATE, STRINGIFY(BAUDRATE), SS_CENTER); // Baud: 250000//波特率：250000
+  PSTRING_ITEM(MSG_INFO_PROTOCOL, PROTOCOL_VERSION, SS_CENTER);    // Protocol: 1.0//协议：1.0
   PSTRING_ITEM(MSG_INFO_PSU, PSU_NAME, SS_CENTER);
   END_SCREEN();
 }
 
-//
-// About Printer > Printer Info
-//
+////
+// About Printer > Printer Info//关于打印机>打印机信息
+////
 #if ENABLED(LCD_PRINTER_INFO_IS_BOOTSCREEN)
 
   void menu_show_marlin_bootscreen() {
@@ -247,19 +248,19 @@ void menu_info_board() {
   void menu_info_printer() {
     if (ui.use_click()) return ui.go_back();
     START_SCREEN();
-    STATIC_ITEM(MSG_MARLIN, SS_DEFAULT|SS_INVERT);              // Marlin
-    STATIC_ITEM_P(PSTR(SHORT_BUILD_VERSION));                   // x.x.x-Branch
-    STATIC_ITEM_P(PSTR(STRING_DISTRIBUTION_DATE));              // YYYY-MM-DD HH:MM
-    STATIC_ITEM_P(PSTR(MACHINE_NAME));                          // My3DPrinter
-    STATIC_ITEM_P(PSTR(WEBSITE_URL));                           // www.my3dprinter.com
-    PSTRING_ITEM(MSG_INFO_EXTRUDERS, STRINGIFY(EXTRUDERS), SS_CENTER); // Extruders: 2
+    STATIC_ITEM(MSG_MARLIN, SS_DEFAULT|SS_INVERT);              // Marlin//马林鱼
+    STATIC_ITEM_P(PSTR(SHORT_BUILD_VERSION));                   // x.x.x-Branch//x.x.x分支
+    STATIC_ITEM_P(PSTR(STRING_DISTRIBUTION_DATE));              // YYYY-MM-DD HH:MM//YYYY-MM-DD HH:MM
+    STATIC_ITEM_P(PSTR(MACHINE_NAME));                          // My3DPrinter//My3D打印机
+    STATIC_ITEM_P(PSTR(WEBSITE_URL));                           // www.my3dprinter.com//www.my3dprinter.com
+    PSTRING_ITEM(MSG_INFO_EXTRUDERS, STRINGIFY(EXTRUDERS), SS_CENTER); // Extruders: 2//挤出机：2台
     #if HAS_LEVELING
       STATIC_ITEM(
-        TERN_(AUTO_BED_LEVELING_3POINT, MSG_3POINT_LEVELING)      // 3-Point Leveling
-        TERN_(AUTO_BED_LEVELING_LINEAR, MSG_LINEAR_LEVELING)      // Linear Leveling
-        TERN_(AUTO_BED_LEVELING_BILINEAR, MSG_BILINEAR_LEVELING)  // Bi-linear Leveling
-        TERN_(AUTO_BED_LEVELING_UBL, MSG_UBL_LEVELING)            // Unified Bed Leveling
-        TERN_(MESH_BED_LEVELING, MSG_MESH_LEVELING)               // Mesh Leveling
+        TERN_(AUTO_BED_LEVELING_3POINT, MSG_3POINT_LEVELING)      // 3-Point Leveling//三点水准测量
+        TERN_(AUTO_BED_LEVELING_LINEAR, MSG_LINEAR_LEVELING)      // Linear Leveling//直线水准测量
+        TERN_(AUTO_BED_LEVELING_BILINEAR, MSG_BILINEAR_LEVELING)  // Bi-linear Leveling//双线水准测量
+        TERN_(AUTO_BED_LEVELING_UBL, MSG_UBL_LEVELING)            // Unified Bed Leveling//统一河床整平
+        TERN_(MESH_BED_LEVELING, MSG_MESH_LEVELING)               // Mesh Leveling//网平
       );
     #endif
     END_SCREEN();
@@ -267,24 +268,24 @@ void menu_info_board() {
 
 #endif
 
-//
-// "About Printer" submenu
-//
+////
+// "About Printer" submenu//“关于打印机”子菜单
+////
 void menu_info() {
   START_MENU();
   BACK_ITEM(MSG_MAIN);
   #if ENABLED(LCD_PRINTER_INFO_IS_BOOTSCREEN)
     SUBMENU(MSG_INFO_PRINTER_MENU, TERN(SHOW_CUSTOM_BOOTSCREEN, menu_show_custom_bootscreen, menu_show_marlin_bootscreen));
   #else
-    SUBMENU(MSG_INFO_PRINTER_MENU, menu_info_printer);           // Printer Info >
-    SUBMENU(MSG_INFO_BOARD_MENU, menu_info_board);               // Board Info >
+    SUBMENU(MSG_INFO_PRINTER_MENU, menu_info_printer);           // Printer Info >//打印机信息>
+    SUBMENU(MSG_INFO_BOARD_MENU, menu_info_board);               // Board Info >//董事会信息>
     #if HAS_EXTRUDERS
-      SUBMENU(MSG_INFO_THERMISTOR_MENU, menu_info_thermistors);  // Thermistors >
+      SUBMENU(MSG_INFO_THERMISTOR_MENU, menu_info_thermistors);  // Thermistors >//热敏电阻>
     #endif
   #endif
 
   #if ENABLED(PRINTCOUNTER)
-    SUBMENU(MSG_INFO_STATS_MENU, menu_info_stats);               // Printer Stats >
+    SUBMENU(MSG_INFO_STATS_MENU, menu_info_stats);               // Printer Stats >//打印机统计信息>
   #endif
 
   #if HAS_GAMES
@@ -293,7 +294,7 @@ void menu_info() {
       SKIP_ITEM(); SKIP_ITEM(); SKIP_ITEM();
     #endif
 
-    // Game sub-menu or the individual game
+    // Game sub-menu or the individual game//游戏子菜单或单个游戏
     SUBMENU(
       #if HAS_GAME_MENU
         MSG_GAMES, menu_game
@@ -313,4 +314,4 @@ void menu_info() {
   END_MENU();
 }
 
-#endif // HAS_LCD_MENU && LCD_INFO_MENU
+#endif // HAS_LCD_MENU && LCD_INFO_MENU//具有LCD菜单和LCD信息菜单

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /************
  * compat.h *
  ************/
@@ -35,7 +36,7 @@
 #endif
 
 #ifdef __MARLIN_FIRMWARE__
-  // __MARLIN_FIRMWARE__ exists when compiled within Marlin.
+  // __MARLIN_FIRMWARE__ exists when compiled within Marlin.//在MARLIN中编译时，固件存在。
   #include "pin_mappings.h"
   #undef max
   #define max(a,b) ((a)>(b)?(a):(b))

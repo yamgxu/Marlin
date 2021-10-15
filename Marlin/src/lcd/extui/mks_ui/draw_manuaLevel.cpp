@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -67,7 +68,7 @@ static void event_handler(lv_obj_t *obj, lv_event_t event) {
 
 void lv_draw_manualLevel() {
   scr = lv_screen_create(LEVELING_UI);
-  // Create an Image button
+  // Create an Image button//创建图像按钮
   lv_obj_t *buttonPoint1 = lv_big_button_create(scr, "F:/bmp_leveling1.bin", leveling_menu.position1, INTERVAL_V, titleHeight, event_handler, ID_M_POINT1);
   lv_obj_clear_protect(buttonPoint1, LV_PROTECT_FOLLOW);
   lv_big_button_create(scr, "F:/bmp_leveling2.bin", leveling_menu.position2, BTN_X_PIXEL + INTERVAL_V * 2, titleHeight, event_handler, ID_M_POINT2);
@@ -84,4 +85,4 @@ void lv_clear_manualLevel() {
   lv_obj_del(scr);
 }
 
-#endif // HAS_TFT_LVGL_UI
+#endif // HAS_TFT_LVGL_UI//有TFT\U LVGL\U用户界面

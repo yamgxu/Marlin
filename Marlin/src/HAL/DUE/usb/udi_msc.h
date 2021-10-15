@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * \file
  *
@@ -41,7 +42,7 @@
  *
  */
 /*
- * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>
+ * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>//www.atmel.com/design support/“>atmel支持</a>
  */
 
 #ifndef _UDI_MSC_H_
@@ -62,9 +63,9 @@ extern "C" {
  * \addtogroup udi_msc_group_udc
  * @{
  */
-//! Global structure which contains standard UDI interface for UDC
+//! Global structure which contains standard UDI interface for UDC//! 包含UDC标准UDI接口的全局结构
 extern UDC_DESC_STORAGE udi_api_t udi_api_msc;
-//@}
+//@}//@}
 
 /**
  * \ingroup udi_msc_group
@@ -73,26 +74,26 @@ extern UDC_DESC_STORAGE udi_api_t udi_api_msc;
  * The following structures provide predefined USB interface descriptors.
  * It must be used to define the final USB descriptors.
  */
-//@{
+//@{//@{
 
-//! Interface descriptor structure for MSC
+//! Interface descriptor structure for MSC//！MSC的接口描述符结构
 typedef struct {
 	usb_iface_desc_t iface;
 	usb_ep_desc_t ep_in;
 	usb_ep_desc_t ep_out;
 } udi_msc_desc_t;
 
-//! By default no string associated to this interface
+//! By default no string associated to this interface//！默认情况下，没有与此接口关联的字符串
 #ifndef UDI_MSC_STRING_ID
 #define UDI_MSC_STRING_ID     0
 #endif
 
-//! MSC endpoints size for full speed
+//! MSC endpoints size for full speed//！MSC终结点全速大小
 #define UDI_MSC_EPS_SIZE_FS   64
-//! MSC endpoints size for high speed
+//! MSC endpoints size for high speed//！MSC终结点大小适用于高速
 #define UDI_MSC_EPS_SIZE_HS   512
 
-//! Content of MSC interface descriptor for all speeds
+//! Content of MSC interface descriptor for all speeds//！所有速度的MSC接口描述符的内容
 #define UDI_MSC_DESC      \
    .iface.bLength             = sizeof(usb_iface_desc_t),\
    .iface.bDescriptorType     = USB_DT_INTERFACE,\
@@ -114,20 +115,20 @@ typedef struct {
    .ep_out.bmAttributes       = USB_EP_TYPE_BULK,\
    .ep_out.bInterval          = 0,
 
-//! Content of MSC interface descriptor for full speed only
+//! Content of MSC interface descriptor for full speed only//！MSC接口描述符的内容仅适用于全速
 #define UDI_MSC_DESC_FS   {\
    UDI_MSC_DESC \
    .ep_in.wMaxPacketSize      = LE16(UDI_MSC_EPS_SIZE_FS),\
    .ep_out.wMaxPacketSize     = LE16(UDI_MSC_EPS_SIZE_FS),\
    }
 
-//! Content of MSC interface descriptor for high speed only
+//! Content of MSC interface descriptor for high speed only//！MSC接口描述符的内容仅适用于高速
 #define UDI_MSC_DESC_HS   {\
    UDI_MSC_DESC \
    .ep_in.wMaxPacketSize      = LE16(UDI_MSC_EPS_SIZE_HS),\
    .ep_out.wMaxPacketSize     = LE16(UDI_MSC_EPS_SIZE_HS),\
    }
-//@}
+//@}//@}
 
 
 /**
@@ -164,7 +165,7 @@ bool udi_msc_process_trans(void);
  */
 bool udi_msc_trans_block(bool b_read, uint8_t * block, iram_size_t block_size,
 		void (*callback) (udd_ep_status_t status, iram_size_t n, udd_ep_id_t ep));
-//@}
+//@}//@}
 
 #ifdef __cplusplus
 }
@@ -373,4 +374,4 @@ bool udi_msc_trans_block(bool b_read, uint8_t * block, iram_size_t block_size,
  *     orders are defined through UDI_X_IFACE_NUMBER defines.
  */
 
-#endif // _UDI_MSC_H_
+#endif // _UDI_MSC_H_//_UDI_MSC_H_

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -53,16 +54,16 @@
 
 #define BOARD_INFO_NAME "Gen3+"
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_STOP_PIN                            20
 #define Y_STOP_PIN                            25
 #define Z_STOP_PIN                            30
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                            15
 #define X_DIR_PIN                             18
 #define X_ENABLE_PIN                          19
@@ -79,20 +80,20 @@
 #define E0_DIR_PIN                            21
 #define E0_ENABLE_PIN                         13
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                             0  // Analog Input (pin 33 extruder)
-#define TEMP_BED_PIN                           5  // Analog Input (pin 34 bed)
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                             0  // Analog Input (pin 33 extruder)//模拟输入（引脚33挤出机）
+#define TEMP_BED_PIN                           5  // Analog Input (pin 34 bed)//模拟输入（引脚34）
 
-//
-// Heaters
-//
+////
+// Heaters//加热器
+////
 #define HEATER_0_PIN                          12
 #define HEATER_BED_PIN                        16
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define SDSS                                   4
 #define PS_ON_PIN                             14

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,12 +32,12 @@
 
 #define BOARD_INFO_NAME "Sainsmart"
 
-//
-// Heaters / Fans
-//
-#define RAMPS_D10_PIN 9   // E
-#define RAMPS_D9_PIN  7   // F PART FAN in front of board next to Extruder heat
-     // RAMPS_D8_PIN  8   // B
-#define MOSFET_D_PIN 10   // F / E
+////
+// Heaters / Fans//加热器/风扇
+////
+#define RAMPS_D10_PIN 9   // E//E
+#define RAMPS_D9_PIN  7   // F PART FAN in front of board next to Extruder heat//F部分风扇位于靠近挤出机加热器的板前面
+     // RAMPS_D8_PIN  8   // B//匝道8引脚8//B
+#define MOSFET_D_PIN 10   // F / E//F/E
 
 #include "pins_RAMPS.h"

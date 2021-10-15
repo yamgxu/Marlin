@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -33,9 +34,9 @@
   #define BOARD_INFO_NAME "Mini RAMBo"
 #endif
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_MIN_PIN                             12
 #define X_MAX_PIN                             30
 #define Y_MIN_PIN                             11
@@ -43,16 +44,16 @@
 #define Z_MIN_PIN                             10
 #define Z_MAX_PIN                             23
 
-//
-// Z Probe (when not Z_MIN_PIN)
-//
+////
+// Z Probe (when not Z_MIN_PIN)//Z探头（非Z_MIN_引脚时）
+////
 #ifndef Z_MIN_PROBE_PIN
   #define Z_MIN_PROBE_PIN                     23
 #endif
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                            37
 #define X_DIR_PIN                             48
 #define X_ENABLE_PIN                          29
@@ -69,7 +70,7 @@
 #define E0_DIR_PIN                            43
 #define E0_ENABLE_PIN                         26
 
-// Microstepping pins - Mapping not from fastio.h (?)
+// Microstepping pins - Mapping not from fastio.h (?)//微步进引脚-映射不是从fastio.h（？）
 #define X_MS1_PIN                             40
 #define X_MS2_PIN                             41
 #define Y_MS1_PIN                             69
@@ -82,22 +83,22 @@
 #define MOTOR_CURRENT_PWM_XY_PIN              46
 #define MOTOR_CURRENT_PWM_Z_PIN               45
 #define MOTOR_CURRENT_PWM_E_PIN               44
-// Motor current PWM conversion, PWM value = MotorCurrentSetting * 255 / range
+// Motor current PWM conversion, PWM value = MotorCurrentSetting * 255 / range//电机电流PWM转换，PWM值=电机电流设置*255/范围
 #ifndef MOTOR_CURRENT_PWM_RANGE
   #define MOTOR_CURRENT_PWM_RANGE            2000
 #endif
 #define DEFAULT_PWM_MOTOR_CURRENT  {1300, 1300, 1250}
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                             0  // Analog Input
-#define TEMP_1_PIN                             1  // Analog Input
-#define TEMP_BED_PIN                           2  // Analog Input
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                             0  // Analog Input//模拟输入
+#define TEMP_1_PIN                             1  // Analog Input//模拟输入
+#define TEMP_BED_PIN                           2  // Analog Input//模拟输入
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_0_PIN                           3
 #define HEATER_1_PIN                           7
 #if !MB(MINIRAMBO_10A)
@@ -110,35 +111,35 @@
 #endif
 #define FAN1_PIN                               6
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define SDSS                                  53
 #define LED_PIN                               13
 #if !MB(MINIRAMBO_10A)
   #define CASE_LIGHT_PIN                       9
 #endif
 
-//
-// M3/M4/M5 - Spindle/Laser Control
-//
-// use P1 connector for spindle pins
-#define SPINDLE_LASER_PWM_PIN                  9  // Hardware PWM
-#define SPINDLE_LASER_ENA_PIN                 18  // Pullup!
+////
+// M3/M4/M5 - Spindle/Laser Control//M3/M4/M5-主轴/激光控制
+////
+// use P1 connector for spindle pins//将P1接头用于主轴销
+#define SPINDLE_LASER_PWM_PIN                  9  // Hardware PWM//硬件脉宽调制
+#define SPINDLE_LASER_ENA_PIN                 18  // Pullup!//拉起！
 #define SPINDLE_DIR_PIN                       19
 
-//
-// Průša i3 MK2 Multiplexer Support
-//
+////
+// Průša i3 MK2 Multiplexer Support//Průša i3 MK2多路复用器支持
+////
 #define E_MUX0_PIN                            17
 #define E_MUX1_PIN                            16
 #if !MB(MINIRAMBO_10A)
-  #define E_MUX2_PIN                          78  // 84 in MK2 Firmware, with BEEPER as 78
+  #define E_MUX2_PIN                          78  // 84 in MK2 Firmware, with BEEPER as 78//84英寸MK2固件，带蜂鸣器78
 #endif
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 #if HAS_WIRED_LCD || TOUCH_UI_ULTIPANEL
 
   #if !MB(MINIRAMBO_10A)
@@ -164,12 +165,12 @@
 
       #define SD_DETECT_PIN                   72
 
-    #else                                         // !MINIRAMBO_10A
+    #else                                         // !MINIRAMBO_10A// !迷你兰博10A
 
-      // AUX-4
+      // AUX-4//AUX-4
       #define BEEPER_PIN                      84
 
-      // AUX-2
+      // AUX-2//AUX-2
       #define BTN_EN1                         14
       #define BTN_EN2                         72
       #define BTN_ENC                          9
@@ -183,12 +184,12 @@
 
       #define SD_DETECT_PIN                   15
 
-    #endif // !MINIRAMBO_10A
+    #endif // !MINIRAMBO_10A// !迷你兰博10A
 
     #if ENABLED(REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER)
-      #define BTN_ENC_EN             LCD_PINS_D7  // Detect the presence of the encoder
+      #define BTN_ENC_EN             LCD_PINS_D7  // Detect the presence of the encoder//检测编码器的存在
     #endif
 
-  #endif // IS_ULTIPANEL || TOUCH_UI_ULTIPANEL
+  #endif // IS_ULTIPANEL || TOUCH_UI_ULTIPANEL//是ULTIPANEL | |触摸UI | ULTIPANEL吗
 
-#endif // HAS_WIRED_LCD || TOUCH_UI_ULTIPANEL
+#endif // HAS_WIRED_LCD || TOUCH_UI_ULTIPANEL//有有线液晶显示器触摸屏

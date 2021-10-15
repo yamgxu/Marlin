@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*************************
  * command_processor.cpp *
  *************************/
@@ -38,4 +39,4 @@ bool CommandProcessor::wait() {
   return !has_fault();
 }
 
-#endif // FTDI_EXTENDED
+#endif // FTDI_EXTENDED//FTDI_扩展

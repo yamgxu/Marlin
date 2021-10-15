@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -34,33 +35,33 @@
   #define DEFAULT_MACHINE_NAME BOARD_INFO_NAME
 #endif
 
-// Avoid conflict with TIMER_TONE defined in variant
+// Avoid conflict with TIMER_TONE defined in variant//避免与变量中定义的计时器音调冲突
 #define STEP_TIMER 10
 
-//
-// EEPROM Emulation
-//
+////
+// EEPROM Emulation//EEPROM仿真
+////
 #if NO_EEPROM_SELECTED
   #define FLASH_EEPROM_EMULATION
-  //#define I2C_EEPROM
+  //#define I2C_EEPROM//#定义I2C_EEPROM
 #endif
 
 #if ENABLED(FLASH_EEPROM_EMULATION)
-  // Decrease delays and flash wear by spreading writes across the
-  // 128 kB sector allocated for EEPROM emulation.
+  // Decrease delays and flash wear by spreading writes across the//通过将写操作分散到整个系统来减少延迟和闪存磨损
+  // 128 kB sector allocated for EEPROM emulation.//分配给EEPROM仿真的128 kB扇区。
   #define FLASH_EEPROM_LEVELING
 #elif ENABLED(I2C_EEPROM)
-  #define MARLIN_EEPROM_SIZE              0x0800  // 2KB
+  #define MARLIN_EEPROM_SIZE              0x0800  // 2KB//2KB
 #endif
 
-//
-// Servos
-//
+////
+// Servos//伺服
+////
 #define SERVO0_PIN                          PA3
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_MIN_PIN                           PB14
 #define X_MAX_PIN                           PA1
 #define Y_MIN_PIN                           PB13
@@ -68,17 +69,17 @@
 #define Z_MIN_PIN                           PA0
 #define Z_MAX_PIN                           PA3
 
-//
-// Filament Sensor
-// share with X_MAX_PIN
-//
+////
+// Filament Sensor//灯丝传感器
+// share with X_MAX_PIN//与X_MAX_PIN共享
+////
 #ifndef FIL_RUNOUT_PIN
   #define FIL_RUNOUT_PIN                    PA1
 #endif
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                          PE11
 #define X_DIR_PIN                           PE10
 #ifndef X_ENABLE_PIN
@@ -112,13 +113,13 @@
 #define E2_CS_PIN                           PC15
 
 #if HAS_TMC_UART
-  //
-  // TMC2208/TMC2209 stepper drivers
-  //
+  ////
+  // TMC2208/TMC2209 stepper drivers//TMC2208/TMC2209步进驱动器
+  ////
 
-  //
-  // Software serial
-  //
+  ////
+  // Software serial//软件系列
+  ////
   #ifndef X_SERIAL_TX_PIN
     #define X_SERIAL_TX_PIN                 PE9
   #endif
@@ -157,17 +158,17 @@
   #endif
 #endif
 
-//
-// Temperature Sensors
-//
+////
+// Temperature Sensors//温度传感器
+////
 #define TEMP_0_PIN                          PC0
 #define TEMP_1_PIN                          PC1
 #define TEMP_2_PIN                          PC2
 #define TEMP_BED_PIN                        PC3
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #ifndef HEATER_0_PIN
   #define HEATER_0_PIN                      PB3
 #endif
@@ -185,27 +186,27 @@
 #define FAN1_PIN                            PB1
 #define FAN2_PIN                            PB2
 
-//
-// SPI
-//
+////
+// SPI//SPI
+////
 #define SD_SCK_PIN                          PA5
 #define SD_MISO_PIN                         PA6
 #define SD_MOSI_PIN                         PA7
 
-//
-// Misc. Functions
-//
-//#define LED_PIN                           PB14
-//#define BTN_PIN                           PC10
-//#define PS_ON_PIN                         PE11
-//#define KILL_PIN                          PC5
+////
+// Misc. Functions//杂项。功能
+////
+//#define LED_PIN                           PB14//#定义LED_引脚PB14
+//#define BTN_PIN                           PC10//#定义BTN_引脚PC10
+//#define PS_ON_PIN                         PE11//#在引脚PE11上定义PS_
+//#define KILL_PIN                          PC5//#定义压井针PC5
 
 #define SDSS                                PA4
 #define SD_DETECT_PIN                       PB10
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 #if ENABLED(FYSETC_242_OLED_12864)
 
   #define BTN_EN1                           PC9
@@ -215,14 +216,14 @@
   #define BEEPER_PIN                        PC6
 
   #define LCD_PINS_DC                       PC12
-  #define LCD_PINS_RS                       PC7   // LCD_RST
+  #define LCD_PINS_RS                       PC7   // LCD_RST//液晶显示器
   #define DOGLCD_CS                         PD2
   #define DOGLCD_MOSI                       PC10
   #define DOGLCD_SCK                        PC11
   #define DOGLCD_A0                  LCD_PINS_DC
   #define FORCE_SOFT_SPI
 
-  #define KILL_PIN                          -1    // NC
+  #define KILL_PIN                          -1    // NC//数控
   #define NEOPIXEL_PIN                      PD0
 
 #elif HAS_WIRED_LCD
@@ -252,13 +253,13 @@
     #define LCD_PINS_D4                     PC10
 
     #if ENABLED(FYSETC_MINI_12864)
-      // See https://wiki.fysetc.com/Mini12864_Panel
+      // See https://wiki.fysetc.com/Mini12864_Panel//看https://wiki.fysetc.com/Mini12864_Panel
       #define DOGLCD_CS                     PC11
       #define DOGLCD_A0                     PD2
       #if ENABLED(FYSETC_GENERIC_12864_1_1)
         #define LCD_BACKLIGHT_PIN           PD0
       #endif
-      #define LCD_RESET_PIN                 PC10  // Must be high or open for LCD to operate normally.
+      #define LCD_RESET_PIN                 PC10  // Must be high or open for LCD to operate normally.//必须为高电平或开路，LCD才能正常工作。
       #if EITHER(FYSETC_MINI_12864_1_2, FYSETC_MINI_12864_2_0)
         #ifndef RGB_LED_R_PIN
           #define RGB_LED_R_PIN             PC12
@@ -279,15 +280,15 @@
       #define LCD_PINS_D6                   PD0
       #define LCD_PINS_D7                   PD1
       #if ENABLED(REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER)
-        #define BTN_ENC_EN           LCD_PINS_D7  // Detect the presence of the encoder
+        #define BTN_ENC_EN           LCD_PINS_D7  // Detect the presence of the encoder//检测编码器的存在
       #endif
     #endif
 
   #endif
 
-#endif // HAS_WIRED_LCD
+#endif // HAS_WIRED_LCD//有有线液晶显示器吗
 
-// Alter timing for graphical display
+// Alter timing for graphical display//改变图形显示的时间
 #if HAS_MARLINUI_U8GLIB
   #ifndef BOARD_ST7920_DELAY_1
     #define BOARD_ST7920_DELAY_1  DELAY_NS(96)

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -32,17 +33,17 @@
 #define BOARD_INFO_NAME "MKS BASE 1.4"
 #define MKS_BASE_VERSION                      14
 
-//
-// Heaters / Fans
-//
-#define FAN_PIN                                9  // PH6 ** Pin18 ** PWM9
+////
+// Heaters / Fans//加热器/风扇
+////
+#define FAN_PIN                                9  // PH6 ** Pin18 ** PWM9//PH6**Pin18**PWM9
 
-// Other Mods
+// Other Mods//其他MOD
 
-#define SERVO3_PIN                            12  // PB6 ** Pin25 ** D12
-#define PS_ON_PIN                              2  // X+ // PE4 ** Pin6  ** PWM2       **MUST BE HARDWARE PWM
-#define FILWIDTH_PIN                          15  // Y+ // PJ0 ** Pin63 ** USART3_RX  **Pin should have a pullup!
-#define FIL_RUNOUT_PIN                        19  // Z+ // PD2 ** Pin45 ** USART1_RX
+#define SERVO3_PIN                            12  // PB6 ** Pin25 ** D12//PB6**Pin25**D12
+#define PS_ON_PIN                              2  // X+ // PE4 ** Pin6  ** PWM2       **MUST BE HARDWARE PWM//X+//PE4**Pin6**PWM2**必须为硬件PWM
+#define FILWIDTH_PIN                          15  // Y+ // PJ0 ** Pin63 ** USART3_RX  **Pin should have a pullup!//Y+//PJ0**Pin63**USART3\U RX**Pin应具有上拉功能！
+#define FIL_RUNOUT_PIN                        19  // Z+ // PD2 ** Pin45 ** USART1_RX//Z+//PD2**Pin45**USART1\U RX
 
 #ifndef RGB_LED_R_PIN
   #define RGB_LED_R_PIN                       50
@@ -55,7 +56,7 @@
 #endif
 
 #ifndef CASE_LIGHT_PIN
-  #define CASE_LIGHT_PIN                      11  // PB5 ** Pin24 ** PWM11
+  #define CASE_LIGHT_PIN                      11  // PB5 ** Pin24 ** PWM11//PB5**Pin24**PWM11
 #endif
 
 #include "pins_MKS_BASE_common.h"

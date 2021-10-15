@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -26,8 +27,8 @@
 
 #include "touch.h"
 
-#include "../marlinui.h"  // for ui methods
-#include "../menu/menu_item.h" // for touch_screen_calibration
+#include "../marlinui.h"  // for ui methods//对于ui方法
+#include "../menu/menu_item.h" // for touch_screen_calibration//用于触摸屏校准
 
 #include "../../module/temperature.h"
 #include "../../module/planner.h"
@@ -77,14 +78,14 @@ void Touch::idle() {
 
   if (!enabled) return;
 
-  // Return if Touch::idle is called within the same millisecond
+  // Return if Touch::idle is called within the same millisecond//如果在同一毫秒内调用Touch:：idle，则返回
   const millis_t now = millis();
   if (last_touch_ms == now) return;
   last_touch_ms = now;
 
   if (get_point(&_x, &_y)) {
     #if HAS_RESUME_CONTINUE
-      // UI is waiting for a click anywhere?
+      // UI is waiting for a click anywhere?//用户界面是否在任何地方等待单击？
       if (wait_for_user) {
         touch_control_type = CLICK;
         ui.lcd_clicked = true;
@@ -150,7 +151,7 @@ void Touch::touch(touch_control_t *control) {
       case CALIBRATE:
         if (touch_calibration.handleTouch(x, y)) ui.refresh();
         break;
-    #endif // TOUCH_SCREEN_CALIBRATION
+    #endif // TOUCH_SCREEN_CALIBRATION//触摸屏校准
 
     case MENU_SCREEN: ui.goto_screen((screenFunc_t)control->data); break;
     case BACK: ui.goto_previous_screen(); break;
@@ -183,7 +184,7 @@ void Touch::touch(touch_control_t *control) {
       heater = control->data;
       ui.clear_lcd();
       #if HAS_HOTEND
-        if (heater >= 0) { // HotEnd
+        if (heater >= 0) { // HotEnd//热端
           #if HOTENDS == 1
             MenuItem_int3::action((const char *)GET_TEXT_F(MSG_NOZZLE), &thermalManager.temp_hotend[0].target, 0, thermalManager.hotend_max_target(0), []{ thermalManager.start_watching_hotend(0); });
           #else
@@ -238,7 +239,7 @@ void Touch::touch(touch_control_t *control) {
       ui.goto_screen((screenFunc_t)ui.move_axis_screen);
       break;
 
-    // TODO: TOUCH could receive data to pass to the callback
+    // TODO: TOUCH could receive data to pass to the callback//TODO:TOUCH可以接收数据以传递给回调
     case BUTTON: ((screenFunc_t)control->data)(); break;
 
     default: break;
@@ -289,4 +290,4 @@ void add_control(uint16_t x, uint16_t y, TouchControlType control_type, intptr_t
     touch.add_control(control_type, x, y, width, height, data);
 }
 
-#endif // TOUCH_SCREEN
+#endif // TOUCH_SCREEN//触摸屏

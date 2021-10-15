@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -20,9 +21,9 @@
  *
  */
 
-//
-// Temperature Menu
-//
+////
+// Temperature Menu//温度菜单
+////
 
 #include "../../inc/MarlinConfig.h"
 
@@ -43,9 +44,9 @@
   #include "../../module/tool_change.h"
 #endif
 
-//
-// "Temperature" submenu items
-//
+////
+// "Temperature" submenu items//“温度”子菜单项
+////
 
 void Temperature::lcd_preheat(const uint8_t e, const int8_t indh, const int8_t indb) {
   UNUSED(e); UNUSED(indh); UNUSED(indb);
@@ -86,7 +87,7 @@ void Temperature::lcd_preheat(const uint8_t e, const int8_t indh, const int8_t i
   #if HAS_TEMP_HOTEND && HAS_HEATED_BED
     inline void _preheat_both(const uint8_t m, const uint8_t e) { thermalManager.lcd_preheat(e, m, m); }
 
-    // Indexed "Preheat ABC" and "Heat Bed" items
+    // Indexed "Preheat ABC" and "Heat Bed" items//索引“预热ABC”和“热床”项目
     #define PREHEAT_ITEMS(M,E) do{ \
       ACTION_ITEM_N_S(E, ui.get_preheat_label(M), MSG_PREHEAT_M_H, []{ _preheat_both(M, MenuItemBase::itemIndex); }); \
       ACTION_ITEM_N_S(E, ui.get_preheat_label(M), MSG_PREHEAT_M_END_E, []{ _preheat_end(M, MenuItemBase::itemIndex); }); \
@@ -94,17 +95,17 @@ void Temperature::lcd_preheat(const uint8_t e, const int8_t indh, const int8_t i
 
   #elif HAS_MULTI_HOTEND
 
-    // No heated bed, so just indexed "Preheat ABC" items
+    // No heated bed, so just indexed "Preheat ABC" items//没有加热床，所以只需索引“预热ABC”项目
     #define PREHEAT_ITEMS(M,E) ACTION_ITEM_N_S(E, ui.get_preheat_label(M), MSG_PREHEAT_M_H, []{ _preheat_end(M, MenuItemBase::itemIndex); })
 
   #endif
 
   #if HAS_MULTI_HOTEND || HAS_HEATED_BED
 
-    // Set editable.int8 to the Material index before entering this menu
-    // because MenuItemBase::itemIndex will be re-used by PREHEAT_ITEMS
+    // Set editable.int8 to the Material index before entering this menu//进入此菜单前，将editable.int8设置为材质索引
+    // because MenuItemBase::itemIndex will be re-used by PREHEAT_ITEMS//因为MenuItemBase:：itemIndex将被预热\u项重新使用
     void menu_preheat_m() {
-      const uint8_t m = editable.int8; // Don't re-use 'editable' in this menu
+      const uint8_t m = editable.int8; // Don't re-use 'editable' in this menu//不要在此菜单中重复使用“可编辑”
 
       START_MENU();
       BACK_ITEM(MSG_TEMPERATURE);
@@ -135,9 +136,9 @@ void Temperature::lcd_preheat(const uint8_t e, const int8_t indh, const int8_t i
       END_MENU();
     }
 
-  #endif // HAS_MULTI_HOTEND || HAS_HEATED_BED
+  #endif // HAS_MULTI_HOTEND || HAS_HEATED_BED//有多功能加热床吗
 
-#endif // PREHEAT_COUNT
+#endif // PREHEAT_COUNT//预热计数
 
 #if HAS_TEMP_HOTEND || HAS_HEATED_BED
 
@@ -147,7 +148,7 @@ void Temperature::lcd_preheat(const uint8_t e, const int8_t indh, const int8_t i
     ui.return_to_status();
   }
 
-#endif // HAS_TEMP_HOTEND || HAS_HEATED_BED
+#endif // HAS_TEMP_HOTEND || HAS_HEATED_BED//有暖气床吗
 
 void menu_temperature() {
   #if HAS_TEMP_HOTEND || HAS_HEATED_BED
@@ -164,10 +165,10 @@ void menu_temperature() {
   START_MENU();
   BACK_ITEM(MSG_MAIN);
 
-  //
-  // Nozzle:
-  // Nozzle [1-5]:
-  //
+  ////
+  // Nozzle://喷嘴：
+  // Nozzle [1-5]://喷嘴[1-5]：
+  ////
   #if HOTENDS == 1
     editable.celsius = thermalManager.temp_hotend[0].target;
     EDIT_ITEM_FAST(int3, MSG_NOZZLE, &editable.celsius, 0, thermalManager.hotend_max_target(0), []{ thermalManager.setTargetHotend(editable.celsius, 0); });
@@ -183,40 +184,40 @@ void menu_temperature() {
       EDIT_ITEM_FAST_N(int3, e, MSG_NOZZLE_STANDBY, &thermalManager.singlenozzle_temp[e], 0, thermalManager.hotend_max_target(0));
   #endif
 
-  //
-  // Bed:
-  //
+  ////
+  // Bed://床：
+  ////
   #if HAS_HEATED_BED
     EDIT_ITEM_FAST(int3, MSG_BED, &thermalManager.temp_bed.target, 0, BED_MAX_TARGET, thermalManager.start_watching_bed);
   #endif
 
-  //
-  // Chamber:
-  //
+  ////
+  // Chamber://会议厅：
+  ////
   #if HAS_HEATED_CHAMBER
     EDIT_ITEM_FAST(int3, MSG_CHAMBER, &thermalManager.temp_chamber.target, 0, CHAMBER_MAX_TARGET, thermalManager.start_watching_chamber);
   #endif
 
-  //
-  // Cooler:
-  //
+  ////
+  // Cooler://冷却器：
+  ////
   #if HAS_COOLER
     bool cstate = cooler.enabled;
     EDIT_ITEM(bool, MSG_COOLER_TOGGLE, &cstate, cooler.toggle);
     EDIT_ITEM_FAST(int3, MSG_COOLER, &thermalManager.temp_cooler.target, COOLER_MIN_TARGET, COOLER_MAX_TARGET, thermalManager.start_watching_cooler);
   #endif
 
-  //
-  // Flow Meter Safety Shutdown:
-  //
+  ////
+  // Flow Meter Safety Shutdown://流量计安全关闭：
+  ////
   #if ENABLED(FLOWMETER_SAFETY)
     bool fstate = cooler.flowsafety_enabled;
     EDIT_ITEM(bool, MSG_FLOWMETER_SAFETY, &fstate, cooler.flowsafety_toggle);
   #endif
 
-  //
-  // Fan Speed:
-  //
+  ////
+  // Fan Speed://风扇转速：
+  ////
   #if HAS_FAN
 
     DEFINE_SINGLENOZZLE_ITEM();
@@ -260,12 +261,12 @@ void menu_temperature() {
       singlenozzle_item(7);
     #endif
 
-  #endif // HAS_FAN
+  #endif // HAS_FAN//范先生
 
   #if PREHEAT_COUNT
-    //
-    // Preheat for all Materials
-    //
+    ////
+    // Preheat for all Materials//对所有材料进行预热
+    ////
     LOOP_L_N(m, PREHEAT_COUNT) {
       editable.int8 = m;
       #if HOTENDS > 1 || HAS_HEATED_BED
@@ -277,9 +278,9 @@ void menu_temperature() {
   #endif
 
   #if HAS_TEMP_HOTEND || HAS_HEATED_BED
-    //
-    // Cooldown
-    //
+    ////
+    // Cooldown//冷却时间
+    ////
     if (TERN0(HAS_HEATED_BED, thermalManager.degTargetBed())) has_heat = true;
     if (has_heat) ACTION_ITEM(MSG_COOLDOWN, lcd_cooldown);
   #endif
@@ -307,4 +308,4 @@ void menu_temperature() {
 
 #endif
 
-#endif // HAS_LCD_MENU && HAS_TEMPERATURE
+#endif // HAS_LCD_MENU && HAS_TEMPERATURE//有液晶显示菜单和温度（&A）

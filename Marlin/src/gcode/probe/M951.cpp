@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -43,14 +44,14 @@ inline void mpe_settings_report() {
 
 void mpe_settings_init() {
   constexpr float pex[2] = PARKING_EXTRUDER_PARKING_X;
-  mpe_settings.parking_xpos[0]      = pex[0];                         // M951 L
-  mpe_settings.parking_xpos[1]      = pex[1];                         // M951 R
-  mpe_settings.grab_distance        = PARKING_EXTRUDER_GRAB_DISTANCE; // M951 I
+  mpe_settings.parking_xpos[0]      = pex[0];                         // M951 L//M951 L
+  mpe_settings.parking_xpos[1]      = pex[1];                         // M951 R//M951R
+  mpe_settings.grab_distance        = PARKING_EXTRUDER_GRAB_DISTANCE; // M951 I//M951 I
   TERN_(HAS_HOME_OFFSET, set_home_offset(X_AXIS, mpe_settings.grab_distance * -1));
-  mpe_settings.slow_feedrate        = MMM_TO_MMS(MPE_SLOW_SPEED);     // M951 J
-  mpe_settings.fast_feedrate        = MMM_TO_MMS(MPE_FAST_SPEED);     // M951 H
-  mpe_settings.travel_distance      = MPE_TRAVEL_DISTANCE;            // M951 D
-  mpe_settings.compensation_factor  = MPE_COMPENSATION;               // M951 C
+  mpe_settings.slow_feedrate        = MMM_TO_MMS(MPE_SLOW_SPEED);     // M951 J//M951 J
+  mpe_settings.fast_feedrate        = MMM_TO_MMS(MPE_FAST_SPEED);     // M951 H//M951H
+  mpe_settings.travel_distance      = MPE_TRAVEL_DISTANCE;            // M951 D//M951 D
+  mpe_settings.compensation_factor  = MPE_COMPENSATION;               // M951 C//M951 C
   mpe_settings_report();
 }
 
@@ -68,4 +69,4 @@ void GcodeSuite::M951() {
   if (!parser.seen("CDHIJLR")) mpe_settings_report();
 }
 
-#endif // MAGNETIC_PARKING_EXTRUDER
+#endif // MAGNETIC_PARKING_EXTRUDER//磁力停车挤出机

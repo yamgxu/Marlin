@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,17 +30,17 @@
 
 #define BOARD_INFO_NAME "Scoovo X9H"
 
-//
-// Servos
-//
-#define SERVO0_PIN                            22  // Motor header MX1
-#define SERVO1_PIN                            23  // Motor header MX2
-#define SERVO2_PIN                            24  // Motor header MX3
-#define SERVO3_PIN                             5  // PWM header pin 5
+////
+// Servos//伺服
+////
+#define SERVO0_PIN                            22  // Motor header MX1//电机收割台MX1
+#define SERVO1_PIN                            23  // Motor header MX2//电机收割台MX2
+#define SERVO2_PIN                            24  // Motor header MX3//电机收割台MX3
+#define SERVO3_PIN                             5  // PWM header pin 5//PWM收割台针脚5
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_MIN_PIN                             12
 #define X_MAX_PIN                             24
 #define Y_MIN_PIN                             11
@@ -47,16 +48,16 @@
 #define Z_MIN_PIN                             10
 #define Z_MAX_PIN                             30
 
-//
-// Z Probe (when not Z_MIN_IN)
-//
+////
+// Z Probe (when not Z_MIN_IN)//Z探头（非Z_MIN_IN时）
+////
 #ifndef Z_MIN_PROBE_PIN
   #define Z_MIN_PROBE_PIN                     30
 #endif
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                            37
 #define X_DIR_PIN                             48
 #define X_ENABLE_PIN                          29
@@ -77,7 +78,7 @@
 #define E1_DIR_PIN                            42
 #define E1_ENABLE_PIN                         25
 
-// Microstepping pins - Mapping not from fastio.h (?)
+// Microstepping pins - Mapping not from fastio.h (?)//微步进引脚-映射不是从fastio.h（？）
 #define X_MS1_PIN                             40
 #define X_MS2_PIN                             41
 #define Y_MS1_PIN                             69
@@ -90,17 +91,17 @@
 #define E1_MS2_PIN                            64
 
 #define DIGIPOTSS_PIN                         38
-#define DIGIPOT_CHANNELS { 4, 5, 3, 0, 1 }        // X Y Z E0 E1 digipot channels to stepper driver mapping
+#define DIGIPOT_CHANNELS { 4, 5, 3, 0, 1 }        // X Y Z E0 E1 digipot channels to stepper driver mapping//X Y Z E0 E1 digipot通道到步进驱动器映射
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                             0  // Analog Input
-#define TEMP_BED_PIN                           7  // Analog Input
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                             0  // Analog Input//模拟输入
+#define TEMP_BED_PIN                           7  // Analog Input//模拟输入
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_0_PIN                           9
 #define HEATER_1_PIN                           7
 #define HEATER_BED_PIN                         3
@@ -111,47 +112,47 @@
 #define FAN1_PIN                               6
 #define FAN2_PIN                               2
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define SDSS                                  53
 #define LED_PIN                               13
 #define PS_ON_PIN                              4
 
 #ifndef FILWIDTH_PIN
-  #define FILWIDTH_PIN                         3  // Analog Input
+  #define FILWIDTH_PIN                         3  // Analog Input//模拟输入
 #endif
 
-//
-// LCD / Controller
-//
-#define LCD_PINS_RS                           70  // Ext2_5
-#define LCD_PINS_ENABLE                       71  // Ext2_7
-#define LCD_PINS_D4                           72  // Ext2_9 ?
-#define LCD_PINS_D5                           73  // Ext2_11 ?
-#define LCD_PINS_D6                           74  // Ext2_13
-#define LCD_PINS_D7                           75  // Ext2_15 ?
+////
+// LCD / Controller//液晶显示器/控制器
+////
+#define LCD_PINS_RS                           70  // Ext2_5//Ext2_5
+#define LCD_PINS_ENABLE                       71  // Ext2_7//Ext2_7
+#define LCD_PINS_D4                           72  // Ext2_9 ?//Ext2_9？
+#define LCD_PINS_D5                           73  // Ext2_11 ?//Ext2_11？
+#define LCD_PINS_D6                           74  // Ext2_13//Ext2_13
+#define LCD_PINS_D7                           75  // Ext2_15 ?//Ext2_15？
 #define BEEPER_PIN                            -1
 
-#define BTN_HOME                              80  // Ext_16
-#define BTN_CENTER                            81  // Ext_14
+#define BTN_HOME                              80  // Ext_16//分机16
+#define BTN_CENTER                            81  // Ext_14//分机14
 #define BTN_ENC                       BTN_CENTER
-#define BTN_RIGHT                             82  // Ext_12
-#define BTN_LEFT                              83  // Ext_10
-#define BTN_UP                                84  // Ext2_8
-#define BTN_DOWN                              85  // Ext2_6
+#define BTN_RIGHT                             82  // Ext_12//分机12
+#define BTN_LEFT                              83  // Ext_10//分机10
+#define BTN_UP                                84  // Ext2_8//Ext2_8
+#define BTN_DOWN                              85  // Ext2_6//Ext2_6
 
 #define HOME_PIN                        BTN_HOME
 
 #if ANY(VIKI2, miniVIKI)
   #define BEEPER_PIN                          44
-  // Pins for DOGM SPI LCD Support
+  // Pins for DOGM SPI LCD Support//用于DOGM SPI LCD支持的引脚
   #define DOGLCD_A0                           70
   #define DOGLCD_CS                           71
   #define LCD_SCREEN_ROT_180
 
-  #define SD_DETECT_PIN                       -1  // Pin 72 if using easy adapter board
+  #define SD_DETECT_PIN                       -1  // Pin 72 if using easy adapter board//引脚72（如果使用简易适配器板）
 
   #define STAT_LED_RED_PIN                    22
   #define STAT_LED_BLUE_PIN                   32
-#endif // VIKI2/miniVIKI
+#endif // VIKI2/miniVIKI//VIKI2/miniVIKI

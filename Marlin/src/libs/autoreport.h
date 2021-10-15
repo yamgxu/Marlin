@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -44,7 +45,7 @@ struct AutoReporter {
       next_report_ms = ms + SEC_TO_MS(report_interval);
       PORT_REDIRECT(report_port_mask);
       Helper::report();
-      //PORT_RESTORE();
+      //PORT_RESTORE();//端口恢复（）；
     }
   }
 };

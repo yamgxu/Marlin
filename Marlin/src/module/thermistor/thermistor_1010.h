@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -23,7 +24,7 @@
 
 #define REVERSE_TEMP_SENSOR_RANGE_1010 1
 
-// Pt1000 with 1k0 pullup
+// Pt1000 with 1k0 pullup//Pt1000带1k0上拉
 constexpr temp_entry_t temptable_1010[] PROGMEM = {
   PtLine(  0, 1000, 1000),
   PtLine( 25, 1000, 1000),

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -87,7 +88,7 @@ class TemporaryBedLevelingState {
 
   struct mesh_index_pair {
     xy_int8_t pos;
-    float distance;   // When populated, the distance from the search location
+    float distance;   // When populated, the distance from the search location//填充时，与搜索位置的距离
     void invalidate() { pos = -1; }
     bool valid() const { return pos.x >= 0 && pos.y >= 0; }
     #if ENABLED(AUTO_BED_LEVELING_UBL)

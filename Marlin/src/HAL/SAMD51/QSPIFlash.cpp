@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -54,12 +55,12 @@ uint8_t QSPIFlash::readByte(const uint32_t address) {
 void QSPIFlash::writeByte(const uint32_t address, const uint8_t value) {
   uint32_t const sector_addr = SECTOR_OF(address);
 
-  // Page changes, flush old and update new cache
+  // Page changes, flush old and update new cache//页面更改、刷新旧缓存和更新新缓存
   if (sector_addr != _addr) {
     flush();
     _addr = sector_addr;
 
-    // read a whole page from flash
+    // read a whole page from flash//从flash上读一整页
     _flashBase->readBuffer(sector_addr, _buf, SFLASH_SECTOR_SIZE);
   }
 
@@ -75,4 +76,4 @@ void QSPIFlash::flush() {
   _addr = INVALID_ADDR;
 }
 
-#endif // QSPI_EEPROM
+#endif // QSPI_EEPROM//QSPI_EEPROM

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -43,6 +44,6 @@ void reset_stepper_drivers() {
 }
 
 #if ENABLED(SOFTWARE_DRIVER_ENABLE)
-  // Flags to optimize XYZ Enabled state
-  xyz_bool_t axis_sw_enabled; // = { false, false, false }
+  // Flags to optimize XYZ Enabled state//用于优化XYZ启用状态的标志
+  xyz_bool_t axis_sw_enabled; // = { false, false, false }//={false，false，false}
 #endif

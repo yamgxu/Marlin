@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -25,55 +26,55 @@
 
 #define _UxGT(a) a
 
-// Fallback if no language is set. DON'T CHANGE
+// Fallback if no language is set. DON'T CHANGE//如果未设置语言，则返回。不要改变
 #ifndef LCD_LANGUAGE
   #define LCD_LANGUAGE en
 #endif
 
-// For character-based LCD controllers (DISPLAY_CHARSET_HD44780)
+// For character-based LCD controllers (DISPLAY_CHARSET_HD44780)//用于基于字符的LCD控制器（显示字符集HD44780）
 #define JAPANESE 1
 #define WESTERN  2
 #define CYRILLIC 3
 
-// NOTE: IF YOU CHANGE LANGUAGE FILES OR MERGE A FILE WITH CHANGES
-//
-//   ==> ALWAYS TRY TO COMPILE MARLIN WITH/WITHOUT "ULTIPANEL" / "ULTRA_LCD" / "SDSUPPORT" #define IN "Configuration.h"
-//   ==> ALSO TRY ALL AVAILABLE LANGUAGE OPTIONS
-// See also https://marlinfw.org/docs/development/lcd_language.html
+// NOTE: IF YOU CHANGE LANGUAGE FILES OR MERGE A FILE WITH CHANGES//注意：如果更改语言文件或将文件与更改合并
+////
+//   ==> ALWAYS TRY TO COMPILE MARLIN WITH/WITHOUT "ULTIPANEL" / "ULTRA_LCD" / "SDSUPPORT" #define IN "Configuration.h"//==>始终尝试编译带/不带“ULTIPANEL”/“ULTRA_LCD”/“SDSUPPORT”#在“Configuration.h”中定义的MARLIN
+//   ==> ALSO TRY ALL AVAILABLE LANGUAGE OPTIONS//==>还可以尝试所有可用的语言选项
+// See also https://marlinfw.org/docs/development/lcd_language.html//另见https://marlinfw.org/docs/development/lcd_language.html
 
-// Languages
-// an         Aragonese
-// bg         Bulgarian
-// ca         Catalan
-// cz         Czech
-// da         Danish
-// de         German
-// el         Greek
-// el_gr      Greek (Greece)
-// en         English
-// es         Spanish
-// eu         Basque-Euskera
-// fi         Finnish
-// fr         French
-// gl         Galician
-// hr         Croatian
-// hu         Hungarian
-// it         Italian
-// jp_kana    Japanese
-// ko_KR      Korean (South Korea)
-// nl         Dutch
-// pl         Polish
-// pt         Portuguese
-// pt_br      Portuguese (Brazilian)
-// ro         Romanian
-// ru         Russian
-// sk         Slovak
-// sv         Swedish
-// tr         Turkish
-// uk         Ukrainian
-// vi         Vietnamese
-// zh_CN      Chinese (Simplified)
-// zh_TW      Chinese (Traditional)
+// Languages//语言
+// an         Aragonese//阿拉贡人
+// bg         Bulgarian//保加利亚语
+// ca         Catalan//加泰罗尼亚
+// cz         Czech//捷克
+// da         Danish//丹麦语
+// de         German//德德语
+// el         Greek//希腊语
+// el_gr      Greek (Greece)//希腊语（希腊）
+// en         English//英语
+// es         Spanish//西班牙语
+// eu         Basque-Euskera//欧盟巴斯克尤斯凯拉酒店
+// fi         Finnish//芬兰语
+// fr         French//法语
+// gl         Galician//加利西亚
+// hr         Croatian//克罗地亚人
+// hu         Hungarian//匈牙利语
+// it         Italian//是意大利人吗
+// jp_kana    Japanese//日本假名
+// ko_KR      Korean (South Korea)//ko_KR Korean（韩国）
+// nl         Dutch//荷兰
+// pl         Polish//光抛光
+// pt         Portuguese//葡萄牙
+// pt_br      Portuguese (Brazilian)//葡萄牙（巴西）
+// ro         Romanian//罗马尼亚人
+// ru         Russian//俄罗斯
+// sk         Slovak//斯洛伐克语
+// sv         Swedish//瑞典语
+// tr         Turkish//土耳其
+// uk         Ukrainian//英国乌克兰人
+// vi         Vietnamese//六越南语
+// zh_CN      Chinese (Simplified)//中文（简体）
+// zh_TW      Chinese (Traditional)//中文（繁体）
 
 #ifdef DEFAULT_SOURCE_CODE_URL
   #undef  SOURCE_CODE_URL
@@ -94,14 +95,14 @@
 
 #define MARLIN_WEBSITE_URL "marlinfw.org"
 
-//#if !defined(STRING_SPLASH_LINE3) && defined(WEBSITE_URL)
-//  #define STRING_SPLASH_LINE3 WEBSITE_URL
-//#endif
+//#if !defined(STRING_SPLASH_LINE3) && defined(WEBSITE_URL)//#如果！已定义（字符串\u启动\u行3）和已定义（网站\u URL）
+//  #define STRING_SPLASH_LINE3 WEBSITE_URL//#定义字符串_SPLASH_LINE3网站_URL
+//#endif//#恩迪夫
 
-//
-// Common Serial Console Messages
-// Don't change these strings because serial hosts look for them.
-//
+////
+// Common Serial Console Messages//通用串行控制台消息
+// Don't change these strings because serial hosts look for them.//不要更改这些字符串，因为串行主机会查找它们。
+////
 
 #define STR_ENQUEUEING                      "enqueueing \""
 #define STR_POWERUP                         "PowerUp"
@@ -203,7 +204,7 @@
 #define STR_KILL_INACTIVE_TIME              "!! KILL caused by too much inactive time - current command: "
 #define STR_KILL_BUTTON                     "!! KILL caused by KILL button/pin"
 
-// temperature.cpp strings
+// temperature.cpp strings//温度.cpp字符串
 #define STR_PID_AUTOTUNE_START              "PID Autotune start"
 #define STR_PID_BAD_HEATER_ID               "PID Autotune failed! Bad heater id"
 #define STR_PID_TEMP_TOO_HIGH               "PID Autotune failed! Temperature too high"
@@ -242,7 +243,7 @@
 #define STR_ERR_PROBING_FAILED              "Probing Failed"
 #define STR_ZPROBE_OUT_SER                  "Z Probe Past Bed"
 
-// Debug
+// Debug//调试
 #define STR_DEBUG_PREFIX                    "DEBUG:"
 #define STR_DEBUG_OFF                       "off"
 #define STR_DEBUG_ECHO                      "ECHO"
@@ -259,9 +260,9 @@
 #define STR_REMINDER_SAVE_SETTINGS          "Remember to save!"
 #define STR_PASSWORD_SET                    "Password is "
 
-//
-// Endstop Names used by Endstops::report_states
-//
+////
+// Endstop Names used by Endstops::report_states//Endstops:：report_states使用的Endstop名称
+////
 #define STR_X_MIN                           "x_min"
 #define STR_X_MAX                           "x_max"
 #define STR_X2_MIN                          "x2_min"
@@ -289,7 +290,7 @@
 #define STR_PROBE_EN                        "probe_en"
 #define STR_FILAMENT_RUNOUT_SENSOR          "filament"
 
-// General axis names
+// General axis names//通用轴名称
 #define STR_X "X"
 #define STR_Y "Y"
 #define STR_Z "Z"
@@ -320,7 +321,7 @@
 #define LCD_STR_K STR_K
 #define LCD_STR_E STR_E
 
-// Extra Axis and Endstop Names
+// Extra Axis and Endstop Names//额外的轴和结束点名称
 #if LINEAR_AXES >= 4
   #if AXIS4_NAME == 'A'
     #define AXIS4_STR "A"
@@ -425,10 +426,10 @@
 
 #if EITHER(HAS_MARLINUI_HD44780, IS_TFTGLCD_PANEL)
 
-  // Custom characters defined in the first 8 characters of the LCD
-  #define LCD_STR_BEDTEMP     "\x00" // Print only as a char. This will have 'unexpected' results when used in a string!
+  // Custom characters defined in the first 8 characters of the LCD//LCD前8个字符中定义的自定义字符
+  #define LCD_STR_BEDTEMP     "\x00" // Print only as a char. This will have 'unexpected' results when used in a string!//仅打印为字符。在字符串中使用时，将产生“意外”结果！
   #define LCD_STR_DEGREE      "\x01"
-  #define LCD_STR_THERMOMETER "\x02" // Still used with string concatenation
+  #define LCD_STR_THERMOMETER "\x02" // Still used with string concatenation//仍然与字符串连接一起使用
   #define LCD_STR_UPLEVEL     "\x03"
   #define LCD_STR_REFRESH     "\x04"
   #define LCD_STR_FOLDER      "\x05"
@@ -437,10 +438,10 @@
   #define LCD_STR_ARROW_RIGHT ">"  /* from the default character set */
 
 #else
-  //
-  // Custom characters from Marlin_symbols.fon which was merged into ISO10646-0-3.bdf
-  // \x00 intentionally skipped to avoid problems in strings
-  //
+  ////
+  // Custom characters from Marlin_symbols.fon which was merged into ISO10646-0-3.bdf//Marlin_symbols.fon中的自定义字符，已合并到ISO10646-0-3.bdf中
+  // \x00 intentionally skipped to avoid problems in strings//\x00故意跳过以避免字符串中出现问题
+  ////
   #define LCD_STR_REFRESH     "\x01"
   #define LCD_STR_FOLDER      "\x02"
   #define LCD_STR_ARROW_RIGHT "\x03"
@@ -452,10 +453,10 @@
   #define LCD_STR_DEGREE      "\x09"
 
   #define LCD_STR_SPECIAL_MAX '\x09'
-  // Maximum here is 0x1F because 0x20 is ' ' (space) and the normal charsets begin.
-  // Better stay below 0x10 because DISPLAY_CHARSET_HD44780_WESTERN begins here.
+  // Maximum here is 0x1F because 0x20 is ' ' (space) and the normal charsets begin.//这里的最大值是0x1F，因为0x20是“”（空格），并且正常字符集开始。
+  // Better stay below 0x10 because DISPLAY_CHARSET_HD44780_WESTERN begins here.//最好保持在0x10以下，因为显示从这里开始。
 
-  // Symbol characters
+  // Symbol characters//符号字符
   #define LCD_STR_FILAM_DIA   "\xF8"
   #define LCD_STR_FILAM_MUL   "\xA4"
 
@@ -500,7 +501,7 @@
 #define LCD_STR_E6 "E" LCD_STR_N6
 #define LCD_STR_E7 "E" LCD_STR_N7
 
-// Include localized LCD Menu Messages
+// Include localized LCD Menu Messages//包括本地化的LCD菜单消息
 
 #define LANGUAGE_DATA_INCL_(M) STRINGIFY_(fontdata/langdata_##M.h)
 #define LANGUAGE_DATA_INCL(M) LANGUAGE_DATA_INCL_(M)
@@ -508,11 +509,11 @@
 #define LANGUAGE_INCL_(M) STRINGIFY_(../lcd/language/language_##M.h)
 #define LANGUAGE_INCL(M) LANGUAGE_INCL_(M)
 
-// Use superscripts, if possible. Evaluated at point of use.
+// Use superscripts, if possible. Evaluated at point of use.//如果可能的话，使用上标。在使用点进行评估。
 #define SUPERSCRIPT_TWO   TERN(NOT_EXTENDED_ISO10646_1_5X7, "^2", "²")
 #define SUPERSCRIPT_THREE TERN(NOT_EXTENDED_ISO10646_1_5X7, "^3", "³")
 
-#include "multi_language.h"   // Allow multiple languages
+#include "multi_language.h"   // Allow multiple languages//允许使用多种语言
 
 #include "../lcd/language/language_en.h"
 #include LANGUAGE_INCL(LCD_LANGUAGE)
@@ -530,5 +531,5 @@
          DISPLAY_CHARSET_ISO10646_PL, \
          DISPLAY_CHARSET_ISO10646_CZ, \
          DISPLAY_CHARSET_ISO10646_SK)
-  #define DISPLAY_CHARSET_ISO10646_1 // use the better font on full graphic displays.
+  #define DISPLAY_CHARSET_ISO10646_1 // use the better font on full graphic displays.//在全图形显示上使用更好的字体。
 #endif

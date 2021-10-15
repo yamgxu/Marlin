@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * @file    u8g_fontutf8.cpp
  * @brief   font api for u8g lib
@@ -77,13 +78,13 @@ static void fontgroup_drawwchar(font_group_t *group, const font_t *fnt_default, 
   uint8_t buf[2] = {0, 0};
   const font_t * fntpqm = (font_t*)fontgroup_find(group, val);
   if (!fntpqm) {
-    // Unknown char, use default font
+    // Unknown char, use default font//未知字符，请使用默认字体
     buf[0] = (uint8_t)(val & 0xFF);
     fntpqm = fnt_default;
   }
   if (fnt_default != fntpqm) {
     buf[0] = (uint8_t)(val & 0x7F);
-    buf[0] |= 0x80; // use upper page to avoid 0x00 error in C. you may want to generate the font data
+    buf[0] |= 0x80; // use upper page to avoid 0x00 error in C. you may want to generate the font data//使用上一页避免C中的0x00错误。您可能希望生成字体数据
   }
 
   cb_draw_ram (userdata, fntpqm, (char*) buf);
@@ -131,7 +132,7 @@ struct _uxg_drawu8_data_t {
   unsigned int x;
   unsigned int y;
   unsigned int adv;
-  unsigned int max_width; // the max pixel width of the string allowed
+  unsigned int max_width; // the max pixel width of the string allowed//允许的字符串的最大像素宽度
   const void * fnt_prev;
 };
 
@@ -312,4 +313,4 @@ int uxg_GetUtf8StrPixelWidthP(u8g_t *pu8g, PGM_P utf8_msg) {
   return data.adv;
 }
 
-#endif // HAS_MARLINUI_U8GLIB
+#endif // HAS_MARLINUI_U8GLIB//马林努伊能说会道吗

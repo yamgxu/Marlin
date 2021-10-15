@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,12 +22,12 @@
  */
 #pragma once
 
-//
-// File: pins/pins_postprocess.h
-// Post-process pins according to configured settings
-//
+////
+// File: pins/pins_postprocess.h//文件：pins/pins\u postprocess.h
+// Post-process pins according to configured settings//根据配置的设置对引脚进行后期处理
+////
 
-// Define certain undefined pins
+// Define certain undefined pins//定义某些未定义的管脚
 #ifndef X_MS1_PIN
   #define X_MS1_PIN -1
 #endif
@@ -200,9 +201,9 @@
   #define E7_ENABLE_PIN -1
 #endif
 
-//
-// Destroy unused CS pins
-//
+////
+// Destroy unused CS pins//销毁未使用的CS引脚
+////
 #if !AXIS_HAS_SPI(X)
   #undef X_CS_PIN
 #endif
@@ -399,9 +400,9 @@
   #define NUM_SERVO_PLUGS 4
 #endif
 
-//
-// Assign endstop pins for boards with only 3 connectors
-//
+////
+// Assign endstop pins for boards with only 3 connectors//为只有3个连接器的电路板指定端部止动销
+////
 #ifdef X_STOP_PIN
   #if X_HOME_TO_MIN
     #define X_MIN_PIN X_STOP_PIN
@@ -505,7 +506,7 @@
   #undef K_MAX_PIN
 #endif
 
-// Filament Sensor first pin alias
+// Filament Sensor first pin alias//灯丝传感器第一针别名
 #if HAS_FILAMENT_SENSOR
   #define FIL_RUNOUT1_PIN FIL_RUNOUT_PIN
 #else
@@ -543,7 +544,7 @@
 #define _EPIN(p,q) __EPIN(p,q)
 #define DIAG_REMAPPED(p,q) (PIN_EXISTS(q) && _EPIN(p##_E_INDEX, DIAG) == q##_PIN)
 
-// The E0/E1 steppers are always used for Dual E
+// The E0/E1 steppers are always used for Dual E//E0/E1步进器始终用于双E
 #if ENABLED(E_DUAL_STEPPER_DRIVERS)
   #ifndef E1_STEP_PIN
     #error "No E1 stepper available for E_DUAL_STEPPER_DRIVERS!"
@@ -553,7 +554,7 @@
   #define X2_E_INDEX E_STEPPERS
 #endif
 
-// The X2 axis, if any, should be the next open extruder port
+// The X2 axis, if any, should be the next open extruder port//X2轴（如有）应为下一个打开的挤出机端口
 #if EITHER(DUAL_X_CARRIAGE, X_DUAL_STEPPER_DRIVERS)
   #ifndef X2_STEP_PIN
     #define X2_STEP_PIN   _EPIN(X2_E_INDEX, STEP)
@@ -584,12 +585,12 @@
     #endif
   #endif
 
-  //
-  // Auto-assign pins for stallGuard sensorless homing
-  //
+  ////
+  // Auto-assign pins for stallGuard sensorless homing//自动分配用于stallGuard无传感器归零的引脚
+  ////
   #if !defined(X2_USE_ENDSTOP) && defined(X2_STALL_SENSITIVITY) && ENABLED(X_DUAL_ENDSTOPS) && _PEXI(X2_E_INDEX, DIAG)
     #define X2_DIAG_PIN _EPIN(X2_E_INDEX, DIAG)
-    #if   DIAG_REMAPPED(X2, X_MIN)      // If already remapped in the pins file...
+    #if   DIAG_REMAPPED(X2, X_MIN)      // If already remapped in the pins file...//如果已在PIN文件中重新映射。。。
       #define X2_USE_ENDSTOP _XMIN_
     #elif DIAG_REMAPPED(X2, Y_MIN)
       #define X2_USE_ENDSTOP _YMIN_
@@ -601,7 +602,7 @@
       #define X2_USE_ENDSTOP _YMAX_
     #elif DIAG_REMAPPED(X2, Z_MAX)
       #define X2_USE_ENDSTOP _ZMAX_
-    #else                               // Otherwise use the driver DIAG_PIN directly
+    #else                               // Otherwise use the driver DIAG_PIN directly//否则，直接使用驱动器诊断引脚
       #define _X2_USE_ENDSTOP(P) _E##P##_DIAG_
       #define X2_USE_ENDSTOP _X2_USE_ENDSTOP(X2_E_INDEX)
     #endif
@@ -626,7 +627,7 @@
   #define X2_MS3_PIN -1
 #endif
 
-// The Y2 axis, if any, should be the next open extruder port
+// The Y2 axis, if any, should be the next open extruder port//Y2轴（如有）应为下一个打开的挤出机端口
 #if ENABLED(Y_DUAL_STEPPER_DRIVERS)
   #ifndef Y2_STEP_PIN
     #define Y2_STEP_PIN   _EPIN(Y2_E_INDEX, STEP)
@@ -656,7 +657,7 @@
       #define Y2_SERIAL_RX_PIN _EPIN(Y2_E_INDEX, SERIAL_RX)
     #endif
   #endif
-  // Auto-assign pins for stallGuard sensorless homing
+  // Auto-assign pins for stallGuard sensorless homing//自动分配用于stallGuard无传感器归零的引脚
   #if !defined(Y2_USE_ENDSTOP) && defined(Y2_STALL_SENSITIVITY) && ENABLED(Y_DUAL_ENDSTOPS) && _PEXI(Y2_E_INDEX, DIAG)
     #define Y2_DIAG_PIN _EPIN(Y2_E_INDEX, DIAG)
     #if   DIAG_REMAPPED(Y2, X_MIN)
@@ -695,7 +696,7 @@
   #define Y2_MS3_PIN -1
 #endif
 
-// The Z2 axis, if any, should be the next open extruder port
+// The Z2 axis, if any, should be the next open extruder port//Z2轴（如有）应为下一个打开的挤出机端口
 #if NUM_Z_STEPPER_DRIVERS >= 2
   #ifndef Z2_STEP_PIN
     #define Z2_STEP_PIN   _EPIN(Z2_E_INDEX, STEP)
@@ -725,7 +726,7 @@
       #define Z2_SERIAL_RX_PIN _EPIN(Z2_E_INDEX, SERIAL_RX)
     #endif
   #endif
-  // Auto-assign pins for stallGuard sensorless homing
+  // Auto-assign pins for stallGuard sensorless homing//自动分配用于stallGuard无传感器归零的引脚
   #if !defined(Z2_USE_ENDSTOP) && defined(Z2_STALL_SENSITIVITY) && ENABLED(Z_MULTI_ENDSTOPS) && NUM_Z_STEPPER_DRIVERS >= 2 && _PEXI(Z2_E_INDEX, DIAG)
     #define Z2_DIAG_PIN _EPIN(Z2_E_INDEX, DIAG)
     #if   DIAG_REMAPPED(Z2, X_MIN)
@@ -795,7 +796,7 @@
       #define Z3_SERIAL_RX_PIN _EPIN(Z3_E_INDEX, SERIAL_RX)
     #endif
   #endif
-  // Auto-assign pins for stallGuard sensorless homing
+  // Auto-assign pins for stallGuard sensorless homing//自动分配用于stallGuard无传感器归零的引脚
   #if !defined(Z3_USE_ENDSTOP) && defined(Z3_STALL_SENSITIVITY) && ENABLED(Z_MULTI_ENDSTOPS) && NUM_Z_STEPPER_DRIVERS >= 3 && _PEXI(Z3_E_INDEX, DIAG)
     #define Z3_DIAG_PIN _EPIN(Z3_E_INDEX, DIAG)
     #if   DIAG_REMAPPED(Z3, X_MIN)
@@ -865,7 +866,7 @@
       #define Z4_SERIAL_RX_PIN _EPIN(Z4_E_INDEX, SERIAL_RX)
     #endif
   #endif
-  // Auto-assign pins for stallGuard sensorless homing
+  // Auto-assign pins for stallGuard sensorless homing//自动分配用于stallGuard无传感器归零的引脚
   #if !defined(Z4_USE_ENDSTOP) && defined(Z4_STALL_SENSITIVITY) && ENABLED(Z_MULTI_ENDSTOPS) && NUM_Z_STEPPER_DRIVERS >= 4 && _PEXI(Z4_E_INDEX, DIAG)
     #define Z4_DIAG_PIN _EPIN(Z4_E_INDEX, DIAG)
     #if   DIAG_REMAPPED(Z4, X_MIN)
@@ -935,7 +936,7 @@
       #define I_SERIAL_RX_PIN _EPIN(I_E_INDEX, SERIAL_RX)
     #endif
   #endif
-  // Auto-assign pins for stallGuard sensorless homing
+  // Auto-assign pins for stallGuard sensorless homing//自动分配用于stallGuard无传感器归零的引脚
   #if !defined(I_USE_ENDSTOP) && defined(I_STALL_SENSITIVITY) && _PEXI(I_E_INDEX, DIAG)
     #define I_DIAG_PIN _EPIN(I_E_INDEX, DIAG)
     #if   DIAG_REMAPPED(I, X_MIN)
@@ -1005,7 +1006,7 @@
       #define J_SERIAL_RX_PIN _EPIN(J_E_INDEX, SERIAL_RX)
     #endif
   #endif
-  // Auto-assign pins for stallGuard sensorless homing
+  // Auto-assign pins for stallGuard sensorless homing//自动分配用于stallGuard无传感器归零的引脚
   #if !defined(J_USE_ENDSTOP) && defined(J_STALL_SENSITIVITY) && _PEXI(J_E_INDEX, DIAG)
     #define J_DIAG_PIN _EPIN(J_E_INDEX, DIAG)
     #if   DIAG_REMAPPED(J, X_MIN)
@@ -1075,7 +1076,7 @@
       #define K_SERIAL_RX_PIN _EPIN(K_E_INDEX, SERIAL_RX)
     #endif
   #endif
-  // Auto-assign pins for stallGuard sensorless homing
+  // Auto-assign pins for stallGuard sensorless homing//自动分配用于stallGuard无传感器归零的引脚
   #if !defined(K_USE_ENDSTOP) && defined(K_STALL_SENSITIVITY) && _PEXI(K_E_INDEX, DIAG)
     #define K_DIAG_PIN _EPIN(K_E_INDEX, DIAG)
     #if   DIAG_REMAPPED(K, X_MIN)
@@ -1111,9 +1112,9 @@
   #define K_MS3_PIN -1
 #endif
 
-//
-// Disable unused endstop / probe pins
-//
+////
+// Disable unused endstop / probe pins//禁用未使用的端部止动器/探针销
+////
 #define _STOP_IN_USE(N) (X2_USE_ENDSTOP == N || Y2_USE_ENDSTOP == N || Z2_USE_ENDSTOP == N || Z3_USE_ENDSTOP == N || Z4_USE_ENDSTOP == N)
 #if _STOP_IN_USE(_XMAX_)
   #define USE_XMAX_PLUG
@@ -1218,9 +1219,9 @@
   #undef Z4_MAX_PIN
 #endif
 
-//
-// Default DOGLCD SPI delays
-//
+////
+// Default DOGLCD SPI delays//默认DOGLCD SPI延迟
+////
 #if HAS_MARLINUI_U8GLIB
   #if !defined(ST7920_DELAY_1) && defined(BOARD_ST7920_DELAY_1)
     #define ST7920_DELAY_1 BOARD_ST7920_DELAY_1

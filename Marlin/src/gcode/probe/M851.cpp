@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -33,7 +34,7 @@
  */
 void GcodeSuite::M851() {
 
-  // Show usage with no parameters
+  // Show usage with no parameters//显示没有参数的用法
   if (!parser.seen("XYZ")) {
     SERIAL_ECHOLNPAIR_P(
       #if HAS_PROBE_XY_OFFSET
@@ -46,10 +47,10 @@ void GcodeSuite::M851() {
     return;
   }
 
-  // Start with current offsets and modify
+  // Start with current offsets and modify//从当前偏移开始并修改
   xyz_pos_t offs = probe.offset;
 
-  // Assume no errors
+  // Assume no errors//假设没有错误
   bool ok = true;
 
   if (parser.seenval('X')) {
@@ -62,7 +63,7 @@ void GcodeSuite::M851() {
         ok = false;
       }
     #else
-      if (x) SERIAL_ECHOLNPAIR("?X must be 0 (NOZZLE_AS_PROBE)."); // ...but let 'ok' stay true
+      if (x) SERIAL_ECHOLNPAIR("?X must be 0 (NOZZLE_AS_PROBE)."); // ...but let 'ok' stay true//…但让“ok”保持真实
     #endif
   }
 
@@ -76,7 +77,7 @@ void GcodeSuite::M851() {
         ok = false;
       }
     #else
-      if (y) SERIAL_ECHOLNPAIR("?Y must be 0 (NOZZLE_AS_PROBE)."); // ...but let 'ok' stay true
+      if (y) SERIAL_ECHOLNPAIR("?Y must be 0 (NOZZLE_AS_PROBE)."); // ...but let 'ok' stay true//…但让“ok”保持真实
     #endif
   }
 
@@ -90,8 +91,8 @@ void GcodeSuite::M851() {
     }
   }
 
-  // Save the new offsets
+  // Save the new offsets//保存新的偏移
   if (ok) probe.offset = offs;
 }
 
-#endif // HAS_BED_PROBE
+#endif // HAS_BED_PROBE//你有床吗

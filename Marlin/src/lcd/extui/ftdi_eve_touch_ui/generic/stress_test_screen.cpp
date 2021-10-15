@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**************************
  * stress_test_screen.cpp *
  **************************/
@@ -80,9 +81,9 @@ bool StressTestScreen::onTouchEnd(uint8_t tag) {
 }
 
 void StressTestScreen::runTestOnBootup(bool enable) {
-  // Use a magic value in passcode to indicate
-  // whether or not we need to re-run the test
-  // at startup.
+  // Use a magic value in passcode to indicate//在密码中使用一个魔术值来指示
+  // whether or not we need to re-run the test//我们是否需要重新运行测试
+  // at startup.//在启动时。
   LockScreen::set_hash(enable ? 0xDEAD : 0);
   injectCommands_P(PSTR("M500"));
 }
@@ -96,7 +97,7 @@ void StressTestScreen::onEntry() {
   mydata.next_watchdog_trigger = millis() + 10000 + random(40000);
   mydata.message = PSTR("Test 1: Stress testing...");
 
-  // Turn off heaters.
+  // Turn off heaters.//关掉暖气。
   coolDown();
 
   runTestOnBootup(true);
@@ -145,4 +146,4 @@ void StressTestScreen::onIdle() {
   BaseScreen::onIdle();
 }
 
-#endif // FTDI_STRESS_TEST_SCREEN
+#endif // FTDI_STRESS_TEST_SCREEN//FTDI压力测试屏幕

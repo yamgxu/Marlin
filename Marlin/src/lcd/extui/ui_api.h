@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -48,9 +49,9 @@
 
 namespace ExtUI {
 
-  // The ExtUI implementation can store up to this many bytes
-  // in the EEPROM when the methods onStoreSettings and
-  // onLoadSettings are called.
+  // The ExtUI implementation can store up to this many bytes//ExtUI实现最多可以存储这么多字节
+  // in the EEPROM when the methods onStoreSettings and//在EEPROM中，当存储设置和
+  // onLoadSettings are called.//将调用onload设置。
 
   static constexpr size_t eeprom_data_size = 48;
 
@@ -71,8 +72,8 @@ namespace ExtUI {
   bool isMoving();
   bool isAxisPositionKnown(const axis_t);
   bool isAxisPositionKnown(const extruder_t);
-  bool isPositionKnown(); // Axis position guaranteed, steppers active since homing
-  bool isMachineHomed(); // Axis position most likely correct, steppers may have deactivated
+  bool isPositionKnown(); // Axis position guaranteed, steppers active since homing//轴位置得到保证，自复位后步进电机处于活动状态
+  bool isMachineHomed(); // Axis position most likely correct, steppers may have deactivated//轴位置很可能正确，步进器可能已停用
   bool canMove(const axis_t);
   bool canMove(const extruder_t);
   void injectCommands_P(PGM_P const);
@@ -172,10 +173,10 @@ namespace ExtUI {
       inline void onMeshUpdate(const xy_int8_t &pos, const_float_t zval) { onMeshUpdate(pos.x, pos.y, zval); }
 
       typedef enum : uint8_t {
-        G29_START,        // Prior to start of probe
-        G29_FINISH,       // Following probe of all points
-        G29_POINT_START,  // Beginning probe of grid location
-        G29_POINT_FINISH, // Finished probe of grid location
+        G29_START,        // Prior to start of probe//在开始探测之前
+        G29_FINISH,       // Following probe of all points//跟踪所有点的探测
+        G29_POINT_START,  // Beginning probe of grid location//网格定位的起始探测
+        G29_POINT_FINISH, // Finished probe of grid location//网格位置的成品探测
         G26_START,
         G26_FINISH,
         G26_POINT_START,
@@ -325,7 +326,7 @@ namespace ExtUI {
   #ifdef __SAM3X8E__
     uint32_t safe_millis();
   #else
-    FORCE_INLINE uint32_t safe_millis() { return millis(); } // TODO: Implement for AVR
+    FORCE_INLINE uint32_t safe_millis() { return millis(); } // TODO: Implement for AVR//TODO:为AVR实现
   #endif
 
   void delay_us(uint32_t us);

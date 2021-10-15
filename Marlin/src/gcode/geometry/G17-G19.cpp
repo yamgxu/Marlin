@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -50,4 +51,4 @@ void GcodeSuite::G17() { set_workspace_plane(PLANE_XY); }
 void GcodeSuite::G18() { set_workspace_plane(PLANE_ZX); }
 void GcodeSuite::G19() { set_workspace_plane(PLANE_YZ); }
 
-#endif // CNC_WORKSPACE_PLANES
+#endif // CNC_WORKSPACE_PLANES//CNC_工作空间_平面

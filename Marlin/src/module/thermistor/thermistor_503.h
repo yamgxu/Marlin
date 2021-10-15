@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,8 +22,8 @@
  */
 #pragma once
 
-// Zonestar (Z8XM2) Heated Bed thermistor. Added By AvanOsch
-// These are taken from the Zonestar settings in original Repetier firmware: Z8XM2_ZRIB_LCD12864_V51.zip
+// Zonestar (Z8XM2) Heated Bed thermistor. Added By AvanOsch//Zonestar（Z8XM2）加热床热敏电阻。由AvanOsch添加
+// These are taken from the Zonestar settings in original Repetier firmware: Z8XM2_ZRIB_LCD12864_V51.zip//这些设置取自原始Repetier固件中的Zonestar设置：Z8XM2_ZRIB_LCD12864_V51.zip
 constexpr temp_entry_t temptable_503[] PROGMEM = {
    { OV(  12), 300 },
    { OV(  27), 270 },

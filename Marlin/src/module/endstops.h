@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -32,7 +33,7 @@
 #define _ES_ITEM(K,N) TERN_(K,DEFER4(__ES_ITEM)(N))
 
 enum EndstopEnum : char {
-  // Common XYZ (ABC) endstops. Defined according to USE_[XYZ](MIN|MAX)_PLUG settings.
+  // Common XYZ (ABC) endstops. Defined according to USE_[XYZ](MIN|MAX)_PLUG settings.//普通XYZ（ABC）止动块。根据使用[XYZ]（最小值|最大值）插头设置定义。
   _ES_ITEM(HAS_X_MIN, X_MIN)
   _ES_ITEM(HAS_X_MAX, X_MAX)
   _ES_ITEM(HAS_Y_MIN, Y_MIN)
@@ -46,7 +47,7 @@ enum EndstopEnum : char {
   _ES_ITEM(HAS_K_MIN, K_MIN)
   _ES_ITEM(HAS_K_MAX, K_MAX)
 
-  // Extra Endstops for XYZ
+  // Extra Endstops for XYZ//XYZ的额外端点停止
   #if ENABLED(X_DUAL_ENDSTOPS)
     _ES_ITEM(HAS_X_MIN, X2_MIN)
     _ES_ITEM(HAS_X_MAX, X2_MAX)
@@ -68,13 +69,13 @@ enum EndstopEnum : char {
     #endif
   #endif
 
-  // Bed Probe state is distinct or shared with Z_MIN (i.e., when the probe is the only Z endstop)
+  // Bed Probe state is distinct or shared with Z_MIN (i.e., when the probe is the only Z endstop)//床探头状态与Z_MIN不同或共享（即，当探头是唯一的Z端止点时）
   _ES_ITEM(HAS_BED_PROBE, Z_MIN_PROBE IF_DISABLED(HAS_CUSTOM_PROBE_PIN, = Z_MIN))
 
-  // The total number of states
+  // The total number of states//国家总数
   NUM_ENDSTOP_STATES
 
-  // Endstops can be either MIN or MAX but not both
+  // Endstops can be either MIN or MAX but not both//终点可以是“最小”或“最大”，但不能同时是“最小”和“最大”
   #if HAS_X_MIN || HAS_X_MAX
     , X_ENDSTOP = TERN(X_HOME_TO_MAX, X_MAX, X_MIN)
   #endif
@@ -113,11 +114,11 @@ class Endstops {
   private:
     static bool enabled, enabled_globally;
     static endstop_mask_t live_state;
-    static volatile endstop_mask_t hit_state; // Use X_MIN, Y_MIN, Z_MIN and Z_MIN_PROBE as BIT index
+    static volatile endstop_mask_t hit_state; // Use X_MIN, Y_MIN, Z_MIN and Z_MIN_PROBE as BIT index//使用X_MIN、Y_MIN、Z_MIN和Z_MIN_探针作为位索引
 
     #if ENDSTOP_NOISE_THRESHOLD
       static endstop_mask_t validated_live_state;
-      static uint8_t endstop_poll_count;    // Countdown from threshold for polling
+      static uint8_t endstop_poll_count;    // Countdown from threshold for polling//从轮询阈值开始倒计时
     #endif
 
   public:
@@ -185,26 +186,26 @@ class Endstops {
      */
     static void report_states();
 
-    // Enable / disable endstop checking globally
+    // Enable / disable endstop checking globally//全局启用/禁用endstop检查
     static void enable_globally(const bool onoff=true);
 
-    // Enable / disable endstop checking
+    // Enable / disable endstop checking//启用/禁用结束停止检查
     static void enable(const bool onoff=true);
 
-    // Disable / Enable endstops based on ENSTOPS_ONLY_FOR_HOMING and global enable
+    // Disable / Enable endstops based on ENSTOPS_ONLY_FOR_HOMING and global enable//基于ENSTOPS（仅限ENSU）禁用/启用端止点，以进行重新定位和全局启用
     static void not_homing();
 
     #if ENABLED(VALIDATE_HOMING_ENDSTOPS)
-      // If the last move failed to trigger an endstop, call kill
+      // If the last move failed to trigger an endstop, call kill//如果最后一步未能触发结束停止，则调用kill
       static void validate_homing_move();
     #else
       FORCE_INLINE static void validate_homing_move() { hit_on_purpose(); }
     #endif
 
-    // Clear endstops (i.e., they were hit intentionally) to suppress the report
+    // Clear endstops (i.e., they were hit intentionally) to suppress the report//清除终止点（即，它们被故意击中）以抑制报告
     FORCE_INLINE static void hit_on_purpose() { hit_state = 0; }
 
-    // Enable / disable endstop z-probe checking
+    // Enable / disable endstop z-probe checking//启用/禁用endstop z-probe检查
     #if HAS_BED_PROBE
       static volatile bool z_probe_enabled;
       static void enable_z_probe(const bool onoff=true);
@@ -212,7 +213,7 @@ class Endstops {
 
     static void resync();
 
-    // Debugging of endstops
+    // Debugging of endstops//端点停止的调试
     #if ENABLED(PINS_DEBUGGING)
       static bool monitor_flag;
       static void monitor();

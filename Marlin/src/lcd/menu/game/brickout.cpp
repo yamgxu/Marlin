@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -59,58 +60,58 @@ void reset_ball() {
 }
 
 void BrickoutGame::game_screen() {
-  if (game_frame()) {     // Run logic twice for finer resolution
-    // Update Paddle Position
+  if (game_frame()) {     // Run logic twice for finer resolution//运行逻辑两次以获得更高的分辨率
+    // Update Paddle Position//更新桨叶位置
     bdat.paddle_x = constrain(int8_t(ui.encoderPosition), 0, (LCD_PIXEL_WIDTH - (PADDLE_W)) / (PADDLE_VEL));
     ui.encoderPosition = bdat.paddle_x;
     bdat.paddle_x *= (PADDLE_VEL);
 
-    // Run the ball logic
+    // Run the ball logic//跑球逻辑
     if (game_state) do {
 
-      // Provisionally update the ball position
-      const fixed_t newx = bdat.ballx + bdat.ballh, newy = bdat.bally + bdat.ballv;  // current next position
-      if (!WITHIN(newx, 0, BTOF(LCD_PIXEL_WIDTH - 1))) {    // out in x?
-        bdat.ballh = -bdat.ballh; _BUZZ(5, 220);            // bounce x
+      // Provisionally update the ball position//暂时更新球的位置
+      const fixed_t newx = bdat.ballx + bdat.ballh, newy = bdat.bally + bdat.ballv;  // current next position//当前下一个位置
+      if (!WITHIN(newx, 0, BTOF(LCD_PIXEL_WIDTH - 1))) {    // out in x?//在x里？
+        bdat.ballh = -bdat.ballh; _BUZZ(5, 220);            // bounce x//反弹x
       }
-      if (newy < 0) {                                       // out in y?
-        bdat.ballv = -bdat.ballv; _BUZZ(5, 280);            // bounce v
+      if (newy < 0) {                                       // out in y?//在纽约？
+        bdat.ballv = -bdat.ballv; _BUZZ(5, 280);            // bounce v//弹跳
         bdat.hit_dir = 1;
       }
-      // Did the ball go below the bottom?
+      // Did the ball go below the bottom?//球到底下了吗？
       else if (newy > BTOF(LCD_PIXEL_HEIGHT)) {
         _BUZZ(500, 75);
         if (--bdat.balls_left) reset_ball(); else game_state = 0;
-        break; // done
+        break; // done//完成
       }
 
-      // Is the ball colliding with a brick?
+      // Is the ball colliding with a brick?//球与砖头相撞吗？
       if (WITHIN(newy, BTOF(BRICK_TOP), BTOF(BRICK_BOT))) {
         const int8_t bit = BRICK_COL(FTOB(newx)), row = BRICK_ROW(FTOB(newy));
         const uint16_t mask = _BV(bit);
         if (bdat.bricks[row] & mask) {
-          // Yes. Remove it!
+          // Yes. Remove it!//对。把它拿走！
           bdat.bricks[row] &= ~mask;
-          // Score!
+          // Score!//得分！
           score += BRICK_ROWS - row;
-          // If bricks are gone, go to reset state
+          // If bricks are gone, go to reset state//如果砖块消失，请转到重置状态
           if (!--bdat.brick_count) game_state = 2;
-          // Bounce the ball cleverly
+          // Bounce the ball cleverly//巧妙地弹起球
           if ((bdat.ballv < 0) == (bdat.hit_dir < 0)) { bdat.ballv = -bdat.ballv; bdat.ballh += fixed_t(random(-16, 16)); _BUZZ(5, 880); }
                                        else { bdat.ballh = -bdat.ballh; bdat.ballv += fixed_t(random(-16, 16)); _BUZZ(5, 640); }
         }
       }
-      // Is the ball moving down and in paddle range?
+      // Is the ball moving down and in paddle range?//球是否向下移动并在划桨范围内？
       else if (bdat.ballv > 0 && WITHIN(newy, BTOF(PADDLE_Y), BTOF(PADDLE_Y + PADDLE_H))) {
-        // Ball actually hitting paddle
+        // Ball actually hitting paddle//球实际上击中了球拍
         const int8_t diff = FTOB(newx) - bdat.paddle_x;
         if (WITHIN(diff, 0, PADDLE_W - 1)) {
 
-          // Reverse Y direction
+          // Reverse Y direction//反向Y方向
           bdat.ballv = -bdat.ballv; _BUZZ(3, 880);
           bdat.hit_dir = -1;
 
-          // Near edges affects X velocity
+          // Near edges affects X velocity//近边影响X速度
           const bool is_left_edge = (diff <= 1);
           if (is_left_edge || diff >= PADDLE_W-1 - 1) {
             if ((bdat.ballh > 0) == is_left_edge) bdat.ballh = -bdat.ballh;
@@ -126,19 +127,19 @@ void BrickoutGame::game_screen() {
             NOMORE(bdat.ballh, BTOF(2));
           }
 
-          // Paddle hit after clearing the board? Reset the board.
+          // Paddle hit after clearing the board? Reset the board.//划桨在清理板后击球？重置电路板。
           if (game_state == 2) { reset_bricks(0xFFFF); game_state = 1; }
         }
       }
 
-      bdat.ballx += bdat.ballh; bdat.bally += bdat.ballv; // update with new velocity
+      bdat.ballx += bdat.ballh; bdat.bally += bdat.ballv; // update with new velocity//以新的速度更新
 
     } while (false);
   }
 
   u8g.setColorIndex(1);
 
-  // Draw bricks
+  // Draw bricks//画砖
   if (PAGE_CONTAINS(BRICK_TOP, BRICK_BOT)) {
     LOOP_L_N(y, BRICK_ROWS) {
       const uint8_t yy = y * BRICK_H + BRICK_TOP;
@@ -155,7 +156,7 @@ void BrickoutGame::game_screen() {
     }
   }
 
-  // Draw paddle
+  // Draw paddle//划桨
   if (PAGE_CONTAINS(PADDLE_Y-1, PADDLE_Y)) {
     u8g.drawHLine(bdat.paddle_x, PADDLE_Y, PADDLE_W);
     #if PADDLE_H > 1
@@ -166,36 +167,36 @@ void BrickoutGame::game_screen() {
     #endif
   }
 
-  // Draw ball while game is running
+  // Draw ball while game is running//在比赛进行中抽球
   if (game_state) {
     const uint8_t by = FTOB(bdat.bally);
     if (PAGE_CONTAINS(by, by+1))
       u8g.drawFrame(FTOB(bdat.ballx), by, 2, 2);
   }
-  // Or draw GAME OVER
+  // Or draw GAME OVER//还是平局
   else
     draw_game_over();
 
   if (PAGE_UNDER(MENU_FONT_ASCENT)) {
-    // Score Digits
-    //const uint8_t sx = (LCD_PIXEL_WIDTH - (score >= 10 ? score >= 100 ? score >= 1000 ? 4 : 3 : 2 : 1) * MENU_FONT_WIDTH) / 2;
+    // Score Digits//分数位数
+    //const uint8_t sx = (LCD_PIXEL_WIDTH - (score >= 10 ? score >= 100 ? score >= 1000 ? 4 : 3 : 2 : 1) * MENU_FONT_WIDTH) / 2;//const uint8\u t sx=（LCD像素宽度-（分数>=10？分数>=100？分数>=1000？4:3:2:1）*菜单字体宽度）/2；
     constexpr uint8_t sx = 0;
     lcd_put_int(sx, MENU_FONT_ASCENT - 1, score);
 
-    // Balls Left
+    // Balls Left//左边的球
     lcd_moveto(LCD_PIXEL_WIDTH - MENU_FONT_WIDTH * 3, MENU_FONT_ASCENT - 1);
     PGM_P const ohs = PSTR("ooo\0\0");
     lcd_put_u8str_P(ohs + 3 - bdat.balls_left);
   }
 
-  // A click always exits this game
+  // A click always exits this game//单击始终退出此游戏
   if (ui.use_click()) exit_game();
 }
 
 #define SCREEN_M ((LCD_PIXEL_WIDTH) / 2)
 
 void BrickoutGame::enter_game() {
-  init_game(2, game_screen); // 2 = reset bricks on paddle hit
+  init_game(2, game_screen); // 2 = reset bricks on paddle hit//2=重置拨杆击球时的砖块
   constexpr uint8_t paddle_start = SCREEN_M - (PADDLE_W) / 2;
   bdat.paddle_x = paddle_start;
   bdat.balls_left = 3;
@@ -204,4 +205,4 @@ void BrickoutGame::enter_game() {
   ui.encoderPosition = paddle_start / (PADDLE_VEL);
 }
 
-#endif // MARLIN_BRICKOUT
+#endif // MARLIN_BRICKOUT//马林·布里科特

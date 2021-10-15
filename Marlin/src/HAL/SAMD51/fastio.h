@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  *
@@ -40,10 +41,10 @@
  * Now you can simply SET_OUTPUT(IO); WRITE(IO, HIGH); WRITE(IO, LOW);
  */
 
-// Read a pin
+// Read a pin//读别针
 #define READ(IO)        ((PORT->Group[(EPortType)GET_SAMD_PORT(IO)].IN.reg & MASK(GET_SAMD_PIN(IO))) != 0)
 
-// Write to a pin
+// Write to a pin//用别针写字
 #define WRITE(IO,V)     do{                                                     \
                           const EPortType port = (EPortType)GET_SAMD_PORT(IO);  \
                           const uint32_t mask = MASK(GET_SAMD_PIN(IO));         \
@@ -52,10 +53,10 @@
                           else PORT->Group[port].OUTCLR.reg = mask;             \
                         }while(0)
 
-// Toggle a pin
+// Toggle a pin//拨动别针
 #define TOGGLE(IO)      PORT->Group[(EPortType)GET_SAMD_PORT(IO)].OUTTGL.reg = MASK(GET_SAMD_PIN(IO));
 
-// Set pin as input
+// Set pin as input//将引脚设置为输入
 #define SET_INPUT(IO)           do{                                                                 \
                                   const EPortType port = (EPortType)GET_SAMD_PORT(IO);              \
                                   const uint32_t pin = GET_SAMD_PIN(IO);                            \
@@ -63,7 +64,7 @@
                                   PORT->Group[port].PINCFG[pin].reg = (uint8_t)(PORT_PINCFG_INEN);  \
                                   PORT->Group[port].DIRCLR.reg = MASK(pin);                         \
                                 }while(0)
-// Set pin as input with pullup
+// Set pin as input with pullup//通过上拉将引脚设置为输入
 #define SET_INPUT_PULLUP(IO)    do{                                                                                       \
                                   const EPortType port = (EPortType)GET_SAMD_PORT(IO);                                    \
                                   const uint32_t pin = GET_SAMD_PIN(IO);                                                  \
@@ -73,7 +74,7 @@
                                   PORT->Group[port].DIRCLR.reg = mask;                                                    \
                                   PORT->Group[port].OUTSET.reg = mask;                                                    \
                                 }while(0)
-// Set pin as input with pulldown
+// Set pin as input with pulldown//使用下拉菜单将引脚设置为输入
 #define SET_INPUT_PULLDOWN(IO)  do{                                                                                       \
                                   const EPortType port = (EPortType)GET_SAMD_PORT(IO);                                    \
                                   const uint32_t pin = GET_SAMD_PIN(IO);                                                  \
@@ -83,7 +84,7 @@
                                   PORT->Group[port].DIRCLR.reg = mask;                                                    \
                                   PORT->Group[port].OUTCLR.reg = mask;                                                    \
                                 }while(0)
-// Set pin as output (push pull)
+// Set pin as output (push pull)//将销设置为输出（推拉）
 #define SET_OUTPUT(IO)          do{                                                                 \
                                   const EPortType port = (EPortType)GET_SAMD_PORT(IO);              \
                                   const uint32_t pin = GET_SAMD_PIN(IO);                            \
@@ -91,7 +92,7 @@
                                   PORT->Group[port].DIRSET.reg = MASK(pin);                         \
                                   PORT->Group[port].PINCFG[pin].reg = 0;                            \
                                 }while(0)
-// Set pin as output (open drain)
+// Set pin as output (open drain)//将引脚设置为输出（开漏）
 #define SET_OUTPUT_OD(IO)       do{                                                                   \
                                   const EPortType port = (EPortType)GET_SAMD_PORT(IO);                \
                                   const uint32_t pin = GET_SAMD_PIN(IO);                              \
@@ -99,22 +100,22 @@
                                   PORT->Group[port].PINCFG[pin].reg = (uint8_t)(PORT_PINCFG_PULLEN);  \
                                   PORT->Group[port].DIRCLR.reg = MASK(pin);                           \
                                 }while(0)
-// Set pin as PWM (push pull)
+// Set pin as PWM (push pull)//将针脚设置为PWM（推拉）
 #define SET_PWM                 SET_OUTPUT
-// Set pin as PWM (open drain)
+// Set pin as PWM (open drain)//将引脚设置为PWM（开路漏极）
 #define SET_PWM_OD              SET_OUTPUT_OD
 
-// check if pin is an output
+// check if pin is an output//检查引脚是否为输出
 #define IS_OUTPUT(IO)            ((PORT->Group[(EPortType)GET_SAMD_PORT(IO)].DIR.reg & MASK(GET_SAMD_PIN(IO))) \
                                  || (PORT->Group[(EPortType)GET_SAMD_PORT(IO)].PINCFG[GET_SAMD_PIN(IO)].reg & (PORT_PINCFG_INEN | PORT_PINCFG_PULLEN)) == PORT_PINCFG_PULLEN)
-// check if pin is an input
+// check if pin is an input//检查引脚是否为输入
 #define IS_INPUT(IO)            !IS_OUTPUT(IO)
 
-// Shorthand
+// Shorthand//速记
 #define OUT_WRITE(IO,V)         do{ SET_OUTPUT(IO); WRITE(IO,V); }while(0)
 #define OUT_WRITE_OD(IO,V)      do{ SET_OUTPUT_OD(IO); WRITE(IO,V); }while(0)
 
-// digitalRead/Write wrappers
+// digitalRead/Write wrappers//数字读/写包装器
 #define extDigitalRead(IO)      digitalRead(IO)
 #define extDigitalWrite(IO,V)   digitalWrite(IO,V)
 
@@ -131,7 +132,7 @@
    */
   #define PWM_PIN(P)        (WITHIN(P, 2, 13) || WITHIN(P, 22, 23) || WITHIN(P, 44, 45) || P == 48)
 
-  // Return fullfilled ADCx->INPUTCTRL.reg
+  // Return fullfilled ADCx->INPUTCTRL.reg//返回完全填充的ADCx->INPUTCTRL.reg
   #define PIN_TO_INPUTCTRL(P)     (  (PIN_TO_AIN(P) == 0) ? ADC_INPUTCTRL_MUXPOS_AIN0   \
                                    : (PIN_TO_AIN(P) == 1) ? ADC_INPUTCTRL_MUXPOS_AIN1   \
                                    : (PIN_TO_AIN(P) == 2) ? ADC_INPUTCTRL_MUXPOS_AIN2   \
@@ -175,12 +176,12 @@
    * pins
    */
 
-   // PORTA
-  #define DIO67_PIN   PIN_PA02    // A0
-  #define DIO59_PIN   PIN_PA04    // A13
-  #define DIO68_PIN   PIN_PA05    // A1
-  #define DIO60_PIN   PIN_PA06    // A14
-  #define DIO61_PIN   PIN_PA07    // A15
+   // PORTA//门
+  #define DIO67_PIN   PIN_PA02    // A0//A0
+  #define DIO59_PIN   PIN_PA04    // A13//A13
+  #define DIO68_PIN   PIN_PA05    // A1//A1
+  #define DIO60_PIN   PIN_PA06    // A14//A14
+  #define DIO61_PIN   PIN_PA07    // A15//A15
   #define DIO26_PIN   PIN_PA12
   #define DIO27_PIN   PIN_PA13
   #define DIO28_PIN   PIN_PA14
@@ -193,17 +194,17 @@
   #define DIO32_PIN   PIN_PA21
   #define DIO31_PIN   PIN_PA22
   #define DIO30_PIN   PIN_PA23
-  // PORTB
-  #define DIO12_PIN   PIN_PB00    // A16
-  #define DIO13_PIN   PIN_PB01    // A17
-  #define DIO9_PIN    PIN_PB02    // A18
-  #define DIO69_PIN   PIN_PB03    // A2
-  #define DIO74_PIN   PIN_PB04    // A7
-  #define DIO54_PIN   PIN_PB05    // A8
-  #define DIO55_PIN   PIN_PB06    // A9
-  #define DIO56_PIN   PIN_PB07    // A10
-  #define DIO57_PIN   PIN_PB08    // A11
-  #define DIO58_PIN   PIN_PB09    // A12
+  // PORTB//波尔图
+  #define DIO12_PIN   PIN_PB00    // A16//A16
+  #define DIO13_PIN   PIN_PB01    // A17//A17
+  #define DIO9_PIN    PIN_PB02    // A18//A18
+  #define DIO69_PIN   PIN_PB03    // A2//A2
+  #define DIO74_PIN   PIN_PB04    // A7//A7
+  #define DIO54_PIN   PIN_PB05    // A8//A8
+  #define DIO55_PIN   PIN_PB06    // A9//A9
+  #define DIO56_PIN   PIN_PB07    // A10//A10
+  #define DIO57_PIN   PIN_PB08    // A11//A11
+  #define DIO58_PIN   PIN_PB09    // A12//A12
   #define DIO18_PIN   PIN_PB12
   #define DIO19_PIN   PIN_PB13
   #define DIO39_PIN   PIN_PB14
@@ -218,13 +219,13 @@
   #define DIO11_PIN   PIN_PB23
   #define DIO1_PIN    PIN_PB24
   #define DIO0_PIN    PIN_PB25
-  #define DIO83_PIN   PIN_PB28    // SD_CS
-  #define DIO95_PIN   PIN_PB31    // SD_CD
-  // PORTC
-  #define DIO70_PIN   PIN_PC00    // A3
-  #define DIO71_PIN   PIN_PC01    // A4
-  #define DIO72_PIN   PIN_PC02    // A5
-  #define DIO73_PIN   PIN_PC03    // A6
+  #define DIO83_PIN   PIN_PB28    // SD_CS//SD_CS
+  #define DIO95_PIN   PIN_PB31    // SD_CD//SD_光盘
+  // PORTC//波尔图
+  #define DIO70_PIN   PIN_PC00    // A3//A3
+  #define DIO71_PIN   PIN_PC01    // A4//A4
+  #define DIO72_PIN   PIN_PC02    // A5//A5
+  #define DIO73_PIN   PIN_PC03    // A6//A6
   #define DIO48_PIN   PIN_PC04
   #define DIO49_PIN   PIN_PC05
   #define DIO46_PIN   PIN_PC06
@@ -243,11 +244,11 @@
   #define DIO5_PIN    PIN_PC21
   #define DIO16_PIN   PIN_PC22
   #define DIO17_PIN   PIN_PC23
-  #define DIO88_PIN   PIN_PC24    // NEOPIXEL
-  // PORTD
+  #define DIO88_PIN   PIN_PC24    // NEOPIXEL//纽皮克塞尔
+  // PORTD//波特
   #define DIO53_PIN   PIN_PD10
   #define DIO22_PIN   PIN_PD12
   #define DIO6_PIN    PIN_PD20
   #define DIO7_PIN    PIN_PD21
 
-#endif // ADAFRUIT_GRAND_CENTRAL_M4
+#endif // ADAFRUIT_GRAND_CENTRAL_M4//ADAFRUIT_GRAND_CENTRAL_M4

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  *
@@ -30,9 +31,9 @@
 
 #include <libmaple/timer.h>
 
-// ------------------------
-// Defines
-// ------------------------
+// ------------------------// ------------------------
+// Defines//定义
+// ------------------------// ------------------------
 
 /**
  * TODO: Check and confirm what timer we will use for each Temps and stepper driving.
@@ -42,13 +43,13 @@
 typedef uint16_t hal_timer_t;
 #define HAL_TIMER_TYPE_MAX 0xFFFF
 
-#define HAL_TIMER_RATE uint32_t(F_CPU)  // frequency of timers peripherals
+#define HAL_TIMER_RATE uint32_t(F_CPU)  // frequency of timers peripherals//定时器和外围设备的频率
 
 #ifndef STEP_TIMER_CHAN
-  #define STEP_TIMER_CHAN 1 // Channel of the timer to use for compare and interrupts
+  #define STEP_TIMER_CHAN 1 // Channel of the timer to use for compare and interrupts//用于比较和中断的计时器通道
 #endif
 #ifndef TEMP_TIMER_CHAN
-  #define TEMP_TIMER_CHAN 1 // Channel of the timer to use for compare and interrupts
+  #define TEMP_TIMER_CHAN 1 // Channel of the timer to use for compare and interrupts//用于比较和中断的计时器通道
 #endif
 
 /**
@@ -67,42 +68,42 @@ typedef uint16_t hal_timer_t;
  */
 #ifndef STEP_TIMER_NUM
   #if defined(MCU_STM32F103CB) || defined(MCU_STM32F103C8)
-    #define STEP_TIMER_NUM      4  // For C8/CB boards, use timer 4
+    #define STEP_TIMER_NUM      4  // For C8/CB boards, use timer 4//对于C8/CB板，使用定时器4
   #else
-    #define STEP_TIMER_NUM      5  // for other boards, five is fine.
+    #define STEP_TIMER_NUM      5  // for other boards, five is fine.//对于其他板，5个就可以了。
   #endif
 #endif
 #ifndef PULSE_TIMER_NUM
   #define PULSE_TIMER_NUM       STEP_TIMER_NUM
 #endif
 #ifndef TEMP_TIMER_NUM
-  #define TEMP_TIMER_NUM        2  // Timer Index for Temperature
-  //#define TEMP_TIMER_NUM      4  // 2->4, Timer 2 for Stepper Current PWM
+  #define TEMP_TIMER_NUM        2  // Timer Index for Temperature//温度计时器索引
+  //#define TEMP_TIMER_NUM      4  // 2->4, Timer 2 for Stepper Current PWM//#定义步进电流PWM的临时定时器数量4//2->4、定时器2
 #endif
 
 #if MB(BTT_SKR_MINI_E3_V1_0, BTT_SKR_E3_DIP, BTT_SKR_MINI_E3_V1_2, MKS_ROBIN_LITE, MKS_ROBIN_E3D, MKS_ROBIN_E3)
-  // SKR Mini E3 boards use PA8 as FAN_PIN, so TIMER 1 is used for Fan PWM.
+  // SKR Mini E3 boards use PA8 as FAN_PIN, so TIMER 1 is used for Fan PWM.//SKR Mini E3板使用PA8作为风扇引脚，因此定时器1用于风扇PWM。
   #ifdef STM32_HIGH_DENSITY
-    #define SERVO0_TIMER_NUM 8  // tone.cpp uses Timer 4
+    #define SERVO0_TIMER_NUM 8  // tone.cpp uses Timer 4//tone.cpp使用计时器4
   #else
-    #define SERVO0_TIMER_NUM 3  // tone.cpp uses Timer 8
+    #define SERVO0_TIMER_NUM 3  // tone.cpp uses Timer 8//tone.cpp使用计时器8
   #endif
 #else
-  #define SERVO0_TIMER_NUM 1  // SERVO0 or BLTOUCH
+  #define SERVO0_TIMER_NUM 1  // SERVO0 or BLTOUCH//伺服0或BLTOUCH
 #endif
 
 #define STEP_TIMER_IRQ_PRIO 2
 #define TEMP_TIMER_IRQ_PRIO 3
 #define SERVO0_TIMER_IRQ_PRIO 1
 
-#define TEMP_TIMER_PRESCALE     1000 // prescaler for setting Temp timer, 72Khz
-#define TEMP_TIMER_FREQUENCY    1000 // temperature interrupt frequency
+#define TEMP_TIMER_PRESCALE     1000 // prescaler for setting Temp timer, 72Khz//用于设置温度定时器的预分频器，72Khz
+#define TEMP_TIMER_FREQUENCY    1000 // temperature interrupt frequency//温度中断频率
 
-#define STEPPER_TIMER_PRESCALE 18             // prescaler for setting stepper timer, 4Mhz
-#define STEPPER_TIMER_RATE     (HAL_TIMER_RATE / STEPPER_TIMER_PRESCALE)   // frequency of stepper timer
-#define STEPPER_TIMER_TICKS_PER_US ((STEPPER_TIMER_RATE) / 1000000) // stepper timer ticks per µs
+#define STEPPER_TIMER_PRESCALE 18             // prescaler for setting stepper timer, 4Mhz//用于设置步进定时器的预分频器，4Mhz
+#define STEPPER_TIMER_RATE     (HAL_TIMER_RATE / STEPPER_TIMER_PRESCALE)   // frequency of stepper timer//步进定时器的频率
+#define STEPPER_TIMER_TICKS_PER_US ((STEPPER_TIMER_RATE) / 1000000) // stepper timer ticks per µs//步进定时器滴答声每微秒
 
-#define PULSE_TIMER_RATE       STEPPER_TIMER_RATE   // frequency of pulse timer
+#define PULSE_TIMER_RATE       STEPPER_TIMER_RATE   // frequency of pulse timer//脉冲定时器频率
 #define PULSE_TIMER_PRESCALE   STEPPER_TIMER_PRESCALE
 #define PULSE_TIMER_TICKS_PER_US STEPPER_TIMER_TICKS_PER_US
 
@@ -120,7 +121,7 @@ timer_dev* get_timer_dev(int number);
 
 #define HAL_timer_get_count(timer_num) timer_get_count(TIMER_DEV(timer_num))
 
-// TODO change this
+// TODO change this//要改变这个吗
 
 #ifndef HAL_TEMP_TIMER_ISR
   #define HAL_TEMP_TIMER_ISR() extern "C" void tempTC_Handler()
@@ -134,16 +135,16 @@ extern "C" {
   void stepTC_Handler();
 }
 
-// ------------------------
-// Public Variables
-// ------------------------
+// ------------------------// ------------------------
+// Public Variables//公共变量
+// ------------------------// ------------------------
 
-//static HardwareTimer StepperTimer(STEP_TIMER_NUM);
-//static HardwareTimer TempTimer(TEMP_TIMER_NUM);
+//static HardwareTimer StepperTimer(STEP_TIMER_NUM);//静态硬件定时器步进定时器（步进定时器）；
+//static HardwareTimer TempTimer(TEMP_TIMER_NUM);//静态硬件定时器（TEMP\u TIMER\u NUM）；
 
-// ------------------------
-// Public functions
-// ------------------------
+// ------------------------// ------------------------
+// Public functions//公共职能
+// ------------------------// ------------------------
 
 void HAL_timer_start(const uint8_t timer_num, const uint32_t frequency);
 void HAL_timer_enable_interrupt(const uint8_t timer_num);
@@ -164,10 +165,10 @@ bool HAL_timer_interrupt_enabled(const uint8_t timer_num);
 FORCE_INLINE static void HAL_timer_set_compare(const uint8_t timer_num, const hal_timer_t compare) {
   switch (timer_num) {
   case STEP_TIMER_NUM:
-    // NOTE: WE have set ARPE = 0, which means the Auto reload register is not preloaded
-    // and there is no need to use any compare, as in the timer mode used, setting ARR to the compare value
-    // will result in exactly the same effect, ie trigerring an interrupt, and on top, set counter to 0
-    timer_set_reload(STEP_TIMER_DEV, compare); // We reload direct ARR as needed during counting up
+    // NOTE: WE have set ARPE = 0, which means the Auto reload register is not preloaded//注意：我们已将ARPE设置为0，这意味着自动重新加载寄存器未预加载
+    // and there is no need to use any compare, as in the timer mode used, setting ARR to the compare value//并且不需要使用任何比较，就像在使用的计时器模式中一样，将ARR设置为比较值
+    // will result in exactly the same effect, ie trigerring an interrupt, and on top, set counter to 0//将产生完全相同的效果，即触发中断，并在顶部将计数器设置为0
+    timer_set_reload(STEP_TIMER_DEV, compare); // We reload direct ARR as needed during counting up//我们在计数过程中根据需要重新加载直接ARR
     break;
   case TEMP_TIMER_NUM:
     timer_set_compare(TEMP_TIMER_DEV, TEMP_TIMER_CHAN, compare);
@@ -178,7 +179,7 @@ FORCE_INLINE static void HAL_timer_set_compare(const uint8_t timer_num, const ha
 FORCE_INLINE static void HAL_timer_isr_prologue(const uint8_t timer_num) {
   switch (timer_num) {
   case STEP_TIMER_NUM:
-    // No counter to clear
+    // No counter to clear//没有计数器可以清除
     timer_generate_update(STEP_TIMER_DEV);
     return;
   case TEMP_TIMER_NUM:
@@ -190,12 +191,12 @@ FORCE_INLINE static void HAL_timer_isr_prologue(const uint8_t timer_num) {
 
 #define HAL_timer_isr_epilogue(TIMER_NUM)
 
-// No command is available in framework to turn off ARPE bit, which is turned on by default in libmaple.
-// Needed here to reset ARPE=0 for stepper timer
+// No command is available in framework to turn off ARPE bit, which is turned on by default in libmaple.//框架中没有关闭ARPE位的命令，这在libmaple中是默认打开的。
+// Needed here to reset ARPE=0 for stepper timer//此处需要重置步进定时器的ARPE=0
 FORCE_INLINE static void timer_no_ARR_preload_ARPE(timer_dev *dev) {
   bb_peri_set_bit(&(dev->regs).gen->CR1, TIMER_CR1_ARPE_BIT, 0);
 }
 
 void timer_set_interrupt_priority(uint_fast8_t timer_num, uint_fast8_t priority);
 
-#define TIMER_OC_NO_PRELOAD 0 // Need to disable preload also on compare registers.
+#define TIMER_OC_NO_PRELOAD 0 // Need to disable preload also on compare registers.//还需要在比较寄存器上禁用预加载。

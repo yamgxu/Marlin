@@ -1,3 +1,4 @@
+/** translatione by yx */
 /***************************
  * flow_percent_screen.cpp *
  ***************************/
@@ -47,4 +48,4 @@ bool FlowPercentScreen::onTouchHeld(uint8_t tag) {
   return true;
 }
 
-#endif // FTDI_FLOW_PERCENT_SCREEN
+#endif // FTDI_FLOW_PERCENT_SCREEN//FTDI流量百分比屏幕

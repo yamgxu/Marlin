@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*************
  * unicode.h *
  *************/
@@ -72,7 +73,7 @@ namespace FTDI {
   void draw_utf8_text(CommandProcessor&, int x, int y, progmem_str, font_size_t, uint16_t options = 0);
   void draw_utf8_text(CommandProcessor&, int x, int y, const char *, font_size_t, uint16_t options = 0);
 
-  // Similar to CLCD::FontMetrics, but can be used with UTF8 encoded strings.
+  // Similar to CLCD::FontMetrics, but can be used with UTF8 encoded strings.//类似于CLCD:：FontMetrics，但可用于UTF8编码的字符串。
 
   struct FontMetrics {
     #if ENABLED(TOUCH_UI_USE_UTF8)

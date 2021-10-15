@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -38,7 +39,7 @@
 #include "../gcode/gcode.h"
 #include "../lcd/marlinui.h"
 
-#include "../MarlinCore.h" // for stop(), disable_e_steppers(), wait_for_user_response()
+#include "../MarlinCore.h" // for stop(), disable_e_steppers(), wait_for_user_response()//对于stop（），禁用步进器（），等待用户响应（）
 
 #if HAS_LEVELING
   #include "../feature/bedlevel/bedlevel.h"
@@ -61,7 +62,7 @@
 #endif
 
 #if ENABLED(HOST_PROMPT_SUPPORT)
-  #include "../feature/host_actions.h" // for PROMPT_USER_CONTINUE
+  #include "../feature/host_actions.h" // for PROMPT_USER_CONTINUE//对于提示用户，请继续
 #endif
 
 #if HAS_Z_SERVO_PROBE
@@ -86,7 +87,7 @@
 
 Probe probe;
 
-xyz_pos_t Probe::offset; // Initialized by settings.load()
+xyz_pos_t Probe::offset; // Initialized by settings.load()//由settings.load（）初始化
 
 #if HAS_PROBE_XY_OFFSET
   const xy_pos_t &Probe::offset_xy = Probe::offset;
@@ -107,17 +108,17 @@ xyz_pos_t Probe::offset; // Initialized by settings.load()
   static void dock_sled(const bool stow) {
     if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPAIR("dock_sled(", stow, ")");
 
-    // Dock sled a bit closer to ensure proper capturing
+    // Dock sled a bit closer to ensure proper capturing//将雪橇靠得更近一点，以确保正确捕获
     do_blocking_move_to_x(X_MAX_POS + SLED_DOCKING_OFFSET - ((stow) ? 1 : 0));
 
     #if HAS_SOLENOID_1 && DISABLED(EXT_SOLENOID)
-      WRITE(SOL1_PIN, !stow); // switch solenoid
+      WRITE(SOL1_PIN, !stow); // switch solenoid//开关电磁阀
     #endif
   }
 
 #elif ENABLED(TOUCH_MI_PROBE)
 
-  // Move to the magnet to unlock the probe
+  // Move to the magnet to unlock the probe//移动到磁铁以解锁探头
   inline void run_deploy_moves_script() {
     #ifndef TOUCH_MI_DEPLOY_XPOS
       #define TOUCH_MI_DEPLOY_XPOS X_MIN_POS
@@ -148,7 +149,7 @@ xyz_pos_t Probe::offset; // Initialized by settings.load()
     #endif
   }
 
-  // Move down to the bed to stow the probe
+  // Move down to the bed to stow the probe//向下移动到床上以收起探头
   inline void run_stow_moves_script() {
     const xyz_pos_t oldpos = current_position;
     endstops.enable_z_probe(false);
@@ -234,7 +235,7 @@ xyz_pos_t Probe::offset; // Initialized by settings.load()
     #endif
   }
 
-#endif // Z_PROBE_ALLEN_KEY
+#endif // Z_PROBE_ALLEN_KEY//Z_探头_艾伦_键
 
 #if HAS_QUIET_PROBING
 
@@ -267,7 +268,7 @@ xyz_pos_t Probe::offset; // Initialized by settings.load()
     if (dopause) safe_delay(_MAX(DELAY_BEFORE_PROBING, 25));
   }
 
-#endif // HAS_QUIET_PROBING
+#endif // HAS_QUIET_PROBING//你安静了吗
 
 /**
  * Raise Z to a minimum height to make room for a probe to move
@@ -290,7 +291,7 @@ FORCE_INLINE void probe_specific_action(const bool deploy) {
       BUZZ(100, 698);
 
       PGM_P const ds_str = deploy ? GET_TEXT(MSG_MANUAL_DEPLOY) : GET_TEXT(MSG_MANUAL_STOW);
-      ui.return_to_status();       // To display the new status message
+      ui.return_to_status();       // To display the new status message//显示新状态消息的步骤
       ui.set_status_P(ds_str, 99);
       SERIAL_ECHOLNPGM_P(ds_str);
 
@@ -302,7 +303,7 @@ FORCE_INLINE void probe_specific_action(const bool deploy) {
 
     } while (ENABLED(PAUSE_PROBE_DEPLOY_WHEN_TRIGGERED));
 
-  #endif // PAUSE_BEFORE_DEPLOY_STOW
+  #endif // PAUSE_BEFORE_DEPLOY_STOW//在部署前暂停
 
   #if ENABLED(SOLENOID_PROBE)
 
@@ -404,9 +405,9 @@ bool Probe::set_deployed(const bool deploy) {
 
   if (endstops.z_probe_enabled == deploy) return false;
 
-  // Make room for probe to deploy (or stow)
-  // Fix-mounted probe should only raise for deploy
-  // unless PAUSE_BEFORE_DEPLOY_STOW is enabled
+  // Make room for probe to deploy (or stow)//为探头的展开（或存放）留出空间
+  // Fix-mounted probe should only raise for deploy//固定式探头仅应在展开时升起
+  // unless PAUSE_BEFORE_DEPLOY_STOW is enabled//除非在启用部署前暂停存储
   #if EITHER(FIX_MOUNTED_PROBE, NOZZLE_AS_PROBE) && DISABLED(PAUSE_BEFORE_DEPLOY_STOW)
     const bool z_raise_wanted = deploy;
   #else
@@ -428,14 +429,14 @@ bool Probe::set_deployed(const bool deploy) {
 
   #if ENABLED(PROBE_TRIGGERED_WHEN_STOWED_TEST)
 
-    // Only deploy/stow if needed
+    // Only deploy/stow if needed//仅在需要时展开/收起
     if (PROBE_TRIGGERED() == deploy) {
-      if (!deploy) endstops.enable_z_probe(false); // Switch off triggered when stowed probes early
-                                                   // otherwise an Allen-Key probe can't be stowed.
+      if (!deploy) endstops.enable_z_probe(false); // Switch off triggered when stowed probes early//提前收起探头时触发关闭
+                                                   // otherwise an Allen-Key probe can't be stowed.//否则，内六角扳手探头无法收起。
       probe_specific_action(deploy);
     }
 
-    if (PROBE_TRIGGERED() == deploy) {             // Unchanged after deploy/stow action?
+    if (PROBE_TRIGGERED() == deploy) {             // Unchanged after deploy/stow action?//展开/收起操作后是否保持不变？
       if (IsRunning()) {
         SERIAL_ERROR_MSG("Z-Probe failed");
         LCD_ALERTMESSAGEPGM_P(PSTR("Err: ZPROBE"));
@@ -450,7 +451,7 @@ bool Probe::set_deployed(const bool deploy) {
 
   #endif
 
-  // If preheating is required before any probing...
+  // If preheating is required before any probing...//如果在任何探测之前需要预热。。。
   TERN_(PREHEAT_BEFORE_PROBING, if (deploy) preheat_for_probing(PROBING_NOZZLE_TEMP, PROBING_BED_TEMP));
 
   do_blocking_move_to(old_xy);
@@ -487,9 +488,9 @@ bool Probe::probe_down_to_z(const_float_t z, const_feedRate_t fr_mm_s) {
     thermalManager.wait_for_hotend_heating(active_extruder);
   #endif
 
-  if (TERN0(BLTOUCH_SLOW_MODE, bltouch.deploy())) return true; // Deploy in LOW SPEED MODE on every probe action
+  if (TERN0(BLTOUCH_SLOW_MODE, bltouch.deploy())) return true; // Deploy in LOW SPEED MODE on every probe action//在每次探测动作中以低速模式部署
 
-  // Disable stealthChop if used. Enable diag1 pin on driver.
+  // Disable stealthChop if used. Enable diag1 pin on driver.//禁用隐形斩波（如果使用）。启用驱动器上的diag1引脚。
   #if ENABLED(SENSORLESS_PROBING)
     sensorless_t stealth_states { false };
     #if ENABLED(DELTA)
@@ -502,10 +503,10 @@ bool Probe::probe_down_to_z(const_float_t z, const_feedRate_t fr_mm_s) {
 
   TERN_(HAS_QUIET_PROBING, set_probing_paused(true));
 
-  // Move down until the probe is triggered
+  // Move down until the probe is triggered//向下移动，直到触发探针
   do_blocking_move_to_z(z, fr_mm_s);
 
-  // Check to see if the probe was triggered
+  // Check to see if the probe was triggered//检查探针是否已触发
   const bool probe_triggered =
     #if BOTH(DELTA, SENSORLESS_PROBING)
       endstops.trigger_state() & (_BV(X_MAX) | _BV(Y_MAX) | _BV(Z_MAX))
@@ -516,7 +517,7 @@ bool Probe::probe_down_to_z(const_float_t z, const_feedRate_t fr_mm_s) {
 
   TERN_(HAS_QUIET_PROBING, set_probing_paused(false));
 
-  // Re-enable stealthChop if used. Disable diag1 pin on driver.
+  // Re-enable stealthChop if used. Disable diag1 pin on driver.//重新启用隐身斩波（如果使用）。禁用驱动器上的diag1引脚。
   #if ENABLED(SENSORLESS_PROBING)
     endstops.not_homing();
     #if ENABLED(DELTA)
@@ -526,16 +527,16 @@ bool Probe::probe_down_to_z(const_float_t z, const_feedRate_t fr_mm_s) {
     tmc_disable_stallguard(stepperZ, stealth_states.z);
   #endif
 
-  if (probe_triggered && TERN0(BLTOUCH_SLOW_MODE, bltouch.stow())) // Stow in LOW SPEED MODE on every trigger
+  if (probe_triggered && TERN0(BLTOUCH_SLOW_MODE, bltouch.stow())) // Stow in LOW SPEED MODE on every trigger//在每个触发器上以低速模式收起
     return true;
 
-  // Clear endstop flags
+  // Clear endstop flags//清除结束停止标志
   endstops.hit_on_purpose();
 
-  // Get Z where the steppers were interrupted
+  // Get Z where the steppers were interrupted//在步进器被中断的地方得到Z
   set_current_from_steppers_for_axis(Z_AXIS);
 
-  // Tell the planner where we actually are
+  // Tell the planner where we actually are//告诉计划者我们的实际位置
   sync_plan_position();
 
   return !probe_triggered;
@@ -590,12 +591,12 @@ float Probe::run_z_probe(const bool sanity_check/*=true*/) {
   DEBUG_SECTION(log_probe, "Probe::run_z_probe", DEBUGGING(LEVELING));
 
   auto try_to_probe = [&](PGM_P const plbl, const_float_t z_probe_low_point, const feedRate_t fr_mm_s, const bool scheck, const float clearance) -> bool {
-    // Tare the probe, if supported
+    // Tare the probe, if supported//如有支撑，给探头去皮
     if (TERN0(PROBE_TARE, tare())) return true;
 
-    // Do a first probe at the fast speed
-    const bool probe_fail = probe_down_to_z(z_probe_low_point, fr_mm_s),            // No probe trigger?
-               early_fail = (scheck && current_position.z > -offset.z + clearance); // Probe triggered too high?
+    // Do a first probe at the fast speed//以最快的速度进行第一次探测
+    const bool probe_fail = probe_down_to_z(z_probe_low_point, fr_mm_s),            // No probe trigger?//没有探针触发器？
+               early_fail = (scheck && current_position.z > -offset.z + clearance); // Probe triggered too high?//探头触发过高？
     #if ENABLED(DEBUG_LEVELING_FEATURE)
       if (DEBUGGING(LEVELING) && (probe_fail || early_fail)) {
         DEBUG_ECHOPGM_P(plbl);
@@ -610,17 +611,17 @@ float Probe::run_z_probe(const bool sanity_check/*=true*/) {
     return probe_fail || early_fail;
   };
 
-  // Stop the probe before it goes too low to prevent damage.
-  // If Z isn't known then probe to -10mm.
+  // Stop the probe before it goes too low to prevent damage.//在探头过低之前停止探头，以防损坏。
+  // If Z isn't known then probe to -10mm.//如果Z未知，则探测至-10mm。
   const float z_probe_low_point = axis_is_trusted(Z_AXIS) ? -offset.z + Z_PROBE_LOW_POINT : -10.0;
 
-  // Double-probing does a fast probe followed by a slow probe
+  // Double-probing does a fast probe followed by a slow probe//双重探测是先进行快速探测，然后进行慢速探测
   #if TOTAL_PROBING == 2
 
-    // Attempt to tare the probe
+    // Attempt to tare the probe//试图给探头去皮
     if (TERN0(PROBE_TARE, tare())) return NAN;
 
-    // Do a first probe at the fast speed
+    // Do a first probe at the fast speed//以最快的速度进行第一次探测
     if (try_to_probe(PSTR("FAST"), z_probe_low_point, z_probe_fast_mm_s,
                      sanity_check, Z_CLEARANCE_BETWEEN_PROBES) ) return NAN;
 
@@ -628,16 +629,16 @@ float Probe::run_z_probe(const bool sanity_check/*=true*/) {
 
     if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPAIR("1st Probe Z:", first_probe_z);
 
-    // Raise to give the probe clearance
+    // Raise to give the probe clearance//升起以给探针留出间隙
     do_blocking_move_to_z(current_position.z + Z_CLEARANCE_MULTI_PROBE, z_probe_fast_mm_s);
 
   #elif Z_PROBE_FEEDRATE_FAST != Z_PROBE_FEEDRATE_SLOW
 
-    // If the nozzle is well over the travel height then
-    // move down quickly before doing the slow probe
+    // If the nozzle is well over the travel height then//如果喷嘴远远超过行程高度，则
+    // move down quickly before doing the slow probe//在进行慢速探测之前，快速向下移动
     const float z = Z_CLEARANCE_DEPLOY_PROBE + 5.0 + (offset.z < 0 ? -offset.z : 0);
     if (current_position.z > z) {
-      // Probe down fast. If the probe never triggered, raise for probe clearance
+      // Probe down fast. If the probe never triggered, raise for probe clearance//快速向下探测。如果探针从未触发，则升高探针间隙
       if (!probe_down_to_z(z, z_probe_fast_mm_s))
         do_blocking_move_to_z(current_position.z + Z_CLEARANCE_BETWEEN_PROBES, z_probe_fast_mm_s);
     }
@@ -658,10 +659,10 @@ float Probe::run_z_probe(const bool sanity_check/*=true*/) {
     )
   #endif
     {
-      // If the probe won't tare, return
+      // If the probe won't tare, return//如果探针无法去皮，则返回
       if (TERN0(PROBE_TARE, tare())) return true;
 
-      // Probe downward slowly to find the bed
+      // Probe downward slowly to find the bed//慢慢向下探，找到床
       if (try_to_probe(PSTR("SLOW"), z_probe_low_point, MMM_TO_MMS(Z_PROBE_FEEDRATE_SLOW),
                        sanity_check, Z_CLEARANCE_MULTI_PROBE) ) return NAN;
 
@@ -670,12 +671,12 @@ float Probe::run_z_probe(const bool sanity_check/*=true*/) {
       const float z = current_position.z;
 
       #if EXTRA_PROBING > 0
-        // Insert Z measurement into probes[]. Keep it sorted ascending.
-        LOOP_LE_N(i, p) {                            // Iterate the saved Zs to insert the new Z
-          if (i == p || probes[i] > z) {                              // Last index or new Z is smaller than this Z
-            for (int8_t m = p; --m >= i;) probes[m + 1] = probes[m];  // Shift items down after the insertion point
-            probes[i] = z;                                            // Insert the new Z measurement
-            break;                                                    // Only one to insert. Done!
+        // Insert Z measurement into probes[]. Keep it sorted ascending.//将Z测量插入探针[]。按升序排序。
+        LOOP_LE_N(i, p) {                            // Iterate the saved Zs to insert the new Z//迭代保存的Z以插入新的Z
+          if (i == p || probes[i] > z) {                              // Last index or new Z is smaller than this Z//最后一个索引或新Z小于此Z
+            for (int8_t m = p; --m >= i;) probes[m + 1] = probes[m];  // Shift items down after the insertion point//在插入点后向下移动项目
+            probes[i] = z;                                            // Insert the new Z measurement//插入新的Z测量值
+            break;                                                    // Only one to insert. Done!//只需插入一个。完成！
           }
         }
       #elif TOTAL_PROBING > 2
@@ -685,7 +686,7 @@ float Probe::run_z_probe(const bool sanity_check/*=true*/) {
       #endif
 
       #if TOTAL_PROBING > 2
-        // Small Z raise after all but the last probe
+        // Small Z raise after all but the last probe//除了最后一个探针之外，小Z升高
         if (p
           #if EXTRA_PROBING > 0
             < TOTAL_PROBING - 1
@@ -697,18 +698,18 @@ float Probe::run_z_probe(const bool sanity_check/*=true*/) {
   #if TOTAL_PROBING > 2
 
     #if EXTRA_PROBING > 0
-      // Take the center value (or average the two middle values) as the median
+      // Take the center value (or average the two middle values) as the median//取中心值（或两个中间值的平均值）作为中间值
       static constexpr int PHALF = (TOTAL_PROBING - 1) / 2;
       const float middle = probes[PHALF],
                   median = ((TOTAL_PROBING) & 1) ? middle : (middle + probes[PHALF + 1]) * 0.5f;
 
-      // Remove values farthest from the median
+      // Remove values farthest from the median//删除距离中间值最远的值
       uint8_t min_avg_idx = 0, max_avg_idx = TOTAL_PROBING - 1;
       for (uint8_t i = EXTRA_PROBING; i--;)
         if (ABS(probes[max_avg_idx] - median) > ABS(probes[min_avg_idx] - median))
           max_avg_idx--; else min_avg_idx++;
 
-      // Return the average value of all remaining probes.
+      // Return the average value of all remaining probes.//返回所有剩余探针的平均值。
       LOOP_S_LE_N(i, min_avg_idx, max_avg_idx)
         probes_z_sum += probes[i];
 
@@ -722,12 +723,12 @@ float Probe::run_z_probe(const bool sanity_check/*=true*/) {
 
     if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPAIR("2nd Probe Z:", z2, " Discrepancy:", first_probe_z - z2);
 
-    // Return a weighted average of the fast and slow probes
+    // Return a weighted average of the fast and slow probes//返回快速和慢速探针的加权平均值
     const float measured_z = (z2 * 3.0 + first_probe_z * 2.0) * 0.2;
 
   #else
 
-    // Return the single probe result
+    // Return the single probe result//返回单探针结果
     const float measured_z = current_position.z;
 
   #endif
@@ -761,18 +762,18 @@ float Probe::probe_at_point(const_float_t rx, const_float_t ry, const ProbePtRai
     if (bltouch.triggered()) bltouch._reset();
   #endif
 
-  // On delta keep Z below clip height or do_blocking_move_to will abort
+  // On delta keep Z below clip height or do_blocking_move_to will abort//在delta上，将Z保持在剪辑高度以下或执行阻止移动将中止
   xyz_pos_t npos = { rx, ry, _MIN(TERN(DELTA, delta_clip_start_height, current_position.z), current_position.z) };
-  if (probe_relative) {                                     // The given position is in terms of the probe
+  if (probe_relative) {                                     // The given position is in terms of the probe//给定的位置是在探针方面
     if (!can_reach(npos)) {
       if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPGM("Position Not Reachable");
       return NAN;
     }
-    npos -= offset_xy;                                      // Get the nozzle position
+    npos -= offset_xy;                                      // Get the nozzle position//获取喷嘴位置
   }
-  else if (!position_is_reachable(npos)) return NAN;        // The given position is in terms of the nozzle
+  else if (!position_is_reachable(npos)) return NAN;        // The given position is in terms of the nozzle//给定的位置与喷嘴有关
 
-  // Move the probe to the starting XYZ
+  // Move the probe to the starting XYZ//将探头移动到起始XYZ
   do_blocking_move_to(npos, feedRate_t(XY_PROBE_FEEDRATE_MM_S));
 
   float measured_z = NAN;
@@ -782,7 +783,7 @@ float Probe::probe_at_point(const_float_t rx, const_float_t ry, const ProbePtRai
     if (big_raise || raise_after == PROBE_PT_RAISE)
       do_blocking_move_to_z(current_position.z + (big_raise ? 25 : Z_CLEARANCE_BETWEEN_PROBES), z_probe_fast_mm_s);
     else if (raise_after == PROBE_PT_STOW)
-      if (stow()) measured_z = NAN;   // Error on stow?
+      if (stow()) measured_z = NAN;   // Error on stow?//积载错误？
 
     if (verbose_level > 2)
       SERIAL_ECHOLNPAIR("Bed X: ", LOGICAL_X_POSITION(rx), " Y: ", LOGICAL_Y_POSITION(ry), " Z: ", measured_z);
@@ -813,6 +814,6 @@ float Probe::probe_at_point(const_float_t rx, const_float_t ry, const ProbePtRai
     STOW_Z_SERVO();
   }
 
-#endif // HAS_Z_SERVO_PROBE
+#endif // HAS_Z_SERVO_PROBE//有_Z_伺服_探头
 
-#endif // HAS_BED_PROBE
+#endif // HAS_BED_PROBE//你有床吗

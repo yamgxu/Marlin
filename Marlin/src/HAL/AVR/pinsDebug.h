@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -32,16 +33,16 @@
 
 #if AVR_AT90USB1286_FAMILY
 
-  // Working with Teensyduino extension so need to re-define some things
+  // Working with Teensyduino extension so need to re-define some things//使用Teensyduino扩展，因此需要重新定义一些内容
   #include "pinsDebug_Teensyduino.h"
-  // Can't use the "digitalPinToPort" function from the Teensyduino type IDEs
-  // portModeRegister takes a different argument
+  // Can't use the "digitalPinToPort" function from the Teensyduino type IDEs//无法使用Teensyduino类型IDE中的“digitalPinToPort”功能
+  // portModeRegister takes a different argument//PortModerRegister采用了不同的论点
   #define digitalPinToTimer_DEBUG(p) digitalPinToTimer(p)
   #define digitalPinToBitMask_DEBUG(p) digitalPinToBitMask(p)
   #define digitalPinToPort_DEBUG(p) digitalPinToPort(p)
   #define GET_PINMODE(pin) (*portModeRegister(pin) & digitalPinToBitMask_DEBUG(pin))
 
-#elif AVR_ATmega2560_FAMILY_PLUS_70   // So we can access/display all the pins on boards using more than 70
+#elif AVR_ATmega2560_FAMILY_PLUS_70   // So we can access/display all the pins on boards using more than 70//因此，我们可以使用70多个端口访问/显示电路板上的所有引脚
 
   #include "pinsDebug_plus_70.h"
   #define digitalPinToTimer_DEBUG(p) digitalPinToTimer_plus_70(p)
@@ -68,7 +69,7 @@
   #define IS_ANALOG(P) ((P) >= analogInputToDigitalPin(0) && ((P) <= analogInputToDigitalPin(15) || (P) <= analogInputToDigitalPin(7)))
 #endif
 #define GET_ARRAY_PIN(p) pgm_read_byte(&pin_array[p].pin)
-#define MULTI_NAME_PAD 26 // space needed to be pretty if not first name assigned to a pin
+#define MULTI_NAME_PAD 26 // space needed to be pretty if not first name assigned to a pin//如果没有为pin指定名字，则空间必须美观
 
 void PRINT_ARRAY_NAME(uint8_t x) {
   char *name_mem_pointer = (char*)pgm_read_ptr(&pin_array[x].name);
@@ -86,9 +87,9 @@ void PRINT_ARRAY_NAME(uint8_t x) {
 #define GET_ARRAY_IS_DIGITAL(x)   pgm_read_byte(&pin_array[x].is_digital)
 
 
-#if defined(__AVR_ATmega1284P__)  // 1284 IDE extensions set this to the number of
-  #undef NUM_DIGITAL_PINS         // digital only pins while all other CPUs have it
-  #define NUM_DIGITAL_PINS 32     // set to digital only + digital/analog
+#if defined(__AVR_ATmega1284P__)  // 1284 IDE extensions set this to the number of//1284 IDE扩展将此设置为
+  #undef NUM_DIGITAL_PINS         // digital only pins while all other CPUs have it//只有数字引脚，而所有其他CPU都有
+  #define NUM_DIGITAL_PINS 32     // set to digital only + digital/analog//设置为仅数字+数字/模拟
 #endif
 
 #define PWM_PRINT(V) do{ sprintf_P(buffer, PSTR("PWM:  %4d"), V); SERIAL_ECHO(buffer); }while(0)
@@ -106,13 +107,13 @@ void PRINT_ARRAY_NAME(uint8_t x) {
  * Return true if it's currently a PWM pin.
  */
 static bool pwm_status(uint8_t pin) {
-  char buffer[20];   // for the sprintf statements
+  char buffer[20];   // for the sprintf statements//对于sprintf语句
 
   switch (digitalPinToTimer_DEBUG(pin)) {
 
     #if defined(TCCR0A) && defined(COM0A1)
       #ifdef TIMER0A
-        #if !AVR_AT90USB1286_FAMILY  // not available in Teensyduino type IDEs
+        #if !AVR_AT90USB1286_FAMILY  // not available in Teensyduino type IDEs//在Teensyduino类型IDE中不可用
           PWM_CASE(0, A);
         #endif
       #endif
@@ -157,7 +158,7 @@ static bool pwm_status(uint8_t pin) {
       return false;
   }
   SERIAL_ECHO_SP(2);
-} // pwm_status
+} // pwm_status//pwm_状态
 
 
 const volatile uint8_t* const PWM_other[][3] PROGMEM = {
@@ -240,8 +241,8 @@ inline void com_print(const uint8_t N, const uint8_t Z) {
   SERIAL_ECHOPAIR(": ", int((*TCCRA >> (6 - Z * 2)) & 0x03));
 }
 
-void timer_prefix(uint8_t T, char L, uint8_t N) {  // T - timer    L - pwm  N - WGM bit layout
-  char buffer[20];   // for the sprintf statements
+void timer_prefix(uint8_t T, char L, uint8_t N) {  // T - timer    L - pwm  N - WGM bit layout//定时器L-pwm N-WGM位布局
+  char buffer[20];   // for the sprintf statements//对于sprintf语句
   const uint8_t *TCCRB = (uint8_t*)TCCR_B(T),
                 *TCCRA = (uint8_t*)TCCR_A(T);
   uint8_t WGM = (((*TCCRB & _BV(WGM_2)) >> 1) | (*TCCRA & (_BV(WGM_0) | _BV(WGM_1))));
@@ -280,7 +281,7 @@ static void pwm_details(uint8_t pin) {
 
     #if defined(TCCR0A) && defined(COM0A1)
       #ifdef TIMER0A
-        #if !AVR_AT90USB1286_FAMILY  // not available in Teensyduino type IDEs
+        #if !AVR_AT90USB1286_FAMILY  // not available in Teensyduino type IDEs//在Teensyduino类型IDE中不可用
           case TIMER0A: timer_prefix(0, 'A', 3); break;
         #endif
       #endif
@@ -325,9 +326,9 @@ static void pwm_details(uint8_t pin) {
   }
   SERIAL_ECHOPGM("  ");
 
-  // on pins that have two PWMs, print info on second PWM
+  // on pins that have two PWMs, print info on second PWM//在具有两个PWM的引脚上，在第二个PWM上打印信息
   #if AVR_ATmega2560_FAMILY || AVR_AT90USB1286_FAMILY
-    // looking for port B7 - PWMs 0A and 1C
+    // looking for port B7 - PWMs 0A and 1C//正在查找端口B7-PWMs 0A和1C
     if (digitalPinToPort_DEBUG(pin) == 'B' - 64 && 0x80 == digitalPinToBitMask_DEBUG(pin)) {
       #if !AVR_AT90USB1286_FAMILY
         SERIAL_ECHOPGM("\n .");
@@ -346,11 +347,11 @@ static void pwm_details(uint8_t pin) {
   #else
     UNUSED(print_is_also_tied);
   #endif
-} // pwm_details
+} // pwm_details//pwm_详细信息
 
 
-#ifndef digitalRead_mod                   // Use Teensyduino's version of digitalRead - it doesn't disable the PWMs
-  int digitalRead_mod(const int8_t pin) { // same as digitalRead except the PWM stop section has been removed
+#ifndef digitalRead_mod                   // Use Teensyduino's version of digitalRead - it doesn't disable the PWMs//使用蒂恩西杜诺版本的digitalRead-它不会禁用PWMs
+  int digitalRead_mod(const int8_t pin) { // same as digitalRead except the PWM stop section has been removed//与digitalRead相同，只是已拆下PWM停止部分
     const uint8_t port = digitalPinToPort_DEBUG(pin);
     return (port != NOT_A_PIN) && (*portInputRegister(port) & digitalPinToBitMask_DEBUG(pin)) ? HIGH : LOW;
   }
@@ -358,7 +359,7 @@ static void pwm_details(uint8_t pin) {
 
 #ifndef PRINT_PORT
 
-  void print_port(int8_t pin) {   // print port number
+  void print_port(int8_t pin) {   // print port number//打印端口号
     #ifdef digitalPinToPort_DEBUG
       uint8_t x;
       SERIAL_ECHOPGM("  Port: ");

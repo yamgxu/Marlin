@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -24,7 +25,7 @@
 
 #if HAS_DUPLICATION_MODE
 
-//#define DEBUG_DXC_MODE
+//#define DEBUG_DXC_MODE//#定义调试\u DXC\u模式
 
 #include "../gcode.h"
 #include "../../module/motion.h"
@@ -77,10 +78,10 @@
           break;
 
         case DXC_DUPLICATION_MODE:
-          // Set the X offset, but no less than the safety gap
+          // Set the X offset, but no less than the safety gap//设置X偏移，但不小于安全间隙
           if (parser.seen('X')) duplicate_extruder_x_offset = _MAX(parser.value_linear_units(), (X2_MIN_POS) - (X1_MIN_POS));
           if (parser.seen('R')) duplicate_extruder_temp_offset = parser.value_celsius_diff();
-          // Always switch back to tool 0
+          // Always switch back to tool 0//始终切换回工具0
           if (active_extruder != 0) tool_change(0);
           break;
 
@@ -93,7 +94,7 @@
           }
           idex_set_mirrored_mode(true);
 
-          // Do a small 'jog' motion in the X axis
+          // Do a small 'jog' motion in the X axis//在X轴上做一个小的“点动”运动
           xyze_pos_t dest = current_position; dest.x -= 0.1f;
           for (uint8_t i = 2; --i;) {
             planner.buffer_line(dest, feedrate_mm_s, 0);
@@ -113,7 +114,7 @@
         gcode.process_subcommands_now_P(PSTR(EVENT_GCODE_IDEX_AFTER_MODECHANGE));
       #endif
     }
-    else if (!parser.seen('W'))  // if no S or W parameter, the DXC mode gets reset to the user's default
+    else if (!parser.seen('W'))  // if no S or W parameter, the DXC mode gets reset to the user's default//如果没有S或W参数，DXC模式将重置为用户默认模式
       dual_x_carriage_mode = DEFAULT_DUAL_X_CARRIAGE_MODE;
 
     #ifdef DEBUG_DXC_MODE
@@ -151,7 +152,7 @@
         }
         DEBUG_EOL();
       }
-    #endif // DEBUG_DXC_MODE
+    #endif // DEBUG_DXC_MODE//调试\u DXC\u模式
   }
 
 #elif ENABLED(MULTI_NOZZLE_DUPLICATION)
@@ -169,8 +170,8 @@
     bool ena = false;
     if (parser.seen("EPS")) {
       planner.synchronize();
-      if (parser.seenval('P')) duplication_e_mask = parser.value_int();   // Set the mask directly
-      else if (parser.seenval('E')) duplication_e_mask = pow(2, parser.value_int() + 1) - 1; // Set the mask by E index
+      if (parser.seenval('P')) duplication_e_mask = parser.value_int();   // Set the mask directly//直接设置掩码
+      else if (parser.seenval('E')) duplication_e_mask = pow(2, parser.value_int() + 1) - 1; // Set the mask by E index//通过E索引设置掩码
       ena = (2 == parser.intval('S', extruder_duplication_enabled ? 2 : 0));
       set_duplication_enabled(ena && (duplication_e_mask >= 3));
     }
@@ -185,6 +186,6 @@
     SERIAL_EOL();
   }
 
-#endif // MULTI_NOZZLE_DUPLICATION
+#endif // MULTI_NOZZLE_DUPLICATION//多喷嘴复制
 
-#endif // HAS_DUPICATION_MODE
+#endif // HAS_DUPICATION_MODE//具有复制模式

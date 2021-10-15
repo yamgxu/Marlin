@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -57,7 +58,7 @@
 
 #if BOTH(HAS_LCD_MENU, ADVANCED_PAUSE_FEATURE)
   #include "../feature/pause.h"
-  #include "../module/motion.h" // for active_extruder
+  #include "../module/motion.h" // for active_extruder//用于主动式挤出机
 #endif
 
 #define START_OF_UTF8_CHAR(C) (((C) & 0xC0u) != 0x80U)
@@ -91,9 +92,9 @@
     typedef void (*screenFunc_t)();
     typedef void (*menuAction_t)();
 
-  #endif // HAS_LCD_MENU
+  #endif // HAS_LCD_MENU//有LCD菜单吗
 
-#endif // HAS_WIRED_LCD
+#endif // HAS_WIRED_LCD//有有线液晶显示器吗
 
 #if HAS_MARLINUI_U8GLIB
   enum MarlinFont : uint8_t {
@@ -125,7 +126,7 @@
 
 #if HAS_LCD_MENU
 
-  // Manual Movement class
+  // Manual Movement class//手动运动课
   class ManualMove {
   private:
     static AxisEnum axis;
@@ -146,12 +147,12 @@
     template <typename T>
     void set_destination(const T& dest) {
       #if IS_KINEMATIC
-        // Moves are segmented, so the entire move is not submitted at once.
-        // Using a separate variable prevents corrupting the in-progress move.
+        // Moves are segmented, so the entire move is not submitted at once.//移动是分段的，因此不会立即提交整个移动。
+        // Using a separate variable prevents corrupting the in-progress move.//使用单独的变量可防止损坏正在进行的移动。
         all_axes_destination = current_position;
         all_axes_destination.set(dest);
       #else
-        // Moves are submitted as single line to the planner using buffer_line.
+        // Moves are submitted as single line to the planner using buffer_line.//使用缓冲行将移动作为单行提交给计划员。
         current_position.set(dest);
       #endif
     }
@@ -187,9 +188,9 @@
 
 #endif
 
-////////////////////////////////////////////
-//////////// MarlinUI Singleton ////////////
-////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+//////////// MarlinUI Singleton ////////////////////////马林纽辛格尔顿////////////
+////////////////////////////////////////////////////////////////////////////////////////
 
 class MarlinUI {
 public:
@@ -210,7 +211,7 @@ public:
   #endif
 
   #if ENABLED(SOUND_MENU_ITEM)
-    static bool buzzer_enabled; // Initialized by settings.load()
+    static bool buzzer_enabled; // Initialized by settings.load()//由settings.load（）初始化
   #else
     static constexpr bool buzzer_enabled = true;
   #endif
@@ -227,7 +228,7 @@ public:
     static void update_indicators();
   #endif
 
-  // LCD implementations
+  // LCD implementations//LCD实现
   static void clear_lcd();
 
   #if BOTH(HAS_LCD_MENU, TOUCH_SCREEN_CALIBRATION)
@@ -299,7 +300,7 @@ public:
 
   #if HAS_STATUS_MESSAGE
     static char status_message[];
-    static uint8_t alert_level; // Higher levels block lower levels
+    static uint8_t alert_level; // Higher levels block lower levels//更高的级别阻止更低的级别
 
     #if ENABLED(STATUS_MESSAGE_SCROLLING)
       static uint8_t status_scroll_offset;
@@ -370,10 +371,10 @@ public:
         static void set_custom_characters(const HD44780CharSet screen_charset=CHARSET_INFO);
 
         #if ENABLED(LCD_PROGRESS_BAR)
-          static millis_t progress_bar_ms;  // Start time for the current progress bar cycle
+          static millis_t progress_bar_ms;  // Start time for the current progress bar cycle//当前进度条循环的开始时间
           static void draw_progress_bar(const uint8_t percent);
           #if PROGRESS_MSG_EXPIRE > 0
-            static millis_t expire_status_ms; // = 0
+            static millis_t expire_status_ms; // = 0// = 0
             FORCE_INLINE static void reset_progress_bar_timeout() { expire_status_ms = 0; }
           #endif
         #endif
@@ -426,7 +427,7 @@ public:
     static void kill_screen(PGM_P const lcd_error, PGM_P const lcd_component);
     static void draw_kill_screen();
 
-  #else // No LCD
+  #else // No LCD//无液晶显示器
 
     static inline void init() {}
     static inline void update() {}
@@ -473,10 +474,10 @@ public:
       #define ENCODER_RATE_MULTIPLY(F) NOOP
     #endif
 
-    // Manual Movement
+    // Manual Movement//手动运动
     static ManualMove manual_move;
 
-    // Select Screen (modal NO/YES style dialog)
+    // Select Screen (modal NO/YES style dialog)//选择屏幕（模式否/是样式对话框）
     static bool selection;
     static void set_selection(const bool sel) { selection = sel; }
     static bool update_selection();
@@ -488,7 +489,7 @@ public:
     static void goto_screen(const screenFunc_t screen, const uint16_t encoder=0, const uint8_t top=0, const uint8_t items=0);
     static void push_current_screen();
 
-    // goto_previous_screen and go_back may also be used as menu item callbacks
+    // goto_previous_screen and go_back may also be used as menu item callbacks//goto_previous_屏幕和go_back也可用作菜单项回调
     static void _goto_previous_screen(TERN_(TURBO_BACK_MENU_ITEM, const bool is_back));
     static inline void goto_previous_screen() { _goto_previous_screen(TERN_(TURBO_BACK_MENU_ITEM, false)); }
     static inline void go_back()              { _goto_previous_screen(TERN_(TURBO_BACK_MENU_ITEM, true)); }
@@ -558,9 +559,9 @@ public:
     #define pause_show_message(...) _pause_show_message()
   #endif
 
-  //
-  // EEPROM: Reset / Init / Load / Store
-  //
+  ////
+  // EEPROM: Reset / Init / Load / Store//EEPROM：复位/初始化/加载/存储
+  ////
   #if HAS_LCD_MENU
     static void reset_settings();
   #endif
@@ -579,9 +580,9 @@ public:
     #endif
   #endif
 
-  //
-  // Special handling if a move is underway
-  //
+  ////
+  // Special handling if a move is underway//如果移动正在进行，则进行特殊处理
+  ////
   #if ANY(DELTA_CALIBRATION_MENU, DELTA_AUTO_CALIBRATION, PROBE_OFFSET_WIZARD) || (ENABLED(LCD_BED_LEVELING) && EITHER(PROBE_MANUALLY, MESH_BED_LEVELING))
     #define LCD_HAS_WAIT_FOR_MOVE 1
     static bool wait_for_move;
@@ -589,9 +590,9 @@ public:
     static constexpr bool wait_for_move = false;
   #endif
 
-  //
-  // Block interaction while under external control
-  //
+  ////
+  // Block interaction while under external control//在外部控制下阻止交互
+  ////
   #if HAS_LCD_MENU && EITHER(AUTO_BED_LEVELING_UBL, G26_MESH_VALIDATION)
     static bool external_control;
     FORCE_INLINE static void capture() { external_control = true; }

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /***********************************
  * restore_failsafe_dialog_box.cpp *
  ***********************************/
@@ -37,8 +38,8 @@ bool RestoreFailsafeDialogBox::onTouchEnd(uint8_t tag) {
     case 1:
       ExtUI::injectCommands_P(PSTR("M502"));
       AlertDialogBox::show(GET_TEXT_F(MSG_EEPROM_RESET));
-      // Remove RestoreFailsafeDialogBox from the stack
-      // so the alert box doesn't return to it.
+      // Remove RestoreFailsafeDialogBox from the stack//从堆栈中删除RestoreFailsafeDialogBox
+      // so the alert box doesn't return to it.//所以警报框不会返回到它。
       current_screen.forget();
       SaveSettingsDialogBox::settingsChanged();
       return true;
@@ -47,4 +48,4 @@ bool RestoreFailsafeDialogBox::onTouchEnd(uint8_t tag) {
   }
 }
 
-#endif // FTDI_RESTORE_FAILSAFE_DIALOG_BOX
+#endif // FTDI_RESTORE_FAILSAFE_DIALOG_BOX//FTDI\u恢复\u故障保护\u对话框

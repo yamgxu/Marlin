@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -25,22 +26,22 @@
 
 #define BOARD_INFO_NAME "BTT SKR Mini V1.1"
 
-//#define DISABLE_DEBUG
+//#define DISABLE_DEBUG//#定义禁用调试
 #define DISABLE_JTAG
 
-// Ignore temp readings during development.
-//#define BOGUS_TEMPERATURE_GRACE_PERIOD    2000
+// Ignore temp readings during development.//在开发过程中忽略温度读数。
+//#define BOGUS_TEMPERATURE_GRACE_PERIOD    2000//#定义2000年的假温度宽限期
 
 #if EITHER(NO_EEPROM_SELECTED, FLASH_EEPROM_EMULATION)
   #define FLASH_EEPROM_EMULATION
-  #define EEPROM_PAGE_SIZE     (0x800U)           // 2KB
+  #define EEPROM_PAGE_SIZE     (0x800U)           // 2KB//2KB
   #define EEPROM_START_ADDRESS (0x8000000UL + (STM32_FLASH_SIZE) * 1024UL - (EEPROM_PAGE_SIZE) * 2UL)
-  #define MARLIN_EEPROM_SIZE    EEPROM_PAGE_SIZE  // 2KB
+  #define MARLIN_EEPROM_SIZE    EEPROM_PAGE_SIZE  // 2KB//2KB
 #endif
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_MIN_PIN                           PC2
 #define X_MAX_PIN                           PA2
 #define Y_MIN_PIN                           PC1
@@ -48,9 +49,9 @@
 #define Z_MIN_PIN                           PC0
 #define Z_MAX_PIN                           PC3
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 
 #define X_STEP_PIN                          PC6
 #define X_DIR_PIN                           PC7
@@ -80,22 +81,22 @@
   #endif
 #endif
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_0_PIN                        PA8
 #define FAN_PIN                             PC8
 #define HEATER_BED_PIN                      PC9
 
-//
-// Temperature Sensors
-//
-#define TEMP_BED_PIN                        PB1   // Analog Input
-#define TEMP_0_PIN                          PA0   // Analog Input
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_BED_PIN                        PB1   // Analog Input//模拟输入
+#define TEMP_0_PIN                          PA0   // Analog Input//模拟输入
 
-//
-// LCD Pins
-//
+////
+// LCD Pins//LCD引脚
+////
 
 /**
  *                _____                                             _____
@@ -150,27 +151,27 @@
       #define DOGLCD_SCK                    PB3
       #define DOGLCD_MOSI                   PB5
 
-      #define FORCE_SOFT_SPI                      // SPI MODE3
+      #define FORCE_SOFT_SPI                      // SPI MODE3//SPI模式3
 
-      #define LED_PIN                       PB7   // red pwm
-      //#define LED_PIN                     PC15  // green
-      //#define LED_PIN                     PC14  // blue
+      #define LED_PIN                       PB7   // red pwm//红色脉宽调制
+      //#define LED_PIN                     PC15  // green//#定义LED_引脚PC15//绿色
+      //#define LED_PIN                     PC14  // blue//#定义LED_引脚PC14//蓝色
 
-      //#if EITHER(FYSETC_MINI_12864_1_2, FYSETC_MINI_12864_2_0)
-      //  #ifndef RGB_LED_R_PIN
-      //    #define RGB_LED_R_PIN PB7
-      //  #endif
-      //  #ifndef RGB_LED_G_PIN
-      //    #define RGB_LED_G_PIN PC15
-      //  #endif
-      //  #ifndef RGB_LED_B_PIN
-      //    #define RGB_LED_B_PIN PC14
-      //  #endif
-      //#elif ENABLED(FYSETC_MINI_12864_2_1)
-      //  #define NEOPIXEL_PIN    PB7
-      //#endif
+      //#if EITHER(FYSETC_MINI_12864_1_2, FYSETC_MINI_12864_2_0)//#如果有（FYSETC_MINI_12864_1_2，FYSETC_MINI_12864_2_0）
+      //  #ifndef RGB_LED_R_PIN//#ifndef RGB#U LED#U R#U引脚
+      //    #define RGB_LED_R_PIN PB7//#定义RGB_LED_R_引脚PB7
+      //  #endif//#endif
+      //  #ifndef RGB_LED_G_PIN//#ifndef RGB#U LED#U G#U引脚
+      //    #define RGB_LED_G_PIN PC15//#定义RGB_LED_G_引脚PC15
+      //  #endif//#endif
+      //  #ifndef RGB_LED_B_PIN//#ifndef RGB_LED#u引脚
+      //    #define RGB_LED_B_PIN PC14//#定义RGB_LED_引脚PC14
+      //  #endif//#endif
+      //#elif ENABLED(FYSETC_MINI_12864_2_1)//#已启用elif（FYSETC_MINI_12864_2_1）
+      //  #define NEOPIXEL_PIN    PB7//#定义Neopix_引脚PB7
+      //#endif//#恩迪夫
 
-    #else                                         // !FYSETC_MINI_12864
+    #else                                         // !FYSETC_MINI_12864// !FYSETC_MINI_12864
 
       #define LCD_PINS_D4                   PC13
       #if IS_ULTIPANEL
@@ -179,12 +180,12 @@
         #define LCD_PINS_D7                 PC14
 
         #if ENABLED(REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER)
-          #define BTN_ENC_EN         LCD_PINS_D7  // Detect the presence of the encoder
+          #define BTN_ENC_EN         LCD_PINS_D7  // Detect the presence of the encoder//检测编码器的存在
         #endif
 
       #endif
 
-    #endif // !FYSETC_MINI_12864
+    #endif // !FYSETC_MINI_12864// !FYSETC_MINI_12864
 
     #if HAS_MARLINUI_U8GLIB
       #ifndef BOARD_ST7920_DELAY_1
@@ -200,14 +201,14 @@
 
   #endif
 
-#endif // HAS_WIRED_LCD
+#endif // HAS_WIRED_LCD//有有线液晶显示器吗
 
-//
-// SD Card
-//
+////
+// SD Card//SD卡
+////
 
-// By default the onboard SD is enabled.
-// Change SDCARD_CONNECTION from 'ONBOARD' to 'LCD' for an external (LCD module) SD
+// By default the onboard SD is enabled.//默认情况下，车载SD已启用。
+// Change SDCARD_CONNECTION from 'ONBOARD' to 'LCD' for an external (LCD module) SD//将外部（LCD模块）SD的SD卡_连接从“板载”更改为“LCD”
 #ifndef SDCARD_CONNECTION
   #define SDCARD_CONNECTION              ONBOARD
 #endif
@@ -226,5 +227,5 @@
   #define SD_MOSI_PIN                       PA7
   #define SD_SS_PIN                         PA4
 #endif
-#define ONBOARD_SPI_DEVICE                     1  // SPI1
-#define ONBOARD_SD_CS_PIN                   PA4   // Chip select for "System" SD card
+#define ONBOARD_SPI_DEVICE                     1  // SPI1//SPI1
+#define ONBOARD_SD_CS_PIN                   PA4   // Chip select for "System" SD card//“系统”SD卡的芯片选择

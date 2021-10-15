@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -36,7 +37,7 @@
   #include "../module/planner.h"
   #include "../libs/hex_print.h"
   #if ENABLED(MONITOR_DRIVER_STATUS)
-    static uint16_t report_tmc_status_interval; // = 0
+    static uint16_t report_tmc_status_interval; // = 0// = 0
   #endif
 #endif
 
@@ -88,9 +89,9 @@
       constexpr uint8_t OT_bp = 25, OTPW_bp = 26;
       constexpr uint32_t S2G_bm = 0x18000000;
       #if ENABLED(TMC_DEBUG)
-        constexpr uint16_t SG_RESULT_bm = 0x3FF; // 0:9
+        constexpr uint16_t SG_RESULT_bm = 0x3FF; // 0:9// 0:9
         constexpr uint8_t STEALTH_bp = 14;
-        constexpr uint32_t CS_ACTUAL_bm = 0x1F0000; // 16:20
+        constexpr uint32_t CS_ACTUAL_bm = 0x1F0000; // 16:20// 16:20
         constexpr uint8_t STALL_GUARD_bp = 24;
         constexpr uint8_t STST_bp = 31;
       #endif
@@ -98,7 +99,7 @@
       const auto ds = data.drv_status = st.DRV_STATUS();
       #ifdef __AVR__
 
-        // 8-bit optimization saves up to 70 bytes of PROGMEM per axis
+        // 8-bit optimization saves up to 70 bytes of PROGMEM per axis//8位优化可为每个轴节省多达70字节的程序
         uint8_t spart;
         #if ENABLED(TMC_DEBUG)
           data.sg_result = ds & SG_RESULT_bm;
@@ -114,10 +115,10 @@
         #if ENABLED(TMC_DEBUG)
           data.is_stall = TEST(spart, STALL_GUARD_bp - 24);
           data.is_standstill = TEST(spart, STST_bp - 24);
-          data.sg_result_reasonable = !data.is_standstill; // sg_result has no reasonable meaning while standstill
+          data.sg_result_reasonable = !data.is_standstill; // sg_result has no reasonable meaning while standstill//停止时，sg_结果没有合理意义
         #endif
 
-      #else // !__AVR__
+      #else // !__AVR__// !__AVR__
 
         data.is_ot = TEST(ds, OT_bp);
         data.is_otpw = TEST(ds, OTPW_bp);
@@ -129,15 +130,15 @@
           data.cs_actual = (ds & CS_ACTUAL_bm) >> CS_ACTUAL_sb;
           data.is_stall = TEST(ds, STALL_GUARD_bp);
           data.is_standstill = TEST(ds, STST_bp);
-          data.sg_result_reasonable = !data.is_standstill; // sg_result has no reasonable meaning while standstill
+          data.sg_result_reasonable = !data.is_standstill; // sg_result has no reasonable meaning while standstill//停止时，sg_结果没有合理意义
         #endif
 
-      #endif // !__AVR__
+      #endif // !__AVR__// !__AVR__
 
       return data;
     }
 
-  #endif // HAS_TMCX1X0
+  #endif // HAS_TMCX1X0//有\u TMCX1X0
 
   #if HAS_TMC220x
 
@@ -147,17 +148,17 @@
 
     static TMC_driver_data get_driver_data(TMC2208Stepper &st) {
       constexpr uint8_t OTPW_bp = 0, OT_bp = 1;
-      constexpr uint8_t S2G_bm = 0b111100; // 2..5
+      constexpr uint8_t S2G_bm = 0b111100; // 2..5// 2..5
       TMC_driver_data data;
       const auto ds = data.drv_status = st.DRV_STATUS();
       data.is_otpw = TEST(ds, OTPW_bp);
       data.is_ot = TEST(ds, OT_bp);
       data.is_s2g = !!(ds & S2G_bm);
       #if ENABLED(TMC_DEBUG)
-        constexpr uint32_t CS_ACTUAL_bm = 0x1F0000; // 16:20
+        constexpr uint32_t CS_ACTUAL_bm = 0x1F0000; // 16:20// 16:20
         constexpr uint8_t STEALTH_bp = 30, STST_bp = 31;
         #ifdef __AVR__
-          // 8-bit optimization saves up to 12 bytes of PROGMEM per axis
+          // 8-bit optimization saves up to 12 bytes of PROGMEM per axis//8位优化可为每个轴节省多达12字节的程序
           uint8_t spart = ds >> 16;
           data.cs_actual = spart & (CS_ACTUAL_bm >> 16);
           spart = ds >> 24;
@@ -174,7 +175,7 @@
       return data;
     }
 
-  #endif // TMC2208 || TMC2209
+  #endif // TMC2208 || TMC2209//TMC2208 | | TMC2209
 
   #if HAS_DRIVER(TMC2660)
 
@@ -194,7 +195,7 @@
       #if ENABLED(TMC_DEBUG)
         constexpr uint8_t STALL_GUARD_bp = 0;
         constexpr uint8_t STST_bp = 7, SG_RESULT_sp = 10;
-        constexpr uint32_t SG_RESULT_bm = 0xFFC00; // 10:19
+        constexpr uint32_t SG_RESULT_bm = 0xFFC00; // 10:19// 10:19
         data.is_stall = TEST(spart, STALL_GUARD_bp);
         data.is_standstill = TEST(spart, STST_bp);
         data.sg_result = (ds & SG_RESULT_bm) >> SG_RESULT_sp;
@@ -203,7 +204,7 @@
       return data;
     }
 
-  #endif // TMC2660
+  #endif // TMC2660//TMC2660
 
   #if ENABLED(STOP_ON_ERROR)
     void report_driver_error(const TMC_driver_data &data) {
@@ -247,15 +248,15 @@
       #endif
     #endif
     SERIAL_CHAR('|');
-    if (st.error_count)       SERIAL_CHAR('E'); // Error
-    if (data.is_ot)           SERIAL_CHAR('O'); // Over-temperature
-    if (data.is_otpw)         SERIAL_CHAR('W'); // over-temperature pre-Warning
+    if (st.error_count)       SERIAL_CHAR('E'); // Error//错误
+    if (data.is_ot)           SERIAL_CHAR('O'); // Over-temperature//超温
+    if (data.is_otpw)         SERIAL_CHAR('W'); // over-temperature pre-Warning//超温预警
     #if ENABLED(TMC_DEBUG)
-      if (data.is_stall)      SERIAL_CHAR('G'); // stallGuard
-      if (data.is_stealth)    SERIAL_CHAR('T'); // stealthChop
-      if (data.is_standstill) SERIAL_CHAR('I'); // standstIll
+      if (data.is_stall)      SERIAL_CHAR('G'); // stallGuard//马厩看守
+      if (data.is_stealth)    SERIAL_CHAR('T'); // stealthChop//隐形斩波
+      if (data.is_standstill) SERIAL_CHAR('I'); // standstIll//停滞不前
     #endif
-    if (st.flag_otpw)         SERIAL_CHAR('F'); // otpw Flag
+    if (st.flag_otpw)         SERIAL_CHAR('F'); // otpw Flag//otpw标志
     SERIAL_CHAR('|');
     if (st.otpw_count > 0) SERIAL_ECHO(st.otpw_count);
     SERIAL_CHAR('\t');
@@ -302,12 +303,12 @@
         }
       #endif
 
-      // Report if a warning was triggered
+      // Report if a warning was triggered//报告是否触发了警告
       if (data.is_otpw && st.otpw_count == 0)
         report_driver_otpw(st);
 
       #if CURRENT_STEP_DOWN > 0
-        // Decrease current if is_otpw is true and driver is enabled and there's been more than 4 warnings
+        // Decrease current if is_otpw is true and driver is enabled and there's been more than 4 warnings//如果is_otpw为真且驱动程序已启用且出现4个以上警告，则减小电流
         if (data.is_otpw && st.otpw_count > 4 && st.isEnabled())
           should_step_down = true;
       #endif
@@ -329,12 +330,12 @@
   void monitor_tmc_drivers() {
     const millis_t ms = millis();
 
-    // Poll TMC drivers at the configured interval
+    // Poll TMC drivers at the configured interval//按配置的时间间隔轮询TMC驱动程序
     static millis_t next_poll = 0;
     const bool need_update_error_counters = ELAPSED(ms, next_poll);
     if (need_update_error_counters) next_poll = ms + MONITOR_DRIVER_STATUS_INTERVAL_MS;
 
-    // Also poll at intervals for debugging
+    // Also poll at intervals for debugging//还要每隔一段时间轮询以进行调试
     #if ENABLED(TMC_DEBUG)
       static millis_t next_debug_reporting = 0;
       const bool need_debug_reporting = report_tmc_status_interval && ELAPSED(ms, next_debug_reporting);
@@ -461,7 +462,7 @@
     }
   }
 
-#endif // MONITOR_DRIVER_STATUS
+#endif // MONITOR_DRIVER_STATUS//监视\u驱动程序\u状态
 
 #if ENABLED(TMC_DEBUG)
 
@@ -734,8 +735,8 @@
           break;
         case TMC_VSENSE: SERIAL_ECHOPGM_P(st.vsense() ? PSTR("1=.165") : PSTR("0=.310")); break;
         case TMC_MICROSTEPS: SERIAL_ECHO(st.microsteps()); break;
-        //case TMC_OTPW: serialprint_truefalse(st.otpw()); break;
-        //case TMC_OTPW_TRIGGERED: serialprint_truefalse(st.getOTPW()); break;
+        //case TMC_OTPW: serialprint_truefalse(st.otpw()); break;//案例TMC_OTPW:serialprint_truefalse（st.OTPW（））；打破
+        //case TMC_OTPW_TRIGGERED: serialprint_truefalse(st.getOTPW()); break;//触发TMC_OTPW_的案例：serialprint_truefalse（st.getOTPW（））；打破
         case TMC_SGT: SERIAL_ECHO(st.sgt()); break;
         case TMC_TOFF: SERIAL_ECHO(st.toff()); break;
         case TMC_TBL: SERIAL_ECHO(st.blank_time()); break;
@@ -1145,7 +1146,7 @@
     TMC_GET_REG(DRV_STATUS, "\t");
   }
 
-#endif // TMC_DEBUG
+#endif // TMC_DEBUG//TMC_调试
 
 #if USE_SENSORLESS
 
@@ -1177,12 +1178,12 @@
   }
 
   bool tmc_enable_stallguard(TMC2660Stepper) {
-    // TODO
+    // TODO//待办事项
     return false;
   }
   void tmc_disable_stallguard(TMC2660Stepper, const bool) {};
 
-#endif // USE_SENSORLESS
+#endif // USE_SENSORLESS//使用无传感器
 
 #if HAS_TMC_SPI
   #define SET_CS_PIN(st) OUT_WRITE(st##_CS_PIN, HIGH)
@@ -1245,7 +1246,7 @@
       SET_CS_PIN(E7);
     #endif
   }
-#endif // HAS_TMC_SPI
+#endif // HAS_TMC_SPI//有TMC和SPI吗
 
 template<typename TMC>
 static bool test_connection(TMC &st) {
@@ -1345,4 +1346,4 @@ void test_tmc_connection(LOGICAL_AXIS_ARGS(const bool)) {
   if (axis_connection) LCD_MESSAGEPGM(MSG_ERROR_TMC);
 }
 
-#endif // HAS_TRINAMIC_CONFIG
+#endif // HAS_TRINAMIC_CONFIG//有_TRINAMIC _CONFIG

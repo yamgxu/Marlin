@@ -1,3 +1,4 @@
+/** translatione by yx */
 /********************
  * files_screen.cpp *
  ********************/
@@ -266,4 +267,4 @@ void FilesScreen::onMediaRemoved() {
   if (AT_SCREEN(FilesScreen)) GOTO_SCREEN(StatusScreen);
 }
 
-#endif // FTDI_FILES_SCREEN
+#endif // FTDI_FILES_SCREEN//FTDI_文件_屏幕

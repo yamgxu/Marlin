@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -53,17 +54,17 @@
  * --------------------
  */
 
-#define TRIM_DURATION           2   // compensation ticks to trim adjust for digitalWrite delays
-#define SERVO_TIMER_PRESCALER   8   // timer prescaler
+#define TRIM_DURATION           2   // compensation ticks to trim adjust for digitalWrite delays//用于调整数字写入延迟的补偿刻度
+#define SERVO_TIMER_PRESCALER   8   // timer prescaler//定时器预分频器
 
-// Say which 16 bit timers can be used and in what order
+// Say which 16 bit timers can be used and in what order//说明可以使用哪些16位计时器以及使用顺序
 #if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
-  //#define _useTimer1
+  //#define _useTimer1//#定义_useTimer1
   #define _useTimer4
   #if NUM_SERVOS > SERVOS_PER_TIMER
     #define _useTimer3
     #if !HAS_MOTOR_CURRENT_PWM && SERVOS > 2 * SERVOS_PER_TIMER
-      #define _useTimer5 // Timer 5 is used for motor current PWM and can't be used for servos.
+      #define _useTimer5 // Timer 5 is used for motor current PWM and can't be used for servos.//定时器5用于电机电流PWM，不能用于伺服。
     #endif
   #endif
 #elif defined(__AVR_ATmega32U4__)
@@ -73,7 +74,7 @@
 #elif defined(__AVR_ATmega128__) || defined(__AVR_ATmega1281__) || defined(__AVR_ATmega1284P__) || defined(__AVR_ATmega2561__)
   #define _useTimer3
 #else
-  // everything else
+  // everything else//其他一切
 #endif
 
 typedef enum {

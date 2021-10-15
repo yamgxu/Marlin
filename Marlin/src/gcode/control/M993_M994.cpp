@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -85,4 +86,4 @@ void GcodeSuite::M994() {
   card.closefile();
 }
 
-#endif // HAS_SPI_FLASH && SDSUPPORT && MARLIN_DEV_MODE
+#endif // HAS_SPI_FLASH && SDSUPPORT && MARLIN_DEV_MODE//具有SPI闪存和SDSUPPORT及MARLIN开发模式

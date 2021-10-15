@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -30,16 +31,16 @@
 
 #include "e_parser.h"
 
-// Static data members
-bool EmergencyParser::killed_by_M112, // = false
+// Static data members//静态数据成员
+bool EmergencyParser::killed_by_M112, // = false//=错误
      EmergencyParser::quickstop_by_M410,
      EmergencyParser::enabled;
 
 #if ENABLED(HOST_PROMPT_SUPPORT)
-  uint8_t EmergencyParser::M876_reason; // = 0
+  uint8_t EmergencyParser::M876_reason; // = 0// = 0
 #endif
 
-// Global instance
+// Global instance//全局实例
 EmergencyParser emergency_parser;
 
-#endif // EMERGENCY_PARSER
+#endif // EMERGENCY_PARSER//紧急语法分析器

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -45,4 +46,4 @@ void GcodeSuite::M73() {
   #endif
 }
 
-#endif // LCD_SET_PROGRESS_MANUALLY
+#endif // LCD_SET_PROGRESS_MANUALLY//LCD\设置\进度\手动

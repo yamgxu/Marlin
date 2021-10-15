@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -44,7 +45,7 @@ void GcodeSuite::M810_819() {
   const size_t len = strlen(parser.string_arg);
 
   if (len) {
-    // Set a macro
+    // Set a macro//设置宏
     if (len > GCODE_MACROS_SLOT_SIZE)
       SERIAL_ERROR_MSG("Macro too long.");
     else {
@@ -56,10 +57,10 @@ void GcodeSuite::M810_819() {
     }
   }
   else {
-    // Execute a macro
+    // Execute a macro//执行宏
     char * const cmd = gcode_macros[index];
     if (strlen(cmd)) process_subcommands_now(cmd);
   }
 }
 
-#endif // GCODE_MACROS
+#endif // GCODE_MACROS//GCODE_宏

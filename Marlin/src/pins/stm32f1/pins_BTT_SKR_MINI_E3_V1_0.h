@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -35,7 +36,7 @@
   #define Z_HARDWARE_SERIAL  MSerial4
   #define E0_HARDWARE_SERIAL MSerial4
 
-  // Default TMC slave addresses
+  // Default TMC slave addresses//默认TMC从机地址
   #ifndef X_SLAVE_ADDRESS
     #define X_SLAVE_ADDRESS  0
   #endif

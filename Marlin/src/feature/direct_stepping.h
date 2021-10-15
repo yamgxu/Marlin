@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -33,17 +34,17 @@ namespace DirectStepping {
     FREE, WRITING, OK, FAIL
   };
 
-  // Static state used for stepping through direct stepping pages
+  // Static state used for stepping through direct stepping pages//用于单步执行直接单步页面的静态
   struct page_step_state_t {
-    // Current page
+    // Current page//当前页
     uint8_t *page;
-    // Current segment
+    // Current segment//当前段
     uint16_t segment_idx;
-    // Current steps within segment
+    // Current steps within segment//段内的当前步骤
     uint8_t segment_steps;
-    // Segment delta
+    // Segment delta//段三角洲
     xyze_uint8_t sd;
-    // Block delta
+    // Block delta//块三角洲
     xyze_int_t bd;
   };
 
@@ -56,7 +57,7 @@ namespace DirectStepping {
     static bool maybe_store_rxd_char(uint8_t c);
     static void write_responses();
 
-    // common methods for page managers
+    // common methods for page managers//页面管理器的常用方法
     static void init();
     static uint8_t *get_page(const page_idx_t page_idx);
     static void free_page(const page_idx_t page_idx);
@@ -111,7 +112,7 @@ namespace DirectStepping {
   template <uint8_t num_pages>
   using SP_4x1_512  = config_t<num_pages, 4, 1, false, 512>;
 
-  // configured types
+  // configured types//配置类型
   typedef STEPPER_PAGE_FORMAT<STEPPER_PAGES> Config;
 
   template class PAGE_MANAGER<Config>;
@@ -119,14 +120,14 @@ namespace DirectStepping {
 };
 
 #define SP_4x4D_128 1
-//#define SP_4x4_128 2
-//#define SP_4x2D_256 3
+//#define SP_4x4_128 2//#定义SP_4x4_128 2
+//#define SP_4x2D_256 3//#定义SP_4x2D_256 3
 #define SP_4x2_256 4
 #define SP_4x1_512 5
 
 typedef typename DirectStepping::Config::page_idx_t page_idx_t;
 
-// TODO: use config
+// TODO: use config//TODO:使用配置
 typedef DirectStepping::page_step_state_t page_step_state_t;
 
 extern const uint8_t segment_table[DirectStepping::Config::NUM_SEGMENTS][DirectStepping::Config::SEGMENT_STEPS];

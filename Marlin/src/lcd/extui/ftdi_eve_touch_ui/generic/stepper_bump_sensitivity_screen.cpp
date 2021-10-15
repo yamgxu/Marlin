@@ -1,3 +1,4 @@
+/** translatione by yx */
 /***************************************
  * stepper_bump_sensitivity_screen.cpp *
  **************************************/
@@ -55,4 +56,4 @@ bool StepperBumpSensitivityScreen::onTouchHeld(uint8_t tag) {
   return true;
 }
 
-#endif // FTDI_STEPPER_BUMP_SENSITIVITY_SCREEN
+#endif // FTDI_STEPPER_BUMP_SENSITIVITY_SCREEN//FTDI_步进器_凸点_灵敏度_屏幕

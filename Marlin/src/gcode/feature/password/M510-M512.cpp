@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -28,16 +29,16 @@
 #include "../../../core/serial.h"
 #include "../../gcode.h"
 
-//
-// M510: Lock Printer
-//
+////
+// M510: Lock Printer//M510：锁定打印机
+////
 void GcodeSuite::M510() {
   password.lock_machine();
 }
 
-//
-// M511: Unlock Printer
-//
+////
+// M511: Unlock Printer//M511：解锁打印机
+////
 #if ENABLED(PASSWORD_UNLOCK_GCODE)
 
   void GcodeSuite::M511() {
@@ -47,11 +48,11 @@ void GcodeSuite::M510() {
     }
   }
 
-#endif // PASSWORD_UNLOCK_GCODE
+#endif // PASSWORD_UNLOCK_GCODE//密码\解锁\密码
 
-//
-// M512: Set/Change/Remove Password
-//
+////
+// M512: Set/Change/Remove Password//M512：设置/更改/删除密码
+////
 #if ENABLED(PASSWORD_CHANGE_GCODE)
 
   void GcodeSuite::M512() {
@@ -66,7 +67,7 @@ void GcodeSuite::M510() {
       if (password.value_entry < CAT(1e, PASSWORD_LENGTH)) {
         password.is_set = true;
         password.value = password.value_entry;
-        SERIAL_ECHOLNPAIR(STR_PASSWORD_SET, password.value); // TODO: Update password.string
+        SERIAL_ECHOLNPAIR(STR_PASSWORD_SET, password.value); // TODO: Update password.string//TODO:更新密码.string
       }
       else
         SERIAL_ECHOLNPGM(STR_PASSWORD_TOO_LONG);
@@ -78,6 +79,6 @@ void GcodeSuite::M510() {
     SERIAL_ECHOLNPGM(STR_REMINDER_SAVE_SETTINGS);
   }
 
-#endif // PASSWORD_CHANGE_GCODE
+#endif // PASSWORD_CHANGE_GCODE//密码更改密码
 
-#endif // PASSWORD_FEATURE
+#endif // PASSWORD_FEATURE//密码加密功能

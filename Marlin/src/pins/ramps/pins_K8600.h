@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -32,34 +33,34 @@
 #define BOARD_INFO_NAME      "K8600"
 #define DEFAULT_MACHINE_NAME "Vertex Nano"
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_MIN_PIN                              3
 #define Y_MAX_PIN                             14
 #define Z_MAX_PIN                             18
 #define Z_MIN_PIN                             -1
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define FAN_PIN                                8
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define SDSS                                  25
 #define CASE_LIGHT_PIN                         7
 
-//
-// Other RAMPS pins
-//
-#define IS_RAMPS_EFB                              // Override autodetection. Bed will be undefined.
+////
+// Other RAMPS pins//其他斜坡销
+////
+#define IS_RAMPS_EFB                              // Override autodetection. Bed will be undefined.//覆盖自动检测。床将是未定义的。
 #include "pins_RAMPS.h"
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #undef X_STEP_PIN
 #undef X_DIR_PIN
 #undef X_ENABLE_PIN
@@ -84,14 +85,14 @@
 #define E0_DIR_PIN                            28
 #define E0_ENABLE_PIN                         24
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #undef HEATER_BED_PIN
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 #if IS_ULTRA_LCD && IS_NEWPANEL
   #undef BEEPER_PIN
 
@@ -108,7 +109,7 @@
   #define LCD_PINS_D6                         33
   #define LCD_PINS_D7                         31
 
-  // Buttons
+  // Buttons//钮扣
   #undef BTN_EN1
   #undef BTN_EN2
   #undef BTN_ENC

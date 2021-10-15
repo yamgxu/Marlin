@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -27,47 +28,47 @@
   #error "CCROBOT-ONLINE MEEB_3DP only supports one hotend / E-stepper. Comment out this line to continue."
 #endif
 
-// https://github.com/ccrobot-online/MEEB_3DP
-// Pin assignments for 32-bit MEEB_3DP
+// https://github.com/ccrobot-online/MEEB_3DP// https://github.com/ccrobot-online/MEEB_3DP
+// Pin assignments for 32-bit MEEB_3DP//32位MEEB_3DP的引脚分配
 #define BOARD_INFO_NAME "CCROBOT-ONLINE MEEB_3DP"
 #define DEFAULT_MACHINE_NAME "STM32F103RCT6"
 #define BOARD_WEBSITE_URL "ccrobot-online.com"
 
-//
-// Release PB4 from JTAG NRST role
-//
+////
+// Release PB4 from JTAG NRST role//从JTAG NRST角色中释放PB4
+////
 #define DISABLE_JTAG
 
-//
-// EEPROM
-//
+////
+// EEPROM//电可擦可编程只读存储器
+////
 #if EITHER(NO_EEPROM_SELECTED, FLASH_EEPROM_EMULATION)
   #define FLASH_EEPROM_EMULATION
-  #define EEPROM_PAGE_SIZE                0x800U  // 2KB
+  #define EEPROM_PAGE_SIZE                0x800U  // 2KB//2KB
   #define EEPROM_START_ADDRESS (0x8000000UL + (STM32_FLASH_SIZE) * 1024UL - (EEPROM_PAGE_SIZE) * 2UL)
-  #define MARLIN_EEPROM_SIZE              0x1000  // 4KB
+  #define MARLIN_EEPROM_SIZE              0x1000  // 4KB//4KB
 #endif
 
-//
-// Servos
-//
+////
+// Servos//伺服
+////
 #define SERVO0_PIN                          PA1
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_STOP_PIN                          PC0
 #define Y_STOP_PIN                          PC1
 #define Z_STOP_PIN                          PC2
 
-//
-// Z Probe must be this pin
-//
-#define Z_MIN_PROBE_PIN                     PC15  // "PROBE"
+////
+// Z Probe must be this pin//Z探头必须位于该引脚上
+////
+#define Z_MIN_PROBE_PIN                     PC15  // "PROBE"//“探测”
 
-//
-// TMC2208 stepper drivers
-//
+////
+// TMC2208 stepper drivers//TMC2208步进驱动器
+////
 #define X_ENABLE_PIN                        PB4
 #define X_STEP_PIN                          PC12
 #define X_DIR_PIN                           PC11
@@ -84,7 +85,7 @@
 #define E0_STEP_PIN                         PA6
 #define E0_DIR_PIN                          PA5
 
-// Stepper drivers Serial UART
+// Stepper drivers Serial UART//步进驱动程序串行UART
 #define X_SERIAL_TX_PIN                     PB3
 #define X_SERIAL_RX_PIN                     PD2
 #define Y_SERIAL_TX_PIN                     PA15
@@ -94,27 +95,27 @@
 #define E0_SERIAL_TX_PIN                    PC5
 #define E0_SERIAL_RX_PIN                    PC4
 
-// Reduce baud rate to improve software serial reliability
+// Reduce baud rate to improve software serial reliability//降低波特率以提高软件串行可靠性
 #define TMC_BAUD_RATE                      19200
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                          PA0   // TH0
-#define TEMP_BED_PIN                        PC3   // THB
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                          PA0   // TH0//TH0
+#define TEMP_BED_PIN                        PC3   // THB//泰铢
 
-//
-// Heaters / Fans
-//
-#define HEATER_0_PIN                        PC8   // HEATER0
-#define HEATER_BED_PIN                      PC9   // HOT BED
+////
+// Heaters / Fans//加热器/风扇
+////
+#define HEATER_0_PIN                        PC8   // HEATER0//加热器
+#define HEATER_BED_PIN                      PC9   // HOT BED//热床
 
-#define FAN_PIN                             PA7   // FAN  (fan2 on board) model cool fan
-#define FAN1_PIN                            PA8   // FAN  (fan0 on board) e0 cool fan
-#define FAN2_PIN                            PB9   // FAN  (fan1 on board) controller cool fan
+#define FAN_PIN                             PA7   // FAN  (fan2 on board) model cool fan//风扇（车载风扇2）型号冷却风扇
+#define FAN1_PIN                            PA8   // FAN  (fan0 on board) e0 cool fan//风扇（车载风扇0）e0冷却风扇
+#define FAN2_PIN                            PB9   // FAN  (fan1 on board) controller cool fan//风扇（车载风扇1）控制器冷却风扇
 
-// One NeoPixel onboard and a connector for other NeoPixels
-#define NEOPIXEL_PIN                        PC7   // The NEOPIXEL LED driving pin
+// One NeoPixel onboard and a connector for other NeoPixels//车载一个Neopix和一个用于其他Neopix的连接器
+#define NEOPIXEL_PIN                        PC7   // The NEOPIXEL LED driving pin//NEOPIXEL LED驱动引脚
 
 /**
  *     1 _____ 2
@@ -127,21 +128,21 @@
  *      LCD EXP
  */
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 #if ENABLED(CR10_STOCKDISPLAY)
   #define BEEPER_PIN                        PB5
   #define BTN_EN1                           PA2
   #define BTN_EN2                           PA3
   #define BTN_ENC                           PB6
 
-  #define LCD_PINS_RS                       PB7   // CS -- SOFT SPI for ENDER3 LCD
-  #define LCD_PINS_D4                       PB8   // SCLK
-  #define LCD_PINS_ENABLE                   PA4   // DATA MOSI
+  #define LCD_PINS_RS                       PB7   // CS -- SOFT SPI for ENDER3 LCD//CS——用于ENDER3 LCD的软SPI
+  #define LCD_PINS_D4                       PB8   // SCLK//SCLK
+  #define LCD_PINS_ENABLE                   PA4   // DATA MOSI//数据MOSI
 #endif
 
-// Alter timing for graphical display
+// Alter timing for graphical display//改变图形显示的时间
 #if HAS_MARLINUI_U8GLIB
   #ifndef BOARD_ST7920_DELAY_1
     #define BOARD_ST7920_DELAY_1 DELAY_NS(125)
@@ -154,16 +155,16 @@
   #endif
 #endif
 
-//
-// Camera
-//
+////
+// Camera//摄像机
+////
 #define CHDK_PIN                            PB15
 
 #if 0
 
-//
-// SD-NAND
-//
+////
+// SD-NAND//SD-NAND
+////
 #if SD_CONNECTION_IS(ONBOARD)
   #define SD_DETECT_PIN                     -1
   #define SD_SCK_PIN                        PA5
@@ -172,7 +173,7 @@
   #define SD_SS_PIN                         PA4
 #endif
 
-#define ONBOARD_SPI_DEVICE                     1  // SPI1
-#define ONBOARD_SD_CS_PIN                   PA4   // Chip select for SD-NAND
+#define ONBOARD_SPI_DEVICE                     1  // SPI1//SPI1
+#define ONBOARD_SD_CS_PIN                   PA4   // Chip select for SD-NAND//SD-NAND的芯片选择
 
 #endif

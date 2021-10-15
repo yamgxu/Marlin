@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,8 +22,8 @@
  */
 #pragma once
 
-// User-defined table 2
-// Dummy Thermistor table.. It will ALWAYS read a fixed value.
+// User-defined table 2//用户定义表2
+// Dummy Thermistor table.. It will ALWAYS read a fixed value.//虚拟热敏电阻表。。它将始终读取一个固定值。
 #ifndef DUMMY_THERMISTOR_999_VALUE
   #define DUMMY_THERMISTOR_999_VALUE 25
 #endif

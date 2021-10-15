@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,10 +22,10 @@
  */
 #pragma once
 
-//
-// Included by MarlinConfigPre.h ahead of Configuration_adv.h.
-// Don't use #if in this file for anything not defined early!
-//
+////
+// Included by MarlinConfigPre.h ahead of Configuration_adv.h.//在配置前由MarlinConfigPre.h包含。
+// Don't use #if in this file for anything not defined early!//不要将此文件中的#if用于早期未定义的任何内容！
+////
 
 #define _A4988              0x4988
 #define _A5984              0x5984
@@ -90,12 +91,12 @@
                       || AXIS_DRIVER_TYPE_X2(T) || AXIS_DRIVER_TYPE_Y2(T) || AXIS_DRIVER_TYPE_Z2(T) \
                       || AXIS_DRIVER_TYPE_Z3(T) || AXIS_DRIVER_TYPE_Z4(T) || HAS_E_DRIVER(T) )
 
-//
-// Trinamic Stepper Drivers
-//
+////
+// Trinamic Stepper Drivers//Trinamic步进驱动器
+////
 
-// Test for supported TMC drivers that require advanced configuration
-// Does not match standalone configurations
+// Test for supported TMC drivers that require advanced configuration//测试需要高级配置的受支持TMC驱动程序
+// Does not match standalone configurations//与独立配置不匹配
 #if (    HAS_DRIVER(TMC2130) || HAS_DRIVER(TMC2160) \
       || HAS_DRIVER(TMC2208) || HAS_DRIVER(TMC2209) \
       || HAS_DRIVER(TMC2660) \
@@ -125,8 +126,8 @@
                            || AXIS_DRIVER_TYPE(A,TMC2660) \
                            || AXIS_DRIVER_TYPE(A,TMC5130) || AXIS_DRIVER_TYPE(A,TMC5160) )
 
-// Test for a driver that uses SPI - this allows checking whether a _CS_ pin
-// is considered sensitive
+// Test for a driver that uses SPI - this allows checking whether a _CS_ pin//测试使用SPI的驱动程序-这允许检查_CS_引脚
+// is considered sensitive//被认为是敏感的
 #define AXIS_HAS_SPI(A)  (    AXIS_DRIVER_TYPE(A,TMC2130) || AXIS_DRIVER_TYPE(A,TMC2160) \
                            || AXIS_DRIVER_TYPE(A,TMC2660) \
                            || AXIS_DRIVER_TYPE(A,TMC5130) || AXIS_DRIVER_TYPE(A,TMC5160) )
@@ -182,16 +183,16 @@
   #define HAS_TMC_SPI 1
 #endif
 
-//
-// TMC26XX Stepper Drivers
-//
+////
+// TMC26XX Stepper Drivers//TMC26XX步进驱动程序
+////
 #if HAS_DRIVER(TMC26X)
   #define HAS_TMC26X 1
 #endif
 
-//
-// L64XX Stepper Drivers
-//
+////
+// L64XX Stepper Drivers//L64XX步进驱动程序
+////
 
 #if HAS_DRIVER(L6470) || HAS_DRIVER(L6474) || HAS_DRIVER(L6480) || HAS_DRIVER(POWERSTEP01)
   #define HAS_L64XX 1

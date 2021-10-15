@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,4 +30,4 @@ int16_t PARSED_PIN_INDEX(const char code, const int16_t dval) {
   return parser.intval(code, dval);
 }
 
-#endif // __PLAT_LINUX__
+#endif // __PLAT_LINUX__//_uuu平台u LINUX__

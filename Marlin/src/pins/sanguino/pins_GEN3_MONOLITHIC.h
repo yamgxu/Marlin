@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -54,23 +55,23 @@
 #define BOARD_INFO_NAME "Gen3 Monolithic"
 #define DEBUG_PIN                              0
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_STOP_PIN                            20
 #define Y_STOP_PIN                            25
 #define Z_STOP_PIN                            30
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                            15
 #define X_DIR_PIN                             18
-#define X_ENABLE_PIN                          24  // actually uses Y_enable_pin
+#define X_ENABLE_PIN                          24  // actually uses Y_enable_pin//实际使用Y_enable_引脚
 
 #define Y_STEP_PIN                            23
 #define Y_DIR_PIN                             22
-#define Y_ENABLE_PIN                          24  // shared with X_enable_pin
+#define Y_ENABLE_PIN                          24  // shared with X_enable_pin//与X_enable_pin共享
 
 #define Z_STEP_PIN                            27
 #define Z_DIR_PIN                             28
@@ -80,19 +81,19 @@
 #define E0_DIR_PIN                            17
 #define E0_ENABLE_PIN                          3
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                             0  // Analog Input
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                             0  // Analog Input//模拟输入
 
-//
-// Heaters
-//
+////
+// Heaters//加热器
+////
 #define HEATER_0_PIN                          16
 
-//
-// Misc. Functions
-//
-#define PS_ON_PIN                             14  // Alex, does this work on the card?
+////
+// Misc. Functions//杂项。功能
+////
+#define PS_ON_PIN                             14  // Alex, does this work on the card?//亚历克斯，这对卡有用吗？
 
-// Alex extras from Gen3+
+// Alex extras from Gen3+//Alex是Gen3的临时演员+

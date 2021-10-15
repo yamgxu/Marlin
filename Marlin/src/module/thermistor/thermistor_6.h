@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,10 +22,10 @@
  */
 #pragma once
 
-// R25 = 100 kOhm, beta25 = 4092 K, 8.2 kOhm pull-up, 100k Epcos (?) thermistor
+// R25 = 100 kOhm, beta25 = 4092 K, 8.2 kOhm pull-up, 100k Epcos (?) thermistor//R25=100千欧，beta25=4092千欧，8.2千欧上拉，100千欧Epcos（？）热敏电阻
 constexpr temp_entry_t temptable_6[] PROGMEM = {
   { OV(   1), 350 },
-  { OV(  28), 250 }, // top rating 250C
+  { OV(  28), 250 }, // top rating 250C//最高额定值250C
   { OV(  31), 245 },
   { OV(  35), 240 },
   { OV(  39), 235 },
@@ -33,8 +34,8 @@ constexpr temp_entry_t temptable_6[] PROGMEM = {
   { OV(  49), 220 },
   { OV(  53), 215 },
   { OV(  62), 210 },
-  { OV(  71), 205 }, // fitted graphically
-  { OV(  78), 200 }, // fitted graphically
+  { OV(  71), 205 }, // fitted graphically//图形拟合
+  { OV(  78), 200 }, // fitted graphically//图形拟合
   { OV(  94), 190 },
   { OV( 102), 185 },
   { OV( 116), 170 },
@@ -60,5 +61,5 @@ constexpr temp_entry_t temptable_6[] PROGMEM = {
   { OV( 970),  25 },
   { OV( 978),  22 },
   { OV(1008),   3 },
-  { OV(1023),   0 } // to allow internal 0 degrees C
+  { OV(1023),   0 } // to allow internal 0 degrees C//允许内部温度为0摄氏度
 };

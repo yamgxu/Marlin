@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -52,7 +53,7 @@ static esp_err_t upload_options_handler(httpd_req_t *req) {
 static esp_err_t upload_file_handler(httpd_req_t *req) {
   httpd_resp_set_hdr(req, "Access-Control-Allow-Origin", "*");
 
-  char boundary[72 + 1] = "--"; // boundary + delimiter prefix --
+  char boundary[72 + 1] = "--"; // boundary + delimiter prefix --//边界+分隔符前缀--
   int boundary_len;
   char *buf = ((struct file_server_data *)req->user_ctx)->scratch;
   int remaining = req->content_len;
@@ -60,14 +61,14 @@ static esp_err_t upload_file_handler(httpd_req_t *req) {
   bool header = false;
   char filename[ESP_VFS_PATH_MAX];
 
-  // Get the length of the Content-Type header
+  // Get the length of the Content-Type header//获取内容类型标题的长度
   int ctype_len = httpd_req_get_hdr_value_len(req, "Content-Type") + 1;
   if (ctype_len == 1) {
     httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, NULL);
     return ESP_FAIL;
   }
 
-  // 
+  // // 
   char *ctypebuf = (char *)malloc(ctype_len);
   if (httpd_req_get_hdr_value_str(req, "Content-Type", ctypebuf, ctype_len) != ESP_OK) {
     free(ctypebuf);
@@ -90,11 +91,11 @@ static esp_err_t upload_file_handler(httpd_req_t *req) {
   while (remaining > 0) {
     if ((received = httpd_req_recv(req, buf, min(remaining, SCRATCH_BUFSIZE-1))) <= 0) {
       if (received == HTTPD_SOCK_ERR_TIMEOUT) {
-        // Retry if timeout occurred
+        // Retry if timeout occurred//如果发生超时，请重试
         continue;
       }
 
-      // In case of error close and delete the file
+      // In case of error close and delete the file//如果出现错误，请关闭并删除该文件
       if (header) {
       }
 
@@ -107,19 +108,19 @@ static esp_err_t upload_file_handler(httpd_req_t *req) {
     char *writedata = buf;
     int writelen = received;
 
-    // null terminate the buffer to safely use string operations
+    // null terminate the buffer to safely use string operations//null终止缓冲区以安全使用字符串操作
     writedata[received] = 0;
 
     if (!header) {
-      // The header should start with the boundary
+      // The header should start with the boundary//标题应以边界开头
       if (!strncmp(boundary, buf, boundary_len) == 0) {
-        // TODO was expecting a header boundary
+        // TODO was expecting a header boundary//TODO希望有一个标题边界
       }
 
-      // Get the content disposition to get the filename
+      // Get the content disposition to get the filename//获取内容配置以获取文件名
       char *cdisposition_filename = strstr(buf, "filename=\"");
       if (!cdisposition_filename) {
-        // TODO was expecting a filename field
+        // TODO was expecting a filename field//TODO需要一个文件名字段
       }
 
       cdisposition_filename += 10;
@@ -129,22 +130,22 @@ static esp_err_t upload_file_handler(httpd_req_t *req) {
       filename[filename_len] = 0;
 
 
-      // Get the beginning of the data
+      // Get the beginning of the data//获取数据的开头
       writedata = strstr(buf, "\r\n\r\n");
       if (!writedata) {
         httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, NULL);
         return ESP_FAIL;
       }
 
-      writedata += 4; // skip the starting \r\n\r\n
+      writedata += 4; // skip the starting \r\n\r\n//跳过启动\r\n\r\n
       writelen -= writedata-buf;
       header = true;
     }
     
-    // Can have the entire file in one buffer
+    // Can have the entire file in one buffer//可以将整个文件放在一个缓冲区中
     if (remaining == 0) {
       char *end = strstr(writedata, boundary);
-      writelen = end-2-writedata; // remove 2 to remove the preceding \r\n
+      writelen = end-2-writedata; // remove 2 to remove the preceding \r\n//删除2以删除前面的\r\n
     }
 
   }
@@ -184,5 +185,5 @@ void web_init() {
   }
 }
 
-#endif // WIFISUPPORT && WEBSUPPORT
-#endif // ARDUINO_ARCH_ESP32
+#endif // WIFISUPPORT && WEBSUPPORT//WIFISUPPORT&&WEBSUPPORT
+#endif // ARDUINO_ARCH_ESP32//ARDUINO_ARCH_ESP32

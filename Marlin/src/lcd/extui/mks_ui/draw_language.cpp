@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -185,7 +186,7 @@ static void disp_language(uint8_t language, uint8_t state) {
 
 void lv_draw_language() {
   scr = lv_screen_create(LANGUAGE_UI);
-  // Create image buttons
+  // Create image buttons//创建图像按钮
   buttonCN = lv_big_button_create(scr, "F:/bmp_simplified_cn.bin", language_menu.chinese_s, INTERVAL_V, titleHeight, event_handler, ID_CN);
   lv_obj_clear_protect(buttonCN, LV_PROTECT_FOLLOW);
   buttonT_CN = lv_big_button_create(scr, "F:/bmp_traditional_cn.bin", language_menu.chinese_t, BTN_X_PIXEL + INTERVAL_V * 2, titleHeight, event_handler, ID_T_CN);
@@ -205,4 +206,4 @@ void lv_clear_language() {
   lv_obj_del(scr);
 }
 
-#endif // HAS_TFT_LVGL_UI
+#endif // HAS_TFT_LVGL_UI//有TFT\U LVGL\U用户界面

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -56,10 +57,10 @@ void LinearAxis::interrupt(GpioEvent ev) {
       last_update = ev.timestamp;
       position += -1 + 2 * Gpio::pin_map[dir_pin].value;
       Gpio::pin_map[min_pin].value = (position < min_position);
-      //Gpio::pin_map[max_pin].value = (position > max_position);
-      //if (position < min_position) printf("axis(%d) endstop : pos: %d, mm: %f, min: %d\n", step_pin, position, position / 80.0, Gpio::pin_map[min_pin].value);
+      //Gpio::pin_map[max_pin].value = (position > max_position);//Gpio:：pin\U映射[max\U pin]。值=（位置>max\U位置）；
+      //if (position < min_position) printf("axis(%d) endstop : pos: %d, mm: %f, min: %d\n", step_pin, position, position / 80.0, Gpio::pin_map[min_pin].value);//如果（位置<最小位置）printf（“轴（%d）末端停止：位置：%d，毫米：%f，最小：%d\n”，步骤引脚，位置，位置/80.0，Gpio:：引脚映射[min\u引脚]。值）；
     }
   }
 }
 
-#endif // __PLAT_LINUX__
+#endif // __PLAT_LINUX__//_uuu平台u LINUX__

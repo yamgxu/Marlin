@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -20,9 +21,9 @@
  *
  */
 
-//
-// Backlash Menu
-//
+////
+// Backlash Menu//齿隙菜单
+////
 
 #include "../../inc/MarlinConfigPre.h"
 
@@ -68,4 +69,4 @@ void menu_backlash() {
   END_MENU();
 }
 
-#endif // HAS_LCD_MENU && BACKLASH_GCODE
+#endif // HAS_LCD_MENU && BACKLASH_GCODE//有_LCD_菜单和&&resack_GCODE

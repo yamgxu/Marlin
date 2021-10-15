@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -37,13 +38,13 @@
     #define SOFTWARE_SPI
   #endif
 
-  // SPI pin definitions - do not edit here - change in SdFatConfig.h
+  // SPI pin definitions - do not edit here - change in SdFatConfig.h//SPI引脚定义-请勿在此编辑-在SdFatConfig.h中更改
   #if ENABLED(SOFTWARE_SPI)
     #warning "Auto-assigning '10' as the SD_CHIP_SELECT_PIN."
-    #define SD_CHIP_SELECT_PIN  10                // Software SPI chip select pin for the SD
+    #define SD_CHIP_SELECT_PIN  10                // Software SPI chip select pin for the SD//SD的软件SPI芯片选择引脚
   #else
-    // hardware pin defs
-    #define SD_CHIP_SELECT_PIN  SD_SS_PIN         // The default chip select pin for the SD card is SS.
+    // hardware pin defs//硬件引脚定义
+    #define SD_CHIP_SELECT_PIN  SD_SS_PIN         // The default chip select pin for the SD card is SS.//SD卡的默认芯片选择引脚为SS。
   #endif
 #endif
 

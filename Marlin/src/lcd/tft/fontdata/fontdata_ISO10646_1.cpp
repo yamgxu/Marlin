@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,7 +30,7 @@
 #define STM32_NOT_EXTENDED_ISO10646_1_5X7
 
 #if ENABLED(STM32_NOT_EXTENDED_ISO10646_1_5X7)
-  // reduced font (only symbols 1 - 127) - saves about 1278 bytes of FLASH
+  // reduced font (only symbols 1 - 127) - saves about 1278 bytes of FLASH//减少字体（仅符号1-127）-节省约1278字节的闪存
 
 /*
   Fontname: -Marlin6x12-Fixed-Medium-R-SemiCondensed--12-90-100-100-C-111-ISO10646-1
@@ -128,9 +129,9 @@ extern const uint8_t ISO10646_1_5x7[1325] = {
   0x40,0x40,0x80,0x05,0x03,0x03,0x06,0x00,0x02,0x48,0xA8,0x90,0xFF
 };
 
-#else // !STM32_NOT_EXTENDED_ISO10646_1_5X7
+#else // !STM32_NOT_EXTENDED_ISO10646_1_5X7// !STM32_非扩展_ISO10646_1_5X7
 
-  // extended (original) font (symbols 1 - 255)
+  // extended (original) font (symbols 1 - 255)//扩展（原始）字体（符号1-255）
 
 /*
   Fontname: -Marlin6x12-Fixed-Medium-R-SemiCondensed--12-90-100-100-C-111-ISO10646-1
@@ -312,6 +313,6 @@ extern const uint8_t ISO10646_1_5x7[2648] = {
   0x00,0x88,0x88,0x88,0x50,0x20,0x40,0x80
 };
 
-#endif // !STM32_NOT_EXTENDED_ISO10646_1_5X7
+#endif // !STM32_NOT_EXTENDED_ISO10646_1_5X7// !STM32_非扩展_ISO10646_1_5X7
 
-#endif // HAS_GRAPHICAL_TFT
+#endif // HAS_GRAPHICAL_TFT//有图形化的TFT

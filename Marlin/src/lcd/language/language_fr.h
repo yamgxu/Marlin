@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,7 +32,7 @@
 #define DISPLAY_CHARSET_ISO10646_1
 
 namespace Language_fr {
-  using namespace Language_en; // Inherit undefined strings from English
+  using namespace Language_en; // Inherit undefined strings from English//从英语中继承未定义的字符串
 
   constexpr uint8_t    CHARSIZE                            = 2;
   PROGMEM Language_Str LANGUAGE                            = _UxGT("Français");
@@ -71,7 +72,7 @@ namespace Language_fr {
   PROGMEM Language_Str MSG_SET_ORIGIN                      = _UxGT("Régler origine");
   PROGMEM Language_Str MSG_ASSISTED_TRAMMING               = _UxGT("Assistant Molettes");
   PROGMEM Language_Str MSG_TRAMMING_WIZARD                 = _UxGT("Assistant Molettes");
-  PROGMEM Language_Str MSG_SELECT_ORIGIN                   = _UxGT("Molette du lit"); // Not a selection of the origin
+  PROGMEM Language_Str MSG_SELECT_ORIGIN                   = _UxGT("Molette du lit"); // Not a selection of the origin//不是对原点的选择
   PROGMEM Language_Str MSG_LAST_VALUE_SP                   = _UxGT("Ecart origine ");
   #if PREHEAT_COUNT
     PROGMEM Language_Str MSG_PREHEAT_1                     = _UxGT("Préchauffage ") PREHEAT_1_LABEL;
@@ -106,7 +107,7 @@ namespace Language_fr {
   PROGMEM Language_Str MSG_LEVEL_CORNERS_RAISE             = _UxGT("Relever le coin jusqu'à la sonde");
   PROGMEM Language_Str MSG_LEVEL_CORNERS_IN_RANGE          = _UxGT("Coins dans la tolérance. Niveau lit ");
   PROGMEM Language_Str MSG_NEXT_CORNER                     = _UxGT("Coin suivant");
-  PROGMEM Language_Str MSG_MESH_EDITOR                     = _UxGT("Modif. maille"); // 13 car. max
+  PROGMEM Language_Str MSG_MESH_EDITOR                     = _UxGT("Modif. maille"); // 13 car. max//13辆车。最大值
   PROGMEM Language_Str MSG_EDIT_MESH                       = _UxGT("Modifier grille");
   PROGMEM Language_Str MSG_EDITING_STOPPED                 = _UxGT("Modification arrêtée");
   PROGMEM Language_Str MSG_PROBING_MESH                    = _UxGT("Mesure point");
@@ -242,7 +243,7 @@ namespace Language_fr {
   PROGMEM Language_Str MSG_NOZZLE_N                        = _UxGT("Buse ~");
   PROGMEM Language_Str MSG_BED                             = _UxGT("Lit");
   PROGMEM Language_Str MSG_CHAMBER                         = _UxGT("Caisson");
-  PROGMEM Language_Str MSG_FAN_SPEED                       = _UxGT("Vit.  ventil.  "); // 15 car. max
+  PROGMEM Language_Str MSG_FAN_SPEED                       = _UxGT("Vit.  ventil.  "); // 15 car. max//15辆车。最大值
   PROGMEM Language_Str MSG_FAN_SPEED_N                     = _UxGT("Vit.  ventil. ~");
   PROGMEM Language_Str MSG_STORED_FAN_N                    = _UxGT("Vit.  enreg.  ~");
   PROGMEM Language_Str MSG_EXTRA_FAN_SPEED                 = _UxGT("Extra ventil.  ");
@@ -412,9 +413,9 @@ namespace Language_fr {
 
   PROGMEM Language_Str MSG_HALTED                          = _UxGT("IMPR. STOPPÉE");
   PROGMEM Language_Str MSG_PLEASE_RESET                    = _UxGT("Redémarrer SVP");
-  PROGMEM Language_Str MSG_SHORT_DAY                       = _UxGT("j"); // One character only
-  PROGMEM Language_Str MSG_SHORT_HOUR                      = _UxGT("h"); // One character only
-  PROGMEM Language_Str MSG_SHORT_MINUTE                    = _UxGT("m"); // One character only
+  PROGMEM Language_Str MSG_SHORT_DAY                       = _UxGT("j"); // One character only//只有一个字符
+  PROGMEM Language_Str MSG_SHORT_HOUR                      = _UxGT("h"); // One character only//只有一个字符
+  PROGMEM Language_Str MSG_SHORT_MINUTE                    = _UxGT("m"); // One character only//只有一个字符
 
   PROGMEM Language_Str MSG_HEATING                         = _UxGT("en chauffe...");
   PROGMEM Language_Str MSG_COOLING                         = _UxGT("Refroidissement");
@@ -543,7 +544,7 @@ namespace Language_fr {
   PROGMEM Language_Str MSG_BAD_PAGE_SPEED                  = _UxGT("Erreur vitesse page");
 
   #if LCD_HEIGHT >= 4
-    // Up to 3 lines allowed
+    // Up to 3 lines allowed//最多允许3行
     PROGMEM Language_Str MSG_ADVANCED_PAUSE_WAITING        = _UxGT(MSG_2_LINE("Presser bouton", "pour reprendre"));
     PROGMEM Language_Str MSG_PAUSE_PRINT_PARKING           = _UxGT(MSG_1_LINE("Parking..."));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_INIT          = _UxGT(MSG_2_LINE("Attente filament", "pour démarrer"));
@@ -555,8 +556,8 @@ namespace Language_fr {
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_PURGE         = _UxGT(MSG_2_LINE("Attente", "Purge filament"));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_CONT_PURGE    = _UxGT(MSG_2_LINE("Presser pour finir", "la purge du filament"));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_RESUME        = _UxGT(MSG_2_LINE("Attente reprise", "impression"));
-  #else // LCD_HEIGHT < 4
-    // Up to 2 lines allowed
+  #else // LCD_HEIGHT < 4//LCD_高度<4
+    // Up to 2 lines allowed//最多允许2行
     PROGMEM Language_Str MSG_ADVANCED_PAUSE_WAITING        = _UxGT(MSG_1_LINE("Clic pour continuer"));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_INIT          = _UxGT(MSG_1_LINE("Patience..."));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_INSERT        = _UxGT(MSG_1_LINE("Insérer fil."));
@@ -567,7 +568,7 @@ namespace Language_fr {
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_PURGE         = _UxGT(MSG_1_LINE("Purge..."));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_CONT_PURGE    = _UxGT(MSG_1_LINE("Terminer ?"));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_RESUME        = _UxGT(MSG_1_LINE("Reprise..."));
-  #endif // LCD_HEIGHT < 4
+  #endif // LCD_HEIGHT < 4//LCD_高度<4
 
   PROGMEM Language_Str MSG_TMC_CURRENT                     = _UxGT("Courant driver");
   PROGMEM Language_Str MSG_TMC_HYBRID_THRS                 = _UxGT("Seuil hybride");

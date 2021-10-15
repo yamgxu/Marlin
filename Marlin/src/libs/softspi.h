@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,13 +22,13 @@
  */
 #pragma once
 
-//
-// Based on https://github.com/niteris/ArduinoSoftSpi
-//
+////
+// Based on https://github.com/niteris/ArduinoSoftSpi//基于https://github.com/niteris/ArduinoSoftSpi
+////
 
-#include "../HAL/shared/Marduino.h" // CORE_TEENSY
+#include "../HAL/shared/Marduino.h" // CORE_TEENSY//CORE_TEENSY
 
-#define nop __asm__ volatile ("nop") // NOP for timing
+#define nop __asm__ volatile ("nop") // NOP for timing//不适用于计时
 
 #ifdef __arm__
 
@@ -54,7 +55,7 @@
         *portClearRegister(pin) = 1;
     }
 
-  #else // !CORE_TEENSY
+  #else // !CORE_TEENSY// !CORE_TEENSY
 
     /**
      * Read pin value
@@ -74,13 +75,13 @@
       digitalWrite(pin, value);
     }
 
-  #endif // !CORE_TEENSY
+  #endif // !CORE_TEENSY// !CORE_TEENSY
 
   inline void fastDigitalToggle(uint8_t pin) { fastDigitalWrite(pin, !fastDigitalRead(pin)); }
 
   inline void fastPinMode(uint8_t pin, bool mode) { pinMode(pin, mode); }
 
-#else  // !__arm__
+#else  // !__arm__// !__手臂__
 
   #include <avr/io.h>
   #include <util/atomic.h>
@@ -98,116 +99,116 @@
 
   #if defined(__AVR_ATmega168__) || defined(__AVR_ATmega168P__) || defined(__AVR_ATmega328P__)
 
-    // 168 and 328 Arduinos
+    // 168 and 328 Arduinos//168和328阿杜伊诺斯
     const static pin_map_t pinMap[] = {
-      {&DDRD, &PIND, &PORTD, 0},  // D0  0
-      {&DDRD, &PIND, &PORTD, 1},  // D1  1
-      {&DDRD, &PIND, &PORTD, 2},  // D2  2
-      {&DDRD, &PIND, &PORTD, 3},  // D3  3
-      {&DDRD, &PIND, &PORTD, 4},  // D4  4
-      {&DDRD, &PIND, &PORTD, 5},  // D5  5
-      {&DDRD, &PIND, &PORTD, 6},  // D6  6
-      {&DDRD, &PIND, &PORTD, 7},  // D7  7
-      {&DDRB, &PINB, &PORTB, 0},  // B0  8
-      {&DDRB, &PINB, &PORTB, 1},  // B1  9
-      {&DDRB, &PINB, &PORTB, 2},  // B2 10
-      {&DDRB, &PINB, &PORTB, 3},  // B3 11
-      {&DDRB, &PINB, &PORTB, 4},  // B4 12
-      {&DDRB, &PINB, &PORTB, 5},  // B5 13
-      {&DDRC, &PINC, &PORTC, 0},  // C0 14
-      {&DDRC, &PINC, &PORTC, 1},  // C1 15
-      {&DDRC, &PINC, &PORTC, 2},  // C2 16
-      {&DDRC, &PINC, &PORTC, 3},  // C3 17
-      {&DDRC, &PINC, &PORTC, 4},  // C4 18
-      {&DDRC, &PINC, &PORTC, 5}   // C5 19
+      {&DDRD, &PIND, &PORTD, 0},  // D0  0//D00
+      {&DDRD, &PIND, &PORTD, 1},  // D1  1//D1 1
+      {&DDRD, &PIND, &PORTD, 2},  // D2  2//D2 2
+      {&DDRD, &PIND, &PORTD, 3},  // D3  3//D33
+      {&DDRD, &PIND, &PORTD, 4},  // D4  4//D4
+      {&DDRD, &PIND, &PORTD, 5},  // D5  5//D5
+      {&DDRD, &PIND, &PORTD, 6},  // D6  6//D6
+      {&DDRD, &PIND, &PORTD, 7},  // D7  7//D7
+      {&DDRB, &PINB, &PORTB, 0},  // B0  8//B0 8
+      {&DDRB, &PINB, &PORTB, 1},  // B1  9//B1 9
+      {&DDRB, &PINB, &PORTB, 2},  // B2 10//B2 10
+      {&DDRB, &PINB, &PORTB, 3},  // B3 11//B3 11
+      {&DDRB, &PINB, &PORTB, 4},  // B4 12//B4 12
+      {&DDRB, &PINB, &PORTB, 5},  // B5 13//B5 13
+      {&DDRC, &PINC, &PORTC, 0},  // C0 14//C0 14
+      {&DDRC, &PINC, &PORTC, 1},  // C1 15//C1 15
+      {&DDRC, &PINC, &PORTC, 2},  // C2 16//C2 16
+      {&DDRC, &PINC, &PORTC, 3},  // C3 17//C3 17
+      {&DDRC, &PINC, &PORTC, 4},  // C4 18//C418
+      {&DDRC, &PINC, &PORTC, 5}   // C5 19//C5 19
     };
 
   #elif defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
 
-    // Mega
+    // Mega//巨大的
     static const pin_map_t pinMap[] = {
-      {&DDRE, &PINE, &PORTE, 0},  // E0  0
-      {&DDRE, &PINE, &PORTE, 1},  // E1  1
-      {&DDRE, &PINE, &PORTE, 4},  // E4  2
-      {&DDRE, &PINE, &PORTE, 5},  // E5  3
-      {&DDRG, &PING, &PORTG, 5},  // G5  4
-      {&DDRE, &PINE, &PORTE, 3},  // E3  5
-      {&DDRH, &PINH, &PORTH, 3},  // H3  6
-      {&DDRH, &PINH, &PORTH, 4},  // H4  7
-      {&DDRH, &PINH, &PORTH, 5},  // H5  8
-      {&DDRH, &PINH, &PORTH, 6},  // H6  9
-      {&DDRB, &PINB, &PORTB, 4},  // B4 10
-      {&DDRB, &PINB, &PORTB, 5},  // B5 11
-      {&DDRB, &PINB, &PORTB, 6},  // B6 12
-      {&DDRB, &PINB, &PORTB, 7},  // B7 13
-      {&DDRJ, &PINJ, &PORTJ, 1},  // J1 14
-      {&DDRJ, &PINJ, &PORTJ, 0},  // J0 15
-      {&DDRH, &PINH, &PORTH, 1},  // H1 16
-      {&DDRH, &PINH, &PORTH, 0},  // H0 17
-      {&DDRD, &PIND, &PORTD, 3},  // D3 18
-      {&DDRD, &PIND, &PORTD, 2},  // D2 19
-      {&DDRD, &PIND, &PORTD, 1},  // D1 20
-      {&DDRD, &PIND, &PORTD, 0},  // D0 21
-      {&DDRA, &PINA, &PORTA, 0},  // A0 22
-      {&DDRA, &PINA, &PORTA, 1},  // A1 23
-      {&DDRA, &PINA, &PORTA, 2},  // A2 24
-      {&DDRA, &PINA, &PORTA, 3},  // A3 25
-      {&DDRA, &PINA, &PORTA, 4},  // A4 26
-      {&DDRA, &PINA, &PORTA, 5},  // A5 27
-      {&DDRA, &PINA, &PORTA, 6},  // A6 28
-      {&DDRA, &PINA, &PORTA, 7},  // A7 29
-      {&DDRC, &PINC, &PORTC, 7},  // C7 30
-      {&DDRC, &PINC, &PORTC, 6},  // C6 31
-      {&DDRC, &PINC, &PORTC, 5},  // C5 32
-      {&DDRC, &PINC, &PORTC, 4},  // C4 33
-      {&DDRC, &PINC, &PORTC, 3},  // C3 34
-      {&DDRC, &PINC, &PORTC, 2},  // C2 35
-      {&DDRC, &PINC, &PORTC, 1},  // C1 36
-      {&DDRC, &PINC, &PORTC, 0},  // C0 37
-      {&DDRD, &PIND, &PORTD, 7},  // D7 38
-      {&DDRG, &PING, &PORTG, 2},  // G2 39
-      {&DDRG, &PING, &PORTG, 1},  // G1 40
-      {&DDRG, &PING, &PORTG, 0},  // G0 41
-      {&DDRL, &PINL, &PORTL, 7},  // L7 42
-      {&DDRL, &PINL, &PORTL, 6},  // L6 43
-      {&DDRL, &PINL, &PORTL, 5},  // L5 44
-      {&DDRL, &PINL, &PORTL, 4},  // L4 45
-      {&DDRL, &PINL, &PORTL, 3},  // L3 46
-      {&DDRL, &PINL, &PORTL, 2},  // L2 47
-      {&DDRL, &PINL, &PORTL, 1},  // L1 48
-      {&DDRL, &PINL, &PORTL, 0},  // L0 49
-      {&DDRB, &PINB, &PORTB, 3},  // B3 50
-      {&DDRB, &PINB, &PORTB, 2},  // B2 51
-      {&DDRB, &PINB, &PORTB, 1},  // B1 52
-      {&DDRB, &PINB, &PORTB, 0},  // B0 53
-      {&DDRF, &PINF, &PORTF, 0},  // F0 54
-      {&DDRF, &PINF, &PORTF, 1},  // F1 55
-      {&DDRF, &PINF, &PORTF, 2},  // F2 56
-      {&DDRF, &PINF, &PORTF, 3},  // F3 57
-      {&DDRF, &PINF, &PORTF, 4},  // F4 58
-      {&DDRF, &PINF, &PORTF, 5},  // F5 59
-      {&DDRF, &PINF, &PORTF, 6},  // F6 60
-      {&DDRF, &PINF, &PORTF, 7},  // F7 61
-      {&DDRK, &PINK, &PORTK, 0},  // K0 62
-      {&DDRK, &PINK, &PORTK, 1},  // K1 63
-      {&DDRK, &PINK, &PORTK, 2},  // K2 64
-      {&DDRK, &PINK, &PORTK, 3},  // K3 65
-      {&DDRK, &PINK, &PORTK, 4},  // K4 66
-      {&DDRK, &PINK, &PORTK, 5},  // K5 67
-      {&DDRK, &PINK, &PORTK, 6},  // K6 68
-      {&DDRK, &PINK, &PORTK, 7},  // K7 69
+      {&DDRE, &PINE, &PORTE, 0},  // E0  0//E00
+      {&DDRE, &PINE, &PORTE, 1},  // E1  1//E1 1
+      {&DDRE, &PINE, &PORTE, 4},  // E4  2//E4 2
+      {&DDRE, &PINE, &PORTE, 5},  // E5  3//E5 3
+      {&DDRG, &PING, &PORTG, 5},  // G5  4//G5 4
+      {&DDRE, &PINE, &PORTE, 3},  // E3  5//E35
+      {&DDRH, &PINH, &PORTH, 3},  // H3  6//H36
+      {&DDRH, &PINH, &PORTH, 4},  // H4  7//H47
+      {&DDRH, &PINH, &PORTH, 5},  // H5  8//H5 8
+      {&DDRH, &PINH, &PORTH, 6},  // H6  9//H6 9
+      {&DDRB, &PINB, &PORTB, 4},  // B4 10//B4 10
+      {&DDRB, &PINB, &PORTB, 5},  // B5 11//B5 11
+      {&DDRB, &PINB, &PORTB, 6},  // B6 12//B6 12
+      {&DDRB, &PINB, &PORTB, 7},  // B7 13//B7 13
+      {&DDRJ, &PINJ, &PORTJ, 1},  // J1 14//J1 14
+      {&DDRJ, &PINJ, &PORTJ, 0},  // J0 15//J0 15
+      {&DDRH, &PINH, &PORTH, 1},  // H1 16//H116
+      {&DDRH, &PINH, &PORTH, 0},  // H0 17//H0 17
+      {&DDRD, &PIND, &PORTD, 3},  // D3 18//D3 18
+      {&DDRD, &PIND, &PORTD, 2},  // D2 19//D2 19
+      {&DDRD, &PIND, &PORTD, 1},  // D1 20//D1 20
+      {&DDRD, &PIND, &PORTD, 0},  // D0 21//D0 21
+      {&DDRA, &PINA, &PORTA, 0},  // A0 22//A0 22
+      {&DDRA, &PINA, &PORTA, 1},  // A1 23//A1 23
+      {&DDRA, &PINA, &PORTA, 2},  // A2 24//A2 24
+      {&DDRA, &PINA, &PORTA, 3},  // A3 25//A3 25
+      {&DDRA, &PINA, &PORTA, 4},  // A4 26//A4 26
+      {&DDRA, &PINA, &PORTA, 5},  // A5 27//A5 27
+      {&DDRA, &PINA, &PORTA, 6},  // A6 28//A6 28
+      {&DDRA, &PINA, &PORTA, 7},  // A7 29//A7 29
+      {&DDRC, &PINC, &PORTC, 7},  // C7 30//C7 30
+      {&DDRC, &PINC, &PORTC, 6},  // C6 31//C6 31
+      {&DDRC, &PINC, &PORTC, 5},  // C5 32//C532
+      {&DDRC, &PINC, &PORTC, 4},  // C4 33//C433
+      {&DDRC, &PINC, &PORTC, 3},  // C3 34//C3 34
+      {&DDRC, &PINC, &PORTC, 2},  // C2 35//C2 35
+      {&DDRC, &PINC, &PORTC, 1},  // C1 36//C1 36
+      {&DDRC, &PINC, &PORTC, 0},  // C0 37//C0 37
+      {&DDRD, &PIND, &PORTD, 7},  // D7 38//D7 38
+      {&DDRG, &PING, &PORTG, 2},  // G2 39//G2 39
+      {&DDRG, &PING, &PORTG, 1},  // G1 40//G140
+      {&DDRG, &PING, &PORTG, 0},  // G0 41//G0 41
+      {&DDRL, &PINL, &PORTL, 7},  // L7 42//L7 42
+      {&DDRL, &PINL, &PORTL, 6},  // L6 43//L6 43
+      {&DDRL, &PINL, &PORTL, 5},  // L5 44//L5 44
+      {&DDRL, &PINL, &PORTL, 4},  // L4 45//L4 45
+      {&DDRL, &PINL, &PORTL, 3},  // L3 46//L3 46
+      {&DDRL, &PINL, &PORTL, 2},  // L2 47//L247
+      {&DDRL, &PINL, &PORTL, 1},  // L1 48//L1 48
+      {&DDRL, &PINL, &PORTL, 0},  // L0 49//L0 49
+      {&DDRB, &PINB, &PORTB, 3},  // B3 50//B350
+      {&DDRB, &PINB, &PORTB, 2},  // B2 51//B2 51
+      {&DDRB, &PINB, &PORTB, 1},  // B1 52//B1 52
+      {&DDRB, &PINB, &PORTB, 0},  // B0 53//B053
+      {&DDRF, &PINF, &PORTF, 0},  // F0 54//F0 54
+      {&DDRF, &PINF, &PORTF, 1},  // F1 55//F1 55
+      {&DDRF, &PINF, &PORTF, 2},  // F2 56//F256
+      {&DDRF, &PINF, &PORTF, 3},  // F3 57//F3 57
+      {&DDRF, &PINF, &PORTF, 4},  // F4 58//F4 58
+      {&DDRF, &PINF, &PORTF, 5},  // F5 59//F5 59
+      {&DDRF, &PINF, &PORTF, 6},  // F6 60//F6 60
+      {&DDRF, &PINF, &PORTF, 7},  // F7 61//F761
+      {&DDRK, &PINK, &PORTK, 0},  // K0 62//k062
+      {&DDRK, &PINK, &PORTK, 1},  // K1 63//K1 63
+      {&DDRK, &PINK, &PORTK, 2},  // K2 64//K264
+      {&DDRK, &PINK, &PORTK, 3},  // K3 65//K365
+      {&DDRK, &PINK, &PORTK, 4},  // K4 66//K4 66
+      {&DDRK, &PINK, &PORTK, 5},  // K5 67//K5 67
+      {&DDRK, &PINK, &PORTK, 6},  // K6 68//K6 68
+      {&DDRK, &PINK, &PORTK, 7},  // K7 69//K7 69
 
-      // pins_MIGHTYBOARD_REVE.h
-      {&DDRG, &PING, &PORTG, 4},  // G4 70
-      {&DDRG, &PING, &PORTG, 3},  // G3 71
-      {&DDRJ, &PINJ, &PORTJ, 2},  // J2 72
-      {&DDRJ, &PINJ, &PORTJ, 3},  // J3 73
-      {&DDRJ, &PINJ, &PORTJ, 7},  // J7 74
-      {&DDRJ, &PINJ, &PORTJ, 4},  // J4 75
-      {&DDRJ, &PINJ, &PORTJ, 5},  // J5 76
-      {&DDRJ, &PINJ, &PORTJ, 6},  // J6 77
-      {&DDRE, &PINE, &PORTE, 2},  // E2 78
-      {&DDRE, &PINE, &PORTE, 6}   // E6 79
+      // pins_MIGHTYBOARD_REVE.h//插脚可能是板上的
+      {&DDRG, &PING, &PORTG, 4},  // G4 70//G4 70
+      {&DDRG, &PING, &PORTG, 3},  // G3 71//G371
+      {&DDRJ, &PINJ, &PORTJ, 2},  // J2 72//J2 72
+      {&DDRJ, &PINJ, &PORTJ, 3},  // J3 73//J3 73
+      {&DDRJ, &PINJ, &PORTJ, 7},  // J7 74//J7 74
+      {&DDRJ, &PINJ, &PORTJ, 4},  // J4 75//J4 75
+      {&DDRJ, &PINJ, &PORTJ, 5},  // J5 76//J5 76
+      {&DDRJ, &PINJ, &PORTJ, 6},  // J6 77//J6 77
+      {&DDRE, &PINE, &PORTE, 2},  // E2 78//E2 78
+      {&DDRE, &PINE, &PORTE, 6}   // E6 79//E6 79
     };
 
   #elif defined(__AVR_ATmega1284P__) || defined(__AVR_ATmega1284__) \
@@ -217,119 +218,119 @@
 
     #ifdef VARIANT_MIGHTY
 
-      // Mighty Layout
+      // Mighty Layout//强大的布局
       static const pin_map_t pinMap[] = {
-        {&DDRB, &PINB, &PORTB, 0},  // B0  0
-        {&DDRB, &PINB, &PORTB, 1},  // B1  1
-        {&DDRB, &PINB, &PORTB, 2},  // B2  2
-        {&DDRB, &PINB, &PORTB, 3},  // B3  3
-        {&DDRB, &PINB, &PORTB, 4},  // B4  4
-        {&DDRB, &PINB, &PORTB, 5},  // B5  5
-        {&DDRB, &PINB, &PORTB, 6},  // B6  6
-        {&DDRB, &PINB, &PORTB, 7},  // B7  7
-        {&DDRD, &PIND, &PORTD, 0},  // D0  8
-        {&DDRD, &PIND, &PORTD, 1},  // D1  9
-        {&DDRD, &PIND, &PORTD, 2},  // D2 10
-        {&DDRD, &PIND, &PORTD, 3},  // D3 11
-        {&DDRD, &PIND, &PORTD, 4},  // D4 12
-        {&DDRD, &PIND, &PORTD, 5},  // D5 13
-        {&DDRD, &PIND, &PORTD, 6},  // D6 14
-        {&DDRD, &PIND, &PORTD, 7},  // D7 15
-        {&DDRC, &PINC, &PORTC, 0},  // C0 16
-        {&DDRC, &PINC, &PORTC, 1},  // C1 17
-        {&DDRC, &PINC, &PORTC, 2},  // C2 18
-        {&DDRC, &PINC, &PORTC, 3},  // C3 19
-        {&DDRC, &PINC, &PORTC, 4},  // C4 20
-        {&DDRC, &PINC, &PORTC, 5},  // C5 21
-        {&DDRC, &PINC, &PORTC, 6},  // C6 22
-        {&DDRC, &PINC, &PORTC, 7},  // C7 23
-        {&DDRA, &PINA, &PORTA, 0},  // A0 24
-        {&DDRA, &PINA, &PORTA, 1},  // A1 25
-        {&DDRA, &PINA, &PORTA, 2},  // A2 26
-        {&DDRA, &PINA, &PORTA, 3},  // A3 27
-        {&DDRA, &PINA, &PORTA, 4},  // A4 28
-        {&DDRA, &PINA, &PORTA, 5},  // A5 29
-        {&DDRA, &PINA, &PORTA, 6},  // A6 30
-        {&DDRA, &PINA, &PORTA, 7}   // A7 31
+        {&DDRB, &PINB, &PORTB, 0},  // B0  0//B00
+        {&DDRB, &PINB, &PORTB, 1},  // B1  1//B1 1
+        {&DDRB, &PINB, &PORTB, 2},  // B2  2//B2 2
+        {&DDRB, &PINB, &PORTB, 3},  // B3  3//B33
+        {&DDRB, &PINB, &PORTB, 4},  // B4  4//B4 4
+        {&DDRB, &PINB, &PORTB, 5},  // B5  5//B5 5
+        {&DDRB, &PINB, &PORTB, 6},  // B6  6//B6
+        {&DDRB, &PINB, &PORTB, 7},  // B7  7//B7
+        {&DDRD, &PIND, &PORTD, 0},  // D0  8//D0 8
+        {&DDRD, &PIND, &PORTD, 1},  // D1  9//D1 9
+        {&DDRD, &PIND, &PORTD, 2},  // D2 10//D2 10
+        {&DDRD, &PIND, &PORTD, 3},  // D3 11//D3 11
+        {&DDRD, &PIND, &PORTD, 4},  // D4 12//D4 12
+        {&DDRD, &PIND, &PORTD, 5},  // D5 13//D5 13
+        {&DDRD, &PIND, &PORTD, 6},  // D6 14//D6 14
+        {&DDRD, &PIND, &PORTD, 7},  // D7 15//D7 15
+        {&DDRC, &PINC, &PORTC, 0},  // C0 16//C0 16
+        {&DDRC, &PINC, &PORTC, 1},  // C1 17//C1 17
+        {&DDRC, &PINC, &PORTC, 2},  // C2 18//C2 18
+        {&DDRC, &PINC, &PORTC, 3},  // C3 19//C3 19
+        {&DDRC, &PINC, &PORTC, 4},  // C4 20//C420
+        {&DDRC, &PINC, &PORTC, 5},  // C5 21//C5 21
+        {&DDRC, &PINC, &PORTC, 6},  // C6 22//C6 22
+        {&DDRC, &PINC, &PORTC, 7},  // C7 23//C7 23
+        {&DDRA, &PINA, &PORTA, 0},  // A0 24//A0 24
+        {&DDRA, &PINA, &PORTA, 1},  // A1 25//A1 25
+        {&DDRA, &PINA, &PORTA, 2},  // A2 26//A2 26
+        {&DDRA, &PINA, &PORTA, 3},  // A3 27//A3 27
+        {&DDRA, &PINA, &PORTA, 4},  // A4 28//A4 28
+        {&DDRA, &PINA, &PORTA, 5},  // A5 29//A5 29
+        {&DDRA, &PINA, &PORTA, 6},  // A6 30//A6 30
+        {&DDRA, &PINA, &PORTA, 7}   // A7 31//A7 31
       };
 
     #elif defined(VARIANT_BOBUINO)
 
-      // Bobuino Layout
+      // Bobuino Layout//博布伊诺布局
       static const pin_map_t pinMap[] = {
-        {&DDRD, &PIND, &PORTD, 0},  // D0  0
-        {&DDRD, &PIND, &PORTD, 1},  // D1  1
-        {&DDRD, &PIND, &PORTD, 2},  // D2  2
-        {&DDRD, &PIND, &PORTD, 3},  // D3  3
-        {&DDRB, &PINB, &PORTB, 0},  // B0  4
-        {&DDRB, &PINB, &PORTB, 1},  // B1  5
-        {&DDRB, &PINB, &PORTB, 2},  // B2  6
-        {&DDRB, &PINB, &PORTB, 3},  // B3  7
-        {&DDRD, &PIND, &PORTD, 5},  // D5  8
-        {&DDRD, &PIND, &PORTD, 6},  // D6  9
-        {&DDRB, &PINB, &PORTB, 4},  // B4 10
-        {&DDRB, &PINB, &PORTB, 5},  // B5 11
-        {&DDRB, &PINB, &PORTB, 6},  // B6 12
-        {&DDRB, &PINB, &PORTB, 7},  // B7 13
-        {&DDRA, &PINA, &PORTA, 7},  // A7 14
-        {&DDRA, &PINA, &PORTA, 6},  // A6 15
-        {&DDRA, &PINA, &PORTA, 5},  // A5 16
-        {&DDRA, &PINA, &PORTA, 4},  // A4 17
-        {&DDRA, &PINA, &PORTA, 3},  // A3 18
-        {&DDRA, &PINA, &PORTA, 2},  // A2 19
-        {&DDRA, &PINA, &PORTA, 1},  // A1 20
-        {&DDRA, &PINA, &PORTA, 0},  // A0 21
-        {&DDRC, &PINC, &PORTC, 0},  // C0 22
-        {&DDRC, &PINC, &PORTC, 1},  // C1 23
-        {&DDRC, &PINC, &PORTC, 2},  // C2 24
-        {&DDRC, &PINC, &PORTC, 3},  // C3 25
-        {&DDRC, &PINC, &PORTC, 4},  // C4 26
-        {&DDRC, &PINC, &PORTC, 5},  // C5 27
-        {&DDRC, &PINC, &PORTC, 6},  // C6 28
-        {&DDRC, &PINC, &PORTC, 7},  // C7 29
-        {&DDRD, &PIND, &PORTD, 4},  // D4 30
-        {&DDRD, &PIND, &PORTD, 7}   // D7 31
+        {&DDRD, &PIND, &PORTD, 0},  // D0  0//D00
+        {&DDRD, &PIND, &PORTD, 1},  // D1  1//D1 1
+        {&DDRD, &PIND, &PORTD, 2},  // D2  2//D2 2
+        {&DDRD, &PIND, &PORTD, 3},  // D3  3//D33
+        {&DDRB, &PINB, &PORTB, 0},  // B0  4//B0 4
+        {&DDRB, &PINB, &PORTB, 1},  // B1  5//B1 5
+        {&DDRB, &PINB, &PORTB, 2},  // B2  6//B2 6
+        {&DDRB, &PINB, &PORTB, 3},  // B3  7//B37
+        {&DDRD, &PIND, &PORTD, 5},  // D5  8//D5 8
+        {&DDRD, &PIND, &PORTD, 6},  // D6  9//D6 9
+        {&DDRB, &PINB, &PORTB, 4},  // B4 10//B4 10
+        {&DDRB, &PINB, &PORTB, 5},  // B5 11//B5 11
+        {&DDRB, &PINB, &PORTB, 6},  // B6 12//B6 12
+        {&DDRB, &PINB, &PORTB, 7},  // B7 13//B7 13
+        {&DDRA, &PINA, &PORTA, 7},  // A7 14//A7 14
+        {&DDRA, &PINA, &PORTA, 6},  // A6 15//A6 15
+        {&DDRA, &PINA, &PORTA, 5},  // A5 16//A5 16
+        {&DDRA, &PINA, &PORTA, 4},  // A4 17//A4 17
+        {&DDRA, &PINA, &PORTA, 3},  // A3 18//A3 18
+        {&DDRA, &PINA, &PORTA, 2},  // A2 19//A2 19
+        {&DDRA, &PINA, &PORTA, 1},  // A1 20//A1 20
+        {&DDRA, &PINA, &PORTA, 0},  // A0 21//A0 21
+        {&DDRC, &PINC, &PORTC, 0},  // C0 22//C0 22
+        {&DDRC, &PINC, &PORTC, 1},  // C1 23//C1 23
+        {&DDRC, &PINC, &PORTC, 2},  // C2 24//C2 24
+        {&DDRC, &PINC, &PORTC, 3},  // C3 25//C3 25
+        {&DDRC, &PINC, &PORTC, 4},  // C4 26//C4 26
+        {&DDRC, &PINC, &PORTC, 5},  // C5 27//C527
+        {&DDRC, &PINC, &PORTC, 6},  // C6 28//C6 28
+        {&DDRC, &PINC, &PORTC, 7},  // C7 29//C7 29
+        {&DDRD, &PIND, &PORTD, 4},  // D4 30//D4 30
+        {&DDRD, &PIND, &PORTD, 7}   // D7 31//D7 31
       };
 
     #elif defined(VARIANT_STANDARD)
 
-      // Standard Layout
+      // Standard Layout//标准布局
       static const pin_map_t pinMap[] = {
-        {&DDRB, &PINB, &PORTB, 0},  // B0  0
-        {&DDRB, &PINB, &PORTB, 1},  // B1  1
-        {&DDRB, &PINB, &PORTB, 2},  // B2  2
-        {&DDRB, &PINB, &PORTB, 3},  // B3  3
-        {&DDRB, &PINB, &PORTB, 4},  // B4  4
-        {&DDRB, &PINB, &PORTB, 5},  // B5  5
-        {&DDRB, &PINB, &PORTB, 6},  // B6  6
-        {&DDRB, &PINB, &PORTB, 7},  // B7  7
-        {&DDRD, &PIND, &PORTD, 0},  // D0  8
-        {&DDRD, &PIND, &PORTD, 1},  // D1  9
-        {&DDRD, &PIND, &PORTD, 2},  // D2 10
-        {&DDRD, &PIND, &PORTD, 3},  // D3 11
-        {&DDRD, &PIND, &PORTD, 4},  // D4 12
-        {&DDRD, &PIND, &PORTD, 5},  // D5 13
-        {&DDRD, &PIND, &PORTD, 6},  // D6 14
-        {&DDRD, &PIND, &PORTD, 7},  // D7 15
-        {&DDRC, &PINC, &PORTC, 0},  // C0 16
-        {&DDRC, &PINC, &PORTC, 1},  // C1 17
-        {&DDRC, &PINC, &PORTC, 2},  // C2 18
-        {&DDRC, &PINC, &PORTC, 3},  // C3 19
-        {&DDRC, &PINC, &PORTC, 4},  // C4 20
-        {&DDRC, &PINC, &PORTC, 5},  // C5 21
-        {&DDRC, &PINC, &PORTC, 6},  // C6 22
-        {&DDRC, &PINC, &PORTC, 7},  // C7 23
-        {&DDRA, &PINA, &PORTA, 7},  // A7 24
-        {&DDRA, &PINA, &PORTA, 6},  // A6 25
-        {&DDRA, &PINA, &PORTA, 5},  // A5 26
-        {&DDRA, &PINA, &PORTA, 4},  // A4 27
-        {&DDRA, &PINA, &PORTA, 3},  // A3 28
-        {&DDRA, &PINA, &PORTA, 2},  // A2 29
-        {&DDRA, &PINA, &PORTA, 1},  // A1 30
-        {&DDRA, &PINA, &PORTA, 0}   // A0 31
+        {&DDRB, &PINB, &PORTB, 0},  // B0  0//B00
+        {&DDRB, &PINB, &PORTB, 1},  // B1  1//B1 1
+        {&DDRB, &PINB, &PORTB, 2},  // B2  2//B2 2
+        {&DDRB, &PINB, &PORTB, 3},  // B3  3//B33
+        {&DDRB, &PINB, &PORTB, 4},  // B4  4//B4 4
+        {&DDRB, &PINB, &PORTB, 5},  // B5  5//B5 5
+        {&DDRB, &PINB, &PORTB, 6},  // B6  6//B6
+        {&DDRB, &PINB, &PORTB, 7},  // B7  7//B7
+        {&DDRD, &PIND, &PORTD, 0},  // D0  8//D0 8
+        {&DDRD, &PIND, &PORTD, 1},  // D1  9//D1 9
+        {&DDRD, &PIND, &PORTD, 2},  // D2 10//D2 10
+        {&DDRD, &PIND, &PORTD, 3},  // D3 11//D3 11
+        {&DDRD, &PIND, &PORTD, 4},  // D4 12//D4 12
+        {&DDRD, &PIND, &PORTD, 5},  // D5 13//D5 13
+        {&DDRD, &PIND, &PORTD, 6},  // D6 14//D6 14
+        {&DDRD, &PIND, &PORTD, 7},  // D7 15//D7 15
+        {&DDRC, &PINC, &PORTC, 0},  // C0 16//C0 16
+        {&DDRC, &PINC, &PORTC, 1},  // C1 17//C1 17
+        {&DDRC, &PINC, &PORTC, 2},  // C2 18//C2 18
+        {&DDRC, &PINC, &PORTC, 3},  // C3 19//C3 19
+        {&DDRC, &PINC, &PORTC, 4},  // C4 20//C420
+        {&DDRC, &PINC, &PORTC, 5},  // C5 21//C5 21
+        {&DDRC, &PINC, &PORTC, 6},  // C6 22//C6 22
+        {&DDRC, &PINC, &PORTC, 7},  // C7 23//C7 23
+        {&DDRA, &PINA, &PORTA, 7},  // A7 24//A7 24
+        {&DDRA, &PINA, &PORTA, 6},  // A6 25//A6 25
+        {&DDRA, &PINA, &PORTA, 5},  // A5 26//A5 26
+        {&DDRA, &PINA, &PORTA, 4},  // A4 27//A4 27
+        {&DDRA, &PINA, &PORTA, 3},  // A3 28//A3 28
+        {&DDRA, &PINA, &PORTA, 2},  // A2 29//A2 29
+        {&DDRA, &PINA, &PORTA, 1},  // A1 30//A1 30
+        {&DDRA, &PINA, &PORTA, 0}   // A0 31//A0 31
       };
 
-    #else // !(VARIANT_MIGHTY || VARIANT_BOBUINO || VARIANT_STANDARD)
+    #else // !(VARIANT_MIGHTY || VARIANT_BOBUINO || VARIANT_STANDARD)// !（变体| | |变体| | |变体|标准）
 
       #error Undefined variant 1284, 644, 324, 64, 32
 
@@ -339,130 +340,130 @@
 
     #ifdef CORE_TEENSY
 
-      // Teensy 2.0
+      // Teensy 2.0//Teensy 2.0
       static const pin_map_t pinMap[] = {
-        {&DDRB, &PINB, &PORTB, 0},  // B0  0
-        {&DDRB, &PINB, &PORTB, 1},  // B1  1
-        {&DDRB, &PINB, &PORTB, 2},  // B2  2
-        {&DDRB, &PINB, &PORTB, 3},  // B3  3
-        {&DDRB, &PINB, &PORTB, 7},  // B7  4
-        {&DDRD, &PIND, &PORTD, 0},  // D0  5
-        {&DDRD, &PIND, &PORTD, 1},  // D1  6
-        {&DDRD, &PIND, &PORTD, 2},  // D2  7
-        {&DDRD, &PIND, &PORTD, 3},  // D3  8
-        {&DDRC, &PINC, &PORTC, 6},  // C6  9
-        {&DDRC, &PINC, &PORTC, 7},  // C7 10
-        {&DDRD, &PIND, &PORTD, 6},  // D6 11
-        {&DDRD, &PIND, &PORTD, 7},  // D7 12
-        {&DDRB, &PINB, &PORTB, 4},  // B4 13
-        {&DDRB, &PINB, &PORTB, 5},  // B5 14
-        {&DDRB, &PINB, &PORTB, 6},  // B6 15
-        {&DDRF, &PINF, &PORTF, 7},  // F7 16
-        {&DDRF, &PINF, &PORTF, 6},  // F6 17
-        {&DDRF, &PINF, &PORTF, 5},  // F5 18
-        {&DDRF, &PINF, &PORTF, 4},  // F4 19
-        {&DDRF, &PINF, &PORTF, 1},  // F1 20
-        {&DDRF, &PINF, &PORTF, 0},  // F0 21
-        {&DDRD, &PIND, &PORTD, 4},  // D4 22
-        {&DDRD, &PIND, &PORTD, 5},  // D5 23
-        {&DDRE, &PINE, &PORTE, 6}   // E6 24
+        {&DDRB, &PINB, &PORTB, 0},  // B0  0//B00
+        {&DDRB, &PINB, &PORTB, 1},  // B1  1//B1 1
+        {&DDRB, &PINB, &PORTB, 2},  // B2  2//B2 2
+        {&DDRB, &PINB, &PORTB, 3},  // B3  3//B33
+        {&DDRB, &PINB, &PORTB, 7},  // B7  4//B7 4
+        {&DDRD, &PIND, &PORTD, 0},  // D0  5//D0 5
+        {&DDRD, &PIND, &PORTD, 1},  // D1  6//D1 6
+        {&DDRD, &PIND, &PORTD, 2},  // D2  7//D2 7
+        {&DDRD, &PIND, &PORTD, 3},  // D3  8//D38
+        {&DDRC, &PINC, &PORTC, 6},  // C6  9//C6 9
+        {&DDRC, &PINC, &PORTC, 7},  // C7 10//C7 10
+        {&DDRD, &PIND, &PORTD, 6},  // D6 11//D6 11
+        {&DDRD, &PIND, &PORTD, 7},  // D7 12//D7 12
+        {&DDRB, &PINB, &PORTB, 4},  // B4 13//B4 13
+        {&DDRB, &PINB, &PORTB, 5},  // B5 14//B5 14
+        {&DDRB, &PINB, &PORTB, 6},  // B6 15//B6 15
+        {&DDRF, &PINF, &PORTF, 7},  // F7 16//F7 16
+        {&DDRF, &PINF, &PORTF, 6},  // F6 17//F6 17
+        {&DDRF, &PINF, &PORTF, 5},  // F5 18//F5 18
+        {&DDRF, &PINF, &PORTF, 4},  // F4 19//F4 19
+        {&DDRF, &PINF, &PORTF, 1},  // F1 20//F1 20
+        {&DDRF, &PINF, &PORTF, 0},  // F0 21//F0 21
+        {&DDRD, &PIND, &PORTD, 4},  // D4 22//D4 22
+        {&DDRD, &PIND, &PORTD, 5},  // D5 23//D5 23
+        {&DDRE, &PINE, &PORTE, 6}   // E6 24//E6 24
       };
 
-    #else // !CORE_TEENSY
+    #else // !CORE_TEENSY// !CORE_TEENSY
 
-      // Leonardo
+      // Leonardo//莱昂纳多
       static const pin_map_t pinMap[] = {
-        {&DDRD, &PIND, &PORTD, 2},  // D2  0
-        {&DDRD, &PIND, &PORTD, 3},  // D3  1
-        {&DDRD, &PIND, &PORTD, 1},  // D1  2
-        {&DDRD, &PIND, &PORTD, 0},  // D0  3
-        {&DDRD, &PIND, &PORTD, 4},  // D4  4
-        {&DDRC, &PINC, &PORTC, 6},  // C6  5
-        {&DDRD, &PIND, &PORTD, 7},  // D7  6
-        {&DDRE, &PINE, &PORTE, 6},  // E6  7
-        {&DDRB, &PINB, &PORTB, 4},  // B4  8
-        {&DDRB, &PINB, &PORTB, 5},  // B5  9
-        {&DDRB, &PINB, &PORTB, 6},  // B6 10
-        {&DDRB, &PINB, &PORTB, 7},  // B7 11
-        {&DDRD, &PIND, &PORTD, 6},  // D6 12
-        {&DDRC, &PINC, &PORTC, 7},  // C7 13
-        {&DDRB, &PINB, &PORTB, 3},  // B3 14
-        {&DDRB, &PINB, &PORTB, 1},  // B1 15
-        {&DDRB, &PINB, &PORTB, 2},  // B2 16
-        {&DDRB, &PINB, &PORTB, 0},  // B0 17
-        {&DDRF, &PINF, &PORTF, 7},  // F7 18
-        {&DDRF, &PINF, &PORTF, 6},  // F6 19
-        {&DDRF, &PINF, &PORTF, 5},  // F5 20
-        {&DDRF, &PINF, &PORTF, 4},  // F4 21
-        {&DDRF, &PINF, &PORTF, 1},  // F1 22
-        {&DDRF, &PINF, &PORTF, 0},  // F0 23
-        {&DDRD, &PIND, &PORTD, 4},  // D4 24
-        {&DDRD, &PIND, &PORTD, 7},  // D7 25
-        {&DDRB, &PINB, &PORTB, 4},  // B4 26
-        {&DDRB, &PINB, &PORTB, 5},  // B5 27
-        {&DDRB, &PINB, &PORTB, 6},  // B6 28
-        {&DDRD, &PIND, &PORTD, 6}   // D6 29
+        {&DDRD, &PIND, &PORTD, 2},  // D2  0//D20
+        {&DDRD, &PIND, &PORTD, 3},  // D3  1//D3 1
+        {&DDRD, &PIND, &PORTD, 1},  // D1  2//D1 2
+        {&DDRD, &PIND, &PORTD, 0},  // D0  3//D0 3
+        {&DDRD, &PIND, &PORTD, 4},  // D4  4//D4
+        {&DDRC, &PINC, &PORTC, 6},  // C6  5//C6 5
+        {&DDRD, &PIND, &PORTD, 7},  // D7  6//D7 6
+        {&DDRE, &PINE, &PORTE, 6},  // E6  7//E6 7
+        {&DDRB, &PINB, &PORTB, 4},  // B4  8//B4 8
+        {&DDRB, &PINB, &PORTB, 5},  // B5  9//B5 9
+        {&DDRB, &PINB, &PORTB, 6},  // B6 10//B6 10
+        {&DDRB, &PINB, &PORTB, 7},  // B7 11//B7 11
+        {&DDRD, &PIND, &PORTD, 6},  // D6 12//D6 12
+        {&DDRC, &PINC, &PORTC, 7},  // C7 13//C7 13
+        {&DDRB, &PINB, &PORTB, 3},  // B3 14//B3 14
+        {&DDRB, &PINB, &PORTB, 1},  // B1 15//B1 15
+        {&DDRB, &PINB, &PORTB, 2},  // B2 16//B2 16
+        {&DDRB, &PINB, &PORTB, 0},  // B0 17//B0 17
+        {&DDRF, &PINF, &PORTF, 7},  // F7 18//F7 18
+        {&DDRF, &PINF, &PORTF, 6},  // F6 19//F6 19
+        {&DDRF, &PINF, &PORTF, 5},  // F5 20//F5 20
+        {&DDRF, &PINF, &PORTF, 4},  // F4 21//F4 21
+        {&DDRF, &PINF, &PORTF, 1},  // F1 22//F1 22
+        {&DDRF, &PINF, &PORTF, 0},  // F0 23//F0 23
+        {&DDRD, &PIND, &PORTD, 4},  // D4 24//D4 24
+        {&DDRD, &PIND, &PORTD, 7},  // D7 25//D7 25
+        {&DDRB, &PINB, &PORTB, 4},  // B4 26//B4 26
+        {&DDRB, &PINB, &PORTB, 5},  // B5 27//B5 27
+        {&DDRB, &PINB, &PORTB, 6},  // B6 28//B6 28
+        {&DDRD, &PIND, &PORTD, 6}   // D6 29//D6 29
       };
 
-    #endif // !CORE_TEENSY
+    #endif // !CORE_TEENSY// !CORE_TEENSY
 
   #elif defined(__AVR_AT90USB646__) || defined(__AVR_AT90USB1286__)
 
-    // Teensy++ 1.0 & 2.0
+    // Teensy++ 1.0 & 2.0//Teensy++1.0和2.0
     static const pin_map_t pinMap[] = {
-      {&DDRD, &PIND, &PORTD, 0},  // D0  0
-      {&DDRD, &PIND, &PORTD, 1},  // D1  1
-      {&DDRD, &PIND, &PORTD, 2},  // D2  2
-      {&DDRD, &PIND, &PORTD, 3},  // D3  3
-      {&DDRD, &PIND, &PORTD, 4},  // D4  4
-      {&DDRD, &PIND, &PORTD, 5},  // D5  5
-      {&DDRD, &PIND, &PORTD, 6},  // D6  6
-      {&DDRD, &PIND, &PORTD, 7},  // D7  7
-      {&DDRE, &PINE, &PORTE, 0},  // E0  8
-      {&DDRE, &PINE, &PORTE, 1},  // E1  9
-      {&DDRC, &PINC, &PORTC, 0},  // C0 10
-      {&DDRC, &PINC, &PORTC, 1},  // C1 11
-      {&DDRC, &PINC, &PORTC, 2},  // C2 12
-      {&DDRC, &PINC, &PORTC, 3},  // C3 13
-      {&DDRC, &PINC, &PORTC, 4},  // C4 14
-      {&DDRC, &PINC, &PORTC, 5},  // C5 15
-      {&DDRC, &PINC, &PORTC, 6},  // C6 16
-      {&DDRC, &PINC, &PORTC, 7},  // C7 17
-      {&DDRE, &PINE, &PORTE, 6},  // E6 18
-      {&DDRE, &PINE, &PORTE, 7},  // E7 19
-      {&DDRB, &PINB, &PORTB, 0},  // B0 20
-      {&DDRB, &PINB, &PORTB, 1},  // B1 21
-      {&DDRB, &PINB, &PORTB, 2},  // B2 22
-      {&DDRB, &PINB, &PORTB, 3},  // B3 23
-      {&DDRB, &PINB, &PORTB, 4},  // B4 24
-      {&DDRB, &PINB, &PORTB, 5},  // B5 25
-      {&DDRB, &PINB, &PORTB, 6},  // B6 26
-      {&DDRB, &PINB, &PORTB, 7},  // B7 27
-      {&DDRA, &PINA, &PORTA, 0},  // A0 28
-      {&DDRA, &PINA, &PORTA, 1},  // A1 29
-      {&DDRA, &PINA, &PORTA, 2},  // A2 30
-      {&DDRA, &PINA, &PORTA, 3},  // A3 31
-      {&DDRA, &PINA, &PORTA, 4},  // A4 32
-      {&DDRA, &PINA, &PORTA, 5},  // A5 33
-      {&DDRA, &PINA, &PORTA, 6},  // A6 34
-      {&DDRA, &PINA, &PORTA, 7},  // A7 35
-      {&DDRE, &PINE, &PORTE, 4},  // E4 36
-      {&DDRE, &PINE, &PORTE, 5},  // E5 37
-      {&DDRF, &PINF, &PORTF, 0},  // F0 38
-      {&DDRF, &PINF, &PORTF, 1},  // F1 39
-      {&DDRF, &PINF, &PORTF, 2},  // F2 40
-      {&DDRF, &PINF, &PORTF, 3},  // F3 41
-      {&DDRF, &PINF, &PORTF, 4},  // F4 42
-      {&DDRF, &PINF, &PORTF, 5},  // F5 43
-      {&DDRF, &PINF, &PORTF, 6},  // F6 44
-      {&DDRF, &PINF, &PORTF, 7}   // F7 45
+      {&DDRD, &PIND, &PORTD, 0},  // D0  0//D00
+      {&DDRD, &PIND, &PORTD, 1},  // D1  1//D1 1
+      {&DDRD, &PIND, &PORTD, 2},  // D2  2//D2 2
+      {&DDRD, &PIND, &PORTD, 3},  // D3  3//D33
+      {&DDRD, &PIND, &PORTD, 4},  // D4  4//D4
+      {&DDRD, &PIND, &PORTD, 5},  // D5  5//D5
+      {&DDRD, &PIND, &PORTD, 6},  // D6  6//D6
+      {&DDRD, &PIND, &PORTD, 7},  // D7  7//D7
+      {&DDRE, &PINE, &PORTE, 0},  // E0  8//E0 8
+      {&DDRE, &PINE, &PORTE, 1},  // E1  9//E1 9
+      {&DDRC, &PINC, &PORTC, 0},  // C0 10//C0 10
+      {&DDRC, &PINC, &PORTC, 1},  // C1 11//C1 11
+      {&DDRC, &PINC, &PORTC, 2},  // C2 12//C2 12
+      {&DDRC, &PINC, &PORTC, 3},  // C3 13//C3 13
+      {&DDRC, &PINC, &PORTC, 4},  // C4 14//C414
+      {&DDRC, &PINC, &PORTC, 5},  // C5 15//C5 15
+      {&DDRC, &PINC, &PORTC, 6},  // C6 16//C6 16
+      {&DDRC, &PINC, &PORTC, 7},  // C7 17//C7 17
+      {&DDRE, &PINE, &PORTE, 6},  // E6 18//E6 18
+      {&DDRE, &PINE, &PORTE, 7},  // E7 19//E7 19
+      {&DDRB, &PINB, &PORTB, 0},  // B0 20//B0 20
+      {&DDRB, &PINB, &PORTB, 1},  // B1 21//B1 21
+      {&DDRB, &PINB, &PORTB, 2},  // B2 22//B2 22
+      {&DDRB, &PINB, &PORTB, 3},  // B3 23//B323
+      {&DDRB, &PINB, &PORTB, 4},  // B4 24//B4 24
+      {&DDRB, &PINB, &PORTB, 5},  // B5 25//B5 25
+      {&DDRB, &PINB, &PORTB, 6},  // B6 26//B6 26
+      {&DDRB, &PINB, &PORTB, 7},  // B7 27//B7 27
+      {&DDRA, &PINA, &PORTA, 0},  // A0 28//A0 28
+      {&DDRA, &PINA, &PORTA, 1},  // A1 29//A1 29
+      {&DDRA, &PINA, &PORTA, 2},  // A2 30//A2 30
+      {&DDRA, &PINA, &PORTA, 3},  // A3 31//A3 31
+      {&DDRA, &PINA, &PORTA, 4},  // A4 32//A4 32
+      {&DDRA, &PINA, &PORTA, 5},  // A5 33//A5 33
+      {&DDRA, &PINA, &PORTA, 6},  // A6 34//A6 34
+      {&DDRA, &PINA, &PORTA, 7},  // A7 35//A7 35
+      {&DDRE, &PINE, &PORTE, 4},  // E4 36//E4 36
+      {&DDRE, &PINE, &PORTE, 5},  // E5 37//E5 37
+      {&DDRF, &PINF, &PORTF, 0},  // F0 38//F0 38
+      {&DDRF, &PINF, &PORTF, 1},  // F1 39//F1 39
+      {&DDRF, &PINF, &PORTF, 2},  // F2 40//F240
+      {&DDRF, &PINF, &PORTF, 3},  // F3 41//F3 41
+      {&DDRF, &PINF, &PORTF, 4},  // F4 42//F4 42
+      {&DDRF, &PINF, &PORTF, 5},  // F5 43//F5 43
+      {&DDRF, &PINF, &PORTF, 6},  // F6 44//F6 44
+      {&DDRF, &PINF, &PORTF, 7}   // F7 45//F7 45
     };
 
-  #else // CPU type
+  #else // CPU type//CPU类型
 
     #error "Unknown CPU type for Software SPI"
 
-  #endif // CPU type
+  #endif // CPU type//CPU类型
 
   /** count of pins */
   static constexpr uint8_t digitalPinCount = sizeof(pinMap) / sizeof(pin_map_t);
@@ -512,9 +513,9 @@
   FORCE_INLINE static void fastDigitalToggle(uint8_t pin) {
     badPinCheck(pin);
     if (pinMap[pin].pin > (uint8_t*)0x5F)
-      *pinMap[pin].pin = _BV(pinMap[pin].bit);  // Must write bit to high address port
+      *pinMap[pin].pin = _BV(pinMap[pin].bit);  // Must write bit to high address port//必须将位写入高地址端口
     else
-      SBI(*pinMap[pin].pin, pinMap[pin].bit);   // Compiles to sbi and PIN register will not be read
+      SBI(*pinMap[pin].pin, pinMap[pin].bit);   // Compiles to sbi and PIN register will not be read//编译到sbi和PIN寄存器将不被读取
   }
 
   /**
@@ -539,7 +540,7 @@
     fastBitWriteSafe(pinMap[pin].ddr, pinMap[pin].bit, mode);
   }
 
-#endif // !__arm__
+#endif // !__arm__// !__手臂__
 
 /**
  * Set pin configuration
@@ -637,10 +638,10 @@ public:
   FORCE_INLINE void write(bool value) { fastDigitalWrite(PinNumber, value); }
 };
 
-const bool MISO_MODE  = false,  // Pin Mode for MISO is input.
-           MISO_LEVEL = false,  // Pullups disabled for MISO are disabled.
-           MOSI_MODE  = true,   // Pin Mode for MOSI is output.
-           SCK_MODE   = true;   // Pin Mode for SCK is output.
+const bool MISO_MODE  = false,  // Pin Mode for MISO is input.//输入MISO的引脚模式。
+           MISO_LEVEL = false,  // Pullups disabled for MISO are disabled.//为味噌禁用的上拉被禁用。
+           MOSI_MODE  = true,   // Pin Mode for MOSI is output.//输出MOSI的引脚模式。
+           SCK_MODE   = true;   // Pin Mode for SCK is output.//输出SCK的引脚模式。
 
 /**
  * @class SoftSPI

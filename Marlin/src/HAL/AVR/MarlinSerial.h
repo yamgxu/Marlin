@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -42,27 +43,27 @@
 
 #ifndef USBCON
 
-  // The presence of the UBRRH register is used to detect a UART.
+  // The presence of the UBRRH register is used to detect a UART.//UBRRH寄存器的存在用于检测UART。
   #define UART_PRESENT(port) ((port == 0 && (defined(UBRRH) || defined(UBRR0H))) || \
                               (port == 1 && defined(UBRR1H)) || (port == 2 && defined(UBRR2H)) || \
                               (port == 3 && defined(UBRR3H)))
 
-  // These are macros to build serial port register names for the selected SERIAL_PORT (C preprocessor
-  // requires two levels of indirection to expand macro values properly)
+  // These are macros to build serial port register names for the selected SERIAL_PORT (C preprocessor//这些宏用于为所选串行端口（C预处理器）生成串行端口寄存器名称
+  // requires two levels of indirection to expand macro values properly)//需要两级间接寻址才能正确展开宏值）
   #define SERIAL_REGNAME(registerbase,number,suffix) _SERIAL_REGNAME(registerbase,number,suffix)
-  #if SERIAL_PORT == 0 && (!defined(UBRR0H) || !defined(UDR0)) // use un-numbered registers if necessary
+  #if SERIAL_PORT == 0 && (!defined(UBRR0H) || !defined(UDR0)) // use un-numbered registers if necessary//如有必要，使用未编号的寄存器
     #define _SERIAL_REGNAME(registerbase,number,suffix) registerbase##suffix
   #else
     #define _SERIAL_REGNAME(registerbase,number,suffix) registerbase##number##suffix
   #endif
 
-  // Registers used by MarlinSerial class (expanded depending on selected serial port)
+  // Registers used by MarlinSerial class (expanded depending on selected serial port)//MarlinSerial类使用的寄存器（根据所选串行端口扩展）
 
-  // Templated 8bit register (generic)
+  // Templated 8bit register (generic)//模板化8位寄存器（通用）
   #define UART_REGISTER_DECL_BASE(registerbase, suffix) \
     template<int portNr> struct R_##registerbase##x##suffix {}
 
-  // Templated 8bit register (specialization for each port)
+  // Templated 8bit register (specialization for each port)//模板化8位寄存器（每个端口专用）
   #define UART_REGISTER_DECL(port, registerbase, suffix) \
     template<> struct R_##registerbase##x##suffix<port> { \
       constexpr R_##registerbase##x##suffix(int) {} \
@@ -70,11 +71,11 @@
       FORCE_INLINE operator uint8_t() const { return SERIAL_REGNAME(registerbase,port,suffix); } \
     }
 
-  // Templated 1bit register (generic)
+  // Templated 1bit register (generic)//模板化1比特寄存器（通用）
   #define UART_BIT_DECL_BASE(registerbase, suffix, bit) \
     template<int portNr>struct B_##bit##x {}
 
-  // Templated 1bit register (specialization for each port)
+  // Templated 1bit register (specialization for each port)//模板化1位寄存器（每个端口专用）
   #define UART_BIT_DECL(port, registerbase, suffix, bit) \
     template<> struct B_##bit##x<port> { \
       constexpr B_##bit##x(int) {} \
@@ -119,10 +120,10 @@
     UART_BIT_DECL(port,UCSR,A,RXC);\
     UART_BIT_DECL(port,UCSR,A,U2X)
 
-  // Declare empty templates
+  // Declare empty templates//声明空模板
   UART_DECL_BASE();
 
-  // And all the specializations for each possible serial port
+  // And all the specializations for each possible serial port//以及每个可能的串行端口的所有专门化
   #if UART_PRESENT(0)
     UART_DECL(0);
   #endif
@@ -138,20 +139,20 @@
 
   #define BYTE 0
 
-  // Templated type selector
+  // Templated type selector//模板类型选择器
   template<bool b, typename T, typename F> struct TypeSelector { typedef T type;} ;
   template<typename T, typename F> struct TypeSelector<false, T, F> { typedef F type; };
 
   template<typename Cfg>
   class MarlinSerial {
   protected:
-    // Registers
+    // Registers//登记册
     static constexpr R_UCSRxA<Cfg::PORT> R_UCSRA = 0;
     static constexpr R_UDRx<Cfg::PORT>   R_UDR   = 0;
     static constexpr R_UBRRxH<Cfg::PORT> R_UBRRH = 0;
     static constexpr R_UBRRxL<Cfg::PORT> R_UBRRL = 0;
 
-    // Bits
+    // Bits//比特
     static constexpr B_RXENx<Cfg::PORT>  B_RXEN  = 0;
     static constexpr B_TXENx<Cfg::PORT>  B_TXEN  = 0;
     static constexpr B_TXCx<Cfg::PORT>   B_TXC   = 0;
@@ -163,7 +164,7 @@
     static constexpr B_RXCx<Cfg::PORT>   B_RXC   = 0;
     static constexpr B_U2Xx<Cfg::PORT>   B_U2X   = 0;
 
-    // Base size of type on buffer size
+    // Base size of type on buffer size//类型的基大小取决于缓冲区大小
     typedef typename TypeSelector<(Cfg::RX_SIZE>256), uint16_t, uint8_t>::type ring_buffer_pos_t;
 
     struct ring_buffer_r {
@@ -180,10 +181,10 @@
     static ring_buffer_t tx_buffer;
     static bool _written;
 
-    static constexpr uint8_t XON_XOFF_CHAR_SENT = 0x80,  // XON / XOFF Character was sent
-                             XON_XOFF_CHAR_MASK = 0x1F;  // XON / XOFF character to send
+    static constexpr uint8_t XON_XOFF_CHAR_SENT = 0x80,  // XON / XOFF Character was sent//已发送XON/XOFF字符
+                             XON_XOFF_CHAR_MASK = 0x1F;  // XON / XOFF character to send//要发送的XON/XOFF字符
 
-    // XON / XOFF character definitions
+    // XON / XOFF character definitions//XON/XOFF字符定义
     static constexpr uint8_t XON_CHAR  = 17, XOFF_CHAR = 19;
     static uint8_t xon_xoff_state,
                    rx_dropped_bytes,
@@ -251,7 +252,7 @@
     extern MSerialT3 customizedSerial3;
   #endif
 
-#endif // !USBCON
+#endif // !USBCON// !美国广播公司
 
 #ifdef MMU2_SERIAL_PORT
   template <uint8_t serial>
@@ -290,7 +291,7 @@
   extern MSerialLCD lcdSerial;
 #endif
 
-// Use the UART for Bluetooth in AT90USB configurations
+// Use the UART for Bluetooth in AT90USB configurations//在AT90USB配置中使用UART进行蓝牙
 #if defined(USBCON) && ENABLED(BLUETOOTH)
   typedef Serial1Class<HardwareSerial> MSerialBT;
   extern MSerialBT bluetoothSerial;

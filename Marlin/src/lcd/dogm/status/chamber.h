@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,9 +22,9 @@
  */
 #pragma once
 
-//
-// lcd/dogm/status/chamber.h - Status Screen Chamber bitmaps
-//
+////
+// lcd/dogm/status/chamber.h - Status Screen Chamber bitmaps//lcd/dogm/status/chamber.h-状态屏幕chamber位图
+////
 
 #define STATUS_CHAMBER_WIDTH 21
 #if STATUS_HEATERS_WIDTH

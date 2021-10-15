@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -82,7 +83,7 @@
 #include <U8glib.h>
 
 #define I2C_SLA         (0x3C*2)
-//#define I2C_CMD_MODE  0x080
+//#define I2C_CMD_MODE  0x080//#定义I2C_CMD_模式0x080
 #define I2C_CMD_MODE    0x000
 #define I2C_DATA_MODE   0x040
 
@@ -105,9 +106,9 @@ uint8_t u8g_com_ssd_I2C_start_sequence(u8g_t *u8g) {
 uint8_t u8g_com_HAL_LPC1768_ssd_hw_i2c_fn(u8g_t *u8g, uint8_t msg, uint8_t arg_val, void *arg_ptr) {
   switch (msg) {
     case U8G_COM_MSG_INIT:
-      //u8g_com_arduino_digital_write(u8g, U8G_PI_SCL, HIGH);
-      //u8g_com_arduino_digital_write(u8g, U8G_PI_SDA, HIGH);
-      //u8g->pin_list[U8G_PI_A0_STATE] = 0;       /* initial RS state: unknown mode */
+      //u8g_com_arduino_digital_write(u8g, U8G_PI_SCL, HIGH);//u8g\u com\u arduino\u数字写入（u8g，u8g\u PI\u SCL，高）；
+      //u8g_com_arduino_digital_write(u8g, U8G_PI_SDA, HIGH);//u8g\u com\u arduino\u数字写入（u8g，u8g\u PI\u SDA，高）；
+      //u8g->pin_list[U8G_PI_A0_STATE] = 0;       /* initial RS state: unknown mode *///u8g->pin_列表[u8g_PI_A0_状态]=0；/*初始RS状态：未知模式*/
 
       u8g_i2c_init(u8g->pin_list[U8G_PI_I2C_OPTION]);
       u8g_com_ssd_I2C_start_sequence(u8g);
@@ -134,7 +135,7 @@ uint8_t u8g_com_HAL_LPC1768_ssd_hw_i2c_fn(u8g_t *u8g, uint8_t msg, uint8_t arg_v
       break;
 
     case U8G_COM_MSG_WRITE_BYTE:
-      //u8g->pin_list[U8G_PI_SET_A0] = 1;
+      //u8g->pin_list[U8G_PI_SET_A0] = 1;//u8g->引脚列表[u8g\U PI\U集合\U A0]=1；
       if (u8g_com_ssd_I2C_start_sequence(u8g) == 0) {
         u8g_i2c_stop();
         return 0;
@@ -144,11 +145,11 @@ uint8_t u8g_com_HAL_LPC1768_ssd_hw_i2c_fn(u8g_t *u8g, uint8_t msg, uint8_t arg_v
         u8g_i2c_stop();
         return 0;
       }
-      // u8g_i2c_stop();
+      // u8g_i2c_stop();//u8g_i2c_停止（）；
       break;
 
     case U8G_COM_MSG_WRITE_SEQ: {
-        //u8g->pin_list[U8G_PI_SET_A0] = 1;
+        //u8g->pin_list[U8G_PI_SET_A0] = 1;//u8g->引脚列表[u8g\U PI\U集合\U A0]=1；
         if (u8g_com_ssd_I2C_start_sequence(u8g) == 0) {
          u8g_i2c_stop();
          return 0;
@@ -163,11 +164,11 @@ uint8_t u8g_com_HAL_LPC1768_ssd_hw_i2c_fn(u8g_t *u8g, uint8_t msg, uint8_t arg_v
           arg_val--;
         }
       }
-      // u8g_i2c_stop();
+      // u8g_i2c_stop();//u8g_i2c_停止（）；
       break;
 
     case U8G_COM_MSG_WRITE_SEQ_P: {
-        //u8g->pin_list[U8G_PI_SET_A0] = 1;
+        //u8g->pin_list[U8G_PI_SET_A0] = 1;//u8g->引脚列表[u8g\U PI\U集合\U A0]=1；
         if (u8g_com_ssd_I2C_start_sequence(u8g) == 0) {
           u8g_i2c_stop();
           return 0;
@@ -181,7 +182,7 @@ uint8_t u8g_com_HAL_LPC1768_ssd_hw_i2c_fn(u8g_t *u8g, uint8_t msg, uint8_t arg_v
           arg_val--;
         }
       }
-      // u8g_i2c_stop();
+      // u8g_i2c_stop();//u8g_i2c_停止（）；
       break;
 
     case U8G_COM_MSG_ADDRESS:                     /* define cmd (arg_val = 0) or data mode (arg_val = 1) */
@@ -189,10 +190,10 @@ uint8_t u8g_com_HAL_LPC1768_ssd_hw_i2c_fn(u8g_t *u8g, uint8_t msg, uint8_t arg_v
       u8g->pin_list[U8G_PI_SET_A0] = 1;   /* force a0 to set again */
       break;
 
-  } // switch
+  } // switch//开关
   return 1;
 }
 
-#endif // HAS_MARLINUI_U8GLIB
+#endif // HAS_MARLINUI_U8GLIB//马林努伊能说会道吗
 
-#endif // TARGET_LPC1768
+#endif // TARGET_LPC1768//目标为LPC1768

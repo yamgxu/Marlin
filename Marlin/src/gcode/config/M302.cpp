@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -52,7 +53,7 @@ void GcodeSuite::M302() {
   if (parser.seen('P'))
     thermalManager.allow_cold_extrude = (thermalManager.extrude_min_temp == 0) || parser.value_bool();
   else if (!seen_S) {
-    // Report current state
+    // Report current state//报告当前状态
     SERIAL_ECHO_START();
     SERIAL_ECHOPGM("Cold extrudes are ");
     SERIAL_ECHOPGM_P(thermalManager.allow_cold_extrude ? PSTR("en") : PSTR("dis"));
@@ -60,4 +61,4 @@ void GcodeSuite::M302() {
   }
 }
 
-#endif // PREVENT_COLD_EXTRUSION
+#endif // PREVENT_COLD_EXTRUSION//防止冷挤压

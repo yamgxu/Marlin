@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -221,7 +222,7 @@
     #endif
   }
 
-#endif // MONITOR_DRIVER_STATUS
+#endif // MONITOR_DRIVER_STATUS//监视\u驱动程序\u状态
 
 /**
  * M913: Set HYBRID_THRESHOLD speed.
@@ -280,7 +281,7 @@
               TERN_(E7_HAS_STEALTHCHOP, case 7: TMC_SET_PWMTHRS_E(7); break;)
             }
           } break;
-        #endif // E_STEPPERS
+        #endif // E_STEPPERS//步进电机
       }
     }
 
@@ -308,7 +309,7 @@
       TERN_(E7_HAS_STEALTHCHOP, TMC_SAY_PWMTHRS_E(7));
     }
   }
-#endif // HYBRID_THRESHOLD
+#endif // HYBRID_THRESHOLD//混合阈值
 
 /**
  * M914: Set StallGuard sensitivity.
@@ -412,6 +413,6 @@
       #endif
     }
   }
-#endif // USE_SENSORLESS
+#endif // USE_SENSORLESS//使用无传感器
 
-#endif // HAS_TRINAMIC_CONFIG
+#endif // HAS_TRINAMIC_CONFIG//有_TRINAMIC _CONFIG

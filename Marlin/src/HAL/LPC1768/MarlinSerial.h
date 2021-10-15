@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -51,17 +52,17 @@ public:
   #endif
 };
 
-// On LPC176x framework, HardwareSerial does not implement the same interface as Arduino's Serial, so overloads
-// of 'available' and 'read' method are not used in this multiple inheritance scenario.
-// Instead, use a ForwardSerial here that adapts the interface.
+// On LPC176x framework, HardwareSerial does not implement the same interface as Arduino's Serial, so overloads//在LPC176x框架上，HardwareSerial没有实现与Arduino的串行接口相同的接口，因此重载
+// of 'available' and 'read' method are not used in this multiple inheritance scenario.//在这个多重继承方案中，不使用'available'和'read'方法。
+// Instead, use a ForwardSerial here that adapts the interface.//相反，在此处使用一个可调整接口的ForwardSerial。
 typedef ForwardSerial1Class<MarlinSerial> MSerialT;
 extern MSerialT MSerial0;
 extern MSerialT MSerial1;
 extern MSerialT MSerial2;
 extern MSerialT MSerial3;
 
-// Consequently, we can't use a RuntimeSerial either. The workaround would be to use
-// a RuntimeSerial<ForwardSerial<MarlinSerial>> type here. Ignore for now until it's actually required.
+// Consequently, we can't use a RuntimeSerial either. The workaround would be to use//因此，我们也不能使用RuntimeSerial。解决办法是使用
+// a RuntimeSerial<ForwardSerial<MarlinSerial>> type here. Ignore for now until it's actually required.//此处键入RuntimeSerial<ForwardSerial<MarlinSerial>>类型。暂时忽略，直到实际需要为止。
 #if ENABLED(SERIAL_RUNTIME_HOOK)
   #error "SERIAL_RUNTIME_HOOK is not yet supported for LPC176x."
 #endif

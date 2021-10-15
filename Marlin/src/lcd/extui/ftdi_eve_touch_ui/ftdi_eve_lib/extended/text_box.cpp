@@ -1,3 +1,4 @@
+/** translatione by yx */
 /****************
  * text_box.cpp *
  ****************/
@@ -77,7 +78,7 @@ namespace FTDI {
 
     FontMetrics fm(font);
 
-    // Shrink the font until we find a font that fits
+    // Shrink the font until we find a font that fits//缩小字体直到找到合适的字体
     for (;;) {
       box_width = w;
       measure_text_box(fm, str, box_width, box_height);
@@ -126,6 +127,6 @@ namespace FTDI {
     strcpy_P(str, (const char*)pstr);
     draw_text_box(cmd, x, y, w, h, (const char*) str, options, font);
   }
-} // namespace FTDI
+} // namespace FTDI//名称空间FTDI
 
-#endif // FTDI_EXTENDED
+#endif // FTDI_EXTENDED//FTDI_扩展

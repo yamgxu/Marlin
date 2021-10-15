@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -43,27 +44,27 @@
  *   Marlin: M672 R
  */
 
-#define M672_PROGBYTE    105                // magic byte to start programming custom sensitivity
-#define M672_ERASEBYTE   131                // magic byte to clear custom sensitivity
+#define M672_PROGBYTE    105                // magic byte to start programming custom sensitivity//启动自定义灵敏度编程的魔法字节
+#define M672_ERASEBYTE   131                // magic byte to clear custom sensitivity//清除自定义敏感度的魔法字节
 
-//
-// Smart Effector byte send protocol:
-//
-//  0  0  1  0       ... always 0010
-//  b7 b6 b5 b4 ~b4  ... hi bits, NOT last bit
-//  b3 b2 b1 b0 ~b0  ... lo bits, NOT last bit
-//
-void M672_send(uint8_t b) {    // bit rate requirement: 1KHz +/- 30%
+////
+// Smart Effector byte send protocol://智能效应器字节发送协议：
+////
+//  0  0  1  0       ... always 0010//  0  0  1  0       ... 总是0010
+//  b7 b6 b5 b4 ~b4  ... hi bits, NOT last bit//b7 b6 b5 b4~b4。。。嗨，比特，不是最后一比特
+//  b3 b2 b1 b0 ~b0  ... lo bits, NOT last bit//B3B2 b1 b0~b0。。。lo位，不是最后一位
+////
+void M672_send(uint8_t b) {    // bit rate requirement: 1KHz +/- 30%//比特率要求：1KHz+/-30%
   LOOP_L_N(bits, 14) {
     switch (bits) {
-      default: { OUT_WRITE(SMART_EFFECTOR_MOD_PIN, !!(b & 0x80)); b <<= 1; break; } // send bit, shift next into place
+      default: { OUT_WRITE(SMART_EFFECTOR_MOD_PIN, !!(b & 0x80)); b <<= 1; break; } // send bit, shift next into place//发送位，下一个移动到位
       case  7:
-      case 12: { OUT_WRITE(SMART_EFFECTOR_MOD_PIN, !!(b & 0x80));          break; } // send bit. no shift
+      case 12: { OUT_WRITE(SMART_EFFECTOR_MOD_PIN, !!(b & 0x80));          break; } // send bit. no shift//发送位。不换班
       case  8:
-      case 13: { OUT_WRITE(SMART_EFFECTOR_MOD_PIN,  !(b & 0x80)); b <<= 1; break; } // send inverted previous bit
-      case  0: case  1:                                   // 00
-      case  3: { OUT_WRITE(SMART_EFFECTOR_MOD_PIN, LOW); break; }   // 0010
-      case  2: { OUT_WRITE(SMART_EFFECTOR_MOD_PIN, HIGH); break; }  // 001
+      case 13: { OUT_WRITE(SMART_EFFECTOR_MOD_PIN,  !(b & 0x80)); b <<= 1; break; } // send inverted previous bit//发送倒置的前一位
+      case  0: case  1:                                   // 00// 00
+      case  3: { OUT_WRITE(SMART_EFFECTOR_MOD_PIN, LOW); break; }   // 0010// 0010
+      case  2: { OUT_WRITE(SMART_EFFECTOR_MOD_PIN, HIGH); break; }  // 001// 001
     }
     DELAY_US(1000);
   }
@@ -92,7 +93,7 @@ void GcodeSuite::M672() {
     return;
   }
 
-  OUT_WRITE(SMART_EFFECTOR_MOD_PIN, LOW);  // Keep Smart Effector in NORMAL mode
+  OUT_WRITE(SMART_EFFECTOR_MOD_PIN, LOW);  // Keep Smart Effector in NORMAL mode//将智能效应器保持在正常模式
 }
 
-#endif // DUET_SMART_EFFECTOR && SMART_EFFECTOR_MOD_PIN
+#endif // DUET_SMART_EFFECTOR && SMART_EFFECTOR_MOD_PIN//二重唱智能效应器和智能效应器模块引脚

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -56,9 +57,9 @@ class libServo: public Servo {
     constexpr uint16_t servo_delay[] = SERVO_DELAY;
     static_assert(COUNT(servo_delay) == NUM_SERVOS, "SERVO_DELAY must be an array NUM_SERVOS long.");
 
-    if (attach(servo_info[servoIndex].Pin.nbr) >= 0) {    // try to reattach
+    if (attach(servo_info[servoIndex].Pin.nbr) >= 0) {    // try to reattach//尝试重新连接
       write(value);
-      safe_delay(servo_delay[servoIndex]); // delay to allow servo to reach position
+      safe_delay(servo_delay[servoIndex]); // delay to allow servo to reach position//允许伺服到达位置的延迟
       TERN_(DEACTIVATE_SERVOS_AFTER_MOVE, detach());
     }
 

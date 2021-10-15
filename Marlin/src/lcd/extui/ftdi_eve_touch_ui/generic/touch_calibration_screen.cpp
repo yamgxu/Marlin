@@ -1,3 +1,4 @@
+/** translatione by yx */
 /********************************
  * touch_calibration_screen.cpp *
  ********************************/
@@ -39,9 +40,9 @@ void TouchCalibrationScreen::onEntry() {
   BaseScreen::onEntry();
 
   if (CLCD::is_touching()) {
-    // Ask the user to release the touch before starting,
-    // as otherwise the first calibration point could
-    // be misinterpreted.
+    // Ask the user to release the touch before starting,//请用户在启动前释放触摸，
+    // as otherwise the first calibration point could//否则，第一个校准点可能会损坏
+    // be misinterpreted.//被误解了。
     cmd.cmd(CMD_DLSTART)
        .cmd(CLEAR_COLOR_RGB(bg_color))
        .cmd(CLEAR(true,true,true))
@@ -58,7 +59,7 @@ void TouchCalibrationScreen::onEntry() {
     }
   }
 
-  // Force a refresh
+  // Force a refresh//强迫刷新
   cmd.cmd(CMD_DLSTART);
   onRedraw(FOREGROUND);
   cmd.cmd(DL::DL_DISPLAY);
@@ -66,9 +67,9 @@ void TouchCalibrationScreen::onEntry() {
 }
 
 void TouchCalibrationScreen::onRefresh() {
-  // Don't do the regular refresh, as this would
-  // cause the calibration be restarted on every
-  // touch.
+  // Don't do the regular refresh, as this would//不要进行常规刷新，因为这样会
+  // cause the calibration be restarted on every//使校准在每一天重新开始
+  // touch.//触摸。
 }
 
 void TouchCalibrationScreen::onRedraw(draw_mode_t) {
@@ -90,4 +91,4 @@ void TouchCalibrationScreen::onIdle() {
   }
 }
 
-#endif // FTDI_TOUCH_CALIBRATION_SCREEN
+#endif // FTDI_TOUCH_CALIBRATION_SCREEN//FTDI触摸屏校准屏

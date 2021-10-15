@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -23,7 +24,7 @@
 
 #define OVM(V) OV((V)*(0.327/0.327))
 
-// R25 = 100 kOhm, beta25 = 4092 K, 4.7 kOhm pull-up, bed thermistor
+// R25 = 100 kOhm, beta25 = 4092 K, 4.7 kOhm pull-up, bed thermistor//R25=100千欧，beta25=4092千欧，4.7千欧上拉，床用热敏电阻
 constexpr temp_entry_t temptable_332[] PROGMEM = {
   { OVM( 268), 150 },
   { OVM( 293), 145 },

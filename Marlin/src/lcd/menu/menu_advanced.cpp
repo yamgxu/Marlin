@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -20,9 +21,9 @@
  *
  */
 
-//
-// Advanced Settings Menus
-//
+////
+// Advanced Settings Menus//高级设置菜单
+////
 
 #include "../../inc/MarlinConfigPre.h"
 
@@ -98,9 +99,9 @@ void menu_backlash();
 #endif
 
 #if DISABLED(NO_VOLUMETRICS) || ENABLED(ADVANCED_PAUSE_FEATURE)
-  //
-  // Advanced Settings > Filament
-  //
+  ////
+  // Advanced Settings > Filament//高级设置>灯丝
+  ////
   void menu_advanced_filament() {
     START_MENU();
     BACK_ITEM(MSG_ADVANCED_SETTINGS);
@@ -160,11 +161,11 @@ void menu_backlash();
     END_MENU();
   }
 
-#endif // !NO_VOLUMETRICS || ADVANCED_PAUSE_FEATURE
+#endif // !NO_VOLUMETRICS || ADVANCED_PAUSE_FEATURE// !无容量测量| |高级|暂停|功能
 
-//
-// Advanced Settings > Temperature helpers
-//
+////
+// Advanced Settings > Temperature helpers//高级设置>温度帮助
+////
 
 #if ENABLED(PID_AUTOTUNE_MENU)
 
@@ -197,14 +198,14 @@ void menu_backlash();
     ui.return_to_status();
   }
 
-#endif // PID_AUTOTUNE_MENU
+#endif // PID_AUTOTUNE_MENU//PID_自动调谐_菜单
 
 #if ENABLED(PID_EDIT_MENU)
 
-  float raw_Ki, raw_Kd; // place-holders for Ki and Kd edits
+  float raw_Ki, raw_Kd; // place-holders for Ki and Kd edits//Ki和Kd编辑的占位符
 
-  // Helpers for editing PID Ki & Kd values
-  // grab the PID value out of the temp variable; scale it; then update the PID driver
+  // Helpers for editing PID Ki & Kd values//用于编辑PID Ki和Kd值的帮助程序
+  // grab the PID value out of the temp variable; scale it; then update the PID driver//从温度变量中取出PID值；扩大规模；然后更新PID驱动程序
   void copy_and_scalePID_i(int16_t e) {
     UNUSED(e);
     PID_PARAM(Ki, e) = scalePID_i(raw_Ki);
@@ -222,7 +223,7 @@ void menu_backlash();
 
 #else
 
-  #define _DEFINE_PIDTEMP_BASE_FUNCS(N) //
+  #define _DEFINE_PIDTEMP_BASE_FUNCS(N) ////
 
 #endif
 
@@ -245,17 +246,17 @@ void menu_backlash();
   #define SHOW_MENU_ADVANCED_TEMPERATURE 1
 #endif
 
-//
-// Advanced Settings > Temperature
-//
+////
+// Advanced Settings > Temperature//高级设置>温度
+////
 #if SHOW_MENU_ADVANCED_TEMPERATURE
 
   void menu_advanced_temperature() {
     START_MENU();
     BACK_ITEM(MSG_ADVANCED_SETTINGS);
-    //
-    // Autotemp, Min, Max, Fact
-    //
+    ////
+    // Autotemp, Min, Max, Fact//自动时间戳，最小值，最大值，事实
+    ////
     #if BOTH(AUTOTEMP, HAS_TEMP_HOTEND)
       EDIT_ITEM(bool, MSG_AUTOTEMP, &planner.autotemp_enabled);
       EDIT_ITEM(int3, MSG_MIN, &planner.autotemp_min, 0, thermalManager.hotend_max_target(0));
@@ -263,14 +264,14 @@ void menu_backlash();
       EDIT_ITEM(float42_52, MSG_FACTOR, &planner.autotemp_factor, 0, 10);
     #endif
 
-    //
-    // PID-P, PID-I, PID-D, PID-C, PID Autotune
-    // PID-P E1, PID-I E1, PID-D E1, PID-C E1, PID Autotune E1
-    // PID-P E2, PID-I E2, PID-D E2, PID-C E2, PID Autotune E2
-    // PID-P E3, PID-I E3, PID-D E3, PID-C E3, PID Autotune E3
-    // PID-P E4, PID-I E4, PID-D E4, PID-C E4, PID Autotune E4
-    // PID-P E5, PID-I E5, PID-D E5, PID-C E5, PID Autotune E5
-    //
+    ////
+    // PID-P, PID-I, PID-D, PID-C, PID Autotune//PID-P、PID-I、PID-D、PID-C、PID自动调谐
+    // PID-P E1, PID-I E1, PID-D E1, PID-C E1, PID Autotune E1//PID-P E1、PID-I E1、PID-D E1、PID-C E1、PID自动调谐E1
+    // PID-P E2, PID-I E2, PID-D E2, PID-C E2, PID Autotune E2//PID-P E2、PID-I E2、PID-D E2、PID-C E2、PID自动调谐E2
+    // PID-P E3, PID-I E3, PID-D E3, PID-C E3, PID Autotune E3//PID-P E3、PID-I E3、PID-D E3、PID-C E3、PID自动调谐E3
+    // PID-P E4, PID-I E4, PID-D E4, PID-C E4, PID Autotune E4//PID-P E4、PID-I E4、PID-D E4、PID-C E4、PID自动调谐E4
+    // PID-P E5, PID-I E5, PID-D E5, PID-C E5, PID Autotune E5//PID-P E5、PID-I E5、PID-D E5、PID-C E5、PID自动调谐E5
+    ////
 
     #if ENABLED(PID_EDIT_MENU)
       #define _PID_EDIT_ITEMS_TMPL(N,T) \
@@ -343,13 +344,13 @@ void menu_backlash();
     END_MENU();
   }
 
-#endif // SHOW_MENU_ADVANCED_TEMPERATURE
+#endif // SHOW_MENU_ADVANCED_TEMPERATURE//显示\u菜单\u高级\u温度
 
 #if DISABLED(SLIM_LCD_MENUS)
 
-  // M203 / M205 Velocity options
+  // M203 / M205 Velocity options//M203/M205速度选项
   void menu_advanced_velocity() {
-    // M203 Max Feedrate
+    // M203 Max Feedrate//M203最大进给速度
     constexpr xyze_feedrate_t max_fr_edit =
       #ifdef MAX_FEEDRATE_EDIT_VALUES
         MAX_FEEDRATE_EDIT_VALUES
@@ -379,20 +380,20 @@ void menu_backlash();
         EDIT_ITEM_FAST_N(float5, n, MSG_VMAX_EN, &planner.settings.max_feedrate_mm_s[E_AXIS_N(n)], 1, max_fr_edit_scaled.e);
     #endif
 
-    // M205 S Min Feedrate
+    // M205 S Min Feedrate//M205秒最小进给速度
     EDIT_ITEM_FAST(float5, MSG_VMIN, &planner.settings.min_feedrate_mm_s, 0, 9999);
 
-    // M205 T Min Travel Feedrate
+    // M205 T Min Travel Feedrate//M205最小行程进给率
     EDIT_ITEM_FAST(float5, MSG_VTRAV_MIN, &planner.settings.min_travel_feedrate_mm_s, 0, 9999);
 
     END_MENU();
   }
 
-  // M201 / M204 Accelerations
+  // M201 / M204 Accelerations//M201/M204加速度
   void menu_advanced_acceleration() {
     const float max_accel = _MAX(planner.settings.max_acceleration_mm_per_s2[A_AXIS], planner.settings.max_acceleration_mm_per_s2[B_AXIS], planner.settings.max_acceleration_mm_per_s2[C_AXIS]);
 
-    // M201 settings
+    // M201 settings//M201设置
     constexpr xyze_ulong_t max_accel_edit =
       #ifdef MAX_ACCEL_EDIT_VALUES
         MAX_ACCEL_EDIT_VALUES
@@ -411,15 +412,15 @@ void menu_backlash();
     START_MENU();
     BACK_ITEM(MSG_ADVANCED_SETTINGS);
 
-    // M204 P Acceleration
+    // M204 P Acceleration//M204 P加速度
     EDIT_ITEM_FAST(float5_25, MSG_ACC, &planner.settings.acceleration, 25, max_accel);
 
     #if HAS_EXTRUDERS
-      // M204 R Retract Acceleration
+      // M204 R Retract Acceleration//M204 R回缩加速度
       EDIT_ITEM_FAST(float5, MSG_A_RETRACT, &planner.settings.retract_acceleration, 100, planner.settings.max_acceleration_mm_per_s2[E_AXIS_N(active_extruder)]);
     #endif
 
-    // M204 T Travel Acceleration
+    // M204 T Travel Acceleration//M204 T行程加速
     EDIT_ITEM_FAST(float5_25, MSG_A_TRAVEL, &planner.settings.travel_acceleration, 25, max_accel);
 
     #define EDIT_AMAX(Q,L) EDIT_ITEM_FAST(long5_25, MSG_AMAX_##Q, &planner.settings.max_acceleration_mm_per_s2[_AXIS(Q)], L, max_accel_edit_scaled[_AXIS(Q)], []{ planner.reset_acceleration_rates(); })
@@ -441,7 +442,7 @@ void menu_backlash();
 
     #ifdef XY_FREQUENCY_LIMIT
       EDIT_ITEM(int8, MSG_XY_FREQUENCY_LIMIT, &planner.xy_freq_limit_hz, 0, 100, planner.refresh_frequency_limit, true);
-      editable.uint8 = uint8_t(LROUND(planner.xy_freq_min_speed_factor * 255)); // percent to u8
+      editable.uint8 = uint8_t(LROUND(planner.xy_freq_min_speed_factor * 255)); // percent to u8//至u8的百分比
       EDIT_ITEM(percent, MSG_XY_FREQUENCY_FEEDRATE, &editable.uint8, 3, 255, []{ planner.set_min_speed_factor_u8(editable.uint8); }, true);
     #endif
 
@@ -491,7 +492,7 @@ void menu_backlash();
 
   #endif
 
-  // M851 - Z Probe Offsets
+  // M851 - Z Probe Offsets//M851-Z探头偏移
   #if HAS_BED_PROBE
     void menu_probe_offsets() {
       START_MENU();
@@ -510,9 +511,9 @@ void menu_backlash();
     }
   #endif
 
-#endif // !SLIM_LCD_MENUS
+#endif // !SLIM_LCD_MENUS// !超薄液晶菜单
 
-// M92 Steps-per-mm
+// M92 Steps-per-mm//M92每毫米步数
 void menu_advanced_steps_per_mm() {
   START_MENU();
   BACK_ITEM(MSG_ADVANCED_SETTINGS);
@@ -552,20 +553,20 @@ void menu_advanced_settings() {
   #if DISABLED(SLIM_LCD_MENUS)
 
     #if HAS_M206_COMMAND
-      //
-      // Set Home Offsets
-      //
+      ////
+      // Set Home Offsets//设置原点偏移
+      ////
       ACTION_ITEM(MSG_SET_HOME_OFFSETS, []{ queue.inject_P(PSTR("M428")); ui.return_to_status(); });
     #endif
 
-    // M203 / M205 - Feedrate items
+    // M203 / M205 - Feedrate items//M203/M205-进给率项目
     SUBMENU(MSG_VELOCITY, menu_advanced_velocity);
 
-    // M201 - Acceleration items
+    // M201 - Acceleration items//M201-加速项目
     SUBMENU(MSG_ACCELERATION, menu_advanced_acceleration);
 
     #if HAS_CLASSIC_JERK
-      // M205 - Max Jerk
+      // M205 - Max Jerk//M205-最大挺举
       SUBMENU(MSG_JERK, menu_advanced_jerk);
     #elif HAS_JUNCTION_DEVIATION
       EDIT_ITEM(float43, MSG_JUNCTION_DEVIATION, &planner.junction_deviation_mm, 0.001f, 0.3f
@@ -575,14 +576,14 @@ void menu_advanced_settings() {
       );
     #endif
 
-    // M851 - Z Probe Offsets
+    // M851 - Z Probe Offsets//M851-Z探头偏移
     #if HAS_BED_PROBE
       if (!is_busy) SUBMENU(MSG_ZPROBE_OFFSETS, menu_probe_offsets);
     #endif
 
-  #endif // !SLIM_LCD_MENUS
+  #endif // !SLIM_LCD_MENUS// !超薄液晶菜单
 
-  // M92 - Steps Per mm
+  // M92 - Steps Per mm//M92-每毫米步数
   if (!is_busy)
     SUBMENU(MSG_STEPS_PER_MM, menu_advanced_steps_per_mm);
 
@@ -616,16 +617,16 @@ void menu_advanced_settings() {
     #endif
   #endif
 
-  // M540 S - Abort on endstop hit when SD printing
+  // M540 S - Abort on endstop hit when SD printing//M540 S-SD打印时endstop命中时中止
   #if ENABLED(SD_ABORT_ON_ENDSTOP_HIT)
     EDIT_ITEM(bool, MSG_ENDSTOP_ABORT, &planner.abort_on_endstop_hit);
   #endif
 
   #if ENABLED(SD_FIRMWARE_UPDATE)
     EDIT_ITEM(bool, MSG_MEDIA_UPDATE, &sd_update_state, []{
-      //
-      // Toggle the SD Firmware Update state in EEPROM
-      //
+      ////
+      // Toggle the SD Firmware Update state in EEPROM//在EEPROM中切换SD固件更新状态
+      ////
       const bool new_state = !settings.sd_update_status(),
                  didset = settings.set_sd_update_status(new_state);
       ui.completion_feedback(didset);
@@ -649,4 +650,4 @@ void menu_advanced_settings() {
   END_MENU();
 }
 
-#endif // HAS_LCD_MENU
+#endif // HAS_LCD_MENU//有LCD菜单吗

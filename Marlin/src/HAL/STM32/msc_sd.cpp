@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  *
@@ -50,14 +51,14 @@ public:
 
   bool Write(uint8_t *pBuf, uint32_t blkAddr, uint16_t blkLen) {
     auto sd2card = diskIODriver();
-    // single block
+    // single block//单块
     if (blkLen == 1) {
       watchdog_refresh();
       sd2card->writeBlock(blkAddr, pBuf);
       return true;
     }
 
-    // multi block optmization
+    // multi block optmization//多块优化
     sd2card->writeStart(blkAddr, blkLen);
     while (blkLen--) {
       watchdog_refresh();
@@ -70,14 +71,14 @@ public:
 
   bool Read(uint8_t *pBuf, uint32_t blkAddr, uint16_t blkLen) {
     auto sd2card = diskIODriver();
-    // single block
+    // single block//单块
     if (blkLen == 1) {
       watchdog_refresh();
       sd2card->readBlock(blkAddr, pBuf);
       return true;
     }
 
-    // multi block optmization
+    // multi block optmization//多块优化
     sd2card->readStart(blkAddr);
     while (blkLen--) {
       watchdog_refresh();
@@ -121,4 +122,4 @@ void MSC_SD_init() {
   USBDevice.begin();
 }
 
-#endif // __STM32F1__ && HAS_SD_HOST_DRIVE
+#endif // __STM32F1__ && HAS_SD_HOST_DRIVE//\uuuu STM32F1\uuuu&&HAS\u SD\u主机\u驱动器

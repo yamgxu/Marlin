@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -48,10 +49,10 @@ void TFT_FSMC::Init() {
 
   uint32_t NSBank = (uint32_t)pinmap_peripheral(digitalPinToPinName(TFT_CS_PIN), PinMap_FSMC_CS);
 
-  // Perform the SRAM1 memory initialization sequence
+  // Perform the SRAM1 memory initialization sequence//执行SRAM1内存初始化序列
   SRAMx.Instance = FSMC_NORSRAM_DEVICE;
   SRAMx.Extended = FSMC_NORSRAM_EXTENDED_DEVICE;
-  // SRAMx.Init
+  // SRAMx.Init//SRAMx.Init
   SRAMx.Init.NSBank = NSBank;
   SRAMx.Init.DataAddressMux = FSMC_DATA_ADDRESS_MUX_DISABLE;
   SRAMx.Init.MemoryType = FSMC_MEMORY_TYPE_SRAM;
@@ -68,8 +69,8 @@ void TFT_FSMC::Init() {
   #ifdef STM32F4xx
     SRAMx.Init.PageSize = FSMC_PAGE_SIZE_NONE;
   #endif
-  // Read Timing - relatively slow to ensure ID information is correctly read from TFT controller
-  // Can be decreases from 15-15-24 to 4-4-8 with risk of stability loss
+  // Read Timing - relatively slow to ensure ID information is correctly read from TFT controller//读取定时-相对较慢，以确保从TFT控制器正确读取ID信息
+  // Can be decreases from 15-15-24 to 4-4-8 with risk of stability loss//可从15-15-24降至4-4-8，有失稳风险
   Timing.AddressSetupTime = 15;
   Timing.AddressHoldTime = 15;
   Timing.DataSetupTime = 24;
@@ -77,8 +78,8 @@ void TFT_FSMC::Init() {
   Timing.CLKDivision = 16;
   Timing.DataLatency = 17;
   Timing.AccessMode = FSMC_ACCESS_MODE_A;
-  // Write Timing
-  // Can be decreases from 8-15-8 to 0-0-1 with risk of stability loss
+  // Write Timing//写入定时
+  // Can be decreases from 8-15-8 to 0-0-1 with risk of stability loss//可从8-15-8降至0-0-1，有失稳风险
   ExtTiming.AddressSetupTime = 8;
   ExtTiming.AddressHoldTime = 15;
   ExtTiming.DataSetupTime = 8;
@@ -145,7 +146,7 @@ uint32_t TFT_FSMC::GetID() {
 uint32_t TFT_FSMC::ReadID(tft_data_t Reg) {
   uint32_t id;
   WriteReg(Reg);
-  id = LCD->RAM; // dummy read
+  id = LCD->RAM; // dummy read//伪读
   id = Reg << 24;
   id |= (LCD->RAM & 0x00FF) << 16;
   id |= (LCD->RAM & 0x00FF) << 8;
@@ -177,5 +178,5 @@ void TFT_FSMC::TransmitDMA(uint32_t MemoryIncrease, uint16_t *Data, uint16_t Cou
   Abort();
 }
 
-#endif // HAS_FSMC_TFT
-#endif // ARDUINO_ARCH_STM32 && !STM32GENERIC
+#endif // HAS_FSMC_TFT//有FSMC和TFT吗
+#endif // ARDUINO_ARCH_STM32 && !STM32GENERIC//ARDUINO_ARCH_STM32&&！STM32通用

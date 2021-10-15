@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*********************
  * language_menu.cpp *
  *********************/
@@ -63,4 +64,4 @@ bool LanguageMenu::onTouchEnd(uint8_t tag) {
   return false;
 }
 
-#endif // FTDI_LANGUAGE_MENU
+#endif // FTDI_LANGUAGE_MENU//FTDI_语言_菜单

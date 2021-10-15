@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -30,10 +31,10 @@
 
 #pragma once
 #include "../../../inc/MarlinConfigPre.h"
-//#define ACDEBUGLEVEL 4
+//#define ACDEBUGLEVEL 4//#定义ACDEBUGLEVEL 4
 
 #if ACDEBUGLEVEL
-  // Bit-masks for selective debug:
+  // Bit-masks for selective debug://用于选择性调试的位掩码：
   enum ACDebugMask : uint8_t {
     AC_INFO   =  1,
     AC_ACTION =  2,
@@ -43,20 +44,20 @@
     AC_SOME   = 32,
     AC_ALL    = 64
   };
-  #define ACDEBUG(mask) ( ((mask) & ACDEBUGLEVEL) == mask )  // Debug flag macro
+  #define ACDEBUG(mask) ( ((mask) & ACDEBUGLEVEL) == mask )  // Debug flag macro//调试标志宏
 #else
   #define ACDEBUG(mask) false
 #endif
 
-#define TFTSer LCD_SERIAL                    // Serial interface for TFT panel now uses marlinserial
-#define MAX_FOLDER_DEPTH                4    // Limit folder depth TFT has a limit for the file path
-#define MAX_CMND_LEN                   16 * MAX_FOLDER_DEPTH // Maximum Length for a Panel command
-#define MAX_PATH_LEN                   16 * MAX_FOLDER_DEPTH // Maximum number of characters in a SD file path
+#define TFTSer LCD_SERIAL                    // Serial interface for TFT panel now uses marlinserial//TFT面板的串行接口现在使用marlinserial
+#define MAX_FOLDER_DEPTH                4    // Limit folder depth TFT has a limit for the file path//限制文件夹深度TFT对文件路径有限制
+#define MAX_CMND_LEN                   16 * MAX_FOLDER_DEPTH // Maximum Length for a Panel command//面板命令的最大长度
+#define MAX_PATH_LEN                   16 * MAX_FOLDER_DEPTH // Maximum number of characters in a SD file path//SD文件路径中的最大字符数
 
-#define AC_HEATER_FAULT_VALIDATION_TIME 5    // number of 1/2 second loops before signalling a heater fault
-#define AC_LOWEST_MESHPOINT_VAL         -10  // The lowest value you can set for a single mesh point offset
+#define AC_HEATER_FAULT_VALIDATION_TIME 5    // number of 1/2 second loops before signalling a heater fault//发出加热器故障信号前的1/2秒环路数
+#define AC_LOWEST_MESHPOINT_VAL         -10  // The lowest value you can set for a single mesh point offset//可以为单个网格点偏移设置的最小值
 
- // TFT panel commands
+ // TFT panel commands//TFT面板命令
 #define  AC_msg_sd_card_inserted       PSTR("J00")
 #define  AC_msg_sd_card_removed        PSTR("J01")
 #define  AC_msg_no_sd_card             PSTR("J02")
@@ -90,7 +91,7 @@
 #define  AC_msg_old_panel_detected     PSTR("Standard TFT panel detected!")
 #define  AC_msg_new_panel_detected     PSTR("New TFT panel detected!")
 #define  AC_msg_powerloss_recovery     PSTR("Resuming from power outage! select the same SD file then press resume")
-// Error messages must not contain spaces
+// Error messages must not contain spaces//错误消息不能包含空格
 #define  AC_msg_error_bed_temp         PSTR("Abnormal_bed_temp")
 #define  AC_msg_error_hotend_temp      PSTR("Abnormal_hotend_temp")
 #define  AC_msg_error_sd_card          PSTR("SD_card_error")
@@ -113,16 +114,16 @@
 #define MARLIN_msg_filament_purging    PSTR("Filament Purging...")
 #define MARLIN_msg_special_pause       PSTR("PB")
 
-#define AC_cmnd_auto_unload_filament   PSTR("M701")                    // Use Marlin unload routine
-#define AC_cmnd_auto_load_filament     PSTR("M702 M0 PB")              // Use Marlin load routing then pause for user to clean nozzle
+#define AC_cmnd_auto_unload_filament   PSTR("M701")                    // Use Marlin unload routine//使用Marlin卸载例程
+#define AC_cmnd_auto_load_filament     PSTR("M702 M0 PB")              // Use Marlin load routing then pause for user to clean nozzle//使用Marlin加载路径，然后暂停，以便用户清洁喷嘴
 
-#define AC_cmnd_manual_load_filament   PSTR("M83\nG1 E50 F700\nM82")   // replace the manual panel commands with something a little faster
+#define AC_cmnd_manual_load_filament   PSTR("M83\nG1 E50 F700\nM82")   // replace the manual panel commands with something a little faster//将手动面板命令替换为稍微快一点的命令
 #define AC_cmnd_manual_unload_filament PSTR("M83\nG1 E-50 F1200\nM82")
 #define AC_cmnd_enable_leveling        PSTR("M420SV")
-#define AC_cmnd_power_loss_recovery    PSTR("G28XYR5\nG28Z")           // Lift, home X and Y then home Z when in 'safe' position
+#define AC_cmnd_power_loss_recovery    PSTR("G28XYR5\nG28Z")           // Lift, home X and Y then home Z when in 'safe' position//当处于“安全”位置时，提升，原点X和Y，然后原点Z
 
-#define AC_Test_for_OldPanel           PSTR("SIZE")                    // An old panel will respond with 'SXY 480 320' a new panel wont respond.
-#define AC_Test_for_NewPanel           PSTR("J200")                    // A new panel will respond with '[0]=0   [1]=0' to '[19]=0   '  an old panel wont respond
+#define AC_Test_for_OldPanel           PSTR("SIZE")                    // An old panel will respond with 'SXY 480 320' a new panel wont respond.//旧面板将响应“SXY 480 320”，而新面板不会响应。
+#define AC_Test_for_NewPanel           PSTR("J200")                    // A new panel will respond with '[0]=0   [1]=0' to '[19]=0   '  an old panel wont respond//新面板将以“[0]=0[1]=0”对“[19]=0”进行响应旧面板不会响应
 
 namespace Anycubic {
   enum heater_state_t : uint8_t {
@@ -175,4 +176,4 @@ namespace Anycubic {
     AC_error_filament_runout,
     AC_error_EEPROM
   };
-}  // Anycubic namespace
+}  // Anycubic namespace//任意立方名称空间

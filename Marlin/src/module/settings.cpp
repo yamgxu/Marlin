@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -35,13 +36,13 @@
  *       either sets a Sane Default, or results in No Change to the existing value.
  */
 
-// Change EEPROM version if the structure changes
+// Change EEPROM version if the structure changes//如果结构发生变化，则更改EEPROM版本
 #define EEPROM_VERSION "V83"
 #define EEPROM_OFFSET 100
 
-// Check the integrity of data offsets.
-// Can be disabled for production build.
-//#define DEBUG_EEPROM_READWRITE
+// Check the integrity of data offsets.//检查数据偏移的完整性。
+// Can be disabled for production build.//可以为生产生成禁用。
+//#define DEBUG_EEPROM_READWRITE//#定义调试\u EEPROM\u读写
 
 #include "settings.h"
 
@@ -51,7 +52,7 @@
 #include "temperature.h"
 
 #include "../lcd/marlinui.h"
-#include "../libs/vector_3.h"   // for matrix_3x3
+#include "../libs/vector_3.h"   // for matrix_3x3//对于矩阵_3x3
 #include "../gcode/gcode.h"
 #include "../MarlinCore.h"
 
@@ -158,7 +159,7 @@
   #include "../lcd/extui/dgus/DGUSDisplayDef.h"
 #endif
 
-#pragma pack(push, 1) // No padding between variables
+#pragma pack(push, 1) // No padding between variables//变量之间没有填充
 
 #if HAS_ETHERNET
   void ETH0_report();
@@ -177,10 +178,10 @@ typedef struct {     bool LINEAR_AXIS_LIST(X, Y, Z, I, J, K), X2, Y2, Z2, Z3, Z4
 
 #undef _EN_ITEM
 
-// Limit an index to an array size
+// Limit an index to an array size//将索引限制为数组大小
 #define ALIM(I,ARR) _MIN(I, (signed)COUNT(ARR) - 1)
 
-// Defaults for reset / fill in on load
+// Defaults for reset / fill in on load//加载时重置/填充的默认值
 static const uint32_t   _DMA[] PROGMEM = DEFAULT_MAX_ACCELERATION;
 static const float     _DASU[] PROGMEM = DEFAULT_AXIS_STEPS_PER_UNIT;
 static const feedRate_t _DMF[] PROGMEM = DEFAULT_MAX_FEEDRATE;
@@ -192,301 +193,301 @@ static const feedRate_t _DMF[] PROGMEM = DEFAULT_MAX_FEEDRATE;
  * EEPROM size is known at compile time!
  */
 typedef struct SettingsDataStruct {
-  char      version[4];                                 // Vnn\0
-  uint16_t  crc;                                        // Data Checksum
+  char      version[4];                                 // Vnn\0//Vnn\0
+  uint16_t  crc;                                        // Data Checksum//数据校验和
 
-  //
-  // DISTINCT_E_FACTORS
-  //
-  uint8_t   esteppers;                                  // DISTINCT_AXES - LINEAR_AXES
+  ////
+  // DISTINCT_E_FACTORS//不同的因素
+  ////
+  uint8_t   esteppers;                                  // DISTINCT_AXES - LINEAR_AXES//不同的_轴-线性_轴
 
   planner_settings_t planner_settings;
 
-  xyze_float_t planner_max_jerk;                        // M205 XYZE  planner.max_jerk
-  float planner_junction_deviation_mm;                  // M205 J     planner.junction_deviation_mm
+  xyze_float_t planner_max_jerk;                        // M205 XYZE  planner.max_jerk//M205 XYZE planner.max\u jerk
+  float planner_junction_deviation_mm;                  // M205 J     planner.junction_deviation_mm//M205 J规划器.连接处偏差\u mm
 
-  xyz_pos_t home_offset;                                // M206 XYZ / M665 TPZ
+  xyz_pos_t home_offset;                                // M206 XYZ / M665 TPZ//M206 XYZ/M665 TPZ
 
   #if HAS_HOTEND_OFFSET
-    xyz_pos_t hotend_offset[HOTENDS - 1];               // M218 XYZ
+    xyz_pos_t hotend_offset[HOTENDS - 1];               // M218 XYZ//M218 XYZ
   #endif
 
-  //
-  // FILAMENT_RUNOUT_SENSOR
-  //
-  bool runout_sensor_enabled;                           // M412 S
-  float runout_distance_mm;                             // M412 D
+  ////
+  // FILAMENT_RUNOUT_SENSOR//灯丝跳动传感器
+  ////
+  bool runout_sensor_enabled;                           // M412 S//M412 S
+  float runout_distance_mm;                             // M412 D//M412 D
 
-  //
-  // ENABLE_LEVELING_FADE_HEIGHT
-  //
-  float planner_z_fade_height;                          // M420 Zn  planner.z_fade_height
+  ////
+  // ENABLE_LEVELING_FADE_HEIGHT//启用\u调平\u衰减\u高度
+  ////
+  float planner_z_fade_height;                          // M420 Zn  planner.z_fade_height//M420 Zn planner.z_渐变_高度
 
-  //
-  // MESH_BED_LEVELING
-  //
-  float mbl_z_offset;                                   // mbl.z_offset
-  uint8_t mesh_num_x, mesh_num_y;                       // GRID_MAX_POINTS_X, GRID_MAX_POINTS_Y
-  float mbl_z_values[TERN(MESH_BED_LEVELING, GRID_MAX_POINTS_X, 3)]   // mbl.z_values
+  ////
+  // MESH_BED_LEVELING//网床找平
+  ////
+  float mbl_z_offset;                                   // mbl.z_offset//mbl.z_偏移量
+  uint8_t mesh_num_x, mesh_num_y;                       // GRID_MAX_POINTS_X, GRID_MAX_POINTS_Y//网格最大点X，网格最大点Y
+  float mbl_z_values[TERN(MESH_BED_LEVELING, GRID_MAX_POINTS_X, 3)]   // mbl.z_values//mbl.z_值
                     [TERN(MESH_BED_LEVELING, GRID_MAX_POINTS_Y, 3)];
 
-  //
-  // HAS_BED_PROBE
-  //
+  ////
+  // HAS_BED_PROBE//你有床吗
+  ////
 
   xyz_pos_t probe_offset;
 
-  //
-  // ABL_PLANAR
-  //
-  matrix_3x3 planner_bed_level_matrix;                  // planner.bed_level_matrix
+  ////
+  // ABL_PLANAR//ABL_平面
+  ////
+  matrix_3x3 planner_bed_level_matrix;                  // planner.bed_level_matrix//planner.bed\u level\u矩阵
 
-  //
-  // AUTO_BED_LEVELING_BILINEAR
-  //
-  uint8_t grid_max_x, grid_max_y;                       // GRID_MAX_POINTS_X, GRID_MAX_POINTS_Y
-  xy_pos_t bilinear_grid_spacing, bilinear_start;       // G29 L F
+  ////
+  // AUTO_BED_LEVELING_BILINEAR//自动调平床双线性
+  ////
+  uint8_t grid_max_x, grid_max_y;                       // GRID_MAX_POINTS_X, GRID_MAX_POINTS_Y//网格最大点X，网格最大点Y
+  xy_pos_t bilinear_grid_spacing, bilinear_start;       // G29 L F//G29 L F
   #if ENABLED(AUTO_BED_LEVELING_BILINEAR)
-    bed_mesh_t z_values;                                // G29
+    bed_mesh_t z_values;                                // G29//G29
   #else
     float z_values[3][3];
   #endif
 
-  //
-  // AUTO_BED_LEVELING_UBL
-  //
-  bool planner_leveling_active;                         // M420 S  planner.leveling_active
-  int8_t ubl_storage_slot;                              // ubl.storage_slot
+  ////
+  // AUTO_BED_LEVELING_UBL//自动调平床
+  ////
+  bool planner_leveling_active;                         // M420 S  planner.leveling_active//M420 S planner.leveling\u激活
+  int8_t ubl_storage_slot;                              // ubl.storage_slot//ubl.存储单元插槽
 
-  //
-  // SERVO_ANGLES
-  //
-  uint16_t servo_angles[EEPROM_NUM_SERVOS][2];          // M281 P L U
+  ////
+  // SERVO_ANGLES//伺服角
+  ////
+  uint16_t servo_angles[EEPROM_NUM_SERVOS][2];          // M281 P L U//m281plu
 
-  //
-  // Temperature first layer compensation values
-  //
+  ////
+  // Temperature first layer compensation values//第一层温度补偿值
+  ////
   #if ENABLED(PROBE_TEMP_COMPENSATION)
-    int16_t z_offsets_probe[COUNT(temp_comp.z_offsets_probe)], // M871 P I V
-            z_offsets_bed[COUNT(temp_comp.z_offsets_bed)]      // M871 B I V
+    int16_t z_offsets_probe[COUNT(temp_comp.z_offsets_probe)], // M871 P I V//M871PIV
+            z_offsets_bed[COUNT(temp_comp.z_offsets_bed)]      // M871 B I V//M871 B I V
             #if ENABLED(USE_TEMP_EXT_COMPENSATION)
-              , z_offsets_ext[COUNT(temp_comp.z_offsets_ext)]  // M871 E I V
+              , z_offsets_ext[COUNT(temp_comp.z_offsets_ext)]  // M871 E I V//M871 E I V
             #endif
             ;
   #endif
 
-  //
-  // BLTOUCH
-  //
+  ////
+  // BLTOUCH//BLTOUCH
+  ////
   bool bltouch_last_written_mode;
 
-  //
-  // DELTA / [XYZ]_DUAL_ENDSTOPS
-  //
+  ////
+  // DELTA / [XYZ]_DUAL_ENDSTOPS//DELTA/[XYZ]\u双端止动块
+  ////
   #if ENABLED(DELTA)
-    float delta_height;                                 // M666 H
-    abc_float_t delta_endstop_adj;                      // M666 X Y Z
-    float delta_radius,                                 // M665 R
-          delta_diagonal_rod,                           // M665 L
-          segments_per_second;                          // M665 S
-    abc_float_t delta_tower_angle_trim,                 // M665 X Y Z
-                delta_diagonal_rod_trim;                // M665 A B C
+    float delta_height;                                 // M666 H//M666H
+    abc_float_t delta_endstop_adj;                      // M666 X Y Z//M666 X Y Z
+    float delta_radius,                                 // M665 R//M665R
+          delta_diagonal_rod,                           // M665 L//M665 L
+          segments_per_second;                          // M665 S//M665 S
+    abc_float_t delta_tower_angle_trim,                 // M665 X Y Z//M665 X Y Z
+                delta_diagonal_rod_trim;                // M665 A B C//M665 A B C
   #elif HAS_EXTRA_ENDSTOPS
-    float x2_endstop_adj,                               // M666 X
-          y2_endstop_adj,                               // M666 Y
-          z2_endstop_adj,                               // M666 (S2) Z
-          z3_endstop_adj,                               // M666 (S3) Z
-          z4_endstop_adj;                               // M666 (S4) Z
+    float x2_endstop_adj,                               // M666 X//M666 X
+          y2_endstop_adj,                               // M666 Y//M666 Y
+          z2_endstop_adj,                               // M666 (S2) Z//M666（S2）Z
+          z3_endstop_adj,                               // M666 (S3) Z//M666（S3）Z
+          z4_endstop_adj;                               // M666 (S4) Z//M666（S4）Z
   #endif
 
-  //
-  // Z_STEPPER_AUTO_ALIGN, Z_STEPPER_ALIGN_KNOWN_STEPPER_POSITIONS
-  //
+  ////
+  // Z_STEPPER_AUTO_ALIGN, Z_STEPPER_ALIGN_KNOWN_STEPPER_POSITIONS//Z_步进电机自动对齐，Z_步进电机对齐已知步进电机位置
+  ////
   #if ENABLED(Z_STEPPER_AUTO_ALIGN)
-    xy_pos_t z_stepper_align_xy[NUM_Z_STEPPER_DRIVERS];             // M422 S X Y
+    xy_pos_t z_stepper_align_xy[NUM_Z_STEPPER_DRIVERS];             // M422 S X Y//M422 S X Y
     #if ENABLED(Z_STEPPER_ALIGN_KNOWN_STEPPER_POSITIONS)
-      xy_pos_t z_stepper_align_stepper_xy[NUM_Z_STEPPER_DRIVERS];   // M422 W X Y
+      xy_pos_t z_stepper_align_stepper_xy[NUM_Z_STEPPER_DRIVERS];   // M422 W X Y//M422宽X Y
     #endif
   #endif
 
-  //
-  // Material Presets
-  //
+  ////
+  // Material Presets//材质预设
+  ////
   #if PREHEAT_COUNT
-    preheat_t ui_material_preset[PREHEAT_COUNT];        // M145 S0 H B F
+    preheat_t ui_material_preset[PREHEAT_COUNT];        // M145 S0 H B F//M145 S0 H B F
   #endif
 
-  //
-  // PIDTEMP
-  //
-  PIDCF_t hotendPID[HOTENDS];                           // M301 En PIDCF / M303 En U
-  int16_t lpq_len;                                      // M301 L
+  ////
+  // PIDTEMP//皮特姆
+  ////
+  PIDCF_t hotendPID[HOTENDS];                           // M301 En PIDCF / M303 En U//M301 En PIDCF/M303 En U
+  int16_t lpq_len;                                      // M301 L//M301 L
 
-  //
-  // PIDTEMPBED
-  //
-  PID_t bedPID;                                         // M304 PID / M303 E-1 U
+  ////
+  // PIDTEMPBED//皮坦普德
+  ////
+  PID_t bedPID;                                         // M304 PID / M303 E-1 U//M304 PID/M303 E-1 U
 
-  //
-  // PIDTEMPCHAMBER
-  //
-  PID_t chamberPID;                                     // M309 PID / M303 E-2 U
+  ////
+  // PIDTEMPCHAMBER//皮坦普尔酒店
+  ////
+  PID_t chamberPID;                                     // M309 PID / M303 E-2 U//M309 PID/M303 E-2 U
 
-  //
-  // User-defined Thermistors
-  //
+  ////
+  // User-defined Thermistors//用户自定义热敏电阻
+  ////
   #if HAS_USER_THERMISTORS
-    user_thermistor_t user_thermistor[USER_THERMISTORS]; // M305 P0 R4700 T100000 B3950
+    user_thermistor_t user_thermistor[USER_THERMISTORS]; // M305 P0 R4700 T100000 B3950//M305 P0 R4700 T100000 B3950
   #endif
 
-  //
-  // Power monitor
-  //
-  uint8_t power_monitor_flags;                          // M430 I V W
+  ////
+  // Power monitor//功率监视器
+  ////
+  uint8_t power_monitor_flags;                          // M430 I V W//M430 I V W
 
-  //
-  // HAS_LCD_CONTRAST
-  //
-  int16_t lcd_contrast;                                 // M250 C
+  ////
+  // HAS_LCD_CONTRAST//有对比度吗
+  ////
+  int16_t lcd_contrast;                                 // M250 C//M250 C
 
-  //
-  // Controller fan settings
-  //
-  controllerFan_settings_t controllerFan_settings;      // M710
+  ////
+  // Controller fan settings//控制器风扇设置
+  ////
+  controllerFan_settings_t controllerFan_settings;      // M710//M710
 
-  //
-  // POWER_LOSS_RECOVERY
-  //
-  bool recovery_enabled;                                // M413 S
+  ////
+  // POWER_LOSS_RECOVERY//功率损失恢复
+  ////
+  bool recovery_enabled;                                // M413 S//M413 S
 
-  //
-  // FWRETRACT
-  //
-  fwretract_settings_t fwretract_settings;              // M207 S F Z W, M208 S F W R
-  bool autoretract_enabled;                             // M209 S
+  ////
+  // FWRETRACT//收回
+  ////
+  fwretract_settings_t fwretract_settings;              // M207 S F Z W, M208 S F W R//M207南飞西，M208南飞西
+  bool autoretract_enabled;                             // M209 S//M209 S
 
-  //
-  // !NO_VOLUMETRIC
-  //
-  bool parser_volumetric_enabled;                       // M200 S  parser.volumetric_enabled
-  float planner_filament_size[EXTRUDERS];               // M200 T D  planner.filament_size[]
-  float planner_volumetric_extruder_limit[EXTRUDERS];   // M200 T L  planner.volumetric_extruder_limit[]
+  ////
+  // !NO_VOLUMETRIC// !没有
+  ////
+  bool parser_volumetric_enabled;                       // M200 S  parser.volumetric_enabled//M200 S parser.u已启用
+  float planner_filament_size[EXTRUDERS];               // M200 T D  planner.filament_size[]//M200 T D规划器。灯丝尺寸[]
+  float planner_volumetric_extruder_limit[EXTRUDERS];   // M200 T L  planner.volumetric_extruder_limit[]//M200 T L规划师。挤压机体积限制[]
 
-  //
-  // HAS_TRINAMIC_CONFIG
-  //
-  tmc_stepper_current_t tmc_stepper_current;            // M906 X Y Z X2 Y2 Z2 Z3 Z4 E0 E1 E2 E3 E4 E5
-  tmc_hybrid_threshold_t tmc_hybrid_threshold;          // M913 X Y Z X2 Y2 Z2 Z3 Z4 E0 E1 E2 E3 E4 E5
-  tmc_sgt_t tmc_sgt;                                    // M914 X Y Z X2 Y2 Z2 Z3 Z4
-  tmc_stealth_enabled_t tmc_stealth_enabled;            // M569 X Y Z X2 Y2 Z2 Z3 Z4 E0 E1 E2 E3 E4 E5
+  ////
+  // HAS_TRINAMIC_CONFIG//有_TRINAMIC _CONFIG
+  ////
+  tmc_stepper_current_t tmc_stepper_current;            // M906 X Y Z X2 Y2 Z2 Z3 Z4 E0 E1 E2 E3 E4 E5//M906 X Y Z X2 Y2 Z2 Z3 Z4 E0 E1 E2 E3 E4 E5
+  tmc_hybrid_threshold_t tmc_hybrid_threshold;          // M913 X Y Z X2 Y2 Z2 Z3 Z4 E0 E1 E2 E3 E4 E5//M913 X Y Z X2 Y2 Z2 Z3 Z4 E0 E1 E2 E3 E4 E5
+  tmc_sgt_t tmc_sgt;                                    // M914 X Y Z X2 Y2 Z2 Z3 Z4//M914 X Y Z X2 Y2 Z2 Z3 Z4
+  tmc_stealth_enabled_t tmc_stealth_enabled;            // M569 X Y Z X2 Y2 Z2 Z3 Z4 E0 E1 E2 E3 E4 E5//M569 X Y Z X2 Y2 Z2 Z3 Z4 E0 E1 E2 E3 E4 E5
 
-  //
-  // LIN_ADVANCE
-  //
-  float planner_extruder_advance_K[_MAX(EXTRUDERS, 1)]; // M900 K  planner.extruder_advance_K
+  ////
+  // LIN_ADVANCE//林乌前进
+  ////
+  float planner_extruder_advance_K[_MAX(EXTRUDERS, 1)]; // M900 K  planner.extruder_advance_K//M900 K计划机、挤出机、推进机
 
-  //
-  // HAS_MOTOR_CURRENT_PWM
-  //
+  ////
+  // HAS_MOTOR_CURRENT_PWM//有\u电机\u电流\u PWM
+  ////
   #ifndef MOTOR_CURRENT_COUNT
     #define MOTOR_CURRENT_COUNT LINEAR_AXES
   #endif
-  uint32_t motor_current_setting[MOTOR_CURRENT_COUNT];  // M907 X Z E ...
+  uint32_t motor_current_setting[MOTOR_CURRENT_COUNT];  // M907 X Z E ...//M907XZE。。。
 
-  //
-  // CNC_COORDINATE_SYSTEMS
-  //
-  xyz_pos_t coordinate_system[MAX_COORDINATE_SYSTEMS];  // G54-G59.3
+  ////
+  // CNC_COORDINATE_SYSTEMS//CNC坐标系
+  ////
+  xyz_pos_t coordinate_system[MAX_COORDINATE_SYSTEMS];  // G54-G59.3//G54-G59.3
 
-  //
-  // SKEW_CORRECTION
-  //
-  skew_factor_t planner_skew_factor;                    // M852 I J K  planner.skew_factor
+  ////
+  // SKEW_CORRECTION//倾斜校正
+  ////
+  skew_factor_t planner_skew_factor;                    // M852 I J K  planner.skew_factor//M852 I J K planner.skew_因子
 
-  //
-  // ADVANCED_PAUSE_FEATURE
-  //
+  ////
+  // ADVANCED_PAUSE_FEATURE//高级暂停功能
+  ////
   #if HAS_EXTRUDERS
-    fil_change_settings_t fc_settings[EXTRUDERS];       // M603 T U L
+    fil_change_settings_t fc_settings[EXTRUDERS];       // M603 T U L//M603TUL
   #endif
 
-  //
-  // Tool-change settings
-  //
+  ////
+  // Tool-change settings//换刀设置
+  ////
   #if HAS_MULTI_EXTRUDER
-    toolchange_settings_t toolchange_settings;          // M217 S P R
+    toolchange_settings_t toolchange_settings;          // M217 S P R//M217 S P R
   #endif
 
-  //
-  // BACKLASH_COMPENSATION
-  //
-  xyz_float_t backlash_distance_mm;                     // M425 X Y Z
-  uint8_t backlash_correction;                          // M425 F
-  float backlash_smoothing_mm;                          // M425 S
+  ////
+  // BACKLASH_COMPENSATION//齿隙补偿
+  ////
+  xyz_float_t backlash_distance_mm;                     // M425 X Y Z//M425 X Y Z
+  uint8_t backlash_correction;                          // M425 F//M425 F
+  float backlash_smoothing_mm;                          // M425 S//M425 S
 
-  //
-  // EXTENSIBLE_UI
-  //
+  ////
+  // EXTENSIBLE_UI//可扩展用户界面
+  ////
   #if ENABLED(EXTENSIBLE_UI)
-    // This is a significant hardware change; don't reserve space when not present
+    // This is a significant hardware change; don't reserve space when not present//这是一个重大的硬件变化；不在场时不要预留空间
     uint8_t extui_data[ExtUI::eeprom_data_size];
   #endif
 
-  //
-  // CASELIGHT_USES_BRIGHTNESS
-  //
+  ////
+  // CASELIGHT_USES_BRIGHTNESS//CASELIGHT_使用_亮度
+  ////
   #if CASELIGHT_USES_BRIGHTNESS
-    uint8_t caselight_brightness;                        // M355 P
+    uint8_t caselight_brightness;                        // M355 P//M355 P
   #endif
 
-  //
-  // PASSWORD_FEATURE
-  //
+  ////
+  // PASSWORD_FEATURE//密码加密功能
+  ////
   #if ENABLED(PASSWORD_FEATURE)
     bool password_is_set;
     uint32_t password_value;
   #endif
 
-  //
-  // TOUCH_SCREEN_CALIBRATION
-  //
+  ////
+  // TOUCH_SCREEN_CALIBRATION//触摸屏校准
+  ////
   #if ENABLED(TOUCH_SCREEN_CALIBRATION)
     touch_calibration_t touch_calibration_data;
   #endif
 
-  // Ethernet settings
+  // Ethernet settings//以太网设置
   #if HAS_ETHERNET
-    bool ethernet_hardware_enabled;                     // M552 S
-    uint32_t ethernet_ip,                               // M552 P
+    bool ethernet_hardware_enabled;                     // M552 S//m552s
+    uint32_t ethernet_ip,                               // M552 P//m552p
              ethernet_dns,
-             ethernet_gateway,                          // M553 P
-             ethernet_subnet;                           // M554 P
+             ethernet_gateway,                          // M553 P//m553p
+             ethernet_subnet;                           // M554 P//m554p
   #endif
 
-  //
-  // Buzzer enable/disable
-  //
+  ////
+  // Buzzer enable/disable//蜂鸣器启用/禁用
+  ////
   #if ENABLED(SOUND_MENU_ITEM)
     bool buzzer_enabled;
   #endif
 
-  //
-  // MKS UI controller
-  //
+  ////
+  // MKS UI controller//用户界面控制器
+  ////
   #if ENABLED(DGUS_LCD_UI_MKS)
-    uint8_t mks_language_index;                         // Display Language
-    xy_int_t mks_corner_offsets[5];                     // Bed Tramming
-    xyz_int_t mks_park_pos;                             // Custom Parking (without NOZZLE_PARK)
-    celsius_t mks_min_extrusion_temp;                   // Min E Temp (shadow M302 value)
+    uint8_t mks_language_index;                         // Display Language//显示语言
+    xy_int_t mks_corner_offsets[5];                     // Bed Tramming//卧床电车
+    xyz_int_t mks_park_pos;                             // Custom Parking (without NOZZLE_PARK)//定制停车场（无喷嘴停车场）
+    celsius_t mks_min_extrusion_temp;                   // Min E Temp (shadow M302 value)//最低E温度（阴影M302值）
   #endif
 
   #if HAS_MULTI_LANGUAGE
-    uint8_t ui_language;                                // M414 S
+    uint8_t ui_language;                                // M414 S//M414 S
   #endif
 
 } SettingsData;
 
-//static_assert(sizeof(SettingsData) <= MARLIN_EEPROM_SIZE, "EEPROM too small to contain SettingsData!");
+//static_assert(sizeof(SettingsData) <= MARLIN_EEPROM_SIZE, "EEPROM too small to contain SettingsData!");//静态断言（sizeof（SettingsData）<=MARLIN\uEEPROM\uSize，“EEPROM太小，无法包含SettingsData！”）；
 
 MarlinSettings settings;
 
@@ -503,11 +504,11 @@ uint16_t MarlinSettings::datasize() { return sizeof(SettingsData); }
 void MarlinSettings::postprocess() {
   xyze_pos_t oldpos = current_position;
 
-  // steps per s2 needs to be updated to agree with units per s2
+  // steps per s2 needs to be updated to agree with units per s2//每个s2的步骤需要更新，以符合每个s2的单位
   planner.reset_acceleration_rates();
 
-  // Make sure delta kinematics are updated before refreshing the
-  // planner position so the stepper counts will be set correctly.
+  // Make sure delta kinematics are updated before refreshing the//在刷新之前，请确保已更新增量运动学
+  // planner position so the stepper counts will be set correctly.//计划器位置，以便正确设置步进机计数。
   TERN_(DELTA, recalc_delta_settings());
 
   TERN_(PIDTEMP, thermalManager.updatePID());
@@ -519,13 +520,13 @@ void MarlinSettings::postprocess() {
       planner.refresh_e_factor(i);
   #endif
 
-  // Software endstops depend on home_offset
+  // Software endstops depend on home_offset//软件结束停止取决于起始偏移
   LOOP_LINEAR_AXES(i) {
     update_workspace_offset((AxisEnum)i);
     update_software_endstops((AxisEnum)i);
   }
 
-  TERN_(ENABLE_LEVELING_FADE_HEIGHT, set_z_fade_height(new_z_fade_height, false)); // false = no report
+  TERN_(ENABLE_LEVELING_FADE_HEIGHT, set_z_fade_height(new_z_fade_height, false)); // false = no report//false=无报告
 
   TERN_(AUTO_BED_LEVELING_BILINEAR, refresh_bed_level());
 
@@ -539,11 +540,11 @@ void MarlinSettings::postprocess() {
 
   TERN_(EXTENSIBLE_UI, ExtUI::onPostprocessSettings());
 
-  // Refresh steps_to_mm with the reciprocal of axis_steps_per_mm
-  // and init stepper.count[], planner.position[] with current_position
+  // Refresh steps_to_mm with the reciprocal of axis_steps_per_mm//使用轴_步数_/mm的倒数刷新步数_至_mm
+  // and init stepper.count[], planner.position[] with current_position//和init stepper.count[]，planner.position[]和当前位置
   planner.refresh_positioning();
 
-  // Various factors can change the current position
+  // Various factors can change the current position//各种因素可以改变当前位置
   if (oldpos != current_position)
     report_current_position();
 }
@@ -581,17 +582,17 @@ void MarlinSettings::postprocess() {
     return true;
   }
 
-#endif // SD_FIRMWARE_UPDATE
+#endif // SD_FIRMWARE_UPDATE//SD_固件_更新
 
 #ifdef ARCHIM2_SPI_FLASH_EEPROM_BACKUP_SIZE
   static_assert(EEPROM_OFFSET + sizeof(SettingsData) < ARCHIM2_SPI_FLASH_EEPROM_BACKUP_SIZE,
                 "ARCHIM2_SPI_FLASH_EEPROM_BACKUP_SIZE is insufficient to capture all EEPROM data.");
 #endif
 
-//
-// This file simply uses the DEBUG_ECHO macros to implement EEPROM_CHITCHAT.
-// For deeper debugging of EEPROM issues enable DEBUG_EEPROM_READWRITE.
-//
+////
+// This file simply uses the DEBUG_ECHO macros to implement EEPROM_CHITCHAT.//该文件仅使用DEBUG_ECHO宏来实现EEPROM_聊天。
+// For deeper debugging of EEPROM issues enable DEBUG_EEPROM_READWRITE.//为了更深入地调试EEPROM问题，请启用DEBUG_EEPROM_READWRITE。
+////
 #define DEBUG_OUT EITHER(EEPROM_CHITCHAT, DEBUG_LEVELING_FEATURE)
 #include "../core/debug_out.h"
 
@@ -634,20 +635,20 @@ void MarlinSettings::postprocess() {
 
     eeprom_error = false;
 
-    // Write or Skip version. (Flash doesn't allow rewrite without erase.)
+    // Write or Skip version. (Flash doesn't allow rewrite without erase.)//写入或跳过版本。（闪存不允许在没有擦除的情况下重写。）
     TERN(FLASH_EEPROM_EMULATION, EEPROM_SKIP, EEPROM_WRITE)(ver);
 
-    EEPROM_SKIP(working_crc); // Skip the checksum slot
+    EEPROM_SKIP(working_crc); // Skip the checksum slot//跳过校验和槽
 
-    working_crc = 0; // clear before first "real data"
+    working_crc = 0; // clear before first "real data"//在第一个“真实数据”之前清除
 
     const uint8_t esteppers = COUNT(planner.settings.axis_steps_per_mm) - LINEAR_AXES;
     _FIELD_TEST(esteppers);
     EEPROM_WRITE(esteppers);
 
-    //
-    // Planner Motion
-    //
+    ////
+    // Planner Motion//计划者动议
+    ////
     {
       EEPROM_WRITE(planner.settings);
 
@@ -666,9 +667,9 @@ void MarlinSettings::postprocess() {
       EEPROM_WRITE(TERN(CLASSIC_JERK, dummyf, planner.junction_deviation_mm));
     }
 
-    //
-    // Home Offset
-    //
+    ////
+    // Home Offset//原点偏移
+    ////
     {
       _FIELD_TEST(home_offset);
 
@@ -682,20 +683,20 @@ void MarlinSettings::postprocess() {
       #endif
     }
 
-    //
-    // Hotend Offsets, if any
-    //
+    ////
+    // Hotend Offsets, if any//热端偏移（如有）
+    ////
     {
       #if HAS_HOTEND_OFFSET
-        // Skip hotend 0 which must be 0
+        // Skip hotend 0 which must be 0//跳过必须为0的热端0
         LOOP_S_L_N(e, 1, HOTENDS)
           EEPROM_WRITE(hotend_offset[e]);
       #endif
     }
 
-    //
-    // Filament Runout Sensor
-    //
+    ////
+    // Filament Runout Sensor//灯丝偏移传感器
+    ////
     {
       #if HAS_FILAMENT_SENSOR
         const bool &runout_sensor_enabled = runout.enabled;
@@ -713,17 +714,17 @@ void MarlinSettings::postprocess() {
       EEPROM_WRITE(runout_distance_mm);
     }
 
-    //
-    // Global Leveling
-    //
+    ////
+    // Global Leveling//全球水准测量
+    ////
     {
       const float zfh = TERN(ENABLE_LEVELING_FADE_HEIGHT, planner.z_fade_height, (DEFAULT_LEVELING_FADE_HEIGHT));
       EEPROM_WRITE(zfh);
     }
 
-    //
-    // Mesh Bed Leveling
-    //
+    ////
+    // Mesh Bed Leveling//网床找平
+    ////
     {
       #if ENABLED(MESH_BED_LEVELING)
         static_assert(
@@ -748,9 +749,9 @@ void MarlinSettings::postprocess() {
       #endif
     }
 
-    //
-    // Probe XYZ Offsets
-    //
+    ////
+    // Probe XYZ Offsets//探测XYZ偏移量
+    ////
     {
       _FIELD_TEST(probe_offset);
       #if HAS_BED_PROBE
@@ -761,9 +762,9 @@ void MarlinSettings::postprocess() {
       EEPROM_WRITE(zpo);
     }
 
-    //
-    // Planar Bed Leveling matrix
-    //
+    ////
+    // Planar Bed Leveling matrix//平面河床水准矩阵
+    ////
     {
       #if ABL_PLANAR
         EEPROM_WRITE(planner.bed_level_matrix);
@@ -773,9 +774,9 @@ void MarlinSettings::postprocess() {
       #endif
     }
 
-    //
-    // Bilinear Auto Bed Leveling
-    //
+    ////
+    // Bilinear Auto Bed Leveling//双线性自动调平
+    ////
     {
       #if ENABLED(AUTO_BED_LEVELING_BILINEAR)
         static_assert(
@@ -794,16 +795,16 @@ void MarlinSettings::postprocess() {
       EEPROM_WRITE(bilinear_start);
 
       #if ENABLED(AUTO_BED_LEVELING_BILINEAR)
-        EEPROM_WRITE(z_values);              // 9-256 floats
+        EEPROM_WRITE(z_values);              // 9-256 floats//9-256个浮点数
       #else
         dummyf = 0;
         for (uint16_t q = grid_max_x * grid_max_y; q--;) EEPROM_WRITE(dummyf);
       #endif
     }
 
-    //
-    // Unified Bed Leveling
-    //
+    ////
+    // Unified Bed Leveling//统一河床整平
+    ////
     {
       _FIELD_TEST(planner_leveling_active);
       const bool ubl_active = TERN(AUTO_BED_LEVELING_UBL, planner.leveling_active, false);
@@ -812,9 +813,9 @@ void MarlinSettings::postprocess() {
       EEPROM_WRITE(storage_slot);
     }
 
-    //
-    // Servo Angles
-    //
+    ////
+    // Servo Angles//伺服角
+    ////
     {
       _FIELD_TEST(servo_angles);
       #if !HAS_SERVO_ANGLES
@@ -823,9 +824,9 @@ void MarlinSettings::postprocess() {
       EEPROM_WRITE(servo_angles);
     }
 
-    //
-    // Thermal first layer compensation values
-    //
+    ////
+    // Thermal first layer compensation values//第一层热补偿值
+    ////
     #if ENABLED(PROBE_TEMP_COMPENSATION)
       EEPROM_WRITE(temp_comp.z_offsets_probe);
       EEPROM_WRITE(temp_comp.z_offsets_bed);
@@ -833,52 +834,52 @@ void MarlinSettings::postprocess() {
         EEPROM_WRITE(temp_comp.z_offsets_ext);
       #endif
     #else
-      // No placeholder data for this feature
+      // No placeholder data for this feature//此功能没有占位符数据
     #endif
 
-    //
-    // BLTOUCH
-    //
+    ////
+    // BLTOUCH//BLTOUCH
+    ////
     {
       _FIELD_TEST(bltouch_last_written_mode);
       const bool bltouch_last_written_mode = TERN(BLTOUCH, bltouch.last_written_mode, false);
       EEPROM_WRITE(bltouch_last_written_mode);
     }
 
-    //
-    // DELTA Geometry or Dual Endstops offsets
-    //
+    ////
+    // DELTA Geometry or Dual Endstops offsets//三角形几何图形或双止点偏移
+    ////
     {
       #if ENABLED(DELTA)
 
         _FIELD_TEST(delta_height);
 
-        EEPROM_WRITE(delta_height);              // 1 float
-        EEPROM_WRITE(delta_endstop_adj);         // 3 floats
-        EEPROM_WRITE(delta_radius);              // 1 float
-        EEPROM_WRITE(delta_diagonal_rod);        // 1 float
-        EEPROM_WRITE(segments_per_second);       // 1 float
-        EEPROM_WRITE(delta_tower_angle_trim);    // 3 floats
-        EEPROM_WRITE(delta_diagonal_rod_trim);   // 3 floats
+        EEPROM_WRITE(delta_height);              // 1 float//1浮子
+        EEPROM_WRITE(delta_endstop_adj);         // 3 floats//3个花车
+        EEPROM_WRITE(delta_radius);              // 1 float//1浮子
+        EEPROM_WRITE(delta_diagonal_rod);        // 1 float//1浮子
+        EEPROM_WRITE(segments_per_second);       // 1 float//1浮子
+        EEPROM_WRITE(delta_tower_angle_trim);    // 3 floats//3个花车
+        EEPROM_WRITE(delta_diagonal_rod_trim);   // 3 floats//3个花车
 
       #elif HAS_EXTRA_ENDSTOPS
 
         _FIELD_TEST(x2_endstop_adj);
 
-        // Write dual endstops in X, Y, Z order. Unused = 0.0
+        // Write dual endstops in X, Y, Z order. Unused = 0.0//按X、Y、Z顺序写入双止动块。未使用=0.0
         dummyf = 0;
-        EEPROM_WRITE(TERN(X_DUAL_ENDSTOPS, endstops.x2_endstop_adj, dummyf));   // 1 float
-        EEPROM_WRITE(TERN(Y_DUAL_ENDSTOPS, endstops.y2_endstop_adj, dummyf));   // 1 float
-        EEPROM_WRITE(TERN(Z_MULTI_ENDSTOPS, endstops.z2_endstop_adj, dummyf));  // 1 float
+        EEPROM_WRITE(TERN(X_DUAL_ENDSTOPS, endstops.x2_endstop_adj, dummyf));   // 1 float//1浮子
+        EEPROM_WRITE(TERN(Y_DUAL_ENDSTOPS, endstops.y2_endstop_adj, dummyf));   // 1 float//1浮子
+        EEPROM_WRITE(TERN(Z_MULTI_ENDSTOPS, endstops.z2_endstop_adj, dummyf));  // 1 float//1浮子
 
         #if ENABLED(Z_MULTI_ENDSTOPS) && NUM_Z_STEPPER_DRIVERS >= 3
-          EEPROM_WRITE(endstops.z3_endstop_adj);   // 1 float
+          EEPROM_WRITE(endstops.z3_endstop_adj);   // 1 float//1浮子
         #else
           EEPROM_WRITE(dummyf);
         #endif
 
         #if ENABLED(Z_MULTI_ENDSTOPS) && NUM_Z_STEPPER_DRIVERS >= 4
-          EEPROM_WRITE(endstops.z4_endstop_adj);   // 1 float
+          EEPROM_WRITE(endstops.z4_endstop_adj);   // 1 float//1浮子
         #else
           EEPROM_WRITE(dummyf);
         #endif
@@ -893,17 +894,17 @@ void MarlinSettings::postprocess() {
       #endif
     #endif
 
-    //
-    // LCD Preheat settings
-    //
+    ////
+    // LCD Preheat settings//LCD预热设置
+    ////
     #if PREHEAT_COUNT
       _FIELD_TEST(ui_material_preset);
       EEPROM_WRITE(ui.material_preset);
     #endif
 
-    //
-    // PIDTEMP
-    //
+    ////
+    // PIDTEMP//皮特姆
+    ////
     {
       _FIELD_TEST(hotendPID);
       HOTEND_LOOP() {
@@ -929,9 +930,9 @@ void MarlinSettings::postprocess() {
       EEPROM_WRITE(TERN(PID_EXTRUSION_SCALING, thermalManager.lpq_len, lpq_len));
     }
 
-    //
-    // PIDTEMPBED
-    //
+    ////
+    // PIDTEMPBED//皮坦普德
+    ////
     {
       _FIELD_TEST(bedPID);
 
@@ -939,7 +940,7 @@ void MarlinSettings::postprocess() {
         #if DISABLED(PIDTEMPBED)
           NAN, NAN, NAN
         #else
-          // Store the unscaled PID values
+          // Store the unscaled PID values//存储未缩放的PID值
           thermalManager.temp_bed.pid.Kp,
           unscalePID_i(thermalManager.temp_bed.pid.Ki),
           unscalePID_d(thermalManager.temp_bed.pid.Kd)
@@ -948,9 +949,9 @@ void MarlinSettings::postprocess() {
       EEPROM_WRITE(bed_pid);
     }
 
-    //
-    // PIDTEMPCHAMBER
-    //
+    ////
+    // PIDTEMPCHAMBER//皮坦普尔酒店
+    ////
     {
       _FIELD_TEST(chamberPID);
 
@@ -958,7 +959,7 @@ void MarlinSettings::postprocess() {
         #if DISABLED(PIDTEMPCHAMBER)
           NAN, NAN, NAN
         #else
-          // Store the unscaled PID values
+          // Store the unscaled PID values//存储未缩放的PID值
           thermalManager.temp_chamber.pid.Kp,
           unscalePID_i(thermalManager.temp_chamber.pid.Ki),
           unscalePID_d(thermalManager.temp_chamber.pid.Kd)
@@ -967,9 +968,9 @@ void MarlinSettings::postprocess() {
       EEPROM_WRITE(chamber_pid);
     }
 
-    //
-    // User-defined Thermistors
-    //
+    ////
+    // User-defined Thermistors//用户自定义热敏电阻
+    ////
     #if HAS_USER_THERMISTORS
     {
       _FIELD_TEST(user_thermistor);
@@ -977,9 +978,9 @@ void MarlinSettings::postprocess() {
     }
     #endif
 
-    //
-    // Power monitor
-    //
+    ////
+    // Power monitor//功率监视器
+    ////
     {
       #if HAS_POWER_MONITOR
         const uint8_t &power_monitor_flags = power_monitor.flags;
@@ -990,9 +991,9 @@ void MarlinSettings::postprocess() {
       EEPROM_WRITE(power_monitor_flags);
     }
 
-    //
-    // LCD Contrast
-    //
+    ////
+    // LCD Contrast//液晶对比度
+    ////
     {
       _FIELD_TEST(lcd_contrast);
 
@@ -1006,9 +1007,9 @@ void MarlinSettings::postprocess() {
       EEPROM_WRITE(lcd_contrast);
     }
 
-    //
-    // Controller Fan
-    //
+    ////
+    // Controller Fan//控制器风扇
+    ////
     {
       _FIELD_TEST(controllerFan_settings);
       #if ENABLED(USE_CONTROLLER_FAN)
@@ -1019,18 +1020,18 @@ void MarlinSettings::postprocess() {
       EEPROM_WRITE(cfs);
     }
 
-    //
-    // Power-Loss Recovery
-    //
+    ////
+    // Power-Loss Recovery//功率损耗恢复
+    ////
     {
       _FIELD_TEST(recovery_enabled);
       const bool recovery_enabled = TERN(POWER_LOSS_RECOVERY, recovery.enabled, ENABLED(PLR_ENABLED_DEFAULT));
       EEPROM_WRITE(recovery_enabled);
     }
 
-    //
-    // Firmware Retraction
-    //
+    ////
+    // Firmware Retraction//固件收回
+    ////
     {
       _FIELD_TEST(fwretract_settings);
       #if DISABLED(FWRETRACT)
@@ -1044,9 +1045,9 @@ void MarlinSettings::postprocess() {
       EEPROM_WRITE(TERN(FWRETRACT_AUTORETRACT, fwretract.autoretract_enabled, autoretract_enabled));
     }
 
-    //
-    // Volumetric & Filament Size
-    //
+    ////
+    // Volumetric & Filament Size//体积和灯丝尺寸
+    ////
     {
       _FIELD_TEST(parser_volumetric_enabled);
 
@@ -1073,9 +1074,9 @@ void MarlinSettings::postprocess() {
       #endif
     }
 
-    //
-    // TMC Configuration
-    //
+    ////
+    // TMC Configuration//TMC配置
+    ////
     {
       _FIELD_TEST(tmc_stepper_current);
 
@@ -1143,9 +1144,9 @@ void MarlinSettings::postprocess() {
       EEPROM_WRITE(tmc_stepper_current);
     }
 
-    //
-    // TMC Hybrid Threshold, and placeholder values
-    //
+    ////
+    // TMC Hybrid Threshold, and placeholder values//TMC混合阈值和占位符值
+    ////
     {
       _FIELD_TEST(tmc_hybrid_threshold);
 
@@ -1182,9 +1183,9 @@ void MarlinSettings::postprocess() {
       EEPROM_WRITE(tmc_hybrid_threshold);
     }
 
-    //
-    // TMC StallGuard threshold
-    //
+    ////
+    // TMC StallGuard threshold//TMC失速保护阈值
+    ////
     {
       tmc_sgt_t tmc_sgt{0};
       #if USE_SENSORLESS
@@ -1205,9 +1206,9 @@ void MarlinSettings::postprocess() {
       EEPROM_WRITE(tmc_sgt);
     }
 
-    //
-    // TMC stepping mode
-    //
+    ////
+    // TMC stepping mode//TMC步进模式
+    ////
     {
       _FIELD_TEST(tmc_stealth_enabled);
 
@@ -1234,9 +1235,9 @@ void MarlinSettings::postprocess() {
       EEPROM_WRITE(tmc_stealth_enabled);
     }
 
-    //
-    // Linear Advance
-    //
+    ////
+    // Linear Advance//线性推进
+    ////
     {
       _FIELD_TEST(planner_extruder_advance_K);
 
@@ -1248,9 +1249,9 @@ void MarlinSettings::postprocess() {
       #endif
     }
 
-    //
-    // Motor Current PWM
-    //
+    ////
+    // Motor Current PWM//电机电流脉宽调制
+    ////
     {
       _FIELD_TEST(motor_current_setting);
 
@@ -1262,9 +1263,9 @@ void MarlinSettings::postprocess() {
       #endif
     }
 
-    //
-    // CNC Coordinate Systems
-    //
+    ////
+    // CNC Coordinate Systems//数控坐标系
+    ////
 
     _FIELD_TEST(coordinate_system);
 
@@ -1273,15 +1274,15 @@ void MarlinSettings::postprocess() {
     #endif
     EEPROM_WRITE(TERN(CNC_COORDINATE_SYSTEMS, gcode.coordinate_system, coordinate_system));
 
-    //
-    // Skew correction factors
-    //
+    ////
+    // Skew correction factors//倾斜校正因子
+    ////
     _FIELD_TEST(planner_skew_factor);
     EEPROM_WRITE(planner.skew_factor);
 
-    //
-    // Advanced Pause filament load & unload lengths
-    //
+    ////
+    // Advanced Pause filament load & unload lengths//高级暂停灯丝加载和卸载长度
+    ////
     #if HAS_EXTRUDERS
     {
       #if DISABLED(ADVANCED_PAUSE_FEATURE)
@@ -1292,18 +1293,18 @@ void MarlinSettings::postprocess() {
     }
     #endif
 
-    //
-    // Multiple Extruders
-    //
+    ////
+    // Multiple Extruders//多台挤出机
+    ////
 
     #if HAS_MULTI_EXTRUDER
       _FIELD_TEST(toolchange_settings);
       EEPROM_WRITE(toolchange_settings);
     #endif
 
-    //
-    // Backlash Compensation
-    //
+    ////
+    // Backlash Compensation//齿隙补偿
+    ////
     {
       #if ENABLED(BACKLASH_GCODE)
         const xyz_float_t &backlash_distance_mm = backlash.distance_mm;
@@ -1323,9 +1324,9 @@ void MarlinSettings::postprocess() {
       EEPROM_WRITE(backlash_smoothing_mm);
     }
 
-    //
-    // Extensible UI User Data
-    //
+    ////
+    // Extensible UI User Data//可扩展UI用户数据
+    ////
     #if ENABLED(EXTENSIBLE_UI)
       {
         char extui_data[ExtUI::eeprom_data_size] = { 0 };
@@ -1335,31 +1336,31 @@ void MarlinSettings::postprocess() {
       }
     #endif
 
-    //
-    // Case Light Brightness
-    //
+    ////
+    // Case Light Brightness//箱灯亮度
+    ////
     #if CASELIGHT_USES_BRIGHTNESS
       EEPROM_WRITE(caselight.brightness);
     #endif
 
-    //
-    // Password feature
-    //
+    ////
+    // Password feature//密码功能
+    ////
     #if ENABLED(PASSWORD_FEATURE)
       EEPROM_WRITE(password.is_set);
       EEPROM_WRITE(password.value);
     #endif
 
-    //
-    // TOUCH_SCREEN_CALIBRATION
-    //
+    ////
+    // TOUCH_SCREEN_CALIBRATION//触摸屏校准
+    ////
     #if ENABLED(TOUCH_SCREEN_CALIBRATION)
       EEPROM_WRITE(touch_calibration.calibration);
     #endif
 
-    //
-    // Ethernet network info
-    //
+    ////
+    // Ethernet network info//以太网网络信息
+    ////
     #if HAS_ETHERNET
     {
       _FIELD_TEST(ethernet_hardware_enabled);
@@ -1376,16 +1377,16 @@ void MarlinSettings::postprocess() {
     }
     #endif
 
-    //
-    // Buzzer enable/disable
-    //
+    ////
+    // Buzzer enable/disable//蜂鸣器启用/禁用
+    ////
     #if ENABLED(SOUND_MENU_ITEM)
       EEPROM_WRITE(ui.buzzer_enabled);
     #endif
 
-    //
-    // MKS UI controller
-    //
+    ////
+    // MKS UI controller//用户界面控制器
+    ////
     #if ENABLED(DGUS_LCD_UI_MKS)
       EEPROM_WRITE(mks_language_index);
       EEPROM_WRITE(mks_corner_offsets);
@@ -1393,36 +1394,36 @@ void MarlinSettings::postprocess() {
       EEPROM_WRITE(mks_min_extrusion_temp);
     #endif
 
-    //
-    // Selected LCD language
-    //
+    ////
+    // Selected LCD language//选定的LCD语言
+    ////
     #if HAS_MULTI_LANGUAGE
       EEPROM_WRITE(ui.language);
     #endif
 
-    //
-    // Report final CRC and Data Size
-    //
+    ////
+    // Report final CRC and Data Size//报告最终CRC和数据大小
+    ////
     if (!eeprom_error) {
       const uint16_t eeprom_size = eeprom_index - (EEPROM_OFFSET),
                      final_crc = working_crc;
 
-      // Write the EEPROM header
+      // Write the EEPROM header//写入EEPROM头
       eeprom_index = EEPROM_OFFSET;
 
       EEPROM_WRITE(version);
       EEPROM_WRITE(final_crc);
 
-      // Report storage size
+      // Report storage size//报告存储大小
       DEBUG_ECHO_MSG("Settings Stored (", eeprom_size, " bytes; crc ", (uint32_t)final_crc, ")");
 
       eeprom_error |= size_error(eeprom_size);
     }
     EEPROM_FINISH();
 
-    //
-    // UBL Mesh
-    //
+    ////
+    // UBL Mesh//UBL网格
+    ////
     #if ENABLED(UBL_SAVE_ACTIVE_ON_M500)
       if (ubl.storage_slot >= 0)
         store_mesh(ubl.storage_slot);
@@ -1447,7 +1448,7 @@ void MarlinSettings::postprocess() {
     uint16_t stored_crc;
     EEPROM_READ_ALWAYS(stored_crc);
 
-    // Version has to match or defaults are used
+    // Version has to match or defaults are used//版本必须匹配或使用默认值
     if (strncmp(version, stored_ver, 3) != 0) {
       if (stored_ver[3] != '\0') {
         stored_ver[0] = '?';
@@ -1459,27 +1460,27 @@ void MarlinSettings::postprocess() {
     }
     else {
       float dummyf = 0;
-      working_crc = 0;  // Init to 0. Accumulated by EEPROM_READ
+      working_crc = 0;  // Init to 0. Accumulated by EEPROM_READ//初始化为0。通过EEPROM_读取累积
 
       _FIELD_TEST(esteppers);
 
-      // Number of esteppers may change
+      // Number of esteppers may change//爱斯达的人数可能会改变
       uint8_t esteppers;
       EEPROM_READ_ALWAYS(esteppers);
 
-      //
-      // Planner Motion
-      //
+      ////
+      // Planner Motion//计划者动议
+      ////
       {
-        // Get only the number of E stepper parameters previously stored
-        // Any steppers added later are set to their defaults
+        // Get only the number of E stepper parameters previously stored//仅获取以前存储的E步进器参数的数量
+        // Any steppers added later are set to their defaults//以后添加的任何步进器都将设置为其默认值
         uint32_t tmp1[LINEAR_AXES + esteppers];
         float tmp2[LINEAR_AXES + esteppers];
         feedRate_t tmp3[LINEAR_AXES + esteppers];
-        EEPROM_READ((uint8_t *)tmp1, sizeof(tmp1)); // max_acceleration_mm_per_s2
+        EEPROM_READ((uint8_t *)tmp1, sizeof(tmp1)); // max_acceleration_mm_per_s2//每平方秒的最大加速度
         EEPROM_READ(planner.settings.min_segment_time_us);
-        EEPROM_READ((uint8_t *)tmp2, sizeof(tmp2)); // axis_steps_per_mm
-        EEPROM_READ((uint8_t *)tmp3, sizeof(tmp3)); // max_feedrate_mm_s
+        EEPROM_READ((uint8_t *)tmp2, sizeof(tmp2)); // axis_steps_per_mm//每毫米轴步数
+        EEPROM_READ((uint8_t *)tmp3, sizeof(tmp3)); // max_feedrate_mm_s//最大进给速度
 
         if (!validating) LOOP_DISTINCT_AXES(i) {
           const bool in = (i < esteppers + LINEAR_AXES);
@@ -1506,9 +1507,9 @@ void MarlinSettings::postprocess() {
         EEPROM_READ(TERN(CLASSIC_JERK, dummyf, planner.junction_deviation_mm));
       }
 
-      //
-      // Home Offset (M206 / M665)
-      //
+      ////
+      // Home Offset (M206 / M665)//原点偏移（M206/M665）
+      ////
       {
         _FIELD_TEST(home_offset);
 
@@ -1522,20 +1523,20 @@ void MarlinSettings::postprocess() {
         #endif
       }
 
-      //
-      // Hotend Offsets, if any
-      //
+      ////
+      // Hotend Offsets, if any//热端偏移（如有）
+      ////
       {
         #if HAS_HOTEND_OFFSET
-          // Skip hotend 0 which must be 0
+          // Skip hotend 0 which must be 0//跳过必须为0的热端0
           LOOP_S_L_N(e, 1, HOTENDS)
             EEPROM_READ(hotend_offset[e]);
         #endif
       }
 
-      //
-      // Filament Runout Sensor
-      //
+      ////
+      // Filament Runout Sensor//灯丝偏移传感器
+      ////
       {
         int8_t runout_sensor_enabled;
         _FIELD_TEST(runout_sensor_enabled);
@@ -1553,14 +1554,14 @@ void MarlinSettings::postprocess() {
         #endif
       }
 
-      //
-      // Global Leveling
-      //
+      ////
+      // Global Leveling//全球水准测量
+      ////
       EEPROM_READ(TERN(ENABLE_LEVELING_FADE_HEIGHT, new_z_fade_height, dummyf));
 
-      //
-      // Mesh (Manual) Bed Leveling
-      //
+      ////
+      // Mesh (Manual) Bed Leveling//网（手动）床面找平
+      ////
       {
         uint8_t mesh_num_x, mesh_num_y;
         EEPROM_READ(dummyf);
@@ -1570,23 +1571,23 @@ void MarlinSettings::postprocess() {
         #if ENABLED(MESH_BED_LEVELING)
           if (!validating) mbl.z_offset = dummyf;
           if (mesh_num_x == (GRID_MAX_POINTS_X) && mesh_num_y == (GRID_MAX_POINTS_Y)) {
-            // EEPROM data fits the current mesh
+            // EEPROM data fits the current mesh//EEPROM数据适合当前网格
             EEPROM_READ(mbl.z_values);
           }
           else {
-            // EEPROM data is stale
+            // EEPROM data is stale//EEPROM数据已过时
             if (!validating) mbl.reset();
             for (uint16_t q = mesh_num_x * mesh_num_y; q--;) EEPROM_READ(dummyf);
           }
         #else
-          // MBL is disabled - skip the stored data
+          // MBL is disabled - skip the stored data//MBL已禁用-跳过存储的数据
           for (uint16_t q = mesh_num_x * mesh_num_y; q--;) EEPROM_READ(dummyf);
-        #endif // MESH_BED_LEVELING
+        #endif // MESH_BED_LEVELING//网床找平
       }
 
-      //
-      // Probe Z Offset
-      //
+      ////
+      // Probe Z Offset//探针Z偏移
+      ////
       {
         _FIELD_TEST(probe_offset);
         #if HAS_BED_PROBE
@@ -1597,9 +1598,9 @@ void MarlinSettings::postprocess() {
         EEPROM_READ(zpo);
       }
 
-      //
-      // Planar Bed Leveling matrix
-      //
+      ////
+      // Planar Bed Leveling matrix//平面河床水准矩阵
+      ////
       {
         #if ABL_PLANAR
           EEPROM_READ(planner.bed_level_matrix);
@@ -1608,24 +1609,24 @@ void MarlinSettings::postprocess() {
         #endif
       }
 
-      //
-      // Bilinear Auto Bed Leveling
-      //
+      ////
+      // Bilinear Auto Bed Leveling//双线性自动调平
+      ////
       {
         uint8_t grid_max_x, grid_max_y;
-        EEPROM_READ_ALWAYS(grid_max_x);                // 1 byte
-        EEPROM_READ_ALWAYS(grid_max_y);                // 1 byte
+        EEPROM_READ_ALWAYS(grid_max_x);                // 1 byte//1字节
+        EEPROM_READ_ALWAYS(grid_max_y);                // 1 byte//1字节
         #if ENABLED(AUTO_BED_LEVELING_BILINEAR)
           if (grid_max_x == (GRID_MAX_POINTS_X) && grid_max_y == (GRID_MAX_POINTS_Y)) {
             if (!validating) set_bed_leveling_enabled(false);
-            EEPROM_READ(bilinear_grid_spacing);        // 2 ints
-            EEPROM_READ(bilinear_start);               // 2 ints
-            EEPROM_READ(z_values);                     // 9 to 256 floats
+            EEPROM_READ(bilinear_grid_spacing);        // 2 ints//2整数
+            EEPROM_READ(bilinear_start);               // 2 ints//2整数
+            EEPROM_READ(z_values);                     // 9 to 256 floats//9到256个浮动
           }
-          else // EEPROM data is stale
-        #endif // AUTO_BED_LEVELING_BILINEAR
+          else // EEPROM data is stale//EEPROM数据已过时
+        #endif // AUTO_BED_LEVELING_BILINEAR//自动调平床双线性
           {
-            // Skip past disabled (or stale) Bilinear Grid data
+            // Skip past disabled (or stale) Bilinear Grid data//跳过已禁用（或过时）的双线性网格数据
             xy_pos_t bgs, bs;
             EEPROM_READ(bgs);
             EEPROM_READ(bs);
@@ -1633,9 +1634,9 @@ void MarlinSettings::postprocess() {
           }
       }
 
-      //
-      // Unified Bed Leveling active state
-      //
+      ////
+      // Unified Bed Leveling active state//统一河床平整活动状态
+      ////
       {
         _FIELD_TEST(planner_leveling_active);
         #if ENABLED(AUTO_BED_LEVELING_UBL)
@@ -1649,9 +1650,9 @@ void MarlinSettings::postprocess() {
         EEPROM_READ(ubl_storage_slot);
       }
 
-      //
-      // SERVO_ANGLES
-      //
+      ////
+      // SERVO_ANGLES//伺服角
+      ////
       {
         _FIELD_TEST(servo_angles);
         #if ENABLED(EDITABLE_SERVO_ANGLES)
@@ -1662,9 +1663,9 @@ void MarlinSettings::postprocess() {
         EEPROM_READ(servo_angles_arr);
       }
 
-      //
-      // Thermal first layer compensation values
-      //
+      ////
+      // Thermal first layer compensation values//第一层热补偿值
+      ////
       #if ENABLED(PROBE_TEMP_COMPENSATION)
         EEPROM_READ(temp_comp.z_offsets_probe);
         EEPROM_READ(temp_comp.z_offsets_bed);
@@ -1673,12 +1674,12 @@ void MarlinSettings::postprocess() {
         #endif
         temp_comp.reset_index();
       #else
-        // No placeholder data for this feature
+        // No placeholder data for this feature//此功能没有占位符数据
       #endif
 
-      //
-      // BLTOUCH
-      //
+      ////
+      // BLTOUCH//BLTOUCH
+      ////
       {
         _FIELD_TEST(bltouch_last_written_mode);
         #if ENABLED(BLTOUCH)
@@ -1689,37 +1690,37 @@ void MarlinSettings::postprocess() {
         EEPROM_READ(bltouch_last_written_mode);
       }
 
-      //
-      // DELTA Geometry or Dual Endstops offsets
-      //
+      ////
+      // DELTA Geometry or Dual Endstops offsets//三角形几何图形或双止点偏移
+      ////
       {
         #if ENABLED(DELTA)
 
           _FIELD_TEST(delta_height);
 
-          EEPROM_READ(delta_height);              // 1 float
-          EEPROM_READ(delta_endstop_adj);         // 3 floats
-          EEPROM_READ(delta_radius);              // 1 float
-          EEPROM_READ(delta_diagonal_rod);        // 1 float
-          EEPROM_READ(segments_per_second);       // 1 float
-          EEPROM_READ(delta_tower_angle_trim);    // 3 floats
-          EEPROM_READ(delta_diagonal_rod_trim);   // 3 floats
+          EEPROM_READ(delta_height);              // 1 float//1浮子
+          EEPROM_READ(delta_endstop_adj);         // 3 floats//3个花车
+          EEPROM_READ(delta_radius);              // 1 float//1浮子
+          EEPROM_READ(delta_diagonal_rod);        // 1 float//1浮子
+          EEPROM_READ(segments_per_second);       // 1 float//1浮子
+          EEPROM_READ(delta_tower_angle_trim);    // 3 floats//3个花车
+          EEPROM_READ(delta_diagonal_rod_trim);   // 3 floats//3个花车
 
         #elif HAS_EXTRA_ENDSTOPS
 
           _FIELD_TEST(x2_endstop_adj);
 
-          EEPROM_READ(TERN(X_DUAL_ENDSTOPS, endstops.x2_endstop_adj, dummyf));  // 1 float
-          EEPROM_READ(TERN(Y_DUAL_ENDSTOPS, endstops.y2_endstop_adj, dummyf));  // 1 float
-          EEPROM_READ(TERN(Z_MULTI_ENDSTOPS, endstops.z2_endstop_adj, dummyf)); // 1 float
+          EEPROM_READ(TERN(X_DUAL_ENDSTOPS, endstops.x2_endstop_adj, dummyf));  // 1 float//1浮子
+          EEPROM_READ(TERN(Y_DUAL_ENDSTOPS, endstops.y2_endstop_adj, dummyf));  // 1 float//1浮子
+          EEPROM_READ(TERN(Z_MULTI_ENDSTOPS, endstops.z2_endstop_adj, dummyf)); // 1 float//1浮子
 
           #if ENABLED(Z_MULTI_ENDSTOPS) && NUM_Z_STEPPER_DRIVERS >= 3
-            EEPROM_READ(endstops.z3_endstop_adj); // 1 float
+            EEPROM_READ(endstops.z3_endstop_adj); // 1 float//1浮子
           #else
             EEPROM_READ(dummyf);
           #endif
           #if ENABLED(Z_MULTI_ENDSTOPS) && NUM_Z_STEPPER_DRIVERS >= 4
-            EEPROM_READ(endstops.z4_endstop_adj); // 1 float
+            EEPROM_READ(endstops.z4_endstop_adj); // 1 float//1浮子
           #else
             EEPROM_READ(dummyf);
           #endif
@@ -1734,24 +1735,24 @@ void MarlinSettings::postprocess() {
         #endif
       #endif
 
-      //
-      // LCD Preheat settings
-      //
+      ////
+      // LCD Preheat settings//LCD预热设置
+      ////
       #if PREHEAT_COUNT
         _FIELD_TEST(ui_material_preset);
         EEPROM_READ(ui.material_preset);
       #endif
 
-      //
-      // Hotend PID
-      //
+      ////
+      // Hotend PID//热端PID
+      ////
       {
         HOTEND_LOOP() {
           PIDCF_t pidcf;
           EEPROM_READ(pidcf);
           #if ENABLED(PIDTEMP)
             if (!validating && !isnan(pidcf.Kp)) {
-              // Scale PID values since EEPROM values are unscaled
+              // Scale PID values since EEPROM values are unscaled//缩放PID值，因为EEPROM值未缩放
               PID_PARAM(Kp, e) = pidcf.Kp;
               PID_PARAM(Ki, e) = scalePID_i(pidcf.Ki);
               PID_PARAM(Kd, e) = scalePID_d(pidcf.Kd);
@@ -1762,9 +1763,9 @@ void MarlinSettings::postprocess() {
         }
       }
 
-      //
-      // PID Extrusion Scaling
-      //
+      ////
+      // PID Extrusion Scaling//PID挤出定标
+      ////
       {
         _FIELD_TEST(lpq_len);
         #if ENABLED(PID_EXTRUSION_SCALING)
@@ -1775,15 +1776,15 @@ void MarlinSettings::postprocess() {
         EEPROM_READ(lpq_len);
       }
 
-      //
-      // Heated Bed PID
-      //
+      ////
+      // Heated Bed PID//加热床PID
+      ////
       {
         PID_t pid;
         EEPROM_READ(pid);
         #if ENABLED(PIDTEMPBED)
           if (!validating && !isnan(pid.Kp)) {
-            // Scale PID values since EEPROM values are unscaled
+            // Scale PID values since EEPROM values are unscaled//缩放PID值，因为EEPROM值未缩放
             thermalManager.temp_bed.pid.Kp = pid.Kp;
             thermalManager.temp_bed.pid.Ki = scalePID_i(pid.Ki);
             thermalManager.temp_bed.pid.Kd = scalePID_d(pid.Kd);
@@ -1791,15 +1792,15 @@ void MarlinSettings::postprocess() {
         #endif
       }
 
-      //
-      // Heated Chamber PID
-      //
+      ////
+      // Heated Chamber PID//加热室PID
+      ////
       {
         PID_t pid;
         EEPROM_READ(pid);
         #if ENABLED(PIDTEMPCHAMBER)
           if (!validating && !isnan(pid.Kp)) {
-            // Scale PID values since EEPROM values are unscaled
+            // Scale PID values since EEPROM values are unscaled//缩放PID值，因为EEPROM值未缩放
             thermalManager.temp_chamber.pid.Kp = pid.Kp;
             thermalManager.temp_chamber.pid.Ki = scalePID_i(pid.Ki);
             thermalManager.temp_chamber.pid.Kd = scalePID_d(pid.Kd);
@@ -1807,9 +1808,9 @@ void MarlinSettings::postprocess() {
         #endif
       }
 
-      //
-      // User-defined Thermistors
-      //
+      ////
+      // User-defined Thermistors//用户自定义热敏电阻
+      ////
       #if HAS_USER_THERMISTORS
       {
         _FIELD_TEST(user_thermistor);
@@ -1817,9 +1818,9 @@ void MarlinSettings::postprocess() {
       }
       #endif
 
-      //
-      // Power monitor
-      //
+      ////
+      // Power monitor//功率监视器
+      ////
       {
         #if HAS_POWER_MONITOR
           uint8_t &power_monitor_flags = power_monitor.flags;
@@ -1830,9 +1831,9 @@ void MarlinSettings::postprocess() {
         EEPROM_READ(power_monitor_flags);
       }
 
-      //
-      // LCD Contrast
-      //
+      ////
+      // LCD Contrast//液晶对比度
+      ////
       {
         _FIELD_TEST(lcd_contrast);
         int16_t lcd_contrast;
@@ -1842,9 +1843,9 @@ void MarlinSettings::postprocess() {
         }
       }
 
-      //
-      // Controller Fan
-      //
+      ////
+      // Controller Fan//控制器风扇
+      ////
       {
         _FIELD_TEST(controllerFan_settings);
         #if ENABLED(CONTROLLER_FAN_EDITABLE)
@@ -1855,9 +1856,9 @@ void MarlinSettings::postprocess() {
         EEPROM_READ(cfs);
       }
 
-      //
-      // Power-Loss Recovery
-      //
+      ////
+      // Power-Loss Recovery//功率损耗恢复
+      ////
       {
         _FIELD_TEST(recovery_enabled);
         #if ENABLED(POWER_LOSS_RECOVERY)
@@ -1868,9 +1869,9 @@ void MarlinSettings::postprocess() {
         EEPROM_READ(recovery_enabled);
       }
 
-      //
-      // Firmware Retraction
-      //
+      ////
+      // Firmware Retraction//固件收回
+      ////
       {
         _FIELD_TEST(fwretract_settings);
 
@@ -1888,9 +1889,9 @@ void MarlinSettings::postprocess() {
         #endif
       }
 
-      //
-      // Volumetric & Filament Size
-      //
+      ////
+      // Volumetric & Filament Size//体积和灯丝尺寸
+      ////
       {
         struct {
           bool volumetric_enabled;
@@ -1912,13 +1913,13 @@ void MarlinSettings::postprocess() {
         #endif
       }
 
-      //
-      // TMC Stepper Settings
-      //
+      ////
+      // TMC Stepper Settings//TMC步进设置
+      ////
 
       if (!validating) reset_stepper_drivers();
 
-      // TMC Stepper Current
+      // TMC Stepper Current//步进电流
       {
         _FIELD_TEST(tmc_stepper_current);
 
@@ -1990,7 +1991,7 @@ void MarlinSettings::postprocess() {
         #endif
       }
 
-      // TMC Hybrid Threshold
+      // TMC Hybrid Threshold//混合阈值
       {
         tmc_hybrid_threshold_t tmc_hybrid_threshold;
         _FIELD_TEST(tmc_hybrid_threshold);
@@ -2021,9 +2022,9 @@ void MarlinSettings::postprocess() {
         #endif
       }
 
-      //
-      // TMC StallGuard threshold.
-      //
+      ////
+      // TMC StallGuard threshold.//TMC失速保护阈值。
+      ////
       {
         tmc_sgt_t tmc_sgt;
         _FIELD_TEST(tmc_sgt);
@@ -2047,7 +2048,7 @@ void MarlinSettings::postprocess() {
         #endif
       }
 
-      // TMC stepping mode
+      // TMC stepping mode//TMC步进模式
       {
         _FIELD_TEST(tmc_stealth_enabled);
 
@@ -2081,9 +2082,9 @@ void MarlinSettings::postprocess() {
         #endif
       }
 
-      //
-      // Linear Advance
-      //
+      ////
+      // Linear Advance//线性推进
+      ////
       {
         float extruder_advance_K[_MAX(EXTRUDERS, 1)];
         _FIELD_TEST(planner_extruder_advance_K);
@@ -2094,9 +2095,9 @@ void MarlinSettings::postprocess() {
         #endif
       }
 
-      //
-      // Motor Current PWM
-      //
+      ////
+      // Motor Current PWM//电机电流脉宽调制
+      ////
       {
         _FIELD_TEST(motor_current_setting);
         uint32_t motor_current_setting[MOTOR_CURRENT_COUNT]
@@ -2117,13 +2118,13 @@ void MarlinSettings::postprocess() {
         #endif
       }
 
-      //
-      // CNC Coordinate System
-      //
+      ////
+      // CNC Coordinate System//数控坐标系
+      ////
       {
         _FIELD_TEST(coordinate_system);
         #if ENABLED(CNC_COORDINATE_SYSTEMS)
-          if (!validating) (void)gcode.select_coordinate_system(-1); // Go back to machine space
+          if (!validating) (void)gcode.select_coordinate_system(-1); // Go back to machine space//回到机器空间
           EEPROM_READ(gcode.coordinate_system);
         #else
           xyz_pos_t coordinate_system[MAX_COORDINATE_SYSTEMS];
@@ -2131,9 +2132,9 @@ void MarlinSettings::postprocess() {
         #endif
       }
 
-      //
-      // Skew correction factors
-      //
+      ////
+      // Skew correction factors//倾斜校正因子
+      ////
       {
         skew_factor_t skew_factor;
         _FIELD_TEST(planner_skew_factor);
@@ -2149,9 +2150,9 @@ void MarlinSettings::postprocess() {
         #endif
       }
 
-      //
-      // Advanced Pause filament load & unload lengths
-      //
+      ////
+      // Advanced Pause filament load & unload lengths//高级暂停灯丝加载和卸载长度
+      ////
       #if HAS_EXTRUDERS
       {
         #if DISABLED(ADVANCED_PAUSE_FEATURE)
@@ -2162,17 +2163,17 @@ void MarlinSettings::postprocess() {
       }
       #endif
 
-      //
-      // Tool-change settings
-      //
+      ////
+      // Tool-change settings//换刀设置
+      ////
       #if HAS_MULTI_EXTRUDER
         _FIELD_TEST(toolchange_settings);
         EEPROM_READ(toolchange_settings);
       #endif
 
-      //
-      // Backlash Compensation
-      //
+      ////
+      // Backlash Compensation//齿隙补偿
+      ////
       {
         #if ENABLED(BACKLASH_GCODE)
           const xyz_float_t &backlash_distance_mm = backlash.distance_mm;
@@ -2192,11 +2193,11 @@ void MarlinSettings::postprocess() {
         EEPROM_READ(backlash_smoothing_mm);
       }
 
-      //
-      // Extensible UI User Data
-      //
+      ////
+      // Extensible UI User Data//可扩展UI用户数据
+      ////
       #if ENABLED(EXTENSIBLE_UI)
-        // This is a significant hardware change; don't reserve EEPROM space when not present
+        // This is a significant hardware change; don't reserve EEPROM space when not present//这是一个重大的硬件变化；不存在时不要保留EEPROM空间
         {
           const char extui_data[ExtUI::eeprom_data_size] = { 0 };
           _FIELD_TEST(extui_data);
@@ -2205,34 +2206,34 @@ void MarlinSettings::postprocess() {
         }
       #endif
 
-      //
-      // Case Light Brightness
-      //
+      ////
+      // Case Light Brightness//箱灯亮度
+      ////
       #if CASELIGHT_USES_BRIGHTNESS
         _FIELD_TEST(caselight_brightness);
         EEPROM_READ(caselight.brightness);
       #endif
 
-      //
-      // Password feature
-      //
+      ////
+      // Password feature//密码功能
+      ////
       #if ENABLED(PASSWORD_FEATURE)
         _FIELD_TEST(password_is_set);
         EEPROM_READ(password.is_set);
         EEPROM_READ(password.value);
       #endif
 
-      //
-      // TOUCH_SCREEN_CALIBRATION
-      //
+      ////
+      // TOUCH_SCREEN_CALIBRATION//触摸屏校准
+      ////
       #if ENABLED(TOUCH_SCREEN_CALIBRATION)
         _FIELD_TEST(touch_calibration_data);
         EEPROM_READ(touch_calibration.calibration);
       #endif
 
-      //
-      // Ethernet network info
-      //
+      ////
+      // Ethernet network info//以太网网络信息
+      ////
       #if HAS_ETHERNET
         _FIELD_TEST(ethernet_hardware_enabled);
         uint32_t ethernet_ip, ethernet_dns, ethernet_gateway, ethernet_subnet;
@@ -2243,17 +2244,17 @@ void MarlinSettings::postprocess() {
         EEPROM_READ(ethernet_subnet);  ethernet.subnet  = ethernet_subnet;
       #endif
 
-      //
-      // Buzzer enable/disable
-      //
+      ////
+      // Buzzer enable/disable//蜂鸣器启用/禁用
+      ////
       #if ENABLED(SOUND_MENU_ITEM)
         _FIELD_TEST(buzzer_enabled);
         EEPROM_READ(ui.buzzer_enabled);
       #endif
 
-      //
-      // MKS UI controller
-      //
+      ////
+      // MKS UI controller//用户界面控制器
+      ////
       #if ENABLED(DGUS_LCD_UI_MKS)
         _FIELD_TEST(mks_language_index);
         EEPROM_READ(mks_language_index);
@@ -2262,9 +2263,9 @@ void MarlinSettings::postprocess() {
         EEPROM_READ(mks_min_extrusion_temp);
       #endif
 
-      //
-      // Selected LCD language
-      //
+      ////
+      // Selected LCD language//选定的LCD语言
+      ////
       #if HAS_MULTI_LANGUAGE
       {
         uint8_t ui_language;
@@ -2274,9 +2275,9 @@ void MarlinSettings::postprocess() {
       }
       #endif
 
-      //
-      // Validate Final Size and CRC
-      //
+      ////
+      // Validate Final Size and CRC//验证最终大小和CRC
+      ////
       eeprom_error = size_error(eeprom_index - (EEPROM_OFFSET));
       if (eeprom_error) {
         DEBUG_ECHO_MSG("Index: ", eeprom_index - (EEPROM_OFFSET), " Size: ", datasize());
@@ -2329,7 +2330,7 @@ void MarlinSettings::postprocess() {
     }
 
     #if ENABLED(EEPROM_CHITCHAT) && DISABLED(DISABLE_M503)
-      // Report the EEPROM settings
+      // Report the EEPROM settings//报告EEPROM设置
       if (!validating && TERN1(EEPROM_BOOT_SILENT, IsRunning())) report();
     #endif
 
@@ -2378,13 +2379,13 @@ void MarlinSettings::postprocess() {
       UNUSED(s);
     }
 
-    const uint16_t MarlinSettings::meshes_end = persistentStore.capacity() - 129; // 128 (+1 because of the change to capacity rather than last valid address)
-                                                                                  // is a placeholder for the size of the MAT; the MAT will always
-                                                                                  // live at the very end of the eeprom
+    const uint16_t MarlinSettings::meshes_end = persistentStore.capacity() - 129; // 128 (+1 because of the change to capacity rather than last valid address)//128（+1，因为更改了容量而不是最后一个有效地址）
+                                                                                  // is a placeholder for the size of the MAT; the MAT will always//是垫子大小的占位符；垫子永远不会坏
+                                                                                  // live at the very end of the eeprom//生活在eeprom的最末端
 
     uint16_t MarlinSettings::meshes_start_index() {
-      return (datasize() + EEPROM_OFFSET + 32) & 0xFFF8;  // Pad the end of configuration data so it can float up
-                                                          // or down a little bit without disrupting the mesh data
+      return (datasize() + EEPROM_OFFSET + 32) & 0xFFF8;  // Pad the end of configuration data so it can float up//填充配置数据的末尾，使其可以向上浮动
+                                                          // or down a little bit without disrupting the mesh data//或者在不中断网格数据的情况下降低一点
     }
 
     #define MESH_STORE_SIZE sizeof(TERN(OPTIMIZED_MESH_STORAGE, mesh_store_t, ubl.z_values))
@@ -2419,7 +2420,7 @@ void MarlinSettings::postprocess() {
           uint8_t * const src = (uint8_t*)&ubl.z_values;
         #endif
 
-        // Write crc to MAT along with other data, or just tack on to the beginning or end
+        // Write crc to MAT along with other data, or just tack on to the beginning or end//将crc与其他数据一起写入MAT，或者只在开头或结尾加上图钉
         persistentStore.access_start();
         const bool status = persistentStore.write_data(pos, src, MESH_STORE_SIZE, &crc);
         persistentStore.access_finish();
@@ -2429,7 +2430,7 @@ void MarlinSettings::postprocess() {
 
       #else
 
-        // Other mesh types
+        // Other mesh types//其他网格类型
 
       #endif
     }
@@ -2475,24 +2476,24 @@ void MarlinSettings::postprocess() {
 
       #else
 
-        // Other mesh types
+        // Other mesh types//其他网格类型
 
       #endif
     }
 
-    //void MarlinSettings::delete_mesh() { return; }
-    //void MarlinSettings::defrag_meshes() { return; }
+    //void MarlinSettings::delete_mesh() { return; }//void MarlinSettings:：delete_mesh（）{return；}
+    //void MarlinSettings::defrag_meshes() { return; }//void MarlinSettings:：defrag_meshes（）{return；}
 
-  #endif // AUTO_BED_LEVELING_UBL
+  #endif // AUTO_BED_LEVELING_UBL//自动调平床
 
-#else // !EEPROM_SETTINGS
+#else // !EEPROM_SETTINGS// !EEPROM_设置
 
   bool MarlinSettings::save() {
     DEBUG_ERROR_MSG("EEPROM disabled");
     return false;
   }
 
-#endif // !EEPROM_SETTINGS
+#endif // !EEPROM_SETTINGS// !EEPROM_设置
 
 /**
  * M502 - Reset Configuration
@@ -2548,9 +2549,9 @@ void MarlinSettings::reset() {
 
   TERN_(HAS_HOTEND_OFFSET, reset_hotend_offsets());
 
-  //
-  // Filament Runout Sensor
-  //
+  ////
+  // Filament Runout Sensor//灯丝偏移传感器
+  ////
 
   #if HAS_FILAMENT_SENSOR
     runout.enabled = FIL_RUNOUT_ENABLED_DEFAULT;
@@ -2558,9 +2559,9 @@ void MarlinSettings::reset() {
     TERN_(HAS_FILAMENT_RUNOUT_DISTANCE, runout.set_runout_distance(FILAMENT_RUNOUT_DISTANCE_MM));
   #endif
 
-  //
-  // Tool-change Settings
-  //
+  ////
+  // Tool-change Settings//换刀设置
+  ////
 
   #if HAS_MULTI_EXTRUDER
     #if ENABLED(TOOLCHANGE_FILAMENT_SWAP)
@@ -2603,29 +2604,29 @@ void MarlinSettings::reset() {
 
   TERN_(EXTENSIBLE_UI, ExtUI::onFactoryReset());
 
-  //
-  // Case Light Brightness
-  //
+  ////
+  // Case Light Brightness//箱灯亮度
+  ////
   TERN_(CASELIGHT_USES_BRIGHTNESS, caselight.brightness = CASE_LIGHT_DEFAULT_BRIGHTNESS);
 
-  //
-  // TOUCH_SCREEN_CALIBRATION
-  //
+  ////
+  // TOUCH_SCREEN_CALIBRATION//触摸屏校准
+  ////
   TERN_(TOUCH_SCREEN_CALIBRATION, touch_calibration.calibration_reset());
 
-  //
-  // Buzzer enable/disable
-  //
+  ////
+  // Buzzer enable/disable//蜂鸣器启用/禁用
+  ////
   TERN_(SOUND_MENU_ITEM, ui.buzzer_enabled = true);
 
-  //
-  // Magnetic Parking Extruder
-  //
+  ////
+  // Magnetic Parking Extruder//磁力停车挤出机
+  ////
   TERN_(MAGNETIC_PARKING_EXTRUDER, mpe_settings_init());
 
-  //
-  // Global Leveling
-  //
+  ////
+  // Global Leveling//全球水准测量
+  ////
   TERN_(ENABLE_LEVELING_FADE_HEIGHT, new_z_fade_height = (DEFAULT_LEVELING_FADE_HEIGHT));
   TERN_(HAS_LEVELING, reset_bed_level());
 
@@ -2639,26 +2640,26 @@ void MarlinSettings::reset() {
     #endif
   #endif
 
-  //
-  // Z Stepper Auto-alignment points
-  //
+  ////
+  // Z Stepper Auto-alignment points//Z步进自动对准点
+  ////
   TERN_(Z_STEPPER_AUTO_ALIGN, z_stepper_align.reset_to_default());
 
-  //
-  // Servo Angles
-  //
-  TERN_(EDITABLE_SERVO_ANGLES, COPY(servo_angles, base_servo_angles)); // When not editable only one copy of servo angles exists
+  ////
+  // Servo Angles//伺服角
+  ////
+  TERN_(EDITABLE_SERVO_ANGLES, COPY(servo_angles, base_servo_angles)); // When not editable only one copy of servo angles exists//不可编辑时，仅存在一个伺服角度副本
 
-  //
-  // BLTOUCH
-  //
-  //#if ENABLED(BLTOUCH)
-  //  bltouch.last_written_mode;
-  //#endif
+  ////
+  // BLTOUCH//BLTOUCH
+  ////
+  //#if ENABLED(BLTOUCH)//#如果启用（BLTOUCH）
+  //  bltouch.last_written_mode;//bltouch.last_write_模式；
+  //#endif//#恩迪夫
 
-  //
-  // Endstop Adjustments
-  //
+  ////
+  // Endstop Adjustments//止动块调整
+  ////
 
   #if ENABLED(DELTA)
     const abc_float_t adj = DELTA_ENDSTOP_ADJ, dta = DELTA_TOWER_ANGLE_TRIM, ddr = DELTA_DIAGONAL_ROD_TRIM_TOWER;
@@ -2704,9 +2705,9 @@ void MarlinSettings::reset() {
     #endif
   #endif
 
-  //
-  // Preheat parameters
-  //
+  ////
+  // Preheat parameters//预热参数
+  ////
   #if PREHEAT_COUNT
     #define _PITEM(N,T) PREHEAT_##N##_##T,
     #if HAS_HOTEND
@@ -2725,9 +2726,9 @@ void MarlinSettings::reset() {
     }
   #endif
 
-  //
-  // Hotend PID
-  //
+  ////
+  // Hotend PID//热端PID
+  ////
 
   #if ENABLED(PIDTEMP)
     #if ENABLED(PID_PARAMS_PER_HOTEND)
@@ -2786,14 +2787,14 @@ void MarlinSettings::reset() {
     }
   #endif
 
-  //
-  // PID Extrusion Scaling
-  //
-  TERN_(PID_EXTRUSION_SCALING, thermalManager.lpq_len = 20); // Default last-position-queue size
+  ////
+  // PID Extrusion Scaling//PID挤出定标
+  ////
+  TERN_(PID_EXTRUSION_SCALING, thermalManager.lpq_len = 20); // Default last-position-queue size//默认最后位置队列大小
 
-  //
-  // Heated Bed PID
-  //
+  ////
+  // Heated Bed PID//加热床PID
+  ////
 
   #if ENABLED(PIDTEMPBED)
     thermalManager.temp_bed.pid.Kp = DEFAULT_bedKp;
@@ -2801,9 +2802,9 @@ void MarlinSettings::reset() {
     thermalManager.temp_bed.pid.Kd = scalePID_d(DEFAULT_bedKd);
   #endif
 
-  //
-  // Heated Chamber PID
-  //
+  ////
+  // Heated Chamber PID//加热室PID
+  ////
 
   #if ENABLED(PIDTEMPCHAMBER)
     thermalManager.temp_chamber.pid.Kp = DEFAULT_chamberKp;
@@ -2811,39 +2812,39 @@ void MarlinSettings::reset() {
     thermalManager.temp_chamber.pid.Kd = scalePID_d(DEFAULT_chamberKd);
   #endif
 
-  //
-  // User-Defined Thermistors
-  //
+  ////
+  // User-Defined Thermistors//用户自定义热敏电阻
+  ////
   TERN_(HAS_USER_THERMISTORS, thermalManager.reset_user_thermistors());
 
-  //
-  // Power Monitor
-  //
+  ////
+  // Power Monitor//功率监视器
+  ////
   TERN_(POWER_MONITOR, power_monitor.reset());
 
-  //
-  // LCD Contrast
-  //
+  ////
+  // LCD Contrast//液晶对比度
+  ////
   TERN_(HAS_LCD_CONTRAST, ui.set_contrast(DEFAULT_LCD_CONTRAST));
 
-  //
-  // Controller Fan
-  //
+  ////
+  // Controller Fan//控制器风扇
+  ////
   TERN_(USE_CONTROLLER_FAN, controllerFan.reset());
 
-  //
-  // Power-Loss Recovery
-  //
+  ////
+  // Power-Loss Recovery//功率损耗恢复
+  ////
   TERN_(POWER_LOSS_RECOVERY, recovery.enable(ENABLED(PLR_ENABLED_DEFAULT)));
 
-  //
-  // Firmware Retraction
-  //
+  ////
+  // Firmware Retraction//固件收回
+  ////
   TERN_(FWRETRACT, fwretract.reset());
 
-  //
-  // Volumetric & Filament Size
-  //
+  ////
+  // Volumetric & Filament Size//体积和灯丝尺寸
+  ////
 
   #if DISABLED(NO_VOLUMETRICS)
     parser.volumetric_enabled = ENABLED(VOLUMETRIC_DEFAULT_ON);
@@ -2859,9 +2860,9 @@ void MarlinSettings::reset() {
 
   reset_stepper_drivers();
 
-  //
-  // Linear Advance
-  //
+  ////
+  // Linear Advance//线性推进
+  ////
 
   #if ENABLED(LIN_ADVANCE)
     LOOP_L_N(i, EXTRUDERS) {
@@ -2870,9 +2871,9 @@ void MarlinSettings::reset() {
     }
   #endif
 
-  //
-  // Motor Current PWM
-  //
+  ////
+  // Motor Current PWM//电机电流脉宽调制
+  ////
 
   #if HAS_MOTOR_CURRENT_PWM
     constexpr uint32_t tmp_motor_current_setting[MOTOR_CURRENT_COUNT] = PWM_MOTOR_CURRENT;
@@ -2880,9 +2881,9 @@ void MarlinSettings::reset() {
       stepper.set_digipot_current(q, (stepper.motor_current_setting[q] = tmp_motor_current_setting[q]));
   #endif
 
-  //
-  // DIGIPOTS
-  //
+  ////
+  // DIGIPOTS//数码表
+  ////
   #if HAS_MOTOR_CURRENT_SPI
     static constexpr uint32_t tmp_motor_current_setting[] = DIGIPOT_MOTOR_CURRENT;
     DEBUG_ECHOLNPGM("Writing Digipot");
@@ -2891,14 +2892,14 @@ void MarlinSettings::reset() {
     DEBUG_ECHOLNPGM("Digipot Written");
   #endif
 
-  //
-  // CNC Coordinate System
-  //
-  TERN_(CNC_COORDINATE_SYSTEMS, (void)gcode.select_coordinate_system(-1)); // Go back to machine space
+  ////
+  // CNC Coordinate System//数控坐标系
+  ////
+  TERN_(CNC_COORDINATE_SYSTEMS, (void)gcode.select_coordinate_system(-1)); // Go back to machine space//回到机器空间
 
-  //
-  // Skew Correction
-  //
+  ////
+  // Skew Correction//倾斜校正
+  ////
   #if ENABLED(SKEW_CORRECTION_GCODE)
     planner.skew_factor.xy = XY_SKEW_FACTOR;
     #if ENABLED(SKEW_CORRECTION_FOR_Z)
@@ -2907,9 +2908,9 @@ void MarlinSettings::reset() {
     #endif
   #endif
 
-  //
-  // Advanced Pause filament load & unload lengths
-  //
+  ////
+  // Advanced Pause filament load & unload lengths//高级暂停灯丝加载和卸载长度
+  ////
   #if ENABLED(ADVANCED_PAUSE_FEATURE)
     LOOP_L_N(e, EXTRUDERS) {
       fc_settings[e].unload_length = FILAMENT_CHANGE_UNLOAD_LENGTH;
@@ -2926,9 +2927,9 @@ void MarlinSettings::reset() {
     #endif
   #endif
 
-  //
-  // MKS UI controller
-  //
+  ////
+  // MKS UI controller//用户界面控制器
+  ////
   TERN_(DGUS_LCD_UI_MKS, MKS_reset_settings());
 
   postprocess();
@@ -3014,7 +3015,7 @@ void MarlinSettings::reset() {
 
     #if HAS_LCD_MENU
 
-      // Temperature units - for Ultipanel temperature options
+      // Temperature units - for Ultipanel temperature options//温度单位-用于多面板温度选项
 
       CONFIG_ECHO_START();
       #if ENABLED(TEMPERATURE_UNITS_SUPPORT)
@@ -3062,7 +3063,7 @@ void MarlinSettings::reset() {
         CONFIG_ECHO_MSG("  M200 S", parser.volumetric_enabled);
       #endif
 
-    #endif // EXTRUDERS && !NO_VOLUMETRICS
+    #endif // EXTRUDERS && !NO_VOLUMETRICS//挤出机&！无体积计量学
 
     CONFIG_ECHO_HEADING("Steps per unit:");
     report_M92(!forReplay);
@@ -3249,8 +3250,8 @@ void MarlinSettings::reset() {
           SERIAL_ECHOLNPGM(" meshes.\n");
         }
 
-       //ubl.report_current_mesh();   // This is too verbose for large meshes. A better (more terse)
-                                                  // solution needs to be found.
+       //ubl.report_current_mesh();   // This is too verbose for large meshes. A better (more terse)//ubl.report_current_mesh（）；//这对于大型网格来说太冗长了。更好（更简洁）
+                                                  // solution needs to be found.//需要找到解决办法。
       #elif ENABLED(AUTO_BED_LEVELING_BILINEAR)
 
         if (leveling_is_valid()) {
@@ -3265,7 +3266,7 @@ void MarlinSettings::reset() {
 
       #endif
 
-    #endif // HAS_LEVELING
+    #endif // HAS_LEVELING//你有找平吗
 
     #if ENABLED(EDITABLE_SERVO_ANGLES)
 
@@ -3287,7 +3288,7 @@ void MarlinSettings::reset() {
         }
       }
 
-    #endif // EDITABLE_SERVO_ANGLES
+    #endif // EDITABLE_SERVO_ANGLES//可编辑的伺服角度
 
     #if HAS_SCARA_OFFSET
 
@@ -3350,7 +3351,7 @@ void MarlinSettings::reset() {
         #endif
       #endif
 
-    #endif // [XYZ]_DUAL_ENDSTOPS
+    #endif // [XYZ]_DUAL_ENDSTOPS//[XYZ]\u双\u止动块
 
     #if PREHEAT_COUNT
 
@@ -3400,7 +3401,7 @@ void MarlinSettings::reset() {
           #endif
           SERIAL_EOL();
         }
-      #endif // PIDTEMP
+      #endif // PIDTEMP//皮特姆
 
       #if ENABLED(PIDTEMPBED)
         CONFIG_ECHO_MSG(
@@ -3419,7 +3420,7 @@ void MarlinSettings::reset() {
         );
       #endif
 
-    #endif // PIDTEMP || PIDTEMPBED || PIDTEMPCHAMBER
+    #endif // PIDTEMP || PIDTEMPBED || PIDTEMPCHAMBER//皮德姆| | |皮德姆床| |皮德姆室
 
     #if HAS_USER_THERMISTORS
       CONFIG_ECHO_HEADING("User thermistors:");
@@ -3662,7 +3663,7 @@ void MarlinSettings::reset() {
           SERIAL_ECHOLNPAIR(" T7 E", stepperE7.get_pwm_thrs());
         #endif
         SERIAL_EOL();
-      #endif // HYBRID_THRESHOLD
+      #endif // HYBRID_THRESHOLD//混合阈值
 
       /**
        * TMC Sensorless homing thresholds
@@ -3728,7 +3729,7 @@ void MarlinSettings::reset() {
           SERIAL_ECHOLNPAIR_P(SP_K_STR, stepperK.homing_threshold());
         #endif
 
-      #endif // USE_SENSORLESS
+      #endif // USE_SENSORLESS//使用无传感器
 
       /**
        * TMC stepping mode
@@ -3783,9 +3784,9 @@ void MarlinSettings::reset() {
         if (TERN0(E6_HAS_STEALTHCHOP, stepperE6.get_stored_stealthChop())) { say_M569(forReplay, PSTR("T6 E"), true); }
         if (TERN0(E7_HAS_STEALTHCHOP, stepperE7.get_stored_stealthChop())) { say_M569(forReplay, PSTR("T7 E"), true); }
 
-      #endif // HAS_STEALTHCHOP
+      #endif // HAS_STEALTHCHOP//你偷了吗
 
-    #endif // HAS_TRINAMIC_CONFIG
+    #endif // HAS_TRINAMIC_CONFIG//有_TRINAMIC _CONFIG
 
     /**
      * Linear Advance
@@ -3804,25 +3805,25 @@ void MarlinSettings::reset() {
       CONFIG_ECHO_HEADING("Stepper motor currents:");
       CONFIG_ECHO_START();
       #if HAS_MOTOR_CURRENT_PWM
-        SERIAL_ECHOLNPAIR_P(                                   // PWM-based has 3 values:
-            PSTR("  M907 X"), stepper.motor_current_setting[0] // X and Y
-                  , SP_Z_STR, stepper.motor_current_setting[1] // Z
-                  , SP_E_STR, stepper.motor_current_setting[2] // E
+        SERIAL_ECHOLNPAIR_P(                                   // PWM-based has 3 values://基于PWM的有3个值：
+            PSTR("  M907 X"), stepper.motor_current_setting[0] // X and Y//X和Y
+                  , SP_Z_STR, stepper.motor_current_setting[1] // Z//Z
+                  , SP_E_STR, stepper.motor_current_setting[2] // E//E
         );
       #elif HAS_MOTOR_CURRENT_SPI
-        SERIAL_ECHOPGM("  M907");                              // SPI-based has 5 values:
-        LOOP_LOGICAL_AXES(q) {                                 // X Y Z (I J K) E (map to X Y Z (I J K) E0 by default)
+        SERIAL_ECHOPGM("  M907");                              // SPI-based has 5 values://基于SPI的有5个值：
+        LOOP_LOGICAL_AXES(q) {                                 // X Y Z (I J K) E (map to X Y Z (I J K) E0 by default)//X Y Z（I J K）E（默认情况下映射到X Y Z（I J K）E0）
           SERIAL_CHAR(' ', axis_codes[q]);
           SERIAL_ECHO(stepper.motor_current_setting[q]);
         }
-        SERIAL_CHAR(' ', 'B');                                 // B (maps to E1 by default)
+        SERIAL_CHAR(' ', 'B');                                 // B (maps to E1 by default)//B（默认情况下映射到E1）
         SERIAL_ECHOLN(stepper.motor_current_setting[4]);
       #endif
-    #elif ENABLED(HAS_MOTOR_CURRENT_I2C)                       // i2c-based has any number of values
-      // Values sent over i2c are not stored.
-      // Indexes map directly to drivers, not axes.
-    #elif ENABLED(HAS_MOTOR_CURRENT_DAC)                       // DAC-based has 4 values, for X Y Z (I J K) E
-      // Values sent over i2c are not stored. Uses indirect mapping.
+    #elif ENABLED(HAS_MOTOR_CURRENT_I2C)                       // i2c-based has any number of values//i2c-based具有任意数量的值
+      // Values sent over i2c are not stored.//通过i2c发送的值不会被存储。
+      // Indexes map directly to drivers, not axes.//索引直接映射到驱动程序，而不是轴。
+    #elif ENABLED(HAS_MOTOR_CURRENT_DAC)                       // DAC-based has 4 values, for X Y Z (I J K) E//基于DAC的有4个值，对于X Y Z（I J K）E
+      // Values sent over i2c are not stored. Uses indirect mapping.//通过i2c发送的值不会被存储。使用间接映射。
     #endif
 
     /**
@@ -3889,6 +3890,6 @@ void MarlinSettings::reset() {
     #endif
   }
 
-#endif // !DISABLE_M503
+#endif // !DISABLE_M503// !禁用_M503
 
 #pragma pack(pop)

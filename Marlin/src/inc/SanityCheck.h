@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -34,11 +35,11 @@
   #error "Marlin requires C++11 support (gcc >= 4.7, Arduino IDE >= 1.6.8). Please upgrade your toolchain."
 #endif
 
-// Strings for sanity check messages
+// Strings for sanity check messages//用于健全性检查消息的字符串
 #define _LINEAR_AXES_STR LINEAR_AXIS_GANG("X ", "Y ", "Z ", "I ", "J ", "K ")
 #define _LOGICAL_AXES_STR LOGICAL_AXIS_GANG("E ", "X ", "Y ", "Z ", "I ", "J ", "K ")
 
-// Make sure macros aren't borked
+// Make sure macros aren't borked//确保宏没有损坏
 #define TEST1
 #define TEST2 1
 #define TEST3 0
@@ -1655,7 +1656,7 @@ static_assert(Y_MAX_LENGTH >= Y_BED_SIZE, "Movement bounds (Y_MIN_POS, Y_MAX_POS
 
 #elif ENABLED(MESH_BED_LEVELING)
 
-  // Mesh Bed Leveling
+  // Mesh Bed Leveling//网床找平
   #if ENABLED(DELTA)
     #error "MESH_BED_LEVELING is not compatible with DELTA printers."
   #elif (GRID_MAX_POINTS_X) > 9 || (GRID_MAX_POINTS_Y) > 9
@@ -2294,14 +2295,14 @@ static_assert(Y_MAX_LENGTH >= Y_BED_SIZE, "Movement bounds (Y_MIN_POS, Y_MAX_POS
                 #if !(PINS_EXIST(E7_STEP, E7_DIR) && HAS_E7_ENABLE)
                   #error "E7_STEP_PIN, E7_DIR_PIN, or E7_ENABLE_PIN not defined for this board."
                 #endif
-              #endif // E_STEPPERS > 7
-            #endif // E_STEPPERS > 6
-          #endif // E_STEPPERS > 5
-        #endif // E_STEPPERS > 4
-      #endif // E_STEPPERS > 3
-    #endif // E_STEPPERS > 2
-  #endif // E_STEPPERS > 1
-#endif // E_STEPPERS
+              #endif // E_STEPPERS > 7//E_步进电机>7
+            #endif // E_STEPPERS > 6//E_步进电机>6
+          #endif // E_STEPPERS > 5//E_步进电机>5
+        #endif // E_STEPPERS > 4//E_步进电机>4
+      #endif // E_STEPPERS > 3//E_步进电机>3
+    #endif // E_STEPPERS > 2//E_步进电机>2
+  #endif // E_STEPPERS > 1//E_步进电机>1
+#endif // E_STEPPERS//步进电机
 
 /**
  * Endstop Tests
@@ -2312,7 +2313,7 @@ static_assert(Y_MAX_LENGTH >= Y_BED_SIZE, "Movement bounds (Y_MIN_POS, Y_MAX_POS
   && !(ENABLED(A##_MULTI_ENDSTOPS) && WITHIN(A##2_USE_ENDSTOP, _##P##MAX_, _##P##MIN_)) )
 #define _AXIS_PLUG_UNUSED_TEST(A) (1 LINEAR_AXIS_GANG(&& _PLUG_UNUSED_TEST(A,X), && _PLUG_UNUSED_TEST(A,Y), && _PLUG_UNUSED_TEST(A,Z), && _PLUG_UNUSED_TEST(A,I), && _PLUG_UNUSED_TEST(A,J), && _PLUG_UNUSED_TEST(A,K) ) )
 
-// A machine with endstops must have a minimum of 3
+// A machine with endstops must have a minimum of 3//带有止动块的机器必须至少有3个止动块
 #if HAS_ENDSTOPS
   #if _AXIS_PLUG_UNUSED_TEST(X)
     #error "You must enable USE_XMIN_PLUG or USE_XMAX_PLUG."
@@ -2333,7 +2334,7 @@ static_assert(Y_MAX_LENGTH >= Y_BED_SIZE, "Movement bounds (Y_MIN_POS, Y_MAX_POS
     #error "You must enable USE_KMIN_PLUG or USE_KMAX_PLUG."
   #endif
 
-  // Delta and Cartesian use 3 homing endstops
+  // Delta and Cartesian use 3 homing endstops//三角洲和笛卡尔使用3个归位止点
   #if NONE(IS_SCARA, SPI_ENDSTOPS)
     #if X_HOME_TO_MIN && DISABLED(USE_XMIN_PLUG)
       #error "Enable USE_XMIN_PLUG when homing X to MIN."
@@ -2358,7 +2359,7 @@ static_assert(Y_MAX_LENGTH >= Y_BED_SIZE, "Movement bounds (Y_MIN_POS, Y_MAX_POS
     #endif
   #endif
 
-  // Z homing direction and plug usage flags
+  // Z homing direction and plug usage flags//Z归位方向和插头使用标志
   #if Z_HOME_TO_MIN && NONE(USE_ZMIN_PLUG, HOMING_Z_WITH_PROBE)
     #error "Enable USE_ZMIN_PLUG when homing Z to MIN."
   #elif Z_HOME_TO_MAX && ENABLED(USE_PROBE_FOR_Z_HOMING)
@@ -2374,7 +2375,7 @@ static_assert(Y_MAX_LENGTH >= Y_BED_SIZE, "Movement bounds (Y_MIN_POS, Y_MAX_POS
   #error "HOME_Z_FIRST can't be used when homing Z with a probe."
 #endif
 
-// Dual/multiple endstops requirements
+// Dual/multiple endstops requirements//双/多端止动器要求
 #if ENABLED(X_DUAL_ENDSTOPS)
   #if ENABLED(DELTA)
     #error "X_DUAL_ENDSTOPS is not compatible with DELTA."
@@ -2470,7 +2471,7 @@ static_assert(Y_MAX_LENGTH >= Y_BED_SIZE, "Movement bounds (Y_MIN_POS, Y_MAX_POS
 #endif
 #undef _RGB_TEST
 
-// NeoPixel requirements
+// NeoPixel requirements//纽比塞尔要求
 #if ENABLED(NEOPIXEL_LED)
   #if !PIN_EXISTS(NEOPIXEL) || NEOPIXEL_PIXELS == 0
     #error "NEOPIXEL_LED requires NEOPIXEL_PIN and NEOPIXEL_PIXELS."
@@ -2484,7 +2485,7 @@ static_assert(Y_MAX_LENGTH >= Y_BED_SIZE, "Movement bounds (Y_MIN_POS, Y_MAX_POS
 #if DISABLED(NO_COMPILE_TIME_PWM)
   #define _TEST_PWM(P) PWM_PIN(P)
 #else
-  #define _TEST_PWM(P) 1 // pass
+  #define _TEST_PWM(P) 1 // pass//通过
 #endif
 
 /**
@@ -2900,13 +2901,13 @@ static_assert(Y_MAX_LENGTH >= Y_BED_SIZE, "Movement bounds (Y_MIN_POS, Y_MAX_POS
 #endif
 
 #if ENABLED(SENSORLESS_HOMING)
-  // Require STEALTHCHOP for SENSORLESS_HOMING on DELTA as the transition from spreadCycle to stealthChop
-  // is necessary in order to reset the stallGuard indication between the initial movement of all three
-  // towers to +Z and the individual homing of each tower. This restriction can be removed once a means of
-  // clearing the stallGuard activated status is found.
+  // Require STEALTHCHOP for SENSORLESS_HOMING on DELTA as the transition from spreadCycle to stealthChop//在从spreadCycle到STEALTHCHOP的过渡过程中，需要STEALTHCHOP来实现DELTA上的无传感器_寻的
+  // is necessary in order to reset the stallGuard indication between the initial movement of all three//为了在所有三个传感器的初始移动之间重置失速保护指示，必须进行此操作
+  // towers to +Z and the individual homing of each tower. This restriction can be removed once a means of//塔到+Z和每个塔的单独归位。此限制可通过以下方式删除：
+  // clearing the stallGuard activated status is found.//发现正在清除stallGuard激活状态。
 
-  // Stall detection DIAG = HIGH : TMC2209
-  // Stall detection DIAG = LOW  : TMC2130/TMC2160/TMC2660/TMC5130/TMC5160
+  // Stall detection DIAG = HIGH : TMC2209//失速检测诊断=高：TMC2209
+  // Stall detection DIAG = LOW  : TMC2130/TMC2160/TMC2660/TMC5130/TMC5160//失速检测诊断=低：TMC2130/TMC2160/TMC2660/TMC5130/TMC5160
   #define X_ENDSTOP_INVERTING !AXIS_DRIVER_TYPE(X,TMC2209)
   #define Y_ENDSTOP_INVERTING !AXIS_DRIVER_TYPE(Y,TMC2209)
   #define Z_ENDSTOP_INVERTING !AXIS_DRIVER_TYPE(Z,TMC2209)
@@ -3038,7 +3039,7 @@ static_assert(Y_MAX_LENGTH >= Y_BED_SIZE, "Movement bounds (Y_MIN_POS, Y_MAX_POS
   #undef K_ENDSTOP_INVERTING
 #endif
 
-// Sensorless probing requirements
+// Sensorless probing requirements//无传感器探测要求
 #if ENABLED(SENSORLESS_PROBING)
   #if ENABLED(DELTA) && !(X_SENSORLESS && Y_SENSORLESS && Z_SENSORLESS)
     #error "SENSORLESS_PROBING for DELTA requires TMC stepper drivers with StallGuard on X, Y, and Z axes."
@@ -3051,7 +3052,7 @@ static_assert(Y_MAX_LENGTH >= Y_BED_SIZE, "Movement bounds (Y_MIN_POS, Y_MAX_POS
   #endif
 #endif
 
-// Sensorless homing is required for both combined steppers in an H-bot
+// Sensorless homing is required for both combined steppers in an H-bot//H-bot中的两个组合步进器都需要无传感器寻的
 #if CORE_IS_XY && X_SENSORLESS != Y_SENSORLESS
   #error "CoreXY requires both X and Y to use sensorless homing if either one does."
 #elif CORE_IS_XZ && X_SENSORLESS != Z_SENSORLESS && !HOMING_Z_WITH_PROBE
@@ -3062,7 +3063,7 @@ static_assert(Y_MAX_LENGTH >= Y_BED_SIZE, "Movement bounds (Y_MIN_POS, Y_MAX_POS
   #error "MARKFORGED_XY requires both X and Y to use sensorless homing if either one does."
 #endif
 
-// Other TMC feature requirements
+// Other TMC feature requirements//其他TMC功能要求
 #if ENABLED(HYBRID_THRESHOLD) && !STEALTHCHOP_ENABLED
   #error "Enable STEALTHCHOP_(XY|Z|E) to use HYBRID_THRESHOLD."
 #elif ENABLED(SENSORLESS_HOMING) && !HAS_STALLGUARD
@@ -3429,17 +3430,17 @@ static_assert(   _ARR_TEST(3,0) && _ARR_TEST(3,1) && _ARR_TEST(3,2)
       #if DISABLED(SPINDLE_LASER_PWM)
         #error "LASER_POWER_INLINE_TRAPEZOID requires SPINDLE_LASER_PWM to function."
       #elif ENABLED(S_CURVE_ACCELERATION)
-        //#ifndef LASER_POWER_INLINE_S_CURVE_ACCELERATION_WARN
-        //  #define LASER_POWER_INLINE_S_CURVE_ACCELERATION_WARN
-        //  #warning "Combining LASER_POWER_INLINE_TRAPEZOID with S_CURVE_ACCELERATION may result in unintended behavior."
-        //#endif
+        //#ifndef LASER_POWER_INLINE_S_CURVE_ACCELERATION_WARN//#ifndef激光功率内联曲线加速度警告
+        //  #define LASER_POWER_INLINE_S_CURVE_ACCELERATION_WARN//#定义激光(功率)内联(S)曲线(加速度)警告
+        //  #warning "Combining LASER_POWER_INLINE_TRAPEZOID with S_CURVE_ACCELERATION may result in unintended behavior."//#警告“将激光功率_直列_梯形与S_曲线_加速度相结合可能会导致意外行为。”
+        //#endif//#恩迪夫
       #endif
     #endif
     #if ENABLED(LASER_POWER_INLINE_INVERT)
-      //#ifndef LASER_POWER_INLINE_INVERT_WARN
-      //  #define LASER_POWER_INLINE_INVERT_WARN
-      //  #warning "Enabling LASER_POWER_INLINE_INVERT means that `M5` won't kill the laser immediately; use `M5 I` instead."
-      //#endif
+      //#ifndef LASER_POWER_INLINE_INVERT_WARN//#ifndef激光器\u电源\u内联\u反转\u警告
+      //  #define LASER_POWER_INLINE_INVERT_WARN//#定义激光功率(内置)反转(警告)
+      //  #warning "Enabling LASER_POWER_INLINE_INVERT means that `M5` won't kill the laser immediately; use `M5 I` instead."//#警告“启用激光功率_内联_反转意味着'M5'不会立即杀死激光；请改用'M5 I'
+      //#endif//#恩迪夫
     #endif
   #else
     #if SPINDLE_LASER_POWERUP_DELAY < 1
@@ -3543,7 +3544,7 @@ static_assert(   _ARR_TEST(3,0) && _ARR_TEST(3,1) && _ARR_TEST(3,2)
   #error "MONITOR_DRIVER_STATUS and SDSUPPORT cannot be used together on boards with shared SPI."
 #endif
 
-// G60/G61 Position Save
+// G60/G61 Position Save//G60/G61位置保存
 #if SAVED_POSITIONS > 256
   #error "SAVED_POSITIONS must be an integer from 0 to 256."
 #endif
@@ -3687,7 +3688,7 @@ static_assert(   _ARR_TEST(3,0) && _ARR_TEST(3,1) && _ARR_TEST(3,2)
 #endif
 #undef _BAD_DRIVER
 
-// Misc. Cleanup
+// Misc. Cleanup//杂项。清理
 #undef _TEST_PWM
 #undef _LINEAR_AXES_STR
 #undef _LOGICAL_AXES_STR

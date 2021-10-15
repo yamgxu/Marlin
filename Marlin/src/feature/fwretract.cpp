@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -30,7 +31,7 @@
 
 #include "fwretract.h"
 
-FWRetract fwretract; // Single instance - this calls the constructor
+FWRetract fwretract; // Single instance - this calls the constructor//单实例-这将调用构造函数
 
 #include "../module/motion.h"
 #include "../module/planner.h"
@@ -42,23 +43,23 @@ FWRetract fwretract; // Single instance - this calls the constructor
   #include "mixing.h"
 #endif
 
-// private:
+// private://私人：
 
 #if HAS_MULTI_EXTRUDER
-  bool FWRetract::retracted_swap[EXTRUDERS];          // Which extruders are swap-retracted
+  bool FWRetract::retracted_swap[EXTRUDERS];          // Which extruders are swap-retracted//哪些挤出机是换装缩回的
 #endif
 
-// public:
+// public://公众：
 
-fwretract_settings_t FWRetract::settings;             // M207 S F Z W, M208 S F W R
+fwretract_settings_t FWRetract::settings;             // M207 S F Z W, M208 S F W R//M207南飞西，M208南飞西
 
 #if ENABLED(FWRETRACT_AUTORETRACT)
-  bool FWRetract::autoretract_enabled;                // M209 S - Autoretract switch
+  bool FWRetract::autoretract_enabled;                // M209 S - Autoretract switch//M209 S-自动复位开关
 #endif
 
-bool FWRetract::retracted[EXTRUDERS];                 // Which extruders are currently retracted
+bool FWRetract::retracted[EXTRUDERS];                 // Which extruders are currently retracted//目前收回了哪些挤出机
 
-float FWRetract::current_retract[EXTRUDERS],          // Retract value used by planner
+float FWRetract::current_retract[EXTRUDERS],          // Retract value used by planner//收回计划器使用的值
       FWRetract::current_hop;
 
 void FWRetract::reset() {
@@ -92,20 +93,20 @@ void FWRetract::reset() {
  *       included in the G-code. Use M207 Z0 to to prevent double hop.
  */
 void FWRetract::retract(const bool retracting OPTARG(HAS_MULTI_EXTRUDER, bool swapping/*=false*/)) {
-  // Prevent two retracts or recovers in a row
+  // Prevent two retracts or recovers in a row//防止连续两次缩回或恢复
   if (retracted[active_extruder] == retracting) return;
 
-  // Prevent two swap-retract or recovers in a row
+  // Prevent two swap-retract or recovers in a row//防止连续两次交换收回或恢复
   #if HAS_MULTI_EXTRUDER
-    // Allow G10 S1 only after G11
+    // Allow G10 S1 only after G11//仅在G11之后允许G10 S1
     if (swapping && retracted_swap[active_extruder] == retracting) return;
-    // G11 priority to recover the long retract if activated
+    // G11 priority to recover the long retract if activated//G11如果激活，恢复长回缩的优先级
     if (!retracting) swapping = retracted_swap[active_extruder];
   #else
     constexpr bool swapping = false;
   #endif
 
-  /* // debugging
+  /* // debugging//调试
     SERIAL_ECHOLNPAIR(
       "retracting ", AS_DIGIT(retracting),
       " swapping ", swapping,
@@ -120,12 +121,12 @@ void FWRetract::retract(const bool retracting OPTARG(HAS_MULTI_EXTRUDER, bool sw
     SERIAL_ECHOLNPAIR("current_position.z ", current_position.z);
     SERIAL_ECHOLNPAIR("current_position.e ", current_position.e);
     SERIAL_ECHOLNPAIR("current_hop ", current_hop);
-  //*/
+  //*///*/
 
   const float base_retract = TERN1(RETRACT_SYNC_MIXING, (MIXING_STEPPERS))
                 * (swapping ? settings.swap_retract_length : settings.retract_length);
 
-  // The current position will be the destination for E and Z moves
+  // The current position will be the destination for E and Z moves//当前位置将是E和Z移动的目的地
   destination = current_position;
 
   #if ENABLED(RETRACT_SYNC_MIXING)
@@ -135,52 +136,52 @@ void FWRetract::retract(const bool retracting OPTARG(HAS_MULTI_EXTRUDER, bool sw
 
   const feedRate_t fr_max_z = planner.settings.max_feedrate_mm_s[Z_AXIS];
   if (retracting) {
-    // Retract by moving from a faux E position back to the current E position
+    // Retract by moving from a faux E position back to the current E position//通过从假E位置移回当前E位置进行缩回
     current_retract[active_extruder] = base_retract;
-    prepare_internal_move_to_destination(                 // set current from destination
+    prepare_internal_move_to_destination(                 // set current from destination//从目的地设置当前值
       settings.retract_feedrate_mm_s * TERN1(RETRACT_SYNC_MIXING, (MIXING_STEPPERS))
     );
 
-    // Is a Z hop set, and has the hop not yet been done?
-    if (!current_hop && settings.retract_zraise > 0.01f) {  // Apply hop only once
-      current_hop += settings.retract_zraise;               // Add to the hop total (again, only once)
-      // Raise up, set_current_to_destination. Maximum Z feedrate
+    // Is a Z hop set, and has the hop not yet been done?//是否已设置Z跃点，且尚未完成跃点？
+    if (!current_hop && settings.retract_zraise > 0.01f) {  // Apply hop only once//仅应用一次跃点
+      current_hop += settings.retract_zraise;               // Add to the hop total (again, only once)//添加到跃点总数（再次，仅一次）
+      // Raise up, set_current_to_destination. Maximum Z feedrate//升起，将\u当前\u设置为\u目的地。最大Z进给速度
       prepare_internal_move_to_destination(fr_max_z);
     }
   }
   else {
-    // If a hop was done and Z hasn't changed, undo the Z hop
+    // If a hop was done and Z hasn't changed, undo the Z hop//如果完成了一个跃点，但Z未更改，请撤消Z跃点
     if (current_hop) {
       current_hop = 0;
-      // Lower Z, set_current_to_destination. Maximum Z feedrate
+      // Lower Z, set_current_to_destination. Maximum Z feedrate//降低Z，将_当前_设置为_目的地。最大Z进给速度
       prepare_internal_move_to_destination(fr_max_z);
     }
 
     const float extra_recover = swapping ? settings.swap_retract_recover_extra : settings.retract_recover_extra;
     if (extra_recover) {
-      current_position.e -= extra_recover;          // Adjust the current E position by the extra amount to recover
-      sync_plan_position_e();                             // Sync the planner position so the extra amount is recovered
+      current_position.e -= extra_recover;          // Adjust the current E position by the extra amount to recover//将当前E位置调整额外量以恢复
+      sync_plan_position_e();                             // Sync the planner position so the extra amount is recovered//同步计划员位置，以便恢复额外金额
     }
 
     current_retract[active_extruder] = 0;
 
-    // Recover E, set_current_to_destination
+    // Recover E, set_current_to_destination//恢复E，将\u当前\u设置为\u目标
     prepare_internal_move_to_destination(
       (swapping ? settings.swap_retract_recover_feedrate_mm_s : settings.retract_recover_feedrate_mm_s)
       * TERN1(RETRACT_SYNC_MIXING, (MIXING_STEPPERS))
     );
   }
 
-  TERN_(RETRACT_SYNC_MIXING, mixer.T(old_mixing_tool));   // Restore original mixing tool
+  TERN_(RETRACT_SYNC_MIXING, mixer.T(old_mixing_tool));   // Restore original mixing tool//恢复原始混合工具
 
-  retracted[active_extruder] = retracting;                // Active extruder now retracted / recovered
+  retracted[active_extruder] = retracting;                // Active extruder now retracted / recovered//主动挤出机现已收回/恢复
 
-  // If swap retract/recover update the retracted_swap flag too
+  // If swap retract/recover update the retracted_swap flag too//如果交换收回/恢复，也更新收回的交换标志
   #if HAS_MULTI_EXTRUDER
     if (swapping) retracted_swap[active_extruder] = retracting;
   #endif
 
-  /* // debugging
+  /* // debugging//调试
     SERIAL_ECHOLNPAIR("retracting ", AS_DIGIT(retracting));
     SERIAL_ECHOLNPAIR("swapping ", AS_DIGIT(swapping));
     SERIAL_ECHOLNPAIR("active_extruder ", active_extruder);
@@ -193,10 +194,10 @@ void FWRetract::retract(const bool retracting OPTARG(HAS_MULTI_EXTRUDER, bool sw
     SERIAL_ECHOLNPAIR("current_position.z ", current_position.z);
     SERIAL_ECHOLNPAIR("current_position.e ", current_position.e);
     SERIAL_ECHOLNPAIR("current_hop ", current_hop);
-  //*/
+  //*///*/
 }
 
-//extern const char SP_Z_STR[];
+//extern const char SP_Z_STR[];//外部常量char SP_Z_STR[]；
 
 /**
  * M207: Set firmware retraction values
@@ -267,7 +268,7 @@ void FWRetract::M208_report(const bool forReplay/*=false*/) {
     SERIAL_ECHOLNPAIR("  M209 S", AS_DIGIT(autoretract_enabled));
   }
 
-#endif // FWRETRACT_AUTORETRACT
+#endif // FWRETRACT_AUTORETRACT//FWRETRACT_自动校正
 
 
-#endif // FWRETRACT
+#endif // FWRETRACT//收回

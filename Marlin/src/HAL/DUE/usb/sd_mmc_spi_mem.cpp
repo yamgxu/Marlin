@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Interface from Atmel USB MSD to Marlin SD card
  */
@@ -27,8 +28,8 @@ Ctrl_status sd_mmc_spi_test_unit_ready() {
   return CTRL_GOOD;
 }
 
-// NOTE: This function is defined as returning the address of the last block
-// in the card, which is cardSize() - 1
+// NOTE: This function is defined as returning the address of the last block//注：此函数定义为返回最后一个块的地址
+// in the card, which is cardSize() - 1//在卡中，即cardSize（）-1
 Ctrl_status sd_mmc_spi_read_capacity(uint32_t *nb_sector) {
   if (!IS_SD_INSERTED() || IS_SD_PRINTING() || IS_SD_FILE_OPEN() || !card.isMounted())
     return CTRL_NO_PRESENT;
@@ -55,7 +56,7 @@ bool sd_mmc_spi_removal() {
 COMPILER_WORD_ALIGNED
 uint8_t sector_buf[SD_MMC_BLOCK_SIZE];
 
-// #define DEBUG_MMC
+// #define DEBUG_MMC//#定义调试_MMC
 
 Ctrl_status sd_mmc_spi_usb_read_10(uint32_t addr, uint16_t nb_sector) {
   #ifdef DISABLE_DUE_SD_MMC
@@ -73,27 +74,27 @@ Ctrl_status sd_mmc_spi_usb_read_10(uint32_t addr, uint16_t nb_sector) {
   }
   #endif
 
-  // Start reading
+  // Start reading//开始阅读
   if (!card.diskIODriver()->readStart(addr))
     return CTRL_FAIL;
 
-  // For each specified sector
+  // For each specified sector//对于每个指定扇区
   while (nb_sector--) {
 
-    // Read a sector
+    // Read a sector//读一个扇区
     card.diskIODriver()->readData(sector_buf);
 
-    // RAM -> USB
+    // RAM -> USB//RAM->USB
     if (!udi_msc_trans_block(true, sector_buf, SD_MMC_BLOCK_SIZE, nullptr)) {
       card.diskIODriver()->readStop();
       return CTRL_FAIL;
     }
   }
 
-  // Stop reading
+  // Stop reading//停止阅读
   card.diskIODriver()->readStop();
 
-  // Done
+  // Done//完成
   return CTRL_GOOD;
 }
 
@@ -116,27 +117,27 @@ Ctrl_status sd_mmc_spi_usb_write_10(uint32_t addr, uint16_t nb_sector) {
   if (!card.diskIODriver()->writeStart(addr, nb_sector))
     return CTRL_FAIL;
 
-  // For each specified sector
+  // For each specified sector//对于每个指定扇区
   while (nb_sector--) {
 
-    // USB -> RAM
+    // USB -> RAM//USB->RAM
     if (!udi_msc_trans_block(false, sector_buf, SD_MMC_BLOCK_SIZE, nullptr)) {
       card.diskIODriver()->writeStop();
       return CTRL_FAIL;
     }
 
-    // Write a sector
+    // Write a sector//写一个扇区
     card.diskIODriver()->writeData(sector_buf);
   }
 
-  // Stop writing
+  // Stop writing//停止写作
   card.diskIODriver()->writeStop();
 
-  // Done
+  // Done//完成
   return CTRL_GOOD;
 }
 
-#endif // ACCESS_USB == true
+#endif // ACCESS_USB == true//访问\u USB==true
 
-#endif // SDSUPPORT
-#endif // ARDUINO_ARCH_SAM
+#endif // SDSUPPORT//SDSUPPORT
+#endif // ARDUINO_ARCH_SAM//阿杜伊诺·阿丘·萨姆

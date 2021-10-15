@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * \file
  *
@@ -41,7 +42,7 @@
  *
  */
 /*
- * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>
+ * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>//www.atmel.com/design support/“>atmel支持</a>
  */
 
 #ifndef _MREPEAT_H_
@@ -58,7 +59,7 @@
 #include "preprocessor.h"
 
 
-//! Maximal number of repetitions supported by MREPEAT.
+//! Maximal number of repetitions supported by MREPEAT.//！MREPEAT支持的最大重复次数。
 #define MREPEAT_LIMIT   256
 
 /*! \brief Macro repeat.
@@ -336,4 +337,4 @@
  * \}
  */
 
-#endif  // _MREPEAT_H_
+#endif  // _MREPEAT_H_//_MREPEAT_H_

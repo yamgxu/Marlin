@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -52,9 +53,9 @@
 #endif
 
 bool DGUSAutoTurnOff = false;
-uint8_t mks_language_index; // Initialized by settings.load()
+uint8_t mks_language_index; // Initialized by settings.load()//由settings.load（）初始化
 
-// endianness swap
+// endianness swap//endianness交换
 uint32_t swap32(const uint32_t value) { return (value & 0x000000FFU) << 24U | (value & 0x0000FF00U) << 8U | (value & 0x00FF0000U) >> 8U | (value & 0xFF000000U) >> 24U; }
 
 #if 0
@@ -83,10 +84,10 @@ void DGUSScreenHandler::sendinfoscreen_mks(const void *line1, const void *line2,
 
 void DGUSScreenHandler::DGUSLCD_SendFanToDisplay(DGUS_VP_Variable &var) {
   if (var.memadr) {
-    //DEBUG_ECHOPAIR(" DGUS_LCD_SendWordValueToDisplay ", var.VP);
-    //DEBUG_ECHOLNPAIR(" data ", *(uint16_t *)var.memadr);
-    uint16_t tmp = *(uint8_t *) var.memadr; // +1 -> avoid rounding issues for the display.
-    // tmp = map(tmp, 0, 255, 0, 100);
+    //DEBUG_ECHOPAIR(" DGUS_LCD_SendWordValueToDisplay ", var.VP);//调试回声对（“DGUS\U LCD\U SendWordValueToDisplay”，var.VP）；
+    //DEBUG_ECHOLNPAIR(" data ", *(uint16_t *)var.memadr);//调试回音对（“数据”*（uint16_t*）变量memadr）；
+    uint16_t tmp = *(uint8_t *) var.memadr; // +1 -> avoid rounding issues for the display.//+1->避免显示的舍入问题。
+    // tmp = map(tmp, 0, 255, 0, 100);//tmp=map（tmp，0，255，0，100）；
     dgusdisplay.WriteVariable(var.VP, tmp);
   }
 }
@@ -172,11 +173,11 @@ void DGUSScreenHandler::DGUSLCD_SendTMCStepValue(DGUS_VP_Variable &var) {
     }
 
     #if ENABLED(DGUS_PRINT_FILENAME)
-      // Send print filename
+      // Send print filename//发送打印文件名
       dgusdisplay.WriteVariable(VP_SD_Print_Filename, filelist.filename(), VP_SD_FileName_LEN, true);
     #endif
 
-    // Setup Confirmation screen
+    // Setup Confirmation screen//设置确认屏幕
     file_to_print = touched_nr;
     GotoScreen(MKSLCD_SCREEN_PRINT_CONFIRM);
   }
@@ -190,9 +191,9 @@ void DGUSScreenHandler::DGUSLCD_SendTMCStepValue(DGUS_VP_Variable &var) {
 
   void DGUSScreenHandler::DGUSLCD_SD_ResumePauseAbort(DGUS_VP_Variable &var, void *val_ptr) {
 
-    if (!ExtUI::isPrintingFromMedia()) return; // avoid race condition when user stays in this menu and printer finishes.
+    if (!ExtUI::isPrintingFromMedia()) return; // avoid race condition when user stays in this menu and printer finishes.//当用户停留在此菜单中且打印机完成时，避免竞争条件。
     switch (swap16(*(uint16_t*)val_ptr)) {
-      case 0: { // Resume
+      case 0: { // Resume//恢复
 
         auto cs = getCurrentScreen();
         if (runout_mks.runout_status != RUNOUT_WAITTING_STATUS && runout_mks.runout_status != UNRUNOUT_STATUS) {
@@ -212,17 +213,17 @@ void DGUSScreenHandler::DGUSLCD_SendTMCStepValue(DGUS_VP_Variable &var) {
         }
       } break;
 
-      case 1: // Pause
+      case 1: // Pause//停顿
 
         GotoScreen(MKSLCD_SCREEN_PAUSE);
         if (!ExtUI::isPrintingFromMediaPaused()) {
           nozzle_park_mks.print_pause_start_flag = 1;
           nozzle_park_mks.blstatus = true;
           ExtUI::pausePrint();
-          //ExtUI::mks_pausePrint();
+          //ExtUI::mks_pausePrint();//ExtUI:：mks_pausePrint（）；
         }
         break;
-      case 2: // Abort
+      case 2: // Abort//流产
         HandleUserConfirmationPopUp(VP_SD_AbortPrintConfirmed, nullptr, PSTR("Abort printing"), filelist.filename(), PSTR("?"), true, true, false, true);
         break;
     }
@@ -236,7 +237,7 @@ void DGUSScreenHandler::DGUSLCD_SendTMCStepValue(DGUS_VP_Variable &var) {
 
     uint16_t dir_icon_val = 25;
     if (filelist.seek(top_file + target_line)) {
-      snprintf_P(tmpfilename, VP_SD_FileName_LEN, PSTR("%s%c"), filelist.filename(), filelist.isDir() ? '/' : 0); // snprintf_P(tmpfilename, VP_SD_FileName_LEN, PSTR("%s"), filelist.filename());
+      snprintf_P(tmpfilename, VP_SD_FileName_LEN, PSTR("%s%c"), filelist.filename(), filelist.isDir() ? '/' : 0); // snprintf_P(tmpfilename, VP_SD_FileName_LEN, PSTR("%s"), filelist.filename());//snprintf_P（tmpfilename，VP_SD_FileName_LEN，PSTR（“%s”），filelist.FileName（））；
       dir_icon_val = filelist.isDir() ? 0 : 1;
     }
     DGUSLCD_SendStringToDisplay(var);
@@ -272,37 +273,37 @@ void DGUSScreenHandler::DGUSLCD_SendTMCStepValue(DGUS_VP_Variable &var) {
     uint16_t value = swap16(*(uint16_t*)val_ptr);
     if (value == 0x0F) GotoScreen(DGUSLCD_SCREEN_MAIN);
   }
-#endif // SDSUPPORT
+#endif // SDSUPPORT//SDSUPPORT
 
 void DGUSScreenHandler::ScreenChangeHook(DGUS_VP_Variable &var, void *val_ptr) {
   uint8_t *tmp = (uint8_t*)val_ptr;
 
-  // The keycode in target is coded as <from-frame><to-frame>, so 0x0100A means
-  // from screen 1 (main) to 10 (temperature). DGUSLCD_SCREEN_POPUP is special,
-  // meaning "return to previous screen"
+  // The keycode in target is coded as <from-frame><to-frame>, so 0x0100A means//目标中的键码编码为<from frame><to frame>，因此0x0100A表示
+  // from screen 1 (main) to 10 (temperature). DGUSLCD_SCREEN_POPUP is special,//从屏幕1（主）到10（温度）。DGUSLCD_屏幕_弹出窗口是特殊的，
+  // meaning "return to previous screen"//意思是“返回上一屏幕”
   DGUSLCD_Screens target = (DGUSLCD_Screens)tmp[1];
 
   DEBUG_ECHOLNPAIR("\n DEBUG target", target);
 
-  // when the dgus had reboot, it will enter the DGUSLCD_SCREEN_MAIN page,
-  // so user can change any page to use this function, an it will check
-  // if robin nano is printing. when it is, dgus will enter the printing
-  // page to continue print;
-  //
-  //if (printJobOngoing() || printingIsPaused()) {
-  //  if (target == MKSLCD_PAUSE_SETTING_MOVE || target == MKSLCD_PAUSE_SETTING_EX
-  //    || target == MKSLCD_SCREEN_PRINT || target == MKSLCD_SCREEN_PAUSE
-  //  ) {
-  //  }
-  //  else
-  //    GotoScreen(MKSLCD_SCREEN_PRINT);
-  // return;
-  //}
+  // when the dgus had reboot, it will enter the DGUSLCD_SCREEN_MAIN page,//当dgus重新启动时，它将进入DGUSLCD_屏幕_主页面，
+  // so user can change any page to use this function, an it will check//因此，用户可以更改任何页面以使用此功能，它将进行检查
+  // if robin nano is printing. when it is, dgus will enter the printing//如果robin nano正在打印。此时，dgus将进入打印
+  // page to continue print;//页面继续打印；
+  ////
+  //if (printJobOngoing() || printingIsPaused()) {//如果（打印作业正在进行（）| |打印作业暂停（））{
+  //  if (target == MKSLCD_PAUSE_SETTING_MOVE || target == MKSLCD_PAUSE_SETTING_EX//如果（目标==MKSLCD_PAUSE_SETTING_MOVE | |目标==MKSLCD_PAUSE_SETTING_EX
+  //    || target == MKSLCD_SCREEN_PRINT || target == MKSLCD_SCREEN_PAUSE//| |目标==MKSLCD_屏幕|打印| |目标==MKSLCD_屏幕|暂停
+  //  ) {//  ) {
+  //  }//  }
+  //  else//否则
+  //    GotoScreen(MKSLCD_SCREEN_PRINT);//GotoScreen（MKSLCD屏幕打印）；
+  // return;//返回；
+  //}//}
 
   if (target == DGUSLCD_SCREEN_POPUP) {
     SetupConfirmAction(ExtUI::setUserConfirmed);
 
-    // Special handling for popup is to return to previous menu
+    // Special handling for popup is to return to previous menu//弹出窗口的特殊处理是返回上一个菜单
     if (current_screen == DGUSLCD_SCREEN_POPUP && confirm_action_cb) confirm_action_cb();
     PopToOldScreen();
     return;
@@ -371,7 +372,7 @@ void DGUSScreenHandler::EEPROM_CTRL(DGUS_VP_Variable &var, void *val_ptr) {
   switch (eep_flag) {
     case 0:
       settings.save();
-      settings.load(); // load eeprom data to check the data is right
+      settings.load(); // load eeprom data to check the data is right//加载eeprom数据以检查数据是否正确
       GotoScreen(MKSLCD_SCREEN_EEP_Config);
       break;
 
@@ -496,7 +497,7 @@ void DGUSScreenHandler::MeshLevelDistanceConfig(DGUS_VP_Variable &var, void *val
 void DGUSScreenHandler::MeshLevel(DGUS_VP_Variable &var, void *val_ptr) {
   #if ENABLED(MESH_BED_LEVELING)
     const uint16_t mesh_value = swap16(*(uint16_t *)val_ptr);
-    // static uint8_t a_first_level = 1;
+    // static uint8_t a_first_level = 1;//静态uint8第一级=1；
     char cmd_buf[30];
     float offset = mesh_adj_distance;
     int16_t integer, Deci, Deci2;
@@ -506,7 +507,7 @@ void DGUSScreenHandler::MeshLevel(DGUS_VP_Variable &var, void *val_ptr) {
     switch (mesh_value) {
       case 0:
         offset = mesh_adj_distance;
-        integer = offset; // get int
+        integer = offset; // get int//得到整数
         Deci = (offset * 10);
         Deci = Deci % 10;
         Deci2 = offset * 100;
@@ -516,12 +517,12 @@ void DGUSScreenHandler::MeshLevel(DGUS_VP_Variable &var, void *val_ptr) {
         snprintf_P(cmd_buf, 30, PSTR("G1 Z%d.%d%d"), integer, Deci, Deci2);
         queue.enqueue_one_now(cmd_buf);
         queue.enqueue_now_P(PSTR("G90"));
-        //soft_endstop._enabled = true;
+        //soft_endstop._enabled = true;//软停止。_启用=真；
         break;
 
       case 1:
         offset = mesh_adj_distance;
-        integer = offset;       // get int
+        integer = offset;       // get int//得到整数
         Deci = (offset * 10);
         Deci = Deci % 10;
         Deci2 = offset * 100;
@@ -534,7 +535,7 @@ void DGUSScreenHandler::MeshLevel(DGUS_VP_Variable &var, void *val_ptr) {
         break;
 
       case 2:
-        if (mesh_point_count == GRID_MAX_POINTS) { // The first point
+        if (mesh_point_count == GRID_MAX_POINTS) { // The first point//第一点
 
           queue.enqueue_now_P(PSTR("G28"));
           queue.enqueue_now_P(PSTR("G29S1"));
@@ -549,7 +550,7 @@ void DGUSScreenHandler::MeshLevel(DGUS_VP_Variable &var, void *val_ptr) {
             dgusdisplay.WriteVariable(VP_AutoLevel_1_Dis, level_buf_ch1, 32, true);
           }
         }
-        else if (mesh_point_count > 1) {                              // 倒数第二个点
+        else if (mesh_point_count > 1) {                              // 倒数第二个点// 倒数第二个点
           queue.enqueue_now_P(PSTR("G29S2"));
           mesh_point_count--;
           if (mks_language_index == MKS_English) {
@@ -585,7 +586,7 @@ void DGUSScreenHandler::MeshLevel(DGUS_VP_Variable &var, void *val_ptr) {
       default:
         break;
     }
-  #endif // MESH_BED_LEVELING
+  #endif // MESH_BED_LEVELING//网床找平
 }
 
 void DGUSScreenHandler::SD_FileBack(DGUS_VP_Variable&, void*) {
@@ -604,7 +605,7 @@ void DGUSScreenHandler::LCD_BLK_Adjust(DGUS_VP_Variable &var, void *val_ptr) {
 void DGUSScreenHandler::ManualAssistLeveling(DGUS_VP_Variable &var, void *val_ptr) {
   const int16_t point_value = swap16(*(uint16_t *)val_ptr);
 
-  // Insist on leveling first time at this screen
+  // Insist on leveling first time at this screen//在这个屏幕上坚持第一次调平
   static bool first_level_flag = false;
   if (!first_level_flag || point_value == 0x0001) {
     queue.enqueue_now_P(G28_STR);
@@ -647,7 +648,7 @@ void DGUSScreenHandler::ManualAssistLeveling(DGUS_VP_Variable &var, void *val_pt
   }
 
   if (WITHIN(point_value, 0x0002, 0x0005)) {
-    //queue.enqueue_now_P(PSTR("G28Z"));
+    //queue.enqueue_now_P(PSTR("G28Z"));//排队。现在排队（PSTR（“G28Z”）；
     queue.enqueue_now_P(PSTR("G1Z-10"));
   }
 }
@@ -665,7 +666,7 @@ void DGUSScreenHandler::TMC_ChangeConfig(DGUS_VP_Variable &var, void *val_ptr) {
         #if X_HAS_STEALTHCHOP
           stepperX.homing_threshold(mks_min(tmc_value, 255));
           settings.save();
-          //tmc_step.x = stepperX.homing_threshold();
+          //tmc_step.x = stepperX.homing_threshold();//tmc_step.x=stepRx.homing_threshold（）；
         #endif
       #endif
       break;
@@ -674,7 +675,7 @@ void DGUSScreenHandler::TMC_ChangeConfig(DGUS_VP_Variable &var, void *val_ptr) {
         #if Y_HAS_STEALTHCHOP
           stepperY.homing_threshold(mks_min(tmc_value, 255));
           settings.save();
-          //tmc_step.y = stepperY.homing_threshold();
+          //tmc_step.y = stepperY.homing_threshold();//tmc_step.y=步进。归位_阈值（）；
         #endif
       #endif
       break;
@@ -683,7 +684,7 @@ void DGUSScreenHandler::TMC_ChangeConfig(DGUS_VP_Variable &var, void *val_ptr) {
         #if Z_HAS_STEALTHCHOP
           stepperZ.homing_threshold(mks_min(tmc_value, 255));
           settings.save();
-          //tmc_step.z = stepperZ.homing_threshold();
+          //tmc_step.z = stepperZ.homing_threshold();//tmc_step.z=stepperZ.homing_threshold（）；
         #endif
       #endif
       break;
@@ -751,7 +752,7 @@ void DGUSScreenHandler::HandleManualMove(DGUS_VP_Variable &var, void *val_ptr) {
 
   int16_t movevalue = swap16(*(uint16_t*)val_ptr);
 
-  // Choose Move distance
+  // Choose Move distance//选择移动距离
        if (manualMoveStep == 0x01) manualMoveStep =   10;
   else if (manualMoveStep == 0x02) manualMoveStep =  100;
   else if (manualMoveStep == 0x03) manualMoveStep = 1000;
@@ -762,9 +763,9 @@ void DGUSScreenHandler::HandleManualMove(DGUS_VP_Variable &var, void *val_ptr) {
     return;
 
   char axiscode;
-  unsigned int speed = 1500; // FIXME: get default feedrate for manual moves, dont hardcode.
+  unsigned int speed = 1500; // FIXME: get default feedrate for manual moves, dont hardcode.//修正：获取手动移动的默认进给速度，不要硬编码。
 
-  switch (var.VP) { // switch X Y Z or Home
+  switch (var.VP) { // switch X Y Z or Home//切换X Y Z或原点
     default: return;
     case VP_MOVE_X:
       DEBUG_ECHOLNPGM("X Move");
@@ -781,7 +782,7 @@ void DGUSScreenHandler::HandleManualMove(DGUS_VP_Variable &var, void *val_ptr) {
     case VP_MOVE_Z:
       DEBUG_ECHOLNPGM("Z Move");
       axiscode = 'Z';
-      speed = 300; // default to 5mm/s
+      speed = 300; // default to 5mm/s//默认为5毫米/秒
       if (!ExtUI::canMove(ExtUI::axis_t::Z)) goto cannotmove;
       break;
 
@@ -789,14 +790,14 @@ void DGUSScreenHandler::HandleManualMove(DGUS_VP_Variable &var, void *val_ptr) {
       DEBUG_ECHOLNPGM("Motor Unlock");
       movevalue = 5;
       axiscode  = '\0';
-      // return ;
+      // return ;//返回；
       break;
 
-    case VP_HOME_ALL: // only used for homing
+    case VP_HOME_ALL: // only used for homing//仅用于归航
       DEBUG_ECHOLNPGM("Home all");
       axiscode  = '\0';
-      movevalue = 0; // ignore value sent from display, this VP is _ONLY_ for homing.
-      //return;
+      movevalue = 0; // ignore value sent from display, this VP is _ONLY_ for homing.//忽略显示器发送的值，此VP仅用于归位。
+      //return;//返回；
       break;
 
     case VP_X_HOME:
@@ -819,7 +820,7 @@ void DGUSScreenHandler::HandleManualMove(DGUS_VP_Variable &var, void *val_ptr) {
   }
 
   DEBUG_ECHOPAIR("movevalue = ", movevalue);
-  if (movevalue != 0 && movevalue != 5) { // get move distance
+  if (movevalue != 0 && movevalue != 5) { // get move distance//获得移动距离
     switch (movevalue) {
       case 0x0001: movevalue =  manualMoveStep; break;
       case 0x0002: movevalue = -manualMoveStep; break;
@@ -828,16 +829,16 @@ void DGUSScreenHandler::HandleManualMove(DGUS_VP_Variable &var, void *val_ptr) {
   }
 
   if (!movevalue) {
-    // homing
+    // homing//归巢
     DEBUG_ECHOPAIR(" homing ", AS_CHAR(axiscode));
-    // char buf[6] = "G28 X";
-    // buf[4] = axiscode;
+    // char buf[6] = "G28 X";//char buf[6]=“G28 X”；
+    // buf[4] = axiscode;//buf[4]=axiscode；
 
     char buf[6];
     sprintf(buf, "G28 %c", axiscode);
-    //DEBUG_ECHOPAIR(" ", buf);
+    //DEBUG_ECHOPAIR(" ", buf);//调试回声对（“，buf）；
     queue.enqueue_one_now(buf);
-    //DEBUG_ECHOLNPGM(" ✓");
+    //DEBUG_ECHOLNPGM(" ✓");//调试_ECHOLNPGM（“✓");
     ForceCompleteUpdate();
     return;
   }
@@ -850,17 +851,17 @@ void DGUSScreenHandler::HandleManualMove(DGUS_VP_Variable &var, void *val_ptr) {
     return;
   }
   else {
-    // movement
+    // movement//运动
     DEBUG_ECHOPAIR(" move ", AS_CHAR(axiscode));
     bool old_relative_mode = relative_mode;
 
     if (!relative_mode) {
-      //DEBUG_ECHOPGM(" G91");
+      //DEBUG_ECHOPGM(" G91");//调试ECHOPGM（“G91”）；
       queue.enqueue_now_P(PSTR("G91"));
-      //DEBUG_ECHOPGM(" ✓ ");
+      //DEBUG_ECHOPGM(" ✓ ");//调试ECHOPGM（“✓ ");
     }
-    char buf[32]; // G1 X9999.99 F12345
-    // unsigned int backup_speed = MMS_TO_MMM(feedrate_mm_s);
+    char buf[32]; // G1 X9999.99 F12345//G1 X9999.99 F12345
+    // unsigned int backup_speed = MMS_TO_MMM(feedrate_mm_s);//无符号整数备份速度=MMS到MMM（进给速度）；
     char sign[] = "\0";
     int16_t value = movevalue / 100;
     if (movevalue < 0) { value = -value; sign[0] = '-'; }
@@ -868,19 +869,19 @@ void DGUSScreenHandler::HandleManualMove(DGUS_VP_Variable &var, void *val_ptr) {
     snprintf_P(buf, 32, PSTR("G0 %c%s%d.%02d F%d"), axiscode, sign, value, fraction, speed);
     queue.enqueue_one_now(buf);
 
-    //if (backup_speed != speed) {
-    //  snprintf_P(buf, 32, PSTR("G0 F%d"), backup_speed);
-    //  queue.enqueue_one_now(buf);
-    //  //DEBUG_ECHOPAIR(" ", buf);
-    //}
+    //if (backup_speed != speed) {//如果（备份速度！=速度）{
+    //  snprintf_P(buf, 32, PSTR("G0 F%d"), backup_speed);//snprintf_P（buf，32，PSTR（“G0 F%d”），备份速度）；
+    //  queue.enqueue_one_now(buf);//排队。现在排队（buf）；
+    //  //DEBUG_ECHOPAIR(" ", buf);////调试\u回声对（“，buf）；
+    //}//}
 
-    //while (!enqueue_and_echo_command(buf)) idle();
-    //DEBUG_ECHOLNPGM(" ✓ ");
+    //while (!enqueue_and_echo_command(buf)) idle();//当（！enqueue_和_echo_命令（buf））空闲时（）；
+    //DEBUG_ECHOLNPGM(" ✓ ");//调试_ECHOLNPGM（“✓ ");
     if (!old_relative_mode) {
-      //DEBUG_ECHOPGM("G90");
-      //queue.enqueue_now_P(PSTR("G90"));
+      //DEBUG_ECHOPGM("G90");//调试ECHOPGM（“G90”）；
+      //queue.enqueue_now_P(PSTR("G90"));//排队。现在排队（PSTR（“G90”）；
       queue.enqueue_now_P(PSTR("G90"));
-      //DEBUG_ECHOPGM(" ✓ ");
+      //DEBUG_ECHOPGM(" ✓ ");//调试ECHOPGM（“✓ ");
     }
   }
 
@@ -902,7 +903,7 @@ void DGUSScreenHandler::GetParkPos_MKS(DGUS_VP_Variable &var, void *val_ptr) {
     case VP_Z_PARK_POS: mks_park_pos.z = value_pos; break;
     default: break;
   }
-  skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel
+  skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel//不要在下次更新时覆盖该值，因为显示可能会并行自动递增
 }
 
 void DGUSScreenHandler::HandleChangeLevelPoint_MKS(DGUS_VP_Variable &var, void *val_ptr) {
@@ -914,7 +915,7 @@ void DGUSScreenHandler::HandleChangeLevelPoint_MKS(DGUS_VP_Variable &var, void *
   *(int16_t*)var.memadr = value_raw;
 
   settings.save();
-  skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel
+  skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel//不要在下次更新时覆盖该值，因为显示可能会并行自动递增
 }
 
 void DGUSScreenHandler::HandleStepPerMMChanged_MKS(DGUS_VP_Variable &var, void *val_ptr) {
@@ -936,7 +937,7 @@ void DGUSScreenHandler::HandleStepPerMMChanged_MKS(DGUS_VP_Variable &var, void *
   ExtUI::setAxisSteps_per_mm(value, axis);
   DEBUG_ECHOLNPAIR_F("value_set:", ExtUI::getAxisSteps_per_mm(axis));
   settings.save();
-  skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel
+  skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel//不要在下次更新时覆盖该值，因为显示可能会并行自动递增
 }
 
 void DGUSScreenHandler::HandleStepPerMMExtruderChanged_MKS(DGUS_VP_Variable &var, void *val_ptr) {
@@ -961,7 +962,7 @@ void DGUSScreenHandler::HandleStepPerMMExtruderChanged_MKS(DGUS_VP_Variable &var
   ExtUI::setAxisSteps_per_mm(value, extruder);
   DEBUG_ECHOLNPAIR_F("value_set:", ExtUI::getAxisSteps_per_mm(extruder));
   settings.save();
-  skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel
+  skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel//不要在下次更新时覆盖该值，因为显示可能会并行自动递增
 }
 
 void DGUSScreenHandler::HandleMaxSpeedChange_MKS(DGUS_VP_Variable &var, void *val_ptr) {
@@ -983,7 +984,7 @@ void DGUSScreenHandler::HandleMaxSpeedChange_MKS(DGUS_VP_Variable &var, void *va
   ExtUI::setAxisMaxFeedrate_mm_s(value, axis);
   DEBUG_ECHOLNPAIR_F("value_set:", ExtUI::getAxisMaxFeedrate_mm_s(axis));
   settings.save();
-  skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel
+  skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel//不要在下次更新时覆盖该值，因为显示可能会并行自动递增
 }
 
 void DGUSScreenHandler::HandleExtruderMaxSpeedChange_MKS(DGUS_VP_Variable &var, void *val_ptr) {
@@ -1008,7 +1009,7 @@ void DGUSScreenHandler::HandleExtruderMaxSpeedChange_MKS(DGUS_VP_Variable &var, 
   ExtUI::setAxisMaxFeedrate_mm_s(value, extruder);
   DEBUG_ECHOLNPAIR_F("value_set:", ExtUI::getAxisMaxFeedrate_mm_s(extruder));
   settings.save();
-  skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel
+  skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel//不要在下次更新时覆盖该值，因为显示可能会并行自动递增
 }
 
 void DGUSScreenHandler::HandleMaxAccChange_MKS(DGUS_VP_Variable &var, void *val_ptr) {
@@ -1030,7 +1031,7 @@ void DGUSScreenHandler::HandleMaxAccChange_MKS(DGUS_VP_Variable &var, void *val_
   ExtUI::setAxisMaxAcceleration_mm_s2(value, axis);
   DEBUG_ECHOLNPAIR_F("value_set:", ExtUI::getAxisMaxAcceleration_mm_s2(axis));
   settings.save();
-  skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel
+  skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel//不要在下次更新时覆盖该值，因为显示可能会并行自动递增
 }
 
 void DGUSScreenHandler::HandleExtruderAccChange_MKS(DGUS_VP_Variable &var, void *val_ptr) {
@@ -1053,38 +1054,38 @@ void DGUSScreenHandler::HandleExtruderAccChange_MKS(DGUS_VP_Variable &var, void 
   ExtUI::setAxisMaxAcceleration_mm_s2(value, extruder);
   DEBUG_ECHOLNPAIR_F("value_set:", ExtUI::getAxisMaxAcceleration_mm_s2(extruder));
   settings.save();
-  skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel
+  skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel//不要在下次更新时覆盖该值，因为显示可能会并行自动递增
 }
 
 void DGUSScreenHandler::HandleTravelAccChange_MKS(DGUS_VP_Variable &var, void *val_ptr) {
   uint16_t value_travel = swap16(*(uint16_t*)val_ptr);
   planner.settings.travel_acceleration = (float)value_travel;
-  skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel
+  skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel//不要在下次更新时覆盖该值，因为显示可能会并行自动递增
 }
 
 void DGUSScreenHandler::HandleFeedRateMinChange_MKS(DGUS_VP_Variable &var, void *val_ptr) {
   uint16_t value_t = swap16(*(uint16_t*)val_ptr);
   planner.settings.min_feedrate_mm_s = (float)value_t;
-  skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel
+  skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel//不要在下次更新时覆盖该值，因为显示可能会并行自动递增
 }
 
 void DGUSScreenHandler::HandleMin_T_F_MKS(DGUS_VP_Variable &var, void *val_ptr) {
   uint16_t value_t_f = swap16(*(uint16_t*)val_ptr);
   planner.settings.min_travel_feedrate_mm_s = (float)value_t_f;
-  skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel
+  skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel//不要在下次更新时覆盖该值，因为显示可能会并行自动递增
 }
 
 void DGUSScreenHandler::HandleAccChange_MKS(DGUS_VP_Variable &var, void *val_ptr) {
   uint16_t value_acc = swap16(*(uint16_t*)val_ptr);
   planner.settings.acceleration = (float)value_acc;
-  skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel
+  skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel//不要在下次更新时覆盖该值，因为显示可能会并行自动递增
 }
 
 #if ENABLED(PREVENT_COLD_EXTRUSION)
   void DGUSScreenHandler::HandleGetExMinTemp_MKS(DGUS_VP_Variable &var, void *val_ptr) {
     const uint16_t value_ex_min_temp = swap16(*(uint16_t*)val_ptr);
     thermalManager.extrude_min_temp = value_ex_min_temp;
-    skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel
+    skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel//不要在下次更新时覆盖该值，因为显示可能会并行自动递增
   }
 #endif
 
@@ -1119,9 +1120,9 @@ void DGUSScreenHandler::HandleAccChange_MKS(DGUS_VP_Variable &var, void *val_ptr
     *(float *)var.memadr = newvalue;
 
     settings.save();
-    skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel
+    skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel//不要在下次更新时覆盖该值，因为显示可能会并行自动递增
   }
-#endif // HAS_PID_HEATING
+#endif // HAS_PID_HEATING//有没有电加热
 
 #if ENABLED(BABYSTEPPING)
   void DGUSScreenHandler::HandleLiveAdjustZ(DGUS_VP_Variable &var, void *val_ptr) {
@@ -1166,7 +1167,7 @@ void DGUSScreenHandler::HandleAccChange_MKS(DGUS_VP_Variable &var, void *val_ptr
     }
     ForceCompleteUpdate();
   }
-#endif // BABYSTEPPING
+#endif // BABYSTEPPING//婴儿步
 
 void DGUSScreenHandler::GetManualFilament(DGUS_VP_Variable &var, void *val_ptr) {
   DEBUG_ECHOLNPGM("GetManualFilament");
@@ -1178,7 +1179,7 @@ void DGUSScreenHandler::GetManualFilament(DGUS_VP_Variable &var, void *val_ptr) 
   DEBUG_ECHOLNPAIR_F("Get Filament len value:", value);
   distanceFilament = value;
 
-  skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel
+  skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel//不要在下次更新时覆盖该值，因为显示可能会并行自动递增
 }
 
 void DGUSScreenHandler::GetManualFilamentSpeed(DGUS_VP_Variable &var, void *val_ptr) {
@@ -1190,14 +1191,14 @@ void DGUSScreenHandler::GetManualFilamentSpeed(DGUS_VP_Variable &var, void *val_
 
   filamentSpeed_mm_s = value_len;
 
-  skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel
+  skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel//不要在下次更新时覆盖该值，因为显示可能会并行自动递增
 }
 
 void DGUSScreenHandler::MKS_FilamentLoadUnload(DGUS_VP_Variable &var, void *val_ptr, const int filamentDir) {
   #if EITHER(HAS_MULTI_HOTEND, SINGLENOZZLE)
     uint8_t swap_tool = 0;
   #else
-    constexpr uint8_t swap_tool = 1; // T0 (or none at all)
+    constexpr uint8_t swap_tool = 1; // T0 (or none at all)//T0（或根本没有）
   #endif
 
   #if HAS_HOTEND
@@ -1267,7 +1268,7 @@ void GcodeSuite::M1002() {
   #endif
 
   const uint8_t old_axis_relative = axis_relative;
-  set_e_relative(); // M83
+  set_e_relative(); // M83//M83
   {
     char buf[20];
     snprintf_P(buf, 20, PSTR("G1E%dF%d"), parser.intval('E'), parser.intval('F'));
@@ -1294,42 +1295,42 @@ void DGUSScreenHandler::MKS_FilamentUnLoad(DGUS_VP_Variable &var, void *val_ptr)
     uint8_t e_temp = 0;
     filament_data.heated = false;
     uint16_t preheat_option = swap16(*(uint16_t*)val_ptr);
-    if (preheat_option >= 10) {     // Unload filament type
+    if (preheat_option >= 10) {     // Unload filament type//卸载灯丝类型
       preheat_option -= 10;
       filament_data.action = 2;
       filament_data.purge_length = DGUS_FILAMENT_PURGE_LENGTH;
     }
-    else if (preheat_option <= 8)   // Load filament type
+    else if (preheat_option <= 8)   // Load filament type//负载灯丝类型
       filament_data.action = 1;
-    else                            // Cancel filament operation
+    else                            // Cancel filament operation//取消灯丝操作
       filament_data.action = 0;
 
     switch (preheat_option) {
-      case 0: // Load PLA
+      case 0: // Load PLA//装载PLA
         #ifdef PREHEAT_1_TEMP_HOTEND
           e_temp = PREHEAT_1_TEMP_HOTEND;
         #endif
         break;
-      case 1: // Load ABS
+      case 1: // Load ABS//负载ABS
         TERN_(PREHEAT_2_TEMP_HOTEND, e_temp = PREHEAT_2_TEMP_HOTEND);
         break;
-      case 2: // Load PET
+      case 2: // Load PET//装载宠物
         #ifdef PREHEAT_3_TEMP_HOTEND
           e_temp = PREHEAT_3_TEMP_HOTEND;
         #endif
         break;
-      case 3: // Load FLEX
+      case 3: // Load FLEX//负载弹性
         #ifdef PREHEAT_4_TEMP_HOTEND
           e_temp = PREHEAT_4_TEMP_HOTEND;
         #endif
         break;
-      case 9: // Cool down
+      case 9: // Cool down//冷静下来
       default:
         e_temp = 0;
         break;
     }
 
-    if (filament_data.action == 0) { // Go back to utility screen
+    if (filament_data.action == 0) { // Go back to utility screen//返回实用程序屏幕
       #if HAS_HOTEND
         thermalManager.setTargetHotend(e_temp, ExtUI::extruder_t::E0);
       #endif
@@ -1338,7 +1339,7 @@ void DGUSScreenHandler::MKS_FilamentUnLoad(DGUS_VP_Variable &var, void *val_ptr)
       #endif
       GotoScreen(DGUSLCD_SCREEN_UTILITY);
     }
-    else { // Go to the preheat screen to show the heating progress
+    else { // Go to the preheat screen to show the heating progress//转到预热屏幕以显示加热进度
       switch (var.VP) {
         default: return;
           #if HAS_HOTEND
@@ -1361,23 +1362,23 @@ void DGUSScreenHandler::MKS_FilamentUnLoad(DGUS_VP_Variable &var, void *val_ptr)
     DEBUG_ECHOLNPGM("HandleFilamentLoadUnload");
     if (filament_data.action <= 0) return;
 
-    // If we close to the target temperature, we can start load or unload the filament
+    // If we close to the target temperature, we can start load or unload the filament//如果我们接近目标温度，我们可以开始加载或卸载灯丝
     if (thermalManager.hotEnoughToExtrude(filament_data.extruder) && \
         thermalManager.targetHotEnoughToExtrude(filament_data.extruder)) {
       float movevalue = DGUS_FILAMENT_LOAD_LENGTH_PER_TIME;
 
-      if (filament_data.action == 1) { // load filament
+      if (filament_data.action == 1) { // load filament//负荷灯丝
         if (!filament_data.heated) {
           filament_data.heated = true;
         }
         movevalue = ExtUI::getAxisPosition_mm(filament_data.extruder) + movevalue;
       }
-      else { // unload filament
+      else { // unload filament//卸载灯丝
         if (!filament_data.heated) {
           GotoScreen(DGUSLCD_SCREEN_FILAMENT_UNLOADING);
           filament_data.heated = true;
         }
-        // Before unloading extrude to prevent jamming
+        // Before unloading extrude to prevent jamming//卸料前挤出，防止堵塞
         if (filament_data.purge_length >= 0) {
           movevalue = ExtUI::getAxisPosition_mm(filament_data.extruder) + movevalue;
           filament_data.purge_length -= movevalue;
@@ -1390,7 +1391,7 @@ void DGUSScreenHandler::MKS_FilamentUnLoad(DGUS_VP_Variable &var, void *val_ptr)
     }
   }
 
-#endif // DGUS_FILAMENT_LOADUNLOAD
+#endif // DGUS_FILAMENT_LOADUNLOAD//DGUS_灯丝_装载卸载
 
 bool DGUSScreenHandler::loop() {
   dgusdisplay.loop();
@@ -1439,7 +1440,7 @@ bool DGUSScreenHandler::loop() {
     #if ENABLED(DGUS_MKS_RUNOUT_SENSOR)
       if (booted && printingIsActive()) DGUS_Runout_Idle();
     #endif
-  #endif // SHOW_BOOTSCREEN
+  #endif // SHOW_BOOTSCREEN//显示启动屏幕
 
   return IsScreenComplete();
 }
@@ -1481,7 +1482,7 @@ void DGUSScreenHandler::DGUS_RunoutInit(void) {
 
 void DGUSScreenHandler::DGUS_Runout_Idle(void) {
   #if ENABLED(DGUS_MKS_RUNOUT_SENSOR)
-    // scanf runout pin
+    // scanf runout pin//扫描偏转销
     switch (runout_mks.runout_status) {
 
       case RUNOUT_STATUS:
@@ -1490,7 +1491,7 @@ void DGUSScreenHandler::DGUS_Runout_Idle(void) {
         GotoScreen(MKSLCD_SCREEN_PAUSE);
 
         sendinfoscreen(PSTR("NOTICE"), nullptr, PSTR("Please change filament!"), nullptr, true, true, true, true);
-        //SetupConfirmAction(nullptr);
+        //SetupConfirmAction(nullptr);//setupconfirmation（nullptr）；
         GotoScreen(DGUSLCD_SCREEN_POPUP);
         break;
 
@@ -2027,4 +2028,4 @@ void DGUSScreenHandler::DGUS_LanguageDisplay(uint8_t var) {
   }
 }
 
-#endif // DGUS_LCD_UI_MKS
+#endif // DGUS_LCD_UI_MKS//DGUS_LCD_UI_MKS

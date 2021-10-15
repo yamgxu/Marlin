@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -20,9 +21,9 @@
  *
  */
 
-//
-// Tune Menu
-//
+////
+// Tune Menu//调谐菜单
+////
 
 #include "../../inc/MarlinConfigPre.h"
 
@@ -103,28 +104,28 @@
     void lcd_babystep_z()  { _lcd_babystep_go(_lcd_babystep_z); }
   #endif
 
-#endif // BABYSTEPPING
+#endif // BABYSTEPPING//婴儿步
 
 void menu_tune() {
   START_MENU();
   BACK_ITEM(MSG_MAIN);
 
-  //
-  // Speed:
-  //
+  ////
+  // Speed://速度：
+  ////
   EDIT_ITEM(int3, MSG_SPEED, &feedrate_percentage, 10, 999);
 
-  //
-  // Manual bed leveling, Bed Z:
-  //
+  ////
+  // Manual bed leveling, Bed Z://手动床层找平，床层Z：
+  ////
   #if BOTH(MESH_BED_LEVELING, LCD_BED_LEVELING)
     EDIT_ITEM(float43, MSG_BED_Z, &mbl.z_offset, -1, 1);
   #endif
 
-  //
-  // Nozzle:
-  // Nozzle [1-4]:
-  //
+  ////
+  // Nozzle://喷嘴：
+  // Nozzle [1-4]://喷嘴[1-4]：
+  ////
   #if HOTENDS == 1
     EDIT_ITEM_FAST(int3, MSG_NOZZLE, &thermalManager.temp_hotend[0].target, 0, thermalManager.hotend_max_target(0), []{ thermalManager.start_watching_hotend(0); });
   #elif HAS_MULTI_HOTEND
@@ -137,16 +138,16 @@ void menu_tune() {
       EDIT_ITEM_FAST_N(int3, e, MSG_NOZZLE_STANDBY, &thermalManager.singlenozzle_temp[e], 0, thermalManager.hotend_max_target(0));
   #endif
 
-  //
-  // Bed:
-  //
+  ////
+  // Bed://床：
+  ////
   #if HAS_HEATED_BED
     EDIT_ITEM_FAST(int3, MSG_BED, &thermalManager.temp_bed.target, 0, BED_MAX_TARGET, thermalManager.start_watching_bed);
   #endif
 
-  //
-  // Fan Speed:
-  //
+  ////
+  // Fan Speed://风扇转速：
+  ////
   #if HAS_FAN
 
     DEFINE_SINGLENOZZLE_ITEM();
@@ -190,23 +191,23 @@ void menu_tune() {
       singlenozzle_item(7);
     #endif
 
-  #endif // HAS_FAN
+  #endif // HAS_FAN//范先生
 
-  //
-  // Flow:
-  //
+  ////
+  // Flow://流量：
+  ////
   #if HAS_EXTRUDERS
     EDIT_ITEM(int3, MSG_FLOW, &planner.flow_percentage[active_extruder], 10, 999, []{ planner.refresh_e_factor(active_extruder); });
-    // Flow En:
+    // Flow En://流程En：
     #if HAS_MULTI_EXTRUDER
       LOOP_L_N(n, EXTRUDERS)
         EDIT_ITEM_N(int3, n, MSG_FLOW_N, &planner.flow_percentage[n], 10, 999, []{ planner.refresh_e_factor(MenuItemBase::itemIndex); });
     #endif
   #endif
 
-  //
-  // Advance K:
-  //
+  ////
+  // Advance K://预付款K：
+  ////
   #if ENABLED(LIN_ADVANCE) && DISABLED(SLIM_LCD_MENUS)
     #if EXTRUDERS == 1
       EDIT_ITEM(float42_52, MSG_ADVANCE_K, &planner.extruder_advance_K[0], 0, 10);
@@ -216,11 +217,11 @@ void menu_tune() {
     #endif
   #endif
 
-  //
-  // Babystep X:
-  // Babystep Y:
-  // Babystep Z:
-  //
+  ////
+  // Babystep X://Babystep X：
+  // Babystep Y://Babystep Y：
+  // Babystep Z://Babystep Z：
+  ////
   #if ENABLED(BABYSTEPPING)
     #if ENABLED(BABYSTEP_XY)
       SUBMENU(MSG_BABYSTEP_X, []{ _lcd_babystep_go(_lcd_babystep_x); });
@@ -236,4 +237,4 @@ void menu_tune() {
   END_MENU();
 }
 
-#endif // HAS_LCD_MENU
+#endif // HAS_LCD_MENU//有LCD菜单吗

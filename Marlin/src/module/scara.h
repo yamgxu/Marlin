@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,7 +32,7 @@ extern float segments_per_second;
 
 #if ENABLED(AXEL_TPARA)
 
-  float constexpr L1 = TPARA_LINKAGE_1, L2 = TPARA_LINKAGE_2,   // Float constants for Robot arm calculations
+  float constexpr L1 = TPARA_LINKAGE_1, L2 = TPARA_LINKAGE_2,   // Float constants for Robot arm calculations//用于机器人手臂计算的浮点常数
                   L1_2 = sq(float(L1)), L1_2_2 = 2.0 * L1_2,
                   L2_2 = sq(float(L2));
 
@@ -40,7 +41,7 @@ extern float segments_per_second;
 
 #else
 
-  float constexpr L1 = SCARA_LINKAGE_1, L2 = SCARA_LINKAGE_2,   // Float constants for SCARA calculations
+  float constexpr L1 = SCARA_LINKAGE_1, L2 = SCARA_LINKAGE_2,   // Float constants for SCARA calculations//SCARA计算中的浮点常数
                   L1_2 = sq(float(L1)), L1_2_2 = 2.0 * L1_2,
                   L2_2 = sq(float(L2));
 

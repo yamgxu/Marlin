@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Copyright (C) 2011 Circuits At Home, LTD. All rights reserved.
  *
@@ -25,7 +26,7 @@
 
 #pragma once
 
-// Cruft removal, makes driver smaller, faster.
+// Cruft removal, makes driver smaller, faster.//清除积垢，使驱动器更小、更快。
 #ifndef MS_WANT_PARSER
   #define MS_WANT_PARSER 0
 #endif
@@ -35,39 +36,39 @@
 #define bmREQ_MASSOUT       USB_SETUP_HOST_TO_DEVICE|USB_SETUP_TYPE_CLASS|USB_SETUP_RECIPIENT_INTERFACE
 #define bmREQ_MASSIN        USB_SETUP_DEVICE_TO_HOST|USB_SETUP_TYPE_CLASS|USB_SETUP_RECIPIENT_INTERFACE
 
-// Mass Storage Subclass Constants
-#define MASS_SUBCLASS_SCSI_NOT_REPORTED 0x00    // De facto use
+// Mass Storage Subclass Constants//大容量存储子类常数
+#define MASS_SUBCLASS_SCSI_NOT_REPORTED 0x00    // De facto use//实际使用
 #define MASS_SUBCLASS_RBC               0x01
-#define MASS_SUBCLASS_ATAPI             0x02    // MMC-5 (ATAPI)
-#define MASS_SUBCLASS_OBSOLETE1         0x03    // Was QIC-157
-#define MASS_SUBCLASS_UFI               0x04    // Specifies how to interface Floppy Disk Drives to USB
-#define MASS_SUBCLASS_OBSOLETE2         0x05    // Was SFF-8070i
-#define MASS_SUBCLASS_SCSI              0x06    // SCSI Transparent Command Set
-#define MASS_SUBCLASS_LSDFS             0x07    // Specifies how host has to negotiate access before trying SCSI
+#define MASS_SUBCLASS_ATAPI             0x02    // MMC-5 (ATAPI)//MMC-5（ATAPI）
+#define MASS_SUBCLASS_OBSOLETE1         0x03    // Was QIC-157//是QIC-157吗
+#define MASS_SUBCLASS_UFI               0x04    // Specifies how to interface Floppy Disk Drives to USB//指定如何将软盘驱动器连接到USB
+#define MASS_SUBCLASS_OBSOLETE2         0x05    // Was SFF-8070i//是SFF-8070i吗
+#define MASS_SUBCLASS_SCSI              0x06    // SCSI Transparent Command Set//SCSI透明命令集
+#define MASS_SUBCLASS_LSDFS             0x07    // Specifies how host has to negotiate access before trying SCSI//指定主机在尝试SCSI之前协商访问的方式
 #define MASS_SUBCLASS_IEEE1667          0x08
 
-// Mass Storage Class Protocols
-#define MASS_PROTO_CBI                  0x00    // CBI (with command completion interrupt)
-#define MASS_PROTO_CBI_NO_INT           0x01    // CBI (without command completion interrupt)
+// Mass Storage Class Protocols//大容量存储类协议
+#define MASS_PROTO_CBI                  0x00    // CBI (with command completion interrupt)//CBI（带命令完成中断）
+#define MASS_PROTO_CBI_NO_INT           0x01    // CBI (without command completion interrupt)//CBI（无命令完成中断）
 #define MASS_PROTO_OBSOLETE             0x02
-#define MASS_PROTO_BBB                  0x50    // Bulk Only Transport
+#define MASS_PROTO_BBB                  0x50    // Bulk Only Transport//散装运输
 #define MASS_PROTO_UAS                  0x62
 
-// Request Codes
+// Request Codes//请求代码
 #define MASS_REQ_ADSC                   0x00
 #define MASS_REQ_GET                    0xFC
 #define MASS_REQ_PUT                    0xFD
 #define MASS_REQ_GET_MAX_LUN            0xFE
-#define MASS_REQ_BOMSR                  0xFF    // Bulk-Only Mass Storage Reset
+#define MASS_REQ_BOMSR                  0xFF    // Bulk-Only Mass Storage Reset//仅大容量存储重置
 
 #define MASS_CBW_SIGNATURE              0x43425355
 #define MASS_CSW_SIGNATURE              0x53425355
 
-#define MASS_CMD_DIR_OUT                0 // (0 << 7)
-#define MASS_CMD_DIR_IN                 0x80 //(1 << 7)
+#define MASS_CMD_DIR_OUT                0 // (0 << 7)// (0 << 7)
+#define MASS_CMD_DIR_IN                 0x80 //(1 << 7)//(1 << 7)
 
 /*
- * Reference documents from T10 (https://www.t10.org)
+ * Reference documents from T10 (https://www.t10.org)//（www.t10.org）
  * SCSI Primary Commands - 3 (SPC-3)
  * SCSI Block Commands - 2 (SBC-2)
  * Multi-Media Commands - 5 (MMC-5)
@@ -166,7 +167,7 @@
 #define MASS_ERR_BAD_LBA                0x09
 #define MASS_ERR_MEDIA_CHANGED          0x0A
 #define MASS_ERR_DEVICE_DISCONNECTED    0x11
-#define MASS_ERR_UNABLE_TO_RECOVER      0x12    // Reset recovery error
+#define MASS_ERR_UNABLE_TO_RECOVER      0x12    // Reset recovery error//重置恢复错误
 #define MASS_ERR_INVALID_LUN            0x13
 #define MASS_ERR_WRITE_STALL            0x14
 #define MASS_ERR_READ_NAKS              0x15
@@ -175,18 +176,18 @@
 #define MASS_ERR_NOT_IMPLEMENTED        0xFD
 #define MASS_ERR_GENERAL_SCSI_ERROR     0xFE
 #define MASS_ERR_GENERAL_USB_ERROR      0xFF
-#define MASS_ERR_USER                   0xA0    // For subclasses to define their own error codes
+#define MASS_ERR_USER                   0xA0    // For subclasses to define their own error codes//用于子类定义自己的错误代码
 
-#define MASS_TRANS_FLG_CALLBACK         0x01    // Callback is involved
-#define MASS_TRANS_FLG_NO_STALL_CHECK   0x02    // STALL condition is not checked
-#define MASS_TRANS_FLG_NO_PHASE_CHECK   0x04    // PHASE_ERROR is not checked
+#define MASS_TRANS_FLG_CALLBACK         0x01    // Callback is involved//涉及回调
+#define MASS_TRANS_FLG_NO_STALL_CHECK   0x02    // STALL condition is not checked//未检查失速条件
+#define MASS_TRANS_FLG_NO_PHASE_CHECK   0x04    // PHASE_ERROR is not checked//未检查相位错误
 
 #define MASS_MAX_ENDPOINTS              3
 
 struct Capacity {
   uint8_t data[8];
-  //uint32_t dwBlockAddress;
-  //uint32_t dwBlockLength;
+  //uint32_t dwBlockAddress;//uint32_t数据块地址；
+  //uint32_t dwBlockLength;//uint32_t数据块长度；
 } __attribute__((packed));
 
 struct BASICCDB {
@@ -342,7 +343,7 @@ struct InquiryResponse {
   unsigned AERC : 1;
 
   uint8_t AdditionalLength;
-  //uint8_t Reserved3[2];
+  //uint8_t Reserved3[2];//uint8_t储备3[2]；
 
   unsigned PROTECT : 1;
   unsigned Res : 2;
@@ -404,34 +405,34 @@ struct CommandBlockWrapper : public CommandBlockWrapperBase {
   uint8_t CBWCB[16];
 
 public:
-  // All zeroed.
+  // All zeroed.//全部归零。
 
   CommandBlockWrapper() :
   CommandBlockWrapperBase(0, 0, 0), bmReserved1(0), bmReserved2(0) {
     for (int i = 0; i < 16; i++) CBWCB[i] = 0;
   }
 
-  // Generic Wrap, CDB zeroed.
+  // Generic Wrap, CDB zeroed.//通用包装，CDB归零。
 
   CommandBlockWrapper(uint32_t tag, uint32_t xflen, uint8_t flgs, uint8_t lu, uint8_t cmdlen, uint8_t cmd) :
   CommandBlockWrapperBase(tag, xflen, flgs),
   bmCBWLUN(lu), bmReserved1(0), bmCBWCBLength(cmdlen), bmReserved2(0) {
     for (int i = 0; i < 16; i++) CBWCB[i] = 0;
-    // Type punning can cause optimization problems and bugs.
-    // Using reinterpret_cast to a dreinterpretifferent object is the proper way to do this.
-    //(((BASICCDB_t *) CBWCB)->LUN) = cmd;
+    // Type punning can cause optimization problems and bugs.//类型双关可能导致优化问题和bug。
+    // Using reinterpret_cast to a dreinterpretifferent object is the proper way to do this.//对不同的对象使用reinterpret_cast是正确的方法。
+    //(((BASICCDB_t *) CBWCB)->LUN) = cmd;//（（（BASICCDB_t*）CBWCB）->LUN）=cmd；
     BASICCDB_t *x = reinterpret_cast<BASICCDB_t *>(CBWCB);
     x->LUN = cmd;
   }
 
-  // Wrap for CDB of 6
+  // Wrap for CDB of 6//国开行6号包裹
 
   CommandBlockWrapper(uint32_t tag, uint32_t xflen, CDB6_t *cdb, uint8_t dir) :
   CommandBlockWrapperBase(tag, xflen, dir),
   bmCBWLUN(cdb->LUN), bmReserved1(0), bmCBWCBLength(6), bmReserved2(0) {
     memcpy(&CBWCB, cdb, 6);
   }
-  // Wrap for CDB of 10
+  // Wrap for CDB of 10//国开行10美元包装
 
   CommandBlockWrapper(uint32_t tag, uint32_t xflen, CDB10_t *cdb, uint8_t dir) :
   CommandBlockWrapperBase(tag, xflen, dir),
@@ -468,32 +469,32 @@ struct RequestSenseResponce {
 
 class BulkOnly : public USBDeviceConfig, public UsbConfigXtracter {
 protected:
-  static const uint8_t epDataInIndex; // DataIn endpoint index
-  static const uint8_t epDataOutIndex; // DataOUT endpoint index
-  static const uint8_t epInterruptInIndex; // InterruptIN  endpoint index
+  static const uint8_t epDataInIndex; // DataIn endpoint index//端点索引中的数据
+  static const uint8_t epDataOutIndex; // DataOUT endpoint index//数据输出端点索引
+  static const uint8_t epInterruptInIndex; // InterruptIN  endpoint index//中断端点索引
 
   USB *pUsb;
   uint8_t bAddress;
-  uint8_t bConfNum; // configuration number
-  uint8_t bIface; // interface value
-  uint8_t bNumEP; // total number of EP in the configuration
-  uint32_t qNextPollTime; // next poll time
-  bool bPollEnable; // poll enable flag
+  uint8_t bConfNum; // configuration number//配置号
+  uint8_t bIface; // interface value//接口值
+  uint8_t bNumEP; // total number of EP in the configuration//配置中的EP总数
+  uint32_t qNextPollTime; // next poll time//下次投票时间
+  bool bPollEnable; // poll enable flag//轮询启用标志
 
   EpInfo epInfo[MASS_MAX_ENDPOINTS];
 
-  uint32_t dCBWTag; // Tag
-  //uint32_t dCBWDataTransferLength; // Data Transfer Length
-  uint8_t bLastUsbError; // Last USB error
-  uint8_t bMaxLUN; // Max LUN
-  uint8_t bTheLUN; // Active LUN
-  uint32_t CurrentCapacity[MASS_MAX_SUPPORTED_LUN]; // Total sectors
-  uint16_t CurrentSectorSize[MASS_MAX_SUPPORTED_LUN]; // Sector size, clipped to 16 bits
-  bool LUNOk[MASS_MAX_SUPPORTED_LUN]; // use this to check for media changes.
+  uint32_t dCBWTag; // Tag//标签
+  //uint32_t dCBWDataTransferLength; // Data Transfer Length//uint32\u t dCBWDataTransferLength；//数据传输长度
+  uint8_t bLastUsbError; // Last USB error//上次USB错误
+  uint8_t bMaxLUN; // Max LUN//最大LUN
+  uint8_t bTheLUN; // Active LUN//活动LUN
+  uint32_t CurrentCapacity[MASS_MAX_SUPPORTED_LUN]; // Total sectors//总扇区
+  uint16_t CurrentSectorSize[MASS_MAX_SUPPORTED_LUN]; // Sector size, clipped to 16 bits//扇区大小，剪裁为16位
+  bool LUNOk[MASS_MAX_SUPPORTED_LUN]; // use this to check for media changes.//使用此选项检查介质更改。
   bool WriteOk[MASS_MAX_SUPPORTED_LUN];
   void PrintEndpointDescriptor(const USB_FD_ENDPOINT_DESCRIPTOR* ep_ptr);
 
-  // Additional Initialization Method for Subclasses
+  // Additional Initialization Method for Subclasses//子类的附加初始化方法
 
   virtual uint8_t OnInit() { return 0; }
 
@@ -502,8 +503,8 @@ public:
 
   uint8_t GetLastUsbError() { return bLastUsbError; };
 
-  uint8_t GetbMaxLUN() { return bMaxLUN; } // Max LUN
-  uint8_t GetbTheLUN() { return bTheLUN; } // Active LUN
+  uint8_t GetbMaxLUN() { return bMaxLUN; } // Max LUN//最大LUN
+  uint8_t GetbTheLUN() { return bTheLUN; } // Active LUN//活动LUN
 
   bool WriteProtected(uint8_t lun);
   uint8_t MediaCTL(uint8_t lun, uint8_t ctl);
@@ -516,7 +517,7 @@ public:
   uint32_t GetCapacity(uint8_t lun);
   uint16_t GetSectorSize(uint8_t lun);
 
-  // USBDeviceConfig implementation
+  // USBDeviceConfig implementation//usbdeviconfig实现
   uint8_t Init(uint8_t parent, uint8_t port, bool lowspeed);
   uint8_t ConfigureDevice(uint8_t parent, uint8_t port, bool lowspeed);
 
@@ -525,7 +526,7 @@ public:
 
   virtual uint8_t GetAddress() { return bAddress; }
 
-  // UsbConfigXtracter implementation
+  // UsbConfigXtracter implementation//UsbConfigXtracter实现
   void EndpointXtract(uint8_t conf, uint8_t iface, uint8_t alt, uint8_t proto, const USB_FD_ENDPOINT_DESCRIPTOR *ep);
 
   virtual bool DEVCLASSOK(uint8_t klass) { return klass == USB_CLASS_MASS_STORAGE; }

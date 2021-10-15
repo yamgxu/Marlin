@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,7 +30,7 @@
 
 #include <string.h>
 
-// A white component can be passed
+// A white component can be passed//可以传递一个白色组件
 #if EITHER(RGBW_LED, PCA9632_RGBW)
   #define HAS_WHITE_LED 1
 #endif
@@ -110,9 +111,9 @@ typedef struct LEDColor {
 
 class LEDLights {
 public:
-  LEDLights() {} // ctor
+  LEDLights() {} // ctor//执行器
 
-  static void setup(); // init()
+  static void setup(); // init()//init（）
 
   static void set_color(const LEDColor &color
     OPTARG(NEOPIXEL_IS_SEQUENTIAL, bool isSequence=false)
@@ -146,12 +147,12 @@ public:
   #endif
 
   #if ANY(LED_CONTROL_MENU, PRINTER_EVENT_LEDS, CASE_LIGHT_IS_COLOR_LED)
-    static LEDColor color; // last non-off color
-    static bool lights_on; // the last set color was "on"
+    static LEDColor color; // last non-off color//最后不褪色
+    static bool lights_on; // the last set color was "on"//最后一组颜色为“开”
   #endif
 
   #if ENABLED(LED_CONTROL_MENU)
-    static void toggle();  // swap "off" with color
+    static void toggle();  // swap "off" with color//用颜色替换“关”
   #endif
   #if EITHER(LED_CONTROL_MENU, CASE_LIGHT_USE_RGB_LED)
     static inline void update() { set_color(color); }
@@ -177,7 +178,7 @@ extern LEDLights leds;
   public:
     LEDLights2() {}
 
-    static void setup(); // init()
+    static void setup(); // init()//init（）
 
     static void set_color(const LEDColor &color);
 
@@ -207,13 +208,13 @@ extern LEDLights leds;
     #endif
 
     #if ENABLED(NEOPIXEL2_SEPARATE)
-      static LEDColor color; // last non-off color
-      static bool lights_on; // the last set color was "on"
-      static void toggle();  // swap "off" with color
+      static LEDColor color; // last non-off color//最后不褪色
+      static bool lights_on; // the last set color was "on"//最后一组颜色为“开”
+      static void toggle();  // swap "off" with color//用颜色替换“关”
       static inline void update() { set_color(color); }
     #endif
   };
 
   extern LEDLights2 leds2;
 
-#endif // NEOPIXEL2_SEPARATE
+#endif // NEOPIXEL2_SEPARATE//NEOPIXEL2_分离

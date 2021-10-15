@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*************
  * screens.h *
  *************/
@@ -24,9 +25,9 @@
 
 /********************************* DL CACHE SLOTS ******************************/
 
-// In order to reduce SPI traffic, we cache display lists (DL) in RAMG. This
-// is done using the CLCD::DLCache class, which takes a unique ID for each
-// cache location. These IDs are defined here:
+// In order to reduce SPI traffic, we cache display lists (DL) in RAMG. This//为了减少SPI流量，我们在RAMG中缓存显示列表（DL）。这
+// is done using the CLCD::DLCache class, which takes a unique ID for each//使用CLCD:：DLCache类完成，该类为每个
+// cache location. These IDs are defined here://缓存位置。这些ID在此处定义：
 
 enum {
   STATUS_SCREEN_CACHE,
@@ -96,8 +97,8 @@ enum {
   DISPLAY_TIMINGS_SCREEN_CACHE
 };
 
-// To save MCU RAM, the status message is "baked" in to the status screen
-// cache, so we reserve a large chunk of memory for the DL cache
+// To save MCU RAM, the status message is "baked" in to the status screen//要保存MCU RAM，状态消息将“烘焙”到状态屏幕
+// cache, so we reserve a large chunk of memory for the DL cache//缓存，因此我们为DL缓存保留了大量内存
 
 #define STATUS_SCREEN_DL_SIZE        4096
 #define ALERT_BOX_DL_SIZE            3072

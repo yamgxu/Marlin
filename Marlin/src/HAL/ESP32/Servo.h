@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -27,20 +28,20 @@
 class Servo {
   static const int MIN_ANGLE =   0,
                    MAX_ANGLE = 180,
-                   MIN_PULSE_WIDTH =  544,  // Shortest pulse sent to a servo
-                   MAX_PULSE_WIDTH = 2400,  // Longest pulse sent to a servo
+                   MIN_PULSE_WIDTH =  544,  // Shortest pulse sent to a servo//发送到伺服系统的最短脉冲
+                   MAX_PULSE_WIDTH = 2400,  // Longest pulse sent to a servo//发送到伺服的最长脉冲
                    TAU_MSEC = 20,
                    TAU_USEC = (TAU_MSEC * 1000),
-                   MAX_COMPARE = _BV(LEDC_TIMER_14_BIT) - 1, // 65535
+                   MAX_COMPARE = _BV(LEDC_TIMER_14_BIT) - 1, // 65535// 65535
                    CHANNEL_MAX_NUM = LEDC_CHANNEL_MAX;
 
 public:
   Servo();
-  int8_t attach(const int pin);   // attach the given pin to the next free channel, set pinMode, return channel number (-1 on fail)
+  int8_t attach(const int pin);   // attach the given pin to the next free channel, set pinMode, return channel number (-1 on fail)//将给定管脚连接到下一个自由通道，设置管脚模式，返回通道编号（-1，故障时）
   void detach();
-  void write(int degrees);        // set angle
-  void move(const int degrees);   // attach the servo, then move to value
-  int read();                     // returns current pulse width as an angle between 0 and 180 degrees
+  void write(int degrees);        // set angle//设定角度
+  void move(const int degrees);   // attach the servo, then move to value//连接伺服，然后移动到“值”
+  int read();                     // returns current pulse width as an angle between 0 and 180 degrees//以0到180度之间的角度返回当前脉冲宽度
 
 private:
   static int channel_next_free;

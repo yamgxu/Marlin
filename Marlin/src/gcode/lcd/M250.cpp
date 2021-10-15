@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -35,4 +36,4 @@ void GcodeSuite::M250() {
   SERIAL_ECHOLNPAIR("LCD Contrast: ", ui.contrast);
 }
 
-#endif // HAS_LCD_CONTRAST
+#endif // HAS_LCD_CONTRAST//有对比度吗

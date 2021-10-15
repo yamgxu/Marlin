@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -32,14 +33,14 @@
 #define BOARD_INFO_NAME "MKS BASE 1.6"
 #define MKS_BASE_VERSION                      16
 
-//
-// Servos
-//
-#define SERVO1_PIN                            12  // Digital 12 / Pin 25
+////
+// Servos//伺服
+////
+#define SERVO1_PIN                            12  // Digital 12 / Pin 25//数字12/引脚25
 
-//
-// Omitted RAMPS pins
-//
+////
+// Omitted RAMPS pins//省略的斜坡销
+////
 #ifndef SERVO2_PIN
   #define SERVO2_PIN                          -1
 #endif

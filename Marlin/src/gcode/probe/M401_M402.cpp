@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -46,4 +47,4 @@ void GcodeSuite::M402() {
   report_current_position();
 }
 
-#endif // HAS_BED_PROBE
+#endif // HAS_BED_PROBE//你有床吗

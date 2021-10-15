@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -28,20 +29,20 @@
 
 #include "../../../inc/MarlinConfigPre.h"
 #include "../../../module/stepper.h"
-//C:\Users\bobku\Documents\GitHub\Marlin-Bob-2\Marlin\src\module\stepper.h
-//C:\Users\bobku\Documents\GitHub\Marlin-Bob-2\Marlin\src\HAL\HAL_DUE\G2_PWM.h
+//C:\Users\bobku\Documents\GitHub\Marlin-Bob-2\Marlin\src\module\stepper.h//C:\Users\bobku\Documents\GitHub\Marlin-Bob-2\Marlin\src\module\stepper.h
+//C:\Users\bobku\Documents\GitHub\Marlin-Bob-2\Marlin\src\HAL\HAL_DUE\G2_PWM.h//C:\Users\bobku\Documents\GitHub\Marlin-Bob-2\Marlin\src\HAL\HAL\u DUE\G2\u PWM.h
 
-#define PWM_PERIOD_US  100  // base repetition rate in micro seconds
+#define PWM_PERIOD_US  100  // base repetition rate in micro seconds//以微秒为单位的基本重复率
 
-typedef struct {       // holds the data needed by the ISR to control the Vref pin
+typedef struct {       // holds the data needed by the ISR to control the Vref pin//保存ISR控制Vref引脚所需的数据
   volatile uint32_t* set_register;
   volatile uint32_t* clr_register;
   uint32_t write_mask;
 } PWM_map;
 
-#define G2_VREF(I) (uint32_t)(I * 5 * 0.15)   // desired Vref * 1000 (scaled so don't loose accuracy in next step)
+#define G2_VREF(I) (uint32_t)(I * 5 * 0.15)   // desired Vref * 1000 (scaled so don't loose accuracy in next step)//所需的Vref*1000（按比例缩放，以便在下一步中不会降低精度）
 
-#define G2_VREF_COUNT(Q) (uint32_t)map(constrain(Q, 500, 3.3 * 1000), 0, 3.3 * 1000, 0, PWM_PERIOD_US)  // under 500  the results are very non-linear
+#define G2_VREF_COUNT(Q) (uint32_t)map(constrain(Q, 500, 3.3 * 1000), 0, 3.3 * 1000, 0, PWM_PERIOD_US)  // under 500  the results are very non-linear//在500以下，结果是非常非线性的
 
 extern volatile uint32_t *SODR_A, *SODR_B, *CODR_A, *CODR_B;
 
@@ -65,13 +66,13 @@ extern uint32_t motor_current_setting[3];
 #define IR_BIT(p) (WITHIN(p, 0, 3) ? (p) : (p) + 4)
 #define COPY_ACTIVE_TABLE() do{ LOOP_L_N(i, 6) work_table[i] = active_table[i]; }while(0)
 
-#define PWM_MR0 19999         // base repetition rate minus one count - 20mS
-#define PWM_PR 24             // prescaler value - prescaler divide by 24 + 1  -  1 MHz output
-#define PWM_PCLKSEL0 0x00     // select clock source for prescaler - defaults to 25MHz on power up
-                              // 0: 25MHz, 1: 100MHz, 2: 50MHz, 3: 12.5MHZ to PWM1 prescaler
-#define MR0_MARGIN 200        // if channel value too close to MR0 the system locks up
+#define PWM_MR0 19999         // base repetition rate minus one count - 20mS//基本重复率减去一个计数-20mS
+#define PWM_PR 24             // prescaler value - prescaler divide by 24 + 1  -  1 MHz output//预分频器值-预分频器除以24+1-1 MHz输出
+#define PWM_PCLKSEL0 0x00     // select clock source for prescaler - defaults to 25MHz on power up//选择预分频器的时钟源-通电时默认为25MHz
+                              // 0: 25MHz, 1: 100MHz, 2: 50MHz, 3: 12.5MHZ to PWM1 prescaler//0:25MHz、1:100MHz、2:50MHz、3:12.5MHZ至PWM1预分频器
+#define MR0_MARGIN 200        // if channel value too close to MR0 the system locks up//如果通道值太接近MR0，系统将锁定
 
-extern bool PWM_table_swap;   // flag to tell the ISR that the tables have been swapped
+extern bool PWM_table_swap;   // flag to tell the ISR that the tables have been swapped//指示ISR已交换表的标志
 
 #define HAL_G2_PWM_ISR  void PWM_Handler()
 

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,7 +30,7 @@
 CaseLight caselight;
 
 #if CASELIGHT_USES_BRIGHTNESS && !defined(CASE_LIGHT_DEFAULT_BRIGHTNESS)
-  #define CASE_LIGHT_DEFAULT_BRIGHTNESS 0 // For use on PWM pin as non-PWM just sets a default
+  #define CASE_LIGHT_DEFAULT_BRIGHTNESS 0 // For use on PWM pin as non-PWM just sets a default//在PWM引脚上用作非PWM仅设置默认值
 #endif
 
 #if CASELIGHT_USES_BRIGHTNESS
@@ -53,12 +54,12 @@ void CaseLight::update(const bool sflag) {
      * level needs to be set to OFF. Since we can't use the PWM register to
      * save the last brightness level we need a variable to save it.
      */
-    static uint8_t brightness_sav;  // Save brightness info for restore on "M355 S1"
+    static uint8_t brightness_sav;  // Save brightness info for restore on "M355 S1"//保存亮度信息以便在“M355 S1”上还原
 
     if (on || !sflag)
-      brightness_sav = brightness;  // Save brightness except for M355 S0
+      brightness_sav = brightness;  // Save brightness except for M355 S0//保存除M355 S0以外的亮度
     if (sflag && on)
-      brightness = brightness_sav;  // Restore last brightness for M355 S1
+      brightness = brightness_sav;  // Restore last brightness for M355 S1//恢复M355 S1的上次亮度
 
     const uint8_t i = on ? brightness : 0, n10ct = ENABLED(INVERT_CASE_LIGHT) ? 255 - i : i;
     UNUSED(n10ct);
@@ -66,7 +67,7 @@ void CaseLight::update(const bool sflag) {
 
   #if CASE_LIGHT_IS_COLOR_LED
     leds.set_color(LEDColor(color.r, color.g, color.b OPTARG(HAS_WHITE_LED, color.w), n10ct));
-  #else // !CASE_LIGHT_IS_COLOR_LED
+  #else // !CASE_LIGHT_IS_COLOR_LED// !案例灯为彩色LED
 
     #if CASELIGHT_USES_BRIGHTNESS
       if (pin_is_pwm())
@@ -84,11 +85,11 @@ void CaseLight::update(const bool sflag) {
         WRITE(CASE_LIGHT_PIN, s ? HIGH : LOW);
       }
 
-  #endif // !CASE_LIGHT_IS_COLOR_LED
+  #endif // !CASE_LIGHT_IS_COLOR_LED// !案例灯为彩色LED
 
   #if ENABLED(CASE_LIGHT_USE_RGB_LED)
     if (leds.lights_on) leds.update(); else leds.set_off();
   #endif
 }
 
-#endif // CASE_LIGHT_ENABLE
+#endif // CASE_LIGHT_ENABLE//案例\灯\启用

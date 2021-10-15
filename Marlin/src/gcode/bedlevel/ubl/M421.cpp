@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -56,18 +57,18 @@ void GcodeSuite::M421() {
 
   if (hasC) ij = ubl.find_closest_mesh_point_of_type(CLOSEST, current_position);
 
-  // Test for bad parameter combinations
+  // Test for bad parameter combinations//不良参数组合的测试
   if (int(hasC) + int(hasI && hasJ) != 1 || !(hasZ || hasQ || hasN))
     SERIAL_ERROR_MSG(STR_ERR_M421_PARAMETERS);
 
-  // Test for I J out of range
+  // Test for I J out of range//I J超出范围的测试
   else if (!WITHIN(ij.x, 0, GRID_MAX_POINTS_X - 1) || !WITHIN(ij.y, 0, GRID_MAX_POINTS_Y - 1))
     SERIAL_ERROR_MSG(STR_ERR_MESH_XY);
   else {
-    float &zval = ubl.z_values[ij.x][ij.y];                               // Altering this Mesh Point
-    zval = hasN ? NAN : parser.value_linear_units() + (hasQ ? zval : 0);  // N=NAN, Z=NEWVAL, or Q=ADDVAL
-    TERN_(EXTENSIBLE_UI, ExtUI::onMeshUpdate(ij.x, ij.y, zval));          // Ping ExtUI in case it's showing the mesh
+    float &zval = ubl.z_values[ij.x][ij.y];                               // Altering this Mesh Point//更改此网格点
+    zval = hasN ? NAN : parser.value_linear_units() + (hasQ ? zval : 0);  // N=NAN, Z=NEWVAL, or Q=ADDVAL//N=NAN，Z=NEWVAL，或Q=ADDVAL
+    TERN_(EXTENSIBLE_UI, ExtUI::onMeshUpdate(ij.x, ij.y, zval));          // Ping ExtUI in case it's showing the mesh//Ping ExtUI以防显示网格
   }
 }
 
-#endif // AUTO_BED_LEVELING_UBL
+#endif // AUTO_BED_LEVELING_UBL//自动调平床

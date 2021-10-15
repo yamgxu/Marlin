@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -37,11 +38,11 @@
 #define EEPROM_FILENAME "eeprom.dat"
 
 #ifndef MARLIN_EEPROM_SIZE
-  #define MARLIN_EEPROM_SIZE 0x1000 // 4KB
+  #define MARLIN_EEPROM_SIZE 0x1000 // 4KB//4KB
 #endif
 size_t PersistentStore::capacity() { return MARLIN_EEPROM_SIZE; }
 
-#define _ALIGN(x) __attribute__ ((aligned(x))) // SDIO uint32_t* compat.
+#define _ALIGN(x) __attribute__ ((aligned(x))) // SDIO uint32_t* compat.//SDIO uint32兼容。
 static char _ALIGN(4) HAL_eeprom_data[MARLIN_EEPROM_SIZE];
 
 bool PersistentStore::access_start() {
@@ -49,7 +50,7 @@ bool PersistentStore::access_start() {
 
   SdFile file, root = card.getroot();
   if (!file.open(&root, EEPROM_FILENAME, O_RDONLY))
-    return true; // false aborts the save
+    return true; // false aborts the save//false将中止保存
 
   int bytes_read = file.read(HAL_eeprom_data, MARLIN_EEPROM_SIZE);
   if (bytes_read < 0) return false;
@@ -89,5 +90,5 @@ bool PersistentStore::read_data(int &pos, uint8_t *value, const size_t size, uin
   return false;
 }
 
-#endif // SDCARD_EEPROM_EMULATION
-#endif // __STM32F1__
+#endif // SDCARD_EEPROM_EMULATION//SD卡EEPROM模拟
+#endif // __STM32F1__//_uustm32f1__

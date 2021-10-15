@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -46,9 +47,9 @@
 
 #include "pins_RAMPS.h"
 
-//
-// Steppers - Swap E0 / E1 on 3DYMY
-//
+////
+// Steppers - Swap E0 / E1 on 3DYMY//步进电机-在3DYMY上交换E0/E1
+////
 #undef E0_STEP_PIN
 #undef E0_DIR_PIN
 #undef E0_ENABLE_PIN
@@ -74,10 +75,10 @@
 #if IS_ULTRA_LCD && NONE(REPRAPWORLD_GRAPHICAL_LCD, CR10_STOCKDISPLAY) && !BOTH(IS_NEWPANEL, PANEL_ONE)
   #if DISABLED(MKS_12864OLED) || ENABLED(MKS_12864OLED_SSD1306)
     #undef LCD_PINS_RS
-    #define LCD_PINS_RS                       42  // 3DYMY boards pin 16 -> 42
+    #define LCD_PINS_RS                       42  // 3DYMY boards pin 16 -> 42//3DYMY板针脚16->42
     #undef LCD_PINS_ENABLE
-    #define LCD_PINS_ENABLE                   44  // 3DYMY boards pin 17 -> 44
+    #define LCD_PINS_ENABLE                   44  // 3DYMY boards pin 17 -> 44//3DYMY板针脚17->44
   #endif
   #undef LCD_PINS_D7
-  #define LCD_PINS_D7                         53  // 3DYMY boards pin 29 -> 53
+  #define LCD_PINS_D7                         53  // 3DYMY boards pin 29 -> 53//3DYMY板针脚29->53
 #endif

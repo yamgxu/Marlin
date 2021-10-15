@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -47,7 +48,7 @@
   #define SD_MISO_PIN       74
   #define SD_MOSI_PIN       75
 #else
-  // defaults
+  // defaults//默认值
   #define DUE_SOFTWARE_SPI
   #ifndef SD_SCK_PIN
     #define SD_SCK_PIN      52

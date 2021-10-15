@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -33,9 +34,9 @@ enum TempSensorID : uint8_t {
 };
 
 typedef struct {
-  uint8_t measurements; // Max. number of measurements to be stored (35 - 80°C)
-  celsius_t temp_res,   // Resolution in °C between measurements
-            start_temp, // Base measurement; z-offset == 0
+  uint8_t measurements; // Max. number of measurements to be stored (35 - 80°C)//要存储的最大测量次数（35-80°C）
+  celsius_t temp_res,   // Resolution in °C between measurements//测量之间的分辨率，单位为°C
+            start_temp, // Base measurement; z-offset == 0//基础测量；z偏移量==0
             end_temp;
 } temp_calib_t;
 
@@ -45,7 +46,7 @@ typedef struct {
  * measurement errors/shifts due to changed temperature.
  */
 
-// Probe temperature calibration constants
+// Probe temperature calibration constants//探针温度校准常数
 #ifndef PTC_SAMPLE_COUNT
   #define PTC_SAMPLE_COUNT 10
 #endif
@@ -57,7 +58,7 @@ typedef struct {
 #endif
 #define PTC_SAMPLE_END (PTC_SAMPLE_START + (PTC_SAMPLE_COUNT) * PTC_SAMPLE_RES)
 
-// Bed temperature calibration constants
+// Bed temperature calibration constants//床温校准常数
 #ifndef BTC_PROBE_TEMP
   #define BTC_PROBE_TEMP 30
 #endif
@@ -81,10 +82,10 @@ typedef struct {
 #endif
 
 static constexpr temp_calib_t cali_info_init[TSI_COUNT] = {
-  { PTC_SAMPLE_COUNT, PTC_SAMPLE_RES, PTC_SAMPLE_START, PTC_SAMPLE_END }, // Probe
-  { BTC_SAMPLE_COUNT, BTC_SAMPLE_RES, BTC_SAMPLE_START, BTC_SAMPLE_END }, // Bed
+  { PTC_SAMPLE_COUNT, PTC_SAMPLE_RES, PTC_SAMPLE_START, PTC_SAMPLE_END }, // Probe//探测
+  { BTC_SAMPLE_COUNT, BTC_SAMPLE_RES, BTC_SAMPLE_START, BTC_SAMPLE_END }, // Bed//床
   #if ENABLED(USE_TEMP_EXT_COMPENSATION)
-    { 20,  5, 180, 180 +  5 * 20 }                                        // Extruder
+    { 20,  5, 180, 180 +  5 * 20 }                                        // Extruder//挤出机
   #endif
 };
 
@@ -93,22 +94,22 @@ class ProbeTempComp {
 
     static const temp_calib_t cali_info[TSI_COUNT];
 
-    // Where to park nozzle to wait for probe cooldown
+    // Where to park nozzle to wait for probe cooldown//将喷嘴停在何处等待探头冷却
     static constexpr xyz_pos_t park_point = PTC_PARK_POS;
 
-    // XY coordinates of nozzle for probing the bed
-    static constexpr xy_pos_t measure_point    = PTC_PROBE_POS;     // Coordinates to probe
-                            //measure_point    = { 12.0f, 7.3f };   // Coordinates for the MK52 magnetic heatbed
+    // XY coordinates of nozzle for probing the bed//用于探测床层的喷嘴的XY坐标
+    static constexpr xy_pos_t measure_point    = PTC_PROBE_POS;     // Coordinates to probe//探测坐标
+                            //measure_point    = { 12.0f, 7.3f };   // Coordinates for the MK52 magnetic heatbed//测量点={12.0f，7.3f}；//MK52磁性加热床的坐标
 
-    static constexpr celsius_t probe_calib_bed_temp = BED_MAX_TARGET,  // Bed temperature while calibrating probe
-                               bed_calib_probe_temp = BTC_PROBE_TEMP;  // Probe temperature while calibrating bed
+    static constexpr celsius_t probe_calib_bed_temp = BED_MAX_TARGET,  // Bed temperature while calibrating probe//校准探头时的床温
+                               bed_calib_probe_temp = BTC_PROBE_TEMP;  // Probe temperature while calibrating bed//校准床时的探头温度
 
     static int16_t *sensor_z_offsets[TSI_COUNT],
-                   z_offsets_probe[cali_info_init[TSI_PROBE].measurements], // (µm)
-                   z_offsets_bed[cali_info_init[TSI_BED].measurements];     // (µm)
+                   z_offsets_probe[cali_info_init[TSI_PROBE].measurements], // (µm)//（µm）
+                   z_offsets_bed[cali_info_init[TSI_BED].measurements];     // (µm)//（µm）
 
     #if ENABLED(USE_TEMP_EXT_COMPENSATION)
-      static int16_t z_offsets_ext[cali_info_init[TSI_EXT].measurements];   // (µm)
+      static int16_t z_offsets_ext[cali_info_init[TSI_EXT].measurements];   // (µm)//（µm）
     #endif
 
     static inline void reset_index() { calib_idx = 0; };

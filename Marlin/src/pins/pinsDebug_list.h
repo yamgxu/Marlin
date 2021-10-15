@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -17,18 +18,18 @@
  *
  */
 
-// Please update this list when adding new pins to Marlin.
-// The order doesn't matter.
-// Following this pattern is a must.
-// If the new pin name is over 28 characters long then pinsDebug.h will need to be modified.
+// Please update this list when adding new pins to Marlin.//请在向Marlin添加新PIN时更新此列表。
+// The order doesn't matter.//顺序不重要。
+// Following this pattern is a must.//必须遵循这种模式。
+// If the new pin name is over 28 characters long then pinsDebug.h will need to be modified.//如果新pin名称长度超过28个字符，则需要修改pinsDebug.h。
 
-// Pin lists 1.1.x and 2.0.x synchronized 2018-02-17
+// Pin lists 1.1.x and 2.0.x synchronized 2018-02-17//Pin列表1.1.x和2.0.x已同步2018-02-17
 
-#line 28 // set __LINE__ to a known value for both passes
+#line 28 // set __LINE__ to a known value for both passes//将两个过程的_线_设置为已知值
 
-//
-// Analog Pin Assignments
-//
+////
+// Analog Pin Assignments//模拟管脚分配
+////
 
 #define ANALOG_OK(PN) ((PN) >= 0 && (PN) < NUM_ANALOG_INPUTS)
 
@@ -53,7 +54,7 @@
 #if PIN_EXISTS(MAIN_VOLTAGE_MEASURE) && ANALOG_OK(MAIN_VOLTAGE_MEASURE_PIN)
   REPORT_NAME_ANALOG(__LINE__, MAIN_VOLTAGE_MEASURE_PIN)
 #endif
-#if !defined(ARDUINO_ARCH_SAM) && !defined(ARDUINO_ARCH_SAMD)  // TC1 & TC2 are macros in the SAM/SAMD tool chain
+#if !defined(ARDUINO_ARCH_SAM) && !defined(ARDUINO_ARCH_SAMD)  // TC1 & TC2 are macros in the SAM/SAMD tool chain//TC1和TC2是SAM/SAMD工具链中的宏
   #if defined(TC1) && ANALOG_OK(TC1)
     REPORT_NAME_ANALOG(__LINE__, TC1)
   #endif
@@ -98,9 +99,9 @@
   REPORT_NAME_ANALOG(__LINE__, ADC_KEYPAD_PIN)
 #endif
 
-//
-// Digital Pin Assignments
-//
+////
+// Digital Pin Assignments//数字管脚分配
+////
 
 #if defined(__FD) && __FD >= 0
   REPORT_NAME_DIGITAL(__LINE__, __FD)
@@ -782,9 +783,9 @@
   REPORT_NAME_DIGITAL(__LINE__, MAX7219_LOAD_PIN)
 #endif
 
-// #if defined(MISO) && MISO >= 0
-//   REPORT_NAME_DIGITAL(__LINE__, MISO)
-// #endif
+// #if defined(MISO) && MISO >= 0//#如果定义（味噌）和味噌>=0
+//   REPORT_NAME_DIGITAL(__LINE__, MISO)//报告\u名称\u数字（\u线\u，MISO）
+// #endif//#endif
 #if PIN_EXISTS(MISO)
   REPORT_NAME_DIGITAL(__LINE__, SD_MISO_PIN)
 #endif
@@ -800,9 +801,9 @@
 #if PIN_EXISTS(MOSFET_D)
   REPORT_NAME_DIGITAL(__LINE__, MOSFET_D_PIN)
 #endif
-// #if defined(MOSI) && MOSI >= 0
-//   REPORT_NAME_DIGITAL(__LINE__, MOSI)
-// #endif
+// #if defined(MOSI) && MOSI >= 0//#如果定义（MOSI）&&MOSI>=0
+//   REPORT_NAME_DIGITAL(__LINE__, MOSI)//报告\u名称\u数字（\u线\u，MOSI）
+// #endif//#endif
 #if PIN_EXISTS(MOSI)
   REPORT_NAME_DIGITAL(__LINE__, SD_MOSI_PIN)
 #endif
@@ -881,21 +882,21 @@
 #if PIN_EXISTS(SAFETY_TRIGGERED)
   REPORT_NAME_DIGITAL(__LINE__, SAFETY_TRIGGERED_PIN)
 #endif
-// #if defined(SCK) && SCK >= 0
-//   REPORT_NAME_DIGITAL(__LINE__, SCK)
-// #endif
+// #if defined(SCK) && SCK >= 0//#如果定义（SCK）&&SCK>=0
+//   REPORT_NAME_DIGITAL(__LINE__, SCK)//报告\名称\数字（\行\行，SCK）
+// #endif//#endif
 #if PIN_EXISTS(SCK)
   REPORT_NAME_DIGITAL(__LINE__, SD_SCK_PIN)
 #endif
-// #if defined(SCL) && SCL >= 0
-//   REPORT_NAME_DIGITAL(__LINE__, SCL)
-// #endif
+// #if defined(SCL) && SCL >= 0//#如果定义（SCL）&&SCL>=0
+//   REPORT_NAME_DIGITAL(__LINE__, SCL)//报告\u名称\u数字（\u行\u，SCL）
+// #endif//#endif
 #if PIN_EXISTS(SD_DETECT)
   REPORT_NAME_DIGITAL(__LINE__, SD_DETECT_PIN)
 #endif
-// #if defined(SDA) && SDA >= 0
-//   REPORT_NAME_DIGITAL(__LINE__, SDA)
-// #endif
+// #if defined(SDA) && SDA >= 0//#如果定义（SDA）&&SDA>=0
+//   REPORT_NAME_DIGITAL(__LINE__, SDA)//报告\u名称\u数字（\u行\u，SDA）
+// #endif//#endif
 #if PIN_EXISTS(SDPOWER)
   REPORT_NAME_DIGITAL(__LINE__, SDPOWER_PIN)
 #endif
@@ -1610,7 +1611,7 @@
 #if PIN_EXISTS(ESP_WIFI_MODULE_GPIO2)
   REPORT_NAME_DIGITAL(__LINE__, ESP_WIFI_MODULE_GPIO2_PIN)
 #endif
-// TFT PINS
+// TFT PINS//TFT引脚
 #if PIN_EXISTS(TFT_CS)
   REPORT_NAME_DIGITAL(__LINE__, TFT_CS_PIN)
 #endif

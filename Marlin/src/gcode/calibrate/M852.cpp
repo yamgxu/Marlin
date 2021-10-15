@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -84,7 +85,7 @@ void GcodeSuite::M852() {
   if (badval)
     SERIAL_ECHOLNPGM(STR_SKEW_MIN " " STRINGIFY(SKEW_FACTOR_MIN) " " STR_SKEW_MAX " " STRINGIFY(SKEW_FACTOR_MAX));
 
-  // When skew is changed the current position changes
+  // When skew is changed the current position changes//当“倾斜”更改时，当前位置将更改
   if (setval) {
     set_current_from_steppers_for_axis(ALL_AXES_ENUM);
     sync_plan_position();
@@ -103,4 +104,4 @@ void GcodeSuite::M852() {
   }
 }
 
-#endif // SKEW_CORRECTION_GCODE
+#endif // SKEW_CORRECTION_GCODE//倾斜校正码

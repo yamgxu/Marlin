@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -23,9 +24,9 @@
 
 #include <avr/wdt.h>
 
-// Initialize watchdog with a 4 second interrupt time
+// Initialize watchdog with a 4 second interrupt time//用4秒的中断时间初始化看门狗
 void watchdog_init();
 
-// Reset watchdog. MUST be called at least every 4 seconds after the
-// first watchdog_init or AVR will go into emergency procedures.
+// Reset watchdog. MUST be called at least every 4 seconds after the//重置看门狗。必须在测试后至少每4秒调用一次
+// first watchdog_init or AVR will go into emergency procedures.//第一看门狗_init或AVR将进入紧急程序。
 inline void HAL_watchdog_refresh() { wdt_reset(); }

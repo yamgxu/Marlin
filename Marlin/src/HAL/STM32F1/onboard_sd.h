@@ -1,6 +1,7 @@
+/** translatione by yx */
 /*-----------------------------------------------------------------------
-/ * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
-/ * Copyright (c) 2019 BigTreeTech [https://github.com/bigtreetech]
+/ * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]//github.com/MarlinFirmware/Marlin]
+/ * Copyright (c) 2019 BigTreeTech [https://github.com/bigtreetech]//github.com/bigtreetech]
 / * Low level disk interface module include file   (C)ChaN, 2015
 /-----------------------------------------------------------------------*/
 

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -33,13 +34,13 @@
 
 void stop();
 
-// Pass true to keep steppers from timing out
+// Pass true to keep steppers from timing out//通过true可防止步进器超时
 void idle(bool no_stepper_sleep=false);
 inline void idle_no_sleep() { idle(true); }
 
 #if ENABLED(G38_PROBE_TARGET)
-  extern uint8_t G38_move;          // Flag to tell the ISR that G38 is in progress, and the type
-  extern bool G38_did_trigger;      // Flag from the ISR to indicate the endstop changed
+  extern uint8_t G38_move;          // Flag to tell the ISR that G38 is in progress, and the type//用于告知ISR G38正在进行中的标志，以及类型
+  extern bool G38_did_trigger;      // Flag from the ISR to indicate the endstop changed//来自ISR的标志，指示endstop已更改
 #endif
 
 /**
@@ -54,7 +55,7 @@ void disable_all_steppers();
 void kill(PGM_P const lcd_error=nullptr, PGM_P const lcd_component=nullptr, const bool steppers_off=false);
 void minkill(const bool steppers_off=false);
 
-// Global State of the firmware
+// Global State of the firmware//固件的全局状态
 enum MarlinState : uint8_t {
   MF_INITIALIZING = 0,
   MF_STOPPED,

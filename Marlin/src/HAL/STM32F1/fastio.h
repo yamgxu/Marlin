@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -45,7 +46,7 @@
 #define SET_INPUT_PULLUP(IO)    _SET_MODE(IO, GPIO_INPUT_PU)
 #define SET_INPUT_PULLDOWN(IO)  _SET_MODE(IO, GPIO_INPUT_PD)
 #define SET_OUTPUT(IO)          OUT_WRITE(IO, LOW)
-#define SET_PWM(IO)             pinMode(IO, PWM)    // do{ gpio_set_mode(PIN_MAP[pin].gpio_device, PIN_MAP[pin].gpio_bit, GPIO_AF_OUTPUT_PP); timer_set_mode(PIN_MAP[pin].timer_device, PIN_MAP[pin].timer_channel, TIMER_PWM); }while(0)
+#define SET_PWM(IO)             pinMode(IO, PWM)    // do{ gpio_set_mode(PIN_MAP[pin].gpio_device, PIN_MAP[pin].gpio_bit, GPIO_AF_OUTPUT_PP); timer_set_mode(PIN_MAP[pin].timer_device, PIN_MAP[pin].timer_channel, TIMER_PWM); }while(0)//do{gpio_设置_模式（PIN_映射[PIN]。gpio_设备，PIN_映射[PIN]。gpio_位，gpio_AF_输出_PP）；定时器_设置_模式（PIN_映射[PIN]。定时器_设备，PIN_映射[PIN]。定时器_通道，定时器_PWM）；}而（0）
 #define SET_PWM_OD(IO)          pinMode(IO, PWM_OPEN_DRAIN)
 
 #define IS_INPUT(IO)            (_GET_MODE(IO) == GPIO_INPUT_FLOATING || _GET_MODE(IO) == GPIO_INPUT_ANALOG || _GET_MODE(IO) == GPIO_INPUT_PU || _GET_MODE(IO) == GPIO_INPUT_PD)
@@ -53,13 +54,13 @@
 
 #define PWM_PIN(IO)             !!PIN_MAP[IO].timer_device
 
-// digitalRead/Write wrappers
+// digitalRead/Write wrappers//数字读/写包装器
 #define extDigitalRead(IO)      digitalRead(IO)
 #define extDigitalWrite(IO,V)   digitalWrite(IO,V)
 
-//
-// Pins Definitions
-//
+////
+// Pins Definitions//引脚定义
+////
 #define PA0  0x00
 #define PA1  0x01
 #define PA2  0x02
@@ -84,7 +85,7 @@
 #define PB4  0x14
 #define PB5  0x15
 #define PB6  0x16
-#define PB7  0x17 // 36 pins (F103T)
+#define PB7  0x17 // 36 pins (F103T)//36针（F103T）
 #define PB8  0x18
 #define PB9  0x19
 #define PB10 0x1A
@@ -119,7 +120,7 @@
 
 #define PD0  0x30
 #define PD1  0x31
-#define PD2  0x32 // 64 pins (F103R)
+#define PD2  0x32 // 64 pins (F103R)//64针（F103R）
 #define PD3  0x33
 #define PD4  0x34
 #define PD5  0x35
@@ -149,7 +150,7 @@
 #define PE12 0x4C
 #define PE13 0x4D
 #define PE14 0x4E
-#define PE15 0x4F // 100 pins (F103V)
+#define PE15 0x4F // 100 pins (F103V)//100针（F103V）
 
 #define PF0  0x50
 #define PF1  0x51
@@ -183,4 +184,4 @@
 #define PG12 0x6C
 #define PG13 0x6D
 #define PG14 0x6E
-#define PG15 0x6F // 144 pins (F103Z)
+#define PG15 0x6F // 144 pins (F103Z)//144针（F103Z）

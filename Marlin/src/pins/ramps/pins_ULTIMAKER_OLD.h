@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -57,8 +58,8 @@
  */
 
 #define BOARD_REV_1_1_TO_1_3
-//#define BOARD_REV_1_0
-//#define BOARD_REV_1_5
+//#define BOARD_REV_1_0//#定义板版本1\u 0
+//#define BOARD_REV_1_5//#定义板版本1和5
 
 #include "env_validate.h"
 
@@ -74,30 +75,30 @@
 #define DEFAULT_MACHINE_NAME    "Ultimaker"
 #define DEFAULT_SOURCE_CODE_URL "github.com/Ultimaker/Marlin"
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #if ENABLED(BOARD_REV_1_1_TO_1_3)
-  #define X_MIN_PIN                           15  // SW1
-  #define X_MAX_PIN                           14  // SW2
-  #define Y_MIN_PIN                           17  // SW3
-  #define Y_MAX_PIN                           16  // SW4
-  #define Z_MIN_PIN                           19  // SW5
-  #define Z_MAX_PIN                           18  // SW6
+  #define X_MIN_PIN                           15  // SW1//SW1
+  #define X_MAX_PIN                           14  // SW2//SW2
+  #define Y_MIN_PIN                           17  // SW3//SW3
+  #define Y_MAX_PIN                           16  // SW4//SW4
+  #define Z_MIN_PIN                           19  // SW5//SW5
+  #define Z_MAX_PIN                           18  // SW6//SW6
 #endif
 
 #if ENABLED(BOARD_REV_1_0)
   #if HAS_CUTTER
-    #define X_STOP_PIN                        13  // SW1  (didn't change) - also has a useable hardware PWM
-    #define Y_STOP_PIN                        12  // SW2
-    #define Z_STOP_PIN                        11  // SW3
+    #define X_STOP_PIN                        13  // SW1  (didn't change) - also has a useable hardware PWM//SW1（未更改）-还具有可用的硬件PWM
+    #define Y_STOP_PIN                        12  // SW2//SW2
+    #define Z_STOP_PIN                        11  // SW3//SW3
   #else
-    #define X_MIN_PIN                         13  // SW1
-    #define X_MAX_PIN                         12  // SW2
-    #define Y_MIN_PIN                         11  // SW3
-    #define Y_MAX_PIN                         10  // SW4
-    #define Z_MIN_PIN                          9  // SW5
-    #define Z_MAX_PIN                          8  // SW6
+    #define X_MIN_PIN                         13  // SW1//SW1
+    #define X_MAX_PIN                         12  // SW2//SW2
+    #define Y_MIN_PIN                         11  // SW3//SW3
+    #define Y_MAX_PIN                         10  // SW4//SW4
+    #define Z_MIN_PIN                          9  // SW5//SW5
+    #define Z_MAX_PIN                          8  // SW6//SW6
   #endif
 #endif
 
@@ -110,16 +111,16 @@
   #define Z_MAX_PIN                           32
 #endif
 
-//
-// Z Probe (when not Z_MIN_PIN)
-//
+////
+// Z Probe (when not Z_MIN_PIN)//Z探头（非Z_MIN_引脚时）
+////
 #if !defined(Z_MIN_PROBE_PIN) && !BOTH(HAS_CUTTER, BOARD_REV_1_0)
   #define Z_MIN_PROBE_PIN              Z_MAX_PIN
 #endif
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                            25
 #define X_DIR_PIN                             23
 #define X_ENABLE_PIN                          27
@@ -133,7 +134,7 @@
 #define Z_ENABLE_PIN                          35
 
 #if BOTH(HAS_CUTTER, BOARD_REV_1_1_TO_1_3) && EXTRUDERS == 1
-  // Move E0 to the spare and get Spindle/Laser signals from E0
+  // Move E0 to the spare and get Spindle/Laser signals from E0//将E0移动到备用位置，并从E0获取主轴/激光信号
   #define E0_STEP_PIN                         49
   #define E0_DIR_PIN                          47
   #define E0_ENABLE_PIN                       48
@@ -147,22 +148,22 @@
   #define E1_ENABLE_PIN                       48
 #endif
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                             8  // Analog Input
-#define TEMP_1_PIN                             1  // Analog Input
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                             8  // Analog Input//模拟输入
+#define TEMP_1_PIN                             1  // Analog Input//模拟输入
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_0_PIN                           2
-//#define HEATER_1_PIN                         3  // used for case light   Rev A said "1"
+//#define HEATER_1_PIN                         3  // used for case light   Rev A said "1"//#定义加热器_1_引脚3//用于箱灯版本A所述的“1”
 #define HEATER_BED_PIN                         4
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 #if ANY(BOARD_REV_1_0, BOARD_REV_1_1_TO_1_3)
 
   #define LCD_PINS_RS                         24
@@ -185,16 +186,16 @@
     #define LCD_PINS_D6                        5
     #define LCD_PINS_D7                        6
 
-    // Buttons directly attached
+    // Buttons directly attached//直接连接的按钮
     #define BTN_EN1                           40
     #define BTN_EN2                           42
     #define BTN_ENC                           19
 
     #define SD_DETECT_PIN                     38
 
-  #else                                           // !IS_NEWPANEL - Old style panel with shift register
+  #else                                           // !IS_NEWPANEL - Old style panel with shift register// !IS_NEWPANEL-带移位寄存器的旧式面板
 
-    // Buttons attached to a shift register
+    // Buttons attached to a shift register//与移位寄存器相连的按钮
     #define SHIFT_CLK_PIN                     38
     #define SHIFT_LD_PIN                      42
     #define SHIFT_OUT_PIN                     40
@@ -207,25 +208,25 @@
     #define LCD_PINS_D6                       20
     #define LCD_PINS_D7                       19
 
-  #endif // !IS_NEWPANEL
+  #endif // !IS_NEWPANEL// !这是新小组吗
 
 #endif
 
-//
-// case light  - see spindle section for more info on available hardware PWMs
-//
+////
+// case light  - see spindle section for more info on available hardware PWMs//箱灯-有关可用硬件PWMs的更多信息，请参阅主轴部分
+////
 #if !PIN_EXISTS(CASE_LIGHT) && ENABLED(BOARD_REV_1_5)
-  #define CASE_LIGHT_PIN                       7  // use PWM -  MUST BE HARDWARE PWM
+  #define CASE_LIGHT_PIN                       7  // use PWM -  MUST BE HARDWARE PWM//使用PWM-必须是硬件PWM
 #endif
 
-//
-// M3/M4/M5 - Spindle/Laser Control
-//
+////
+// M3/M4/M5 - Spindle/Laser Control//M3/M4/M5-主轴/激光控制
+////
 #if HAS_CUTTER
-  #if EITHER(BOARD_REV_1_0, BOARD_REV_1_5)        // Use the last three SW positions
-    #define SPINDLE_DIR_PIN                   10  // 1.0: SW4  1.5: EXP3-6 ("10")
-    #define SPINDLE_LASER_PWM_PIN              9  // 1.0: SW5  1.5: EXP3-7 ( "9") .. MUST BE HARDWARE PWM
-    #define SPINDLE_LASER_ENA_PIN              8  // 1.0: SW6  1.5: EXP3-8 ( "8") .. Pin should have a pullup!
+  #if EITHER(BOARD_REV_1_0, BOARD_REV_1_5)        // Use the last three SW positions//使用最后三个SW位置
+    #define SPINDLE_DIR_PIN                   10  // 1.0: SW4  1.5: EXP3-6 ("10")//1.0:SW4 1.5:EXP3-6（“10”）
+    #define SPINDLE_LASER_PWM_PIN              9  // 1.0: SW5  1.5: EXP3-7 ( "9") .. MUST BE HARDWARE PWM//1.0:SW5 1.5:EXP3-7（“9”）。。必须是硬件PWM
+    #define SPINDLE_LASER_ENA_PIN              8  // 1.0: SW6  1.5: EXP3-8 ( "8") .. Pin should have a pullup!//1.0:SW6 1.5:EXP3-8（“8”）。。别针应该拉起！
   #elif ENABLED(BOARD_REV_1_1_TO_1_3)
     /**
      * Only four hardware PWMs physically connected to anything on these boards:
@@ -240,14 +241,14 @@
      */
     #if EXTRUDERS == 1
       #define SPINDLE_DIR_PIN                 43
-      #define SPINDLE_LASER_PWM_PIN           45  // Hardware PWM
-      #define SPINDLE_LASER_ENA_PIN           41  // Pullup!
-    #elif TEMP_SENSOR_BED == 0                    // Can't use E0 so see if HEATER_BED_PIN is available
+      #define SPINDLE_LASER_PWM_PIN           45  // Hardware PWM//硬件脉宽调制
+      #define SPINDLE_LASER_ENA_PIN           41  // Pullup!//拉起！
+    #elif TEMP_SENSOR_BED == 0                    // Can't use E0 so see if HEATER_BED_PIN is available//无法使用E0，因此请查看是否有加热器\u床\u引脚可用
       #undef HEATER_BED_PIN
-      #define SPINDLE_DIR_PIN                 38  // Probably pin 4 on 10 pin connector closest to the E0 socket
-      #define SPINDLE_LASER_PWM_PIN            4  // Hardware PWM - Special precautions usually needed.
-      #define SPINDLE_LASER_ENA_PIN           40  // Pullup! (Probably pin 6 on the 10-pin
-                                            // connector closest to the E0 socket)
+      #define SPINDLE_DIR_PIN                 38  // Probably pin 4 on 10 pin connector closest to the E0 socket//可能是最靠近E0插座的10针接头上的针脚4
+      #define SPINDLE_LASER_PWM_PIN            4  // Hardware PWM - Special precautions usually needed.//硬件PWM-通常需要特殊预防措施。
+      #define SPINDLE_LASER_ENA_PIN           40  // Pullup! (Probably pin 6 on the 10-pin//拉起！（可能是10针上的针6
+                                            // connector closest to the E0 socket)//最靠近E0插座的连接器）
     #endif
   #endif
 #endif

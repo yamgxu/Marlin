@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -38,17 +39,17 @@
 #define INVERTED_BED_PINS
 #define INVERTED_FAN_PINS
 
-//
-// Servos
-//
+////
+// Servos//伺服
+////
 #define SERVO0_PIN                             7
 #define SERVO1_PIN                             6
 #define SERVO2_PIN                             5
 #define SERVO3_PIN                             3
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_MIN_PIN                             22
 #define X_MAX_PIN                             30
 #define Y_MIN_PIN                             24
@@ -56,9 +57,9 @@
 #define Z_MIN_PIN                             26
 #define Z_MAX_PIN                             34
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                            63
 #define X_DIR_PIN                             62
 #define X_ENABLE_PIN                          48
@@ -101,24 +102,24 @@
   #define E2_CS_PIN                           59
 #endif
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                             1  // Analog Input
-#define TEMP_1_PIN                             2  // Analog Input
-#define TEMP_2_PIN                             3  // Analog Input
-#define TEMP_BED_PIN                           0  // Analog Input
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                             1  // Analog Input//模拟输入
+#define TEMP_1_PIN                             2  // Analog Input//模拟输入
+#define TEMP_2_PIN                             3  // Analog Input//模拟输入
+#define TEMP_BED_PIN                           0  // Analog Input//模拟输入
 
-// SPI for Max6675 or Max31855 Thermocouple
+// SPI for Max6675 or Max31855 Thermocouple//Max6675或Max31855热电偶的SPI
 #if DISABLED(SDSUPPORT)
   #define MAX6675_SS_PIN                      53
 #else
   #define MAX6675_SS_PIN                      49
 #endif
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_0_PIN                           9
 #define HEATER_1_PIN                          10
 #define HEATER_2_PIN                          11
@@ -128,17 +129,17 @@
   #define FAN_PIN                             12
 #endif
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define SDSS                                   4
 #define LED_PIN                               13
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 #if HAS_WIRED_LCD
-  // ramps-fd lcd adaptor
+  // ramps-fd lcd adaptor//斜坡fd lcd适配器
 
   #define BEEPER_PIN                          37
   #define BTN_EN1                             33
@@ -157,10 +158,10 @@
     #define DOGLCD_SCK                        76
     #define DOGLCD_MOSI                       75
 
-    //#define FORCE_SOFT_SPI                      // Use this if default of hardware SPI causes display problems
-                                                  //   results in LCD soft SPI mode 3, SD soft SPI mode 0
+    //#define FORCE_SOFT_SPI                      // Use this if default of hardware SPI causes display problems//#定义FORCE\u SOFT\u SPI//如果硬件SPI的默认值导致显示问题，请使用此选项
+                                                  //   results in LCD soft SPI mode 3, SD soft SPI mode 0//结果为LCD软SPI模式3，SD软SPI模式0
 
-    #define LCD_RESET_PIN                     23  // Must be high or open for LCD to operate normally.
+    #define LCD_RESET_PIN                     23  // Must be high or open for LCD to operate normally.//必须为高电平或开路，LCD才能正常工作。
 
     #if EITHER(FYSETC_MINI_12864_1_2, FYSETC_MINI_12864_2_0)
       #ifndef RGB_LED_R_PIN
@@ -196,16 +197,16 @@
     #define STAT_LED_BLUE_PIN                 29
     #define STAT_LED_RED_PIN                  23
     #define DOGLCD_CS                         17
-    #define DOGLCD_SCK                        76  // SCK_PIN   - Required for DUE Hardware SPI
-    #define DOGLCD_MOSI                       75  // MOSI_PIN
-    #define DOGLCD_MISO                       74  // MISO_PIN
+    #define DOGLCD_SCK                        76  // SCK_PIN   - Required for DUE Hardware SPI//SCK_引脚-需要适当的硬件SPI
+    #define DOGLCD_MOSI                       75  // MOSI_PIN//莫西奥平
+    #define DOGLCD_MISO                       74  // MISO_PIN//味噌皮
   #endif
 
   #if ENABLED(REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER)
-    #define BTN_ENC_EN               LCD_PINS_D7  // Detect the presence of the encoder
+    #define BTN_ENC_EN               LCD_PINS_D7  // Detect the presence of the encoder//检测编码器的存在
   #endif
 
-#endif // HAS_WIRED_LCD
+#endif // HAS_WIRED_LCD//有有线液晶显示器吗
 
 #if HAS_TMC_UART
   /**
@@ -214,24 +215,24 @@
    * Hardware serial communication ports.
    * If undefined software serial is used according to the pins below
    */
-  //#define X_HARDWARE_SERIAL  Serial1
-  //#define X2_HARDWARE_SERIAL Serial1
-  //#define Y_HARDWARE_SERIAL  Serial1
-  //#define Y2_HARDWARE_SERIAL Serial1
-  //#define Z_HARDWARE_SERIAL  Serial1
-  //#define Z2_HARDWARE_SERIAL Serial1
-  //#define E0_HARDWARE_SERIAL Serial1
-  //#define E1_HARDWARE_SERIAL Serial1
-  //#define E2_HARDWARE_SERIAL Serial1
-  //#define E3_HARDWARE_SERIAL Serial1
-  //#define E4_HARDWARE_SERIAL Serial1
+  //#define X_HARDWARE_SERIAL  Serial1//#定义X_硬件_串行1
+  //#define X2_HARDWARE_SERIAL Serial1//#定义X2_硬件_串行1
+  //#define Y_HARDWARE_SERIAL  Serial1//#定义Y_硬件_串行1
+  //#define Y2_HARDWARE_SERIAL Serial1//#定义Y2\u硬件\u串行1
+  //#define Z_HARDWARE_SERIAL  Serial1//#定义Z_硬件_串行1
+  //#define Z2_HARDWARE_SERIAL Serial1//#定义Z2_硬件_串行1
+  //#define E0_HARDWARE_SERIAL Serial1//#定义E0_硬件_串行1
+  //#define E1_HARDWARE_SERIAL Serial1//#定义E1_硬件_串行1
+  //#define E2_HARDWARE_SERIAL Serial1//#定义E2_硬件_串行1
+  //#define E3_HARDWARE_SERIAL Serial1//#定义E3\u硬件\u串行1
+  //#define E4_HARDWARE_SERIAL Serial1//#定义E4\u硬件\u串行1
 #endif
 
-//
-// M3/M4/M5 - Spindle/Laser Control
-//
+////
+// M3/M4/M5 - Spindle/Laser Control//M3/M4/M5-主轴/激光控制
+////
 #if HOTENDS < 3 && HAS_CUTTER && !PIN_EXISTS(SPINDLE_LASER_ENA)
-  #define SPINDLE_LASER_ENA_PIN               45  // Use E2 ENA
-  #define SPINDLE_LASER_PWM_PIN               12  // Hardware PWM
-  #define SPINDLE_DIR_PIN                     47  // Use E2 DIR
+  #define SPINDLE_LASER_ENA_PIN               45  // Use E2 ENA//使用E2-ENA
+  #define SPINDLE_LASER_PWM_PIN               12  // Hardware PWM//硬件脉宽调制
+  #define SPINDLE_DIR_PIN                     47  // Use E2 DIR//使用E2目录
 #endif

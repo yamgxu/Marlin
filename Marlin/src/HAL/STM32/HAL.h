@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  *
@@ -37,9 +38,9 @@
 
 #include <stdint.h>
 
-//
-// Serial Ports
-//
+////
+// Serial Ports//串行端口
+////
 #ifdef USBCON
   #include <USBSerial.h>
   #include "../../core/serial_hook.h"
@@ -116,12 +117,12 @@
 #define cli() __disable_irq()
 #define sei() __enable_irq()
 
-// On AVR this is in math.h?
+// On AVR this is in math.h?//在AVR上这是在数学上，h？
 #define square(x) ((x)*(x))
 
-// ------------------------
-// Types
-// ------------------------
+// ------------------------// ------------------------
+// Types//类型
+// ------------------------// ------------------------
 
 typedef int16_t pin_t;
 
@@ -129,29 +130,29 @@ typedef int16_t pin_t;
 #define PAUSE_SERVO_OUTPUT() libServo::pause_all_servos()
 #define RESUME_SERVO_OUTPUT() libServo::resume_all_servos()
 
-// ------------------------
-// Public Variables
-// ------------------------
+// ------------------------// ------------------------
+// Public Variables//公共变量
+// ------------------------// ------------------------
 
-// result of last ADC conversion
+// result of last ADC conversion//上次ADC转换的结果
 extern uint16_t HAL_adc_result;
 
-// ------------------------
-// Public functions
-// ------------------------
+// ------------------------// ------------------------
+// Public functions//公共职能
+// ------------------------// ------------------------
 
-// Memory related
+// Memory related//记忆相关
 #define __bss_end __bss_end__
 
-// Enable hooks into  setup for HAL
+// Enable hooks into  setup for HAL//在HAL的设置中启用挂钩
 void HAL_init();
 #define HAL_IDLETASK 1
 void HAL_idletask();
 
-// Clear reset reason
+// Clear reset reason//清除重置原因
 void HAL_clear_reset_source();
 
-// Reset reason
+// Reset reason//重置原因
 uint8_t HAL_get_reset_source();
 
 void HAL_reboot();
@@ -170,14 +171,14 @@ static inline int freeMemory() {
 
 #pragma GCC diagnostic pop
 
-//
-// ADC
-//
+////
+// ADC//模数转换器
+////
 
 #define HAL_ANALOG_SELECT(pin) pinMode(pin, INPUT)
 
 #define HAL_ADC_VREF         3.3
-#define HAL_ADC_RESOLUTION  ADC_RESOLUTION // 12
+#define HAL_ADC_RESOLUTION  ADC_RESOLUTION // 12// 12
 #define HAL_START_ADC(pin)  HAL_adc_start_conversion(pin)
 #define HAL_READ_ADC()      HAL_adc_result
 #define HAL_ADC_READY()     true
@@ -195,20 +196,20 @@ uint16_t HAL_adc_get_result();
 #ifdef STM32F1xx
   #define JTAG_DISABLE() AFIO_DBGAFR_CONFIG(AFIO_MAPR_SWJ_CFG_JTAGDISABLE)
   #define JTAGSWD_DISABLE() AFIO_DBGAFR_CONFIG(AFIO_MAPR_SWJ_CFG_DISABLE)
-  #define JTAGSWD_RESET() AFIO_DBGAFR_CONFIG(AFIO_MAPR_SWJ_CFG_RESET); // Reset: FULL SWD+JTAG
+  #define JTAGSWD_RESET() AFIO_DBGAFR_CONFIG(AFIO_MAPR_SWJ_CFG_RESET); // Reset: FULL SWD+JTAG//重置：全SWD+JTAG
 #endif
 
 #define PLATFORM_M997_SUPPORT
 void flashFirmware(const int16_t);
 
-// Maple Compatibility
+// Maple Compatibility//枫树兼容性
 typedef void (*systickCallback_t)(void);
 void systick_attach_callback(systickCallback_t cb);
 void HAL_SYSTICK_Callback();
 
 extern volatile uint32_t systick_uptime_millis;
 
-#define HAL_CAN_SET_PWM_FREQ   // This HAL supports PWM Frequency adjustment
+#define HAL_CAN_SET_PWM_FREQ   // This HAL supports PWM Frequency adjustment//该HAL支持PWM频率调整
 
 /**
  * set_pwm_frequency

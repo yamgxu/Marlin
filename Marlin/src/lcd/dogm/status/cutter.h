@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,9 +22,9 @@
  */
 #pragma once
 
-//
-// lcd/dogm/status/cutter.h - Status Screen Laser / Spindle bitmaps
-//
+////
+// lcd/dogm/status/cutter.h - Status Screen Laser / Spindle bitmaps//lcd/dogm/status/cutter.h-状态屏幕激光/主轴位图
+////
 
 #define STATUS_CUTTER_WIDTH 24
 #define STATUS_CUTTER_X     80

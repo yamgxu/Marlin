@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -24,10 +25,10 @@
 #include "../inc/MarlinConfigPre.h"
 
 typedef struct {
-  uint8_t   active_speed,    // 0-255 (fullspeed); Speed with enabled stepper motors
-            idle_speed;      // 0-255 (fullspeed); Speed after idle period with all motors are disabled
-  uint16_t  duration;        // Duration in seconds for the fan to run after all motors are disabled
-  bool      auto_mode;       // Default true
+  uint8_t   active_speed,    // 0-255 (fullspeed); Speed with enabled stepper motors//0-255（全速）；启用步进电机的速度
+            idle_speed;      // 0-255 (fullspeed); Speed after idle period with all motors are disabled//0-255（全速）；所有电机处于禁用状态时，怠速后的转速
+  uint16_t  duration;        // Duration in seconds for the fan to run after all motors are disabled//所有电机停用后风扇运行的持续时间（秒）
+  bool      auto_mode;       // Default true//默认为真
 } controllerFan_settings_t;
 
 #ifndef CONTROLLERFAN_SPEED_ACTIVE

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -33,16 +34,16 @@
 #if NO_EEPROM_SELECTED
   #if MB(RUMBA32_V1_0)
     #define FLASH_EEPROM_EMULATION
-    #define MARLIN_EEPROM_SIZE            0x1000  // 4KB
+    #define MARLIN_EEPROM_SIZE            0x1000  // 4KB//4KB
   #elif MB(RUMBA32_V1_1)
     #define I2C_EEPROM
-    #define MARLIN_EEPROM_SIZE            0x2000  // 8KB (24LC64T-I/OT)
+    #define MARLIN_EEPROM_SIZE            0x2000  // 8KB (24LC64T-I/OT)//8KB（24LC64T-I/OT）
   #endif
 #endif
 
 #if ENABLED(FLASH_EEPROM_EMULATION)
-  // Decrease delays and flash wear by spreading writes across the
-  // 128 kB sector allocated for EEPROM emulation.
+  // Decrease delays and flash wear by spreading writes across the//通过将写操作分散到整个系统来减少延迟和闪存磨损
+  // 128 kB sector allocated for EEPROM emulation.//分配给EEPROM仿真的128 kB扇区。
   #define FLASH_EEPROM_LEVELING
 #endif
 
@@ -54,9 +55,9 @@
   #undef BTN_PIN
 
   #if HAS_TMC_UART
-    //
-    // TMC2208/TMC2209 stepper drivers - Software Serial is used according to below pins
-    //
+    ////
+    // TMC2208/TMC2209 stepper drivers - Software Serial is used according to below pins//TMC2208/TMC2209步进驱动程序-根据以下引脚使用软件串行
+    ////
     #define X_SERIAL_TX_PIN                 PA14
     #define X_SERIAL_RX_PIN                 PC14
 

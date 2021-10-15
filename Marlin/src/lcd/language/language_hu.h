@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -34,7 +35,7 @@
  */
 
 namespace Language_hu {
-  using namespace Language_en; // A fordítás az örökölt Amerikai Angol (English) karakterláncokat használja.
+  using namespace Language_en; // A fordítás az örökölt Amerikai Angol (English) karakterláncokat használja.//一辆福特阿兹诺尔特美式安哥尔（英语）卡拉克特拉·坎卡特·哈兹纳亚。
 
   constexpr uint8_t    CHARSIZE                            = 2;
   PROGMEM Language_Str LANGUAGE                            = _UxGT("Magyar");
@@ -53,7 +54,7 @@ namespace Language_hu {
   PROGMEM Language_Str MSG_MEDIA_USB_REMOVED               = _UxGT("USB eltávolítva");
   PROGMEM Language_Str MSG_MEDIA_USB_FAILED                = _UxGT("USB eszköz hiba");
   PROGMEM Language_Str MSG_KILL_SUBCALL_OVERFLOW           = _UxGT("Túlfolyás");
-  PROGMEM Language_Str MSG_LCD_ENDSTOPS                    = _UxGT("Végállás"); // Maximum 8 karakter
+  PROGMEM Language_Str MSG_LCD_ENDSTOPS                    = _UxGT("Végállás"); // Maximum 8 karakter//最大8克拉
   PROGMEM Language_Str MSG_LCD_SOFT_ENDSTOPS               = _UxGT("Szoft. végállás");
   PROGMEM Language_Str MSG_MAIN                            = _UxGT("<Fömenü>");
   PROGMEM Language_Str MSG_ADVANCED_SETTINGS               = _UxGT("További beállítások");
@@ -494,9 +495,9 @@ namespace Language_hu {
   PROGMEM Language_Str MSG_ERR_MINTEMP                     = _UxGT("Hiba: MIN höfok");
   PROGMEM Language_Str MSG_HALTED                          = _UxGT("A NYOMTATÓ LEÁLLT");
   PROGMEM Language_Str MSG_PLEASE_RESET                    = _UxGT("Indítsd újra!");
-  PROGMEM Language_Str MSG_SHORT_DAY                       = _UxGT("n"); // Csak egy karakter
-  PROGMEM Language_Str MSG_SHORT_HOUR                      = _UxGT("ó"); // Csak egy karakter
-  PROGMEM Language_Str MSG_SHORT_MINUTE                    = _UxGT("p"); // Csak egy karakter
+  PROGMEM Language_Str MSG_SHORT_DAY                       = _UxGT("n"); // Csak egy karakter//Csak egy karakter
+  PROGMEM Language_Str MSG_SHORT_HOUR                      = _UxGT("ó"); // Csak egy karakter//Csak egy karakter
+  PROGMEM Language_Str MSG_SHORT_MINUTE                    = _UxGT("p"); // Csak egy karakter//Csak egy karakter
   PROGMEM Language_Str MSG_HEATING                         = _UxGT("Fütés...");
   PROGMEM Language_Str MSG_COOLING                         = _UxGT("Hütés...");
   PROGMEM Language_Str MSG_BED_HEATING                     = _UxGT("Ágy fütés...");
@@ -637,10 +638,10 @@ namespace Language_hu {
   PROGMEM Language_Str MSG_REMINDER_SAVE_SETTINGS          = _UxGT("Mentsd el!");
   PROGMEM Language_Str MSG_PASSWORD_REMOVED                = _UxGT("Jelszó törölve");
 
-  //
-  // Filament Change screens show up to 3 lines on a 4-line display
-  //                        ...or up to 2 lines on a 3-line display
-  //
+  ////
+  // Filament Change screens show up to 3 lines on a 4-line display//灯丝更换屏幕在4行显示屏上最多显示3行
+  //                        ...or up to 2 lines on a 3-line display//…或在3行显示器上最多显示2行
+  ////
   #if LCD_HEIGHT >= 4
     PROGMEM Language_Str MSG_ADVANCED_PAUSE_WAITING        = _UxGT(MSG_2_LINE("Nyomj gombot", "nyomtatás folytatáshoz"));
     PROGMEM Language_Str MSG_PAUSE_PRINT_PARKING           = _UxGT(MSG_1_LINE("Parkolás..."));

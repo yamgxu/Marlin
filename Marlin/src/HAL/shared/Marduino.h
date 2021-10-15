@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -25,15 +26,15 @@
  * HAL/shared/Marduino.h
  */
 
-#undef DISABLED       // Redefined by ESP32
-#undef M_PI           // Redefined by all
-#undef _BV            // Redefined by some
-#undef SBI            // Redefined by arduino/const_functions.h
-#undef CBI            // Redefined by arduino/const_functions.h
-#undef sq             // Redefined by teensy3/wiring.h
-#undef UNUSED         // Redefined by stm32f4xx_hal_def.h
+#undef DISABLED       // Redefined by ESP32//由ESP32重新定义
+#undef M_PI           // Redefined by all//重新定义
+#undef _BV            // Redefined by some//被一些人重新定义
+#undef SBI            // Redefined by arduino/const_functions.h//由arduino/const_函数重新定义。h
+#undef CBI            // Redefined by arduino/const_functions.h//由arduino/const_函数重新定义。h
+#undef sq             // Redefined by teensy3/wiring.h//由teensy3/wiring.h重新定义
+#undef UNUSED         // Redefined by stm32f4xx_hal_def.h//由stm32f4xx_hal_def.h重新定义
 
-#include <Arduino.h>  // NOTE: If included earlier then this line is a NOOP
+#include <Arduino.h>  // NOTE: If included earlier then this line is a NOOP//注：如果包含在前面，则该行为NOOP
 
 #undef DISABLED
 #define DISABLED(V...) DO(DIS,&&,V)
@@ -51,9 +52,9 @@
 #define sq(x) ((x)*(x))
 
 #ifndef __AVR__
-  #ifndef strchr_P // Some platforms define a macro (DUE, teensy35)
+  #ifndef strchr_P // Some platforms define a macro (DUE, teensy35)//某些平台定义宏（到期，teensy35）
     inline const char* strchr_P(const char *s, int c) { return strchr(s,c); }
-    //#define strchr_P(s,c) strchr(s,c)
+    //#define strchr_P(s,c) strchr(s,c)//#定义strchr\u P（s，c）strchr（s，c）
   #endif
 
   #ifndef snprintf_P
@@ -64,7 +65,7 @@
   #endif
 #endif
 
-// Restart causes
+// Restart causes//重新启动原因
 #define RST_POWER_ON    1
 #define RST_EXTERNAL    2
 #define RST_BROWN_OUT   4
@@ -77,7 +78,7 @@
   #define M_PI 3.14159265358979323846f
 #endif
 
-// Remove compiler warning on an unused variable
+// Remove compiler warning on an unused variable//删除未使用变量上的编译器警告
 #ifndef UNUSED
   #define UNUSED(x) ((void)(x))
 #endif

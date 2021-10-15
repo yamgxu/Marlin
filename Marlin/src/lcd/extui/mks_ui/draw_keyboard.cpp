@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -85,7 +86,7 @@ static void lv_kb_event_cb(lv_obj_t *kb, lv_event_t event) {
   const char * txt = lv_btnm_get_active_btn_text(kb);
   if (!txt) return;
 
-  // Do the corresponding action according to the text of the button
+  // Do the corresponding action according to the text of the button//根据按钮的文本执行相应的操作
   if (strcmp(txt, "abc") == 0) {
     lv_btnm_set_map(kb, kb_map_lc);
     lv_btnm_set_ctrl_map(kb, kb_ctrl_lc_map);
@@ -107,7 +108,7 @@ static void lv_kb_event_cb(lv_obj_t *kb, lv_event_t event) {
       draw_return_ui();
     }
     else {
-      lv_kb_set_ta(kb, nullptr); // De-assign the text area to hide its cursor if needed
+      lv_kb_set_ta(kb, nullptr); // De-assign the text area to hide its cursor if needed//如果需要，取消指定文本区域以隐藏其光标
       lv_obj_del(kb);
       return;
     }
@@ -153,7 +154,7 @@ static void lv_kb_event_cb(lv_obj_t *kb, lv_event_t event) {
             wifi_tips_type = TIPS_TYPE_JOINING;
             lv_draw_wifi_tips();
             break;
-        #endif // MKS_WIFI_MODULE
+        #endif // MKS_WIFI_MODULE//MKS_无线模块
         case autoLevelGcodeCommand:
           uint8_t buf[100];
           strncpy((char *)buf,ret_ta_txt,sizeof(buf));
@@ -163,22 +164,22 @@ static void lv_kb_event_cb(lv_obj_t *kb, lv_event_t event) {
           break;
         case GCodeCommand:
           if (!queue.ring_buffer.full(3)) {
-            // Hook anything that goes to the serial port
+            // Hook anything that goes to the serial port//钩住任何连接到串行端口的东西
             MYSERIAL1.setHook(lv_serial_capt_hook, lv_eom_hook, 0);
             queue.enqueue_one_now(ret_ta_txt);
           }
           lv_clear_keyboard();
-          // draw_return_ui is called in the end of message hook
+          // draw_return_ui is called in the end of message hook//在消息钩子的末尾调用draw\u return\u ui
           break;
         default: break;
       }
     }
     else
-      lv_kb_set_ta(kb, nullptr); // De-assign the text area to hide it cursor if needed
+      lv_kb_set_ta(kb, nullptr); // De-assign the text area to hide it cursor if needed//如果需要，取消指定文本区域以隐藏光标
   return;
   }
 
-  // Add the characters to the text area if set
+  // Add the characters to the text area if set//将字符添加到文本区域（如果已设置）
   if (!ext->ta) return;
 
   if (strcmp(txt, "Enter") == 0 || strcmp(txt, LV_SYMBOL_NEW_LINE) == 0)
@@ -218,7 +219,7 @@ static void lv_kb_event_cb(lv_obj_t *kb, lv_event_t event) {
 void lv_draw_keyboard() {
   scr = lv_screen_create(KEYBOARD_UI, "");
 
-  // Create styles for the keyboard
+  // Create styles for the keyboard//为键盘创建样式
   static lv_style_t rel_style, pr_style;
 
   lv_style_copy(&rel_style, &lv_style_btn_rel);
@@ -233,7 +234,7 @@ void lv_draw_keyboard() {
   pr_style.body.main_color = lv_color_make(0x72, 0x42, 0x15);
   pr_style.body.grad_color = lv_color_make(0x6A, 0x3A, 0x0C);
 
-  // Create a keyboard and apply the styles
+  // Create a keyboard and apply the styles//创建键盘并应用样式
   lv_obj_t *kb = lv_kb_create(scr, nullptr);
   lv_obj_set_event_cb(kb, lv_kb_event_cb);
   lv_kb_set_cursor_manage(kb, true);
@@ -245,7 +246,7 @@ void lv_draw_keyboard() {
     }
   #endif
 
-  // Create a text area. The keyboard will write here
+  // Create a text area. The keyboard will write here//创建一个文本区域。键盘将在这里书写
   lv_obj_t *ta = lv_ta_create(scr, nullptr);
   lv_obj_align(ta, nullptr, LV_ALIGN_IN_TOP_MID, 0, 10);
   switch (keyboard_value) {
@@ -255,15 +256,15 @@ void lv_draw_keyboard() {
     lv_ta_set_text(ta, public_buf_m);
       break;
     case GCodeCommand:
-      // Start with uppercase by default
+      // Start with uppercase by default//默认情况下以大写字母开头
       lv_btnm_set_map(kb, kb_map_uc);
       lv_btnm_set_ctrl_map(kb, kb_ctrl_uc_map);
-      // Fallthrough
+      // Fallthrough//失败
     default:
     lv_ta_set_text(ta, "");
   }
 
-  // Assign the text area to the keyboard
+  // Assign the text area to the keyboard//将文本区域指定给键盘
   lv_kb_set_ta(kb, ta);
 }
 
@@ -272,4 +273,4 @@ void lv_clear_keyboard() {
 }
 
 
-#endif  // HAS_TFT_LVGL_UI
+#endif  // HAS_TFT_LVGL_UI//有TFT\U LVGL\U用户界面

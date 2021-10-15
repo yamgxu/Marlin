@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -20,9 +21,9 @@
  *
  */
 
-//
-// TMC Menu
-//
+////
+// TMC Menu//TMC菜单
+////
 
 #include "../../inc/MarlinConfigPre.h"
 
@@ -178,4 +179,4 @@ void menu_tmc() {
   END_MENU();
 }
 
-#endif // HAS_TRINAMIC_CONFIG
+#endif // HAS_TRINAMIC_CONFIG//有_TRINAMIC _CONFIG

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -89,11 +90,11 @@
   L64XX_CLASS(E7) stepperE7(L6470_CHAIN_SS_PIN);
 #endif
 
-// Not using L64XX class init method because it
-// briefly sends power to the steppers
+// Not using L64XX class init method because it//不使用L64XX类初始化方法，因为它
+// briefly sends power to the steppers//向步进电机短暂供电
 
 inline void L6470_init_chip(L64XX &st, const int ms, const int oc, const int sc, const int mv, const int slew_rate) {
-  st.set_handlers(L64xxManager.spi_init, L64xxManager.transfer_single, L64xxManager.transfer_chain);  // specify which external SPI routines to use
+  st.set_handlers(L64xxManager.spi_init, L64xxManager.transfer_single, L64xxManager.transfer_chain);  // specify which external SPI routines to use//指定要使用的外部SPI例程
   switch (st.L6470_status_layout) {
     case L6470_STATUS_LAYOUT: {
       st.resetDev();
@@ -123,31 +124,31 @@ inline void L6470_init_chip(L64XX &st, const int ms, const int oc, const int sc,
 
     case L6474_STATUS_LAYOUT: {
       st.free();
-      //st.SetParam(st.L64XX_CONFIG, CONFIG_PWM_DIV_1 | CONFIG_PWM_MUL_2 | CONFIG_OC_SD_DISABLE | CONFIG_VS_COMP_DISABLE | CONFIG_SW_HARD_STOP | CONFIG_INT_16MHZ);
-      //st.SetParam(L6474_TVAL, 0xFF);
+      //st.SetParam(st.L64XX_CONFIG, CONFIG_PWM_DIV_1 | CONFIG_PWM_MUL_2 | CONFIG_OC_SD_DISABLE | CONFIG_VS_COMP_DISABLE | CONFIG_SW_HARD_STOP | CONFIG_INT_16MHZ);//st.SetParam（st.L64XX|u配置，配置PWM|u DIV|u 1 |配置PWM|u MUL|u 2 |配置OC|u SD|u DISABLE |配置VS|u COMP|u DISABLE |配置SW|硬停|配置INT U 16MHZ）；
+      //st.SetParam(L6474_TVAL, 0xFF);//st.SetParam（L6474_TVAL，0xFF）；
       st.setMicroSteps(ms);
       st.setOverCurrent(oc);
       st.setTVALCurrent(sc);
       st.SetParam(L6470_ABS_POS, 0);
       uint32_t config_temp = st.GetParam(st.L64XX_CONFIG);
-      config_temp &= ~CONFIG_POW_SR & ~CONFIG_EN_TQREG;  // clear out slew rate and set current to be controlled by TVAL register
+      config_temp &= ~CONFIG_POW_SR & ~CONFIG_EN_TQREG;  // clear out slew rate and set current to be controlled by TVAL register//清除转换速率并设置由TVAL寄存器控制的电流
       switch (slew_rate) {
         case 0: st.SetParam(st.L64XX_CONFIG, config_temp | CONFIG_SR_75V_us); break;
         default:
         case 1: st.SetParam(st.L64XX_CONFIG, config_temp | CONFIG_SR_110V_us); break;
         case 3:
         case 2: st.SetParam(st.L64XX_CONFIG, config_temp | CONFIG_SR_260V_us); break;
-        //case 0: st.SetParam(st.L64XX_CONFIG, 0x2E88 | CONFIG_EN_TQREG | CONFIG_SR_75V_us); break;
-        //default:
-        //case 1: st.SetParam(st.L64XX_CONFIG, 0x2E88 | CONFIG_EN_TQREG | CONFIG_SR_110V_us); break;
-        //case 3:
-        //case 2: st.SetParam(st.L64XX_CONFIG, 0x2E88 | CONFIG_EN_TQREG | CONFIG_SR_260V_us); break;
+        //case 0: st.SetParam(st.L64XX_CONFIG, 0x2E88 | CONFIG_EN_TQREG | CONFIG_SR_75V_us); break;//案例0:st.SetParam（st.L64XX_-CONFIG，0x2E88 | CONFIG_-EN_-TQREG | CONFIG_-SR_75V_-us）；打破
+        //default://默认值：
+        //case 1: st.SetParam(st.L64XX_CONFIG, 0x2E88 | CONFIG_EN_TQREG | CONFIG_SR_110V_us); break;//案例1:st.SetParam（st.L64XX_配置，0x2E88 |配置_EN_TQREG |配置_SR_110V_us）；打破
+        //case 3://案例3：
+        //case 2: st.SetParam(st.L64XX_CONFIG, 0x2E88 | CONFIG_EN_TQREG | CONFIG_SR_260V_us); break;//案例2:st.SetParam（st.L64XX_-CONFIG，0x2E88 | CONFIG_-EN_-TQREG | CONFIG_-SR_260V_-us）；打破
 
-        //case 0: st.SetParam(st.L64XX_CONFIG, 0x2E88 ); break;
-        //default:
-        //case 1: st.SetParam(st.L64XX_CONFIG, 0x2E88 ); break;
-        //case 3:
-        //case 2: st.SetParam(st.L64XX_CONFIG, 0x2E88 ); break;
+        //case 0: st.SetParam(st.L64XX_CONFIG, 0x2E88 ); break;//案例0:st.SetParam（st.L64XX_配置，0x2E88）；打破
+        //default://默认值：
+        //case 1: st.SetParam(st.L64XX_CONFIG, 0x2E88 ); break;//案例1:st.SetParam（st.L64XX_配置，0x2E88）；打破
+        //case 3://案例3：
+        //case 2: st.SetParam(st.L64XX_CONFIG, 0x2E88 ); break;//案例2:st.SetParam（st.L64XX_配置，0x2E88）；打破
       }
       st.getStatus();
       st.getStatus();
@@ -167,7 +168,7 @@ inline void L6470_init_chip(L64XX &st, const int ms, const int oc, const int sc,
       st.SetParam(+-L6470_KVAL_HOLD, mv);
       st.SetParam(L6470_ABS_POS, 0);
       st.SetParam(st.L64XX_CONFIG,(st.GetParam(st.L64XX_CONFIG) | PWR_VCC_7_5V));
-      st.getStatus();     // must clear out status bits before can set slew rate
+      st.getStatus();     // must clear out status bits before can set slew rate//必须清除状态位才能设置转换速率
       st.getStatus();
       switch (slew_rate) {
         case 0: st.SetParam(L6470_GATECFG1, CONFIG1_SR_220V_us); st.SetParam(L6470_GATECFG2, CONFIG2_SR_220V_us); break;
@@ -243,4 +244,4 @@ void L64XX_Marlin::init_to_defaults() {
   #endif
 }
 
-#endif // HAS_L64XX
+#endif // HAS_L64XX//有"L64XX"吗?

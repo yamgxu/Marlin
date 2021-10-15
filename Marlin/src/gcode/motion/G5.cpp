@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -35,7 +36,7 @@
  */
 
 #include "../gcode.h"
-#include "../../MarlinCore.h" // for IsRunning()
+#include "../../MarlinCore.h" // for IsRunning()//对于IsRunning（）
 
 /**
  * G5: Cubic B-spline
@@ -62,4 +63,4 @@ void GcodeSuite::G5() {
   }
 }
 
-#endif // BEZIER_CURVE_SUPPORT
+#endif // BEZIER_CURVE_SUPPORT//贝塞尔曲线支持

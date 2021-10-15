@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -27,7 +28,7 @@
 #include "../gcode.h"
 #include "../../module/scara.h"
 #include "../../module/motion.h"
-#include "../../MarlinCore.h" // for IsRunning()
+#include "../../MarlinCore.h" // for IsRunning()//对于IsRunning（）
 
 inline bool SCARA_move_to_cal(const uint8_t delta_a, const uint8_t delta_b) {
   if (IsRunning()) {
@@ -78,4 +79,4 @@ bool GcodeSuite::M364() {
   return SCARA_move_to_cal(45, 135);
 }
 
-#endif // MORGAN_SCARA
+#endif // MORGAN_SCARA//摩根·斯卡拉

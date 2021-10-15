@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Generated automatically by buildroot/share/fonts/uxggenpages.sh
  * Contents will be REPLACED by future processing!
@@ -11,5 +12,5 @@ const u8g_fntpgm_uint8_t fontpage_2_241_241[31] U8G_FONT_SECTION("fontpage_2_241
 
 #define FONTDATA_ITEM(page, begin, end, data) { page, begin, end, COUNT(data), data }
 static const uxg_fontinfo_t g_fontinfo[] PROGMEM = {
-    FONTDATA_ITEM(2, 241, 241, fontpage_2_241_241), // 'ű' -- 'ű'
+    FONTDATA_ITEM(2, 241, 241, fontpage_2_241_241), // 'ű' -- 'ű'// 'ű' -- 'ű'
 };

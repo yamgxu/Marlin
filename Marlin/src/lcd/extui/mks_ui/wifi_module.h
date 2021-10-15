@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -72,16 +73,16 @@ typedef struct {
 } WIFI_DMA_RCV_FIFO;
 
 typedef struct {
-  uint8_t flag; // 0x0: no error;  0x01: error
-  uint32_t start_tick; //error start time
+  uint8_t flag; // 0x0: no error;  0x01: error//0x0：无错误；0x01:错误
+  uint32_t start_tick; //error start time//错误开始时间
   uint32_t now_tick;
 } WIFI_TRANS_ERROR;
 
 extern volatile WIFI_TRANS_ERROR wifiTransError;
 
 typedef struct {
-  char ap_name[32];   //wifi-name
-  char keyCode[64]; //wifi password
+  char ap_name[32];   //wifi-name//wifi名称
+  char keyCode[64]; //wifi password//无线密码
   int  decodeType;
   int  baud;
   int  mode;
@@ -148,18 +149,18 @@ typedef struct {
 } QUEUE;
 
 typedef enum {
-  WIFI_PARA_SET,      // 0x0:net parameter
-  WIFI_PRINT_INF,     // 0x1:print message
-  WIFI_TRANS_INF,     // 0x2:Pass through information
-  WIFI_EXCEP_INF,     // 0x3:Exception information
-  WIFI_CLOUD_CFG,     // 0x4:cloud config
-  WIFI_CLOUD_UNBIND,  // 0x5:Unbind ID
+  WIFI_PARA_SET,      // 0x0:net parameter//0x0:网络参数
+  WIFI_PRINT_INF,     // 0x1:print message//0x1：打印消息
+  WIFI_TRANS_INF,     // 0x2:Pass through information//0x2：传递信息
+  WIFI_EXCEP_INF,     // 0x3:Exception information//0x3：异常信息
+  WIFI_CLOUD_CFG,     // 0x4:cloud config//0x4：云配置
+  WIFI_CLOUD_UNBIND,  // 0x5:Unbind ID//0x5：解除绑定ID
 } WIFI_RET_TYPE;
 
 typedef struct {
   uint32_t uart_read_point;
   uint32_t uart_write_point;
-  //uint8_t uartTxBuffer[UART_FIFO_BUFFER_SIZE];
+  //uint8_t uartTxBuffer[UART_FIFO_BUFFER_SIZE];//uint8_t uartTxBuffer[UART_FIFO_BUFFER_SIZE]；
 } SZ_USART_FIFO;
 
 #define WIFI_GCODE_BUFFER_LEAST_SIZE    96

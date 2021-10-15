@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,79 +30,79 @@
 
 #define BOARD_INFO_NAME "Cohesion3D Mini"
 
-//
-// Servos
-//
+////
+// Servos//伺服
+////
 #define SERVO0_PIN                         P1_23
 
-//
-// Limit Switches
-//
-#define X_MIN_PIN                          P1_24  // 10k pullup to 3.3V
-#define X_MAX_PIN                          P1_25  // 10k pullup to 3.3V
-#define Y_MIN_PIN                          P1_26  // 10k pullup to 3.3V
-#define Y_MAX_PIN                          P1_27  // 10k pullup to 3.3V
-#define Z_MIN_PIN                          P1_28  // 10k pullup to 3.3V
-#define Z_MAX_PIN                          P1_29  // 10k pullup to 3.3V
+////
+// Limit Switches//限位开关
+////
+#define X_MIN_PIN                          P1_24  // 10k pullup to 3.3V//10k上拉至3.3V
+#define X_MAX_PIN                          P1_25  // 10k pullup to 3.3V//10k上拉至3.3V
+#define Y_MIN_PIN                          P1_26  // 10k pullup to 3.3V//10k上拉至3.3V
+#define Y_MAX_PIN                          P1_27  // 10k pullup to 3.3V//10k上拉至3.3V
+#define Z_MIN_PIN                          P1_28  // 10k pullup to 3.3V//10k上拉至3.3V
+#define Z_MAX_PIN                          P1_29  // 10k pullup to 3.3V//10k上拉至3.3V
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                         P2_00
 #define X_DIR_PIN                          P0_05
 #define X_ENABLE_PIN                       P0_04
-#define X_CS_PIN                           P1_10  // Ethernet Expansion - Pin 9
+#define X_CS_PIN                           P1_10  // Ethernet Expansion - Pin 9//以太网扩展-引脚9
 
 #define Y_STEP_PIN                         P2_01
 #define Y_DIR_PIN                          P0_11
 #define Y_ENABLE_PIN                       P0_10
-#define Y_CS_PIN                           P1_09  // Ethernet Expansion - Pin 10
+#define Y_CS_PIN                           P1_09  // Ethernet Expansion - Pin 10//以太网扩展-引脚10
 
 #define Z_STEP_PIN                         P2_02
 #define Z_DIR_PIN                          P0_20
 #define Z_ENABLE_PIN                       P0_19
-#define Z_CS_PIN                           P1_00  // Ethernet Expansion - Pin 11
+#define Z_CS_PIN                           P1_00  // Ethernet Expansion - Pin 11//以太网扩展-引脚11
 
 #define E0_STEP_PIN                        P2_03
 #define E0_DIR_PIN                         P0_22
 #define E0_ENABLE_PIN                      P0_21
-#define E0_CS_PIN                          P1_04  // Ethernet Expansion - Pin 12
+#define E0_CS_PIN                          P1_04  // Ethernet Expansion - Pin 12//以太网扩展-引脚12
 
-//
-// Default pins for TMC software SPI
-//
+////
+// Default pins for TMC software SPI//TMC软件SPI的默认引脚
+////
 #if ENABLED(TMC_USE_SW_SPI)
   #ifndef TMC_SW_MOSI
-    #define TMC_SW_MOSI                    P1_16  // Ethernet Expansion - Pin 5
+    #define TMC_SW_MOSI                    P1_16  // Ethernet Expansion - Pin 5//以太网扩展-引脚5
   #endif
   #ifndef TMC_SW_MISO
-    #define TMC_SW_MISO                    P1_17  // Ethernet Expansion - Pin 6
+    #define TMC_SW_MISO                    P1_17  // Ethernet Expansion - Pin 6//以太网扩展-引脚6
   #endif
   #ifndef TMC_SW_SCK
-    #define TMC_SW_SCK                     P1_08  // Ethernet Expansion - Pin 7
+    #define TMC_SW_SCK                     P1_08  // Ethernet Expansion - Pin 7//以太网扩展-引脚7
   #endif
 #endif
 
-//
-// Analog Inputs
-//  3.3V max when defined as an analog input
-//
-#define TEMP_0_PIN                      P0_23_A0  // P0_23
-#define TEMP_BED_PIN                    P0_24_A1  // P0_24
+////
+// Analog Inputs//模拟输入
+//  3.3V max when defined as an analog input//当定义为模拟输入时，最大电压为3.3V
+////
+#define TEMP_0_PIN                      P0_23_A0  // P0_23//P0_23
+#define TEMP_BED_PIN                    P0_24_A1  // P0_24//P0_24
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_BED_PIN                     P2_05
-#define HEATER_0_PIN                       P2_07  // FET 1
+#define HEATER_0_PIN                       P2_07  // FET 1//场效应晶体管1
 #ifndef FAN_PIN
-  #define FAN_PIN                          P2_06  // FET 3
+  #define FAN_PIN                          P2_06  // FET 3//场效应晶体管3
 #endif
 
-//
-// Auto fans
-//
-#define AUTO_FAN_PIN                       P2_04  // FET 4
+////
+// Auto fans//汽车风扇
+////
+#define AUTO_FAN_PIN                       P2_04  // FET 4//场效应晶体管4
 #ifndef E0_AUTO_FAN_PIN
   #define E0_AUTO_FAN_PIN           AUTO_FAN_PIN
 #endif
@@ -112,57 +113,57 @@
   #define E2_AUTO_FAN_PIN           AUTO_FAN_PIN
 #endif
 
-//
-// Misc. Functions
-//
-#define LED_PIN                            P4_28  // Play LED
+////
+// Misc. Functions//杂项。功能
+////
+#define LED_PIN                            P4_28  // Play LED//播放LED
 
-//
-// M3/M4/M5 - Spindle/Laser Control
-//
+////
+// M3/M4/M5 - Spindle/Laser Control//M3/M4/M5-主轴/激光控制
+////
 #if HAS_CUTTER
   #undef HEATER_0_PIN
-  #define SPINDLE_LASER_ENA_PIN            P2_07  // FET 1
+  #define SPINDLE_LASER_ENA_PIN            P2_07  // FET 1//场效应晶体管1
   #undef HEATER_BED_PIN
-  #define SPINDLE_LASER_PWM_PIN            P2_05  // Bed FET
+  #define SPINDLE_LASER_PWM_PIN            P2_05  // Bed FET//床场效应晶体管
   #undef FAN_PIN
-  #define SPINDLE_DIR_PIN                  P2_06  // FET 3
+  #define SPINDLE_DIR_PIN                  P2_06  // FET 3//场效应晶体管3
 #endif
 
-//
-// LCD / Controller
-//
-// LCD_PINS_D5, D6, and D7 are not present in the EXP1 connector, and will need to be
-// defined to use the REPRAP_DISCOUNT_SMART_CONTROLLER.
-//
-// A remote SD card is currently not supported because the pins routed to the EXP2
-// connector are shared with the onboard SD card, and Marlin does not support reading
-// G-code files from the onboard SD card.
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
+// LCD_PINS_D5, D6, and D7 are not present in the EXP1 connector, and will need to be//EXP1连接器中不存在LCD_引脚_D5、D6和D7，需要更换
+// defined to use the REPRAP_DISCOUNT_SMART_CONTROLLER.//定义为使用REPRAP\u折扣\u智能\u控制器。
+////
+// A remote SD card is currently not supported because the pins routed to the EXP2//当前不支持远程SD卡，因为插脚路由到EXP2
+// connector are shared with the onboard SD card, and Marlin does not support reading//连接器与板载SD卡共享，Marlin不支持读取
+// G-code files from the onboard SD card.//车载SD卡上的G代码文件。
+////
 #if HAS_WIRED_LCD
 
-  #define BEEPER_PIN                       P0_27  // EXP2-7 - open drain
+  #define BEEPER_PIN                       P0_27  // EXP2-7 - open drain//EXP2-7-明渠
 
-  #define BTN_EN1                          P3_26  // EXP2-5
-  #define BTN_EN2                          P3_25  // EXP2-3
-  #define BTN_ENC                          P1_30  // EXP1-2
+  #define BTN_EN1                          P3_26  // EXP2-5//表2-5
+  #define BTN_EN2                          P3_25  // EXP2-3//表2-3
+  #define BTN_ENC                          P1_30  // EXP1-2//表1-2
 
-  #define LCD_PINS_RS                      P0_16  // EXP1-4
-  #define LCD_SDSS                         P0_28  // EXP2-4
-  #define LCD_PINS_ENABLE                  P0_18  // EXP1-3
-  #define LCD_PINS_D4                      P0_15  // EXP1-5
+  #define LCD_PINS_RS                      P0_16  // EXP1-4//表1-4
+  #define LCD_SDSS                         P0_28  // EXP2-4//表2-4
+  #define LCD_PINS_ENABLE                  P0_18  // EXP1-3//表1-3
+  #define LCD_PINS_D4                      P0_15  // EXP1-5//表1-5
 
-  #define KILL_PIN                         P2_11  // EXP2-10
+  #define KILL_PIN                         P2_11  // EXP2-10//表2-10
 
   #if ENABLED(SDSUPPORT)
     #error "SDSUPPORT is not currently supported by the Cohesion3D boards"
   #endif
 
-#endif // HAS_WIRED_LCD
+#endif // HAS_WIRED_LCD//有有线液晶显示器吗
 
-//
-// Ethernet pins
-//
+////
+// Ethernet pins//以太网管脚
+////
 #define ENET_MDIO                          P1_17
 #define ENET_RX_ER                         P1_14
 #define ENET_RXD1                          P1_10

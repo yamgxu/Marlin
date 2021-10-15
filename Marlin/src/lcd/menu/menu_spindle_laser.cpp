@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -20,9 +21,9 @@
  *
  */
 
-//
-// Spindle / Laser Menu
-//
+////
+// Spindle / Laser Menu//主轴/激光菜单
+////
 
 #include "../../inc/MarlinConfig.h"
 
@@ -42,8 +43,8 @@
     BACK_ITEM(MSG_MAIN);
 
     #if ENABLED(SPINDLE_LASER_PWM)
-      // Change the cutter's "current power" value without turning the cutter on or off
-      // Power is displayed and set in units and range according to CUTTER_POWER_UNIT
+      // Change the cutter's "current power" value without turning the cutter on or off//在不打开或关闭切割机的情况下更改切割机的“当前功率”值
+      // Power is displayed and set in units and range according to CUTTER_POWER_UNIT//功率根据切割器功率单位以单位和范围显示和设置
       EDIT_ITEM_FAST(CUTTER_MENU_POWER_TYPE, MSG_CUTTER(POWER), &cutter.menuPower,
         cutter.mpower_min(), cutter.mpower_max(), cutter.update_from_mpower);
     #endif
@@ -69,7 +70,7 @@
     #endif
 
     #if ENABLED(LASER_FEATURE)
-      // Setup and fire a test pulse using the current PWM power level for for a duration of test_pulse_min to test_pulse_max ms.
+      // Setup and fire a test pulse using the current PWM power level for for a duration of test_pulse_min to test_pulse_max ms.//使用当前PWM功率电平设置并激发一个测试脉冲，持续时间为test_pulse_min至test_pulse_max ms。
       EDIT_ITEM_FAST(CUTTER_MENU_PULSE_TYPE, MSG_LASER_PULSE_MS, &cutter.testPulse, LASER_TEST_PULSE_MIN, LASER_TEST_PULSE_MAX);
       ACTION_ITEM(MSG_LASER_FIRE_PULSE, cutter.test_fire_pulse);
     #endif
@@ -81,4 +82,4 @@
     END_MENU();
   }
 
-#endif // HAS_LCD_MENU && HAS_CUTTER
+#endif // HAS_LCD_MENU && HAS_CUTTER//HAS_LCD_菜单&&HAS_切割器

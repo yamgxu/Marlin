@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,12 +30,12 @@
 
 #define BOARD_INFO_NAME "RAMPS <1.2"
 
-// Uncomment the following line for RAMPS v1.0
-//#define RAMPS_V_1_0
+// Uncomment the following line for RAMPS v1.0//取消对RAMPS v1.0的以下行的注释
+//#define RAMPS_V_1_0//#定义坡道V_1_0
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_MIN_PIN                              3
 #define X_MAX_PIN                              2
 #define Y_MIN_PIN                             16
@@ -42,16 +43,16 @@
 #define Z_MIN_PIN                             18
 #define Z_MAX_PIN                             19
 
-//
-// Z Probe (when not Z_MIN_PIN)
-//
+////
+// Z Probe (when not Z_MIN_PIN)//Z探头（非Z_MIN_引脚时）
+////
 #ifndef Z_MIN_PROBE_PIN
   #define Z_MIN_PROBE_PIN                     19
 #endif
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                            26
 #define X_DIR_PIN                             28
 #define X_ENABLE_PIN                          24
@@ -68,29 +69,29 @@
 #define E0_DIR_PIN                            34
 #define E0_ENABLE_PIN                         30
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                             2  // Analog Input
-#define TEMP_BED_PIN                           1  // Analog Input
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                             2  // Analog Input//模拟输入
+#define TEMP_BED_PIN                           1  // Analog Input//模拟输入
 
-// SPI for Max6675 or Max31855 Thermocouple
+// SPI for Max6675 or Max31855 Thermocouple//Max6675或Max31855热电偶的SPI
 #if DISABLED(SDSUPPORT)
-  #define MAX6675_SS_PIN                      66  // Don't use 53 if using Display/SD card
+  #define MAX6675_SS_PIN                      66  // Don't use 53 if using Display/SD card//如果使用显示卡/SD卡，请不要使用53
 #else
-  #define MAX6675_SS_PIN                      66  // Don't use 49 (SD_DETECT_PIN)
+  #define MAX6675_SS_PIN                      66  // Don't use 49 (SD_DETECT_PIN)//不要使用49（SD_DETECT_引脚）
 #endif
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #if ENABLED(RAMPS_V_1_0)
   #define HEATER_0_PIN                        12
   #define HEATER_BED_PIN                      -1
   #ifndef FAN_PIN
     #define FAN_PIN                           11
   #endif
-#else                                             // RAMPS_V_1_1 or RAMPS_V_1_2
+#else                                             // RAMPS_V_1_1 or RAMPS_V_1_2//斜坡V_1_1或斜坡V_1_2
   #define HEATER_0_PIN                        10
   #define HEATER_BED_PIN                       8
   #ifndef FAN_PIN
@@ -98,20 +99,20 @@
   #endif
 #endif
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define SDPOWER_PIN                           48
 #define SDSS                                  53
 #define LED_PIN                               13
 
 #ifndef CASE_LIGHT_PIN
-  #define CASE_LIGHT_PIN                      45  // Hardware PWM
+  #define CASE_LIGHT_PIN                      45  // Hardware PWM//硬件脉宽调制
 #endif
 
-//
-// M3/M4/M5 - Spindle/Laser Control
-//
-#define SPINDLE_LASER_ENA_PIN                 41  // Pullup or pulldown!
-#define SPINDLE_LASER_PWM_PIN                 45  // Hardware PWM
+////
+// M3/M4/M5 - Spindle/Laser Control//M3/M4/M5-主轴/激光控制
+////
+#define SPINDLE_LASER_ENA_PIN                 41  // Pullup or pulldown!//拉起还是拉下！
+#define SPINDLE_LASER_PWM_PIN                 45  // Hardware PWM//硬件脉宽调制
 #define SPINDLE_DIR_PIN                       43

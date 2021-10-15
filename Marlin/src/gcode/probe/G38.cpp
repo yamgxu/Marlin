@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -47,7 +48,7 @@ inline bool G38_run_probe() {
   bool G38_pass_fail = false;
 
   #if MULTIPLE_PROBING > 1
-    // Get direction of move and retract
+    // Get direction of move and retract//获取移动和缩回的方向
     xyz_float_t retract_mm;
     LOOP_LINEAR_AXES(i) {
       const float dist = destination[i] - current_position[i];
@@ -55,9 +56,9 @@ inline bool G38_run_probe() {
     }
   #endif
 
-  planner.synchronize();  // wait until the machine is idle
+  planner.synchronize();  // wait until the machine is idle//等待机器怠速运转
 
-  // Move flag value
+  // Move flag value//移动标志值
   #if ENABLED(G38_PROBE_AWAY)
     const uint8_t move_value = parser.subcode;
   #else
@@ -66,7 +67,7 @@ inline bool G38_run_probe() {
 
   G38_did_trigger = false;
 
-  // Move until destination reached or target hit
+  // Move until destination reached or target hit//移动直到到达目的地或击中目标
   G38_single_probe(move_value);
 
   if (G38_did_trigger) {
@@ -74,7 +75,7 @@ inline bool G38_run_probe() {
     G38_pass_fail = true;
 
     #if MULTIPLE_PROBING > 1
-      // Move away by the retract distance
+      // Move away by the retract distance//按缩回距离移开
       destination = current_position + retract_mm;
       endstops.enable(false);
       prepare_line_to_destination();
@@ -82,7 +83,7 @@ inline bool G38_run_probe() {
 
       REMEMBER(fr, feedrate_mm_s, feedrate_mm_s * 0.25);
 
-      // Bump the target more slowly
+      // Bump the target more slowly//缓慢地撞击目标
       destination -= retract_mm * 2;
 
       G38_single_probe(move_value);
@@ -105,7 +106,7 @@ inline bool G38_run_probe() {
  *  G38.5 - Probe away from workpiece, stop on contact break
  */
 void GcodeSuite::G38(const int8_t subcode) {
-  // Get X Y Z E F
+  // Get X Y Z E F//得到xyzef
   get_destination_from_command();
 
   remember_feedrate_scaling_off();
@@ -118,11 +119,11 @@ void GcodeSuite::G38(const int8_t subcode) {
     #endif
   ;
 
-  // If any axis has enough movement, do the move
+  // If any axis has enough movement, do the move//如果任何轴有足够的移动，请执行移动
   LOOP_LINEAR_AXES(i)
     if (ABS(destination[i] - current_position[i]) >= G38_MINIMUM_MOVE) {
       if (!parser.seenval('F')) feedrate_mm_s = homing_feedrate((AxisEnum)i);
-      // If G38.2 fails throw an error
+      // If G38.2 fails throw an error//如果G38.2失败，则抛出错误
       if (!G38_run_probe() && error_on_fail) SERIAL_ERROR_MSG("Failed to reach target");
       break;
     }
@@ -130,4 +131,4 @@ void GcodeSuite::G38(const int8_t subcode) {
   restore_feedrate_and_scaling();
 }
 
-#endif // G38_PROBE_TARGET
+#endif // G38_PROBE_TARGET//G38_探头_目标

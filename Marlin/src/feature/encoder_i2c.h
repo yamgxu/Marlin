@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -27,17 +28,17 @@
 
 #include <Wire.h>
 
-//=========== Advanced / Less-Common Encoder Configuration Settings ==========
+//=========== Advanced / Less-Common Encoder Configuration Settings ==========//==========高级/不太常见的编码器配置设置==========
 
-#define I2CPE_EC_THRESH_PROPORTIONAL                    // if enabled adjusts the error correction threshold
-                                                        // proportional to the current speed of the axis allows
-                                                        // for very small error margin at low speeds without
-                                                        // stuttering due to reading latency at high speeds
+#define I2CPE_EC_THRESH_PROPORTIONAL                    // if enabled adjusts the error correction threshold//如果启用，则调整错误纠正阈值
+                                                        // proportional to the current speed of the axis allows//与轴的当前速度成比例
+                                                        // for very small error margin at low speeds without//在低速时误差很小，没有
+                                                        // stuttering due to reading latency at high speeds//由于高速读取延迟而导致口吃
 
-#define I2CPE_DEBUG                                     // enable encoder-related debug serial echos
+#define I2CPE_DEBUG                                     // enable encoder-related debug serial echos//启用与编码器相关的调试串行回声
 
-#define I2CPE_REBOOT_TIME             5000              // time we wait for an encoder module to reboot
-                                                        // after changing address.
+#define I2CPE_REBOOT_TIME             5000              // time we wait for an encoder module to reboot//等待编码器模块重新启动的时间
+                                                        // after changing address.//更改地址后。
 
 #define I2CPE_MAG_SIG_GOOD            0
 #define I2CPE_MAG_SIG_MID             1
@@ -58,7 +59,7 @@
 #define I2CPE_REPORT_STRENGTH         1
 #define I2CPE_REPORT_VERSION          2
 
-// Default I2C addresses
+// Default I2C addresses//默认I2C地址
 #define I2CPE_PRESET_ADDR_X           30
 #define I2CPE_PRESET_ADDR_Y           31
 #define I2CPE_PRESET_ADDR_Z           32
@@ -67,7 +68,7 @@
 #define I2CPE_DEF_AXIS                X_AXIS
 #define I2CPE_DEF_ADDR                I2CPE_PRESET_ADDR_X
 
-// Error event counter; tracks how many times there is an error exceeding a certain threshold
+// Error event counter; tracks how many times there is an error exceeding a certain threshold//错误事件计数器；跟踪错误超过某个阈值的次数
 #define I2CPE_ERR_CNT_THRESH          3.00
 #define I2CPE_ERR_CNT_DEBOUNCE_MS     2000
 
@@ -76,17 +77,17 @@
   #define I2CPE_ERR_PRST_ARRAY_SIZE   10
 #endif
 
-// Error Correction Methods
+// Error Correction Methods//纠错方法
 #define I2CPE_ECM_NONE                0
 #define I2CPE_ECM_MICROSTEP           1
 #define I2CPE_ECM_PLANNER             2
 #define I2CPE_ECM_STALLDETECT         3
 
-// Encoder types
+// Encoder types//编码器类型
 #define I2CPE_ENC_TYPE_ROTARY         0
 #define I2CPE_ENC_TYPE_LINEAR         1
 
-// Parser
+// Parser//分析器
 #define I2CPE_PARSE_ERR               1
 #define I2CPE_PARSE_OK                0
 
@@ -105,7 +106,7 @@ class I2CPositionEncoder {
     uint8_t   i2cAddress          = I2CPE_DEF_ADDR,
               ecMethod            = I2CPE_DEF_EC_METHOD,
               type                = I2CPE_DEF_TYPE,
-              H                   = I2CPE_MAG_SIG_NF;    // Magnetic field strength
+              H                   = I2CPE_MAG_SIG_NF;    // Magnetic field strength//磁场强度
 
     int       encoderTicksPerUnit = I2CPE_DEF_ENC_TICKS_UNIT,
               stepperTicks        = I2CPE_DEF_TICKS_REV,
@@ -219,7 +220,7 @@ class I2CPositionEncodersMgr {
 
     static void init();
 
-    // consider only updating one endoder per call / tick if encoders become too time intensive
+    // consider only updating one endoder per call / tick if encoders become too time intensive/如果编码器太过时间密集，只考虑每次调用/滴答更新一个内建器。
     static void update() { LOOP_PE(i) encoders[i].update(); }
 
     static void homed(const AxisEnum axis) {

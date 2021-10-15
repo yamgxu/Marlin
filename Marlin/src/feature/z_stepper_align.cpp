@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -58,39 +59,39 @@ void ZStepperAlign::reset_to_default() {
       "Z_STEPPER_ALIGN_XY point " STRINGIFY(N) " is not reachable with the default NOZZLE_TO_PROBE offset and PROBING_MARGIN.")
     VALIDATE_ALIGN_POINT(0); VALIDATE_ALIGN_POINT(1); VALIDATE_ALIGN_POINT(2); VALIDATE_ALIGN_POINT(3);
 
-  #else // !Z_STEPPER_ALIGN_XY
+  #else // !Z_STEPPER_ALIGN_XY// !Z_步进器_对齐_XY
 
     const xy_pos_t xy_init[] = {
-      #if NUM_Z_STEPPER_DRIVERS >= 3  // First probe point...
+      #if NUM_Z_STEPPER_DRIVERS >= 3  // First probe point...//第一个探测点。。。
         #if !Z_STEPPERS_ORIENTATION
-          { probe.min_x(), probe.min_y() }, // SW
+          { probe.min_x(), probe.min_y() }, // SW//西南
         #elif Z_STEPPERS_ORIENTATION == 1
-          { probe.min_x(), probe.max_y() }, // NW
+          { probe.min_x(), probe.max_y() }, // NW//西北
         #elif Z_STEPPERS_ORIENTATION == 2
-          { probe.max_x(), probe.max_y() }, // NE
+          { probe.max_x(), probe.max_y() }, // NE//东北
         #elif Z_STEPPERS_ORIENTATION == 3
-          { probe.max_x(), probe.min_y() }, // SE
+          { probe.max_x(), probe.min_y() }, // SE//硒
         #else
           #error "Z_STEPPERS_ORIENTATION must be from 0 to 3 (first point SW, NW, NE, SE)."
         #endif
-        #if NUM_Z_STEPPER_DRIVERS == 4    // 3 more points...
+        #if NUM_Z_STEPPER_DRIVERS == 4    // 3 more points...//还有3点。。。
           #if !Z_STEPPERS_ORIENTATION
-            { probe.min_x(), probe.max_y() }, { probe.max_x(), probe.max_y() }, { probe.max_x(), probe.min_y() }  // SW
+            { probe.min_x(), probe.max_y() }, { probe.max_x(), probe.max_y() }, { probe.max_x(), probe.min_y() }  // SW//西南
           #elif Z_STEPPERS_ORIENTATION == 1
-            { probe.max_x(), probe.max_y() }, { probe.max_x(), probe.min_y() }, { probe.min_x(), probe.min_y() }  // NW
+            { probe.max_x(), probe.max_y() }, { probe.max_x(), probe.min_y() }, { probe.min_x(), probe.min_y() }  // NW//西北
           #elif Z_STEPPERS_ORIENTATION == 2
-            { probe.max_x(), probe.min_y() }, { probe.min_x(), probe.min_y() }, { probe.min_x(), probe.max_y() }  // NE
+            { probe.max_x(), probe.min_y() }, { probe.min_x(), probe.min_y() }, { probe.min_x(), probe.max_y() }  // NE//东北
           #elif Z_STEPPERS_ORIENTATION == 3
-            { probe.min_x(), probe.min_y() }, { probe.min_x(), probe.max_y() }, { probe.max_x(), probe.max_y() }  // SE
+            { probe.min_x(), probe.min_y() }, { probe.min_x(), probe.max_y() }, { probe.max_x(), probe.max_y() }  // SE//硒
           #endif
-        #elif !Z_STEPPERS_ORIENTATION     // or 2 more points...
-          { probe.max_x(), probe.min_y() }, { X_CENTER, probe.max_y() } // SW
+        #elif !Z_STEPPERS_ORIENTATION     // or 2 more points...//或者再加2分。。。
+          { probe.max_x(), probe.min_y() }, { X_CENTER, probe.max_y() } // SW//西南
         #elif Z_STEPPERS_ORIENTATION == 1
-          { probe.min_x(), probe.min_y() }, { probe.max_x(), Y_CENTER } // NW
+          { probe.min_x(), probe.min_y() }, { probe.max_x(), Y_CENTER } // NW//西北
         #elif Z_STEPPERS_ORIENTATION == 2
-          { probe.min_x(), probe.max_y() }, { X_CENTER, probe.min_y() } // NE
+          { probe.min_x(), probe.max_y() }, { X_CENTER, probe.min_y() } // NE//东北
         #elif Z_STEPPERS_ORIENTATION == 3
-          { probe.max_x(), probe.max_y() }, { probe.min_x(), Y_CENTER } // SE
+          { probe.max_x(), probe.max_y() }, { probe.min_x(), Y_CENTER } // SE//硒
         #endif
       #elif Z_STEPPERS_ORIENTATION
         { X_CENTER, probe.min_y() }, { X_CENTER, probe.max_y() }
@@ -99,7 +100,7 @@ void ZStepperAlign::reset_to_default() {
       #endif
     };
 
-  #endif // !Z_STEPPER_ALIGN_XY
+  #endif // !Z_STEPPER_ALIGN_XY// !Z_步进器_对齐_XY
 
   COPY(xy, xy_init);
 
@@ -118,4 +119,4 @@ void ZStepperAlign::reset_to_default() {
   #endif
 }
 
-#endif // Z_STEPPER_AUTO_ALIGN
+#endif // Z_STEPPER_AUTO_ALIGN//Z_步进电机自动对齐

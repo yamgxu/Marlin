@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -25,7 +26,7 @@
 #if ENABLED(PINS_DEBUGGING)
 
 #include "../gcode.h"
-#include "../../MarlinCore.h" // for pin_is_protected
+#include "../../MarlinCore.h" // for pin_is_protected//因为pin_受保护
 #include "../../pins/pinsDebug.h"
 #include "../../module/endstops.h"
 
@@ -76,7 +77,7 @@ inline void toggle_pins() {
       #else
         const bool prior_mode = GET_PINMODE(pin);
       #endif
-      #if AVR_AT90USB1286_FAMILY // Teensy IDEs don't know about these pins so must use FASTIO
+      #if AVR_AT90USB1286_FAMILY // Teensy IDEs don't know about these pins so must use FASTIO//Teensy IDEs不知道这些引脚，所以必须使用FASTIO
         if (pin == TEENSY_E2) {
           SET_OUTPUT(TEENSY_E2);
           for (int16_t j = 0; j < repeat; j++) {
@@ -114,7 +115,7 @@ inline void toggle_pins() {
   }
   SERIAL_ECHOLNPGM("Done.");
 
-} // toggle_pins
+} // toggle_pins//拨动销
 
 inline void servo_probe_test() {
 
@@ -126,7 +127,7 @@ inline void servo_probe_test() {
 
     SERIAL_ERROR_MSG("Z_PROBE_SERVO_NR not set up.");
 
-  #else // HAS_Z_SERVO_PROBE
+  #else // HAS_Z_SERVO_PROBE//有_Z_伺服_探头
 
     const uint8_t probe_index = parser.byteval('P', Z_PROBE_SERVO_NR);
 
@@ -161,14 +162,14 @@ inline void servo_probe_test() {
 
     SET_INPUT_PULLUP(PROBE_TEST_PIN);
 
-    // First, check for a probe that recognizes an advanced BLTouch sequence.
-    // In addition to STOW and DEPLOY, it uses SW MODE (and RESET in the beginning)
-    // to see if this is one of the following: BLTOUCH Classic 1.2, 1.3,  or
-    // BLTouch Smart 1.0, 2.0, 2.2, 3.0, 3.1. But only if the user has actually
-    // configured a BLTouch as being present. If the user has not configured this,
-    // the BLTouch will be detected in the last phase of these tests (see further on).
+    // First, check for a probe that recognizes an advanced BLTouch sequence.//首先，检查识别高级BLTouch序列的探针。
+    // In addition to STOW and DEPLOY, it uses SW MODE (and RESET in the beginning)//除装载和部署外，它还使用SW模式（并在开始时重置）
+    // to see if this is one of the following: BLTOUCH Classic 1.2, 1.3,  or//查看这是否是以下情况之一：BLTOUCH Classic 1.2、1.3或
+    // BLTouch Smart 1.0, 2.0, 2.2, 3.0, 3.1. But only if the user has actually//BLTouch智能1.0、2.0、2.2、3.0、3.1。但前提是用户确实
+    // configured a BLTouch as being present. If the user has not configured this,//将BLTouch配置为存在。如果用户尚未对此进行配置，
+    // the BLTouch will be detected in the last phase of these tests (see further on).//BLTouch将在这些测试的最后阶段检测到（请参阅下文）。
     bool blt = false;
-    // This code will try to detect a BLTouch probe or clone
+    // This code will try to detect a BLTouch probe or clone//此代码将尝试检测BLTouch探测器或克隆
     #if ENABLED(BLTOUCH)
       SERIAL_ECHOLNPGM(". Check for BLTOUCH");
       bltouch._reset();
@@ -180,28 +181,28 @@ inline void servo_probe_test() {
           if (probe_inverting == READ(PROBE_TEST_PIN)) {
             bltouch._stow();
             SERIAL_ECHOLNPGM("= BLTouch Classic 1.2, 1.3, Smart 1.0, 2.0, 2.2, 3.0, 3.1 detected.");
-            // Check for a 3.1 by letting the user trigger it, later
+            // Check for a 3.1 by letting the user trigger it, later//稍后，通过让用户触发来检查3.1版本
             blt = true;
         }
       }
     }
     #endif
 
-    // The following code is common to all kinds of servo probes.
-    // Since it could be a real servo or a BLTouch (any kind) or a clone,
-    // use only "common" functions - i.e. SERVO_MOVE. No bltouch.xxxx stuff.
+    // The following code is common to all kinds of servo probes.//以下代码适用于所有类型的伺服探头。
+    // Since it could be a real servo or a BLTouch (any kind) or a clone,//因为它可能是一个真正的伺服或BLTouch（任何类型）或克隆，
+    // use only "common" functions - i.e. SERVO_MOVE. No bltouch.xxxx stuff.//仅使用“通用”功能，即伺服移动。没有bltouch.xxxx之类的东西。
 
-    // If it is already recognised as a being a BLTouch, no need for this test
+    // If it is already recognised as a being a BLTouch, no need for this test//如果已确认为BLTouch，则无需进行此测试
     if (!blt) {
-      // DEPLOY and STOW 4 times and see if the signal follows
-      // Then it is a mechanical switch
+      // DEPLOY and STOW 4 times and see if the signal follows//展开和收起4次，查看信号是否跟随
+      // Then it is a mechanical switch//然后是一个机械开关
       uint8_t i = 0;
       SERIAL_ECHOLNPGM(". Deploy & stow 4 times");
       do {
-        MOVE_SERVO(probe_index, servo_angles[Z_PROBE_SERVO_NR][0]); // Deploy
+        MOVE_SERVO(probe_index, servo_angles[Z_PROBE_SERVO_NR][0]); // Deploy//部署
         safe_delay(500);
         deploy_state = READ(PROBE_TEST_PIN);
-        MOVE_SERVO(probe_index, servo_angles[Z_PROBE_SERVO_NR][1]); // Stow
+        MOVE_SERVO(probe_index, servo_angles[Z_PROBE_SERVO_NR][1]); // Stow//积载
         safe_delay(500);
         stow_state = READ(PROBE_TEST_PIN);
       } while (++i < 4);
@@ -225,19 +226,19 @@ inline void servo_probe_test() {
       }
     }
 
-    // Ask the user for a trigger event and measure the pulse width.
-    MOVE_SERVO(probe_index, servo_angles[Z_PROBE_SERVO_NR][0]); // Deploy
+    // Ask the user for a trigger event and measure the pulse width.//向用户询问触发事件并测量脉冲宽度。
+    MOVE_SERVO(probe_index, servo_angles[Z_PROBE_SERVO_NR][0]); // Deploy//部署
     safe_delay(500);
     SERIAL_ECHOLNPGM("** Please trigger probe within 30 sec **");
     uint16_t probe_counter = 0;
 
-    // Wait 30 seconds for user to trigger probe
+    // Wait 30 seconds for user to trigger probe//等待30秒，让用户触发探测器
     for (uint16_t j = 0; j < 500 * 30 && probe_counter == 0 ; j++) {
       safe_delay(2);
 
-      if (0 == j % (500 * 1)) gcode.reset_stepper_timeout();    // Keep steppers powered
+      if (0 == j % (500 * 1)) gcode.reset_stepper_timeout();    // Keep steppers powered//保持步进电机通电
 
-      if (deploy_state != READ(PROBE_TEST_PIN)) {               // probe triggered
+      if (deploy_state != READ(PROBE_TEST_PIN)) {               // probe triggered//探针触发
         for (probe_counter = 0; probe_counter < 15 && deploy_state != READ(PROBE_TEST_PIN); ++probe_counter) safe_delay(2);
 
         SERIAL_ECHOPGM(". Pulse width");
@@ -256,16 +257,16 @@ inline void servo_probe_test() {
         }
         else SERIAL_ECHOLNPGM("FAIL: Noise detected - please re-run test");
 
-        MOVE_SERVO(probe_index, servo_angles[Z_PROBE_SERVO_NR][1]); // Stow
+        MOVE_SERVO(probe_index, servo_angles[Z_PROBE_SERVO_NR][1]); // Stow//积载
         return;
       }
     }
 
     if (!probe_counter) SERIAL_ECHOLNPGM("FAIL: No trigger detected");
 
-  #endif // HAS_Z_SERVO_PROBE
+  #endif // HAS_Z_SERVO_PROBE//有_Z_伺服_探头
 
-} // servo_probe_test
+} // servo_probe_test//伺服探头测试
 
 /**
  * M43: Pin debug - report pin state, watch pins, toggle pins and servo probe test/report
@@ -296,10 +297,10 @@ inline void servo_probe_test() {
  */
 void GcodeSuite::M43() {
 
-  // 'T' must be first. It uses 'S' and 'E' differently.
+  // 'T' must be first. It uses 'S' and 'E' differently.//“T”必须是第一个。它以不同的方式使用'S'和'E'。
   if (parser.seen('T')) return toggle_pins();
 
-  // 'E' Enable or disable endstop monitoring and return
+  // 'E' Enable or disable endstop monitoring and return//“E”启用或禁用endstop监视并返回
   if (parser.seen('E')) {
     endstops.monitor_flag = parser.value_bool();
     SERIAL_ECHOPGM("endstop monitor ");
@@ -308,23 +309,23 @@ void GcodeSuite::M43() {
     return;
   }
 
-  // 'S' Run servo probe test and return
+  // 'S' Run servo probe test and return//“S”运行伺服探针测试并返回
   if (parser.seen('S')) return servo_probe_test();
 
-  // 'P' Get the range of pins to test or watch
+  // 'P' Get the range of pins to test or watch//“P”获取要测试或观察的管脚范围
   uint8_t first_pin = PARSED_PIN_INDEX('P', 0),
           last_pin = parser.seenval('P') ? first_pin : NUMBER_PINS_TOTAL - 1;
 
   if (first_pin > last_pin) return;
 
-  // 'I' to ignore protected pins
+  // 'I' to ignore protected pins//“I”忽略受保护的PIN
   const bool ignore_protection = parser.boolval('I');
 
-  // 'W' Watch until click, M108, or reset
+  // 'W' Watch until click, M108, or reset//“W”观察直到单击、M108或重置
   if (parser.boolval('W')) {
     SERIAL_ECHOLNPGM("Watching pins");
     #ifdef ARDUINO_ARCH_SAM
-      NOLESS(first_pin, 2); // Don't hijack the UART pins
+      NOLESS(first_pin, 2); // Don't hijack the UART pins//不要劫持UART引脚
     #endif
     uint8_t pin_state[last_pin - first_pin + 1];
     LOOP_S_LE_N(i, first_pin, last_pin) {
@@ -335,9 +336,9 @@ void GcodeSuite::M43() {
       delay(1);
         /*
         if (IS_ANALOG(pin))
-          pin_state[pin - first_pin] = analogRead(DIGITAL_PIN_TO_ANALOG_PIN(pin)); // int16_t pin_state[...]
+          pin_state[pin - first_pin] = analogRead(DIGITAL_PIN_TO_ANALOG_PIN(pin)); // int16_t pin_state[...]//int16引脚状态[…]
         else
-        //*/
+        //*///*/
           pin_state[i - first_pin] = extDigitalRead(pin);
     }
 
@@ -356,9 +357,9 @@ void GcodeSuite::M43() {
         const byte val =
           /*
           IS_ANALOG(pin)
-            ? analogRead(DIGITAL_PIN_TO_ANALOG_PIN(pin)) : // int16_t val
+            ? analogRead(DIGITAL_PIN_TO_ANALOG_PIN(pin)) : // int16_t val//国际16日
             :
-          //*/
+          //*///*/
             extDigitalRead(pin);
         if (val != pin_state[i - first_pin]) {
           report_pin_state_extended(pin, ignore_protection, false);
@@ -375,7 +376,7 @@ void GcodeSuite::M43() {
     }
   }
   else {
-    // Report current state of selected pin(s)
+    // Report current state of selected pin(s)//报告所选pin的当前状态
     LOOP_S_LE_N(i, first_pin, last_pin) {
       pin_t pin = GET_PIN_MAP_PIN_M43(i);
       if (VALID_PIN(pin)) report_pin_state_extended(pin, ignore_protection, true);
@@ -383,4 +384,4 @@ void GcodeSuite::M43() {
   }
 }
 
-#endif // PINS_DEBUGGING
+#endif // PINS_DEBUGGING//引脚调试

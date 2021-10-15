@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2021 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -47,5 +48,5 @@ extern "C" {
 }
 #endif
 
-#endif // POSTMORTEM_DEBUGGING
-#endif // TARGET_LPC1768
+#endif // POSTMORTEM_DEBUGGING//死后调试
+#endif // TARGET_LPC1768//目标为LPC1768

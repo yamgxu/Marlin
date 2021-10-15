@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2021 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -168,4 +169,4 @@ void stepper_driver_backward_report() {
   #endif
 }
 
-#endif // HAS_DRIVER_SAFE_POWER_PROTECT
+#endif // HAS_DRIVER_SAFE_POWER_PROTECT//司机是否有安全电源保护

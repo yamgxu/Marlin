@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -35,11 +36,11 @@
 void GcodeSuite::M118() {
   bool hasE = false, hasA = false;
   #if HAS_MULTI_SERIAL
-    int8_t port = -1; // Assume no redirect
+    int8_t port = -1; // Assume no redirect//假设没有重定向
   #endif
   char *p = parser.string_arg;
   for (uint8_t i = 3; i--;) {
-    // A1, E1, and Pn are always parsed out
+    // A1, E1, and Pn are always parsed out//A1、E1和Pn总是被解析出来
     if (!( ((p[0] == 'A' || p[0] == 'E') && p[1] == '1') || (p[0] == 'P' && NUMERIC(p[1])) )) break;
     switch (p[0]) {
       case 'A': hasA = true; break;
@@ -55,6 +56,6 @@ void GcodeSuite::M118() {
   PORT_REDIRECT(WITHIN(port, 0, NUM_SERIAL) ? (port ? SERIAL_PORTMASK(port - 1) : SerialMask::All) : multiSerial.portMask);
 
   if (hasE) SERIAL_ECHO_START();
-  if (hasA) SERIAL_ECHOPGM("//");
+  if (hasA) SERIAL_ECHOPGM("//");//");
   SERIAL_ECHOLN(p);
 }

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -27,21 +28,21 @@
  * These use GPIO register access for fast port manipulation.
  */
 
-// ------------------------
-// Public Variables
-// ------------------------
+// ------------------------// ------------------------
+// Public Variables//公共变量
+// ------------------------// ------------------------
 
 extern GPIO_TypeDef * FastIOPortMap[];
 
-// ------------------------
-// Public functions
-// ------------------------
+// ------------------------// ------------------------
+// Public functions//公共职能
+// ------------------------// ------------------------
 
-void FastIO_init(); // Must be called before using fast io macros
+void FastIO_init(); // Must be called before using fast io macros//必须在使用快速io宏之前调用
 
-// ------------------------
-// Defines
-// ------------------------
+// ------------------------// ------------------------
+// Defines//定义
+// ------------------------// ------------------------
 
 #define _BV32(b) (1UL << (b))
 
@@ -63,7 +64,7 @@ void FastIO_init(); // Must be called before using fast io macros
 
 #define _GET_MODE(IO)
 #define _SET_MODE(IO,M)         pinMode(IO, M)
-#define _SET_OUTPUT(IO)         pinMode(IO, OUTPUT)                               //!< Output Push Pull Mode & GPIO_NOPULL
+#define _SET_OUTPUT(IO)         pinMode(IO, OUTPUT)                               //!< Output Push Pull Mode & GPIO_NOPULL//!< 输出推拉模式和GPIO\U NOPULL
 #define _SET_OUTPUT_OD(IO)      pinMode(IO, OUTPUT_OPEN_DRAIN)
 
 #define WRITE(IO,V)             _WRITE(IO,V)
@@ -73,9 +74,9 @@ void FastIO_init(); // Must be called before using fast io macros
 #define OUT_WRITE(IO,V)         do{ _SET_OUTPUT(IO); WRITE(IO,V); }while(0)
 #define OUT_WRITE_OD(IO,V)      do{ _SET_OUTPUT_OD(IO); WRITE(IO,V); }while(0)
 
-#define SET_INPUT(IO)           _SET_MODE(IO, INPUT)                              //!< Input Floating Mode
-#define SET_INPUT_PULLUP(IO)    _SET_MODE(IO, INPUT_PULLUP)                       //!< Input with Pull-up activation
-#define SET_INPUT_PULLDOWN(IO)  _SET_MODE(IO, INPUT_PULLDOWN)                     //!< Input with Pull-down activation
+#define SET_INPUT(IO)           _SET_MODE(IO, INPUT)                              //!< Input Floating Mode//!< 输入浮动模式
+#define SET_INPUT_PULLUP(IO)    _SET_MODE(IO, INPUT_PULLUP)                       //!< Input with Pull-up activation//!< 上拉激活输入
+#define SET_INPUT_PULLDOWN(IO)  _SET_MODE(IO, INPUT_PULLDOWN)                     //!< Input with Pull-down activation//!< 下拉激活输入
 #define SET_OUTPUT(IO)          OUT_WRITE(IO, LOW)
 #define SET_PWM(IO)             _SET_MODE(IO, PWM)
 
@@ -85,6 +86,6 @@ void FastIO_init(); // Must be called before using fast io macros
 #define PWM_PIN(P)              digitalPinHasPWM(P)
 #define NO_COMPILE_TIME_PWM
 
-// digitalRead/Write wrappers
+// digitalRead/Write wrappers//数字读/写包装器
 #define extDigitalRead(IO)    digitalRead(IO)
 #define extDigitalWrite(IO,V) digitalWrite(IO,V)

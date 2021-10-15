@@ -1,3 +1,4 @@
+/** translatione by yx */
 /* Copyright (C) 2015-2016 Andrew J. Kroll
    and
 Copyright (C) 2011 Circuits At Home, LTD. All rights reserved.
@@ -20,14 +21,14 @@ Contact information
 -------------------
 
 Circuits At Home, LTD
-Web      :  https://www.circuitsathome.com
+Web      :  https://www.circuitsathome.com//www.circuitsathome.com
 e-mail   :  support@circuitsathome.com
  */
 /* USB functions */
 #ifndef _UHS_host_h_
 #define _UHS_host_h_
 
-// WARNING: Do not change the order of includes, or stuff will break!
+// WARNING: Do not change the order of includes, or stuff will break!//警告：请勿更改包含的顺序，否则内容将被破坏！
 #include <inttypes.h>
 #include <stddef.h>
 #include <stdio.h>
@@ -41,7 +42,7 @@ e-mail   :  support@circuitsathome.com
 #endif
 #include "UHS_macros.h"
 
-// None of these should ever be directly included by a driver, or a user's sketch.
+// None of these should ever be directly included by a driver, or a user's sketch.//驱动程序或用户草图不应直接包含这些内容。
 #include "../dyn_SWI/dyn_SWI.h"
 #include "UHS_USB_IDs.h"
 #include "UHS_settings.h"
@@ -52,7 +53,7 @@ e-mail   :  support@circuitsathome.com
 #include "UHS_printhex.h"
 #include "UHS_message.h"
 
-// Load system components as required
+// Load system components as required//根据需要加载系统组件
 #if defined(LOAD_USB_HOST_SYSTEM) && !defined(USB_HOST_SYSTEM_LOADED)
 #include "UHS_util_INLINE.h"
 #include "UHS_host_INLINE.h"
@@ -70,11 +71,11 @@ e-mail   :  support@circuitsathome.com
 #include "UHS_KINETIS_EHCI/UHS_KINETIS_EHCI.h"
 #endif
 
-// Load USB drivers and multiplexers
+// Load USB drivers and multiplexers//加载USB驱动程序和多路复用器
 
 #ifdef LOAD_UHS_HUB
 #include "UHS_HUB/UHS_HUB.h"
-#endif // HUB loaded
+#endif // HUB loaded//轮毂负载
 
 #ifdef LOAD_UHS_BULK_STORAGE
 #include "UHS_BULK_STORAGE/UHS_BULK_STORAGE.h"
@@ -83,20 +84,20 @@ e-mail   :  support@circuitsathome.com
 #ifdef LOAD_GENERIC_STORAGE
 #include "../UHS_FS/UHS_FS.h"
 #endif
-// Add BT and optionally HID if directed to do so
+// Add BT and optionally HID if directed to do so//添加BT和HID（如果有指示）
 #ifdef LOAD_UHS_BT
 #include "UHS_BT/UHS_BT.h"
-#endif // BT and optionally HID loaded
+#endif // BT and optionally HID loaded//BT和可选HID加载
 
-// Add HID
+// Add HID//添加隐藏
 #ifdef LOAD_UHS_HID
 #include "UHS_HID/UHS_HID.h"
-#endif // HID loaded
+#endif // HID loaded//隐藏装载
 
-// Add CDC multiplexers (currently only ACM)
+// Add CDC multiplexers (currently only ACM)//添加CDC多路复用器（目前仅限ACM）
 #if defined(LOAD_UHS_CDC_ACM) || defined(LOAD_UHS_CDC_ACM_FTDI) || defined(LOAD_UHS_CDC_ACM_PROLIFIC) || defined(LOAD_UHS_CDC_ACM_XR21B1411)
 #include "UHS_CDC/UHS_CDC.h"
-#endif // CDC loaded
+#endif // CDC loaded//CDC加载
 
 #ifdef LOAD_UHS_ADK
 #include "UHS_ADK/UHS_ADK.h"
@@ -106,6 +107,6 @@ e-mail   :  support@circuitsathome.com
 #include "UHS_MIDI/UHS_MIDI.h"
 #endif
 
-#endif // System code loaded
+#endif // System code loaded//系统代码已加载
 
-#endif // _UHS_host_h_
+#endif // _UHS_host_h_//_UHS_主机_h_

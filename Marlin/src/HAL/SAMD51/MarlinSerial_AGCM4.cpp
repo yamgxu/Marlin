@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  *
@@ -51,4 +52,4 @@
   void SERCOM5_3_Handler() { Serial4.IrqHandler(); }
 #endif
 
-#endif // ADAFRUIT_GRAND_CENTRAL_M4
+#endif // ADAFRUIT_GRAND_CENTRAL_M4//ADAFRUIT_GRAND_CENTRAL_M4

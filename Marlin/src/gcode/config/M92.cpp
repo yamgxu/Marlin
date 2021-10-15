@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -68,7 +69,7 @@ void GcodeSuite::M92() {
   const int8_t target_extruder = get_target_extruder_from_command();
   if (target_extruder < 0) return;
 
-  // No arguments? Show M92 report.
+  // No arguments? Show M92 report.//没有争论？显示M92报告。
   if (!parser.seen(
     LOGICAL_AXIS_GANG("E", "X", "Y", "Z", AXIS4_STR, AXIS5_STR, AXIS6_STR)
     TERN_(MAGIC_NUMBERS_GCODE, "HL")
@@ -82,7 +83,7 @@ void GcodeSuite::M92() {
         #if HAS_EXTRUDERS
           const float value = parser.value_per_axis_units((AxisEnum)(E_AXIS_N(target_extruder)));
           if (value < 20) {
-            float factor = planner.settings.axis_steps_per_mm[E_AXIS_N(target_extruder)] / value; // increase e constants if M92 E14 is given for netfab.
+            float factor = planner.settings.axis_steps_per_mm[E_AXIS_N(target_extruder)] / value; // increase e constants if M92 E14 is given for netfab.//如果为netfab提供M92 E14，则增加e常数。
             #if HAS_CLASSIC_JERK && HAS_CLASSIC_E_JERK
               planner.max_jerk.e *= factor;
             #endif

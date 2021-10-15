@@ -1,3 +1,4 @@
+/** translatione by yx */
 /************************
  * media_filereader.cpp *
  ************************/
@@ -58,4 +59,4 @@
     void MediaFileReader::rewind()                        {}
     int16_t MediaFileReader::read(void *, void *, size_t) {return 0;}
   #endif
-#endif // TOUCH_UI_FTDI_EVE
+#endif // TOUCH_UI_FTDI_EVE//触摸屏

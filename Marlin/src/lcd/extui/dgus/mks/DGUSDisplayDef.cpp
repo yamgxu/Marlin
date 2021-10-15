@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -54,14 +55,14 @@ float ZOffset_distance = 0.1;
 float mesh_adj_distance = 0.01;
 float Z_distance = 0.1;
 
-//struct { uint16_t h, m, s; } dgus_time;
+//struct { uint16_t h, m, s; } dgus_time;//结构{uint16_t h，m，s；}dgus_时间；
 
-//
-// Persistent settings
-//
-xy_int_t mks_corner_offsets[5];   // Initialized by settings.load()
-xyz_int_t mks_park_pos;           // Initialized by settings.load()
-celsius_t mks_min_extrusion_temp; // Initialized by settings.load()
+////
+// Persistent settings//持久设置
+////
+xy_int_t mks_corner_offsets[5];   // Initialized by settings.load()//由settings.load（）初始化
+xyz_int_t mks_park_pos;           // Initialized by settings.load()//由settings.load（）初始化
+celsius_t mks_min_extrusion_temp; // Initialized by settings.load()//由settings.load（）初始化
 
 void MKS_reset_settings() {
   constexpr xy_int_t init_dgus_level_offsets[5] = {
@@ -83,7 +84,7 @@ void MKS_pause_print_move() {
   queue.exhaust();
   position_before_pause = current_position;
 
-  // Save the current position, the raise amount, and 'already raised'
+  // Save the current position, the raise amount, and 'already raised'//保存当前职位、加薪金额和“已加薪”
   TERN_(POWER_LOSS_RECOVERY, if (recovery.enabled) recovery.save(true, mks_park_pos.z, true));
 
   destination.z = _MIN(current_position.z + mks_park_pos.z, Z_MAX_POS);
@@ -103,7 +104,7 @@ void MKS_resume_print_move() {
 
 float z_offset_add = 0;
 
-xyz_int_t tmc_step; // = { 0, 0, 0 }
+xyz_int_t tmc_step; // = { 0, 0, 0 }// = { 0, 0, 0 }
 
 uint16_t lcd_default_light = 50;
 
@@ -119,7 +120,7 @@ const uint16_t VPList_Boot[] PROGMEM = {
 #define MKSLIST_E_ITEM(N) VP_T_E##N##_Is, VP_T_E##N##_Set,
 
 const uint16_t VPList_Main[] PROGMEM = {
-  // VP_M117, for completeness, but it cannot be auto-uploaded.
+  // VP_M117, for completeness, but it cannot be auto-uploaded.//VP_M117，完整性，但无法自动上传。
   #if HAS_HOTEND
     MKSLIST_E_ITEM(0) VP_E0_STATUS,
     #if HOTENDS >= 2
@@ -142,50 +143,50 @@ const uint16_t VPList_Main[] PROGMEM = {
 };
 
 const uint16_t MKSList_Home[] PROGMEM = {
-  // E Temp
+  // E Temp//E温度
   REPEAT(EXTRUDERS, MKSLIST_E_ITEM)
-  // HB Temp
+  // HB Temp//血红蛋白温度
   VP_T_Bed_Is, VP_T_Bed_Set,
-  // FAN
+  // FAN//扇子
   VP_Fan0_Percentage,
-  // Language
-  // VP_HOME_Dis,
+  // Language//语言
+  // VP_HOME_Dis,//副总裁(家庭)(Dis)，
 
   0x0000
 };
 
 const uint16_t MKSList_Setting[] PROGMEM = {
-  // E Temp
+  // E Temp//E温度
   REPEAT(EXTRUDERS, MKSLIST_E_ITEM)
-  // HB Temp
+  // HB Temp//血红蛋白温度
   VP_T_Bed_Is, VP_T_Bed_Set,
-  // FAN
+  // FAN//扇子
   VP_Fan0_Percentage,
-  // Language
+  // Language//语言
   VP_Setting_Dis,
   0x0000
 };
 
 const uint16_t MKSList_Tool[] PROGMEM = {
-  // E Temp
+  // E Temp//E温度
   REPEAT(EXTRUDERS, MKSLIST_E_ITEM)
-  // HB Temp
+  // HB Temp//血红蛋白温度
   VP_T_Bed_Is, VP_T_Bed_Set,
-  // FAN
+  // FAN//扇子
   VP_Fan0_Percentage,
-  // Language
+  // Language//语言
   VP_Tool_Dis,
-  // LCD BLK
+  // LCD BLK//液晶显示器
   VP_LCD_BLK,
   0x0000
 };
 
 const uint16_t MKSList_EXTRUE[] PROGMEM = {
-  // E Temp
+  // E Temp//E温度
   REPEAT(EXTRUDERS, MKSLIST_E_ITEM)
-  // HB Temp
+  // HB Temp//血红蛋白温度
   VP_T_Bed_Is, VP_T_Bed_Set,
-  // FAN
+  // FAN//扇子
   VP_Fan0_Percentage,
 
   VP_Filament_distance,
@@ -195,35 +196,35 @@ const uint16_t MKSList_EXTRUE[] PROGMEM = {
 };
 
 const uint16_t MKSList_LEVEL[] PROGMEM = {
-  // E Temp
+  // E Temp//E温度
   REPEAT(EXTRUDERS, MKSLIST_E_ITEM)
-  // HB Temp
+  // HB Temp//血红蛋白温度
   VP_T_Bed_Is, VP_T_Bed_Set,
-  // FAN
+  // FAN//扇子
   VP_Fan0_Percentage,
 
   0x0000
 };
 
 const uint16_t MKSList_MOVE[] PROGMEM = {
-  // E Temp
+  // E Temp//E温度
   REPEAT(EXTRUDERS, MKSLIST_E_ITEM)
-  // HB Temp
+  // HB Temp//血红蛋白温度
   VP_T_Bed_Is, VP_T_Bed_Set,
-  // FAN
+  // FAN//扇子
   VP_Fan0_Percentage,
 
   0x0000
 };
 
 const uint16_t MKSList_Print[] PROGMEM = {
-  // E Temp
+  // E Temp//E温度
   REPEAT(EXTRUDERS, MKSLIST_E_ITEM)
-  // HB Temp
+  // HB Temp//血红蛋白温度
   VP_T_Bed_Is, VP_T_Bed_Set,
-  // FAN
+  // FAN//扇子
   VP_Fan0_Percentage,
-  // Print Percent
+  // Print Percent//打印百分比
   VP_PrintProgress_Percentage,
 
   VP_PrintTime,
@@ -254,26 +255,26 @@ const uint16_t MKSList_SD_File[] PROGMEM = {
 };
 
 const uint16_t MKSList_TempOnly[] PROGMEM = {
-  // E Temp
+  // E Temp//E温度
   REPEAT(EXTRUDERS, MKSLIST_E_ITEM)
-  // HB Temp
+  // HB Temp//血红蛋白温度
   VP_T_Bed_Is, VP_T_Bed_Set,
-  // FAN
+  // FAN//扇子
   VP_Fan0_Percentage,
-  // LCD BLK
+  // LCD BLK//液晶显示器
   VP_LCD_BLK,
   0x0000
 };
 
 const uint16_t MKSList_Pluse[] PROGMEM = {
-  // E Temp
+  // E Temp//E温度
   REPEAT(EXTRUDERS, MKSLIST_E_ITEM)
-  // HB Temp
+  // HB Temp//血红蛋白温度
   VP_T_Bed_Is, VP_T_Bed_Set,
-  // FAN
+  // FAN//扇子
   VP_Fan0_Percentage,
 
-  // Pluse
+  // Pluse//加塞
   VP_X_STEP_PER_MM,
   VP_Y_STEP_PER_MM,
   VP_Z_STEP_PER_MM,
@@ -284,14 +285,14 @@ const uint16_t MKSList_Pluse[] PROGMEM = {
 };
 
 const uint16_t MKSList_MaxSpeed[] PROGMEM = {
-  // E Temp
+  // E Temp//E温度
   REPEAT(EXTRUDERS, MKSLIST_E_ITEM)
-  // HB Temp
+  // HB Temp//血红蛋白温度
   VP_T_Bed_Is, VP_T_Bed_Set,
-  // FAN
+  // FAN//扇子
   VP_Fan0_Percentage,
 
-  // Pluse
+  // Pluse//加塞
   VP_X_MAX_SPEED,
   VP_Y_MAX_SPEED,
   VP_Z_MAX_SPEED,
@@ -302,14 +303,14 @@ const uint16_t MKSList_MaxSpeed[] PROGMEM = {
 };
 
 const uint16_t MKSList_MaxAcc[] PROGMEM = {
-  // E Temp
+  // E Temp//E温度
   REPEAT(EXTRUDERS, MKSLIST_E_ITEM)
-  // HB Temp
+  // HB Temp//血红蛋白温度
   VP_T_Bed_Is, VP_T_Bed_Set,
-  // FAN
+  // FAN//扇子
   VP_Fan0_Percentage,
 
-  // ACC
+  // ACC//行政协调会
   VP_ACC_SPEED,
   VP_X_ACC_MAX_SPEED,
   VP_Y_ACC_MAX_SPEED,
@@ -321,14 +322,14 @@ const uint16_t MKSList_MaxAcc[] PROGMEM = {
 };
 
 const uint16_t MKSList_PID[] PROGMEM = {
-  // E Temp
+  // E Temp//E温度
   REPEAT(EXTRUDERS, MKSLIST_E_ITEM)
-  // HB Temp
+  // HB Temp//血红蛋白温度
   VP_T_Bed_Is, VP_T_Bed_Set,
-  // FAN
+  // FAN//扇子
   VP_Fan0_Percentage,
 
-  // PID
+  // PID//PID
   VP_E0_PID_P,
   VP_E0_PID_I,
   VP_E0_PID_D,
@@ -337,14 +338,14 @@ const uint16_t MKSList_PID[] PROGMEM = {
 };
 
 const uint16_t MKSList_Level_Point[] PROGMEM = {
-  // E Temp
+  // E Temp//E温度
   REPEAT(EXTRUDERS, MKSLIST_E_ITEM)
-  // HB Temp
+  // HB Temp//血红蛋白温度
   VP_T_Bed_Is, VP_T_Bed_Set,
-  // FAN
+  // FAN//扇子
   VP_Fan0_Percentage,
 
-  // Level Point
+  // Level Point//水准点
   VP_Level_Point_One_X,
   VP_Level_Point_One_Y,
   VP_Level_Point_Two_X,
@@ -372,9 +373,9 @@ const uint16_t MKSList_Level_PrintConfig[] PROGMEM = {
 };
 
 const uint16_t MKSList_PrintPauseConfig[] PROGMEM = {
-  // E Temp
+  // E Temp//E温度
   REPEAT(EXTRUDERS, MKSLIST_E_ITEM)
-  // HB Temp
+  // HB Temp//血红蛋白温度
   VP_T_Bed_Is, VP_T_Bed_Set,
 
   VP_X_PARK_POS,
@@ -385,9 +386,9 @@ const uint16_t MKSList_PrintPauseConfig[] PROGMEM = {
 };
 
 const uint16_t MKSList_MotoConfig[] PROGMEM = {
-  // E Temp
+  // E Temp//E温度
   REPEAT(EXTRUDERS, MKSLIST_E_ITEM)
-  // HB Temp
+  // HB Temp//血红蛋白温度
   VP_T_Bed_Is, VP_T_Bed_Set,
 
   VP_TRAVEL_SPEED,
@@ -398,18 +399,18 @@ const uint16_t MKSList_MotoConfig[] PROGMEM = {
 };
 
 const uint16_t MKSList_EX_Config[] PROGMEM = {
-  // E Temp
+  // E Temp//E温度
   REPEAT(EXTRUDERS, MKSLIST_E_ITEM)
-  // HB Temp
+  // HB Temp//血红蛋白温度
   VP_T_Bed_Is, VP_T_Bed_Set,
   VP_MIN_EX_T,VP_Min_EX_T_E,
   0x0000
 };
 
 const uint16_t MKSTMC_Config[] PROGMEM = {
-  // E Temp
+  // E Temp//E温度
   REPEAT(EXTRUDERS, MKSLIST_E_ITEM)
-  // HB Temp
+  // HB Temp//血红蛋白温度
   VP_T_Bed_Is, VP_T_Bed_Set,
   VP_MIN_EX_T,
 
@@ -435,7 +436,7 @@ const uint16_t MKSAuto_Level[] PROGMEM = {
 };
 
 const uint16_t MKSOffset_Config[] PROGMEM = {
-  // E Temp
+  // E Temp//E温度
   REPEAT(EXTRUDERS, MKSLIST_E_ITEM)
   VP_OFFSET_X,
   VP_OFFSET_Y,
@@ -449,49 +450,49 @@ const uint16_t MKSBabyStep[] PROGMEM = {
 };
 
 const uint16_t MKSList_About[] PROGMEM = {
-  // Marlin version
+  // Marlin version//马林版本
   VP_MARLIN_VERSION,
-  // H43 Version
+  // H43 Version//H43版本
   VP_MKS_H43_VERSION,
   VP_MKS_H43_UpdataVERSION,
   0x0000
 };
 
-// Page data updata
+// Page data updata//页面数据更新
 const struct VPMapping VPMap[] PROGMEM = {
-  { MKSLCD_SCREEN_BOOT, VPList_Boot },                        // Boot Page to show logo  0
-  { MKSLCD_SCREEN_HOME, MKSList_Home },                       // Home, Page 1
-  { MKSLCD_SCREEN_SETTING, MKSList_Setting },                 // Setting, Page 2
-  { MKSLCD_SCREEM_TOOL, MKSList_Tool },                       // Page 3
-  { MKSLCD_SCREEN_EXTRUDE_P1, MKSList_EXTRUE },               // Page 4
-  { MKSLCD_SCREEN_EXTRUDE_P2, MKSList_EXTRUE },               // Page 11
-  { MKSLCD_PAUSE_SETTING_EX, MKSList_EXTRUE },                // Page 57
-  { MKSLCD_PAUSE_SETTING_EX2, MKSList_EXTRUE },               // Page 61
-  { MKSLCD_SCREEN_LEVEL, MKSList_LEVEL },                     // Page 5
-  { MKSLCD_SCREEN_MOVE, MKSList_MOVE },                       // Page 6
-  { MKSLCD_SCREEN_PRINT, MKSList_Print },                     // Page 7
-  { MKSLCD_SCREEN_PAUSE, MKSList_Print },                     // Page 26
-  { MKSLCD_SCREEN_CHOOSE_FILE, MKSList_SD_File },             // Page 15
-  { MKSLCD_SCREEN_MOTOR_PLUSE, MKSList_Pluse },               // Page 51
-  { MKSLCD_SCREEN_MOTOR_SPEED, MKSList_MaxSpeed },            // Page 55
-  { MKSLCD_SCREEN_MOTOR_ACC_MAX, MKSList_MaxAcc },            // Page 53
-  { MKSLCD_SCREEN_LEVEL_DATA, MKSList_Level_Point },          // Page 48
-  { MKSLCD_PrintPause_SET, MKSList_PrintPauseConfig },        // Page 49
-  { MKSLCD_FILAMENT_DATA, MKSList_SD_File },                  // Page 50
-  { MKSLCD_SCREEN_Config, MKSList_TempOnly },                 // Page 46
-  { MKSLCD_SCREEN_Config_MOTOR, MKSList_MotoConfig },         // Page 47
-  { MKSLCD_PID, MKSList_PID },                                // Page 56
-  { MKSLCD_ABOUT, MKSList_About },                            // Page 36
-  { MKSLCD_SCREEN_PRINT_CONFIG, MKSList_Level_PrintConfig },  // Page 60
-  { MKSLCD_SCREEN_EX_CONFIG, MKSList_EX_Config },             // Page 65
-  { MKSLCD_SCREEN_TMC_Config, MKSTMC_Config },                // Page 70
-  { MKSLCD_AUTO_LEVEL, MKSAuto_Level },                       // Page 73
-  { MKSLCD_Screen_Offset_Config, MKSOffset_Config },          // Page 30
-  { MKSLCD_Screen_PMove, MKSList_MOVE },                      // Page 64
-  { MKSLCD_Screen_Baby, MKSBabyStep },                        // Page 71
-  //{ MKSLCD_SCREEN_LEVEL_DATA, MKSList_SD_File},
-  //{ MKSLCD_SCREEN_HOME, VPList_Boot },
-  { 0, nullptr } // List is terminated with an nullptr as table entry.
+  { MKSLCD_SCREEN_BOOT, VPList_Boot },                        // Boot Page to show logo  0//启动页显示徽标0
+  { MKSLCD_SCREEN_HOME, MKSList_Home },                       // Home, Page 1//主页，第1页
+  { MKSLCD_SCREEN_SETTING, MKSList_Setting },                 // Setting, Page 2//设置，第2页
+  { MKSLCD_SCREEM_TOOL, MKSList_Tool },                       // Page 3//第3页
+  { MKSLCD_SCREEN_EXTRUDE_P1, MKSList_EXTRUE },               // Page 4//第4页
+  { MKSLCD_SCREEN_EXTRUDE_P2, MKSList_EXTRUE },               // Page 11//第11页
+  { MKSLCD_PAUSE_SETTING_EX, MKSList_EXTRUE },                // Page 57//第57页
+  { MKSLCD_PAUSE_SETTING_EX2, MKSList_EXTRUE },               // Page 61//第61页
+  { MKSLCD_SCREEN_LEVEL, MKSList_LEVEL },                     // Page 5//第5页
+  { MKSLCD_SCREEN_MOVE, MKSList_MOVE },                       // Page 6//第6页
+  { MKSLCD_SCREEN_PRINT, MKSList_Print },                     // Page 7//第7页
+  { MKSLCD_SCREEN_PAUSE, MKSList_Print },                     // Page 26//第26页
+  { MKSLCD_SCREEN_CHOOSE_FILE, MKSList_SD_File },             // Page 15//第15页
+  { MKSLCD_SCREEN_MOTOR_PLUSE, MKSList_Pluse },               // Page 51//第51页
+  { MKSLCD_SCREEN_MOTOR_SPEED, MKSList_MaxSpeed },            // Page 55//第55页
+  { MKSLCD_SCREEN_MOTOR_ACC_MAX, MKSList_MaxAcc },            // Page 53//第53页
+  { MKSLCD_SCREEN_LEVEL_DATA, MKSList_Level_Point },          // Page 48//第48页
+  { MKSLCD_PrintPause_SET, MKSList_PrintPauseConfig },        // Page 49//第49页
+  { MKSLCD_FILAMENT_DATA, MKSList_SD_File },                  // Page 50//第50页
+  { MKSLCD_SCREEN_Config, MKSList_TempOnly },                 // Page 46//第46页
+  { MKSLCD_SCREEN_Config_MOTOR, MKSList_MotoConfig },         // Page 47//第47页
+  { MKSLCD_PID, MKSList_PID },                                // Page 56//第56页
+  { MKSLCD_ABOUT, MKSList_About },                            // Page 36//第36页
+  { MKSLCD_SCREEN_PRINT_CONFIG, MKSList_Level_PrintConfig },  // Page 60//第60页
+  { MKSLCD_SCREEN_EX_CONFIG, MKSList_EX_Config },             // Page 65//第65页
+  { MKSLCD_SCREEN_TMC_Config, MKSTMC_Config },                // Page 70//第70页
+  { MKSLCD_AUTO_LEVEL, MKSAuto_Level },                       // Page 73//第73页
+  { MKSLCD_Screen_Offset_Config, MKSOffset_Config },          // Page 30//第30页
+  { MKSLCD_Screen_PMove, MKSList_MOVE },                      // Page 64//第64页
+  { MKSLCD_Screen_Baby, MKSBabyStep },                        // Page 71//第71页
+  //{ MKSLCD_SCREEN_LEVEL_DATA, MKSList_SD_File},//{MKSLCD_屏幕_级别_数据，MKSList_SD_文件}，
+  //{ MKSLCD_SCREEN_HOME, VPList_Boot },//{MKSLCD_SCREEN_HOME，VPList_Boot}，
+  { 0, nullptr } // List is terminated with an nullptr as table entry.//列表以nullptr作为表项终止。
 };
 
 const char MarlinVersion[] PROGMEM = SHORT_BUILD_VERSION;
@@ -499,7 +500,7 @@ const char H43Version[] PROGMEM = "MKS H43_V1.30";
 const char Updata_Time[] PROGMEM = STRING_DISTRIBUTION_DATE;
 
 const struct DGUS_VP_Variable ListOfVP[] PROGMEM = {
-  // Helper to detect touch events
+  // Helper to detect touch events//帮助检测触摸事件
   VPHELPER(VP_SCREENCHANGE, nullptr, ScreenHandler.ScreenChangeHook, nullptr),
   VPHELPER(VP_SCREENCHANGE_ASK, nullptr, ScreenHandler.ScreenChangeHookIfIdle, nullptr),
   #if ENABLED(SDSUPPORT)
@@ -507,7 +508,7 @@ const struct DGUS_VP_Variable ListOfVP[] PROGMEM = {
   #endif
   VPHELPER(VP_CONFIRMED, nullptr, ScreenHandler.ScreenConfirmedOK, nullptr),
 
-  // Back Button
+  // Back Button//后退按钮
   VPHELPER(VP_BACK_PAGE, nullptr, ScreenHandler.ScreenBackChange, nullptr),
   VPHELPER(VP_TEMP_ALL_OFF, nullptr, ScreenHandler.HandleAllHeatersOff, nullptr),
 
@@ -536,12 +537,12 @@ const struct DGUS_VP_Variable ListOfVP[] PROGMEM = {
     VPHELPER(VP_Z_FIRST_LAYER_CAL, nullptr, ScreenHandler.HandleFirstLayerCal, nullptr),
   #endif
   {.VP = VP_MARLIN_VERSION, .memadr = (void *)MarlinVersion, .size = VP_MARLIN_VERSION_LEN, .set_by_display_handler = nullptr, .send_to_display_handler = ScreenHandler.DGUSLCD_SendStringToDisplayPGM},
-  // M117 LCD String (We don't need the string in memory but "just" push it to the display on demand, hence the nullptr
+  // M117 LCD String (We don't need the string in memory but "just" push it to the display on demand, hence the nullptr//M117 LCD字符串（我们不需要内存中的字符串，但“只要”按需将其推送到显示器，因此为空PTR
   {.VP = VP_M117, .memadr = nullptr, .size = VP_M117_LEN, .set_by_display_handler = nullptr, .send_to_display_handler = ScreenHandler.DGUSLCD_SendStringToDisplay},
   {.VP = VP_MKS_H43_VERSION, .memadr = (void *)H43Version, .size = VP_MKS_H43_VERSION_LEN, .set_by_display_handler = nullptr, .send_to_display_handler = ScreenHandler.DGUSLCD_SendStringToDisplayPGM},
   {.VP = VP_MKS_H43_UpdataVERSION, .memadr = (void *)Updata_Time, .size = VP_MKS_H43_VERSION_LEN, .set_by_display_handler = nullptr, .send_to_display_handler = ScreenHandler.DGUSLCD_SendStringToDisplayPGM},
 
-  // Temperature Data
+  // Temperature Data//温度数据
   #if HAS_HOTEND
     VPHELPER(VP_T_E0_Is, &thermalManager.temp_hotend[0].celsius, nullptr, ScreenHandler.DGUSLCD_SendFloatAsLongValueToDisplay<0>),
     VPHELPER(VP_T_E0_Set, &thermalManager.temp_hotend[0].target, ScreenHandler.HandleTemperatureChanged, ScreenHandler.DGUSLCD_SendWordValueToDisplay),
@@ -600,7 +601,7 @@ const struct DGUS_VP_Variable ListOfVP[] PROGMEM = {
     #endif
   #endif
 
-  // Fan Data
+  // Fan Data//风扇数据
   #if HAS_FAN
     #define FAN_VPHELPER(N)                                                                                                                    \
       VPHELPER(VP_Fan##N##_Percentage, &thermalManager.fan_speed[N], ScreenHandler.DGUSLCD_SetUint8, ScreenHandler.DGUSLCD_SendFanToDisplay), \
@@ -609,15 +610,15 @@ const struct DGUS_VP_Variable ListOfVP[] PROGMEM = {
     REPEAT(FAN_COUNT, FAN_VPHELPER)
   #endif
 
-  // Feedrate
+  // Feedrate//进给速度
   VPHELPER(VP_Feedrate_Percentage, &feedrate_percentage, ScreenHandler.DGUSLCD_SetValueDirectly<int16_t>, ScreenHandler.DGUSLCD_SendWordValueToDisplay),
 
-  // Position Data
+  // Position Data//位置数据
   VPHELPER(VP_XPos, &current_position.x, nullptr, ScreenHandler.DGUSLCD_SendFloatAsLongValueToDisplay<2>),
   VPHELPER(VP_YPos, &current_position.y, nullptr, ScreenHandler.DGUSLCD_SendFloatAsLongValueToDisplay<2>),
   VPHELPER(VP_ZPos, &current_position.z, nullptr, ScreenHandler.DGUSLCD_SendFloatAsLongValueToDisplay<2>),
 
-  // Level Point Set
+  // Level Point Set//水平点集
   VPHELPER(VP_Level_Point_One_X, &mks_corner_offsets[0].x, ScreenHandler.HandleChangeLevelPoint_MKS, ScreenHandler.DGUSLCD_SendWordValueToDisplay),
   VPHELPER(VP_Level_Point_One_Y, &mks_corner_offsets[0].y, ScreenHandler.HandleChangeLevelPoint_MKS, ScreenHandler.DGUSLCD_SendWordValueToDisplay),
   VPHELPER(VP_Level_Point_Two_X, &mks_corner_offsets[1].x, ScreenHandler.HandleChangeLevelPoint_MKS, ScreenHandler.DGUSLCD_SendWordValueToDisplay),
@@ -629,16 +630,16 @@ const struct DGUS_VP_Variable ListOfVP[] PROGMEM = {
   VPHELPER(VP_Level_Point_Five_X, &mks_corner_offsets[4].x, ScreenHandler.HandleChangeLevelPoint_MKS, ScreenHandler.DGUSLCD_SendWordValueToDisplay),
   VPHELPER(VP_Level_Point_Five_Y, &mks_corner_offsets[4].y, ScreenHandler.HandleChangeLevelPoint_MKS, ScreenHandler.DGUSLCD_SendWordValueToDisplay),
 
-  // Print Progress
+  // Print Progress//打印进度
   VPHELPER(VP_PrintProgress_Percentage, nullptr, nullptr, ScreenHandler.DGUSLCD_SendPrintProgressToDisplay),
 
-  // LCD Control
+  // LCD Control//液晶显示器控制
   VPHELPER(VP_LCD_BLK, &lcd_default_light, ScreenHandler.LCD_BLK_Adjust, ScreenHandler.DGUSLCD_SendWordValueToDisplay),
 
-  // SD File - Back
+  // SD File - Back//SD文件-返回
   VPHELPER(VP_SD_FileSelect_Back, nullptr, ScreenHandler.SD_FileBack, nullptr),
 
-  // Print Time
+  // Print Time//打印时间
   VPHELPER_STR(VP_PrintTime, nullptr, VP_PrintTime_LEN, nullptr, ScreenHandler.DGUSLCD_SendPrintTimeToDisplay_MKS),
 
   #if ENABLED(PRINTCOUNTER)
@@ -685,7 +686,7 @@ const struct DGUS_VP_Variable ListOfVP[] PROGMEM = {
     VPHELPER(VP_MIN_EX_T, &thermalManager.extrude_min_temp, ScreenHandler.HandleGetExMinTemp_MKS, ScreenHandler.DGUSLCD_SendWordValueToDisplay),
   #endif
 
-  #if ENABLED(SENSORLESS_HOMING)  // TMC SENSORLESS Setting
+  #if ENABLED(SENSORLESS_HOMING)  // TMC SENSORLESS Setting//TMC无传感器设置
     #if X_HAS_STEALTHCHOP
       VPHELPER(VP_TMC_X_STEP, &tmc_step.x, ScreenHandler.TMC_ChangeConfig, ScreenHandler.DGUSLCD_SendTMCStepValue),
     #endif
@@ -697,7 +698,7 @@ const struct DGUS_VP_Variable ListOfVP[] PROGMEM = {
     #endif
   #endif
 
-  #if HAS_TRINAMIC_CONFIG   // TMC Current Setting
+  #if HAS_TRINAMIC_CONFIG   // TMC Current Setting//TMC电流设置
     #if AXIS_IS_TMC(X)
       VPHELPER(VP_TMC_X_Current, &stepperX.val_mA, ScreenHandler.TMC_ChangeConfig, ScreenHandler.DGUSLCD_SendWordValueToDisplay),
     #endif
@@ -728,7 +729,7 @@ const struct DGUS_VP_Variable ListOfVP[] PROGMEM = {
   VPHELPER(VP_LEVEL_BUTTON, nullptr, ScreenHandler.Level_Ctrl_MKS, nullptr),
   VPHELPER(VP_LANGUAGE_CHANGE, nullptr, ScreenHandler.LanguageChange_MKS, nullptr),
 
-  //VPHELPER(VP_SD_Print_LiveAdjustZ, nullptr, ScreenHandler.HandleLiveAdjustZ, nullptr),
+  //VPHELPER(VP_SD_Print_LiveAdjustZ, nullptr, ScreenHandler.HandleLiveAdjustZ, nullptr),//VPHELPER（VP_SD_Print_LiveAdjustZ、nullptr、ScreenHandler.HandleLiveAdjustZ、nullptr），
 
   VPHELPER(VP_SD_Print_LiveAdjustZ_Confirm, nullptr, ScreenHandler.ZoffsetConfirm, nullptr),
 
@@ -749,7 +750,7 @@ const struct DGUS_VP_Variable ListOfVP[] PROGMEM = {
     #endif
   #endif
 
-  // SDCard File listing
+  // SDCard File listing//SD卡文件列表
 
   #if ENABLED(SDSUPPORT)
     VPHELPER(VP_SD_FileSelected, nullptr, ScreenHandler.DGUSLCD_SD_FileSelected, nullptr),
@@ -785,18 +786,18 @@ const struct DGUS_VP_Variable ListOfVP[] PROGMEM = {
     VPHELPER(VP_WAITING_STATUS, nullptr, nullptr, ScreenHandler.DGUSLCD_SendWaitingStatusToDisplay),
   #endif
 
-  // Messages for the User, shared by the popup and the kill screen. They cant be autouploaded as we do not buffer content.
-  //{.VP = VP_MSGSTR1, .memadr = nullptr, .size = VP_MSGSTR1_LEN, .set_by_display_handler = nullptr, .send_to_display_handler = ScreenHandler.DGUSLCD_SendStringToDisplayPGM},
-  //{.VP = VP_MSGSTR2, .memadr = nullptr, .size = VP_MSGSTR2_LEN, .set_by_display_handler = nullptr, .send_to_display_handler = ScreenHandler.DGUSLCD_SendStringToDisplayPGM},
-  //{.VP = VP_MSGSTR3, .memadr = nullptr, .size = VP_MSGSTR3_LEN, .set_by_display_handler = nullptr, .send_to_display_handler = ScreenHandler.DGUSLCD_SendStringToDisplayPGM},
-  //{.VP = VP_MSGSTR4, .memadr = nullptr, .size = VP_MSGSTR4_LEN, .set_by_display_handler = nullptr, .send_to_display_handler = ScreenHandler.DGUSLCD_SendStringToDisplayPGM},
+  // Messages for the User, shared by the popup and the kill screen. They cant be autouploaded as we do not buffer content.//弹出窗口和kill屏幕共享的用户消息。它们不能自动上传，因为我们不缓冲内容。
+  //{.VP = VP_MSGSTR1, .memadr = nullptr, .size = VP_MSGSTR1_LEN, .set_by_display_handler = nullptr, .send_to_display_handler = ScreenHandler.DGUSLCD_SendStringToDisplayPGM},//{.VP=VP_MSGSTR1、.memadr=nullptr、.size=VP_MSGSTR1_LEN、.set_by_display_handler=nullptr、.send_to_display_handler=screenhdler.DGUSLCD_SendStringToDisplayPGM}，
+  //{.VP = VP_MSGSTR2, .memadr = nullptr, .size = VP_MSGSTR2_LEN, .set_by_display_handler = nullptr, .send_to_display_handler = ScreenHandler.DGUSLCD_SendStringToDisplayPGM},//{.VP=VP_MSGSTR2、.memadr=nullptr、.size=VP_MSGSTR2_LEN、.set_by_display_handler=nullptr、.send_to_display_handler=screenhdler.DGUSLCD_SendStringToDisplayPGM}，
+  //{.VP = VP_MSGSTR3, .memadr = nullptr, .size = VP_MSGSTR3_LEN, .set_by_display_handler = nullptr, .send_to_display_handler = ScreenHandler.DGUSLCD_SendStringToDisplayPGM},//{.VP=VP_MSGSTR3、.memadr=nullptr、.size=VP_MSGSTR3_LEN、.set_by_display_handler=nullptr、.send_to_display_handler=screenhdler.DGUSLCD_SendStringToDisplayPGM}，
+  //{.VP = VP_MSGSTR4, .memadr = nullptr, .size = VP_MSGSTR4_LEN, .set_by_display_handler = nullptr, .send_to_display_handler = ScreenHandler.DGUSLCD_SendStringToDisplayPGM},//{.VP=VP_MSGSTR4、.memadr=nullptr、.size=VP_MSGSTR4_LEN、.set_by_display_handler=nullptr、.send_to_display_handler=screenhdler.DGUSLCD_SendStringToDisplayPGM}，
 
   {.VP = VP_MSGSTR1, .memadr = nullptr, .size = VP_MSGSTR1_LEN, .set_by_display_handler = nullptr, .send_to_display_handler = ScreenHandler.DGUSLCD_SendStringToDisplay_Language_MKS},
   {.VP = VP_MSGSTR2, .memadr = nullptr, .size = VP_MSGSTR2_LEN, .set_by_display_handler = nullptr, .send_to_display_handler = ScreenHandler.DGUSLCD_SendStringToDisplay_Language_MKS},
   {.VP = VP_MSGSTR3, .memadr = nullptr, .size = VP_MSGSTR3_LEN, .set_by_display_handler = nullptr, .send_to_display_handler = ScreenHandler.DGUSLCD_SendStringToDisplay_Language_MKS},
   {.VP = VP_MSGSTR4, .memadr = nullptr, .size = VP_MSGSTR4_LEN, .set_by_display_handler = nullptr, .send_to_display_handler = ScreenHandler.DGUSLCD_SendStringToDisplay_Language_MKS},
 
-  VPHELPER(0, 0, 0, 0) // must be last entry.
+  VPHELPER(0, 0, 0, 0) // must be last entry.//必须是最后一个条目。
 };
 
-#endif // DGUS_LCD_UI_MKS
+#endif // DGUS_LCD_UI_MKS//DGUS_LCD_UI_MKS

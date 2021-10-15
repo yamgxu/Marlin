@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -48,8 +49,8 @@ inline void incremental_LSF_reset(struct linear_fit_data *lsf) {
 }
 
 inline void incremental_WLSF(struct linear_fit_data *lsf, const_float_t x, const_float_t y, const_float_t z, const_float_t w) {
-  // weight each accumulator by factor w, including the "number" of samples
-  // (analogous to calling inc_LSF twice with same values to weight it by 2X)
+  // weight each accumulator by factor w, including the "number" of samples//按系数w对每个收集器进行称重，包括样品的“数量”
+  // (analogous to calling inc_LSF twice with same values to weight it by 2X)//（类似于使用相同的值调用inc_LSF两次，将其加权2倍）
   const float wx = w * x, wy = w * y, wz = w * z;
   lsf->xbar  += wx;
   lsf->ybar  += wy;

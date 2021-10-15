@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,7 +32,7 @@
 #define DISPLAY_CHARSET_ISO10646_1
 
 namespace Language_sv {
-  using namespace Language_en; // Inherit undefined strings from English
+  using namespace Language_en; // Inherit undefined strings from English//从英语中继承未定义的字符串
 
   constexpr uint8_t    CHARSIZE                            = 2;
   PROGMEM Language_Str LANGUAGE                            = _UxGT("Swedish");
@@ -50,7 +51,7 @@ namespace Language_sv {
   PROGMEM Language_Str MSG_MEDIA_USB_REMOVED               = _UxGT("USB enhet borttagen");
   PROGMEM Language_Str MSG_MEDIA_USB_FAILED                = _UxGT("USB start misslyckad");
   PROGMEM Language_Str MSG_KILL_SUBCALL_OVERFLOW           = _UxGT("Underanrop överskriden");
-  PROGMEM Language_Str MSG_LCD_ENDSTOPS                    = _UxGT("Slutstop"); // Max length 8 characters
+  PROGMEM Language_Str MSG_LCD_ENDSTOPS                    = _UxGT("Slutstop"); // Max length 8 characters//最大长度为8个字符
   PROGMEM Language_Str MSG_LCD_SOFT_ENDSTOPS               = _UxGT("Mjuk slutstopp");
   PROGMEM Language_Str MSG_MAIN                            = _UxGT("Huvud");
   PROGMEM Language_Str MSG_ADVANCED_SETTINGS               = _UxGT("Advancerade inställningar");
@@ -472,9 +473,9 @@ namespace Language_sv {
   PROGMEM Language_Str MSG_ERR_MINTEMP                     = _UxGT("Fel: MINTEMP");
   PROGMEM Language_Str MSG_HALTED                          = _UxGT("Utskrift stoppad");
   PROGMEM Language_Str MSG_PLEASE_RESET                    = _UxGT("Snälla Återställ");
-  PROGMEM Language_Str MSG_SHORT_DAY                       = _UxGT("d"); // One character only
-  PROGMEM Language_Str MSG_SHORT_HOUR                      = _UxGT("t"); // One character only
-  PROGMEM Language_Str MSG_SHORT_MINUTE                    = _UxGT("m"); // One character only
+  PROGMEM Language_Str MSG_SHORT_DAY                       = _UxGT("d"); // One character only//只有一个字符
+  PROGMEM Language_Str MSG_SHORT_HOUR                      = _UxGT("t"); // One character only//只有一个字符
+  PROGMEM Language_Str MSG_SHORT_MINUTE                    = _UxGT("m"); // One character only//只有一个字符
   PROGMEM Language_Str MSG_HEATING                         = _UxGT("Värmer...");
   PROGMEM Language_Str MSG_COOLING                         = _UxGT("Kyler...");
   PROGMEM Language_Str MSG_BED_HEATING                     = _UxGT("Bädd Värmer...");
@@ -613,10 +614,10 @@ namespace Language_sv {
   PROGMEM Language_Str MSG_REMINDER_SAVE_SETTINGS          = _UxGT("Kom ihåg att Spara!");
   PROGMEM Language_Str MSG_PASSWORD_REMOVED                = _UxGT("Lösenord Bort taget");
 
-  //
-  // Filament Change screens show up to 3 lines on a 4-line display
-  //                        ...or up to 2 lines on a 3-line display
-  //
+  ////
+  // Filament Change screens show up to 3 lines on a 4-line display//灯丝更换屏幕在4行显示屏上最多显示3行
+  //                        ...or up to 2 lines on a 3-line display//…或在3行显示器上最多显示2行
+  ////
   #if LCD_HEIGHT >= 4
     PROGMEM Language_Str MSG_ADVANCED_PAUSE_WAITING        = _UxGT(MSG_2_LINE("Tryck på knappen", "för att fortsätta utskrift"));
     PROGMEM Language_Str MSG_PAUSE_PRINT_PARKING           = _UxGT(MSG_1_LINE("Parkera..."));

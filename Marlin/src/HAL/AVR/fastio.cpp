@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -244,8 +245,8 @@ uint8_t extDigitalRead(const int8_t pin) {
 uint16_t set_pwm_frequency_hz(const_float_t hz, const float dca, const float dcb, const float dcc) {
   float count = 0;
   if (hz > 0 && (dca || dcb || dcc)) {
-    count = float(F_CPU) / hz;            // 1x prescaler, TOP for 16MHz base freq.
-    uint16_t prescaler;                   // Range of 30.5Hz (65535) 64.5KHz (>31)
+    count = float(F_CPU) / hz;            // 1x prescaler, TOP for 16MHz base freq.//1个预分频器，顶部用于16MHz基频。
+    uint16_t prescaler;                   // Range of 30.5Hz (65535) 64.5KHz (>31)//范围为30.5Hz（65535）64.5KHz（>31）
 
          if (count >= 255. * 256.) { prescaler = 1024; SET_CS(5, PRESCALER_1024); }
     else if (count >= 255. * 64.)  { prescaler = 256;  SET_CS(5,  PRESCALER_256); }
@@ -254,35 +255,35 @@ uint16_t set_pwm_frequency_hz(const_float_t hz, const float dca, const float dcb
     else                           { prescaler = 1;    SET_CS(5,    PRESCALER_1); }
 
     count /= float(prescaler);
-    const float pwm_top = round(count);   // Get the rounded count
+    const float pwm_top = round(count);   // Get the rounded count//取整数
 
-    ICR5 = (uint16_t)pwm_top - 1;         // Subtract 1 for TOP
-    OCR5A = pwm_top * ABS(dca);          // Update and scale DCs
+    ICR5 = (uint16_t)pwm_top - 1;         // Subtract 1 for TOP//顶部减去1
+    OCR5A = pwm_top * ABS(dca);          // Update and scale DCs//更新和扩展DCs
     OCR5B = pwm_top * ABS(dcb);
     OCR5C = pwm_top * ABS(dcc);
-    _SET_COM(5, A, dca ? (dca < 0 ? COM_SET_CLEAR : COM_CLEAR_SET) : COM_NORMAL); // Set compare modes
+    _SET_COM(5, A, dca ? (dca < 0 ? COM_SET_CLEAR : COM_CLEAR_SET) : COM_NORMAL); // Set compare modes//设置比较模式
     _SET_COM(5, B, dcb ? (dcb < 0 ? COM_SET_CLEAR : COM_CLEAR_SET) : COM_NORMAL);
     _SET_COM(5, C, dcc ? (dcc < 0 ? COM_SET_CLEAR : COM_CLEAR_SET) : COM_NORMAL);
 
-    SET_WGM(5, FAST_PWM_ICRn);            // Fast PWM with ICR5 as TOP
+    SET_WGM(5, FAST_PWM_ICRn);            // Fast PWM with ICR5 as TOP//以ICR5为顶部的快速PWM
 
-    //SERIAL_ECHOLNPGM("Timer 5 Settings:");
-    //SERIAL_ECHOLNPAIR("  Prescaler=", prescaler);
-    //SERIAL_ECHOLNPAIR("        TOP=", ICR5);
-    //SERIAL_ECHOLNPAIR("      OCR5A=", OCR5A);
-    //SERIAL_ECHOLNPAIR("      OCR5B=", OCR5B);
-    //SERIAL_ECHOLNPAIR("      OCR5C=", OCR5C);
+    //SERIAL_ECHOLNPGM("Timer 5 Settings:");//串行ECHOLNPGM（“计时器5设置：”）；
+    //SERIAL_ECHOLNPAIR("  Prescaler=", prescaler);//串行回波对（“预分频器=”，预分频器）；
+    //SERIAL_ECHOLNPAIR("        TOP=", ICR5);//串行回波对（“TOP=”，ICR5）；
+    //SERIAL_ECHOLNPAIR("      OCR5A=", OCR5A);//串行回波对（“OCR5A=”，OCR5A）；
+    //SERIAL_ECHOLNPAIR("      OCR5B=", OCR5B);//序列回波对（“OCR5B=”，OCR5B）；
+    //SERIAL_ECHOLNPAIR("      OCR5C=", OCR5C);//序列回波对（“OCR5C=”，OCR5C）；
   }
   else {
-    // Restore the default for Timer 5
-    SET_WGM(5, PWM_PC_8);                 // PWM 8-bit (Phase Correct)
-    SET_COMS(5, NORMAL, NORMAL, NORMAL);  // Do nothing
-    SET_CS(5, PRESCALER_64);              // 16MHz / 64 = 250KHz
+    // Restore the default for Timer 5//恢复计时器5的默认值
+    SET_WGM(5, PWM_PC_8);                 // PWM 8-bit (Phase Correct)//PWM 8位（相位正确）
+    SET_COMS(5, NORMAL, NORMAL, NORMAL);  // Do nothing//无所事事
+    SET_CS(5, PRESCALER_64);              // 16MHz / 64 = 250KHz//16MHz/64=250KHz
     OCR5A = OCR5B = OCR5C = 0;
   }
   return round(count);
 }
 #endif
 
-#endif // FASTIO_EXT_START
-#endif // __AVR__
+#endif // FASTIO_EXT_START//快速下一步开始
+#endif // __AVR__//_uuuavr__

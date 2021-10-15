@@ -1,3 +1,4 @@
+/** translatione by yx */
 /* Copyright (C) 2015-2016 Andrew J. Kroll
    and
 Copyright (C) 2011 Circuits At Home, LTD. All rights reserved.
@@ -20,15 +21,15 @@ Contact information
 -------------------
 
 Circuits At Home, LTD
-Web      :  https://www.circuitsathome.com
+Web      :  https://www.circuitsathome.com//www.circuitsathome.com
 e-mail   :  support@circuitsathome.com
  */
 
 #if defined(LOAD_UHS_BULK_STORAGE) && defined(__UHS_BULK_STORAGE_H__) && !defined(UHS_BULK_STORAGE_LOADED)
 #define UHS_BULK_STORAGE_LOADED
 
-// uncomment to get 'printf' console debugging. NOT FOR UNO!
-//#define DEBUG_PRINTF_EXTRA_HUGE_UHS_BULK_STORAGE
+// uncomment to get 'printf' console debugging. NOT FOR UNO!//取消注释以获取“printf”控制台调试。不适合乌诺！
+//#define DEBUG_PRINTF_EXTRA_HUGE_UHS_BULK_STORAGE//#定义调试\打印\额外\巨大\超高速\批量\存储
 
 #if DEBUG_PRINTF_EXTRA_HUGE
 #ifdef DEBUG_PRINTF_EXTRA_HUGE_UHS_BULK_STORAGE
@@ -40,11 +41,11 @@ e-mail   :  support@circuitsathome.com
 #define BS_HOST_DEBUG(...) VOID0
 #endif
 
-////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Interface code
+// Interface code//接口代码
 
-////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
  * Get the capacity of the media
@@ -116,11 +117,11 @@ bool UHS_NI UHS_Bulk_Storage::WriteProtected(uint8_t lun) {
 uint8_t UHS_NI UHS_Bulk_Storage::SCSITransaction6(SCSI_CDB6_t *cdb, uint16_t buf_size, void *buf, uint8_t dir) {
         if(!bAddress) return UHS_BULK_ERR_DEVICE_DISCONNECTED;
         pUsb->DisablePoll();
-        // promote buf_size to 32bits.
+        // promote buf_size to 32bits.//将buf_大小提升到32位。
         UHS_BULK_CommandBlockWrapper cbw = UHS_BULK_CommandBlockWrapper(++dCBWTag, (uint32_t)buf_size, cdb, dir);
 
 #if 0
-        // Lets check the CBW here:
+        // Lets check the CBW here://让我们在此处检查CBW：
         printf("\r\n");
         printf("\r\n");
         uint8_t *dump = (uint8_t*)(&cbw);
@@ -150,9 +151,9 @@ uint8_t UHS_NI UHS_Bulk_Storage::SCSITransaction6(SCSI_CDB6_t *cdb, uint16_t buf
 uint8_t UHS_NI UHS_Bulk_Storage::SCSITransaction10(SCSI_CDB10_t *cdb, uint16_t buf_size, void *buf, uint8_t dir) {
         if(!bAddress) return UHS_BULK_ERR_DEVICE_DISCONNECTED;
         pUsb->DisablePoll();
-        // promote buf_size to 32bits.
+        // promote buf_size to 32bits.//将buf_大小提升到32位。
         UHS_BULK_CommandBlockWrapper cbw = UHS_BULK_CommandBlockWrapper(++dCBWTag, (uint32_t)buf_size, cdb, dir);
-        //SetCurLUN(cdb->LUN);
+        //SetCurLUN(cdb->LUN);//SetCurLUN（cdb->LUN）；
         uint8_t v = (HandleSCSIError(Transaction(&cbw, buf_size, buf)));
         pUsb->EnablePoll();
         return v;
@@ -294,14 +295,14 @@ again:
         return er;
 }
 
-// End of user functions, the remaining code below is driver internals.
-// Only developer serviceable parts below!
+// End of user functions, the remaining code below is driver internals.//用户函数结束时，下面剩下的代码是驱动程序内部代码。
+// Only developer serviceable parts below!//仅适用于以下可维修部件！
 
-////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Main driver code
+// Main driver code//主驱动程序代码
 
-////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 UHS_NI UHS_Bulk_Storage::UHS_Bulk_Storage(UHS_USB_HOST_BASE *p) {
         pUsb = p;
@@ -310,10 +311,10 @@ UHS_NI UHS_Bulk_Storage::UHS_Bulk_Storage(UHS_USB_HOST_BASE *p) {
 
                 DriverDefaults();
                 pUsb->RegisterDeviceClass(this);
-                //                Serial.print("Bulk Register to USB Host @ 0x");
-                //                Serial.println((uint32_t)pUsb, HEX);
-                //                Serial.print("Bulk Register to USB Host Address Pool @ 0x");
-                //                Serial.println((uint32_t)pUsb->GetAddressPool(), HEX);
+                //                Serial.print("Bulk Register to USB Host @ 0x");//串行打印（“批量注册到USB主机@0x”）；
+                //                Serial.println((uint32_t)pUsb, HEX);//Serial.println（（uint32_t）pUsb，十六进制）；
+                //                Serial.print("Bulk Register to USB Host Address Pool @ 0x");//串行打印（“批量注册到USB主机地址池@0x”）；
+                //                Serial.println((uint32_t)pUsb->GetAddressPool(), HEX);//Serial.println（（uint32_t）pUsb->GetAddressPool（），十六进制）；
         }
 }
 
@@ -325,17 +326,17 @@ bool UHS_NI UHS_Bulk_Storage::OKtoEnumerate(ENUMERATION_INFO *ei) {
         BS_HOST_DEBUG("BulkOnly: checking numep %i, klass %2.2x, subklass %2.2x\r\n", ei->interface.numep, ei->klass, ei->subklass);
         BS_HOST_DEBUG("BulkOnly: checking protocol %2.2x, interface.klass %2.2x, interface.subklass %2.2x\r\n", ei->protocol, ei->interface.klass, ei->interface.subklass);
         BS_HOST_DEBUG("BulkOnly: checking interface.protocol %2.2x\r\n", ei->interface.protocol);
-        //
-        // TO-DO?
-        // Check that we have 2 bulk endpoints, and one in each direction??
-        // e.g.       (ei->interface.numep > 1) && // two or more endpoints AND check types
-        // This will work with proper hardware though.
-        //
+        ////
+        // TO-DO?//待办事项？
+        // Check that we have 2 bulk endpoints, and one in each direction??//检查是否有2个批量端点，每个方向一个？？
+        // e.g.       (ei->interface.numep > 1) && // two or more endpoints AND check types//例如，（ei->interface.numep>1）&&&///两个或多个端点和检查类型
+        // This will work with proper hardware though.//这将与适当的硬件虽然工作。
+        ////
 
         return (
-                ((ei->klass == UHS_USB_CLASS_MASS_STORAGE) || (ei->interface.klass == UHS_USB_CLASS_MASS_STORAGE)) && // mass storage class AND
-                ((ei->subklass == UHS_BULK_SUBCLASS_SCSI) || (ei->interface.subklass == UHS_BULK_SUBCLASS_SCSI)) && // SCSI command set AND
-                ((ei->protocol == UHS_STOR_PROTO_BBB) || (ei->interface.protocol == UHS_STOR_PROTO_BBB)) // Bulk Only transport
+                ((ei->klass == UHS_USB_CLASS_MASS_STORAGE) || (ei->interface.klass == UHS_USB_CLASS_MASS_STORAGE)) && // mass storage class AND//大容量存储类和
+                ((ei->subklass == UHS_BULK_SUBCLASS_SCSI) || (ei->interface.subklass == UHS_BULK_SUBCLASS_SCSI)) && // SCSI command set AND//SCSI命令集和
+                ((ei->protocol == UHS_STOR_PROTO_BBB) || (ei->interface.protocol == UHS_STOR_PROTO_BBB)) // Bulk Only transport//散装运输
                 );
 }
 
@@ -348,7 +349,7 @@ uint8_t UHS_NI UHS_Bulk_Storage::SetInterface(ENUMERATION_INFO *ei) {
 
         bAddress = ei->address;
         BS_HOST_DEBUG("BS SetInterface\r\n");
-        // Fill in the endpoint info structure
+        // Fill in the endpoint info structure//填写端点信息结构
         for(uint8_t ep = 0; ep < ei->interface.numep; ep++) {
                 BS_HOST_DEBUG("ep: 0x%2.2x bmAttributes: 0x%2.2x ", ep, ei->interface.epInfo[ep].bmAttributes);
                 if(ei->interface.epInfo[ep].bmAttributes == USB_TRANSFER_TYPE_BULK) {
@@ -378,18 +379,18 @@ uint8_t UHS_NI UHS_Bulk_Storage::SetInterface(ENUMERATION_INFO *ei) {
  */
 uint8_t UHS_NI UHS_Bulk_Storage::Start() {
         uint8_t rcode;
-        //        Serial.print("Bulk Start from USB Host @ 0x");
-        //        Serial.println((uint32_t)pUsb, HEX);
-        //        Serial.print("Bulk Start USB Host Address Pool @ 0x");
-        //        Serial.println((uint32_t)pUsb->GetAddressPool(), HEX);
+        //        Serial.print("Bulk Start from USB Host @ 0x");//串行打印（“从USB主机批量启动@0x”）；
+        //        Serial.println((uint32_t)pUsb, HEX);//Serial.println（（uint32_t）pUsb，十六进制）；
+        //        Serial.print("Bulk Start USB Host Address Pool @ 0x");//串行打印（“批量启动USB主机地址池@0x”）；
+        //        Serial.println((uint32_t)pUsb->GetAddressPool(), HEX);//Serial.println（（uint32_t）pUsb->GetAddressPool（），十六进制）；
 
         BS_HOST_DEBUG("BS Start, speed: %i\r\n", pUsb->GetAddressPool()->GetUsbDevicePtr(bAddress)->speed);
         BS_HOST_DEBUG("BS Start\r\n");
         rcode = pUsb->setEpInfoEntry(bAddress, bIface, 3, epInfo);
-        //        Serial.println(rcode,HEX);
+        //        Serial.println(rcode,HEX);//Serial.println（rcode，十六进制）；
         if(rcode) goto FailOnInit;
 
-        // Do a 1 second delay before LUN query
+        // Do a 1 second delay before LUN query//在LUN查询之前延迟1秒
         if(!UHS_SLEEP_MS(1000)) goto FailUnPlug;
 
         rcode = GetMaxLUN(&bMaxLUN);
@@ -399,8 +400,8 @@ uint8_t UHS_NI UHS_Bulk_Storage::Start() {
         }
         if(bMaxLUN >= MASS_MAX_SUPPORTED_LUN) bMaxLUN = MASS_MAX_SUPPORTED_LUN - 1;
         BS_HOST_DEBUG("MaxLUN %u\r\n", bMaxLUN);
-        //ErrorMessage<uint8_t > (PSTR("MaxLUN"), bMaxLUN);
-        if(!UHS_SLEEP_MS(150)) goto FailUnPlug; // Delay a bit for slow firmware. (again)
+        //ErrorMessage<uint8_t > (PSTR("MaxLUN"), bMaxLUN);//错误消息（PSTR（“MaxLUN”），bMaxLUN）；
+        if(!UHS_SLEEP_MS(150)) goto FailUnPlug; // Delay a bit for slow firmware. (again)//对于较慢的固件，延迟一点。（再次）
 
         for(uint8_t lun = 0; lun <= bMaxLUN; lun++) {
                 if(!UHS_SLEEP_MS(3)) goto FailUnPlug;
@@ -456,7 +457,7 @@ uint8_t UHS_NI UHS_Bulk_Storage::Start() {
                 uint8_t tries = 0xF0;
                 while((rcode = TestUnitReady(lun))) {
                         BS_HOST_DEBUG("\r\nTry %2.2x TestUnitReady %2.2x\r\n", tries - 0xF0, rcode);
-                        if(rcode == 0x08) break; // break on no media, this is OK to do.
+                        if(rcode == 0x08) break; // break on no media, this is OK to do.//在没有媒体的情况下中断，可以这样做。
                         if(rcode == UHS_BULK_ERR_DEVICE_DISCONNECTED) goto FailUnPlug;
                         if(rcode == UHS_BULK_ERR_INVALID_CSW) goto Fail;
                         if(rcode != UHS_BULK_ERR_MEDIA_CHANGED) goto Fail;
@@ -465,22 +466,22 @@ uint8_t UHS_NI UHS_Bulk_Storage::Start() {
                         if(!tries) break;
                 }
                 #else
-                        // Don't wait for the LUN to become ready, as this will
-                        // trigger Marlin's watchdog timer
+                        // Don't wait for the LUN to become ready, as this will//不要等待LUN准备就绪，因为这样会
+                        // trigger Marlin's watchdog timer//触发马林看门狗定时器
                         rcode = -1;
                 #endif
                 if(!UHS_SLEEP_MS(3)) goto FailUnPlug;
                 LockMedia(lun, 1);
                 if(rcode == 0x08) {
                         if(!UHS_SLEEP_MS(3)) goto FailUnPlug;
-                        if(MediaCTL(lun, 1) == UHS_BULK_ERR_DEVICE_DISCONNECTED) goto FailUnPlug; // I actually have a USB stick that needs this!
+                        if(MediaCTL(lun, 1) == UHS_BULK_ERR_DEVICE_DISCONNECTED) goto FailUnPlug; // I actually have a USB stick that needs this!//实际上我有一个U盘需要这个！
                 }
                 BS_HOST_DEBUG("\r\nTry %2.2x TestUnitReady %2.2x\r\n", tries - 0xF0, rcode);
                 if(!rcode) {
                         if(!UHS_SLEEP_MS(3)) goto FailUnPlug;
                         BS_HOST_DEBUG("CheckLUN...\r\n");
                         BS_HOST_DEBUG("%lu\r\n", millis()/1000);
-                        // Stalls on ***some*** devices, ***WHY***?! Device SAID it is READY!!
+                        // Stalls on ***some*** devices, ***WHY***?! Device SAID it is READY!!//在***一些***设备上暂停，***为什么***？！设备说它准备好了！！
                         LUNOk[lun] = CheckLUN(lun);
                         BS_HOST_DEBUG("%lu\r\n", millis()/1000);
                         if(!LUNOk[lun]) LUNOk[lun] = CheckLUN(lun);
@@ -532,20 +533,20 @@ Fail:
         return rcode;
 }
 
-// Base class definition of Release() used. See UHS_USBInterface class definition for details
+// Base class definition of Release() used. See UHS_USBInterface class definition for details//使用了Release（）的基类定义。有关详细信息，请参见UHS_USBInterface类定义
 
 /**
  * For driver use only.
  *
  * @return
  */
-//void UHS_NI UHS_Bulk_Storage::Release() {
-//        pUsb->DisablePoll();
-//        OnRelease();
-//        DriverDefaults();
-//        pUsb->EnablePoll();
-//        return;
-//}
+//void UHS_NI UHS_Bulk_Storage::Release() {//无效超高硫镍超高硫散装存储：：发布（）{
+//        pUsb->DisablePoll();//pUsb->DisablePoll（）；
+//        OnRelease();//OnRelease（）；
+//        DriverDefaults();//DriverDefaults（）；
+//        pUsb->EnablePoll();//pUsb->EnablePoll（）；
+//        return;//返回；
+//}//}
 
 /**
  * For driver use only.
@@ -569,17 +570,17 @@ bool UHS_NI UHS_Bulk_Storage::CheckLUN(uint8_t lun) {
                 D_PrintHex<uint8_t > (capacity.data[i], 0x80);
         Notify(PSTR("\r\n\r\n"), 0x80);
 #endif
-        // Only 512/1024/2048/4096 are valid values!
+        // Only 512/1024/2048/4096 are valid values!//只有512/1024/2048/4096是有效值！
         uint32_t c = UHS_BYTES_TO_UINT32(capacity.data[4], capacity.data[5], capacity.data[6], capacity.data[7]);
         if(c != 0x0200LU && c != 0x0400LU && c != 0x0800LU && c != 0x1000LU) {
                 return false;
         }
-        // Store capacity information.
-        CurrentSectorSize[lun] = (uint16_t)(c); // & 0xFFFF);
+        // Store capacity information.//存储容量信息。
+        CurrentSectorSize[lun] = (uint16_t)(c); // & 0xFFFF);//&0xFFFF）；
 
         CurrentCapacity[lun] = UHS_BYTES_TO_UINT32(capacity.data[0], capacity.data[1], capacity.data[2], capacity.data[3]) + 1;
         if(CurrentCapacity[lun] == /*0xffffffffLU */ 0x01LU || CurrentCapacity[lun] == 0x00LU) {
-                // Buggy firmware will report 0xFFFFFFFF or 0 for no media
+                // Buggy firmware will report 0xFFFFFFFF or 0 for no media//有缺陷的固件将报告0xFFFFFF或0（无介质）
 #ifdef DEBUG_USB_HOST
                 if(CurrentCapacity[lun])
                         ErrorMessage<uint8_t > (PSTR(">>>>>>>>>>>>>>>>BUGGY FIRMWARE. CAPACITY FAIL ON LUN"), lun);
@@ -636,13 +637,13 @@ void UHS_NI UHS_Bulk_Storage::Poll() {
         return;
 }
 
-////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-// SCSI code
+// SCSI code//SCSI代码
 
 
-////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
  * For driver use only.
@@ -689,7 +690,7 @@ uint8_t UHS_NI UHS_Bulk_Storage::Inquiry(uint8_t lun, uint16_t bsize, uint8_t *b
  */
 uint8_t UHS_NI UHS_Bulk_Storage::TestUnitReady(uint8_t lun) {
         if(!bAddress) return UHS_BULK_ERR_DEVICE_DISCONNECTED;
-        //SetCurLUN(lun);
+        //SetCurLUN(lun);//SetCurLUN（lun）；
         if(!bAddress)
                 return UHS_BULK_ERR_UNIT_NOT_READY;
 
@@ -795,13 +796,13 @@ uint8_t UHS_NI UHS_Bulk_Storage::RequestSense(uint8_t lun, uint16_t size, uint8_
 }
 
 
-////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-// USB code
+// USB code//USB代码
 
 
-////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
  * For driver use only.
@@ -936,11 +937,11 @@ uint8_t UHS_NI UHS_Bulk_Storage::HandleUsbError(uint8_t error, uint8_t index) {
                         ErrorMessage<uint8_t > (PSTR("Index"), index);
                 }
                 switch(error) {
-                                // case UHS_HOST_ERROR_WRONGPID:
+                                // case UHS_HOST_ERROR_WRONGPID://案例UHS\U主机错误\U错误PID：
                         case UHS_HOST_ERROR_NONE:
                                 return UHS_BULK_ERR_SUCCESS;
                         case UHS_HOST_ERROR_BUSY:
-                                // SIE is busy, just hang out and try again.
+                                // SIE is busy, just hang out and try again.//SIE很忙，请挂断然后再试一次。
                                 return UHS_BULK_ERR_UNIT_BUSY;
                         case UHS_HOST_ERROR_NAK:
                                 return UHS_BULK_ERR_UNIT_BUSY;
@@ -956,10 +957,10 @@ uint8_t UHS_NI UHS_Bulk_Storage::HandleUsbError(uint8_t error, uint8_t index) {
 
 
                         case UHS_HOST_ERROR_TOGERR:
-                                // Handle a very super rare corner case, where toggles become de-synched.
-                                // I have only ran into one device that has this firmware bug, and this is
-                                // the only clean way to get back into sync with the buggy device firmware.
-                                //   --AJK
+                                // Handle a very super rare corner case, where toggles become de-synched.//处理一个非常罕见的角落情况下，切换变得不同步。
+                                // I have only ran into one device that has this firmware bug, and this is//我只遇到一个设备有这个固件错误，这是
+                                // the only clean way to get back into sync with the buggy device firmware.//这是恢复与有缺陷的设备固件同步的唯一干净方法。
+                                //   --AJK//--AJK
                                 if(bAddress && bConfNum) {
                                         error = pUsb->setConf(bAddress, bConfNum);
 
@@ -973,7 +974,7 @@ uint8_t UHS_NI UHS_Bulk_Storage::HandleUsbError(uint8_t error, uint8_t index) {
                                 return UHS_BULK_ERR_GENERAL_USB_ERROR;
                 }
                 count--;
-        } // while
+        } // while//当
 
         return ((error && !count) ? UHS_BULK_ERR_GENERAL_USB_ERROR : UHS_BULK_ERR_SUCCESS);
 }
@@ -994,7 +995,7 @@ uint8_t UHS_NI UHS_Bulk_Storage::Transaction(UHS_BULK_CommandBlockWrapper *pcbw,
         bool write = (pcbw->bmCBWFlags & UHS_BULK_CMD_DIR_IN) != UHS_BULK_CMD_DIR_IN;
         uint8_t ret = 0;
         uint8_t usberr;
-        UHS_BULK_CommandStatusWrapper csw; // up here, we allocate ahead to save cpu cycles.
+        UHS_BULK_CommandStatusWrapper csw; // up here, we allocate ahead to save cpu cycles.//在这里，我们提前分配以节省cpu周期。
         SetCurLUN(pcbw->bmCBWLUN);
         ErrorMessage<uint32_t > (PSTR("CBW.dCBWTag"), pcbw->dCBWTag);
 
@@ -1043,7 +1044,7 @@ uint8_t UHS_NI UHS_Bulk_Storage::Transaction(UHS_BULK_CommandBlockWrapper *pcbw,
                         Notify(PSTR("CBW:\t\tOK\r\n"), 0x80);
                         Notify(PSTR("Data Stage:\tOK\r\n"), 0x80);
                 } else {
-                        // Throw away csw, IT IS NOT OF ANY USE.
+                        // Throw away csw, IT IS NOT OF ANY USE.//扔掉csw，它没有任何用处。
                         ResetRecovery();
                         return ret;
                 }
@@ -1053,17 +1054,17 @@ uint8_t UHS_NI UHS_Bulk_Storage::Transaction(UHS_BULK_CommandBlockWrapper *pcbw,
                 }
                 if(usberr == UHS_HOST_ERROR_NONE) {
                         if(IsValidCSW(&csw, pcbw)) {
-                                //ErrorMessage<uint32_t > (PSTR("CSW.dCBWTag"), csw.dCSWTag);
-                                //ErrorMessage<uint8_t > (PSTR("bCSWStatus"), csw.bCSWStatus);
-                                //ErrorMessage<uint32_t > (PSTR("dCSWDataResidue"), csw.dCSWDataResidue);
+                                //ErrorMessage<uint32_t > (PSTR("CSW.dCBWTag"), csw.dCSWTag);//错误消息（PSTR（“CSW.dCBWTag”）、CSW.dCSWTag）；
+                                //ErrorMessage<uint8_t > (PSTR("bCSWStatus"), csw.bCSWStatus);//错误消息（PSTR（“bCSWStatus”）、csw.bCSWStatus）；
+                                //ErrorMessage<uint32_t > (PSTR("dCSWDataResidue"), csw.dCSWDataResidue);//错误消息<uint32\u t>（PSTR（“dcswdataresidence”），csw.dcswdataresidence；
                                 Notify(PSTR("CSW:\t\tOK\r\n\r\n"), 0x80);
                                 return csw.bCSWStatus;
                         } else {
-                                // NOTE! Sometimes this is caused by the reported residue being wrong.
-                                // Get a different device. It isn't compliant, and should have never passed Q&A.
-                                // I own one... 05e3:0701 Genesys Logic, Inc. USB 2.0 IDE Adapter.
-                                // Other devices that exhibit this behavior exist in the wild too.
-                                // Be sure to check quirks in the Linux source code before reporting a bug. --xxxajk
+                                // NOTE! Sometimes this is caused by the reported residue being wrong.//注意！有时，这是由于报告的残留物错误造成的。
+                                // Get a different device. It isn't compliant, and should have never passed Q&A.//换一台不同的设备。它是不符合要求的，应该永远不会通过Q&A。
+                                // I own one... 05e3:0701 Genesys Logic, Inc. USB 2.0 IDE Adapter.//我有一个。。。05e3:0701 Genesys Logic，Inc.USB 2.0 IDE适配器。
+                                // Other devices that exhibit this behavior exist in the wild too.//其他表现出这种行为的设备也存在于野外。
+                                // Be sure to check quirks in the Linux source code before reporting a bug. --xxxajk//在报告bug之前，一定要检查Linux源代码中的怪癖--xxxajk
                                 Notify(PSTR("Invalid CSW\r\n"), 0x80);
                                 Reset();
                                 ResetRecovery();
@@ -1133,7 +1134,7 @@ uint8_t UHS_NI UHS_Bulk_Storage::HandleSCSIError(uint8_t status) {
                         ErrorMessage<uint8_t > (PSTR("Add Sense Code"), rsp.bAdditionalSenseCode);
                         ErrorMessage<uint8_t > (PSTR("Add Sense Qual"), rsp.bAdditionalSenseQualifier);
 #endif
-                        // warning, this is not testing ASQ, only SK and ASC.
+                        // warning, this is not testing ASQ, only SK and ASC.//警告，这不是测试ASQ，仅测试SK和ASC。
                         switch(rsp.bmSenseKey) {
                                 case SCSI_S_UNIT_ATTENTION:
                                         switch(rsp.bAdditionalSenseCode) {
@@ -1160,25 +1161,25 @@ uint8_t UHS_NI UHS_Bulk_Storage::HandleSCSIError(uint8_t status) {
                                         return UHS_BULK_ERR_GENERAL_SCSI_ERROR;
                         }
 
-                        // case 4: return MASS_ERR_UNIT_BUSY; // Busy means retry later.
-                        //    case 0x05/0x14: we stalled out
-                        //    case 0x15/0x16: we naked out.
+                        // case 4: return MASS_ERR_UNIT_BUSY; // Busy means retry later.//案例4：返回质量错误单元忙；//忙意味着稍后重试。
+                        //    case 0x05/0x14: we stalled out//案例0x05/0x14：我们陷入困境
+                        //    case 0x15/0x16: we naked out.//案例0x15/0x16：我们赤身裸体。
                 default:
                         ErrorMessage<uint8_t > (PSTR("Gen SCSI Err"), status);
                         ErrorMessage<uint8_t > (PSTR("LUN"), bTheLUN);
 
                         return status;
-        } // switch
+        } // switch//开关
 }
 
 
-////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-// Debugging code
+// Debugging code//调试代码
 
 
-////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
  * @param ep_ptr

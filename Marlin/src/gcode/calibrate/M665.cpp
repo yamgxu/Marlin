@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -104,9 +105,9 @@
         }
       }
 
-    #endif // HAS_SCARA_OFFSET
+    #endif // HAS_SCARA_OFFSET//斯卡拉偏移了吗
   }
 
 #endif
 
-#endif // IS_KINEMATIC
+#endif // IS_KINEMATIC//是运动学的吗

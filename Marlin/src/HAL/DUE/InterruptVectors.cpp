@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -49,49 +50,49 @@ static DeviceVectors ram_tab = { nullptr };
  * by reprogramming the NVIC registers
  */
 static pfnISR_Handler* get_relocated_table_addr() {
-  // Get the address of the interrupt/exception table
+  // Get the address of the interrupt/exception table//获取中断/异常表的地址
   uint32_t isrtab = SCB->VTOR;
 
-  // If already relocated, we are done!
+  // If already relocated, we are done!//如果已经搬迁，我们就完了！
   if (isrtab >= IRAM0_ADDR)
     return (pfnISR_Handler*)isrtab;
 
-  // Get the address of the table stored in FLASH
+  // Get the address of the table stored in FLASH//获取存储在闪存中的表的地址
   const pfnISR_Handler* romtab = (const pfnISR_Handler*)isrtab;
 
-  // Copy it to SRAM
+  // Copy it to SRAM//将其复制到SRAM
   memcpy(&ram_tab, romtab, sizeof(ram_tab));
 
-  // Disable global interrupts
+  // Disable global interrupts//禁用全局中断
   CRITICAL_SECTION_START();
 
-  // Set the vector table base address to the SRAM copy
+  // Set the vector table base address to the SRAM copy//将向量表基址设置为SRAM副本
   SCB->VTOR = (uint32_t)(&ram_tab);
 
-  // Reenable interrupts
+  // Reenable interrupts//可重入中断
   CRITICAL_SECTION_END();
 
-  // Return the address of the table
+  // Return the address of the table//返回表的地址
   return (pfnISR_Handler*)(&ram_tab);
 }
 
 pfnISR_Handler install_isr(IRQn_Type irq, pfnISR_Handler newHandler) {
-  // Get the address of the relocated table
+  // Get the address of the relocated table//获取重新定位的表的地址
   pfnISR_Handler *isrtab = get_relocated_table_addr();
 
-  // Disable global interrupts
+  // Disable global interrupts//禁用全局中断
   CRITICAL_SECTION_START();
 
-  // Get the original handler
+  // Get the original handler//获取原始处理程序
   pfnISR_Handler oldHandler = isrtab[irq + 16];
 
-  // Install the new one
+  // Install the new one//安装新的
   isrtab[irq + 16] = newHandler;
 
-  // Reenable interrupts
+  // Reenable interrupts//可重入中断
   CRITICAL_SECTION_END();
 
-  // Return the original one
+  // Return the original one//退回原版
   return oldHandler;
 }
 

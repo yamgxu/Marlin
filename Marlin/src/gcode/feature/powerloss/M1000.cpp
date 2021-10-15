@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -86,4 +87,4 @@ void GcodeSuite::M1000() {
 
 }
 
-#endif // POWER_LOSS_RECOVERY
+#endif // POWER_LOSS_RECOVERY//功率损失恢复

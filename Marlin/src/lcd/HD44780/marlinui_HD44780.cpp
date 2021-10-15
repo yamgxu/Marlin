@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -58,9 +59,9 @@
   #include "../../feature/bedlevel/bedlevel.h"
 #endif
 
-//
-// Create LCD instance and chipset-specific information
-//
+////
+// Create LCD instance and chipset-specific information//创建LCD实例和芯片组特定信息
+////
 
 #if ENABLED(LCD_I2C_TYPE_PCF8575)
 
@@ -76,8 +77,8 @@
 
 #elif ENABLED(SR_LCD_2W_NL)
 
-  // 2 wire Non-latching LCD SR from:
-  // https://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/schematics#!shiftregister-connection
+  // 2 wire Non-latching LCD SR from://2线非闭锁式LCD SR来自：
+  // https://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/schematics#!shiftregister-connection// https://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/schematics#!移位寄存器连接
 
   LCD_CLASS lcd(SR_DATA_PIN, SR_CLK_PIN
     #if PIN_EXISTS(SR_STROBE)
@@ -87,9 +88,9 @@
 
 #elif ENABLED(SR_LCD_3W_NL)
 
-  // NewLiquidCrystal was not working
-  // https://github.com/mikeshub/SailfishLCD
-  // uses the code directly from Sailfish
+  // NewLiquidCrystal was not working//新的水晶坏了
+  // https://github.com/mikeshub/SailfishLCD// https://github.com/mikeshub/SailfishLCD
+  // uses the code directly from Sailfish//直接使用来自Sailfish的代码
 
   LCD_CLASS lcd(SR_STROBE_PIN, SR_DATA_PIN, SR_CLK_PIN);
 
@@ -99,11 +100,11 @@
 
 #elif ENABLED(YHCB2004)
 
-  LCD_CLASS lcd(YHCB2004_CLK, 20, 4, YHCB2004_MOSI, YHCB2004_MISO); // CLK, cols, rows, MOSI, MISO
+  LCD_CLASS lcd(YHCB2004_CLK, 20, 4, YHCB2004_MOSI, YHCB2004_MISO); // CLK, cols, rows, MOSI, MISO//CLK、cols、rows、摩西、味噌
 
 #else
 
-  // Standard direct-connected LCD implementations
+  // Standard direct-connected LCD implementations//标准直接连接LCD实现
   LCD_CLASS lcd(LCD_PINS_RS, LCD_PINS_ENABLE, LCD_PINS_D4, LCD_PINS_D5, LCD_PINS_D6, LCD_PINS_D7);
 
 #endif
@@ -131,7 +132,7 @@ void MarlinUI::set_custom_characters(const HD44780CharSet screen_charset/*=CHARS
     UNUSED(screen_charset);
   #endif
 
-  // CHARSET_BOOT
+  // CHARSET_BOOT//CHARSET_靴
   #if ENABLED(SHOW_BOOTSCREEN)
     const static PROGMEM byte corner[4][8] = { {
       B00000,
@@ -170,9 +171,9 @@ void MarlinUI::set_custom_characters(const HD44780CharSet screen_charset/*=CHARS
       B00000,
       B00000
     } };
-  #endif // SHOW_BOOTSCREEN
+  #endif // SHOW_BOOTSCREEN//显示启动屏幕
 
-  // CHARSET_INFO
+  // CHARSET_INFO//字符集信息
   const static PROGMEM byte bedTemp[8] = {
     B00000,
     B11111,
@@ -252,7 +253,7 @@ void MarlinUI::set_custom_characters(const HD44780CharSet screen_charset/*=CHARS
 
   #if ENABLED(LCD_PROGRESS_BAR)
 
-    // CHARSET_INFO
+    // CHARSET_INFO//字符集信息
     const static PROGMEM byte progress[3][8] = { {
       B00000,
       B10000,
@@ -282,11 +283,11 @@ void MarlinUI::set_custom_characters(const HD44780CharSet screen_charset/*=CHARS
       B00000
     } };
 
-  #endif // LCD_PROGRESS_BAR
+  #endif // LCD_PROGRESS_BAR//LCD_进度_条
 
   #if BOTH(SDSUPPORT, HAS_LCD_MENU)
 
-    // CHARSET_MENU
+    // CHARSET_MENU//字符集菜单
     const static PROGMEM byte refresh[8] = {
       B00000,
       B00110,
@@ -308,17 +309,17 @@ void MarlinUI::set_custom_characters(const HD44780CharSet screen_charset/*=CHARS
       B00000
     };
 
-  #endif // SDSUPPORT
+  #endif // SDSUPPORT//SDSUPPORT
 
   #if ENABLED(SHOW_BOOTSCREEN)
-    // Set boot screen corner characters
+    // Set boot screen corner characters//设置启动屏幕角字符
     if (screen_charset == CHARSET_BOOT) {
       for (uint8_t i = 4; i--;)
         createChar_P(i, corner[i]);
     }
     else
   #endif
-    { // Info Screen uses 5 special characters
+    { // Info Screen uses 5 special characters//信息屏幕使用5个特殊字符
       createChar_P(LCD_STR_BEDTEMP[0], bedTemp);
       createChar_P(LCD_STR_DEGREE[0], degree);
       createChar_P(LCD_STR_THERMOMETER[0], thermometer);
@@ -326,7 +327,7 @@ void MarlinUI::set_custom_characters(const HD44780CharSet screen_charset/*=CHARS
       createChar_P(LCD_STR_CLOCK[0], clock);
 
       #if ENABLED(LCD_PROGRESS_BAR)
-        if (screen_charset == CHARSET_INFO) { // 3 Progress bar characters for info screen
+        if (screen_charset == CHARSET_INFO) { // 3 Progress bar characters for info screen//信息屏幕的3个进度条字符
           for (int16_t i = 3; i--;)
             createChar_P(LCD_STR_PROGRESS[i], progress[i]);
         }
@@ -335,7 +336,7 @@ void MarlinUI::set_custom_characters(const HD44780CharSet screen_charset/*=CHARS
         {
           createChar_P(LCD_STR_UPLEVEL[0], uplevel);
           #if BOTH(SDSUPPORT, HAS_LCD_MENU)
-            // SD Card sub-menu special characters
+            // SD Card sub-menu special characters//SD卡子菜单特殊字符
             createChar_P(LCD_STR_REFRESH[0], refresh);
             createChar_P(LCD_STR_FOLDER[0], folder);
           #endif
@@ -382,19 +383,19 @@ bool MarlinUI::detected() {
 #if HAS_SLOW_BUTTONS
   uint8_t MarlinUI::read_slow_buttons() {
     #if ENABLED(LCD_I2C_TYPE_MCP23017)
-      // Reading these buttons is too slow for interrupt context
-      // so they are read during LCD update in the main loop.
+      // Reading these buttons is too slow for interrupt context//读取这些按钮对于中断上下文来说太慢
+      // so they are read during LCD update in the main loop.//因此，它们在主循环中的LCD更新期间被读取。
       uint8_t slow_bits = lcd.readButtons()
         #if !BUTTON_EXISTS(ENC)
           << B_I2C_BTN_OFFSET
         #endif
       ;
       #if ENABLED(LCD_I2C_VIKI)
-        if ((slow_bits & (B_MI | B_RI)) && PENDING(millis(), next_button_update_ms)) // LCD clicked
-          slow_bits &= ~(B_MI | B_RI); // Disable LCD clicked buttons if screen is updated
+        if ((slow_bits & (B_MI | B_RI)) && PENDING(millis(), next_button_update_ms)) // LCD clicked//LCD点击
+          slow_bits &= ~(B_MI | B_RI); // Disable LCD clicked buttons if screen is updated//如果屏幕更新，则禁用LCD单击按钮
       #endif
       return slow_bits;
-    #endif // LCD_I2C_TYPE_MCP23017
+    #endif // LCD_I2C_TYPE_MCP23017//LCD_I2C_类型_MCP23017
   }
 #endif
 
@@ -408,7 +409,7 @@ void MarlinUI::clear_lcd() { lcd.clear(); }
       lcd_put_wchar(' ');
   }
 
-  // Scroll the PSTR 'text' in a 'len' wide field for 'time' milliseconds at position col,line
+  // Scroll the PSTR 'text' in a 'len' wide field for 'time' milliseconds at position col,line//在“len”宽字段中滚动PSTR“text”，在位置col，line处滚动“time”毫秒
   void lcd_scroll(const lcd_uint_t col, const lcd_uint_t line, PGM_P const text, const uint8_t len, const int16_t time) {
     uint8_t slen = utf8_strlen_P(text);
     if (slen < len) {
@@ -421,16 +422,16 @@ void MarlinUI::clear_lcd() { lcd.clear(); }
       int dly = time / _MAX(slen, 1);
       LOOP_LE_N(i, slen) {
 
-        // Print the text at the correct place
+        // Print the text at the correct place//在正确的位置打印文本
         lcd_put_u8str_max_P(col, line, p, len);
 
-        // Fill with spaces
+        // Fill with spaces//填空
         for (uint8_t ix = slen - i; ix < len; ++ix) lcd_put_wchar(' ');
 
-        // Delay
+        // Delay//耽搁
         safe_delay(dly);
 
-        // Advance to the next UTF8 valid position
+        // Advance to the next UTF8 valid position//前进到下一个UTF8有效位置
         p++;
         while (!START_OF_UTF8_CHAR(pgm_read_byte(p))) p++;
       }
@@ -460,21 +461,21 @@ void MarlinUI::clear_lcd() { lcd.clear(); }
         lcd_scroll(0, 3, PSTR(STRING), LCD_WIDTH, DELAY); \
       }
 
-    //
-    // Show the Marlin logo with splash line 1
-    //
+    ////
+    // Show the Marlin logo with splash line 1//显示带有飞溅线1的马林鱼标志
+    ////
     if (LCD_EXTRA_SPACE >= utf8_strlen(SHORT_BUILD_VERSION) + 1) {
-      //
-      // Show the Marlin logo, splash line1, and splash line 2
-      //
+      ////
+      // Show the Marlin logo, splash line1, and splash line 2//显示马林鱼徽标、飞溅线1和飞溅线2
+      ////
       logo_lines(PSTR(" " SHORT_BUILD_VERSION));
       CENTER_OR_SCROLL(MARLIN_WEBSITE_URL, 2000);
     }
     else {
-      //
-      // Show the Marlin logo and short build version
-      // After a delay show the website URL
-      //
+      ////
+      // Show the Marlin logo and short build version//显示马林标志和短版
+      // After a delay show the website URL//延迟后显示网站URL
+      ////
       logo_lines(NUL_STR);
       CENTER_OR_SCROLL(SHORT_BUILD_VERSION, 1500);
       CENTER_OR_SCROLL(MARLIN_WEBSITE_URL, 1500);
@@ -491,7 +492,7 @@ void MarlinUI::clear_lcd() { lcd.clear(); }
     lcd.clear();
   }
 
-#endif // SHOW_BOOTSCREEN
+#endif // SHOW_BOOTSCREEN//显示启动屏幕
 
 void MarlinUI::draw_kill_screen() {
   lcd_put_u8str(0, 0, status_message);
@@ -502,11 +503,11 @@ void MarlinUI::draw_kill_screen() {
   lcd_put_u8str_P(0, y, GET_TEXT(MSG_PLEASE_RESET));
 }
 
-//
-// Before homing, blink '123' <-> '???'.
-// Homed but unknown... '123' <-> '   '.
-// Homed and known, display constantly.
-//
+////
+// Before homing, blink '123' <-> '???'.//归位前，闪烁“123”<->“？？”。
+// Homed but unknown... '123' <-> '   './/有家但不知道……”123' <-> '   '.
+// Homed and known, display constantly.//家喻户晓，不断展示。
+////
 FORCE_INLINE void _draw_axis_value(const AxisEnum axis, const char *value, const bool blink) {
   lcd_put_wchar('X' + uint8_t(axis));
   if (blink)
@@ -642,7 +643,7 @@ FORCE_INLINE void _draw_bed_status(const bool blink) {
     lcd_put_u8str(msg);
   }
 
-#endif // LCD_PROGRESS_BAR
+#endif // LCD_PROGRESS_BAR//LCD_进度_条
 
 void MarlinUI::draw_status_message(const bool blink) {
 
@@ -650,8 +651,8 @@ void MarlinUI::draw_status_message(const bool blink) {
 
   #if ENABLED(LCD_PROGRESS_BAR)
 
-    // Draw the progress bar if the message has shown long enough
-    // or if there is no message set.
+    // Draw the progress bar if the message has shown long enough//如果消息显示的时间足够长，请绘制进度条
+    // or if there is no message set.//或者如果没有消息集。
     if (ELAPSED(millis(), progress_bar_ms + PROGRESS_BAR_MSG_TIME) || !has_status()) {
       const uint8_t progress = get_progress_percent();
       if (progress > 2) return draw_progress_bar(progress);
@@ -659,7 +660,7 @@ void MarlinUI::draw_status_message(const bool blink) {
 
   #elif BOTH(FILAMENT_LCD_DISPLAY, SDSUPPORT)
 
-    // Alternate Status message and Filament display
+    // Alternate Status message and Filament display//备用状态信息和灯丝显示
     if (ELAPSED(millis(), next_filament_display)) {
       lcd_put_u8str_P(PSTR("Dia "));
       lcd_put_u8str(ftostr12ns(filwidth.measured_mm));
@@ -669,42 +670,42 @@ void MarlinUI::draw_status_message(const bool blink) {
       return;
     }
 
-  #endif // FILAMENT_LCD_DISPLAY && SDSUPPORT
+  #endif // FILAMENT_LCD_DISPLAY && SDSUPPORT//灯丝\u LCD\u显示器和SDU支持
 
   #if ENABLED(STATUS_MESSAGE_SCROLLING)
     static bool last_blink = false;
 
-    // Get the UTF8 character count of the string
+    // Get the UTF8 character count of the string//获取字符串的UTF8字符计数
     uint8_t slen = utf8_strlen(status_message);
 
-    // If the string fits into the LCD, just print it and do not scroll it
+    // If the string fits into the LCD, just print it and do not scroll it//如果字符串适合LCD，只需打印它，不要滚动它
     if (slen <= LCD_WIDTH) {
 
-      // The string isn't scrolling and may not fill the screen
+      // The string isn't scrolling and may not fill the screen//字符串没有滚动，可能无法填充屏幕
       lcd_put_u8str(status_message);
 
-      // Fill the rest with spaces
+      // Fill the rest with spaces//用空格填充其余部分
       while (slen < LCD_WIDTH) { lcd_put_wchar(' '); ++slen; }
     }
     else {
-      // String is larger than the available space in screen.
+      // String is larger than the available space in screen.//字符串大于屏幕中的可用空间。
 
-      // Get a pointer to the next valid UTF8 character
-      // and the string remaining length
+      // Get a pointer to the next valid UTF8 character//获取指向下一个有效UTF8字符的指针
+      // and the string remaining length//和字符串的剩余长度
       uint8_t rlen;
       const char *stat = status_and_len(rlen);
-      lcd_put_u8str_max(stat, LCD_WIDTH);     // The string leaves space
+      lcd_put_u8str_max(stat, LCD_WIDTH);     // The string leaves space//字符串留下了空间
 
-      // If the remaining string doesn't completely fill the screen
+      // If the remaining string doesn't completely fill the screen//如果剩余的字符串没有完全填满屏幕
       if (rlen < LCD_WIDTH) {
-        uint8_t chars = LCD_WIDTH - rlen;     // Amount of space left in characters
-        lcd_put_wchar(' ');                   // Always at 1+ spaces left, draw a space
-        if (--chars) {                        // Draw a second space if there's room
+        uint8_t chars = LCD_WIDTH - rlen;     // Amount of space left in characters//字符中剩余的空间量
+        lcd_put_wchar(' ');                   // Always at 1+ spaces left, draw a space//始终在左1+空格处，绘制一个空格
+        if (--chars) {                        // Draw a second space if there's room//如果有空间，再画一个空格
           lcd_put_wchar(' ');
-          if (--chars) {                      // Draw a third space if there's room
+          if (--chars) {                      // Draw a third space if there's room//如果有空间，画第三个空格
             lcd_put_wchar(' ');
             if (--chars)
-              lcd_put_u8str_max(status_message, chars); // Print a second copy of the message
+              lcd_put_u8str_max(status_message, chars); // Print a second copy of the message//打印邮件的第二份副本
           }
         }
       }
@@ -716,13 +717,13 @@ void MarlinUI::draw_status_message(const bool blink) {
   #else
     UNUSED(blink);
 
-    // Get the UTF8 character count of the string
+    // Get the UTF8 character count of the string//获取字符串的UTF8字符计数
     uint8_t slen = utf8_strlen(status_message);
 
-    // Just print the string to the LCD
+    // Just print the string to the LCD//只需将字符串打印到LCD上
     lcd_put_u8str_max(status_message, LCD_WIDTH);
 
-    // Fill the rest with spaces if there are missing spaces
+    // Fill the rest with spaces if there are missing spaces//如果缺少空格，则用空格填充其余部分
     while (slen < LCD_WIDTH) {
       lcd_put_wchar(' ');
       ++slen;
@@ -798,19 +799,19 @@ void MarlinUI::draw_status_screen() {
 
   #if LCD_INFO_SCREEN_STYLE == 0
 
-    // ========== Line 1 ==========
+    // ========== Line 1 ==========//=============第1行==========
 
     #if LCD_WIDTH < 20
 
-      //
-      // Hotend 0 Temperature
-      //
+      ////
+      // Hotend 0 Temperature//热端0温度
+      ////
       #if HAS_HOTEND
         _draw_heater_status(H_E0, -1, blink);
 
-        //
-        // Hotend 1 or Bed Temperature
-        //
+        ////
+        // Hotend 1 or Bed Temperature//热端1或床温
+        ////
         #if HAS_MULTI_HOTEND
           lcd_moveto(8, 0);
           _draw_heater_status(H_E1, LCD_STR_THERMOMETER[0], blink);
@@ -820,17 +821,17 @@ void MarlinUI::draw_status_screen() {
         #endif
       #endif
 
-    #else // LCD_WIDTH >= 20
+    #else // LCD_WIDTH >= 20//LCD_宽度>=20
 
-      //
-      // Hotend 0 Temperature
-      //
+      ////
+      // Hotend 0 Temperature//热端0温度
+      ////
       #if HAS_HOTEND
         _draw_heater_status(H_E0, LCD_STR_THERMOMETER[0], blink);
 
-        //
-        // Hotend 1 or Bed Temperature
-        //
+        ////
+        // Hotend 1 or Bed Temperature//热端1或床温
+        ////
         #if HAS_MULTI_HOTEND
           lcd_moveto(10, 0);
           _draw_heater_status(H_E1, LCD_STR_THERMOMETER[0], blink);
@@ -844,9 +845,9 @@ void MarlinUI::draw_status_screen() {
       TERN_(LASER_COOLANT_FLOW_METER, _draw_flowmeter_status());
       TERN_(I2C_AMMETER, _draw_ammeter_status());
 
-    #endif // LCD_WIDTH >= 20
+    #endif // LCD_WIDTH >= 20//LCD_宽度>=20
 
-    // ========== Line 2 ==========
+    // ========== Line 2 ==========//=============第2行==========
 
     #if LCD_HEIGHT > 2
 
@@ -857,12 +858,12 @@ void MarlinUI::draw_status_screen() {
           _draw_print_progress();
         #endif
 
-      #else // LCD_WIDTH >= 20
+      #else // LCD_WIDTH >= 20//LCD_宽度>=20
 
         lcd_moveto(0, 1);
 
-        // If the first line has two extruder temps,
-        // show more temperatures on the next line
+        // If the first line has two extruder temps,//如果第一条生产线有两个挤出机温度，
+        // show more temperatures on the next line//在下一行显示更多温度
 
         #if HOTENDS > 2 || (HAS_MULTI_HOTEND && HAS_HEATED_BED)
 
@@ -873,11 +874,11 @@ void MarlinUI::draw_status_screen() {
 
           _draw_bed_status(blink);
 
-        #else // HOTENDS <= 2 && (HOTENDS <= 1 || !HAS_HEATED_BED)
+        #else // HOTENDS <= 2 && (HOTENDS <= 1 || !HAS_HEATED_BED)//热端<=2&（热端<=1 | |！有加热床）
 
           #if HAS_DUAL_MIXING
 
-            // Two-component mix / gradient instead of XY
+            // Two-component mix / gradient instead of XY//双组分混合/渐变，而不是XY
 
             char mixer_messages[12];
             const char *mix_label;
@@ -895,15 +896,15 @@ void MarlinUI::draw_status_screen() {
             sprintf_P(mixer_messages, PSTR("%s %d;%d%% "), mix_label, int(mixer.mix[0]), int(mixer.mix[1]));
             lcd_put_u8str(mixer_messages);
 
-          #else // !HAS_DUAL_MIXING
+          #else // !HAS_DUAL_MIXING// !有双重混合吗
 
             const bool show_e_total = TERN0(LCD_SHOW_E_TOTAL, printingIsActive());
 
             if (show_e_total) {
               #if ENABLED(LCD_SHOW_E_TOTAL)
                 char tmp[20];
-                const uint8_t escale = e_move_accumulator >= 100000.0f ? 10 : 1; // After 100m switch to cm
-                sprintf_P(tmp, PSTR("E %ld%cm       "), uint32_t(_MAX(e_move_accumulator, 0.0f)) / escale, escale == 10 ? 'c' : 'm'); // 1234567mm
+                const uint8_t escale = e_move_accumulator >= 100000.0f ? 10 : 1; // After 100m switch to cm//100米后切换到厘米
+                sprintf_P(tmp, PSTR("E %ld%cm       "), uint32_t(_MAX(e_move_accumulator, 0.0f)) / escale, escale == 10 ? 'c' : 'm'); // 1234567mm//1234567毫米
                 lcd_put_u8str(tmp);
               #endif
             }
@@ -914,11 +915,11 @@ void MarlinUI::draw_status_screen() {
               _draw_axis_value(Y_AXIS, ftostr4sign(lpos.y), blink);
             }
 
-          #endif // !HAS_DUAL_MIXING
+          #endif // !HAS_DUAL_MIXING// !有双重混合吗
 
-        #endif // HOTENDS <= 2 && (HOTENDS <= 1 || !HAS_HEATED_BED)
+        #endif // HOTENDS <= 2 && (HOTENDS <= 1 || !HAS_HEATED_BED)//热端<=2&（热端<=1 | |！有加热床）
 
-      #endif // LCD_WIDTH >= 20
+      #endif // LCD_WIDTH >= 20//LCD_宽度>=20
 
       lcd_moveto(LCD_WIDTH - 8, 1);
       _draw_axis_value(Z_AXIS, ftostr52sp(LOGICAL_Z_POSITION(current_position.z)), blink);
@@ -927,9 +928,9 @@ void MarlinUI::draw_status_screen() {
         lcd_put_wchar(planner.leveling_active || blink ? '_' : ' ');
       #endif
 
-    #endif // LCD_HEIGHT > 2
+    #endif // LCD_HEIGHT > 2//LCD_高度>2
 
-    // ========== Line 3 ==========
+    // ========== Line 3 ==========//=============第3行==========
 
     #if LCD_HEIGHT > 3
 
@@ -973,20 +974,20 @@ void MarlinUI::draw_status_screen() {
         #endif
       #endif
 
-    #endif // LCD_HEIGHT > 3
+    #endif // LCD_HEIGHT > 3//LCD_高度>3
 
   #elif LCD_INFO_SCREEN_STYLE == 1
 
-    // ========== Line 1 ==========
+    // ========== Line 1 ==========//=============第1行==========
 
-    //
-    // Hotend 0 Temperature
-    //
+    ////
+    // Hotend 0 Temperature//热端0温度
+    ////
     _draw_heater_status(H_E0, LCD_STR_THERMOMETER[0], blink);
 
-    //
-    // Z Coordinate
-    //
+    ////
+    // Z Coordinate//Z坐标
+    ////
     lcd_moveto(LCD_WIDTH - 9, 0);
     _draw_axis_value(Z_AXIS, ftostr52sp(LOGICAL_Z_POSITION(current_position.z)), blink);
 
@@ -994,11 +995,11 @@ void MarlinUI::draw_status_screen() {
       lcd_put_wchar(LCD_WIDTH - 1, 0, planner.leveling_active || blink ? '_' : ' ');
     #endif
 
-    // ========== Line 2 ==========
+    // ========== Line 2 ==========//=============第2行==========
 
-    //
-    // Hotend 1 or Bed Temperature
-    //
+    ////
+    // Hotend 1 or Bed Temperature//热端1或床温
+    ////
     lcd_moveto(0, 1);
     #if HAS_MULTI_HOTEND
       _draw_heater_status(H_E1, LCD_STR_THERMOMETER[0], blink);
@@ -1010,11 +1011,11 @@ void MarlinUI::draw_status_screen() {
     lcd_put_u8str(i16tostr3rj(feedrate_percentage));
     lcd_put_wchar('%');
 
-    // ========== Line 3 ==========
+    // ========== Line 3 ==========//=============第3行==========
 
-    //
-    // SD Percent, Hotend 2, or Bed
-    //
+    ////
+    // SD Percent, Hotend 2, or Bed//SD百分比、热端2或床
+    ////
     lcd_moveto(0, 2);
     #if HOTENDS > 2
       _draw_heater_status(H_E2, LCD_STR_THERMOMETER[0], blink);
@@ -1025,9 +1026,9 @@ void MarlinUI::draw_status_screen() {
       _draw_print_progress();
     #endif
 
-    //
-    // Elapsed Time or SD Percent
-    //
+    ////
+    // Elapsed Time or SD Percent//已用时间或SD百分比
+    ////
     lcd_moveto(LCD_WIDTH - 9, 2);
 
     #if HAS_PRINT_PROGRESS && !DREW_PRINT_PROGRESS
@@ -1040,13 +1041,13 @@ void MarlinUI::draw_status_screen() {
 
     #endif
 
-  #endif // LCD_INFO_SCREEN_STYLE 1
+  #endif // LCD_INFO_SCREEN_STYLE 1//LCD\信息\屏幕\样式1
 
-  // ========= Last Line ========
+  // ========= Last Line ========//==========最后一行========
 
-  //
-  // Status Message (which may be a Progress Bar or Filament display)
-  //
+  ////
+  // Status Message (which may be a Progress Bar or Filament display)//状态信息（可能是进度条或灯丝显示屏）
+  ////
   draw_status_message(blink);
 }
 
@@ -1063,9 +1064,9 @@ void MarlinUI::draw_status_screen() {
       }
     }
 
-  #endif // ADVANCED_PAUSE_FEATURE
+  #endif // ADVANCED_PAUSE_FEATURE//高级暂停功能
 
-  // Draw a static item with no left-right margin required. Centered by default.
+  // Draw a static item with no left-right margin required. Centered by default.//绘制不需要左右边距的静态项。默认情况下居中。
   void MenuItem_static::draw(const uint8_t row, PGM_P const pstr, const uint8_t style/*=SS_DEFAULT*/, const char * const vstr/*=nullptr*/) {
     int8_t n = LCD_WIDTH;
     lcd_moveto(0, row);
@@ -1080,7 +1081,7 @@ void MarlinUI::draw_status_screen() {
     for (; n > 0; --n) lcd_put_wchar(' ');
   }
 
-  // Draw a generic menu item with pre_char (if selected) and post_char
+  // Draw a generic menu item with pre_char (if selected) and post_char//用pre_char（如果选中）和post_char绘制通用菜单项
   void MenuItemBase::_draw(const bool sel, const uint8_t row, PGM_P const pstr, const char pre_char, const char post_char) {
     lcd_put_wchar(0, row, sel ? pre_char : ' ');
     uint8_t n = lcd_put_u8str_ind_P(pstr, itemIndex, itemString, LCD_WIDTH - 2);
@@ -1088,7 +1089,7 @@ void MarlinUI::draw_status_screen() {
     lcd_put_wchar(post_char);
   }
 
-  // Draw a menu item with a (potentially) editable value
+  // Draw a menu item with a (potentially) editable value//绘制具有（可能）可编辑值的菜单项
   void MenuEditItemBase::draw(const bool sel, const uint8_t row, PGM_P const pstr, const char * const inStr, const bool pgm) {
     const uint8_t vlen = inStr ? (pgm ? utf8_strlen_P(inStr) : utf8_strlen(inStr)) : 0;
     lcd_put_wchar(0, row, sel ? LCD_STR_ARROW_RIGHT[0] : ' ');
@@ -1100,20 +1101,20 @@ void MarlinUI::draw_status_screen() {
     }
   }
 
-  // Low-level draw_edit_screen can be used to draw an edit screen from anyplace
+  // Low-level draw_edit_screen can be used to draw an edit screen from anyplace//低级绘制编辑屏幕可用于从任何位置绘制编辑屏幕
   void MenuEditItemBase::draw_edit_screen(PGM_P const pstr, const char * const value/*=nullptr*/) {
     ui.encoder_direction_normal();
     uint8_t n = lcd_put_u8str_ind_P(0, 1, pstr, itemIndex, itemString, LCD_WIDTH - 1);
     if (value) {
       lcd_put_wchar(':'); n--;
-      const uint8_t len = utf8_strlen(value) + 1;   // Plus one for a leading space
-      const lcd_uint_t valrow = n < len ? 2 : 1;    // Value on the next row if it won't fit
-      lcd_put_wchar(LCD_WIDTH - len, valrow, ' ');  // Right-justified, padded, leading space
+      const uint8_t len = utf8_strlen(value) + 1;   // Plus one for a leading space//加上一个前导空格
+      const lcd_uint_t valrow = n < len ? 2 : 1;    // Value on the next row if it won't fit//如果不适合，则在下一行显示值
+      lcd_put_wchar(LCD_WIDTH - len, valrow, ' ');  // Right-justified, padded, leading space//右对齐、填充、前导空格
       lcd_put_u8str(value);
     }
   }
 
-  // The Select Screen presents a prompt and two "buttons"
+  // The Select Screen presents a prompt and two "buttons"//选择屏幕显示一个提示和两个“按钮”
   void MenuItem_confirm::draw_select_screen(PGM_P const yes, PGM_P const no, const bool yesno, PGM_P const pref, const char * const string/*=nullptr*/, PGM_P const suff/*=nullptr*/) {
     ui.draw_select_screen_prompt(pref, string, suff);
     SETCURSOR(0, LCD_HEIGHT - 1);
@@ -1137,7 +1138,7 @@ void MarlinUI::draw_status_screen() {
   #if ENABLED(LCD_HAS_STATUS_INDICATORS)
 
     void MarlinUI::update_indicators() {
-      // Set the LEDS - referred to as backlights by the LiquidTWI2 library
+      // Set the LEDS - referred to as backlights by the LiquidTWI2 library//设置LED-LiquidTWI2库称为背光
       static uint8_t ledsprev = 0;
       uint8_t leds = 0;
 
@@ -1154,7 +1155,7 @@ void MarlinUI::draw_status_screen() {
           || TERN0(HAS_FAN6, thermalManager.fan_speed[6])
           || TERN0(HAS_FAN7, thermalManager.fan_speed[7])
         ) leds |= LED_C;
-      #endif // HAS_FAN
+      #endif // HAS_FAN//范先生
 
       if (TERN0(HAS_MULTI_HOTEND, thermalManager.degTargetHotend(1) > 0)) leds |= LED_C;
 
@@ -1164,7 +1165,7 @@ void MarlinUI::draw_status_screen() {
       }
     }
 
-  #endif // LCD_HAS_STATUS_INDICATORS
+  #endif // LCD_HAS_STATUS_INDICATORS//LCD_有_状态_指示灯
 
   #if ENABLED(AUTO_BED_LEVELING_UBL)
 
@@ -1224,7 +1225,7 @@ void MarlinUI::draw_status_screen() {
       coordinate ret_val;
       int16_t xp, yp, r, c;
 
-      x++; y++; // +1 because lines on the left and top
+      x++; y++; // +1 because lines on the left and top//+1，因为左侧和顶部的线条
 
       c = x / (HD44780_CHAR_WIDTH);
       r = y / (HD44780_CHAR_HEIGHT);
@@ -1232,8 +1233,8 @@ void MarlinUI::draw_status_screen() {
       ret_val.column = c;
       ret_val.row    = r;
 
-      xp = x - c * (HD44780_CHAR_WIDTH);                                    // Get the pixel offsets into the character cell
-      xp = HD44780_CHAR_WIDTH - 1 - xp;                                     // Column within relevant character cell (0 on the right)
+      xp = x - c * (HD44780_CHAR_WIDTH);                                    // Get the pixel offsets into the character cell//将像素偏移量放入字符单元
+      xp = HD44780_CHAR_WIDTH - 1 - xp;                                     // Column within relevant character cell (0 on the right)//相关字符单元格内的列（右侧0）
       yp = y - r * (HD44780_CHAR_HEIGHT);
 
       ret_val.x_pixel_mask   = _BV(xp);
@@ -1270,7 +1271,7 @@ void MarlinUI::draw_status_screen() {
         #define _ZLABEL(X,Y) _LABEL('Z',X,Y)
       #endif
 
-      #if LCD_HEIGHT <= 3   // 16x2 or 20x2 display
+      #if LCD_HEIGHT <= 3   // 16x2 or 20x2 display//16x2或20x2显示器
 
         /**
          * Show X and Y positions
@@ -1282,7 +1283,7 @@ void MarlinUI::draw_status_screen() {
 
         lcd_moveto(_PLOT_X, 0);
 
-      #else // 16x4 or 20x4 display
+      #else // 16x4 or 20x4 display//16x4或20x4显示器
 
         coordinate upper_left, lower_right, bottom_right_corner;
         custom_char new_char;
@@ -1301,39 +1302,39 @@ void MarlinUI::draw_status_screen() {
 
         clear_lcd();
 
-        x_map_pixels = (HD44780_CHAR_WIDTH) * (MESH_MAP_COLS) - 2;          // Minus 2 because we are drawing a box around the map
+        x_map_pixels = (HD44780_CHAR_WIDTH) * (MESH_MAP_COLS) - 2;          // Minus 2 because we are drawing a box around the map//减2，因为我们正在地图周围画一个方框
         y_map_pixels = (HD44780_CHAR_HEIGHT) * (MESH_MAP_ROWS) - 2;
 
         pixels_per_x_mesh_pnt = x_map_pixels / (GRID_MAX_POINTS_X);
         pixels_per_y_mesh_pnt = y_map_pixels / (GRID_MAX_POINTS_Y);
 
-        if (pixels_per_x_mesh_pnt >= HD44780_CHAR_WIDTH) {                  // There are only 2 custom characters available, so the X
-          pixels_per_x_mesh_pnt = HD44780_CHAR_WIDTH;                       // Size of the mesh point needs to fit within them independent
-          suppress_x_offset = 1;                                            // Of where the starting pixel is located.
+        if (pixels_per_x_mesh_pnt >= HD44780_CHAR_WIDTH) {                  // There are only 2 custom characters available, so the X//只有2个自定义字符可用，因此X
+          pixels_per_x_mesh_pnt = HD44780_CHAR_WIDTH;                       // Size of the mesh point needs to fit within them independent//网格点的大小需要与它们相适应
+          suppress_x_offset = 1;                                            // Of where the starting pixel is located.//起始像素的位置。
         }
 
-        if (pixels_per_y_mesh_pnt >= HD44780_CHAR_HEIGHT) {                 // There are only 2 custom characters available, so the Y
-          pixels_per_y_mesh_pnt = HD44780_CHAR_HEIGHT;                      // Size of the mesh point needs to fit within them independent
-          suppress_y_offset = 1;                                            // Of where the starting pixel is located.
+        if (pixels_per_y_mesh_pnt >= HD44780_CHAR_HEIGHT) {                 // There are only 2 custom characters available, so the Y//只有2个自定义字符可用，因此Y
+          pixels_per_y_mesh_pnt = HD44780_CHAR_HEIGHT;                      // Size of the mesh point needs to fit within them independent//网格点的大小需要与它们相适应
+          suppress_y_offset = 1;                                            // Of where the starting pixel is located.//起始像素的位置。
         }
 
-        x_map_pixels = pixels_per_x_mesh_pnt * (GRID_MAX_POINTS_X);         // Now we have the right number of pixels to make both
-        y_map_pixels = pixels_per_y_mesh_pnt * (GRID_MAX_POINTS_Y);         // Directions fit nicely
+        x_map_pixels = pixels_per_x_mesh_pnt * (GRID_MAX_POINTS_X);         // Now we have the right number of pixels to make both//现在我们有了正确的像素数，可以同时制作这两种图像
+        y_map_pixels = pixels_per_y_mesh_pnt * (GRID_MAX_POINTS_Y);         // Directions fit nicely//方向很合适
 
-        right_edge   = pixels_per_x_mesh_pnt * (GRID_MAX_POINTS_X) + 1;     // Find location of right edge within the character cell
-        bottom_line  = pixels_per_y_mesh_pnt * (GRID_MAX_POINTS_Y) + 1;     // Find location of bottome line within the character cell
+        right_edge   = pixels_per_x_mesh_pnt * (GRID_MAX_POINTS_X) + 1;     // Find location of right edge within the character cell//在字符单元格中查找右边缘的位置
+        bottom_line  = pixels_per_y_mesh_pnt * (GRID_MAX_POINTS_Y) + 1;     // Find location of bottome line within the character cell//查找字符单元格中底线的位置
 
         n_rows = bottom_line / (HD44780_CHAR_HEIGHT) + 1;
         n_cols = right_edge / (HD44780_CHAR_WIDTH) + 1;
 
         for (i = 0; i < n_cols; i++) {
-          lcd_put_wchar(i, 0, CHAR_LINE_TOP);                               // Box Top line
-          lcd_put_wchar(i, n_rows - 1, CHAR_LINE_BOT);                      // Box Bottom line
+          lcd_put_wchar(i, 0, CHAR_LINE_TOP);                               // Box Top line//箱顶线
+          lcd_put_wchar(i, n_rows - 1, CHAR_LINE_BOT);                      // Box Bottom line//箱底线
         }
 
         for (j = 0; j < n_rows; j++) {
-          lcd_put_wchar(0, j, CHAR_EDGE_L);                                 // Box Left edge
-          lcd_put_wchar(n_cols - 1, j, CHAR_EDGE_R);                        // Box Right edge
+          lcd_put_wchar(0, j, CHAR_EDGE_L);                                 // Box Left edge//框左边缘
+          lcd_put_wchar(n_cols - 1, j, CHAR_EDGE_R);                        // Box Right edge//长方体右边缘
         }
 
         /**
@@ -1343,31 +1344,31 @@ void MarlinUI::draw_status_screen() {
         k = pixels_per_y_mesh_pnt * (GRID_MAX_POINTS_Y) + 2;
         l = (HD44780_CHAR_HEIGHT) * n_rows;
         if (l > k && l - k >= (HD44780_CHAR_HEIGHT) / 2) {
-          lcd_put_wchar(0, n_rows - 1, ' ');                                // Box Left edge
-          lcd_put_wchar(n_cols - 1, n_rows - 1, ' ');                       // Box Right edge
+          lcd_put_wchar(0, n_rows - 1, ' ');                                // Box Left edge//框左边缘
+          lcd_put_wchar(n_cols - 1, n_rows - 1, ' ');                       // Box Right edge//长方体右边缘
         }
 
         clear_custom_char(&new_char);
-        new_char.custom_char_bits[0] = 0b11111U;                            // Char #0 is used for the box top line
+        new_char.custom_char_bits[0] = 0b11111U;                            // Char #0 is used for the box top line//Char#0用于框顶行
         lcd.createChar(CHAR_LINE_TOP, (uint8_t*)&new_char);
 
         clear_custom_char(&new_char);
-        k = (GRID_MAX_POINTS_Y) * pixels_per_y_mesh_pnt + 1;                // Row of pixels for the bottom box line
-        l = k % (HD44780_CHAR_HEIGHT);                                      // Row within relevant character cell
-        new_char.custom_char_bits[l] = 0b11111U;                            // Char #1 is used for the box bottom line
+        k = (GRID_MAX_POINTS_Y) * pixels_per_y_mesh_pnt + 1;                // Row of pixels for the bottom box line//框底行的像素行
+        l = k % (HD44780_CHAR_HEIGHT);                                      // Row within relevant character cell//相关字符单元格中的行
+        new_char.custom_char_bits[l] = 0b11111U;                            // Char #1 is used for the box bottom line//Char#1用于方框底线
         lcd.createChar(CHAR_LINE_BOT, (uint8_t*)&new_char);
 
         clear_custom_char(&new_char);
         for (j = 0; j < HD44780_CHAR_HEIGHT; j++)
-          new_char.custom_char_bits[j] = 0b10000U;                          // Char #2 is used for the box left edge
+          new_char.custom_char_bits[j] = 0b10000U;                          // Char #2 is used for the box left edge//Char#2用于方框左边缘
         lcd.createChar(CHAR_EDGE_L, (uint8_t*)&new_char);
 
         clear_custom_char(&new_char);
-        m = (GRID_MAX_POINTS_X) * pixels_per_x_mesh_pnt + 1;                // Column of pixels for the right box line
-        n = m % (HD44780_CHAR_WIDTH);                                       // Column within relevant character cell
-        i = HD44780_CHAR_WIDTH - 1 - n;                                     // Column within relevant character cell (0 on the right)
+        m = (GRID_MAX_POINTS_X) * pixels_per_x_mesh_pnt + 1;                // Column of pixels for the right box line//右框线的像素列
+        n = m % (HD44780_CHAR_WIDTH);                                       // Column within relevant character cell//相关字符单元格中的列
+        i = HD44780_CHAR_WIDTH - 1 - n;                                     // Column within relevant character cell (0 on the right)//相关字符单元格内的列（右侧0）
         for (j = 0; j < HD44780_CHAR_HEIGHT; j++)
-          new_char.custom_char_bits[j] = (uint8_t)_BV(i);                   // Char #3 is used for the box right edge
+          new_char.custom_char_bits[j] = (uint8_t)_BV(i);                   // Char #3 is used for the box right edge//字符#3用于框的右边缘
         lcd.createChar(CHAR_EDGE_R, (uint8_t*)&new_char);
 
         i = x_plot * pixels_per_x_mesh_pnt - suppress_x_offset;
@@ -1406,7 +1407,7 @@ void MarlinUI::draw_status_screen() {
           l = upper_left.x_pixel_offset;
           clear_custom_char(&new_char);
           for (j = upper_left.y_pixel_offset; j < ypix; j++) {
-            i = _BV(HD44780_CHAR_WIDTH - 1);                                // Fill in the left side of the right character cell
+            i = _BV(HD44780_CHAR_WIDTH - 1);                                // Fill in the left side of the right character cell//填写右侧字符单元格的左侧
             for (k = 0; k < pixels_per_x_mesh_pnt - 1 - l; k++) {
               new_char.custom_char_bits[j] |= i;
               i >>= 1;
@@ -1419,12 +1420,12 @@ void MarlinUI::draw_status_screen() {
          * Next, check for two character cells stacked on top of each other being used to display the Mesh Point
          */
         if (upper_left.row == lower_right.row - 1) {
-          l = HD44780_CHAR_HEIGHT - upper_left.y_pixel_offset;              // Number of pixel rows in top character cell
-          k = pixels_per_y_mesh_pnt - l;                                    // Number of pixel rows in bottom character cell
+          l = HD44780_CHAR_HEIGHT - upper_left.y_pixel_offset;              // Number of pixel rows in top character cell//顶部字符单元中的像素行数
+          k = pixels_per_y_mesh_pnt - l;                                    // Number of pixel rows in bottom character cell//底部字符单元中的像素行数
           clear_custom_char(&new_char);
           for (j = 0; j < k; j++) {
             i = upper_left.x_pixel_mask;
-            for (m = 0; m < pixels_per_x_mesh_pnt; m++) {                   // Fill in the top side of the bottom character cell
+            for (m = 0; m < pixels_per_x_mesh_pnt; m++) {                   // Fill in the top side of the bottom character cell//填充底部字符单元格的顶部
               new_char.custom_char_bits[j] |= i;
               if (!(i >>= 1)) break;
             }
@@ -1439,13 +1440,13 @@ void MarlinUI::draw_status_screen() {
          */
 
         if (upper_left.column == lower_right.column - 1 && upper_left.row == lower_right.row - 1) {
-          l = HD44780_CHAR_HEIGHT - upper_left.y_pixel_offset;              // Number of pixel rows in top character cell
-          k = pixels_per_y_mesh_pnt - l;                                    // Number of pixel rows in bottom character cell
+          l = HD44780_CHAR_HEIGHT - upper_left.y_pixel_offset;              // Number of pixel rows in top character cell//顶部字符单元中的像素行数
+          k = pixels_per_y_mesh_pnt - l;                                    // Number of pixel rows in bottom character cell//底部字符单元中的像素行数
           clear_custom_char(&new_char);
           for (j = 0; j < k; j++) {
             l = upper_left.x_pixel_offset;
-            i = _BV(HD44780_CHAR_WIDTH - 1);                                // Fill in the left side of the right character cell
-            for (m = 0; m < pixels_per_x_mesh_pnt - 1 - l; m++) {           // Fill in the top side of the bottom character cell
+            i = _BV(HD44780_CHAR_WIDTH - 1);                                // Fill in the left side of the right character cell//填写右侧字符单元格的左侧
+            for (m = 0; m < pixels_per_x_mesh_pnt - 1 - l; m++) {           // Fill in the top side of the bottom character cell//填充底部字符单元格的顶部
               new_char.custom_char_bits[j] |= i;
               i >>= 1;
             }
@@ -1464,7 +1465,7 @@ void MarlinUI::draw_status_screen() {
       lcd_put_u8str(ui8tostr3rj(y_plot));
       lcd_put_wchar(')');
 
-      #if LCD_HEIGHT <= 3   // 16x2 or 20x2 display
+      #if LCD_HEIGHT <= 3   // 16x2 or 20x2 display//16x2或20x2显示器
 
         /**
          * Print Z values
@@ -1475,7 +1476,7 @@ void MarlinUI::draw_status_screen() {
         else
           lcd_put_u8str_P(PSTR(" -----"));
 
-      #else                 // 16x4 or 20x4 display
+      #else                 // 16x4 or 20x4 display//16x4或20x4显示器
 
         /**
          * Show all values at right of screen
@@ -1494,7 +1495,7 @@ void MarlinUI::draw_status_screen() {
         else
           lcd_put_u8str_P(PSTR(" -----"));
 
-      #endif // LCD_HEIGHT > 3
+      #endif // LCD_HEIGHT > 3//LCD_高度>3
     }
 
     void add_edges_to_custom_char(custom_char &custom, const coordinate &ul, const coordinate &lr, const coordinate &brc, const uint8_t cell_location) {
@@ -1506,16 +1507,16 @@ void MarlinUI::draw_status_screen() {
        * Check if Top line of box needs to be filled in
        */
 
-      if (ul.row == 0 && (cell_location & (TOP_LEFT|TOP_RIGHT))) {   // Only fill in the top line for the top character cells
+      if (ul.row == 0 && (cell_location & (TOP_LEFT|TOP_RIGHT))) {   // Only fill in the top line for the top character cells//仅填写顶部字符单元格的顶行
 
         if (n_cols == 1) {
           if (ul.column != brc.column)
-            custom.custom_char_bits[0] = 0xFF;                              // Single column in middle
+            custom.custom_char_bits[0] = 0xFF;                              // Single column in middle//中间单列
           else
-            for (i = brc.x_pixel_offset; i < HD44780_CHAR_WIDTH; i++)       // Single column on right side
+            for (i = brc.x_pixel_offset; i < HD44780_CHAR_WIDTH; i++)       // Single column on right side//单列在右侧
               SBI(custom.custom_char_bits[0], i);
         }
-        else if ((cell_location & TOP_LEFT) || lr.column != brc.column)     // Multiple column in the middle or with right cell in middle
+        else if ((cell_location & TOP_LEFT) || lr.column != brc.column)     // Multiple column in the middle or with right cell in middle中/多列中间
           custom.custom_char_bits[0] = 0xFF;
         else
           for (i = brc.x_pixel_offset; i < HD44780_CHAR_WIDTH; i++)
@@ -1526,8 +1527,8 @@ void MarlinUI::draw_status_screen() {
        * Check if left line of box needs to be filled in
        */
       if (cell_location & (TOP_LEFT|LOWER_LEFT)) {
-        if (ul.column == 0) {                                               // Left column of characters on LCD Display
-          k = ul.row == brc.row ? brc.y_pixel_offset : HD44780_CHAR_HEIGHT; // If it isn't the last row... do the full character cell
+        if (ul.column == 0) {                                               // Left column of characters on LCD Display//LCD显示屏上的左列字符
+          k = ul.row == brc.row ? brc.y_pixel_offset : HD44780_CHAR_HEIGHT; // If it isn't the last row... do the full character cell//如果不是最后一排。。。执行完整字符单元格
           for (i = 0; i < k; i++)
             SBI(custom.custom_char_bits[i], HD44780_CHAR_WIDTH - 1);
         }
@@ -1537,13 +1538,13 @@ void MarlinUI::draw_status_screen() {
        * Check if bottom line of box needs to be filled in
        */
 
-      // Single row of mesh plot cells
+      // Single row of mesh plot cells//单行网格打印单元
       if (n_rows == 1 /* && (cell_location & (TOP_LEFT|TOP_RIGHT)) */ && ul.row == brc.row) {
-        if (n_cols == 1)                                                    // Single row, single column case
+        if (n_cols == 1)                                                    // Single row, single column case//单行、单列大小写
           k = ul.column == brc.column ? brc.x_pixel_mask : 0x01;
-        else if (cell_location & TOP_RIGHT)                                 // Single row, multiple column case
+        else if (cell_location & TOP_RIGHT)                                 // Single row, multiple column case//单行、多列大小写
           k = lr.column == brc.column ? brc.x_pixel_mask : 0x01;
-        else                                                                // Single row, left of multiple columns
+        else                                                                // Single row, left of multiple columns//单行，多个列的左侧
           k = 0x01;
         while (k < _BV(HD44780_CHAR_WIDTH)) {
           custom.custom_char_bits[brc.y_pixel_offset] |= k;
@@ -1551,14 +1552,14 @@ void MarlinUI::draw_status_screen() {
         }
       }
 
-      // Double row of characters on LCD Display
-      // And this is a bottom custom character
+      // Double row of characters on LCD Display//LCD显示器上的双行字符
+      // And this is a bottom custom character//这是一个底部自定义字符
       if (n_rows == 2 && (cell_location & (LOWER_LEFT|LOWER_RIGHT)) && lr.row == brc.row) {
-        if (n_cols == 1)                                                    // Double row, single column case
+        if (n_cols == 1)                                                    // Double row, single column case//双行、单列大小写
           k = ul.column == brc.column ? brc.x_pixel_mask : 0x01;
-        else if (cell_location & LOWER_RIGHT)                               // Double row, multiple column case
+        else if (cell_location & LOWER_RIGHT)                               // Double row, multiple column case//双行、多列大小写
           k = lr.column == brc.column ? brc.x_pixel_mask : 0x01;
-        else                                                                // Double row, left of multiple columns
+        else                                                                // Double row, left of multiple columns//双行，多列左侧
           k = 0x01;
         while (k < _BV(HD44780_CHAR_WIDTH)) {
           custom.custom_char_bits[brc.y_pixel_offset] |= k;
@@ -1570,19 +1571,19 @@ void MarlinUI::draw_status_screen() {
        * Check if right line of box needs to be filled in
        */
 
-      // Nothing to do if the lower right part of the mesh pnt isn't in the same column as the box line
+      // Nothing to do if the lower right part of the mesh pnt isn't in the same column as the box line//如果网格pnt的右下部分与框线不在同一列中，则无需执行任何操作
       if (lr.column == brc.column) {
-        // This mesh point is in the same character cell as the right box line
+        // This mesh point is in the same character cell as the right box line//此网格点与右框线位于同一字符单元中
         if (ul.column == brc.column || (cell_location & (TOP_RIGHT|LOWER_RIGHT))) {
-          // If not the last row... do the full character cell
+          // If not the last row... do the full character cell//如果不是最后一行。。。执行完整字符单元格
           k = ul.row == brc.row ? brc.y_pixel_offset : HD44780_CHAR_HEIGHT;
           for (i = 0; i < k; i++) custom.custom_char_bits[i] |= brc.x_pixel_mask;
         }
       }
     }
 
-  #endif // AUTO_BED_LEVELING_UBL
+  #endif // AUTO_BED_LEVELING_UBL//自动调平床
 
-#endif // HAS_LCD_MENU
+#endif // HAS_LCD_MENU//有LCD菜单吗
 
-#endif // HAS_MARLINUI_HD44780
+#endif // HAS_MARLINUI_HD44780//马利尼有HD44780吗

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -37,9 +38,9 @@
 
 #define SRAM_EEPROM_EMULATION
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_MIN_PIN                           PG8
 #define X_MAX_PIN                           PG7
 #define Y_MIN_PIN                           PG6
@@ -47,16 +48,16 @@
 #define Z_MIN_PIN                           PG4
 #define Z_MAX_PIN                           PG3
 
-//
-// Servos
-//
-#define SERVO0_PIN                          PB0   // XS2-5
-#define SERVO1_PIN                          PF7   // XS1-5
-#define SERVO2_PIN                          PF8   // XS1-6
+////
+// Servos//伺服
+////
+#define SERVO0_PIN                          PB0   // XS2-5//XS2-5
+#define SERVO1_PIN                          PF7   // XS1-5//XS1-5
+#define SERVO2_PIN                          PF8   // XS1-6//XS1-6
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                          PE6
 #define X_DIR_PIN                           PE5
 #define X_ENABLE_PIN                        PC13
@@ -77,25 +78,25 @@
 #define E1_DIR_PIN                          PA15
 #define E1_ENABLE_PIN                       PD6
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                          PC1   // T1 <-> E0
-#define TEMP_1_PIN                          PC2   // T2 <-> E1
-#define TEMP_BED_PIN                        PC0   // T0 <-> Bed
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                          PC1   // T1 <-> E0//T1<->E0
+#define TEMP_1_PIN                          PC2   // T2 <-> E1//T2<->E1
+#define TEMP_BED_PIN                        PC0   // T0 <-> Bed//T0<->床
 
-//
-// Heaters / Fans
-//
-#define HEATER_0_PIN                        PF3   // Heater0
-#define HEATER_1_PIN                        PF2   // Heater1
-#define HEATER_BED_PIN                      PF4   // Hotbed
-#define FAN_PIN                             PA7   // Fan0
+////
+// Heaters / Fans//加热器/风扇
+////
+#define HEATER_0_PIN                        PF3   // Heater0//加热器
+#define HEATER_1_PIN                        PF2   // Heater1//加热器1
+#define HEATER_BED_PIN                      PF4   // Hotbed//温床
+#define FAN_PIN                             PA7   // Fan0//Fan0
 
-//
-// Misc. Functions
-//
-#define SDSS                                -1    // PB12
+////
+// Misc. Functions//杂项。功能
+////
+#define SDSS                                -1    // PB12//PB12
 
 #define SD_DETECT_PIN                       PF9
 #define BEEPER_PIN                          PG2

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -46,20 +47,20 @@
   #define POWER_LOSS_ZRAISE 2
 #endif
 
-//#define DEBUG_POWER_LOSS_RECOVERY
-//#define SAVE_EACH_CMD_MODE
-//#define SAVE_INFO_INTERVAL_MS 0
+//#define DEBUG_POWER_LOSS_RECOVERY//#定义调试\电源\损耗\恢复
+//#define SAVE_EACH_CMD_MODE//#在每个命令模式下定义保存
+//#define SAVE_INFO_INTERVAL_MS 0//#定义保存\u信息\u间隔\u MS 0
 
 typedef struct {
   uint8_t valid_head;
 
-  // Machine state
+  // Machine state//机器状态
   xyze_pos_t current_position;
   uint16_t feedrate;
 
   float zraise;
 
-  // Repeat information
+  // Repeat information//重复信息
   #if ENABLED(GCODE_REPEAT_MARKERS)
     Repeat stored_repeat;
   #endif
@@ -96,35 +97,35 @@ typedef struct {
     float retract[EXTRUDERS], retract_hop;
   #endif
 
-  // Mixing extruder and gradient
+  // Mixing extruder and gradient//混合挤出机与梯度
   #if ENABLED(MIXING_EXTRUDER)
-    //uint_fast8_t selected_vtool;
-    //mixer_comp_t color[NR_MIXING_VIRTUAL_TOOLS][MIXING_STEPPERS];
+    //uint_fast8_t selected_vtool;//uint\u fast8\u t选定的工具；
+    //mixer_comp_t color[NR_MIXING_VIRTUAL_TOOLS][MIXING_STEPPERS];//混音器合成颜色[NR_混合虚拟工具][混合步进器]；
     #if ENABLED(GRADIENT_MIX)
       gradient_t gradient;
     #endif
   #endif
 
-  // SD Filename and position
+  // SD Filename and position//SD文件名和位置
   char sd_filename[MAXPATHNAMELENGTH];
   volatile uint32_t sdpos;
 
-  // Job elapsed time
+  // Job elapsed time//作业运行时间
   millis_t print_job_elapsed;
 
-  // Relative axis modes
+  // Relative axis modes//相对轴模式
   uint8_t axis_relative;
 
-  // Misc. Marlin flags
+  // Misc. Marlin flags//杂项。马林旗
   struct {
-    bool raised:1;                // Raised before saved
-    bool dryrun:1;                // M111 S8
-    bool allow_cold_extrusion:1;  // M302 P1
+    bool raised:1;                // Raised before saved//在保存之前提出
+    bool dryrun:1;                // M111 S8//M111 S8
+    bool allow_cold_extrusion:1;  // M302 P1//M302 P1
     #if HAS_LEVELING
-      bool leveling:1;            // M420 S
+      bool leveling:1;            // M420 S//M420 S
     #endif
     #if DISABLED(NO_VOLUMETRICS)
-      bool volumetric_enabled:1;  // M200 S D
+      bool volumetric_enabled:1;  // M200 S D//M200SD
     #endif
   } flag;
 
@@ -141,9 +142,9 @@ class PrintJobRecovery {
     static SdFile file;
     static job_recovery_info_t info;
 
-    static uint8_t queue_index_r;     //!< Queue index of the active command
-    static uint32_t cmd_sdpos,        //!< SD position of the next command
-                    sdpos[BUFSIZE];   //!< SD positions of queued commands
+    static uint8_t queue_index_r;     //!< Queue index of the active command//!< 活动命令的队列索引
+    static uint32_t cmd_sdpos,        //!< SD position of the next command//!< 下一个命令的SD位置
+                    sdpos[BUFSIZE];   //!< SD positions of queued commands//!< 排队命令的SD位置
 
     #if ENABLED(DWIN_CREALITY_LCD)
       static bool dwin_flag;
@@ -164,7 +165,7 @@ class PrintJobRecovery {
       #endif
     }
 
-    // Track each command's file offsets
+    // Track each command's file offsets//跟踪每个命令的文件偏移
     static inline uint32_t command_sdpos() { return sdpos[queue_index_r]; }
     static inline void commit_sdpos(const uint8_t index_w) { sdpos[index_w] = cmd_sdpos; }
 
@@ -198,7 +199,7 @@ class PrintJobRecovery {
       }
     #endif
 
-    // The referenced file exists
+    // The referenced file exists//引用的文件已存在
     static inline bool interrupted_file_exists() { return card.fileExists(info.sd_filename); }
 
     static inline bool valid() { return info.valid() && interrupted_file_exists(); }

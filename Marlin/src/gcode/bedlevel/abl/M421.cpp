@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -71,4 +72,4 @@ void GcodeSuite::M421() {
     SERIAL_ERROR_MSG(STR_ERR_M421_PARAMETERS);
 }
 
-#endif // AUTO_BED_LEVELING_BILINEAR
+#endif // AUTO_BED_LEVELING_BILINEAR//自动调平床双线性

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,7 +32,7 @@
 #define DISPLAY_CHARSET_ISO10646_5
 
 namespace Language_uk {
-  using namespace Language_en; // Inherit undefined strings from English
+  using namespace Language_en; // Inherit undefined strings from English//从英语中继承未定义的字符串
 
   constexpr uint8_t    CHARSIZE                            = 2;
   PROGMEM Language_Str LANGUAGE                            = _UxGT("Ukranian");
@@ -59,7 +60,7 @@ namespace Language_uk {
     PROGMEM Language_Str MSG_KILL_SUBCALL_OVERFLOW         = _UxGT("Переповн. виклику");
     PROGMEM Language_Str MSG_LCD_SOFT_ENDSTOPS             = _UxGT("Прогр.кінцевики");
   #endif
-  PROGMEM Language_Str MSG_LCD_ENDSTOPS                    = _UxGT("Кінцевик"); // Max length 8 characters
+  PROGMEM Language_Str MSG_LCD_ENDSTOPS                    = _UxGT("Кінцевик"); // Max length 8 characters//最大长度为8个字符
   PROGMEM Language_Str MSG_MAIN                            = _UxGT("Основне меню");
   PROGMEM Language_Str MSG_ADVANCED_SETTINGS               = _UxGT("Інші налаштування");
   PROGMEM Language_Str MSG_CONFIGURATION                   = _UxGT("Конфігурація");
@@ -487,7 +488,7 @@ namespace Language_uk {
   PROGMEM Language_Str MSG_POWER                           = _UxGT("Потужність");
   PROGMEM Language_Str MSG_START_PRINT                     = _UxGT("Почати друк");
 
-  PROGMEM Language_Str MSG_BUTTON_NEXT                     = _UxGT("Далі");  //short text for buttons
+  PROGMEM Language_Str MSG_BUTTON_NEXT                     = _UxGT("Далі");  //short text for buttons//按钮的短文本
   PROGMEM Language_Str MSG_BUTTON_INIT                     = _UxGT("Ініц-я");
   PROGMEM Language_Str MSG_BUTTON_STOP                     = _UxGT("Зупинка");
   PROGMEM Language_Str MSG_BUTTON_PRINT                    = _UxGT("Друк");
@@ -504,7 +505,7 @@ namespace Language_uk {
   PROGMEM Language_Str MSG_RESUME_PRINT                    = _UxGT("Відновити друк");
   PROGMEM Language_Str MSG_HOST_START_PRINT                = _UxGT("Старт з хосту");
   PROGMEM Language_Str MSG_STOP_PRINT                      = _UxGT("Скасувати друк");
-  PROGMEM Language_Str MSG_END_LOOPS                       = _UxGT("End Repeat Loops"); // needs translation
+  PROGMEM Language_Str MSG_END_LOOPS                       = _UxGT("End Repeat Loops"); // needs translation//需要翻译
   PROGMEM Language_Str MSG_PRINTING_OBJECT                 = _UxGT("Друк об'єкта");
   PROGMEM Language_Str MSG_CANCEL_OBJECT                   = _UxGT("Завершити об'єкт");
   PROGMEM Language_Str MSG_CANCEL_OBJECT_N                 = _UxGT("Завершити об'єкт =");
@@ -625,9 +626,9 @@ namespace Language_uk {
   PROGMEM Language_Str MSG_ERR_MINTEMP                     = _UxGT("МІНІМАЛЬНА Т") LCD_STR_DEGREE;
   PROGMEM Language_Str MSG_HALTED                          = _UxGT("ПРИНТЕР ЗУПИНЕНО");
   PROGMEM Language_Str MSG_PLEASE_RESET                    = _UxGT("Перезавантажте");
-  PROGMEM Language_Str MSG_SHORT_DAY                       = _UxGT("д"); // One character only
-  PROGMEM Language_Str MSG_SHORT_HOUR                      = _UxGT("г"); // One character only
-  PROGMEM Language_Str MSG_SHORT_MINUTE                    = _UxGT("х"); // One character only
+  PROGMEM Language_Str MSG_SHORT_DAY                       = _UxGT("д"); // One character only//只有一个字符
+  PROGMEM Language_Str MSG_SHORT_HOUR                      = _UxGT("г"); // One character only//只有一个字符
+  PROGMEM Language_Str MSG_SHORT_MINUTE                    = _UxGT("х"); // One character only//只有一个字符
   PROGMEM Language_Str MSG_HEATING                         = _UxGT("Нагрівання...");
   PROGMEM Language_Str MSG_COOLING                         = _UxGT("Охолодження...");
   PROGMEM Language_Str MSG_BED_HEATING                     = _UxGT("Нагрів столу...");
@@ -828,13 +829,13 @@ namespace Language_uk {
   PROGMEM Language_Str MSG_PASSWORD_REMOVED                = _UxGT("Пароль видалений");
 
 
-  //
-  // Filament Change screens show up to 3 lines on a 4-line display
-  //                        ...or up to 2 lines on a 3-line display
-  //
+  ////
+  // Filament Change screens show up to 3 lines on a 4-line display//灯丝更换屏幕在4行显示屏上最多显示3行
+  //                        ...or up to 2 lines on a 3-line display//…或在3行显示器上最多显示2行
+  ////
   PROGMEM Language_Str MSG_PAUSE_PRINT_PARKING             = _UxGT(MSG_1_LINE("Паркування..."));
   #if LCD_HEIGHT >= 4
-    // Up to 3 lines allowed
+    // Up to 3 lines allowed//最多允许3行
     PROGMEM Language_Str MSG_ADVANCED_PAUSE_WAITING        = _UxGT(MSG_3_LINE("Натисніть кнопку", "для продовження", "друку"));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_INIT          = _UxGT(MSG_3_LINE("Зачекайте", "на початок", "заміни прутка"));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_INSERT        = _UxGT(MSG_3_LINE("Вставте пруток", "та натисніть", "для продовження"));
@@ -846,7 +847,7 @@ namespace Language_uk {
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_CONT_PURGE    = _UxGT(MSG_3_LINE("Натисніть кнопку", "для завершення", "очищення прутка"));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_RESUME        = _UxGT(MSG_3_LINE("Зачекайте", "на відновлення", "друку"));
   #else
-    // Up to 2 lines allowed
+    // Up to 2 lines allowed//最多允许2行
     PROGMEM Language_Str MSG_ADVANCED_PAUSE_WAITING        = _UxGT(MSG_1_LINE("Продовжити друк"));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_INIT          = _UxGT(MSG_1_LINE("Зачекайте..."));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_INSERT        = _UxGT(MSG_1_LINE("Вставте і натисніть"));

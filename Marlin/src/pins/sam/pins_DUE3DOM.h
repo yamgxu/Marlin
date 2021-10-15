@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,17 +30,17 @@
 
 #define BOARD_INFO_NAME "DUE3DOM"
 
-//
-// Servos
-//
+////
+// Servos//伺服
+////
 #define SERVO0_PIN                             5
 #define SERVO1_PIN                             6
 #define SERVO2_PIN                            13
 #define SERVO3_PIN                            -1
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_MIN_PIN                             38
 #define X_MAX_PIN                             36
 #define Y_MIN_PIN                             34
@@ -47,9 +48,9 @@
 #define Z_MIN_PIN                             30
 #define Z_MAX_PIN                             28
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                             2
 #define X_DIR_PIN                              3
 #define X_ENABLE_PIN                          22
@@ -58,59 +59,59 @@
 #define Y_DIR_PIN                             16
 #define Y_ENABLE_PIN                          26
 
-#define Z_STEP_PIN                            61  // Z1 STP
-#define Z_DIR_PIN                             60  // Z1 DIR
-#define Z_ENABLE_PIN                          15  // Z1 ENA
+#define Z_STEP_PIN                            61  // Z1 STP//Z1 STP
+#define Z_DIR_PIN                             60  // Z1 DIR//Z1方向
+#define Z_ENABLE_PIN                          15  // Z1 ENA//Z1-ENA
 
-#define E0_STEP_PIN                           64  // Z2 STP
-#define E0_DIR_PIN                            63  // Z2 DIR
-#define E0_ENABLE_PIN                         62  // Z2 ENA
+#define E0_STEP_PIN                           64  // Z2 STP//Z2 STP
+#define E0_DIR_PIN                            63  // Z2 DIR//Z2目录
+#define E0_ENABLE_PIN                         62  // Z2 ENA//Z2-ENA
 
-#define E1_STEP_PIN                           51  // E1 STP
-#define E1_DIR_PIN                            53  // E1 DIR
-#define E1_ENABLE_PIN                         65  // E1 ENA
+#define E1_STEP_PIN                           51  // E1 STP//E1 STP
+#define E1_DIR_PIN                            53  // E1 DIR//E1目录
+#define E1_ENABLE_PIN                         65  // E1 ENA//E1埃纳
 
-#define E2_STEP_PIN                           24  // E2 STP
-#define E2_DIR_PIN                            23  // E2 DIR
-#define E2_ENABLE_PIN                         49  // E2 ENA
+#define E2_STEP_PIN                           24  // E2 STP//E2 STP
+#define E2_DIR_PIN                            23  // E2 DIR//E2目录
+#define E2_ENABLE_PIN                         49  // E2 ENA//E2-ENA
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                             0  // Analog Input (HOTEND0 thermistor)
-#define TEMP_1_PIN                             2  // Analog Input (HOTEND1 thermistor)
-#define TEMP_2_PIN                             5  // Analog Input (unused)
-#define TEMP_BED_PIN                           1  // Analog Input (BED thermistor)
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                             0  // Analog Input (HOTEND0 thermistor)//模拟输入（HOTEND0热敏电阻）
+#define TEMP_1_PIN                             2  // Analog Input (HOTEND1 thermistor)//模拟输入（热端1热敏电阻）
+#define TEMP_2_PIN                             5  // Analog Input (unused)//模拟输入（未使用）
+#define TEMP_BED_PIN                           1  // Analog Input (BED thermistor)//模拟输入（床用热敏电阻）
 
-// SPI for Max6675 or Max31855 Thermocouple
+// SPI for Max6675 or Max31855 Thermocouple//Max6675或Max31855热电偶的SPI
 #if DISABLED(SDSUPPORT)
   #define MAX6675_SS_PIN                      -1
 #else
   #define MAX6675_SS_PIN                      -1
 #endif
 
-//
-// Heaters / Fans
-//
-#define HEATER_0_PIN                           7  // HOTEND0 MOSFET
-#define HEATER_1_PIN                           8  // HOTEND1 MOSFET
-#define HEATER_BED_PIN                        39  // BED MOSFET
+////
+// Heaters / Fans//加热器/风扇
+////
+#define HEATER_0_PIN                           7  // HOTEND0 MOSFET//HOTEND0 MOSFET
+#define HEATER_1_PIN                           8  // HOTEND1 MOSFET//HOTEND1 MOSFET
+#define HEATER_BED_PIN                        39  // BED MOSFET//床层MOSFET
 
 #ifndef FAN_PIN
-  #define FAN_PIN                             11  // FAN1 header on board - PRINT FAN
+  #define FAN_PIN                             11  // FAN1 header on board - PRINT FAN//FAN1板上页眉-打印风扇
 #endif
-#define FAN1_PIN                               9  // FAN2 header on board - CONTROLLER FAN
-#define FAN2_PIN                              12  // FAN3 header on board - EXTRUDER0 FAN
+#define FAN1_PIN                               9  // FAN2 header on board - CONTROLLER FAN//板上风扇2收割台-控制器风扇
+#define FAN2_PIN                              12  // FAN3 header on board - EXTRUDER0 FAN//板上风扇3集管-风扇0
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define SDSS                                   4
 #define PS_ON_PIN                             40
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 #if HAS_WIRED_LCD
 
   #define LCD_PINS_RS                         42
@@ -162,10 +163,10 @@
     #define BTN_ENC                           37
 
     #define BEEPER_PIN                        -1
-  #endif // SPARK_FULL_GRAPHICS
+  #endif // SPARK_FULL_GRAPHICS//SPARK_FULL_图形
 
   #if ENABLED(REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER)
-    #define BTN_ENC_EN               LCD_PINS_D7  // Detect the presence of the encoder
+    #define BTN_ENC_EN               LCD_PINS_D7  // Detect the presence of the encoder//检测编码器的存在
   #endif
 
-#endif // HAS_WIRED_LCD
+#endif // HAS_WIRED_LCD//有有线液晶显示器吗

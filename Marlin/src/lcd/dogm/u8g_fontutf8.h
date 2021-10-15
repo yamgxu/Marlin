@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * @file    fontutf8.h
  * @brief   font api for u8g lib
@@ -11,9 +12,9 @@
 #include <U8glib.h>
 #include "../fontutils.h"
 
-// the macro to indicate a UTF-8 string
-// You should to save the C/C++ source in UTF-8 encoding!
-// Once you change your UTF-8 strings, you need to call the script uxggenpages.sh to create the font data file fontutf8-data.h
+// the macro to indicate a UTF-8 string//用于指示UTF-8字符串的宏
+// You should to save the C/C++ source in UTF-8 encoding!//您应该使用UTF-8编码保存C/C++源代码！
+// Once you change your UTF-8 strings, you need to call the script uxggenpages.sh to create the font data file fontutf8-data.h//更改UTF-8字符串后，需要调用脚本uxggenpages.sh来创建字体数据文件fontutf8 data.h
 #define _UxGT(a) a
 
 typedef struct _uxg_fontinfo_t {
@@ -24,7 +25,7 @@ typedef struct _uxg_fontinfo_t {
   const u8g_fntpgm_uint8_t *fntdata;
 } uxg_fontinfo_t;
 
-int uxg_SetUtf8Fonts(const uxg_fontinfo_t * fntinfo, int number); // fntinfo is type of PROGMEM
+int uxg_SetUtf8Fonts(const uxg_fontinfo_t * fntinfo, int number); // fntinfo is type of PROGMEM//fntinfo是PROGMEM的类型
 
 unsigned int uxg_DrawWchar(u8g_t *pu8g, unsigned int x, unsigned int y, wchar_t ch, pixel_len_t max_length);
 

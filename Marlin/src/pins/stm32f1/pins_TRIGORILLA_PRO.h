@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -40,24 +41,24 @@
 
 #define DISABLE_JTAG
 
-//#define SWAPPED_Z_PLUGS
+//#define SWAPPED_Z_PLUGS//#定义交换的_Z_插头
 
-//
-// EEPROM
-//
+////
+// EEPROM//电可擦可编程只读存储器
+////
 #define FLASH_EEPROM_EMULATION
 #if ENABLED(FLASH_EEPROM_EMULATION)
-  // SoC Flash (framework-arduinoststm32-maple/STM32F1/libraries/EEPROM/EEPROM.h)
+  // SoC Flash (framework-arduinoststm32-maple/STM32F1/libraries/EEPROM/EEPROM.h)//SoC闪存（framework-TSTM32-maple/STM32F1/libraries/EEPROM/EEPROM.h）
   #define EEPROM_START_ADDRESS (0x8000000UL + (512 * 1024) - 2 * EEPROM_PAGE_SIZE)
-  #define EEPROM_PAGE_SIZE     (0x800U)     // 2KB, but will use 2x more (4KB)
+  #define EEPROM_PAGE_SIZE     (0x800U)     // 2KB, but will use 2x more (4KB)//2KB，但将使用2倍以上（4KB）
   #define MARLIN_EEPROM_SIZE    EEPROM_PAGE_SIZE
 #else
-  #define MARLIN_EEPROM_SIZE   (0x800U) // On SD, Limit to 2KB, require this amount of RAM
+  #define MARLIN_EEPROM_SIZE   (0x800U) // On SD, Limit to 2KB, require this amount of RAM//在SD上，限制为2KB，需要此数量的RAM
 #endif
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_STOP_PIN                          PG10
 #define Y_STOP_PIN                          PA12
 #ifndef Z_MIN_PIN
@@ -75,9 +76,9 @@
   #endif
 #endif
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_ENABLE_PIN                        PC13
 #define X_STEP_PIN                          PE5
 #define X_DIR_PIN                           PE6
@@ -98,33 +99,33 @@
 #define E1_STEP_PIN                         PC7
 #define E1_DIR_PIN                          PC6
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                          PA1   // TH1
-#define TEMP_BED_PIN                        PA0   // TB1
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                          PA1   // TH1//TH1
+#define TEMP_BED_PIN                        PA0   // TB1//TB1
 
-//
-// Heaters
-//
-#define HEATER_0_PIN                        PG12  // HEATER1
-#define HEATER_BED_PIN                      PG11  // HOT BED
+////
+// Heaters//加热器
+////
+#define HEATER_0_PIN                        PG12  // HEATER1//加热器1
+#define HEATER_BED_PIN                      PG11  // HOT BED//热床
 #define HEATER_BED_INVERTING                true
 
-//
-// Fans
-//
-#define CONTROLLER_FAN_PIN                  PD6   // FAN
-#define FAN_PIN                             PG13  // FAN
-#define FAN1_PIN                            PG14  // FAN
+////
+// Fans//扇子
+////
+#define CONTROLLER_FAN_PIN                  PD6   // FAN//扇子
+#define FAN_PIN                             PG13  // FAN//扇子
+#define FAN1_PIN                            PG14  // FAN//扇子
 
-//
-// Misc
-//
+////
+// Misc//杂项
+////
 #define BEEPER_PIN                          PB0
 #define LED_PIN                             PD3
-//#define POWER_LOSS_PIN                    PG2   // PG4 PW_DET
-#define FIL_RUNOUT_PIN                      PA15  // MT_DET
+//#define POWER_LOSS_PIN                    PG2   // PG4 PW_DET//#定义电源损耗引脚PG2//PG4 PW\U DET
+#define FIL_RUNOUT_PIN                      PA15  // MT_DET//德特山
 
 /**
  * Note: MKS Robin TFT screens use various TFT controllers
@@ -140,10 +141,10 @@
 #if HAS_FSMC_TFT
   #define TFT_RESET_PIN                     PF11
   #define TFT_BACKLIGHT_PIN                 PD13
-  #define FSMC_CS_PIN                       PD7   // NE4
-  #define FSMC_RS_PIN                       PD11  // A0
+  #define FSMC_CS_PIN                       PD7   // NE4//NE4
+  #define FSMC_RS_PIN                       PD11  // A0//A0
 
-  #define LCD_USE_DMA_FSMC                        // Use DMA transfers to send data to the TFT
+  #define LCD_USE_DMA_FSMC                        // Use DMA transfers to send data to the TFT//使用DMA传输将数据发送到TFT
   #define FSMC_DMA_DEV                      DMA2
   #define FSMC_DMA_CHANNEL               DMA_CH5
 
@@ -153,7 +154,7 @@
   #define LCD_BACKLIGHT_PIN                 PD13
 #endif
 
-// XPT2046 Touch Screen calibration
+// XPT2046 Touch Screen calibration//XPT2046触摸屏校准
 #if ANY(TFT_COLOR_UI, TFT_LVGL_UI, TFT_CLASSIC_UI)
   #ifndef TOUCH_CALIBRATION_X
     #define TOUCH_CALIBRATION_X           -17181
@@ -170,23 +171,23 @@
 #endif
 
 #if NEED_TOUCH_PINS
-  #define TOUCH_CS_PIN                      PB7   // SPI2_NSS
-  #define TOUCH_SCK_PIN                     PA5   // SPI2_SCK
-  #define TOUCH_MISO_PIN                    PA6   // SPI2_MISO
-  #define TOUCH_MOSI_PIN                    PA7   // SPI2_MOSI
+  #define TOUCH_CS_PIN                      PB7   // SPI2_NSS//SPI2\U NSS
+  #define TOUCH_SCK_PIN                     PA5   // SPI2_SCK//SPI2_SCK
+  #define TOUCH_MISO_PIN                    PA6   // SPI2_MISO//味噌
+  #define TOUCH_MOSI_PIN                    PA7   // SPI2_MOSI//SPI2_MOSI
 #endif
 
-// SPI1(PA7) & SPI3(PB5) not available
+// SPI1(PA7) & SPI3(PB5) not available//SPI1（PA7）和SPI3（PB5）不可用
 #define SPI_DEVICE                             2
 
 #if ENABLED(SDIO_SUPPORT)
-  #define SD_SCK_PIN                        PB13  // SPI2 ok
-  #define SD_MISO_PIN                       PB14  // SPI2 ok
-  #define SD_MOSI_PIN                       PB15  // SPI2 ok
-  #define SD_SS_PIN                         PC11  // PB12 is X- ok
-  #define SD_DETECT_PIN                     -1    // SD_CD ok
+  #define SD_SCK_PIN                        PB13  // SPI2 ok//SPI2 ok
+  #define SD_MISO_PIN                       PB14  // SPI2 ok//SPI2 ok
+  #define SD_MOSI_PIN                       PB15  // SPI2 ok//SPI2 ok
+  #define SD_SS_PIN                         PC11  // PB12 is X- ok//PB12是X-ok吗
+  #define SD_DETECT_PIN                     -1    // SD_CD ok//SD_CD ok
 #else
-  // SD as custom software SPI (SDIO pins)
+  // SD as custom software SPI (SDIO pins)//SD作为定制软件SPI（SDIO引脚）
   #define SD_SCK_PIN                        PC12
   #define SD_MISO_PIN                       PC8
   #define SD_MOSI_PIN                       PD2

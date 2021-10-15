@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -71,8 +72,8 @@
 
 #define BOARD_INFO_NAME "Printrboard Rev.F"
 
-// Disable JTAG pins so EXP1 pins work correctly
-// (Its pins are used for the Extrudrboard and filament sensor, for example).
+// Disable JTAG pins so EXP1 pins work correctly//禁用JTAG引脚，以便EXP1引脚正常工作
+// (Its pins are used for the Extrudrboard and filament sensor, for example).//（例如，其针脚用于挤压纸板和灯丝传感器）。
 #define DISABLE_JTAG
 
 /**
@@ -91,180 +92,180 @@
  * Define NO_EXTRUDRBOARD_OUTPUT_SWAP if you have a REV F5 or lower and
  * want to use EXTRUDRBOARD A for E1 and EXTRUDRBOARD B for E2.
  */
-//#define NO_EXTRUDRBOARD
-//#define NO_EXTRUDRBOARD_OUTPUT_SWAP
+//#define NO_EXTRUDRBOARD//#定义无挤出板
+//#define NO_EXTRUDRBOARD_OUTPUT_SWAP//#定义无挤出卡片输出交换
 
-//
-// Limit Switches
-//
-#define X_STOP_PIN                            47  // E3
-#define Y_STOP_PIN                            24  // B4 PWM2A
-#define Z_STOP_PIN                            36  // E4
+////
+// Limit Switches//限位开关
+////
+#define X_STOP_PIN                            47  // E3//E3
+#define Y_STOP_PIN                            24  // B4 PWM2A//B4 PWM2A
+#define Z_STOP_PIN                            36  // E4//E4
 
-//
-// Steppers
-//
-#define X_STEP_PIN                            28  // A0
-#define X_DIR_PIN                             29  // A1
-#define X_ENABLE_PIN                          19  // E7
+////
+// Steppers//踏步机
+////
+#define X_STEP_PIN                            28  // A0//A0
+#define X_DIR_PIN                             29  // A1//A1
+#define X_ENABLE_PIN                          19  // E7//E7
 
-#define Y_STEP_PIN                            30  // A2
-#define Y_DIR_PIN                             31  // A3
-#define Y_ENABLE_PIN                          18  // E6
+#define Y_STEP_PIN                            30  // A2//A2
+#define Y_DIR_PIN                             31  // A3//A3
+#define Y_ENABLE_PIN                          18  // E6//E6
 
-#define Z_STEP_PIN                            32  // A4
-#define Z_DIR_PIN                             33  // A5
-#define Z_ENABLE_PIN                          17  // C7
+#define Z_STEP_PIN                            32  // A4//A4
+#define Z_DIR_PIN                             33  // A5//A5
+#define Z_ENABLE_PIN                          17  // C7//C7
 
-#define E0_STEP_PIN                           34  // A6
-#define E0_DIR_PIN                            35  // A7
-#define E0_ENABLE_PIN                         13  // C3
+#define E0_STEP_PIN                           34  // A6//A6
+#define E0_DIR_PIN                            35  // A7//A7
+#define E0_ENABLE_PIN                         13  // C3//C3
 
 #if DISABLED(NO_EXTRUDRBOARD)
 #if DISABLED(NO_EXTRUDRBOARD_OUTPUT_SWAP)
-  #define E1_STEP_PIN                         25  // B5
-  #define E1_DIR_PIN                          37  // E5
-  #define E1_ENABLE_PIN                       42  // F4
+  #define E1_STEP_PIN                         25  // B5//B5
+  #define E1_DIR_PIN                          37  // E5//E5
+  #define E1_ENABLE_PIN                       42  // F4//F4
 
-  #define E2_STEP_PIN                          2  // D2
-  #define E2_DIR_PIN                           3  // D3
-  #define E2_ENABLE_PIN                       43  // F5
+  #define E2_STEP_PIN                          2  // D2//D2
+  #define E2_DIR_PIN                           3  // D3//D3
+  #define E2_ENABLE_PIN                       43  // F5//F5
 #else
-  #define E1_STEP_PIN                          2  // D2
-  #define E1_DIR_PIN                           3  // D3
-  #define E1_ENABLE_PIN                       43  // F5
+  #define E1_STEP_PIN                          2  // D2//D2
+  #define E1_DIR_PIN                           3  // D3//D3
+  #define E1_ENABLE_PIN                       43  // F5//F5
 
-  #define E2_STEP_PIN                         25  // B5
-  #define E2_DIR_PIN                          37  // E5
-  #define E2_ENABLE_PIN                       42  // F4
+  #define E2_STEP_PIN                         25  // B5//B5
+  #define E2_DIR_PIN                          37  // E5//E5
+  #define E2_ENABLE_PIN                       42  // F4//F4
 #endif
-#endif // NO_EXTRUDRBOARD
+#endif // NO_EXTRUDRBOARD//无挤压纸板
 
-// Enable control of stepper motor currents with the I2C based MCP4728 DAC used on Printrboard REVF
+// Enable control of stepper motor currents with the I2C based MCP4728 DAC used on Printrboard REVF//使用PrinterBoard REVF上使用的基于I2C的MCP4728 DAC控制步进电机电流
 #define HAS_MOTOR_CURRENT_DAC
 
-// Set default drive strength percents if not already defined - X, Y, Z, E axis
+// Set default drive strength percents if not already defined - X, Y, Z, E axis//设置默认驱动强度百分比（如果尚未定义）-X、Y、Z、E轴
 #ifndef DAC_MOTOR_CURRENT_DEFAULT
   #define DAC_MOTOR_CURRENT_DEFAULT { 70, 70, 50, 70 }
 #endif
 
-// Number of channels available for DAC
+// Number of channels available for DAC//可用于DAC的通道数
 #define DAC_STEPPER_ORDER { 3, 2, 1, 0 }
 
 #define DAC_STEPPER_SENSE    0.11
 #define DAC_STEPPER_ADDRESS                    0
 #define DAC_STEPPER_MAX                      3520
-#define DAC_STEPPER_VREF                       1  // internal Vref, gain 1x = 2.048V
+#define DAC_STEPPER_VREF                       1  // internal Vref, gain 1x = 2.048V//内部Vref，增益1x=2.048V
 #define DAC_STEPPER_GAIN                       0
 #define DAC_OR_ADDRESS                      0x00
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                             1  // Analog Input (Extruder)
-#define TEMP_BED_PIN                           0  // Analog Input (Bed)
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                             1  // Analog Input (Extruder)//模拟输入（挤出机）
+#define TEMP_BED_PIN                           0  // Analog Input (Bed)//模拟输入（Bed）
 
 #if DISABLED(NO_EXTRUDRBOARD)
 #if DISABLED(NO_EXTRUDRBOARD_OUTPUT_SWAP)
-  #define TEMP_1_PIN                           2  // Analog Input (Extrudrboard A THERM)
-  #define TEMP_2_PIN                           3  // Analog Input (Extrudrboard B THERM)
+  #define TEMP_1_PIN                           2  // Analog Input (Extrudrboard A THERM)//模拟输入（一个THERM）
+  #define TEMP_2_PIN                           3  // Analog Input (Extrudrboard B THERM)//模拟输入（Extrudrboard B THERM）
 #else
-  #define TEMP_1_PIN                           3  // Analog Input (Extrudrboard B THERM)
-  #define TEMP_2_PIN                           2  // Analog Input (Extrudrboard A THERM)
+  #define TEMP_1_PIN                           3  // Analog Input (Extrudrboard B THERM)//模拟输入（Extrudrboard B THERM）
+  #define TEMP_2_PIN                           2  // Analog Input (Extrudrboard A THERM)//模拟输入（一个THERM）
 #endif
 #endif
 
-//
-// Heaters / Fans
-//
-#define HEATER_0_PIN                          15  // C5 PWM3B - Extruder
-#define HEATER_BED_PIN                        14  // C4 PWM3C
+////
+// Heaters / Fans//加热器/风扇
+////
+#define HEATER_0_PIN                          15  // C5 PWM3B - Extruder//C5 PWM3B-挤出机
+#define HEATER_BED_PIN                        14  // C4 PWM3C//C4 PWM3C
 
 #if DISABLED(NO_EXTRUDRBOARD)
 #if DISABLED(NO_EXTRUDRBOARD_OUTPUT_SWAP)
-  #define HEATER_1_PIN                        44  // F6 - Extrudrboard A HOTEND
-  #define HEATER_2_PIN                        45  // F7 - Extrudrboard B HOTEND
+  #define HEATER_1_PIN                        44  // F6 - Extrudrboard A HOTEND//F6-挤出板A热端
+  #define HEATER_2_PIN                        45  // F7 - Extrudrboard B HOTEND//F7-挤压板B热端
 #else
-  #define HEATER_1_PIN                        45  // F7 - Extrudrboard B HOTEND
-  #define HEATER_2_PIN                        44  // F6 - Extrudrboard A HOTEND
+  #define HEATER_1_PIN                        45  // F7 - Extrudrboard B HOTEND//F7-挤压板B热端
+  #define HEATER_2_PIN                        44  // F6 - Extrudrboard A HOTEND//F6-挤出板A热端
 #endif
 #endif
 
 #ifndef FAN_PIN
-  #define FAN_PIN                             16  // C6 PWM3A
+  #define FAN_PIN                             16  // C6 PWM3A//C6 PWM3A
 #endif
 
-//
-// LCD / Controller
-//
-//#define USE_INTERNAL_SD
+////
+// LCD / Controller//液晶显示器/控制器
+////
+//#define USE_INTERNAL_SD//#定义使用\u内部\u SD
 
 #if HAS_WIRED_LCD
-  #define LCD_PINS_RS                          9  // E1       JP11-11
-  #define LCD_PINS_ENABLE                      8  // E0       JP11-10
-  #define LCD_PINS_D4                          7  // D7       JP11-8
-  #define LCD_PINS_D5                          6  // D6       JP11-7
-  #define LCD_PINS_D6                          5  // D5       JP11-6
-  #define LCD_PINS_D7                          4  // D4       JP11-5
+  #define LCD_PINS_RS                          9  // E1       JP11-11//E1 JP11-11
+  #define LCD_PINS_ENABLE                      8  // E0       JP11-10//E0 JP11-10
+  #define LCD_PINS_D4                          7  // D7       JP11-8//D7 JP11-8
+  #define LCD_PINS_D5                          6  // D6       JP11-7//D6 JP11-7
+  #define LCD_PINS_D6                          5  // D5       JP11-6//D5 JP11-6
+  #define LCD_PINS_D7                          4  // D4       JP11-5//D4 JP11-5
 
   #if ANY(VIKI2, miniVIKI)
 
-    #define BEEPER_PIN                         8  // E0       JP11-10
-    #define DOGLCD_A0                         40  // F2       JP2-2
-    #define DOGLCD_CS                         41  // F3       JP2-4
+    #define BEEPER_PIN                         8  // E0       JP11-10//E0 JP11-10
+    #define DOGLCD_A0                         40  // F2       JP2-2//F2 JP2-2
+    #define DOGLCD_CS                         41  // F3       JP2-4//F3 JP2-4
     #define LCD_SCREEN_ROT_180
 
-    #define BTN_EN1                            2  // D2 TX1   JP2-5
-    #define BTN_EN2                            3  // D3 RX1   JP2-7
-    #define BTN_ENC                           45  // F7 TDI   JP2-12
+    #define BTN_EN1                            2  // D2 TX1   JP2-5//D2 TX1 JP2-5
+    #define BTN_EN2                            3  // D3 RX1   JP2-7//D3 RX1 JP2-7
+    #define BTN_ENC                           45  // F7 TDI   JP2-12//F7 TDI JP2-12
 
-    #define SDSS                               3  // F5 TMS   JP2-8
+    #define SDSS                               3  // F5 TMS   JP2-8//F5 TMS JP2-8
 
-    #define STAT_LED_RED_PIN                  12  // C2       JP11-14
-    #define STAT_LED_BLUE_PIN                 10  // C0       JP11-12
+    #define STAT_LED_RED_PIN                  12  // C2       JP11-14//C2 JP11-14
+    #define STAT_LED_BLUE_PIN                 10  // C0       JP11-12//C0 JP11-12
 
   #elif ENABLED(MINIPANEL)
 
     #if DISABLED(USE_INTERNAL_SD)
-      //      PIN       FASTIO PIN#  ATUSB90 PIN# Teensy2.0++ PIN#  Printrboard RevF Conn.   MKSLCD12864 PIN#
-      #define SDSS                            11  //      36               C1                EXP2-13             EXP2-07
-      #define SD_DETECT_PIN                    9  //      34               E1                EXP2-11             EXP2-04
+      //      PIN       FASTIO PIN#  ATUSB90 PIN# Teensy2.0++ PIN#  Printrboard RevF Conn.   MKSLCD12864 PIN#//引脚FASTIO引脚ATUB90引脚Teensy2.0++引脚打印板RevF Conn.MKSLCD12864引脚#
+      #define SDSS                            11  //      36               C1                EXP2-13             EXP2-07//36 C1 EXP2-13 EXP2-07
+      #define SD_DETECT_PIN                    9  //      34               E1                EXP2-11             EXP2-04//34 E1 EXP2-11 EXP2-04
     #endif
 
-    //      PIN       FASTIO PIN#  ATUSB90 PIN# Teensy2.0++ PIN#  Printrboard RevF Conn.   MKSLCD12864 PIN#
-    #define DOGLCD_A0                          4  //       29               D4                EXP2-05             EXP1-04
-    #define DOGLCD_CS                          5  //       30               D5                EXP2-06             EXP1-05
-    #define BTN_ENC                            6  //       31               D6                EXP2-07             EXP1-09
-    #define BEEPER_PIN                         7  //       32               D7                EXP2-08             EXP1-10
-    #define KILL_PIN                           8  //       33               E0                EXP2-10             EXP2-03
-    #define BTN_EN1                           10  //       35               C0                EXP2-12             EXP2-06
-    #define BTN_EN2                           12  //       37               C2                EXP2-14             EXP2-08
-    //#define LCD_BACKLIGHT_PIN               43  //    56               F5                EXP1-12     Not Implemented
-    //#define SCK                             21  //         11               B1                ICSP-04             EXP2-09
-    //#define MOSI                            22  //         12               B2                ICSP-03             EXP2-05
-    //#define MISO                            23  //         13               B3                ICSP-06             EXP2-05
+    //      PIN       FASTIO PIN#  ATUSB90 PIN# Teensy2.0++ PIN#  Printrboard RevF Conn.   MKSLCD12864 PIN#//引脚FASTIO引脚ATUB90引脚Teensy2.0++引脚打印板RevF Conn.MKSLCD12864引脚#
+    #define DOGLCD_A0                          4  //       29               D4                EXP2-05             EXP1-04//29 D4 EXP2-05 EXP1-04
+    #define DOGLCD_CS                          5  //       30               D5                EXP2-06             EXP1-05//30 D5 EXP2-06 EXP1-05
+    #define BTN_ENC                            6  //       31               D6                EXP2-07             EXP1-09//31 D6 EXP2-07 EXP1-09
+    #define BEEPER_PIN                         7  //       32               D7                EXP2-08             EXP1-10//32 D7 EXP2-08 EXP1-10
+    #define KILL_PIN                           8  //       33               E0                EXP2-10             EXP2-03//33 E0 EXP2-10 EXP2-03
+    #define BTN_EN1                           10  //       35               C0                EXP2-12             EXP2-06//35 C0 EXP2-12 EXP2-06
+    #define BTN_EN2                           12  //       37               C2                EXP2-14             EXP2-08//37 C2 EXP2-14 EXP2-08
+    //#define LCD_BACKLIGHT_PIN               43  //    56               F5                EXP1-12     Not Implemented//#定义LCD_背光_引脚43//56 F5 EXP1-12未实现
+    //#define SCK                             21  //         11               B1                ICSP-04             EXP2-09//#定义SCK 21//11 B1 ICSP-04 EXP2-09
+    //#define MOSI                            22  //         12               B2                ICSP-03             EXP2-05//#定义MOSI 22//12 B2 ICSP-03 EXP2-05
+    //#define MISO                            23  //         13               B3                ICSP-06             EXP2-05//#定义MISO 23//13 B3 ICSP-06 EXP2-05
 
-    // Alter timing for graphical display
+    // Alter timing for graphical display//改变图形显示的时间
     #define BOARD_ST7920_DELAY_1 DELAY_NS(313)
     #define BOARD_ST7920_DELAY_2 DELAY_NS(313)
     #define BOARD_ST7920_DELAY_3 DELAY_NS(313)
 
   #else
 
-    #define BTN_EN1                           10  // C0       JP11-12
-    #define BTN_EN2                           11  // C1       JP11-13
-    #define BTN_ENC                           12  // C2       JP11-14
+    #define BTN_EN1                           10  // C0       JP11-12//C0 JP11-12
+    #define BTN_EN2                           11  // C1       JP11-13//C1 JP11-13
+    #define BTN_ENC                           12  // C2       JP11-14//C2 JP11-14
 
   #endif
 
 #endif
 
-//
-// Misc. Functions
-//
-//      PIN       FASTIO PIN#  ATUSB90 PIN# Teensy2.0++ PIN#  Printrboard RevF Conn.
+////
+// Misc. Functions//杂项。功能
+////
+//      PIN       FASTIO PIN#  ATUSB90 PIN# Teensy2.0++ PIN#  Printrboard RevF Conn.//引脚FASTIO引脚ATUB90引脚Teensy2.0++引脚打印板RevF Conn。
 #ifndef SDSS
-  #define SDSS                                20  //       10               B0
+  #define SDSS                                20  //       10               B0//10 B0
 #endif
 
 /**
@@ -275,5 +276,5 @@
  * which will let you use Channel B on the Extrudrboard as E1.
  */
 #ifndef FILWIDTH_PIN
-  #define FILWIDTH_PIN                         2  // Analog Input
+  #define FILWIDTH_PIN                         2  // Analog Input//模拟输入
 #endif

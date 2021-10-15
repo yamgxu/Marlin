@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -24,7 +25,7 @@
 
 #include <libmaple/stm32.h>
 
-#include "../../inc/MarlinConfig.h" // Allow pins/pins.h to set density
+#include "../../inc/MarlinConfig.h" // Allow pins/pins.h to set density//允许pins/pins.h设置密度
 
 #if EITHER(STM32_HIGH_DENSITY, STM32_XL_DENSITY)
 
@@ -84,7 +85,7 @@ bool SDIO_Init() {
 bool SDIO_ReadBlock_DMA(uint32_t blockAddress, uint8_t *data) {
   if (SDIO_GetCardState() != SDIO_CARD_TRANSFER) return false;
   if (blockAddress >= SdCard.LogBlockNbr) return false;
-  if ((0x03 & (uint32_t)data)) return false; // misaligned data
+  if ((0x03 & (uint32_t)data)) return false; // misaligned data//未对齐数据
 
   if (SdCard.CardType != CARD_SDHC_SDXC) { blockAddress *= 512U; }
 
@@ -103,14 +104,14 @@ bool SDIO_ReadBlock_DMA(uint32_t blockAddress, uint8_t *data) {
 
   while (!SDIO_GET_FLAG(SDIO_STA_DATAEND | SDIO_STA_TRX_ERROR_FLAGS)) { /* wait */ }
 
-  //If there were SDIO errors, do not wait DMA.
+  //If there were SDIO errors, do not wait DMA.//如果存在SDIO错误，请不要等待DMA。
   if (SDIO->STA & SDIO_STA_TRX_ERROR_FLAGS) {
     SDIO_CLEAR_FLAG(SDIO_ICR_CMD_FLAGS | SDIO_ICR_DATA_FLAGS);
     dma_disable(SDIO_DMA_DEV, SDIO_DMA_CHANNEL);
     return false;
   }
 
-  //Wait for DMA transaction to complete
+  //Wait for DMA transaction to complete//等待DMA事务完成
   while ((DMA2_BASE->ISR & (DMA_ISR_TEIF4|DMA_ISR_TCIF4)) == 0 ) { /* wait */ }
 
   if (DMA2_BASE->ISR & DMA_ISR_TEIF4) {
@@ -146,7 +147,7 @@ uint32_t millis();
 bool SDIO_WriteBlock(uint32_t blockAddress, const uint8_t *data) {
   if (SDIO_GetCardState() != SDIO_CARD_TRANSFER) return false;
   if (blockAddress >= SdCard.LogBlockNbr) return false;
-  if ((0x03 & (uint32_t)data)) return false; // misaligned data
+  if ((0x03 & (uint32_t)data)) return false; // misaligned data//未对齐数据
 
   if (SdCard.CardType != CARD_SDHC_SDXC) { blockAddress *= 512U; }
 
@@ -184,9 +185,9 @@ bool SDIO_WriteBlock(uint32_t blockAddress, const uint8_t *data) {
 
 inline uint32_t SDIO_GetCardState() { return SDIO_CmdSendStatus(SdCard.RelCardAdd << 16U) ? (SDIO_GetResponse(SDIO_RESP1) >> 9U) & 0x0FU : SDIO_CARD_ERROR; }
 
-// ------------------------
-// SD Commands and Responses
-// ------------------------
+// ------------------------// ------------------------
+// SD Commands and Responses//SD命令和响应
+// ------------------------// ------------------------
 
 void SDIO_SendCommand(uint16_t command, uint32_t argument) { SDIO->ARG = argument; SDIO->CMD = (uint32_t)(SDIO_CMD_CPSMEN | command); }
 uint8_t SDIO_GetCommandResponse() { return (uint8_t)(SDIO->RESPCMD); }
@@ -221,7 +222,7 @@ bool SDIO_CmdAppSetClearCardDetect(uint32_t rsa) {
   return SDIO_GetCmdResp2();
 }
 
-// Wait until given flags are unset or till timeout
+// Wait until given flags are unset or till timeout//等待给定标志取消设置或等待超时
 #define SDIO_WAIT(FLAGS) do{ \
   uint32_t count = 1 + (SDIO_CMDTIMEOUT) * ((F_CPU) / 8U / 1000U); \
   do { if (!--count) return false; } while (!SDIO_GET_FLAG(FLAGS)); \
@@ -299,5 +300,5 @@ bool SDIO_GetCmdResp7() {
   return true;
 }
 
-#endif // STM32_HIGH_DENSITY || STM32_XL_DENSITY
-#endif // ARDUINO_ARCH_STM32F1
+#endif // STM32_HIGH_DENSITY || STM32_XL_DENSITY//STM32_高密度| | STM32_XL_密度
+#endif // ARDUINO_ARCH_STM32F1//ARDUINO_ARCH_STM32F1

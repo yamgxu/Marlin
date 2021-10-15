@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -87,12 +88,12 @@ inline void L6470_say_status(const L64XX_axis_t axis) {
  * M122: Debug L6470 drivers
  */
 void GcodeSuite::M122() {
-  L64xxManager.pause_monitor(true); // Keep monitor_driver() from stealing status
-  L64xxManager.spi_active = true;   // Tell set_directions() a series of SPI transfers is underway
+  L64xxManager.pause_monitor(true); // Keep monitor_driver() from stealing status//防止监视器_驱动程序（）窃取状态
+  L64xxManager.spi_active = true;   // Tell set_directions() a series of SPI transfers is underway//告诉set_directions（）一系列SPI传输正在进行中
 
-  //if (parser.seen('S'))
-  //  tmc_set_report_interval(parser.value_bool());
-  //else
+  //if (parser.seen('S'))//if（parser.seen（'S'））
+  //  tmc_set_report_interval(parser.value_bool());//tmc_set_report_interval（parser.value_bool（））；
+  //else//否则
 
   #if AXIS_IS_L64XX(X)
     L6470_say_status(X);
@@ -143,9 +144,9 @@ void GcodeSuite::M122() {
     L6470_say_status(E7);
   #endif
 
-  L64xxManager.spi_active = false;   // done with all SPI transfers - clear handshake flags
+  L64xxManager.spi_active = false;   // done with all SPI transfers - clear handshake flags//完成所有SPI传输-清除握手标志
   L64xxManager.spi_abort = false;
   L64xxManager.pause_monitor(false);
 }
 
-#endif // HAS_L64XX
+#endif // HAS_L64XX//有"L64XX"吗?

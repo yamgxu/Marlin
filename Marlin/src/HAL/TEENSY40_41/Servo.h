@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -27,7 +28,7 @@
 
 #include <PWMServo.h>
 
-// Inherit and expand on core Servo library
+// Inherit and expand on core Servo library//核心伺服库的继承与扩展
 class libServo : public PWMServo {
   public:
     int8_t attach(const int pin);
@@ -39,5 +40,5 @@ class libServo : public PWMServo {
     uint8_t servoPin;
     uint16_t min_ticks;
     uint16_t max_ticks;
-    uint8_t servoIndex; // Index into the channel data for this servo
+    uint8_t servoIndex; // Index into the channel data for this servo//索引到此伺服的通道数据
 };

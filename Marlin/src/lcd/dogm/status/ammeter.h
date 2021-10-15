@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2021 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,9 +22,9 @@
  */
 #pragma once
 
-//
-// lcd/dogm/status/ammeter.h - Status Screen Laser Ammeter bitmaps
-//
+////
+// lcd/dogm/status/ammeter.h - Status Screen Laser Ammeter bitmaps//lcd/dogm/status/AMETER.h-状态屏幕激光安培计位图
+////
 
 #define STATUS_AMMETER_WIDTH 20
 

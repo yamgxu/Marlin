@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,16 +22,16 @@
  */
 #pragma once
 
-// R25 = 100 kOhm, beta25 = 3950 K, 4.7 kOhm pull-up,
-// Maker's Tool Works Kapton Bed Thermistor
-// ./createTemperatureLookup.py --r0=100000 --t0=25 --r1=0 --r2=4700 --beta=3950
-// r0: 100000
-// t0: 25
-// r1: 0 (parallel with rTherm)
-// r2: 4700 (series with rTherm)
-// beta: 3950
-// min adc: 1 at 0.0048828125 V
-// max adc: 1023 at 4.9951171875 V
+// R25 = 100 kOhm, beta25 = 3950 K, 4.7 kOhm pull-up,//R25=100千欧，beta25=3950千欧，上拉4.7千欧，
+// Maker's Tool Works Kapton Bed Thermistor//制造商的工具是卡普顿床热敏电阻
+// ./createTemperatureLookup.py --r0=100000 --t0=25 --r1=0 --r2=4700 --beta=3950//./createTemperatureLookup.py--r0=100000--t0=25--r1=0--r2=4700--beta=3950
+// r0: 100000//r0:100000
+// t0: 25//t0:25
+// r1: 0 (parallel with rTherm)//r1:0（与Rterm并行）
+// r2: 4700 (series with rTherm)//r2:4700（带rTherm的系列）
+// beta: 3950//贝塔：3950
+// min adc: 1 at 0.0048828125 V//最小模数：0.0048828125 V时为1
+// max adc: 1023 at 4.9951171875 V//4.9951171875 V时的最大adc:1023
 constexpr temp_entry_t temptable_60[] PROGMEM = {
   { OV(  51), 272 },
   { OV(  61), 258 },

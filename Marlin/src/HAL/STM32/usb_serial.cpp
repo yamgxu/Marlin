@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -50,5 +51,5 @@ void USB_Hook_init() {
   USBD_CDC_fops.Receive = USBD_CDC_Receive_hook;
 }
 
-#endif // EMERGENCY_PARSER && USBD_USE_CDC
-#endif // ARDUINO_ARCH_STM32 && !STM32GENERIC
+#endif // EMERGENCY_PARSER && USBD_USE_CDC//紧急解析器和USBD使用CDC
+#endif // ARDUINO_ARCH_STM32 && !STM32GENERIC//ARDUINO_ARCH_STM32&&！STM32通用

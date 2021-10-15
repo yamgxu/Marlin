@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,7 +32,7 @@
 #define DISPLAY_CHARSET_ISO10646_1
 
 namespace Language_gl {
-  using namespace Language_en; // Inherit undefined strings from English
+  using namespace Language_en; // Inherit undefined strings from English//从英语中继承未定义的字符串
 
   constexpr uint8_t    CHARSIZE                            = 1;
   PROGMEM Language_Str LANGUAGE                            = _UxGT("Galician");
@@ -431,9 +432,9 @@ namespace Language_gl {
   PROGMEM Language_Str MSG_ERR_MINTEMP                     = _UxGT("Erro:TEMP MÍN");
   PROGMEM Language_Str MSG_HALTED                          = _UxGT("IMPRESORA DETIDA");
   PROGMEM Language_Str MSG_PLEASE_RESET                    = _UxGT("Debe reiniciar!");
-  PROGMEM Language_Str MSG_SHORT_DAY                       = _UxGT("d"); // One character only
-  PROGMEM Language_Str MSG_SHORT_HOUR                      = _UxGT("h"); // One character only
-  PROGMEM Language_Str MSG_SHORT_MINUTE                    = _UxGT("m"); // One character only
+  PROGMEM Language_Str MSG_SHORT_DAY                       = _UxGT("d"); // One character only//只有一个字符
+  PROGMEM Language_Str MSG_SHORT_HOUR                      = _UxGT("h"); // One character only//只有一个字符
+  PROGMEM Language_Str MSG_SHORT_MINUTE                    = _UxGT("m"); // One character only//只有一个字符
   PROGMEM Language_Str MSG_HEATING                         = _UxGT("Quentando...");
   PROGMEM Language_Str MSG_COOLING                         = _UxGT("Arrefriando...");
   PROGMEM Language_Str MSG_BED_HEATING                     = _UxGT("Quentando cama...");

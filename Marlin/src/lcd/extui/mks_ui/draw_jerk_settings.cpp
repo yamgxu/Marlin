@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -95,4 +96,4 @@ void lv_clear_jerk_settings() {
   lv_obj_del(scr);
 }
 
-#endif // HAS_TFT_LVGL_UI && HAS_CLASSIC_JERK
+#endif // HAS_TFT_LVGL_UI && HAS_CLASSIC_JERK//拥有TFT、LVGL、UI和经典冲动

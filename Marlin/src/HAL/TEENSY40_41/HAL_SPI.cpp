@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -35,20 +36,20 @@
 
 static SPISettings spiConfig;
 
-// ------------------------
-// Public functions
-// ------------------------
+// ------------------------// ------------------------
+// Public functions//公共职能
+// ------------------------// ------------------------
 
 #if ENABLED(SOFTWARE_SPI)
-  // ------------------------
-  // Software SPI
-  // ------------------------
+  // ------------------------// ------------------------
+  // Software SPI//软件SPI
+  // ------------------------// ------------------------
   #error "Software SPI not supported for Teensy 4. Use Hardware SPI."
 #else
 
-// ------------------------
-// Hardware SPI
-// ------------------------
+// ------------------------// ------------------------
+// Hardware SPI//硬件SPI
+// ------------------------// ------------------------
 
 void spiBegin() {
   #ifndef SD_SS_PIN
@@ -57,22 +58,22 @@ void spiBegin() {
 
   OUT_WRITE(SD_SS_PIN, HIGH);
 
-  //SET_OUTPUT(SD_SCK_PIN);
-  //SET_INPUT(SD_MISO_PIN);
-  //SET_OUTPUT(SD_MOSI_PIN);
+  //SET_OUTPUT(SD_SCK_PIN);//设置输出（SD\U SCK\U引脚）；
+  //SET_INPUT(SD_MISO_PIN);//设置输入（SD\U MISO\U引脚）；
+  //SET_OUTPUT(SD_MOSI_PIN);//设置输出（SD\U MOSI\U引脚）；
 
   #if 0 && DISABLED(SOFTWARE_SPI)
-    // set SS high - may be chip select for another SPI device
+    // set SS high - may be chip select for another SPI device//设置SS高-可能是另一个SPI设备的芯片选择
     #if SET_SPI_SS_HIGH
       WRITE(SD_SS_PIN, HIGH);
     #endif
-    // set a default rate
-    spiInit(SPI_HALF_SPEED); // 1
+    // set a default rate//设定默认利率
+    spiInit(SPI_HALF_SPEED); // 1// 1
   #endif
 }
 
 void spiInit(uint8_t spiRate) {
-  // Use Marlin data-rates
+  // Use Marlin data-rates//使用马林数据速率
   uint32_t clock;
   switch (spiRate) {
   case SPI_FULL_SPEED:    clock = 10000000; break;
@@ -82,7 +83,7 @@ void spiInit(uint8_t spiRate) {
   case SPI_SPEED_5:       clock =   625000; break;
   case SPI_SPEED_6:       clock =   312500; break;
   default:
-    clock = 4000000; // Default from the SPI libarary
+    clock = 4000000; // Default from the SPI libarary//SPI库中的默认值
   }
   spiConfig = SPISettings(clock, MSBFIRST, SPI_MODE0);
   SPI.begin();
@@ -93,32 +94,32 @@ uint8_t spiRec() {
   uint8_t returnByte = SPI.transfer(0xFF);
   SPI.endTransaction();
   return returnByte;
-  //SPDR = 0xFF;
-  //while (!TEST(SPSR, SPIF)) { /* Intentionally left empty */ }
-  //return SPDR;
+  //SPDR = 0xFF;//SPDR=0xFF；
+  //while (!TEST(SPSR, SPIF)) { /* Intentionally left empty */ }//而（！TEST（SPSR，SPIF））{/*故意留空*/}
+  //return SPDR;//返回SPDR；
 }
 
 void spiRead(uint8_t *buf, uint16_t nbyte) {
   SPI.beginTransaction(spiConfig);
   SPI.transfer(buf, nbyte);
   SPI.endTransaction();
-  //if (nbyte-- == 0) return;
-  //  SPDR = 0xFF;
-  //for (uint16_t i = 0; i < nbyte; i++) {
-  //  while (!TEST(SPSR, SPIF)) { /* Intentionally left empty */ }
-  //  buf[i] = SPDR;
-  //  SPDR = 0xFF;
-  //}
-  //while (!TEST(SPSR, SPIF)) { /* Intentionally left empty */ }
-  //buf[nbyte] = SPDR;
+  //if (nbyte-- == 0) return;//如果（n字节--==0）返回；
+  //  SPDR = 0xFF;//SPDR=0xFF；
+  //for (uint16_t i = 0; i < nbyte; i++) {//对于（uint16_t i=0；i<nbyte；i++）{
+  //  while (!TEST(SPSR, SPIF)) { /* Intentionally left empty */ }//而（！TEST（SPSR，SPIF））{/*故意留空*/}
+  //  buf[i] = SPDR;//buf[i]=SPDR；
+  //  SPDR = 0xFF;//SPDR=0xFF；
+  //}//}
+  //while (!TEST(SPSR, SPIF)) { /* Intentionally left empty */ }//而（！TEST（SPSR，SPIF））{/*故意留空*/}
+  //buf[nbyte] = SPDR;//buf[nbyte]=SPDR；
 }
 
 void spiSend(uint8_t b) {
   SPI.beginTransaction(spiConfig);
   SPI.transfer(b);
   SPI.endTransaction();
-  //SPDR = b;
-  //while (!TEST(SPSR, SPIF)) { /* Intentionally left empty */ }
+  //SPDR = b;//SPDR=b；
+  //while (!TEST(SPSR, SPIF)) { /* Intentionally left empty */ }//而（！TEST（SPSR，SPIF））{/*故意留空*/}
 }
 
 void spiSendBlock(uint8_t token, const uint8_t *buf) {
@@ -134,11 +135,11 @@ void spiSendBlock(uint8_t token, const uint8_t *buf) {
   SPI.endTransaction();
 }
 
-// Begin SPI transaction, set clock, bit order, data mode
+// Begin SPI transaction, set clock, bit order, data mode//开始SPI事务、设置时钟、位顺序、数据模式
 void spiBeginTransaction(uint32_t spiClock, uint8_t bitOrder, uint8_t dataMode) {
   spiConfig = SPISettings(spiClock, bitOrder, dataMode);
   SPI.beginTransaction(spiConfig);
 }
 
-#endif // SOFTWARE_SPI
-#endif // __IMXRT1062__
+#endif // SOFTWARE_SPI//软件SPI
+#endif // __IMXRT1062__//_uuimxrt1062__

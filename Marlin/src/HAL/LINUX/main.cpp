@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -18,7 +19,7 @@
  */
 #ifdef __PLAT_LINUX__
 
-//#define GPIO_LOGGING // Full GPIO and Positional Logging
+//#define GPIO_LOGGING // Full GPIO and Positional Logging//#定义GPIO_日志//完整GPIO和位置日志
 
 #include "../../inc/MarlinConfig.h"
 #include "../shared/Delay.h"
@@ -35,7 +36,7 @@
 extern void setup();
 extern void loop();
 
-// simple stdout / stdin implementation for fake serial port
+// simple stdout / stdin implementation for fake serial port//伪串口的简单stdout/stdin实现
 void write_serial_thread() {
   for (;;) {
     for (std::size_t i = usb_serial.transmit_buffer.available(); i > 0; i--) {
@@ -93,7 +94,7 @@ void simulation_loop() {
         y = y_axis.position;
         z = z_axis.position;
       }
-      // flush the logger
+      // flush the logger//冲洗记录器
       logger.flush();
     #endif
 
@@ -112,7 +113,7 @@ int main() {
   #endif
 
   Clock::setFrequency(F_CPU);
-  Clock::setTimeMultiplier(1.0); // some testing at 10x
+  Clock::setTimeMultiplier(1.0); // some testing at 10x//在10倍时进行一些测试
 
   HAL_timer_init();
 
@@ -131,4 +132,4 @@ int main() {
   read_serial.join();
 }
 
-#endif // __PLAT_LINUX__
+#endif // __PLAT_LINUX__//_uuu平台u LINUX__

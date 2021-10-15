@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*************************
  * statistics_screen.cpp *
  *************************/
@@ -52,7 +53,7 @@ void StatisticsScreen::onRedraw(draw_mode_t what) {
        .text(BTN_POS(1,4), BTN_SIZE(2,1), GET_TEXT_F(MSG_INFO_PRINT_TIME),       OPT_RIGHTX | OPT_CENTERY)
        .text(BTN_POS(1,5), BTN_SIZE(2,1), GET_TEXT_F(MSG_INFO_PRINT_LONGEST),    OPT_RIGHTX | OPT_CENTERY)
        .text(BTN_POS(1,6), BTN_SIZE(2,1), GET_TEXT_F(MSG_INFO_PRINT_FILAMENT),   OPT_RIGHTX | OPT_CENTERY);
-    // Don't chain the following, it causes strange issues with evaluation ordering!
+    // Don't chain the following, it causes strange issues with evaluation ordering!//不要链接以下内容，这会导致评估顺序出现奇怪的问题！
     cmd.text(BTN_POS(3,2), BTN_SIZE(2,1), getTotalPrints_str(buffer));
     cmd.text(BTN_POS(3,3), BTN_SIZE(2,1), getFinishedPrints_str(buffer));
     cmd.text(BTN_POS(3,4), BTN_SIZE(2,1), getTotalPrintTime_str(buffer));
@@ -74,4 +75,4 @@ bool StatisticsScreen::onTouchEnd(uint8_t tag) {
   }
 }
 
-#endif // FTDI_STATISTICS_SCREEN
+#endif // FTDI_STATISTICS_SCREEN//FTDI_统计屏幕

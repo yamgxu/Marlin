@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -40,7 +41,7 @@
   typedef u8g_uint_t lcd_uint_t;
   typedef u8g_int_t lcd_int_t;
 
-  // Only Western languages support big / small fonts
+  // Only Western languages support big / small fonts//只有西方语言支持大/小字体
   #if DISABLED(DISPLAY_CHARSET_ISO10646_1)
     #undef USE_BIG_EDIT_FONT
     #undef USE_SMALL_INFOFONT
@@ -65,7 +66,7 @@
   #endif
   #define EDIT_FONT_HEIGHT (EDIT_FONT_ASCENT + EDIT_FONT_DESCENT)
 
-  // Get the Ascent, Descent, and total Height for the Info Screen font
+  // Get the Ascent, Descent, and total Height for the Info Screen font//获取信息屏幕字体的上升、下降和总高度
   #if ENABLED(USE_SMALL_INFOFONT)
     extern const u8g_fntpgm_uint8_t u8g_font_6x9[];
     #define INFO_FONT_ASCENT 7

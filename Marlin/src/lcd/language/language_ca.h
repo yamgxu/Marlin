@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -28,7 +29,7 @@
  * See also https://marlinfw.org/docs/development/lcd_language.html
  */
 namespace Language_ca {
-  using namespace Language_en; // Inherit undefined strings from English
+  using namespace Language_en; // Inherit undefined strings from English//从英语中继承未定义的字符串
 
   constexpr uint8_t    CHARSIZE                            = 2;
   PROGMEM Language_Str LANGUAGE                            = _UxGT("Catalan");
@@ -161,9 +162,9 @@ namespace Language_ca {
   PROGMEM Language_Str MSG_ERR_MINTEMP                     = _UxGT("Err: TEMP MINIMA");
   PROGMEM Language_Str MSG_HALTED                          = _UxGT("IMPRESSORA PARADA");
   PROGMEM Language_Str MSG_PLEASE_RESET                    = _UxGT("Reinicieu");
-  PROGMEM Language_Str MSG_SHORT_DAY                       = _UxGT("d"); // One character only
-  PROGMEM Language_Str MSG_SHORT_HOUR                      = _UxGT("h"); // One character only
-  PROGMEM Language_Str MSG_SHORT_MINUTE                    = _UxGT("m"); // One character only
+  PROGMEM Language_Str MSG_SHORT_DAY                       = _UxGT("d"); // One character only//只有一个字符
+  PROGMEM Language_Str MSG_SHORT_HOUR                      = _UxGT("h"); // One character only//只有一个字符
+  PROGMEM Language_Str MSG_SHORT_MINUTE                    = _UxGT("m"); // One character only//只有一个字符
   PROGMEM Language_Str MSG_HEATING                         = _UxGT("Escalfant...");
   PROGMEM Language_Str MSG_BED_HEATING                     = _UxGT("Escalfant llit...");
   PROGMEM Language_Str MSG_DELTA_CALIBRATE                 = _UxGT("Calibratge Delta");
@@ -206,10 +207,10 @@ namespace Language_ca {
 
   PROGMEM Language_Str MSG_KILL_EXPECTED_PRINTER           = _UxGT("Impressora incorrecta");
 
-  //
-  // Filament Change screens show up to 3 lines on a 4-line display
-  //                        ...or up to 2 lines on a 3-line display
-  //
+  ////
+  // Filament Change screens show up to 3 lines on a 4-line display//灯丝更换屏幕在4行显示屏上最多显示3行
+  //                        ...or up to 2 lines on a 3-line display//…或在3行显示器上最多显示2行
+  ////
   #if LCD_HEIGHT >= 4
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_INIT          = _UxGT(MSG_3_LINE("Esperant per", "iniciar el canvi", "de filament"));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_UNLOAD        = _UxGT(MSG_2_LINE("Esperant per", "treure filament"));
@@ -218,12 +219,12 @@ namespace Language_ca {
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_HEATING       = _UxGT(MSG_2_LINE("Escalfant nozzle", "Espereu..."));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_LOAD          = _UxGT(MSG_2_LINE("Esperant carrega", "de filament"));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_RESUME        = _UxGT(MSG_2_LINE("Esperant per", "reprendre"));
-  #else // LCD_HEIGHT < 4
+  #else // LCD_HEIGHT < 4//LCD_高度<4
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_INIT          = _UxGT(MSG_1_LINE("Espereu..."));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_UNLOAD        = _UxGT(MSG_1_LINE("Expulsant..."));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_INSERT        = _UxGT(MSG_1_LINE("Insereix i prem"));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_HEATING       = _UxGT(MSG_1_LINE("Escalfant..."));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_LOAD          = _UxGT(MSG_1_LINE("Carregant..."));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_RESUME        = _UxGT(MSG_1_LINE("Reprenent..."));
-  #endif // LCD_HEIGHT < 4
+  #endif // LCD_HEIGHT < 4//LCD_高度<4
 }

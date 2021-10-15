@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -50,7 +51,7 @@ Nozzle nozzle;
       const xyz_pos_t oldpos = current_position;
     #endif
 
-    // Move to the starting point
+    // Move to the starting point//移到起点
     #if ENABLED(NOZZLE_CLEAN_NO_Z)
       #if ENABLED(NOZZLE_CLEAN_NO_Y)
         do_blocking_move_to_x(start.x);
@@ -61,7 +62,7 @@ Nozzle nozzle;
       do_blocking_move_to(start);
     #endif
 
-    // Start the stroke pattern
+    // Start the stroke pattern//开始笔划模式
     LOOP_L_N(i, strokes >> 1) {
       #if ENABLED(NOZZLE_CLEAN_NO_Y)
         do_blocking_move_to_x(end.x);
@@ -99,8 +100,8 @@ Nozzle nozzle;
     #endif
 
     const uint8_t zigs = objects << 1;
-    const bool horiz = ABS(diff.x) >= ABS(diff.y);    // Do a horizontal wipe?
-    const float P = (horiz ? diff.x : diff.y) / zigs; // Period of each zig / zag
+    const bool horiz = ABS(diff.x) >= ABS(diff.y);    // Do a horizontal wipe?//做水平擦拭？
+    const float P = (horiz ? diff.x : diff.y) / zigs; // Period of each zig / zag//每个之字形/之字形的周期
     const xyz_pos_t *side;
     LOOP_L_N(j, strokes) {
       for (int8_t i = 0; i < zigs; i++) {
@@ -145,7 +146,7 @@ Nozzle nozzle;
           middle.y + cos((RADIANS(360) / NOZZLE_CLEAN_CIRCLE_FN) * i) * radius
         );
 
-    // Let's be safe
+    // Let's be safe//我们要安全
     do_blocking_move_to_xy(start);
 
     TERN_(NOZZLE_CLEAN_GOBACK, do_blocking_move_to(back));
@@ -221,18 +222,18 @@ Nozzle nozzle;
     }
   }
 
-#endif // NOZZLE_CLEAN_FEATURE
+#endif // NOZZLE_CLEAN_FEATURE//喷嘴清洁功能
 
 #if ENABLED(NOZZLE_PARK_FEATURE)
 
   float Nozzle::park_mode_0_height(const_float_t park_z) {
-    // Apply a minimum raise, if specified. Use park.z as a minimum height instead.
-    return _MAX(park_z,                       // Minimum height over 0 based on input
-      _MIN(Z_MAX_POS,                         // Maximum height is fixed
+    // Apply a minimum raise, if specified. Use park.z as a minimum height instead.//如有规定，施加最小升程。使用park.z作为最小高度。
+    return _MAX(park_z,                       // Minimum height over 0 based on input//基于输入的最小高度大于0
+      _MIN(Z_MAX_POS,                         // Maximum height is fixed//最大高度是固定的
         #ifdef NOZZLE_PARK_Z_RAISE_MIN
-          NOZZLE_PARK_Z_RAISE_MIN +           // Minimum raise...
+          NOZZLE_PARK_Z_RAISE_MIN +           // Minimum raise...//最低加薪。。。
         #endif
-        current_position.z                    // ...over current position
+        current_position.z                    // ...over current position//…过流位置
       )
     );
   }
@@ -241,15 +242,15 @@ Nozzle nozzle;
     constexpr feedRate_t fr_xy = NOZZLE_PARK_XY_FEEDRATE, fr_z = NOZZLE_PARK_Z_FEEDRATE;
 
     switch (z_action) {
-      case 1: // Go to Z-park height
+      case 1: // Go to Z-park height//转到Z-park高度
         do_blocking_move_to_z(park.z, fr_z);
         break;
 
-      case 2: // Raise by Z-park height
+      case 2: // Raise by Z-park height//升高Z-park高度
         do_blocking_move_to_z(_MIN(current_position.z + park.z, Z_MAX_POS), fr_z);
         break;
 
-      default: // Raise by NOZZLE_PARK_Z_RAISE_MIN, use park.z as a minimum height
+      default: // Raise by NOZZLE_PARK_Z_RAISE_MIN, use park.z as a minimum height//通过喷嘴上升_驻车_Z_上升_最小，使用PARK.Z作为最小高度
         do_blocking_move_to_z(park_mode_0_height(park.z), fr_z);
         break;
     }
@@ -263,6 +264,6 @@ Nozzle nozzle;
     report_current_position();
   }
 
-#endif // NOZZLE_PARK_FEATURE
+#endif // NOZZLE_PARK_FEATURE//喷嘴（驻车）功能
 
-#endif // NOZZLE_CLEAN_FEATURE || NOZZLE_PARK_FEATURE
+#endif // NOZZLE_CLEAN_FEATURE || NOZZLE_PARK_FEATURE//喷嘴|清洁|喷嘴|停车|功能

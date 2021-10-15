@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*******************
  * flash_storage.h *
  *******************/
@@ -22,8 +23,8 @@
 
 class SPIFlash {
   public:
-    static constexpr uint32_t erase_unit_size = 4 * 1024; // Minimum erase unit
-    static constexpr uint32_t write_page_size = 256;      // Minimum page write unit
+    static constexpr uint32_t erase_unit_size = 4 * 1024; // Minimum erase unit//最小擦除单元
+    static constexpr uint32_t write_page_size = 256;      // Minimum page write unit//最小页写入单元
 
     enum {
       READ_STATUS_1 = 0x05,
@@ -68,7 +69,7 @@ class UIFlashStorage : private SPIFlash {
     static void     set_media_file_size(uint8_t slot, uint32_t size);
     static uint32_t get_media_file_size(uint8_t slot);
 
-    static constexpr uint32_t delimiter = 0x4D524C4E; // 'MRLN'
+    static constexpr uint32_t delimiter = 0x4D524C4E; // 'MRLN'//“MRLN”
   public:
     enum error_t {
       SUCCESS,

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -25,10 +26,10 @@
 
 #include "draw_ui.h"
 #include <lv_conf.h>
-//#include "../lvgl/src/lv_objx/lv_imgbtn.h"
-//#include "../lvgl/src/lv_objx/lv_img.h"
-//#include "../lvgl/src/lv_core/lv_disp.h"
-//#include "../lvgl/src/lv_core/lv_refr.h"
+//#include "../lvgl/src/lv_objx/lv_imgbtn.h"//#包括“./lvgl/src/lv_objx/lv_imgbtn.h”
+//#include "../lvgl/src/lv_objx/lv_img.h"//#包括“./lvgl/src/lv_objx/lv_img.h”
+//#include "../lvgl/src/lv_core/lv_disp.h"//#包括“./lvgl/src/lv_核心/lv_显示”
+//#include "../lvgl/src/lv_core/lv_refr.h"//#包括“./lvgl/src/lv_核心/lv_参考h”
 
 #include "../../../sd/cardreader.h"
 #include "../../../inc/MarlinConfig.h"
@@ -58,13 +59,13 @@ uint8_t sel_id = 0;
 
   static uint8_t search_file() {
     int valid_name_cnt = 0;
-    //char tmp[SHORT_NEME_LEN*MAX_DIR_LEVEL+1];
+    //char tmp[SHORT_NEME_LEN*MAX_DIR_LEVEL+1];//字符tmp[短字符长度*最大方向级别+1]；
 
     list_file.Sd_file_cnt = 0;
-    //list_file.Sd_file_offset = dir_offset[curDirLever].cur_page_first_offset;
+    //list_file.Sd_file_offset = dir_offset[curDirLever].cur_page_first_offset;//list_file.Sd_file_offset=dir_offset[curDirLever]。cur_page_first_offset；
 
-    //root2.rewind();
-    //SERIAL_ECHOLN(list_file.curDirPath);
+    //root2.rewind();//root2.倒带（）；
+    //SERIAL_ECHOLN(list_file.curDirPath);//SERIAL_ECHOLN（list_file.curDirPath）；
 
     if (curDirLever != 0)
       card.cd(list_file.curDirPath);
@@ -95,11 +96,11 @@ uint8_t sel_id = 0;
       }
       list_file.Sd_file_cnt++;
     }
-    //card.closefile(false);
+    //card.closefile(false);//卡片关闭文件（假）；
     return valid_name_cnt;
   }
 
-#endif // SDSUPPORT
+#endif // SDSUPPORT//SDSUPPORT
 
 bool have_pre_pic(char *path) {
   #if ENABLED(SDSUPPORT)
@@ -119,11 +120,11 @@ bool have_pre_pic(char *path) {
 static void event_handler(lv_obj_t *obj, lv_event_t event) {
   if (event != LV_EVENT_RELEASED) return;
   uint8_t i, file_count = 0;
-  //switch (obj->mks_obj_id)
-  //{
+  //switch (obj->mks_obj_id)//开关（obj->mks\U obj\U id）
+  //{//{
   if (obj->mks_obj_id == ID_P_UP) {
     if (dir_offset[curDirLever].curPage > 0) {
-      // 2015.05.19
+      // 2015.05.19// 2015.05.19
       list_file.Sd_file_cnt = 0;
 
       if (dir_offset[curDirLever].cur_page_first_offset >= FILE_NUM)
@@ -207,7 +208,7 @@ static void event_handler(lv_obj_t *obj, lv_event_t event) {
 }
 
 void lv_draw_print_file() {
-  //uint8_t i;
+  //uint8_t i;//uint8_t i；
   uint8_t file_count;
 
   curDirLever = 0;
@@ -227,9 +228,9 @@ void lv_draw_print_file() {
   #endif
   disp_gcode_icon(file_count);
 
-  //lv_obj_t *labelPageUp = lv_label_create_empty(buttonPageUp);
-  //lv_obj_t *labelPageDown = lv_label_create_empty(buttonPageDown);
-  //lv_obj_t *label_Back = lv_label_create_empty(buttonBack);
+  //lv_obj_t *labelPageUp = lv_label_create_empty(buttonPageUp);//lv_obj_t*labelPageUp=lv_label_create_empty（按钮PageUp）；
+  //lv_obj_t *labelPageDown = lv_label_create_empty(buttonPageDown);//lv_obj_t*labelPageDown=lv_label_create_empty（按钮PageDown）；
+  //lv_obj_t *label_Back = lv_label_create_empty(buttonBack);//lv_obj_t*label_Back=lv_label_create_empty（按钮后退）；
 
   /*
   if (gCfgItems.multiple_language) {
@@ -248,15 +249,15 @@ static char test_public_buf_l[40];
 void disp_gcode_icon(uint8_t file_num) {
   uint8_t i;
 
-  // TODO: set current media title?!
+  // TODO: set current media title?!//TODO:设置当前媒体标题？！
   scr = lv_screen_create(PRINT_FILE_UI, "");
 
-  // Create image buttons
+  // Create image buttons//创建图像按钮
   buttonPageUp   = lv_imgbtn_create(scr, "F:/bmp_pageUp.bin", OTHER_BTN_XPIEL * 3 + INTERVAL_V * 4, titleHeight, event_handler, ID_P_UP);
   buttonPageDown = lv_imgbtn_create(scr, "F:/bmp_pageDown.bin", OTHER_BTN_XPIEL * 3 + INTERVAL_V * 4, titleHeight + OTHER_BTN_YPIEL + INTERVAL_H, event_handler, ID_P_DOWN);
   buttonBack     = lv_imgbtn_create(scr, "F:/bmp_back.bin", OTHER_BTN_XPIEL * 3 + INTERVAL_V * 4, titleHeight + OTHER_BTN_YPIEL * 2 + INTERVAL_H * 2, event_handler, ID_P_RETURN);
 
-  // Create labels on the image buttons
+  // Create labels on the image buttons//在图像按钮上创建标签
   for (i = 0; i < FILE_BTN_CNT; i++) {
     /*
     if (seq) {
@@ -294,7 +295,7 @@ void disp_gcode_icon(uint8_t file_num) {
       else {
         if (have_pre_pic((char *)list_file.file_name[i])) {
 
-          //lv_obj_set_event_cb_mks(buttonGcode[i], event_handler, (i + 1), list_file.file_name[i], 1);
+          //lv_obj_set_event_cb_mks(buttonGcode[i], event_handler, (i + 1), list_file.file_name[i], 1);//lv_obj_set_event_cb_mks（按钮代码[i]，事件处理程序，（i+1），列表文件.文件名[i]，1）；
 
           strcpy(test_public_buf_l, "S:");
           strcat(test_public_buf_l, list_file.file_name[i]);
@@ -305,24 +306,24 @@ void disp_gcode_icon(uint8_t file_num) {
           if (i < 3) {
             lv_obj_set_pos(buttonGcode[i], BTN_X_PIXEL * i + INTERVAL_V * (i + 1) + FILE_PRE_PIC_X_OFFSET, titleHeight + FILE_PRE_PIC_Y_OFFSET);
             buttonText[i] = lv_btn_create(scr, nullptr);
-            //lv_obj_set_event_cb(buttonText[i], event_handler);
+            //lv_obj_set_event_cb(buttonText[i], event_handler);//lv_obj_set_event_cb（按钮文本[i]，事件处理程序）；
 
             lv_btn_use_label_style(buttonText[i]);
             lv_obj_clear_protect(buttonText[i], LV_PROTECT_FOLLOW);
             lv_btn_set_layout(buttonText[i], LV_LAYOUT_OFF);
-            //lv_obj_set_event_cb_mks(buttonText[i], event_handler,(i+10),"", 0);
+            //lv_obj_set_event_cb_mks(buttonText[i], event_handler,(i+10),"", 0);//lv_obj_set_event_cb_mks（按钮文本[i]，事件处理程序，（i+10），“”，0）；
             lv_obj_set_pos(buttonText[i], BTN_X_PIXEL * i + INTERVAL_V * (i + 1) + FILE_PRE_PIC_X_OFFSET, titleHeight + FILE_PRE_PIC_Y_OFFSET + 100);
             lv_obj_set_size(buttonText[i], 100, 40);
           }
           else {
             lv_obj_set_pos(buttonGcode[i], BTN_X_PIXEL * (i - 3) + INTERVAL_V * ((i - 3) + 1) + FILE_PRE_PIC_X_OFFSET, BTN_Y_PIXEL + INTERVAL_H + titleHeight + FILE_PRE_PIC_Y_OFFSET);
             buttonText[i] = lv_btn_create(scr, nullptr);
-            //lv_obj_set_event_cb(buttonText[i], event_handler);
+            //lv_obj_set_event_cb(buttonText[i], event_handler);//lv_obj_set_event_cb（按钮文本[i]，事件处理程序）；
 
             lv_btn_use_label_style(buttonText[i]);
             lv_obj_clear_protect(buttonText[i], LV_PROTECT_FOLLOW);
             lv_btn_set_layout(buttonText[i], LV_LAYOUT_OFF);
-            //lv_obj_set_event_cb_mks(buttonText[i], event_handler,(i+10),"", 0);
+            //lv_obj_set_event_cb_mks(buttonText[i], event_handler,(i+10),"", 0);//lv_obj_set_event_cb_mks（按钮文本[i]，事件处理程序，（i+10），“”，0）；
             lv_obj_set_pos(buttonText[i], BTN_X_PIXEL * (i - 3) + INTERVAL_V * ((i - 3) + 1) + FILE_PRE_PIC_X_OFFSET, BTN_Y_PIXEL + INTERVAL_H + titleHeight + FILE_PRE_PIC_Y_OFFSET + 100);
             lv_obj_set_size(buttonText[i], 100, 40);
           }
@@ -345,8 +346,8 @@ void disp_gcode_icon(uint8_t file_num) {
         if (gCfgItems.encoder_enable) lv_group_add_obj(g, buttonGcode[i]);
       #endif
 
-    #else // !TFT35
-    #endif // !TFT35
+    #else // !TFT35// !TFT35
+    #endif // !TFT35// !TFT35
   }
   #if HAS_ROTARY_ENCODER
     if (gCfgItems.encoder_enable) {
@@ -368,13 +369,13 @@ uint32_t lv_open_gcode_file(char *path) {
     card.openFileRead(cur_name);
     card.read(public_buf, 512);
     ps4 = (uint32_t *)strstr((char *)public_buf, ";simage:");
-    // Ignore the beginning message of gcode file
+    // Ignore the beginning message of gcode file//忽略gcode文件的开始消息
     if (ps4) {
       pre_sread_cnt = (uint32_t)ps4 - (uint32_t)((uint32_t *)(&public_buf[0]));
       card.setIndex(pre_sread_cnt);
     }
     return pre_sread_cnt;
-  #endif // SDSUPPORT
+  #endif // SDSUPPORT//SDSUPPORT
 }
 
 int ascii2dec_test(char *ascii) {
@@ -405,9 +406,9 @@ void lv_gcode_file_read(uint8_t *data_buf) {
     memset(public_buf, 0, 200);
 
     while (card.isFileOpen()) {
-      if (ignore_start) card.read(temp_test, 8); // line start -> ignore
-      card.read(temp_test, 200); // data
-      // \r;;gimage: we got the bit img, so stop here
+      if (ignore_start) card.read(temp_test, 8); // line start -> ignore//行开始->忽略
+      card.read(temp_test, 200); // data//资料
+      // \r;;gimage: we got the bit img, so stop here//\r；；gimage:我们有一点img，所以停在这里
       if (temp_test[1] == ';') {
         card.closefile();
         break;
@@ -419,9 +420,9 @@ void lv_gcode_file_read(uint8_t *data_buf) {
       }
 
       uint16_t c = card.get();
-      // check for more data or end of line (CR or LF)
+      // check for more data or end of line (CR or LF)//检查是否有更多数据或行尾（CR或LF）
       if (ISEOL(c)) {
-        c = card.get(); // more eol?
+        c = card.get(); // more eol?//更多的下线？
         if (!ISEOL(c)) card.setIndex(card.getIndex() - 1);
         break;
       }
@@ -438,22 +439,22 @@ void lv_gcode_file_read(uint8_t *data_buf) {
       for (i = 0; i < 200;) {
         p_index = (uint16_t *)(&public_buf[i]);
 
-        //Color = (*p_index >> 8);
-        //*p_index = Color | ((*p_index & 0xFF) << 8);
+        //Color = (*p_index >> 8);//颜色=（*p_指数>>8）；
+        //*p_index = Color | ((*p_index & 0xFF) << 8);//*p|指数=颜色（*p|指数&0xFF）<<8）；
         i += 2;
         if (*p_index == 0x0000) *p_index = LV_COLOR_BACKGROUND.full;
       }
-    #else // !HAS_TFT_LVGL_UI_SPI
+    #else // !HAS_TFT_LVGL_UI_SPI//！具有\u TFT\u LVGL\u UI\u SPI
       for (i = 0; i < 200;) {
         p_index = (uint16_t *)(&public_buf[i]);
-        //Color = (*p_index >> 8);
-        //*p_index = Color | ((*p_index & 0xFF) << 8);
+        //Color = (*p_index >> 8);//颜色=（*p_指数>>8）；
+        //*p_index = Color | ((*p_index & 0xFF) << 8);//*p|指数=颜色（*p|指数&0xFF）<<8）；
         i += 2;
-        if (*p_index == 0x0000) *p_index = LV_COLOR_BACKGROUND.full; // 0x18C3;
+        if (*p_index == 0x0000) *p_index = LV_COLOR_BACKGROUND.full; // 0x18C3;//0x18C3；
       }
-    #endif // !HAS_TFT_LVGL_UI_SPI
+    #endif // !HAS_TFT_LVGL_UI_SPI// !有TFT\U LVGL\U UI\U SPI
     memcpy(data_buf, public_buf, 200);
-  #endif // SDSUPPORT
+  #endif // SDSUPPORT//SDSUPPORT
 }
 
 void lv_close_gcode_file() {TERN_(SDSUPPORT, card.closefile());}
@@ -486,10 +487,10 @@ void cutFileName(char *path, int len, int bytePerLine, char *outStr) {
   #endif
 
   beginIndex = (strIndex1 != 0
-                //&& (strIndex2 != 0) && (strIndex1 < strIndex2)
+                //&& (strIndex2 != 0) && (strIndex1 < strIndex2)//&&（strIndex2！=0）&（strIndex1<strIndex2）
                 ) ? strIndex1 + 1 : tmpFile;
 
-  if (strIndex2 == 0 || (strIndex1 > strIndex2)) { // not gcode file
+  if (strIndex2 == 0 || (strIndex1 > strIndex2)) { // not gcode file//不是gcode文件
     #if _LFN_UNICODE
       if (wcslen(beginIndex) > len)
         wcsncpy(outStr, beginIndex, len);
@@ -502,13 +503,13 @@ void cutFileName(char *path, int len, int bytePerLine, char *outStr) {
         strcpy(outStr, beginIndex);
     #endif
   }
-  else { // gcode file
+  else { // gcode file//gcode文件
     if (strIndex2 - beginIndex > (len - 2)) {
       #if _LFN_UNICODE
         wcsncpy(outStr, (const WCHAR *)beginIndex, len - 3);
         wcscat(outStr, (const WCHAR *)gFileTail);
       #else
-        //strncpy(outStr, beginIndex, len - 3);
+        //strncpy(outStr, beginIndex, len - 3);//strncpy（未完成、开始索引、len-3）；
         strncpy(outStr, beginIndex, len - 4);
         strcat_P(outStr, PSTR("~.g"));
       #endif
@@ -551,4 +552,4 @@ void lv_clear_print_file() {
   lv_obj_del(scr);
 }
 
-#endif // HAS_TFT_LVGL_UI
+#endif // HAS_TFT_LVGL_UI//有TFT\U LVGL\U用户界面

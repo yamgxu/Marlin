@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -25,7 +26,7 @@
   extern "C" { /* C-declarations for C++ */
 #endif
 
-#define MIN_FILE_PRINTED   100 //5000
+#define MIN_FILE_PRINTED   100 //5000//5000
 
 void printer_state_polling();
 void filament_pin_setup();

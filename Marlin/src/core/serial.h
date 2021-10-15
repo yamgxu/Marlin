@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -28,7 +29,7 @@
   #include "../feature/meatpack.h"
 #endif
 
-// Commonly-used strings in serial output
+// Commonly-used strings in serial output//串行输出中常用的字符串
 extern const char NUL_STR[],
                   SP_X_STR[], SP_Y_STR[], SP_Z_STR[],
                   SP_A_STR[], SP_B_STR[], SP_C_STR[], SP_E_STR[],
@@ -40,19 +41,19 @@ extern const char NUL_STR[],
                   X_LBL[], Y_LBL[], Z_LBL[], E_LBL[],
                   I_LBL[], J_LBL[], K_LBL[];
 
-//
-// Debugging flags for use by M111
-//
+////
+// Debugging flags for use by M111//M111使用的调试标志
+////
 enum MarlinDebugFlags : uint8_t {
   MARLIN_DEBUG_NONE          = 0,
-  MARLIN_DEBUG_ECHO          = _BV(0), ///< Echo commands in order as they are processed
-  MARLIN_DEBUG_INFO          = _BV(1), ///< Print messages for code that has debug output
-  MARLIN_DEBUG_ERRORS        = _BV(2), ///< Not implemented
-  MARLIN_DEBUG_DRYRUN        = _BV(3), ///< Ignore temperature setting and E movement commands
-  MARLIN_DEBUG_COMMUNICATION = _BV(4), ///< Not implemented
+  MARLIN_DEBUG_ECHO          = _BV(0), ///< Echo commands in order as they are processed///<按处理顺序回显命令
+  MARLIN_DEBUG_INFO          = _BV(1), ///< Print messages for code that has debug output///<打印具有调试输出的代码的消息
+  MARLIN_DEBUG_ERRORS        = _BV(2), ///< Not implemented///<未实施
+  MARLIN_DEBUG_DRYRUN        = _BV(3), ///< Ignore temperature setting and E movement commands///<忽略温度设置和E移动命令
+  MARLIN_DEBUG_COMMUNICATION = _BV(4), ///< Not implemented///<未实施
   #if ENABLED(DEBUG_LEVELING_FEATURE)
-    MARLIN_DEBUG_LEVELING    = _BV(5), ///< Print detailed output for homing and leveling
-    MARLIN_DEBUG_MESH_ADJUST = _BV(6), ///< UBL bed leveling
+    MARLIN_DEBUG_LEVELING    = _BV(5), ///< Print detailed output for homing and leveling///<打印归位和调平的详细输出
+    MARLIN_DEBUG_MESH_ADJUST = _BV(6), ///< UBL bed leveling///<UBL河床平整
   #else
     MARLIN_DEBUG_LEVELING    = 0,
     MARLIN_DEBUG_MESH_ADJUST = 0,
@@ -63,17 +64,17 @@ enum MarlinDebugFlags : uint8_t {
 extern uint8_t marlin_debug_flags;
 #define DEBUGGING(F) (marlin_debug_flags & (MARLIN_DEBUG_## F))
 
-//
-// Serial redirection
-//
-// Step 1: Find out what the first serial leaf is
+////
+// Serial redirection//串行重定向
+////
+// Step 1: Find out what the first serial leaf is//步骤1：找出第一个序列叶是什么
 #if BOTH(HAS_MULTI_SERIAL, SERIAL_CATCHALL)
   #define _SERIAL_LEAF_1 MYSERIAL
 #else
   #define _SERIAL_LEAF_1 MYSERIAL1
 #endif
 
-// Hook Meatpack if it's enabled on the first leaf
+// Hook Meatpack if it's enabled on the first leaf//如果在第一片叶子上启用，则勾选Meatpack
 #if ENABLED(MEATPACK_ON_SERIAL_PORT_1)
   typedef MeatpackSerial<decltype(_SERIAL_LEAF_1)> SerialLeafT1;
   extern SerialLeafT1 mpSerial1;
@@ -82,27 +83,27 @@ extern uint8_t marlin_debug_flags;
   #define SERIAL_LEAF_1 _SERIAL_LEAF_1
 #endif
 
-// Step 2: For multiserial wrap all serial ports in a single
-//         interface with the ability to output to multiple serial ports.
+// Step 2: For multiserial wrap all serial ports in a single//步骤2：对于多串行，将所有串行端口包装在单个端口中
+//         interface with the ability to output to multiple serial ports.//接口，能够输出到多个串行端口。
 #if HAS_MULTI_SERIAL
   #define _PORT_REDIRECT(n,p) REMEMBER(n,multiSerial.portMask,p)
   #define _PORT_RESTORE(n,p)  RESTORE(n)
   #define SERIAL_ASSERT(P)    if(multiSerial.portMask!=(P)){ debugger(); }
-  // If we have a catchall, use that directly
+  // If we have a catchall, use that directly//如果我们有一个catchall，直接使用它
   #ifdef SERIAL_CATCHALL
     #define _SERIAL_LEAF_2 SERIAL_CATCHALL
   #elif HAS_ETHERNET
-    typedef ConditionalSerial<decltype(MYSERIAL2)> SerialLeafT2;  // We need to create an instance here
+    typedef ConditionalSerial<decltype(MYSERIAL2)> SerialLeafT2;  // We need to create an instance here//我们需要在这里创建一个实例
     extern SerialLeafT2 msSerial2;
     #define _SERIAL_LEAF_2 msSerial2
   #else
-    #define _SERIAL_LEAF_2 MYSERIAL2 // Don't create a useless instance here, directly use the existing instance
+    #define _SERIAL_LEAF_2 MYSERIAL2 // Don't create a useless instance here, directly use the existing instance//不要在这里创建无用的实例，直接使用现有实例
   #endif
 
-  // Nothing complicated here
+  // Nothing complicated here//这里没什么复杂的
   #define _SERIAL_LEAF_3 MYSERIAL3
 
-  // Hook Meatpack if it's enabled on the second leaf
+  // Hook Meatpack if it's enabled on the second leaf//如果在第二片叶子上启用，则勾选Meatpack
   #if ENABLED(MEATPACK_ON_SERIAL_PORT_2)
     typedef MeatpackSerial<decltype(_SERIAL_LEAF_2)> SerialLeafT2;
     extern SerialLeafT2 mpSerial2;
@@ -111,7 +112,7 @@ extern uint8_t marlin_debug_flags;
     #define SERIAL_LEAF_2 _SERIAL_LEAF_2
   #endif
 
-  // Hook Meatpack if it's enabled on the third leaf
+  // Hook Meatpack if it's enabled on the third leaf//如果在第三个叶子上启用，则勾选Meatpack
   #if ENABLED(MEATPACK_ON_SERIAL_PORT_3)
     typedef MeatpackSerial<decltype(_SERIAL_LEAF_3)> SerialLeafT3;
     extern SerialLeafT3 mpSerial3;
@@ -143,9 +144,9 @@ extern uint8_t marlin_debug_flags;
 #define PORT_RESTORE()     _PORT_RESTORE(1)
 #define SERIAL_PORTMASK(P) SerialMask::from(P)
 
-//
-// SERIAL_CHAR - Print one or more individual chars
-//
+////
+// SERIAL_CHAR - Print one or more individual chars//串行字符-打印一个或多个单独字符
+////
 inline void SERIAL_CHAR(char a) { SERIAL_IMPL.write(a); }
 template <typename ... Args>
 void SERIAL_CHAR(char a, Args ... args) { SERIAL_IMPL.write(a); SERIAL_CHAR(args ...); }
@@ -160,37 +161,37 @@ void SERIAL_CHAR(char a, Args ... args) { SERIAL_IMPL.write(a); SERIAL_CHAR(args
 template <typename T>
 void SERIAL_ECHO(T x) { SERIAL_IMPL.print(x); }
 
-// Wrapper for ECHO commands to interpret a char
+// Wrapper for ECHO commands to interpret a char//用于解释字符的ECHO命令的包装器
 typedef struct SerialChar { char c; SerialChar(char n) : c(n) { } } serial_char_t;
 inline void SERIAL_ECHO(serial_char_t x) { SERIAL_IMPL.write(x.c); }
 #define AS_CHAR(C) serial_char_t(C)
 #define AS_DIGIT(C) AS_CHAR('0' + (C))
 
-// SERIAL_ECHO_F prints a floating point value with optional precision
+// SERIAL_ECHO_F prints a floating point value with optional precision//SERIAL_ECHO_F打印具有可选精度的浮点值
 inline void SERIAL_ECHO_F(EnsureDouble x, int digit=2) { SERIAL_IMPL.print(x, digit); }
 
 template <typename T>
 void SERIAL_ECHOLN(T x) { SERIAL_IMPL.println(x); }
 
-// SERIAL_PRINT works like SERIAL_ECHO but allow to specify the encoding base of the number printed
+// SERIAL_PRINT works like SERIAL_ECHO but allow to specify the encoding base of the number printed//SERIAL_PRINT的工作原理与SERIAL_ECHO类似，但允许指定打印号码的编码基数
 template <typename T, typename U>
 void SERIAL_PRINT(T x, U y) { SERIAL_IMPL.print(x, y); }
 
 template <typename T, typename U>
 void SERIAL_PRINTLN(T x, U y) { SERIAL_IMPL.println(x, y); }
 
-// Flush the serial port
+// Flush the serial port//刷新串行端口
 inline void SERIAL_FLUSH()    { SERIAL_IMPL.flush(); }
 inline void SERIAL_FLUSHTX()  { SERIAL_IMPL.flushTX(); }
 
-// Print a single PROGMEM string to serial
+// Print a single PROGMEM string to serial//将单个PROGMEM字符串打印为串行
 void serialprintPGM(PGM_P str);
 
-//
-// SERIAL_ECHOPAIR... macros are used to output string-value pairs.
-//
+////
+// SERIAL_ECHOPAIR... macros are used to output string-value pairs.//序列回波对。。。宏用于输出字符串-值对。
+////
 
-// Print up to 20 pairs of values. Odd elements must be literal strings.
+// Print up to 20 pairs of values. Odd elements must be literal strings.//最多打印20对值。奇数元素必须是文字字符串。
 #define __SEP_N(N,V...)           _SEP_##N(V)
 #define _SEP_N(N,V...)            __SEP_N(N,V)
 #define _SEP_N_REF()              _SEP_N
@@ -199,7 +200,7 @@ void serialprintPGM(PGM_P str);
 #define _SEP_3(s,v,V...)          _SEP_2(s,v); DEFER2(_SEP_N_REF)()(TWO_ARGS(V),V);
 #define SERIAL_ECHOPAIR(V...)     do{ EVAL(_SEP_N(TWO_ARGS(V),V)); }while(0)
 
-// Print up to 20 pairs of values followed by newline. Odd elements must be literal strings.
+// Print up to 20 pairs of values followed by newline. Odd elements must be literal strings.//最多打印20对值，后跟换行符。奇数元素必须是文字字符串。
 #define __SELP_N(N,V...)          _SELP_##N(V)
 #define _SELP_N(N,V...)           __SELP_N(N,V)
 #define _SELP_N_REF()             _SELP_N
@@ -208,7 +209,7 @@ void serialprintPGM(PGM_P str);
 #define _SELP_3(s,v,V...)         _SEP_2(s,v); DEFER2(_SELP_N_REF)()(TWO_ARGS(V),V);
 #define SERIAL_ECHOLNPAIR(V...)   do{ EVAL(_SELP_N(TWO_ARGS(V),V)); }while(0)
 
-// Print up to 20 pairs of values. Odd elements must be PSTR pointers.
+// Print up to 20 pairs of values. Odd elements must be PSTR pointers.//最多打印20对值。奇数元素必须是PSTR指针。
 #define __SEP_N_P(N,V...)         _SEP_##N##_P(V)
 #define _SEP_N_P(N,V...)          __SEP_N_P(N,V)
 #define _SEP_N_P_REF()            _SEP_N_P
@@ -217,7 +218,7 @@ void serialprintPGM(PGM_P str);
 #define _SEP_3_P(s,v,V...)        _SEP_2_P(s,v); DEFER2(_SEP_N_P_REF)()(TWO_ARGS(V),V);
 #define SERIAL_ECHOPAIR_P(V...)   do{ EVAL(_SEP_N_P(TWO_ARGS(V),V)); }while(0)
 
-// Print up to 20 pairs of values followed by newline. Odd elements must be PSTR pointers.
+// Print up to 20 pairs of values followed by newline. Odd elements must be PSTR pointers.//最多打印20对值，后跟换行符。奇数元素必须是PSTR指针。
 #define __SELP_N_P(N,V...)        _SELP_##N##_P(V)
 #define _SELP_N_P(N,V...)         __SELP_N_P(N,V)
 #define _SELP_N_P_REF()           _SELP_N_P
@@ -245,7 +246,7 @@ void serialprintPGM(PGM_P str);
     SERIAL_ECHOLIST_IMPL(args...);
   }
 
-#else // Optimization if the listed type are all the same (seems to be the case in the codebase so use that instead)
+#else // Optimization if the listed type are all the same (seems to be the case in the codebase so use that instead)//如果列出的类型都相同，则进行优化（代码库中似乎就是这种情况，因此请改用它）
 
   template <typename ... Args>
   void SERIAL_ECHOLIST(PGM_P const str, Args && ... args) {
@@ -289,9 +290,9 @@ void serialprintPGM(PGM_P str);
   #define SERIAL_DECIMAL(V) SERIAL_ECHO(V)
 #endif
 
-//
-// Functions for serial printing from PROGMEM. (Saves loads of SRAM.)
-//
+////
+// Functions for serial printing from PROGMEM. (Saves loads of SRAM.)//从PROGMEM进行串行打印的功能。（保存SRAM的负载。）
+////
 void serial_echopair_PGM(PGM_P const s_P, serial_char_t v);
 void serial_echopair_PGM(PGM_P const s_P, const char *v);
 void serial_echopair_PGM(PGM_P const s_P, char v);

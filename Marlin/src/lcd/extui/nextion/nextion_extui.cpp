@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2021 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -56,60 +57,60 @@ namespace ExtUI {
   void onFactoryReset()   {}
 
   void onStoreSettings(char *buff) {
-    // Called when saving to EEPROM (i.e. M500). If the ExtUI needs
-    // permanent data to be stored, it can write up to eeprom_data_size bytes
-    // into buff.
+    // Called when saving to EEPROM (i.e. M500). If the ExtUI needs//保存到EEPROM（即M500）时调用。如果ExtUI需要
+    // permanent data to be stored, it can write up to eeprom_data_size bytes//永久性存储数据，可写入eeprom_数据_大小字节
+    // into buff.//变成浅黄色。
 
-    // Example:
-    //  static_assert(sizeof(myDataStruct) <= ExtUI::eeprom_data_size);
-    //  memcpy(buff, &myDataStruct, sizeof(myDataStruct));
+    // Example://例如：
+    //  static_assert(sizeof(myDataStruct) <= ExtUI::eeprom_data_size);//静态断言（sizeof（myDataStruct）<=ExtUI:：eeprom\u数据大小）；
+    //  memcpy(buff, &myDataStruct, sizeof(myDataStruct));//memcpy（buff和myDataStruct，sizeof（myDataStruct））；
   }
 
   void onLoadSettings(const char *buff) {
-    // Called while loading settings from EEPROM. If the ExtUI
-    // needs to retrieve data, it should copy up to eeprom_data_size bytes
-    // from buff
+    // Called while loading settings from EEPROM. If the ExtUI//从EEPROM加载设置时调用。如果ExtUI
+    // needs to retrieve data, it should copy up to eeprom_data_size bytes//需要检索数据时，它应最多复制eeprom_数据_大小字节
+    // from buff//发福
 
-    // Example:
-    //  static_assert(sizeof(myDataStruct) <= ExtUI::eeprom_data_size);
-    //  memcpy(&myDataStruct, buff, sizeof(myDataStruct));
+    // Example://例如：
+    //  static_assert(sizeof(myDataStruct) <= ExtUI::eeprom_data_size);//静态断言（sizeof（myDataStruct）<=ExtUI:：eeprom\u数据大小）；
+    //  memcpy(&myDataStruct, buff, sizeof(myDataStruct));//memcpy（&myDataStruct，buff，sizeof（myDataStruct））；
   }
 
   void onPostprocessSettings() {
-    // Called after loading or resetting stored settings
+    // Called after loading or resetting stored settings//加载或重置存储设置后调用
   }
 
   void onConfigurationStoreWritten(bool success) {
-    // Called after the entire EEPROM has been written,
-    // whether successful or not.
+    // Called after the entire EEPROM has been written,//在写入整个EEPROM后调用，
+    // whether successful or not.//不管成功与否。
   }
 
   void onConfigurationStoreRead(bool success) {
-    // Called after the entire EEPROM has been read,
-    // whether successful or not.
+    // Called after the entire EEPROM has been read,//读取整个EEPROM后调用，
+    // whether successful or not.//不管成功与否。
   }
 
   #if HAS_MESH
     void onMeshLevelingStart() {}
 
     void onMeshUpdate(const int8_t xpos, const int8_t ypos, const float zval) {
-      // Called when any mesh points are updated
+      // Called when any mesh points are updated//更新任何网格点时调用
     }
 
     void onMeshUpdate(const int8_t xpos, const int8_t ypos, const ExtUI::probe_state_t state) {
-      // Called to indicate a special condition
+      // Called to indicate a special condition//被调用以指示特殊情况
     }
   #endif
 
   #if ENABLED(POWER_LOSS_RECOVERY)
     void onPowerLossResume() {
-      // Called on resume from power-loss
+      // Called on resume from power-loss//因断电而恢复通话
     }
   #endif
 
   #if HAS_PID_HEATING
     void onPidTuning(const result_t rst) {
-      // Called for temperature PID tuning result
+      // Called for temperature PID tuning result//调用温度PID调整结果
       nextion.PanelInfo(37);
     }
   #endif
@@ -118,4 +119,4 @@ namespace ExtUI {
   void onSteppersEnabled()  {}
 }
 
-#endif // NEXTION_TFT
+#endif // NEXTION_TFT//NEXTION_TFT

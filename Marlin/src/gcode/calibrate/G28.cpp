@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -54,7 +55,7 @@
   #include "../../lcd/extui/ui_api.h"
 #endif
 
-#if HAS_L64XX                         // set L6470 absolute position registers to counts
+#if HAS_L64XX                         // set L6470 absolute position registers to counts//将L6470绝对位置寄存器设置为计数
   #include "../../libs/L64XX/L64XX_Marlin.h"
 #endif
 
@@ -69,7 +70,7 @@
 
   static void quick_home_xy() {
 
-    // Pretend the current position is 0,0
+    // Pretend the current position is 0,0//假设当前位置为0,0
     current_position.set(0.0, 0.0);
     sync_plan_position();
 
@@ -114,14 +115,14 @@
     #endif
   }
 
-#endif // QUICK_HOME
+#endif // QUICK_HOME//快回家
 
 #if ENABLED(Z_SAFE_HOMING)
 
   inline void home_z_safely() {
     DEBUG_SECTION(log_G28, "home_z_safely", DEBUGGING(LEVELING));
 
-    // Disallow Z homing if X or Y homing is needed
+    // Disallow Z homing if X or Y homing is needed//如果需要X或Y归零，则不允许Z归零
     if (homing_needed_error(_BV(X_AXIS) | _BV(Y_AXIS))) return;
 
     sync_plan_position();
@@ -146,10 +147,10 @@
 
       if (DEBUGGING(LEVELING)) DEBUG_POS("home_z_safely", destination);
 
-      // Free the active extruder for movement
+      // Free the active extruder for movement//释放活动挤出机，以便移动
       TERN_(DUAL_X_CARRIAGE, idex_set_parked(false));
 
-      TERN_(SENSORLESS_HOMING, safe_delay(500)); // Short delay needed to settle
+      TERN_(SENSORLESS_HOMING, safe_delay(500)); // Short delay needed to settle//需要解决的短暂延迟
 
       do_blocking_move_to_xy(destination);
       homeaxis(Z_AXIS);
@@ -160,7 +161,7 @@
     }
   }
 
-#endif // Z_SAFE_HOMING
+#endif // Z_SAFE_HOMING//安全归航
 
 #if ENABLED(IMPROVE_HOMING_RELIABILITY)
 
@@ -185,7 +186,7 @@
     planner.reset_acceleration_rates();
   }
 
-#endif // IMPROVE_HOMING_RELIABILITY
+#endif // IMPROVE_HOMING_RELIABILITY//提高寻的可靠性
 
 /**
  * G28: Home all axes according to settings
@@ -209,7 +210,7 @@ void GcodeSuite::G28() {
   DEBUG_SECTION(log_G28, "G28", DEBUGGING(LEVELING));
   if (DEBUGGING(LEVELING)) log_machine_info();
 
-  TERN_(LASER_MOVE_G28_OFF, cutter.set_inline_enabled(false));  // turn off laser
+  TERN_(LASER_MOVE_G28_OFF, cutter.set_inline_enabled(false));  // turn off laser//关闭激光器
 
   TERN_(FULL_REPORT_TO_HOST_FEATURE, set_and_report_grblstate(M_HOMING));
 
@@ -228,7 +229,7 @@ void GcodeSuite::G28() {
     }
   #endif
 
-  // Home (O)nly if position is unknown
+  // Home (O)nly if position is unknown//仅当位置未知时才返回原点（O）
   if (!axes_should_home() && parser.seen_test('O')) {
     if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPGM("> homing not needed, skip");
     return;
@@ -237,25 +238,25 @@ void GcodeSuite::G28() {
   TERN_(DWIN_CREALITY_LCD, DWIN_StartHoming());
   TERN_(EXTENSIBLE_UI, ExtUI::onHomingStart());
 
-  planner.synchronize();          // Wait for planner moves to finish!
+  planner.synchronize();          // Wait for planner moves to finish!//等待计划者移动完成！
 
-  SET_SOFT_ENDSTOP_LOOSE(false);  // Reset a leftover 'loose' motion state
+  SET_SOFT_ENDSTOP_LOOSE(false);  // Reset a leftover 'loose' motion state//重置剩余的“松散”运动状态
 
-  // Disable the leveling matrix before homing
+  // Disable the leveling matrix before homing//重设原点前禁用调平矩阵
   #if CAN_SET_LEVELING_AFTER_G28
     const bool leveling_restore_state = parser.boolval('L', TERN1(RESTORE_LEVELING_AFTER_G28, planner.leveling_active));
   #endif
 
-  // Cancel any prior G29 session
+  // Cancel any prior G29 session//取消先前的G29会议
   TERN_(PROBE_MANUALLY, g29_in_progress = false);
 
-  // Disable leveling before homing
+  // Disable leveling before homing//在归位前禁用调平
   TERN_(HAS_LEVELING, set_bed_leveling_enabled(false));
 
-  // Reset to the XY plane
+  // Reset to the XY plane//重置为XY平面
   TERN_(CNC_WORKSPACE_PLANES, workspace_plane = PLANE_XY);
 
-  // Count this command as movement / activity
+  // Count this command as movement / activity//将此命令计为移动/活动
   reset_stepper_timeout();
 
   #define HAS_CURRENT_HOME(N) (defined(N##_CURRENT_HOME) && N##_CURRENT_HOME != N##_CURRENT)
@@ -293,12 +294,12 @@ void GcodeSuite::G28() {
     motion_state_t saved_motion_state = begin_slow_homing();
   #endif
 
-  // Always home with tool 0 active
+  // Always home with tool 0 active//始终在工具0处于活动状态时返回原位
   #if HAS_MULTI_HOTEND
     #if DISABLED(DELTA) || ENABLED(DELTA_HOME_TO_SAFE_ZONE)
       const uint8_t old_tool_index = active_extruder;
     #endif
-    // PARKING_EXTRUDER homing requires different handling of movement / solenoid activation, depending on the side of homing
+    // PARKING_EXTRUDER homing requires different handling of movement / solenoid activation, depending on the side of homing//根据归零侧的不同，停机/挤出机归零需要对运动/电磁阀激活进行不同的处理
     #if ENABLED(PARKING_EXTRUDER)
       const bool pe_final_change_must_unpark = parking_extruder_unpark_after_homing(old_tool_index, X_HOME_DIR + 1 == old_tool_index * 2);
     #endif
@@ -309,11 +310,11 @@ void GcodeSuite::G28() {
 
   remember_feedrate_scaling_off();
 
-  endstops.enable(true); // Enable endstops for next homing move
+  endstops.enable(true); // Enable endstops for next homing move//为下一个归位移动启用结束停止
 
   #if ENABLED(DELTA)
 
-    constexpr bool doZ = true; // for NANODLP_Z_SYNC if your DLP is on a DELTA
+    constexpr bool doZ = true; // for NANODLP_Z_SYNC if your DLP is on a DELTA//对于NANODLP_Z_SYNC，如果您的DLP位于三角形上
 
     home_delta();
 
@@ -321,7 +322,7 @@ void GcodeSuite::G28() {
 
   #elif ENABLED(AXEL_TPARA)
 
-    constexpr bool doZ = true; // for NANODLP_Z_SYNC if your DLP is on a TPARA
+    constexpr bool doZ = true; // for NANODLP_Z_SYNC if your DLP is on a TPARA//对于NANODLP_Z_SYNC，如果您的DLP在TPARA上
 
     home_TPARA();
 
@@ -330,17 +331,17 @@ void GcodeSuite::G28() {
     #define _UNSAFE(A) (homeZ && TERN0(Z_SAFE_HOMING, axes_should_home(_BV(A##_AXIS))))
 
     const bool homeZ = TERN0(HAS_Z_AXIS, parser.seen_test('Z')),
-               LINEAR_AXIS_LIST(              // Other axes should be homed before Z safe-homing
-                 needX = _UNSAFE(X), needY = _UNSAFE(Y), needZ = false, // UNUSED
+               LINEAR_AXIS_LIST(              // Other axes should be homed before Z safe-homing//其他轴应在Z安全归位之前归位
+                 needX = _UNSAFE(X), needY = _UNSAFE(Y), needZ = false, // UNUSED//未使用
                  needI = _UNSAFE(I), needJ = _UNSAFE(J), needK = _UNSAFE(K)
                ),
-               LINEAR_AXIS_LIST(              // Home each axis if needed or flagged
+               LINEAR_AXIS_LIST(              // Home each axis if needed or flagged//如果需要或标记，将每个轴归零
                  homeX = needX || parser.seen_test('X'),
                  homeY = needY || parser.seen_test('Y'),
                  homeZZ = homeZ,
                  homeI = needI || parser.seen_test(AXIS4_NAME), homeJ = needJ || parser.seen_test(AXIS5_NAME), homeK = needK || parser.seen_test(AXIS6_NAME),
                ),
-               home_all = LINEAR_AXIS_GANG(   // Home-all if all or none are flagged
+               home_all = LINEAR_AXIS_GANG(   // Home-all if all or none are flagged//如果标记全部或无，则返回全部
                     homeX == homeX, && homeY == homeX, && homeZ == homeX,
                  && homeI == homeX, && homeJ == homeX, && homeK == homeX
                ),
@@ -360,36 +361,36 @@ void GcodeSuite::G28() {
     const float z_homing_height = parser.seenval('R') ? parser.value_linear_units() : Z_HOMING_HEIGHT;
 
     if (z_homing_height && (LINEAR_AXIS_GANG(doX, || doY, || TERN0(Z_SAFE_HOMING, doZ), || doI, || doJ, || doK))) {
-      // Raise Z before homing any other axes and z is not already high enough (never lower z)
+      // Raise Z before homing any other axes and z is not already high enough (never lower z)//在归位任何其他轴之前升高Z，且Z还不够高（切勿降低Z）
       if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPAIR("Raise Z (before homing) by ", z_homing_height);
       do_z_clearance(z_homing_height);
       TERN_(BLTOUCH, bltouch.init());
     }
 
-    // Diagonal move first if both are homing
+    // Diagonal move first if both are homing//如果两个都归位，则先对角移动
     TERN_(QUICK_HOME, if (doX && doY) quick_home_xy());
 
-    // Home Y (before X)
+    // Home Y (before X)//主Y（X之前）
     if (ENABLED(HOME_Y_BEFORE_X) && (doY || TERN0(CODEPENDENT_XY_HOMING, doX)))
       homeaxis(Y_AXIS);
 
-    // Home X
+    // Home X//家庭X
     if (doX || (doY && ENABLED(CODEPENDENT_XY_HOMING) && DISABLED(HOME_Y_BEFORE_X))) {
 
       #if ENABLED(DUAL_X_CARRIAGE)
 
-        // Always home the 2nd (right) extruder first
+        // Always home the 2nd (right) extruder first//始终先将第二台（右）挤出机置于原位
         active_extruder = 1;
         homeaxis(X_AXIS);
 
-        // Remember this extruder's position for later tool change
+        // Remember this extruder's position for later tool change//记住挤出机的位置，以便以后更换刀具
         inactive_extruder_x = current_position.x;
 
-        // Home the 1st (left) extruder
+        // Home the 1st (left) extruder//安装第一台（左）挤出机
         active_extruder = 0;
         homeaxis(X_AXIS);
 
-        // Consider the active extruder to be in its "parked" position
+        // Consider the active extruder to be in its "parked" position/考虑主动挤出机处于其“停放”位置。
         idex_set_parked();
 
       #else
@@ -399,13 +400,13 @@ void GcodeSuite::G28() {
       #endif
     }
 
-    // Home Y (after X)
+    // Home Y (after X)//家Y（X之后）
     if (DISABLED(HOME_Y_BEFORE_X) && doY)
       homeaxis(Y_AXIS);
 
     TERN_(IMPROVE_HOMING_RELIABILITY, end_slow_homing(saved_motion_state));
 
-    // Home Z last if homing towards the bed
+    // Home Z last if homing towards the bed//原点Z最后一个，如果朝向床
     #if HAS_Z_AXIS && DISABLED(HOME_Z_FIRST)
       if (doZ) {
         #if EITHER(Z_MULTI_ENDSTOPS, Z_STEPPER_AUTO_ALIGN)
@@ -444,18 +445,18 @@ void GcodeSuite::G28() {
 
       TERN_(IMPROVE_HOMING_RELIABILITY, saved_motion_state = begin_slow_homing());
 
-      // Always home the 2nd (right) extruder first
+      // Always home the 2nd (right) extruder first//始终先将第二台（右）挤出机置于原位
       active_extruder = 1;
       homeaxis(X_AXIS);
 
-      // Remember this extruder's position for later tool change
+      // Remember this extruder's position for later tool change//记住挤出机的位置，以便以后更换刀具
       inactive_extruder_x = current_position.x;
 
-      // Home the 1st (left) extruder
+      // Home the 1st (left) extruder//安装第一台（左）挤出机
       active_extruder = 0;
       homeaxis(X_AXIS);
 
-      // Consider the active extruder to be parked
+      // Consider the active extruder to be parked//考虑将主动挤出机停放。
       idex_set_parked();
 
       dual_x_carriage_mode = IDEX_saved_mode;
@@ -464,23 +465,23 @@ void GcodeSuite::G28() {
       TERN_(IMPROVE_HOMING_RELIABILITY, end_slow_homing(saved_motion_state));
     }
 
-  #endif // DUAL_X_CARRIAGE
+  #endif // DUAL_X_CARRIAGE//双_X_车厢
 
   endstops.not_homing();
 
-  // Clear endstop state for polled stallGuard endstops
+  // Clear endstop state for polled stallGuard endstops//清除轮询stallGuard endstops的endstop状态
   TERN_(SPI_ENDSTOPS, endstops.clear_endstop_state());
 
-  // Move to a height where we can use the full xy-area
+  // Move to a height where we can use the full xy-area//移动到可以使用完整xy区域的高度
   TERN_(DELTA_HOME_TO_SAFE_ZONE, do_blocking_move_to_z(delta_clip_start_height));
 
   TERN_(CAN_SET_LEVELING_AFTER_G28, if (leveling_restore_state) set_bed_leveling_enabled());
 
   restore_feedrate_and_scaling();
 
-  // Restore the active tool after homing
+  // Restore the active tool after homing//归位后恢复激活的刀具
   #if HAS_MULTI_HOTEND && (DISABLED(DELTA) || ENABLED(DELTA_HOME_TO_SAFE_ZONE))
-    tool_change(old_tool_index, TERN(PARKING_EXTRUDER, !pe_final_change_must_unpark, DISABLED(DUAL_X_CARRIAGE)));   // Do move if one of these
+    tool_change(old_tool_index, TERN(PARKING_EXTRUDER, !pe_final_change_must_unpark, DISABLED(DUAL_X_CARRIAGE)));   // Do move if one of these//如果其中一个有问题，一定要移动
   #endif
 
   #if HAS_HOMING_CURRENT
@@ -506,7 +507,7 @@ void GcodeSuite::G28() {
     #if HAS_CURRENT_HOME(K)
       stepperK.rms_current(tmc_save_current_K);
     #endif
-  #endif // HAS_HOMING_CURRENT
+  #endif // HAS_HOMING_CURRENT//有归位电流吗
 
   ui.refresh();
 
@@ -521,9 +522,9 @@ void GcodeSuite::G28() {
   TERN_(FULL_REPORT_TO_HOST_FEATURE, set_and_report_grblstate(M_IDLE));
 
   #if HAS_L64XX
-    // Set L6470 absolute position registers to counts
-    // constexpr *might* move this to PROGMEM.
-    // If not, this will need a PROGMEM directive and an accessor.
+    // Set L6470 absolute position registers to counts//将L6470绝对位置寄存器设置为计数
+    // constexpr *might* move this to PROGMEM.//constexpr*可能*将此移动到PROGMEM。
+    // If not, this will need a PROGMEM directive and an accessor.//如果没有，则需要一个PROGMEM指令和一个访问器。
     #define _EN_ITEM(N) , E_AXIS
     static constexpr AxisEnum L64XX_axis_xref[MAX_L64XX] = {
       LINEAR_AXIS_LIST(X_AXIS, Y_AXIS, Z_AXIS, I_AXIS, J_AXIS, K_AXIS),

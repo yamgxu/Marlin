@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -30,29 +31,29 @@
 #include "timers.h"
 
 void set_pwm_frequency(const pin_t pin, int f_desired) {
-  if (!PWM_PIN(pin)) return;                    // Don't proceed if no hardware timer
+  if (!PWM_PIN(pin)) return;                    // Don't proceed if no hardware timer//如果没有硬件计时器，则不要继续
 
   timer_dev *timer = PIN_MAP[pin].timer_device;
   uint8_t channel = PIN_MAP[pin].timer_channel;
 
-  // Protect used timers
+  // Protect used timers//保护使用过的计时器
   if (timer == get_timer_dev(TEMP_TIMER_NUM)) return;
   if (timer == get_timer_dev(STEP_TIMER_NUM)) return;
   #if PULSE_TIMER_NUM != STEP_TIMER_NUM
     if (timer == get_timer_dev(PULSE_TIMER_NUM)) return;
   #endif
 
-  if (!(timer->regs.bas->SR & TIMER_CR1_CEN))   // Ensure the timer is enabled
+  if (!(timer->regs.bas->SR & TIMER_CR1_CEN))   // Ensure the timer is enabled//确保计时器已启用
     timer_init(timer);
 
   timer_set_mode(timer, channel, TIMER_PWM);
-  uint16_t preload = 255;                       // Lock 255 PWM resolution for high frequencies
+  uint16_t preload = 255;                       // Lock 255 PWM resolution for high frequencies//锁定255 PWM分辨率，用于高频
   int32_t prescaler = (HAL_TIMER_RATE) / (preload + 1) / f_desired - 1;
-  if (prescaler > 65535) {                      // For low frequencies increase prescaler
+  if (prescaler > 65535) {                      // For low frequencies increase prescaler//对于低频增加预分频器
     prescaler = 65535;
     preload = (HAL_TIMER_RATE) / (prescaler + 1) / f_desired - 1;
   }
-  if (prescaler < 0) return;                    // Too high frequency
+  if (prescaler < 0) return;                    // Too high frequency//频率太高
   timer_set_reload(timer, preload);
   timer_set_prescaler(timer, prescaler);
 }
@@ -64,5 +65,5 @@ void set_pwm_duty(const pin_t pin, const uint16_t v, const uint16_t v_size/*=255
   pwmWrite(pin, max_val);
 }
 
-#endif // NEEDS_HARDWARE_PWM
-#endif // __STM32F1__
+#endif // NEEDS_HARDWARE_PWM//需要硬件\u PWM
+#endif // __STM32F1__//_uustm32f1__

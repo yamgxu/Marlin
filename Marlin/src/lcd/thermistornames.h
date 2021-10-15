@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,11 +32,11 @@
 
 #undef THERMISTOR_NAME
 
-// User-specified thermistor parameters
+// User-specified thermistor parameters//用户指定的热敏电阻参数
 #if THERMISTOR_ID == 1000
   #define THERMISTOR_NAME "User Parameters"
 
-// Thermcouples
+// Thermcouples//热电偶
 #elif THERMISTOR_ID == -5
   #define THERMISTOR_NAME "MAX31865"
 #elif THERMISTOR_ID == -4
@@ -47,7 +48,7 @@
 #elif THERMISTOR_ID == -1
   #define THERMISTOR_NAME "AD595"
 
-// Standard thermistors
+// Standard thermistors//标准热敏电阻
 #elif THERMISTOR_ID == 1
   #define THERMISTOR_NAME "EPCOS 100K"
 #elif THERMISTOR_ID == 331
@@ -109,7 +110,7 @@
 #elif THERMISTOR_ID == 99
   #define THERMISTOR_NAME "100k with 10k pull-up"
 
-// Modified thermistors
+// Modified thermistors//改性热敏电阻
 #elif THERMISTOR_ID == 30
   #define THERMISTOR_NAME "Kis3d EN AW NTC100K/3950"
 #elif THERMISTOR_ID == 51
@@ -129,7 +130,7 @@
 #elif THERMISTOR_ID == 666
   #define THERMISTOR_NAME "Einstart S"
 
-// High Temperature thermistors
+// High Temperature thermistors//高温热敏电阻
 #elif THERMISTOR_ID == 61
   #define THERMISTOR_NAME "Formbot 350°C"
 #elif THERMISTOR_ID == 66
@@ -137,7 +138,7 @@
 #elif THERMISTOR_ID == 67
   #define THERMISTOR_NAME "SliceEng 450°C"
 
-// Dummies for dev testing
+// Dummies for dev testing//开发人员测试用假人
 #elif THERMISTOR_ID == 998
   #define THERMISTOR_NAME "Dummy 1"
 #elif THERMISTOR_ID == 999
@@ -145,4 +146,4 @@
 #elif THERMISTOR_ID == 1000
   #define THERMISTOR_NAME "Custom"
 
-#endif // THERMISTOR_ID
+#endif // THERMISTOR_ID//热敏电阻

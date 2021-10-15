@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,17 +30,17 @@
 
 #define BOARD_INFO_NAME "RADDS"
 
-//
-// EEPROM
-//
+////
+// EEPROM//电可擦可编程只读存储器
+////
 #if EITHER(NO_EEPROM_SELECTED, I2C_EEPROM)
   #define I2C_EEPROM
-  #define MARLIN_EEPROM_SIZE              0x2000  // 8KB
+  #define MARLIN_EEPROM_SIZE              0x2000  // 8KB//8KB
 #endif
 
-//
-// Servos
-//
+////
+// Servos//伺服
+////
 #if !HAS_CUTTER
   #define SERVO0_PIN                           5
 #endif
@@ -47,9 +48,9 @@
 #define SERVO2_PIN                            39
 #define SERVO3_PIN                            40
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_MIN_PIN                             28
 #define X_MAX_PIN                             34
 #define Y_MIN_PIN                             30
@@ -57,16 +58,16 @@
 #define Z_MIN_PIN                             32
 #define Z_MAX_PIN                             38
 
-//
-// Z Probe (when not Z_MIN_PIN)
-//
+////
+// Z Probe (when not Z_MIN_PIN)//Z探头（非Z_MIN_引脚时）
+////
 #ifndef Z_MIN_PROBE_PIN
   #define Z_MIN_PROBE_PIN                     38
 #endif
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                            24
 #define X_DIR_PIN                             23
 #define X_ENABLE_PIN                          26
@@ -113,7 +114,7 @@
  * RADDS Extension Board V2 / V3
  * http://doku.radds.org/dokumentation/extension-board
  */
-//#define RADDS_EXTENSION                      2
+//#define RADDS_EXTENSION                      2//#定义RADDS_扩展2
 #if RADDS_EXTENSION >= 2
   #define E3_DIR_PIN                          33
   #define E3_STEP_PIN                         35
@@ -151,7 +152,7 @@
       #define E4_CS_PIN                       39
     #endif
 
-    // E3 and E4 share the same MSx pins
+    // E3 and E4 share the same MSx pins//E3和E4共享相同的MSx引脚
     #define E3_MS1_PIN                        67
     #define E4_MS1_PIN                        67
     #define E3_MS2_PIN                        68
@@ -169,31 +170,31 @@
 
 #endif
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                             0  // Analog Input
-#define TEMP_1_PIN                             1  // Analog Input
-#define TEMP_2_PIN                             2  // Analog Input
-#define TEMP_3_PIN                             3  // Analog Input
-#define TEMP_4_PIN                             5  // dummy so will compile when PINS_DEBUGGING is enabled
-#define TEMP_BED_PIN                           4  // Analog Input
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                             0  // Analog Input//模拟输入
+#define TEMP_1_PIN                             1  // Analog Input//模拟输入
+#define TEMP_2_PIN                             2  // Analog Input//模拟输入
+#define TEMP_3_PIN                             3  // Analog Input//模拟输入
+#define TEMP_4_PIN                             5  // dummy so will compile when PINS_DEBUGGING is enabled//启用PINS_调试时，dummy so将编译
+#define TEMP_BED_PIN                           4  // Analog Input//模拟输入
 
-// SPI for Max6675 or Max31855 Thermocouple
+// SPI for Max6675 or Max31855 Thermocouple//Max6675或Max31855热电偶的SPI
 #if DISABLED(SDSUPPORT)
   #define MAX6675_SS_PIN                      53
 #else
   #define MAX6675_SS_PIN                      49
 #endif
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_0_PIN                          13
 #define HEATER_1_PIN                          12
 #define HEATER_2_PIN                          11
 #if !HAS_CUTTER
-  #define HEATER_BED_PIN                       7  // BED
+  #define HEATER_BED_PIN                       7  // BED//床
 #endif
 
 #ifndef FAN_PIN
@@ -201,29 +202,29 @@
 #endif
 #define FAN1_PIN                               8
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define SD_DETECT_PIN                         14
-#define PS_ON_PIN                             40  // SERVO3_PIN
+#define PS_ON_PIN                             40  // SERVO3_PIN//伺服3_销
 
 #ifndef FIL_RUNOUT_PIN
-  #define FIL_RUNOUT_PIN                      39  // SERVO2_PIN
+  #define FIL_RUNOUT_PIN                      39  // SERVO2_PIN//伺服2_销
 #endif
 
-//
-// M3/M4/M5 - Spindle/Laser Control
-//
+////
+// M3/M4/M5 - Spindle/Laser Control//M3/M4/M5-主轴/激光控制
+////
 #if HAS_CUTTER
   #if !NUM_SERVOS
-    #define SPINDLE_LASER_PWM_PIN              5  // SERVO0_PIN
+    #define SPINDLE_LASER_PWM_PIN              5  // SERVO0_PIN//伺服0_销
   #endif
-  #define SPINDLE_LASER_ENA_PIN                7  // HEATER_BED_PIN - Pullup/down!
+  #define SPINDLE_LASER_ENA_PIN                7  // HEATER_BED_PIN - Pullup/down!//加热器\u床\u销-上拉/下拉！
 #endif
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 #if HAS_WIRED_LCD
 
   #if ENABLED(RADDS_DISPLAY)
@@ -248,8 +249,8 @@
 
   #elif IS_RRD_FG_SC
 
-    // The REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER requires
-    // an adapter such as https://www.thingiverse.com/thing:1740725
+    // The REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER requires//REPRAP\u折扣\u完整\u图形\u智能\u控制器需要
+    // an adapter such as https://www.thingiverse.com/thing:1740725//适配器，如https://www.thingiverse.com/thing:1740725
 
     #define LCD_PINS_RS                       42
     #define LCD_PINS_ENABLE                   43
@@ -283,13 +284,13 @@
     #define BTN_EN2                           33
     #define BTN_ENC                           37
 
-  #endif // SPARK_FULL_GRAPHICS
+  #endif // SPARK_FULL_GRAPHICS//SPARK_FULL_图形
 
   #if ENABLED(REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER)
-    #define BTN_ENC_EN               LCD_PINS_D7  // Detect the presence of the encoder
+    #define BTN_ENC_EN               LCD_PINS_D7  // Detect the presence of the encoder//检测编码器的存在
   #endif
 
-#endif // HAS_WIRED_LCD
+#endif // HAS_WIRED_LCD//有有线液晶显示器吗
 
 #ifndef SDSS
   #define SDSS                                 4

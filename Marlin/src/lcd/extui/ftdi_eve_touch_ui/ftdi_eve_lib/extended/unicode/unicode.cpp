@@ -1,3 +1,4 @@
+/** translatione by yx */
 /***************
  * unicode.cpp *
  ***************/
@@ -218,7 +219,7 @@
     cmd.cmd(BITMAP_TRANSFORM_E(fs.get_coefficient()));
     cmd.cmd(BEGIN(BITMAPS));
 
-    // Apply alignment options
+    // Apply alignment options//应用对齐选项
     if (options & OPT_CENTERX)
       x -= get_utf8_text_width(str, fs) / 2;
     else if (options & OPT_RIGHTX)
@@ -226,7 +227,7 @@
     if (options & OPT_CENTERY)
       y -= fs.get_height()/2;
 
-    // Render the text
+    // Render the text//渲染文本
     render_utf8_text(&cmd, x, y, str, fs);
     cmd.cmd(RESTORE_CONTEXT());
   }
@@ -237,4 +238,4 @@
     draw_utf8_text(cmd, x, y, (const char*) str, fs, options);
   }
 
-#endif // FTDI_EXTENDED && TOUCH_UI_USE_UTF8
+#endif // FTDI_EXTENDED && TOUCH_UI_USE_UTF8//FTDI扩展和触摸屏用户界面使用UTF8

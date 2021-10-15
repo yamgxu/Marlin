@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -150,7 +151,7 @@ HSD_sink_res heatshrink_decoder_sink(heatshrink_decoder *hsd,
 #define BACKREF_COUNT_BITS(HSD) (HEATSHRINK_DECODER_LOOKAHEAD_BITS(HSD))
 #define BACKREF_INDEX_BITS(HSD) (HEATSHRINK_DECODER_WINDOW_BITS(HSD))
 
-// States
+// States//州
 static HSD_state st_tag_bit(heatshrink_decoder *hsd);
 static HSD_state st_yield_literal(heatshrink_decoder *hsd, output_info *oi);
 static HSD_state st_backref_index_msb(heatshrink_decoder *hsd);
@@ -199,15 +200,15 @@ HSD_poll_res heatshrink_decoder_poll(heatshrink_decoder *hsd, uint8_t *out_buf, 
         return HSDR_POLL_ERROR_UNKNOWN;
     }
 
-    // If the current state cannot advance, check if input or output
-    // buffer are exhausted.
+    // If the current state cannot advance, check if input or output//如果当前状态无法前进，请检查输入或输出
+    // buffer are exhausted.//缓冲区已耗尽。
     if (hsd->state == in_state)
       return (*output_size == out_buf_size) ? HSDR_POLL_MORE : HSDR_POLL_EMPTY;
   }
 }
 
 static HSD_state st_tag_bit(heatshrink_decoder *hsd) {
-  uint32_t bits = get_bits(hsd, 1);  // get tag bit
+  uint32_t bits = get_bits(hsd, 1);  // get tag bit//获取标记位
   if (bits == NO_BITS)
     return HSDS_TAG_BIT;
   else if (bits)
@@ -381,4 +382,4 @@ static void push_byte(heatshrink_decoder *hsd, output_info *oi, uint8_t byte) {
   (void)hsd;
 }
 
-#endif // BINARY_FILE_TRANSFER
+#endif // BINARY_FILE_TRANSFER//二进制文件传输

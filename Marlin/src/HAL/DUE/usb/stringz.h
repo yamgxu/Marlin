@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * \file
  *
@@ -41,7 +42,7 @@
  *
  */
 /*
- * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>
+ * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>//www.atmel.com/design support/“>atmel支持</a>
  */
 
 #ifndef _STRINGZ_H_
@@ -82,4 +83,4 @@
  * \}
  */
 
-#endif  // _STRINGZ_H_
+#endif  // _STRINGZ_H_//_STRINGZ_H_

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2021 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -24,32 +25,32 @@
 #include "../inc/MarlinConfigPre.h"
 
 #ifndef FLOWMETER_PPL
-  #define FLOWMETER_PPL      5880 // Pulses per liter
+  #define FLOWMETER_PPL      5880 // Pulses per liter//每升脉冲数
 #endif
 #ifndef FLOWMETER_INTERVAL
-  #define FLOWMETER_INTERVAL 1000 // milliseconds
+  #define FLOWMETER_INTERVAL 1000 // milliseconds//毫秒
 #endif
 
-// Cooling device
+// Cooling device//冷却装置
 
 class Cooler {
 public:
-  static uint16_t capacity;   // Cooling capacity in watts
-  static uint16_t load;       // Cooling load in watts
+  static uint16_t capacity;   // Cooling capacity in watts//冷却能力（瓦特）
+  static uint16_t load;       // Cooling load in watts//冷负荷（瓦特）
 
   static bool enabled;
   static void enable()  { enabled = true; }
   static void disable() { enabled = false; }
   static void toggle()  { enabled = !enabled; }
 
-  static uint8_t mode;                  // 0 = CO2 Liquid cooling, 1 = Laser Diode TEC Heatsink Cooling
+  static uint8_t mode;                  // 0 = CO2 Liquid cooling, 1 = Laser Diode TEC Heatsink Cooling//0=CO2液体冷却，1=激光二极管TEC散热器冷却
   static void set_mode(const uint8_t m) { mode = m; }
 
   #if ENABLED(LASER_COOLANT_FLOW_METER)
-    static float flowrate;                // Flow meter reading in liters-per-minute.
-    static bool flowmeter;                // Flag to monitor the flow
-    static volatile uint16_t flowpulses;  // Flowmeter IRQ pulse count
-    static millis_t flowmeter_next_ms;    // Next time at which to calculate flow
+    static float flowrate;                // Flow meter reading in liters-per-minute.//流量计读数（升/分钟）。
+    static bool flowmeter;                // Flag to monitor the flow//用于监视流的标记
+    static volatile uint16_t flowpulses;  // Flowmeter IRQ pulse count//流量计IRQ脉冲计数
+    static millis_t flowmeter_next_ms;    // Next time at which to calculate flow//下一次计算流量的时间
 
     static void set_flowmeter(const bool sflag) {
       if (flowmeter != sflag) {
@@ -61,10 +62,10 @@ public:
       }
     }
 
-    // To calculate flow we only need to count pulses
+    // To calculate flow we only need to count pulses//为了计算流量，我们只需要计算脉冲数
     static void flowmeter_ISR() { flowpulses++; }
 
-    // Enable / Disable the flow meter interrupt
+    // Enable / Disable the flow meter interrupt//启用/禁用流量计中断
     static void flowmeter_interrupt_enable() {
       attachInterrupt(digitalPinToInterrupt(FLOWMETER_PIN), flowmeter_ISR, RISING);
     }
@@ -72,21 +73,21 @@ public:
       detachInterrupt(digitalPinToInterrupt(FLOWMETER_PIN));
     }
 
-    // Enable / Disable the flow meter interrupt
+    // Enable / Disable the flow meter interrupt//启用/禁用流量计中断
     static void flowmeter_enable()  { set_flowmeter(true); flowpulses = 0; flowmeter_interrupt_enable(); }
     static void flowmeter_disable() { set_flowmeter(false); flowmeter_interrupt_disable(); flowpulses = 0; }
 
-    // Get the total flow (in liters per minute) since the last reading
+    // Get the total flow (in liters per minute) since the last reading//获取自上次读数以来的总流量（以升/分钟为单位）
     static void calc_flowrate() {
-      // flowrate = (litres) * (seconds) = litres per minute
+      // flowrate = (litres) * (seconds) = litres per minute//流量=（升）*（秒）=升/分钟
       flowrate = (flowpulses / (float)FLOWMETER_PPL) * ((1000.0f / (float)FLOWMETER_INTERVAL) * 60.0f);
       flowpulses = 0;
     }
 
-    // Userland task to update the flow meter
+    // Userland task to update the flow meter//Userland任务更新流量计
     static void flowmeter_task(const millis_t ms=millis()) {
-      if (!flowmeter)       // !! The flow meter must always be on !!
-        flowmeter_enable(); // Init and prime
+      if (!flowmeter)       // !! The flow meter must always be on !!// !! 流量计必须一直开着！！
+        flowmeter_enable(); // Init and prime//初始与素数
       if (ELAPSED(ms, flowmeter_next_ms)) {
         calc_flowrate();
         flowmeter_next_ms = ms + FLOWMETER_INTERVAL;
@@ -94,8 +95,8 @@ public:
     }
 
     #if ENABLED(FLOWMETER_SAFETY)
-      static bool fault;                // Flag that the cooler is in a fault state
-      static bool flowsafety_enabled;   // Flag to disable the cutter if flow rate is too low
+      static bool fault;                // Flag that the cooler is in a fault state//标记冷却器处于故障状态
+      static bool flowsafety_enabled;   // Flag to disable the cutter if flow rate is too low//如果流速过低，禁用切割机的标志
       static void flowsafety_toggle()   { flowsafety_enabled = !flowsafety_enabled; }
       static bool check_flow_too_low() {
         const bool too_low = flowsafety_enabled && flowrate < (FLOWMETER_MIN_LITERS_PER_MINUTE);

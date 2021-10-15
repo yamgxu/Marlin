@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,9 +22,9 @@
  */
 #pragma once
 
-//
-// FYSETC F6 1.3 (and 1.4) pin assignments
-//
+////
+// FYSETC F6 1.3 (and 1.4) pin assignments//FYSETC F6 1.3（和1.4）引脚分配
+////
 
 #if NOT_TARGET(__AVR_ATmega2560__)
   #error "Oops! Select 'FYSETC F6' in 'Tools > Board.'"
@@ -36,17 +37,17 @@
 #define RESET_PIN                             30
 #define SPI_FLASH_CS                          83
 
-//
-// Servos
-//
+////
+// Servos//伺服
+////
 #define SERVO0_PIN                            13
-#define SERVO1_PIN                            11  // (PS_ON_PIN)
-#define SERVO2_PIN                            10  // (FIL_RUNOUT_PIN)
-#define SERVO3_PIN                             4  // (RGB_LED_G_PIN)
+#define SERVO1_PIN                            11  // (PS_ON_PIN)//（PS_ON_PIN）
+#define SERVO2_PIN                            10  // (FIL_RUNOUT_PIN)//（FIL_跳动_销）
+#define SERVO3_PIN                             4  // (RGB_LED_G_PIN)//（RGB_LED_G_引脚）
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_MIN_PIN                             63
 #define X_MAX_PIN                             64
 #define Y_MIN_PIN                             14
@@ -60,16 +61,16 @@
   #define FIL_RUNOUT_PIN              SERVO2_PIN
 #endif
 
-//
-// Z Probe (when not Z_MIN_PIN)
-//
+////
+// Z Probe (when not Z_MIN_PIN)//Z探头（非Z_MIN_引脚时）
+////
 #ifndef Z_MIN_PROBE_PIN
-  #define Z_MIN_PROBE_PIN                      9  // Servos pin
+  #define Z_MIN_PROBE_PIN                      9  // Servos pin//伺服销
 #endif
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                            54
 #define X_DIR_PIN                             55
 #define X_ENABLE_PIN                          38
@@ -112,10 +113,10 @@
   #define E2_CS_PIN                           42
 #endif
 
-//
-// Sensorless homing DIAG pin is not directly connected to the MCU. Close
-// the jumper next to the limit switch socket when using sensorless homing.
-//
+////
+// Sensorless homing DIAG pin is not directly connected to the MCU. Close//无传感器归位诊断引脚未直接连接到MCU。关
+// the jumper next to the limit switch socket when using sensorless homing.//使用无传感器归零时，限位开关插座旁边的跳线。
+////
 
 #if HAS_TMC_UART
   /**
@@ -125,58 +126,58 @@
    * At the moment, F6 rx pins are not pc interrupt pins
    */
   #ifndef X_SERIAL_RX_PIN
-    #define X_SERIAL_RX_PIN                   -1  // 71
+    #define X_SERIAL_RX_PIN                   -1  // 71// 71
   #endif
   #ifndef X_SERIAL_TX_PIN
     #define X_SERIAL_TX_PIN                   72
   #endif
   #ifndef Y_SERIAL_RX_PIN
-    #define Y_SERIAL_RX_PIN                   -1  // 73
+    #define Y_SERIAL_RX_PIN                   -1  // 73// 73
   #endif
   #ifndef Y_SERIAL_TX_PIN
     #define Y_SERIAL_TX_PIN                   75
   #endif
   #ifndef Z_SERIAL_RX_PIN
-    #define Z_SERIAL_RX_PIN                   -1  // 78
+    #define Z_SERIAL_RX_PIN                   -1  // 78// 78
   #endif
   #ifndef Z_SERIAL_TX_PIN
     #define Z_SERIAL_TX_PIN                   79
   #endif
   #ifndef E0_SERIAL_RX_PIN
-    #define E0_SERIAL_RX_PIN                  -1  // 76
+    #define E0_SERIAL_RX_PIN                  -1  // 76// 76
   #endif
   #ifndef E0_SERIAL_TX_PIN
     #define E0_SERIAL_TX_PIN                  77
   #endif
   #ifndef E1_SERIAL_RX_PIN
-    #define E1_SERIAL_RX_PIN                  -1  // 80
+    #define E1_SERIAL_RX_PIN                  -1  // 80// 80
   #endif
   #ifndef E1_SERIAL_TX_PIN
     #define E1_SERIAL_TX_PIN                  81
   #endif
   #ifndef E2_SERIAL_RX_PIN
-    #define E2_SERIAL_RX_PIN                  -1  // 22
+    #define E2_SERIAL_RX_PIN                  -1  // 22// 22
   #endif
   #ifndef E2_SERIAL_TX_PIN
     #define E2_SERIAL_TX_PIN                  82
   #endif
 #endif
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                            12  // Analog Input
-#define TEMP_1_PIN                            13  // Analog Input
-#define TEMP_2_PIN                            14  // Analog Input
-#define TEMP_BED_PIN                          15  // Analog Input
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                            12  // Analog Input//模拟输入
+#define TEMP_1_PIN                            13  // Analog Input//模拟输入
+#define TEMP_2_PIN                            14  // Analog Input//模拟输入
+#define TEMP_BED_PIN                          15  // Analog Input//模拟输入
 
 #ifndef FILWIDTH_PIN
-  #define FILWIDTH_PIN                         9  // Analog Input on X+ endstop
+  #define FILWIDTH_PIN                         9  // Analog Input on X+ endstop//X+端停止上的模拟输入
 #endif
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_0_PIN                           5
 #define HEATER_1_PIN                           6
 #define HEATER_2_PIN                           7
@@ -186,9 +187,9 @@
 #define FAN1_PIN                              45
 #define FAN2_PIN                              46
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define SDSS                                  53
 #define LED_PIN                               13
 #define KILL_PIN                              41
@@ -208,9 +209,9 @@
  *               EXP2                                              EXP1
  */
 
-//
-// LCDs and Controllers
-//
+////
+// LCDs and Controllers//液晶显示器和控制器
+////
 #define SD_DETECT_PIN                         49
 
 #if ENABLED(FYSETC_242_OLED_12864)
@@ -233,9 +234,9 @@
   #define BEEPER_PIN                          37
 
   #if ENABLED(FYSETC_MINI_12864)
-    //
-    // See https://wiki.fysetc.com/Mini12864_Panel/?fbclid=IwAR1FyjuNdVOOy9_xzky3qqo_WeM5h-4gpRnnWhQr_O1Ef3h0AFnFXmCehK8
-    //
+    ////
+    // See https://wiki.fysetc.com/Mini12864_Panel/?fbclid=IwAR1FyjuNdVOOy9_xzky3qqo_WeM5h-4gpRnnWhQr_O1Ef3h0AFnFXmCehK8//看https://wiki.fysetc.com/Mini12864_Panel/?fbclid=IwAR1FyjuNdVOOy9_xzky3qqo_WeM5h-4gpRnnWhQr_O1Ef3h0AFnFXmCehK8
+    ////
     #define DOGLCD_A0                         16
     #define DOGLCD_CS                         17
 
@@ -243,8 +244,8 @@
       #define LCD_BACKLIGHT_PIN               27
     #endif
 
-    #define LCD_RESET_PIN                     23  // Must be high or open for LCD to operate normally.
-                                  // Seems to work best if left open.
+    #define LCD_RESET_PIN                     23  // Must be high or open for LCD to operate normally.//必须为高电平或开路，LCD才能正常工作。
+                                  // Seems to work best if left open.//如果不打开，似乎效果最好。
 
     #if EITHER(FYSETC_MINI_12864_1_2, FYSETC_MINI_12864_2_0)
       #ifndef RGB_LED_R_PIN
@@ -275,7 +276,7 @@
     #endif
 
     #if ENABLED(REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER)
-      #define BTN_ENC_EN             LCD_PINS_D7  // Detect the presence of the encoder
+      #define BTN_ENC_EN             LCD_PINS_D7  // Detect the presence of the encoder//检测编码器的存在
     #endif
 
   #endif

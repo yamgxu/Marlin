@@ -1,3 +1,4 @@
+/** translatione by yx */
 /********************
  * nudge_nozzle.cpp *
  ********************/
@@ -121,4 +122,4 @@ void NudgeNozzleScreen::onIdle() {
   reset_menu_timeout();
 }
 
-#endif // FTDI_NUDGE_NOZZLE_SCREEN
+#endif // FTDI_NUDGE_NOZZLE_SCREEN//FTDI_轻推_喷嘴_屏幕

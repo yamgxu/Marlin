@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -27,7 +28,7 @@
 
 #include "watchdog.h"
 
-#define WDT_TIMEOUT_MS TERN(WATCHDOG_DURATION_8S, 8000, 4000) // 4 or 8 second timeout
+#define WDT_TIMEOUT_MS TERN(WATCHDOG_DURATION_8S, 8000, 4000) // 4 or 8 second timeout//4或8秒超时
 
 void watchdog_init() {
   WDOG_TOVALH = 0;
@@ -35,6 +36,6 @@ void watchdog_init() {
   WDOG_STCTRLH = WDOG_STCTRLH_WDOGEN;
 }
 
-#endif // USE_WATCHDOG
+#endif // USE_WATCHDOG//使用看门狗
 
-#endif // __MK64FX512__ || __MK66FX1M0__
+#endif // __MK64FX512__ || __MK66FX1M0__//_uu MK64FX512__124; 124; _uumk66fx1m0__

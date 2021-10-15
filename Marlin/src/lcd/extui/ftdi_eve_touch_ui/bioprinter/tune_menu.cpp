@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*********************
  * bio_tune_menu.cpp *
  *********************/
@@ -75,4 +76,4 @@ bool TuneMenu::onTouchEnd(uint8_t tag) {
   return true;
 }
 
-#endif // FTDI_BIO_TUNE_MENU
+#endif // FTDI_BIO_TUNE_MENU//FTDI_生物_调谐_菜单

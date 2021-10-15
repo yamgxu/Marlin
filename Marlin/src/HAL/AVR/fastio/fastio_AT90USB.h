@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,16 +32,16 @@
 
 #include "../fastio.h"
 
-// change for your board
+// change for your board//为你的董事会换钱
 #define DEBUG_LED   DIO31 /* led D5 red */
 
-// SPI
-#define SCK         DIO21  //  9
-#define MISO        DIO23  // 11
-#define MOSI        DIO22  // 10
-#define SS          DIO20  //  8
+// SPI//SPI
+#define SCK         DIO21  //  9//  9
+#define MISO        DIO23  // 11// 11
+#define MOSI        DIO22  // 10// 10
+#define SS          DIO20  //  8//  8
 
-// Digital I/O
+// Digital I/O//数字I/O
 
 #define DIO0_PIN    PIND0
 #define DIO0_RPORT  PIND
@@ -129,19 +130,19 @@
 #define DIO14_PIN   PINC4
 #define DIO14_RPORT PINC
 #define DIO14_WPORT PORTC
-#define DIO14_PWM   0 // OC3C
+#define DIO14_PWM   0 // OC3C//OC3C
 #define DIO14_DDR   DDRC
 
 #define DIO15_PIN   PINC5
 #define DIO15_RPORT PINC
 #define DIO15_WPORT PORTC
-#define DIO15_PWM   0 // OC3B
+#define DIO15_PWM   0 // OC3B//OC3B
 #define DIO15_DDR   DDRC
 
 #define DIO16_PIN   PINC6
 #define DIO16_RPORT PINC
 #define DIO16_WPORT PORTC
-#define DIO16_PWM   0 // OC3A
+#define DIO16_PWM   0 // OC3A//OC3A
 #define DIO16_DDR   DDRC
 
 #define DIO17_PIN   PINC7
@@ -189,25 +190,25 @@
 #define DIO24_PIN   PINB4
 #define DIO24_RPORT PINB
 #define DIO24_WPORT PORTB
-#define DIO24_PWM   0 // OC2A
+#define DIO24_PWM   0 // OC2A//OC2A
 #define DIO24_DDR   DDRB
 
 #define DIO25_PIN   PINB5
 #define DIO25_RPORT PINB
 #define DIO25_WPORT PORTB
-#define DIO25_PWM   0 // OC1A
+#define DIO25_PWM   0 // OC1A//OC1A
 #define DIO25_DDR   DDRB
 
 #define DIO26_PIN   PINB6
 #define DIO26_RPORT PINB
 #define DIO26_WPORT PORTB
-#define DIO26_PWM   0 // OC1B
+#define DIO26_PWM   0 // OC1B//OC1B
 #define DIO26_DDR   DDRB
 
 #define DIO27_PIN   PINB7
 #define DIO27_RPORT PINB
 #define DIO27_WPORT PORTB
-#define DIO27_PWM   0 // OC1C
+#define DIO27_PWM   0 // OC1C//OC1C
 #define DIO27_DDR   DDRB
 
 #define DIO28_PIN   PINA0
@@ -366,8 +367,8 @@
 #define AIO7_PWM    0
 #define AIO7_DDR    DDRF
 
-//-- Begin not supported by Teensyduino
-//-- don't use Arduino functions on these pins pinMode/digitalWrite/etc
+//-- Begin not supported by Teensyduino//--Teensyduino不支持Begin
+//-- don't use Arduino functions on these pins pinMode/digitalWrite/etc//--不要在这些引脚上使用Arduino函数pinMode/digitalWrite/etc
 #define DIO46_PIN   PINE2
 #define DIO46_RPORT PINE
 #define DIO46_WPORT PORTE
@@ -383,7 +384,7 @@
 #define TEENSY_E2   46
 #define TEENSY_E3   47
 
-//-- end not supported by Teensyduino
+//-- end not supported by Teensyduino//--Teensyduino不支持end
 
 #undef PA0
 #define PA0_PIN     PINA0
@@ -536,13 +537,13 @@
 #define PD0_PIN     PIND0
 #define PD0_RPORT   PIND
 #define PD0_WPORT   PORTD
-#define PD0_PWM     0 // OC0B
+#define PD0_PWM     0 // OC0B//OC0B
 #define PD0_DDR     DDRD
 #undef PD1
 #define PD1_PIN     PIND1
 #define PD1_RPORT   PIND
 #define PD1_WPORT   PORTD
-#define PD1_PWM     0 // OC2B
+#define PD1_PWM     0 // OC2B//OC2B
 #define PD1_DDR     DDRD
 #undef PD2
 #define PD2_PIN     PIND2
@@ -685,7 +686,7 @@
  * do not function the same as the other Arduino extensions.
  */
 
-//digitalPinToTimer(pin) function works like Arduino but Timers are not defined
+//digitalPinToTimer(pin) function works like Arduino but Timers are not defined//digitalPinToTimer（pin）函数的工作原理与Arduino类似，但没有定义计时器
 #define TIMER0B 1
 #define TIMER1A 7
 #define TIMER1B 8

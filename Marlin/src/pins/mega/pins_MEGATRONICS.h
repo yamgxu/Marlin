@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -28,9 +29,9 @@
 #include "env_validate.h"
 
 #define BOARD_INFO_NAME "Megatronics"
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_MIN_PIN                             41
 #define X_MAX_PIN                             37
 #define Y_MIN_PIN                             14
@@ -38,27 +39,27 @@
 #define Z_MIN_PIN                             18
 #define Z_MAX_PIN                             19
 
-//
-// Z Probe (when not Z_MIN_PIN)
-//
+////
+// Z Probe (when not Z_MIN_PIN)//Z探头（非Z_MIN_引脚时）
+////
 #ifndef Z_MIN_PROBE_PIN
   #define Z_MIN_PROBE_PIN                     19
 #endif
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                            26
 #define X_DIR_PIN                             28
 #define X_ENABLE_PIN                          24
 
-#define Y_STEP_PIN                            60  // A6
-#define Y_DIR_PIN                             61  // A7
+#define Y_STEP_PIN                            60  // A6//A6
+#define Y_DIR_PIN                             61  // A7//A7
 #define Y_ENABLE_PIN                          22
 
-#define Z_STEP_PIN                            54  // A0
-#define Z_DIR_PIN                             55  // A1
-#define Z_ENABLE_PIN                          56  // A2
+#define Z_STEP_PIN                            54  // A0//A0
+#define Z_DIR_PIN                             55  // A1//A1
+#define Z_ENABLE_PIN                          56  // A2//A2
 
 #define E0_STEP_PIN                           31
 #define E0_DIR_PIN                            32
@@ -68,31 +69,31 @@
 #define E1_DIR_PIN                            36
 #define E1_ENABLE_PIN                         30
 
-//
-// Temperature Sensors
-//
+////
+// Temperature Sensors//温度传感器
+////
 #if TEMP_SENSOR_0 == -1
-  #define TEMP_0_PIN                           8  // Analog Input
+  #define TEMP_0_PIN                           8  // Analog Input//模拟输入
 #else
-  #define TEMP_0_PIN                          13  // Analog Input
+  #define TEMP_0_PIN                          13  // Analog Input//模拟输入
 #endif
-#define TEMP_1_PIN                            15  // Analog Input
-#define TEMP_BED_PIN                          14  // Analog Input
+#define TEMP_1_PIN                            15  // Analog Input//模拟输入
+#define TEMP_BED_PIN                          14  // Analog Input//模拟输入
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_0_PIN                           9
 #define HEATER_1_PIN                           8
 #define HEATER_BED_PIN                        10
 
 #ifndef FAN_PIN
-  #define FAN_PIN                              7  // IO pin. Buffer needed
+  #define FAN_PIN                              7  // IO pin. Buffer needed//IO引脚。需要缓冲区
 #endif
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define SDSS                                  53
 #define LED_PIN                               13
 #define PS_ON_PIN                             12
@@ -101,9 +102,9 @@
   #define CASE_LIGHT_PIN                       2
 #endif
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 #define BEEPER_PIN                            33
 
 #if IS_ULTRA_LCD && IS_NEWPANEL
@@ -115,18 +116,18 @@
   #define LCD_PINS_D6                         27
   #define LCD_PINS_D7                         29
 
-  // Buttons directly attached to AUX-2
+  // Buttons directly attached to AUX-2//直接连接到AUX-2的按钮
   #define BTN_EN1                             59
   #define BTN_EN2                             64
   #define BTN_ENC                             43
 
-  #define SD_DETECT_PIN                       -1  // RAMPS doesn't use this
+  #define SD_DETECT_PIN                       -1  // RAMPS doesn't use this//坡道不使用这个
 
-#endif // IS_ULTRA_LCD && IS_NEWPANEL
+#endif // IS_ULTRA_LCD && IS_NEWPANEL//IS_ULTRA_LCD和IS_NEWPANEL
 
-//
-// M3/M4/M5 - Spindle/Laser Control
-//
-#define SPINDLE_LASER_PWM_PIN                  3  // Hardware PWM
-#define SPINDLE_LASER_ENA_PIN                  4  // Pullup!
+////
+// M3/M4/M5 - Spindle/Laser Control//M3/M4/M5-主轴/激光控制
+////
+#define SPINDLE_LASER_PWM_PIN                  3  // Hardware PWM//硬件脉宽调制
+#define SPINDLE_LASER_ENA_PIN                  4  // Pullup!//拉起！
 #define SPINDLE_DIR_PIN                       11

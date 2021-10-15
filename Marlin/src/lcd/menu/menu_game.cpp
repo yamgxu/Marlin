@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -45,4 +46,4 @@ void menu_game() {
   END_MENU();
 }
 
-#endif // HAS_GAME_MENU
+#endif // HAS_GAME_MENU//有游戏菜单吗

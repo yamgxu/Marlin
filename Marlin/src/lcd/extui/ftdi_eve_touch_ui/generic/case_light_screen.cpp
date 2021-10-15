@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*************************
  * case_light_screen.cpp *
  *************************/
@@ -58,4 +59,4 @@ bool CaseLightScreen::onTouchHeld(uint8_t tag) {
   return true;
 }
 
-#endif // FTDI_CASE_LIGHT_SCREEN
+#endif // FTDI_CASE_LIGHT_SCREEN//FTDI外壳灯屏幕

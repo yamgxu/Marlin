@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -43,24 +44,24 @@ USBSerialType USBSerial(false, SerialUSB);
 uint16_t HAL_adc_result;
 
 static const uint8_t pin2sc1a[] = {
-    5, 14, 8, 9, 13, 12, 6, 7, 15, 4, 0, 19, 3, 31, // 0-13, we treat them as A0-A13
-    5, 14, 8, 9, 13, 12, 6, 7, 15, 4, // 14-23 (A0-A9)
-    31, 31, 31, 31, 31, 31, 31, 31, 31, 31, // 24-33
-    0+64, 19+64, 3+64, 31+64, // 34-37 (A10-A13)
-    26, 22, 23, 27, 29, 30 // 38-43: temp. sensor, VREF_OUT, A14, bandgap, VREFH, VREFL. A14 isn't connected to anything in Teensy 3.0.
+    5, 14, 8, 9, 13, 12, 6, 7, 15, 4, 0, 19, 3, 31, // 0-13, we treat them as A0-A13//0-13，我们将其视为A0-A13
+    5, 14, 8, 9, 13, 12, 6, 7, 15, 4, // 14-23 (A0-A9)//14-23（A0-A9）
+    31, 31, 31, 31, 31, 31, 31, 31, 31, 31, // 24-33// 24-33
+    0+64, 19+64, 3+64, 31+64, // 34-37 (A10-A13)//34-37（A10-A13）
+    26, 22, 23, 27, 29, 30 // 38-43: temp. sensor, VREF_OUT, A14, bandgap, VREFH, VREFL. A14 isn't connected to anything in Teensy 3.0.//38-43：温度。传感器，VREF_输出，A14，带隙，VREFH，VREFL。A14没有连接到Teensy 3.0中的任何东西。
 };
 
 /*
-  // disable interrupts
+  // disable interrupts//禁用中断
   void cli() { noInterrupts(); }
 
-  // enable interrupts
+  // enable interrupts//启用中断
   void sei() { interrupts(); }
 */
 
 void HAL_adc_init() {
   analog_init();
-  while (ADC0_SC3 & ADC_SC3_CAL) {}; // Wait for calibration to finish
+  while (ADC0_SC3 & ADC_SC3_CAL) {}; // Wait for calibration to finish//等待校准完成
   NVIC_ENABLE_IRQ(IRQ_FTM1);
 }
 
@@ -71,9 +72,9 @@ uint8_t HAL_get_reset_source() {
     case 128: return RST_POWER_ON; break;
     case 64: return RST_EXTERNAL; break;
     case 32: return RST_WATCHDOG; break;
-    // case 8: return RST_LOSS_OF_LOCK; break;
-    // case 4: return RST_LOSS_OF_CLOCK; break;
-    // case 2: return RST_LOW_VOLTAGE; break;
+    // case 8: return RST_LOSS_OF_LOCK; break;//案例8：返回第一个锁丢失；打破
+    // case 4: return RST_LOSS_OF_CLOCK; break;//情况4：返回时钟的第一次丢失；打破
+    // case 2: return RST_LOW_VOLTAGE; break;//情况2：返回RST_低电压；打破
   }
   return 0;
 }
@@ -99,4 +100,4 @@ void HAL_adc_start_conversion(const uint8_t adc_pin) { ADC0_SC1A = pin2sc1a[adc_
 
 uint16_t HAL_adc_get_result() { return ADC0_RA; }
 
-#endif // __MK20DX256__
+#endif // __MK20DX256__//_uuumk20dx256__

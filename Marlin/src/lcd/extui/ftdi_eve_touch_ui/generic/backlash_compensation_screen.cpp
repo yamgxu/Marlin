@@ -1,3 +1,4 @@
+/** translatione by yx */
 /************************************
  * backlash_compensation_screen.cpp *
  ************************************/
@@ -72,4 +73,4 @@ bool BacklashCompensationScreen::onTouchHeld(uint8_t tag) {
   return true;
 }
 
-#endif // FTDI_BACKLASH_COMP_SCREEN
+#endif // FTDI_BACKLASH_COMP_SCREEN//FTDI齿隙补偿屏

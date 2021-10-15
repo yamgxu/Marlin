@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -40,12 +41,12 @@ public:
      * M110 N<int> sets the current line number.
      */
     long last_N;
-    int count;                      //!< Number of characters read in the current line of serial input
-    char line_buffer[MAX_CMD_SIZE]; //!< The current line accumulator
-    uint8_t input_state;            //!< The input state
+    int count;                      //!< Number of characters read in the current line of serial input//!< 在串行输入的当前行中读取的字符数
+    char line_buffer[MAX_CMD_SIZE]; //!< The current line accumulator//!< 电流线路累加器
+    uint8_t input_state;            //!< The input state//!< 输入状态
   };
 
-  static SerialState serial_state[NUM_SERIAL]; //!< Serial states for each serial port
+  static SerialState serial_state[NUM_SERIAL]; //!< Serial states for each serial port//!< 每个串行端口的串行状态
 
   /**
    * GCode Command Queue
@@ -57,10 +58,10 @@ public:
    * command and hands off execution to individual handler functions.
    */
   struct CommandLine {
-    char buffer[MAX_CMD_SIZE];      //!< The command buffer
-    bool skip_ok;                   //!< Skip sending ok when command is processed?
+    char buffer[MAX_CMD_SIZE];      //!< The command buffer//!< 命令缓冲区
+    bool skip_ok;                   //!< Skip sending ok when command is processed?//!< 处理命令时是否跳过发送确定？
     #if ENABLED(HAS_MULTI_SERIAL)
-      serial_index_t port;          //!< Serial port the command was received on
+      serial_index_t port;          //!< Serial port the command was received on//!< 在上接收命令的串行端口
     #endif
   };
 
@@ -68,10 +69,10 @@ public:
    * A handy ring buffer type
    */
   struct RingBuffer {
-    uint8_t length,                 //!< Number of commands in the queue
-            index_r,                //!< Ring buffer's read position
-            index_w;                //!< Ring buffer's write position
-    CommandLine commands[BUFSIZE];  //!< The ring buffer of commands
+    uint8_t length,                 //!< Number of commands in the queue//!< 队列中的命令数
+            index_r,                //!< Ring buffer's read position//!< 环形缓冲区的读取位置
+            index_w;                //!< Ring buffer's write position//!< 环形缓冲区的写入位置
+    CommandLine commands[BUFSIZE];  //!< The ring buffer of commands//!< 命令的环形缓冲区
 
     inline serial_index_t command_port() const { return TERN0(HAS_MULTI_SERIAL, commands[index_r].port); }
 
@@ -205,10 +206,10 @@ private:
     static void get_sdcard_commands();
   #endif
 
-  // Process the next "immediate" command (PROGMEM)
+  // Process the next "immediate" command (PROGMEM)//处理下一个“立即”命令（PROGMEM）
   static bool process_injected_command_P();
 
-  // Process the next "immediate" command (SRAM)
+  // Process the next "immediate" command (SRAM)//处理下一个“立即”命令（SRAM）
   static bool process_injected_command();
 
   /**

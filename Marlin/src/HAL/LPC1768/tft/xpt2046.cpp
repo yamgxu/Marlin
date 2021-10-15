@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -50,13 +51,13 @@ void XPT2046::Init() {
   OUT_WRITE(TOUCH_CS_PIN, HIGH);
 
   #if PIN_EXISTS(TOUCH_INT)
-    // Optional Pendrive interrupt pin
+    // Optional Pendrive interrupt pin//可选Pendrive中断引脚
     SET_INPUT(TOUCH_INT_PIN);
   #endif
 
   TERN_(TOUCH_BUTTONS_HW_SPI, touch_spi_init(SPI_SPEED_6));
 
-  // Read once to enable pendrive status pin
+  // Read once to enable pendrive status pin//读取一次以启用pendrive状态引脚
   getRawData(XPT2046_X);
 }
 
@@ -128,4 +129,4 @@ uint16_t XPT2046::SoftwareIO(uint16_t data) {
   return result;
 }
 
-#endif // HAS_TFT_XPT2046
+#endif // HAS_TFT_XPT2046//具有_TFT _XPT2046

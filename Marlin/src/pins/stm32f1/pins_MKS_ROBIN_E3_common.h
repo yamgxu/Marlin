@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,35 +32,35 @@
 
 #define BOARD_WEBSITE_URL "github.com/makerbase-mks"
 
-//#define DISABLE_DEBUG
+//#define DISABLE_DEBUG//#定义禁用调试
 #define DISABLE_JTAG
 
-//
-// EEPROM
-//
+////
+// EEPROM//电可擦可编程只读存储器
+////
 #if EITHER(NO_EEPROM_SELECTED, FLASH_EEPROM_EMULATION)
   #define FLASH_EEPROM_EMULATION
-  #define EEPROM_PAGE_SIZE     (0x800U)           // 2KB
+  #define EEPROM_PAGE_SIZE     (0x800U)           // 2KB//2KB
   #define EEPROM_START_ADDRESS (0x8000000UL + (STM32_FLASH_SIZE) * 1024UL - (EEPROM_PAGE_SIZE) * 2UL)
-  #define MARLIN_EEPROM_SIZE    EEPROM_PAGE_SIZE  // 2KB
+  #define MARLIN_EEPROM_SIZE    EEPROM_PAGE_SIZE  // 2KB//2KB
 #endif
 
-//
-// Servos
-//
+////
+// Servos//伺服
+////
 #define SERVO0_PIN                          PA3
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_STOP_PIN                          PA12
 #define Y_STOP_PIN                          PA11
 #define Z_MIN_PIN                           PC6
 #define Z_MAX_PIN                           PB1
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                          PC0
 #define X_DIR_PIN                           PB2
 #define X_ENABLE_PIN                        PC13
@@ -87,14 +88,14 @@
    * Hardware serial communication ports.
    * If undefined software serial is used according to the pins below
    */
-  //#define X_HARDWARE_SERIAL  MSerial1
-  //#define Y_HARDWARE_SERIAL  MSerial1
-  //#define Z_HARDWARE_SERIAL  MSerial1
-  //#define E0_HARDWARE_SERIAL MSerial1
+  //#define X_HARDWARE_SERIAL  MSerial1//#定义X_硬件_串行MSerial1
+  //#define Y_HARDWARE_SERIAL  MSerial1//#定义Y_硬件_串行MSerial1
+  //#define Z_HARDWARE_SERIAL  MSerial1//#定义Z_硬件_串行MSerial1
+  //#define E0_HARDWARE_SERIAL MSerial1//#定义E0_硬件_串行MSerial1
 
-  //
-  // Software serial
-  //
+  ////
+  // Software serial//软件系列
+  ////
   #define X_SERIAL_TX_PIN                   PC7
   #define X_SERIAL_RX_PIN                   PC7
 
@@ -107,24 +108,24 @@
   #define E0_SERIAL_TX_PIN                  PC11
   #define E0_SERIAL_RX_PIN                  PC11
 
-  // Reduce baud rate to improve software serial reliability
+  // Reduce baud rate to improve software serial reliability//降低波特率以提高软件串行可靠性
   #define TMC_BAUD_RATE                    19200
 #endif
 
-//
-// Heaters 0,1 / Fans / Bed
-//
+////
+// Heaters 0,1 / Fans / Bed//加热器0.1/风扇/床
+////
 #define HEATER_0_PIN                        PC9
 #define FAN_PIN                             PA8
 #define HEATER_BED_PIN                      PC8
 
-//
-// Temperature Sensors
-//
-#define TEMP_BED_PIN                        PA1   // TB
-#define TEMP_0_PIN                          PA0   // TH1
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_BED_PIN                        PA1   // TB//结核病
+#define TEMP_0_PIN                          PA0   // TH1//TH1
 
-#define FIL_RUNOUT_PIN                      PB10  // MT_DET
+#define FIL_RUNOUT_PIN                      PB10  // MT_DET//德特山
 
 /**
  *                _____                                      _____                                     _____
@@ -145,7 +146,7 @@
   #define BTN_EN1                           PB11
   #define BTN_EN2                           PB0
 
-  // MKS MINI12864 and MKS LCD12864B; If using MKS LCD12864A (Need to remove RPK2 resistor)
+  // MKS MINI12864 and MKS LCD12864B; If using MKS LCD12864A (Need to remove RPK2 resistor)//MKS MINI12864和MKS LCD12864B；如果使用MKS LCD12864A（需要拆除RPK2电阻器）
   #if ENABLED(MKS_MINI_12864)
 
     #define LCD_BACKLIGHT_PIN               -1
@@ -164,18 +165,18 @@
       #define LCD_PINS_D7                   PC5
 
       #if !defined(BTN_ENC_EN) && ENABLED(REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER)
-        #define BTN_ENC_EN           LCD_PINS_D7  // Detect the presence of the encoder
+        #define BTN_ENC_EN           LCD_PINS_D7  // Detect the presence of the encoder//检测编码器的存在
       #endif
 
     #endif
 
-  #endif // !MKS_MINI_12864
+  #endif // !MKS_MINI_12864// !MKS_MINI_12864
 
-#endif // HAS_WIRED_LCD
+#endif // HAS_WIRED_LCD//有有线液晶显示器吗
 
-//
-// SD Card
-//
+////
+// SD Card//SD卡
+////
 #define SPI_DEVICE                          2
 #define ONBOARD_SPI_DEVICE                  2
 #define SDSS                           SD_SS_PIN
@@ -184,7 +185,7 @@
 #define ONBOARD_SD_CS_PIN              SD_SS_PIN
 #define NO_SD_HOST_DRIVE
 
-// TODO: This is the only way to set SPI for SD on STM32 (for now)
+// TODO: This is the only way to set SPI for SD on STM32 (for now)//TODO:这是在STM32上为SD设置SPI的唯一方法（目前）
 #define ENABLE_SPI2
 #define SD_SCK_PIN                          PB13
 #define SD_MISO_PIN                         PB14

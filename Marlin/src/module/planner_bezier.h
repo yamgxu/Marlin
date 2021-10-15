@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -30,9 +31,9 @@
 #include "../core/types.h"
 
 void cubic_b_spline(
-  const xyze_pos_t &position,       // current position
-  const xyze_pos_t &target,         // target position
-  const xy_pos_t (&offsets)[2],     // a pair of offsets
-  const_feedRate_t scaled_fr_mm_s,  // mm/s scaled by feedrate %
+  const xyze_pos_t &position,       // current position//当前位置
+  const xyze_pos_t &target,         // target position//目标位置
+  const xy_pos_t (&offsets)[2],     // a pair of offsets//一对偏移量
+  const_feedRate_t scaled_fr_mm_s,  // mm/s scaled by feedrate %//毫米/秒，按进给速度%缩放
   const uint8_t extruder
 );

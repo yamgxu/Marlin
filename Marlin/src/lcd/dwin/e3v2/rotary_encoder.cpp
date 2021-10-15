@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -50,7 +51,7 @@
 
 ENCODER_Rate EncoderRate;
 
-// Buzzer
+// Buzzer//蜂鸣器
 void Encoder_tick() {
   #if PIN_EXISTS(BEEPER)
     WRITE(BEEPER_PIN, HIGH);
@@ -59,7 +60,7 @@ void Encoder_tick() {
   #endif
 }
 
-// Encoder initialization
+// Encoder initialization//编码器初始化
 void Encoder_Configuration() {
   #if BUTTON_EXISTS(EN1)
     SET_INPUT_PULLUP(BTN_EN1);
@@ -75,7 +76,7 @@ void Encoder_Configuration() {
   #endif
 }
 
-// Analyze encoder value and return state
+// Analyze encoder value and return state//分析编码器值和返回状态
 ENCODER_DiffState Encoder_ReceiveAnalyze() {
   const millis_t now = millis();
   static uint8_t lastEncoderBits;
@@ -91,7 +92,7 @@ ENCODER_DiffState Encoder_ReceiveAnalyze() {
       next_click_update_ms = millis() + 300;
       Encoder_tick();
       #if PIN_EXISTS(LCD_LED)
-        //LED_Action();
+        //LED_Action();//LED_动作（）；
       #endif
       const bool was_waiting = wait_for_user;
       wait_for_user = false;
@@ -130,13 +131,13 @@ ENCODER_DiffState Encoder_ReceiveAnalyze() {
       millis_t ms = millis();
       int32_t encoderMultiplier = 1;
 
-      // if must encoder rati multiplier
+      // if must encoder rati multiplier//如果必须使用编码器比率乘法器
       if (EncoderRate.enabled) {
         const float abs_diff = ABS(temp_diff),
                     encoderMovementSteps = abs_diff / (ENCODER_PULSES_PER_STEP);
         if (EncoderRate.lastEncoderTime) {
-          // Note that the rate is always calculated between two passes through the
-          // loop and that the abs of the temp_diff value is tracked.
+          // Note that the rate is always calculated between two passes through the//请注意，速率始终是在两次通过之间计算的
+          // loop and that the abs of the temp_diff value is tracked.//循环并跟踪temp_diff值的绝对值。
           const float encoderStepRate = encoderMovementSteps / float(ms - EncoderRate.lastEncoderTime) * 1000;
                if (encoderStepRate >= ENCODER_100X_STEPS_PER_SEC) encoderMultiplier = 100;
           else if (encoderStepRate >= ENCODER_10X_STEPS_PER_SEC)  encoderMultiplier = 10;
@@ -151,7 +152,7 @@ ENCODER_DiffState Encoder_ReceiveAnalyze() {
 
     #endif
 
-    // EncoderRate.encoderMoveValue += (temp_diff * encoderMultiplier) / (ENCODER_PULSES_PER_STEP);
+    // EncoderRate.encoderMoveValue += (temp_diff * encoderMultiplier) / (ENCODER_PULSES_PER_STEP);//EncoderRate.encoderMoveValue+=（温度差*编码器倍增器）/（编码器每步脉冲数）；
     EncoderRate.encoderMoveValue = (temp_diff * encoderMultiplier) / (ENCODER_PULSES_PER_STEP);
     if (EncoderRate.encoderMoveValue < 0) EncoderRate.encoderMoveValue = -EncoderRate.encoderMoveValue;
 
@@ -162,22 +163,22 @@ ENCODER_DiffState Encoder_ReceiveAnalyze() {
 
 #if PIN_EXISTS(LCD_LED)
 
-  // Take the low 24 valid bits  24Bit: G7 G6 G5 G4 G3 G2 G1 G0 R7 R6 R5 R4 R3 R2 R1 R0 B7 B6 B5 B4 B3 B2 B1 B0
+  // Take the low 24 valid bits  24Bit: G7 G6 G5 G4 G3 G2 G1 G0 R7 R6 R5 R4 R3 R2 R1 R0 B7 B6 B5 B4 B3 B2 B1 B0//取低位24有效位24位：G7 G6 G5 G4 G3 G2 G1 G0 R7 R6 R5 R4 R3 R2 R1 R0 B7 B6 B5 B4 B3 B2 B1 B0
   uint16_t LED_DataArray[LED_NUM];
 
-  // LED light operation
+  // LED light operation//LED灯操作
   void LED_Action() {
     LED_Control(RGB_SCALE_WARM_WHITE,0x0F);
     delay(30);
     LED_Control(RGB_SCALE_WARM_WHITE,0x00);
   }
 
-  // LED initialization
+  // LED initialization//LED初始化
   void LED_Configuration() {
     SET_OUTPUT(LCD_LED_PIN);
   }
 
-  // LED write data
+  // LED write data//LED写入数据
   void LED_WriteData() {
     uint8_t tempCounter_LED, tempCounter_Bit;
     for (tempCounter_LED = 0; tempCounter_LED < LED_NUM; tempCounter_LED++) {
@@ -197,9 +198,9 @@ ENCODER_DiffState Encoder_ReceiveAnalyze() {
     }
   }
 
-  // LED control
-  //  RGB_Scale: RGB color ratio
-  //  luminance: brightness (0~0xFF)
+  // LED control//LED控制
+  //  RGB_Scale: RGB color ratio//RGB_比例：RGB颜色比率
+  //  luminance: brightness (0~0xFF)//亮度：亮度（0~0xFF）
   void LED_Control(const uint8_t RGB_Scale, const uint8_t luminance) {
     for (uint8_t i = 0; i < LED_NUM; i++) {
       LED_DataArray[i] = 0;
@@ -212,10 +213,10 @@ ENCODER_DiffState Encoder_ReceiveAnalyze() {
     LED_WriteData();
   }
 
-  // LED gradient control
-  //  RGB_Scale: RGB color ratio
-  //  luminance: brightness (0~0xFF)
-  //  change_Time: gradient time (ms)
+  // LED gradient control//LED梯度控制
+  //  RGB_Scale: RGB color ratio//RGB_比例：RGB颜色比率
+  //  luminance: brightness (0~0xFF)//亮度：亮度（0~0xFF）
+  //  change_Time: gradient time (ms)//更改时间：渐变时间（ms）
   void LED_GraduallyControl(const uint8_t RGB_Scale, const uint8_t luminance, const uint16_t change_Interval) {
     struct { uint8_t g, r, b; } led_data[LED_NUM];
     for (uint8_t i = 0; i < LED_NUM; i++) {
@@ -251,6 +252,6 @@ ENCODER_DiffState Encoder_ReceiveAnalyze() {
     }
   }
 
-#endif // LCD_LED
+#endif // LCD_LED//液晶显示器
 
-#endif // DWIN_CREALITY_LCD
+#endif // DWIN_CREALITY_LCD//DWIN_CREALITY_液晶显示器

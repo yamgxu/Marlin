@@ -1,6 +1,7 @@
+/** translatione by yx */
 /*
  * Marlin 3D Printer Firmware
- * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+ * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]//github.com/MarlinFirmware/Marlin]
  *
  * Based on Sprinter and grbl.
  * Copyright (c) 2011 Camiel Gubbels / Erik van der Zalm
@@ -16,7 +17,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.//www.gnu.org/licenses/>。
  *
  */
 
@@ -52,29 +53,29 @@ static void PCA9533_writeRegister(uint8_t reg, uint8_t val){
   delayMicroseconds(1);
 }
 
-// Reset (clear) all registers
+// Reset (clear) all registers//重置（清除）所有寄存器
 void PCA9533_reset() {
   PCA9533_writeAllRegisters(0, 0, 0, 0, 0);
 }
 
-// Turn all LEDs off
+// Turn all LEDs off//关闭所有指示灯
 void PCA9533_setOff() {
   PCA9533_writeRegister(PCA9533_REG_SEL, 0);
 }
 
 void PCA9533_set_rgb(uint8_t red, uint8_t green, uint8_t blue) {
-  uint8_t r_pwm0 = 0; // Register data - PWM value
-  uint8_t r_pwm1 = 0; // Register data - PWM value
+  uint8_t r_pwm0 = 0; // Register data - PWM value//寄存器数据-PWM值
+  uint8_t r_pwm1 = 0; // Register data - PWM value//寄存器数据-PWM值
 
-  uint8_t op_g = 0, op_r = 0, op_b = 0; // Opcodes - Green, Red, Blue
+  uint8_t op_g = 0, op_r = 0, op_b = 0; // Opcodes - Green, Red, Blue//操作码-绿色、红色、蓝色
 
-  // Light theory! GREEN takes priority because
-  // it's the most visible to the human eye.
+  // Light theory! GREEN takes priority because//光理论！绿色优先，因为
+  // it's the most visible to the human eye.//这是人眼最容易看到的。
        if (green ==   0)  op_g = PCA9533_LED_OP_OFF;
   else if (green == 255)  op_g = PCA9533_LED_OP_ON;
   else { r_pwm0 = green;  op_g = PCA9533_LED_OP_PWM0; }
 
-  // RED
+  // RED//红色的
        if (red ==   0)    op_r = PCA9533_LED_OP_OFF;
   else if (red == 255)    op_r = PCA9533_LED_OP_ON;
   else if (r_pwm0 == 0 || r_pwm0 == red) {
@@ -84,7 +85,7 @@ void PCA9533_set_rgb(uint8_t red, uint8_t green, uint8_t blue) {
          r_pwm1 = red;    op_r = PCA9533_LED_OP_PWM1;
   }
 
-  // BLUE
+  // BLUE//蓝色的
        if (blue ==   0)   op_b = PCA9533_LED_OP_OFF;
   else if (blue == 255)   op_b = PCA9533_LED_OP_ON;
   else if (r_pwm0 == 0 || r_pwm0 == blue) {
@@ -102,15 +103,15 @@ void PCA9533_set_rgb(uint8_t red, uint8_t green, uint8_t blue) {
     uint8_t dgb = ABS(green - blue),
             dgr = ABS(green - red),
             dbr = ABS(blue - red);
-    if (dgb < dgr && dgb < dbr) {         // Mix with G on channel 0.
+    if (dgb < dgr && dgb < dbr) {         // Mix with G on channel 0.//在通道0上与G混合。
       op_b = PCA9533_LED_OP_PWM0;
       r_pwm0 = uint8_t(((uint16_t)green + (uint16_t)blue) / 2);
     }
-    else if (dbr <= dgr && dbr <= dgb) {  // Mix with R on channel 1.
+    else if (dbr <= dgr && dbr <= dgb) {  // Mix with R on channel 1.//在通道1上与R混合。
       op_b = PCA9533_LED_OP_PWM1;
       r_pwm1 = uint8_t(((uint16_t)red + (uint16_t)blue) / 2);
     }
-    else {                                // Mix R+G on 0 and put B on 1.
+    else {                                // Mix R+G on 0 and put B on 1.//在0上混合R+G，在1上混合B。
       op_r = PCA9533_LED_OP_PWM0;
       r_pwm0 = uint8_t(((uint16_t)green + (uint16_t)red) / 2);
       op_b = PCA9533_LED_OP_PWM1;
@@ -118,10 +119,10 @@ void PCA9533_set_rgb(uint8_t red, uint8_t green, uint8_t blue) {
     }
   }
 
-  // Write the changes to the hardware
+  // Write the changes to the hardware//将更改写入硬件
   PCA9533_writeAllRegisters(0, r_pwm0, 0, r_pwm1,
     (op_g << PCA9533_LED_OFS_GRN) | (op_r << PCA9533_LED_OFS_RED) | (op_b << PCA9533_LED_OFS_BLU)
   );
 }
 
-#endif // PCA9533
+#endif // PCA9533//PCA9533

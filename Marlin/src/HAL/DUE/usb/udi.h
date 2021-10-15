@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * \file
  *
@@ -41,7 +42,7 @@
  *
  */
 /*
- * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>
+ * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>//www.atmel.com/design support/“>atmel支持</a>
  */
 
 #ifndef _UDI_H_
@@ -125,9 +126,9 @@ typedef struct {
 	void (*sof_notify)(void);
 } udi_api_t;
 
-//@}
+//@}//@}
 
 #ifdef __cplusplus
 }
 #endif
-#endif // _UDI_H_
+#endif // _UDI_H_//_UDI_H_

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -28,8 +29,8 @@
 #define BOARD_INFO_NAME   "FYSETC Cheetah"
 #define BOARD_WEBSITE_URL "fysetc.com"
 
-// Ignore temp readings during development.
-//#define BOGUS_TEMPERATURE_GRACE_PERIOD    2000
+// Ignore temp readings during development.//在开发过程中忽略温度读数。
+//#define BOGUS_TEMPERATURE_GRACE_PERIOD    2000//#定义2000年的假温度宽限期
 
 #define BOARD_NO_NATIVE_USB
 
@@ -37,31 +38,31 @@
 
 #if EITHER(NO_EEPROM_SELECTED, FLASH_EEPROM_EMULATION)
   #define FLASH_EEPROM_EMULATION
-  #define EEPROM_PAGE_SIZE     (0x800U)           // 2KB
+  #define EEPROM_PAGE_SIZE     (0x800U)           // 2KB//2KB
   #define EEPROM_START_ADDRESS (0x8000000UL + (STM32_FLASH_SIZE) * 1024UL - (EEPROM_PAGE_SIZE) * 2UL)
-  #define MARLIN_EEPROM_SIZE    EEPROM_PAGE_SIZE  // 2KB
+  #define MARLIN_EEPROM_SIZE    EEPROM_PAGE_SIZE  // 2KB//2KB
 #endif
 
-//
-// Servos
-//
+////
+// Servos//伺服
+////
 #define SERVO0_PIN                          PA0
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_STOP_PIN                          PA1
 #define Y_STOP_PIN                          PB4
 #define Z_STOP_PIN                          PA15
 
-//
-// Filament runout
-//
+////
+// Filament runout//灯丝跳动
+////
 #define FIL_RUNOUT_PIN                      PB5
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                          PB8
 #define X_DIR_PIN                           PB9
 #define X_ENABLE_PIN                        PA8
@@ -84,7 +85,7 @@
   #define Z_HARDWARE_SERIAL  MSerial2
   #define E0_HARDWARE_SERIAL MSerial2
 
-  // Default TMC slave addresses
+  // Default TMC slave addresses//默认TMC从机地址
   #ifndef X_SLAVE_ADDRESS
     #define X_SLAVE_ADDRESS  0
   #endif
@@ -99,24 +100,24 @@
   #endif
 #endif
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_0_PIN                        PC6
 #define HEATER_BED_PIN                      PC7
 #ifndef FAN_PIN
   #define FAN_PIN                           PC8
 #endif
 
-//
-// Temperature Sensors
-//
-#define TEMP_BED_PIN                        PC5   // Analog Input
-#define TEMP_0_PIN                          PC4   // Analog Input
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_BED_PIN                        PC5   // Analog Input//模拟输入
+#define TEMP_0_PIN                          PC4   // Analog Input//模拟输入
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define SDSS                                PA4
 #define SD_DETECT_PIN                       PC3
 
@@ -153,20 +154,20 @@
     #define DOGLCD_CS                       PB12
     #define DOGLCD_SCK                      PB13
     #define DOGLCD_MOSI                     PB15
-    //#define LCD_SCREEN_ROT_90
-    //#define LCD_SCREEN_ROT_180
-    //#define LCD_SCREEN_ROT_270
+    //#define LCD_SCREEN_ROT_90//#定义LCD屏幕旋转90
+    //#define LCD_SCREEN_ROT_180//#定义LCD屏幕旋转180
+    //#define LCD_SCREEN_ROT_270//#定义LCD屏幕旋转270
 
     #if EITHER(FYSETC_MINI_12864, U8GLIB_ST7920)
       #define FORCE_SOFT_SPI
     #endif
   #endif
 
-  #define LCD_PINS_RS                       PB12  // CS -- SOFT SPI for ENDER3 LCD
-  #define LCD_PINS_D4                       PB13  // SCLK
-  #define LCD_PINS_ENABLE                   PB15  // DATA MOSI
+  #define LCD_PINS_RS                       PB12  // CS -- SOFT SPI for ENDER3 LCD//CS——用于ENDER3 LCD的软SPI
+  #define LCD_PINS_D4                       PB13  // SCLK//SCLK
+  #define LCD_PINS_ENABLE                   PB15  // DATA MOSI//数据MOSI
 
-  //#define LCD_CONTRAST_INIT                190
+  //#define LCD_CONTRAST_INIT                190//#定义LCD对比度初始值190
 
   #if IS_NEWPANEL
     #define BTN_EN1                         PC10
@@ -180,7 +181,7 @@
   #define CLCD_MOD_RESET                    PC11
   #define CLCD_SPI_CS                       PB12
 
-  //#define CLCD_USE_SOFT_SPI                     // the Cheetah can use hardware-SPI so we do not really need this
+  //#define CLCD_USE_SOFT_SPI                     // the Cheetah can use hardware-SPI so we do not really need this//#定义CLCD\u使用\u软\u SPI//猎豹可以使用硬件SPI，因此我们并不真正需要它
 
   #if ENABLED(CLCD_USE_SOFT_SPI)
     #define CLCD_SOFT_SPI_MOSI              PB15

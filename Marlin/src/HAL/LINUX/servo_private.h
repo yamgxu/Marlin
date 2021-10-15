@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -49,31 +50,31 @@
 
 #include <stdint.h>
 
-// Macros
-//values in microseconds
-#define MIN_PULSE_WIDTH       544     // the shortest pulse sent to a servo
-#define MAX_PULSE_WIDTH      2400     // the longest pulse sent to a servo
-#define DEFAULT_PULSE_WIDTH  1500     // default pulse width when servo is attached
-#define REFRESH_INTERVAL    20000     // minimum time to refresh servos in microseconds
+// Macros//宏
+//values in microseconds//以微秒为单位的值
+#define MIN_PULSE_WIDTH       544     // the shortest pulse sent to a servo//发送到伺服系统的最短脉冲
+#define MAX_PULSE_WIDTH      2400     // the longest pulse sent to a servo//发送到伺服系统的最长脉冲
+#define DEFAULT_PULSE_WIDTH  1500     // default pulse width when servo is attached//附加伺服时的默认脉冲宽度
+#define REFRESH_INTERVAL    20000     // minimum time to refresh servos in microseconds//刷新伺服的最短时间（微秒）
 
 #define MAX_SERVOS             4
 
-#define INVALID_SERVO         255     // flag indicating an invalid servo index
+#define INVALID_SERVO         255     // flag indicating an invalid servo index//指示无效伺服索引的标志
 
 
-// Types
+// Types//类型
 
 typedef struct {
-  uint8_t nbr        : 8 ;            // a pin number from 0 to 254 (255 signals invalid pin)
-  uint8_t isActive   : 1 ;            // true if this channel is enabled, pin not pulsed if false
+  uint8_t nbr        : 8 ;            // a pin number from 0 to 254 (255 signals invalid pin)//从0到254的管脚编号（255表示管脚无效）
+  uint8_t isActive   : 1 ;            // true if this channel is enabled, pin not pulsed if false//如果启用此通道，则为true；如果为false，则引脚不脉冲
 } ServoPin_t;
 
 typedef struct {
   ServoPin_t Pin;
-  unsigned int pulse_width;           // pulse width in microseconds
+  unsigned int pulse_width;           // pulse width in microseconds//脉冲宽度（微秒）
 } ServoInfo_t;
 
-// Global variables
+// Global variables//全局变量
 
 extern uint8_t ServoCount;
 extern ServoInfo_t servo_info[MAX_SERVOS];

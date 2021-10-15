@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -34,15 +35,15 @@
 #define MKS_BASE_VERSION                      14
 #define IS_RAMPS_EFB
 
-//
-// Heaters / Fans
-//
-#define FAN_PIN                                9  // PH6 ** Pin18 ** PWM9
+////
+// Heaters / Fans//加热器/风扇
+////
+#define FAN_PIN                                9  // PH6 ** Pin18 ** PWM9//PH6**Pin18**PWM9
 #define FAN1_PIN                               6
 
-//
-// Extra Extruder / Stepper for V5.2
-//
+////
+// Extra Extruder / Stepper for V5.2//V5.2的额外挤出机/步进机
+////
 #define E2_STEP_PIN                            4
 #define E2_DIR_PIN                             5
 #define E2_ENABLE_PIN                         22

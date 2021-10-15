@@ -1,3 +1,4 @@
+/** translatione by yx */
 /******************************
  * filament_runout_screen.cpp *
  ******************************/
@@ -61,4 +62,4 @@ bool FilamentRunoutScreen::onTouchHeld(uint8_t tag) {
   return true;
 }
 
-#endif // FTDI_FILAMENT_RUNOUT_SCREEN
+#endif // FTDI_FILAMENT_RUNOUT_SCREEN//FTDI_灯丝_跳动_屏幕

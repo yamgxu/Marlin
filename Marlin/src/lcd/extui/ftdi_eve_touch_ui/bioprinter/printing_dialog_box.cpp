@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*******************************
  * bio_printing_dialog_box.cpp *
  *******************************/
@@ -144,4 +145,4 @@ void BioPrintingDialogBox::show() {
   GOTO_SCREEN(BioPrintingDialogBox);
 }
 
-#endif // FTDI_BIO_PRINTING_DIALOG_BOX
+#endif // FTDI_BIO_PRINTING_DIALOG_BOX//FTDI_生物_打印_对话框

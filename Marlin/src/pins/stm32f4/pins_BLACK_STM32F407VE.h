@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -40,19 +41,19 @@
 
 #define DEFAULT_MACHINE_NAME "STM32F407VET6"
 
-//#define I2C_EEPROM
+//#define I2C_EEPROM//#定义I2C_EEPROM
 #define SRAM_EEPROM_EMULATION
-#define MARLIN_EEPROM_SIZE                0x2000  // 8KB
+#define MARLIN_EEPROM_SIZE                0x2000  // 8KB//8KB
 
-//
-// Servos
-//
+////
+// Servos//伺服
+////
 #define SERVO0_PIN                          PC6
 #define SERVO1_PIN                          PC7
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_MIN_PIN                           PC13
 #define X_MAX_PIN                           PA15
 #define Y_MIN_PIN                           PA5
@@ -60,9 +61,9 @@
 #define Z_MIN_PIN                           PD14
 #define Z_MAX_PIN                           PD15
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                          PC4
 #define X_DIR_PIN                           PA4
 #define X_ENABLE_PIN                        PE7
@@ -83,41 +84,41 @@
 #define E1_DIR_PIN                          PE1
 #define E1_ENABLE_PIN                       PB8
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                          PC0   // T0
-#define TEMP_1_PIN                          PC1   // T1
-#define TEMP_BED_PIN                        PC2   // TB
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                          PC0   // T0//T0
+#define TEMP_1_PIN                          PC1   // T1//T1
+#define TEMP_BED_PIN                        PC2   // TB//结核病
 
 #ifndef TEMP_CHAMBER_PIN
-  #define TEMP_CHAMBER_PIN                  PC3   // TC
+  #define TEMP_CHAMBER_PIN                  PC3   // TC//TC
 #endif
 
-//
-// Heaters / Fans
-//
-#define HEATER_0_PIN                        PA2   // Heater0
-#define HEATER_1_PIN                        PA3   // Heater1
-#define HEATER_BED_PIN                      PA1   // Hotbed
+////
+// Heaters / Fans//加热器/风扇
+////
+#define HEATER_0_PIN                        PA2   // Heater0//加热器
+#define HEATER_1_PIN                        PA3   // Heater1//加热器1
+#define HEATER_BED_PIN                      PA1   // Hotbed//温床
 
-#define FAN_PIN                             PE9   // Fan0
-#define FAN1_PIN                            PE11  // Fan1
-#define FAN2_PIN                            PE13  // Fan2
-#define FAN3_PIN                            PE14  // Fan3
+#define FAN_PIN                             PE9   // Fan0//Fan0
+#define FAN1_PIN                            PE11  // Fan1//Fan1
+#define FAN2_PIN                            PE13  // Fan2//风扇2
+#define FAN3_PIN                            PE14  // Fan3//风扇3
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define LED_PIN                             PA6
-//#define LED_PIN                           PA7
+//#define LED_PIN                           PA7//#定义LED_引脚PA7
 #define KILL_PIN                            PB1
 
-//
-// LCD / Controller
-//
-//#define SD_DETECT_PIN                     PC5
-//#define SD_DETECT_PIN                     PA8   // SDIO SD_DETECT_PIN, external SDIO card reader only
+////
+// LCD / Controller//液晶显示器/控制器
+////
+//#define SD_DETECT_PIN                     PC5//#定义SD_检测_引脚PC5
+//#define SD_DETECT_PIN                     PA8   // SDIO SD_DETECT_PIN, external SDIO card reader only//#定义SD_DETECT_引脚PA8//SDIO SD_DETECT_引脚，仅限外部SDIO读卡器
 
 #define BEEPER_PIN                          PD10
 #define LCD_PINS_RS                         PE15
@@ -134,12 +135,12 @@
 #define DOGLCD_A0                    LCD_PINS_D6
 
 #if ENABLED(REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER)
-  #define BTN_ENC_EN                 LCD_PINS_D7  // Detect the presence of the encoder
+  #define BTN_ENC_EN                 LCD_PINS_D7  // Detect the presence of the encoder//检测编码器的存在
 #endif
 
-//
-// Onboard SD support
-//
+////
+// Onboard SD support//机载SD支持
+////
 #define SDIO_D0_PIN                         PC8
 #define SDIO_D1_PIN                         PC9
 #define SDIO_D2_PIN                         PC10
@@ -152,10 +153,10 @@
 #endif
 
 #if SD_CONNECTION_IS(ONBOARD)
-  #define SDIO_SUPPORT                            // Use SDIO for onboard SD
+  #define SDIO_SUPPORT                            // Use SDIO for onboard SD//将SDIO用于车载SD
 
   #ifndef SDIO_SUPPORT
-    #define SOFTWARE_SPI                          // Use soft SPI for onboard SD
+    #define SOFTWARE_SPI                          // Use soft SPI for onboard SD//对车载SD使用软SPI
     #define SDSS                     SDIO_D3_PIN
     #define SD_SCK_PIN               SDIO_CK_PIN
     #define SD_MISO_PIN              SDIO_D0_PIN

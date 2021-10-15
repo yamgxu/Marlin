@@ -1,3 +1,4 @@
+/** translatione by yx */
 /************************
  * move_axis_screen.cpp *
  ************************/
@@ -32,10 +33,10 @@ using namespace ExtUI;
 constexpr static MoveAxisScreenData &mydata = screen_data.MoveAxisScreen;
 
 void BaseMoveAxisScreen::onEntry() {
-  // Since Marlin keeps only one absolute position for all the extruders,
-  // we have to keep track of the relative motion of individual extruders
-  // ourselves. The relative distances are reset to zero whenever this
-  // screen is entered.
+  // Since Marlin keeps only one absolute position for all the extruders,//由于Marlin仅为所有挤出机保留一个绝对位置，
+  // we have to keep track of the relative motion of individual extruders//我们必须跟踪各个挤出机的相对运动
+  // ourselves. The relative distances are reset to zero whenever this//我们自己。每当发生此情况时，相对距离将重置为零
+  // screen is entered.//进入屏幕。
 
   LOOP_L_N(i, ExtUI::extruderCount) {
     mydata.e_rel[i] = 0;
@@ -83,7 +84,7 @@ bool BaseMoveAxisScreen::onTouchHeld(uint8_t tag) {
     case  5: UI_INCREMENT_AXIS(Y); break;
     case  6: UI_DECREMENT_AXIS(Z); break;
     case  7: UI_INCREMENT_AXIS(Z); break;
-    // For extruders, also update relative distances.
+    // For extruders, also update relative distances.//对于挤出机，也更新相对距离。
     case  8: UI_DECREMENT_AXIS(E0); mydata.e_rel[0] -= increment; break;
     case  9: UI_INCREMENT_AXIS(E0); mydata.e_rel[0] += increment; break;
     #if HAS_MULTI_EXTRUDER
@@ -117,9 +118,9 @@ void BaseMoveAxisScreen::raiseZtoTop() {
 }
 
 float BaseMoveAxisScreen::getManualFeedrate(uint8_t axis, float increment_mm) {
-  // Compute feedrate so that the tool lags the adjuster when it is
-  // being held down, this allows enough margin for the planner to
-  // connect segments and even out the motion.
+  // Compute feedrate so that the tool lags the adjuster when it is//计算进给速度，使刀具在移动时滞后于调节器
+  // being held down, this allows enough margin for the planner to//这就为规划者提供了足够的空间
+  // connect segments and even out the motion.//连接线段并使运动均匀。
   constexpr xyze_feedrate_t max_manual_feedrate = MANUAL_FEEDRATE;
   return min(max_manual_feedrate[axis] / 60.0f, abs(increment_mm * (TOUCH_REPEATS_PER_SECOND) * 0.80f));
 }
@@ -140,4 +141,4 @@ void MoveAxisScreen::onIdle() {
   BaseScreen::onIdle();
 }
 
-#endif // FTDI_MOVE_AXIS_SCREEN
+#endif // FTDI_MOVE_AXIS_SCREEN//FTDI_移动_轴_屏幕

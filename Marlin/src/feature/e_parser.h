@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,11 +32,11 @@
   #include "host_actions.h"
 #endif
 
-// External references
+// External references//外部参照
 extern bool wait_for_user, wait_for_heatup;
 
 #if ENABLED(REALTIME_REPORTING_COMMANDS)
-  // From motion.h, which cannot be included here
+  // From motion.h, which cannot be included here//来自motion.h，此处不能包含
   void report_current_position_moving();
   void quickpause_stepper();
   void quickresume_stepper();
@@ -47,7 +48,7 @@ class EmergencyParser {
 
 public:
 
-  // Currently looking for: M108, M112, M410, M876 S[0-9], S000, P000, R000
+  // Currently looking for: M108, M112, M410, M876 S[0-9], S000, P000, R000//目前正在寻找：M108，M112，M410，M876 S[0-9]，S000，P000，R000
   enum State : uint8_t {
     EP_RESET,
     EP_N,
@@ -68,7 +69,7 @@ public:
       EP_ctrl,
       EP_K, EP_KI, EP_KIL, EP_KILL,
     #endif
-    EP_IGNORE // to '\n'
+    EP_IGNORE // to '\n'//到“\n”
   };
 
   static bool killed_by_M112;

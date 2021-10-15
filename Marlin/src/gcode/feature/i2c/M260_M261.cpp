@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -44,16 +45,16 @@
  *  M260 R1 ; Reset the buffer without sending data
  */
 void GcodeSuite::M260() {
-  // Set the target address
+  // Set the target address//设置目标地址
   if (parser.seen('A')) i2c.address(parser.value_byte());
 
-  // Add a new byte to the buffer
+  // Add a new byte to the buffer//向缓冲区添加新字节
   if (parser.seen('B')) i2c.addbyte(parser.value_byte());
 
-  // Flush the buffer to the bus
+  // Flush the buffer to the bus//将缓冲区刷新到总线
   if (parser.seen('S')) i2c.send();
 
-  // Reset and rewind the buffer
+  // Reset and rewind the buffer//重置并倒带缓冲区
   else if (parser.seen('R')) i2c.reset();
 }
 

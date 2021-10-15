@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -20,9 +21,9 @@
  *
  */
 
-//
-// Bed Tramming Wizard
-//
+////
+// Bed Tramming Wizard//卧铺向导
+////
 
 #include "../../inc/MarlinConfigPre.h"
 
@@ -36,7 +37,7 @@
 #include "../../module/probe.h"
 #include "../../gcode/queue.h"
 
-//#define DEBUG_OUT 1
+//#define DEBUG_OUT 1//#定义调试输出1
 #include "../../core/debug_out.h"
 
 float z_measured[G35_PROBE_COUNT] = { 0 };
@@ -48,7 +49,7 @@ static uint8_t tram_index = 0;
 
 static bool probe_single_point() {
   do_blocking_move_to_z(TERN(BLTOUCH, Z_CLEARANCE_DEPLOY_PROBE, Z_CLEARANCE_BETWEEN_PROBES));
-  // Stow after each point with BLTouch "HIGH SPEED" mode for push-pin safety
+  // Stow after each point with BLTouch "HIGH SPEED" mode for push-pin safety//使用BLTouch“高速”模式在每个点后收起，以确保插销安全
   const float z_probed_height = probe.probe_at_point(screws_tilt_adjust_pos[tram_index], TERN(BLTOUCH_HS_MODE, PROBE_PT_STOW, PROBE_PT_RAISE), 0, true);
   DEBUG_ECHOLNPAIR("probe_single_point: ", z_probed_height, "mm");
   z_measured[tram_index] = z_probed_height;
@@ -62,9 +63,9 @@ static void _menu_single_probe(const uint8_t point) {
   DEBUG_ECHOLNPAIR("Screen: single probe screen Arg:", point);
   START_MENU();
   STATIC_ITEM(MSG_LEVEL_CORNERS, SS_LEFT);
-  STATIC_ITEM(MSG_LAST_VALUE_SP, SS_LEFT, ftostr42_52(z_measured[0] - z_measured[point])); // Print diff
+  STATIC_ITEM(MSG_LAST_VALUE_SP, SS_LEFT, ftostr42_52(z_measured[0] - z_measured[point])); // Print diff//打印差异
   ACTION_ITEM(MSG_UBL_BC_INSERT2, []{ if (probe_single_point()) ui.refresh(); });
-  ACTION_ITEM(MSG_BUTTON_DONE, []{ ui.goto_previous_screen(); }); // Back
+  ACTION_ITEM(MSG_BUTTON_DONE, []{ ui.goto_previous_screen(); }); // Back//背
   END_MENU();
 }
 
@@ -73,24 +74,24 @@ static void tramming_wizard_menu() {
   START_MENU();
   STATIC_ITEM(MSG_SELECT_ORIGIN);
 
-  // Draw a menu item for each tramming point
+  // Draw a menu item for each tramming point//为每个牵引点绘制一个菜单项
   LOOP_L_N(i, G35_PROBE_COUNT)
     SUBMENU_N_P(i, (char*)pgm_read_ptr(&tramming_point_name[i]), []{ _menu_single_probe(MenuItemBase::itemIndex); });
 
   ACTION_ITEM(MSG_BUTTON_DONE, []{
-    probe.stow(); // Stow before exiting Tramming Wizard
+    probe.stow(); // Stow before exiting Tramming Wizard//退出缆车向导前装载
     ui.goto_previous_screen_no_defer();
   });
   END_MENU();
 }
 
-// Init the wizard and enter the submenu
+// Init the wizard and enter the submenu//初始化向导并进入子菜单
 void goto_tramming_wizard() {
   DEBUG_ECHOLNPAIR("Screen: goto_tramming_wizard", 1);
   tram_index = 0;
   ui.defer_status_screen();
 
-  // Inject G28, wait for homing to complete,
+  // Inject G28, wait for homing to complete,//注入G28，等待归位完成，
   set_all_unhomed();
   queue.inject_P(TERN(CAN_SET_LEVELING_AFTER_G28, PSTR("G28L0"), G28_STR));
 
@@ -101,4 +102,4 @@ void goto_tramming_wizard() {
   });
 }
 
-#endif // HAS_LCD_MENU && ASSISTED_TRAMMING_WIZARD
+#endif // HAS_LCD_MENU && ASSISTED_TRAMMING_WIZARD//有LCD菜单和辅助行车向导

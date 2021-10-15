@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -28,7 +29,7 @@
 #include "../HAL_MinSerial.h"
 #include <stdarg.h>
 
-// Dump a backtrace entry
+// Dump a backtrace entry//转储回溯条目
 static bool UnwReportOut(void *ctx, const UnwReport *bte) {
   int *p = (int*)ctx;
 
@@ -65,12 +66,12 @@ static const UnwindCallbacks UnwCallbacks = {
   #endif
 };
 
-// Perform a backtrace to the serial port
+// Perform a backtrace to the serial port//对串行端口执行回溯跟踪
 void backtrace() {
 
   unsigned long sp = 0, lr = 0, pc = 0;
 
-  // Capture the values of the registers to perform the traceback
+  // Capture the values of the registers to perform the traceback//捕获寄存器的值以执行回溯
   __asm__ __volatile__ (
     " mov %[lrv],lr\n"
     " mov %[spv],sp\n"
@@ -87,20 +88,20 @@ void backtrace() {
 void backtrace_ex(unsigned long sp, unsigned long lr, unsigned long pc) {
   UnwindFrame btf;
 
-  // Fill the traceback structure
+  // Fill the traceback structure//填充回溯结构
   btf.sp = sp;
   btf.fp = btf.sp;
   btf.lr = lr;
-  btf.pc = pc | 1; // Force Thumb, as CORTEX only support it
+  btf.pc = pc | 1; // Force Thumb, as CORTEX only support it//用力拇指，因为皮层只支持它
 
-  // Perform a backtrace
+  // Perform a backtrace//执行回溯跟踪
   MinSerial::TX("Backtrace:");
   int ctr = 0;
   UnwindStart(&btf, &UnwCallbacks, &ctr);
 }
 
-#else // !__arm__ && !__thumb__
+#else // !__arm__ && !__thumb__// !__手臂&&__拇指__
 
 void backtrace() {}
 
-#endif // __arm__ || __thumb__
+#endif // __arm__ || __thumb__//手臂拇指__

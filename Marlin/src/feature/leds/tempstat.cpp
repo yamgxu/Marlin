@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -32,10 +33,10 @@
 #include "../../module/temperature.h"
 
 void handle_status_leds() {
-  static int8_t old_red = -1;  // Invalid value to force LED initialization
+  static int8_t old_red = -1;  // Invalid value to force LED initialization//强制LED初始化的值无效
   static millis_t next_status_led_update_ms = 0;
   if (ELAPSED(millis(), next_status_led_update_ms)) {
-    next_status_led_update_ms += 500; // Update every 0.5s
+    next_status_led_update_ms += 500; // Update every 0.5s//每0.5s更新一次
     celsius_t max_temp = TERN0(HAS_HEATED_BED, _MAX(thermalManager.degTargetBed(), thermalManager.wholeDegBed()));
     HOTEND_LOOP()
       max_temp = _MAX(max_temp, thermalManager.wholeDegHotend(e), thermalManager.degTargetHotend(e));
@@ -52,4 +53,4 @@ void handle_status_leds() {
   }
 }
 
-#endif // TEMP_STAT_LEDS
+#endif // TEMP_STAT_LEDS//温度/状态指示灯

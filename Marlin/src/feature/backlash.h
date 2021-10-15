@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -55,7 +56,7 @@ public:
 
   static inline float get_measurement(const AxisEnum a) {
     UNUSED(a);
-    // Return the measurement averaged over all readings
+    // Return the measurement averaged over all readings//返回所有读数的平均值
     return TERN(MEASURE_BACKLASH_WHEN_PROBING
       , measured_count[a] > 0 ? measured_mm[a] / measured_count[a] : 0
       , 0

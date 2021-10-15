@@ -1,3 +1,4 @@
+/** translatione by yx */
 /* Copyright (C) 2015-2016 Andrew J. Kroll
    and
 Copyright (C) 2011 Circuits At Home, LTD. All rights reserved.
@@ -20,7 +21,7 @@ Contact information
 -------------------
 
 Circuits At Home, LTD
-Web      :  https://www.circuitsathome.com
+Web      :  https://www.circuitsathome.com//www.circuitsathome.com
 e-mail   :  support@circuitsathome.com
  */
 
@@ -93,4 +94,4 @@ template <class T> void D_PrintBin(NOTUSED(T val), NOTUSED(int lvl)) {
 
 
 
-#endif // __PRINTHEX_H__
+#endif // __PRINTHEX_H__//打印十六进制__

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -51,7 +52,7 @@ ring_buffer_pos_t RingBuffer::write(const uint8_t c) {
     return 1;
   }
 
-  // TODO: buffer is full, handle?
+  // TODO: buffer is full, handle?//TODO:缓冲区已满，句柄？
   return 0;
 }
 
@@ -107,7 +108,7 @@ const httpd_uri_t WebSocketSerial::ws = {
   .is_websocket = true
 };
 
-// WebSocketSerial impl
+// WebSocketSerial impl//WebSocketSerial impl
 WebSocketSerial::WebSocketSerial()
     : rx_buffer(RingBuffer(RX_BUFFER_SIZE)),
       tx_buffer(RingBuffer(TX_BUFFER_SIZE)),
@@ -159,10 +160,10 @@ void WebSocketSerial::ws_async_send(void *arg) {
   ws_pkt.len = resp_arg->len;
   ws_pkt.type = HTTPD_WS_TYPE_TEXT;
 
-  // todo use the size from the server config
+  // todo use the size from the server config//todo使用服务器配置中的大小
   size_t fds = 8;
   int client_fds[8];
-  esp_err_t ret = httpd_get_client_list(resp_arg->hd, &fds, client_fds); //todo handle error
+  esp_err_t ret = httpd_get_client_list(resp_arg->hd, &fds, client_fds); //todo handle error//todo句柄错误
   if (ret != ESP_OK) {
     return;
   } 
@@ -170,14 +171,14 @@ void WebSocketSerial::ws_async_send(void *arg) {
   for (int i=0; i<fds; i++) {
     if (httpd_ws_get_fd_info(resp_arg->hd, client_fds[i]) == HTTPD_WS_CLIENT_WEBSOCKET) {
       httpd_ws_send_frame_async(resp_arg->hd, client_fds[i], &ws_pkt);
-      // When is ws_pkt freed?
+      // When is ws_pkt freed?//ws_pkt何时释放？
     }
   }
 
   free(arg);
-  // when to free arg->txbuf? <- same time ass ws_pkt
+  // when to free arg->txbuf? <- same time ass ws_pkt//何时释放arg->txbuf？<-同一时间ass W_pkt
 
-  // TODO free memory
+  // TODO free memory//TODO空闲内存
 }
 
 esp_err_t WebSocketSerial::ws_handler(httpd_req_t *req) {
@@ -209,7 +210,7 @@ esp_err_t WebSocketSerial::ws_handler(httpd_req_t *req) {
       return ret;
     }
 
-    // TODO this is static so need a ref to this, would be cleaner if it was not statuc but it's a C callback
+    // TODO this is static so need a ref to this, would be cleaner if it was not statuc but it's a C callback//TODO这是静态的，所以需要一个对它的引用，如果它不是static，而是一个C回调，那么它会更干净
     webSocketSerial.push(ws_pkt.payload, ws_pkt.len);
   }
 
@@ -239,5 +240,5 @@ size_t WebSocketSerial::write(const uint8_t *buffer, size_t size) {
   return written;
 }
 
-#endif // WIFISUPPORT
-#endif // ARDUINO_ARCH_ESP32
+#endif // WIFISUPPORT//WIFISUPPORT
+#endif // ARDUINO_ARCH_ESP32//ARDUINO_ARCH_ESP32

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -20,9 +21,9 @@
  *
  */
 
-//
-// Cancel Object Menu
-//
+////
+// Cancel Object Menu//取消对象菜单
+////
 
 #include "../../inc/MarlinConfigPre.h"
 
@@ -58,17 +59,17 @@ void menu_cancelobject() {
   START_MENU();
   BACK_ITEM(MSG_MAIN);
 
-  // Draw cancelable items in a loop
+  // Draw cancelable items in a loop//在循环中绘制可取消项
   for (int8_t i = -1; i < cancelable.object_count; i++) {
-    if (i == ao) continue;                                          // Active is drawn on -1 index
-    const int8_t j = i < 0 ? ao : i;                                // Active or index item
-    if (!cancelable.is_canceled(j)) {                               // Not canceled already?
-      SUBMENU_N(j, MSG_CANCEL_OBJECT_N, lcd_cancel_object_confirm); // Offer the option.
-      if (i < 0) SKIP_ITEM();                                       // Extra line after active
+    if (i == ao) continue;                                          // Active is drawn on -1 index//活动是在-1索引上绘制的
+    const int8_t j = i < 0 ? ao : i;                                // Active or index item//活动项或索引项
+    if (!cancelable.is_canceled(j)) {                               // Not canceled already?//还没有取消吗？
+      SUBMENU_N(j, MSG_CANCEL_OBJECT_N, lcd_cancel_object_confirm); // Offer the option.//提供选择权。
+      if (i < 0) SKIP_ITEM();                                       // Extra line after active//激活后的额外行
     }
   }
 
   END_MENU();
 }
 
-#endif // HAS_LCD_MENU && CANCEL_OBJECTS
+#endif // HAS_LCD_MENU && CANCEL_OBJECTS//具有\u LCD\u菜单和取消\u对象（&C）

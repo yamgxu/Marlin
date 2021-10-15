@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*********************
  * status_screen.cpp *
  *********************/
@@ -141,7 +142,7 @@ void StatusScreen::draw_temperature(draw_mode_t what) {
        .fgcolor(fan_speed).button(FAN_POS,     F(""), OPT_FLAT)
        .tag(0);
 
-    // Draw Extruder Bitmap on Extruder Temperature Button
+    // Draw Extruder Bitmap on Extruder Temperature Button//在挤出机温度按钮上绘制挤出机位图
 
     cmd.tag(5)
        .cmd (BITMAP_SOURCE(Extruder_Icon_Info))
@@ -150,20 +151,20 @@ void StatusScreen::draw_temperature(draw_mode_t what) {
        .icon(ICON_POS(NOZ_1_POS), Extruder_Icon_Info, icon_scale)
        .icon(ICON_POS(NOZ_2_POS), Extruder_Icon_Info, icon_scale);
 
-    // Draw Bed Heat Bitmap on Bed Heat Button
+    // Draw Bed Heat Bitmap on Bed Heat Button//在“床热”按钮上绘制床热位图
     cmd.cmd (BITMAP_SOURCE(Bed_Heat_Icon_Info))
        .cmd (BITMAP_LAYOUT(Bed_Heat_Icon_Info))
        .cmd (BITMAP_SIZE  (Bed_Heat_Icon_Info))
        .icon(ICON_POS(BED_POS), Bed_Heat_Icon_Info, icon_scale);
 
-    // Draw Fan Percent Bitmap on Bed Heat Button
+    // Draw Fan Percent Bitmap on Bed Heat Button//在床上加热按钮上绘制风扇百分比位图
 
     cmd.cmd (BITMAP_SOURCE(Fan_Icon_Info))
        .cmd (BITMAP_LAYOUT(Fan_Icon_Info))
        .cmd (BITMAP_SIZE  (Fan_Icon_Info))
        .icon(ICON_POS(FAN_POS), Fan_Icon_Info, icon_scale);
 
-    TERN_(TOUCH_UI_USE_UTF8, load_utf8_bitmaps(cmd)); // Restore font bitmap handles
+    TERN_(TOUCH_UI_USE_UTF8, load_utf8_bitmaps(cmd)); // Restore font bitmap handles//还原字体位图句柄
   }
 
   if (what & FOREGROUND) {
@@ -381,7 +382,7 @@ void StatusScreen::setStatusMessage(const char *message) {
 }
 
 void StatusScreen::loadBitmaps() {
-  // Load the bitmaps for the status screen
+  // Load the bitmaps for the status screen//加载状态屏幕的位图
   using namespace Theme;
   constexpr uint32_t base = ftdi_memory_map::RAM_G;
   CLCD::mem_write_pgm(base + TD_Icon_Info.RAMG_offset,       TD_Icon,       sizeof(TD_Icon));
@@ -389,7 +390,7 @@ void StatusScreen::loadBitmaps() {
   CLCD::mem_write_pgm(base + Bed_Heat_Icon_Info.RAMG_offset, Bed_Heat_Icon, sizeof(Bed_Heat_Icon));
   CLCD::mem_write_pgm(base + Fan_Icon_Info.RAMG_offset,      Fan_Icon,      sizeof(Fan_Icon));
 
-  // Load fonts for internationalization
+  // Load fonts for internationalization//加载国际化字体
   #if ENABLED(TOUCH_UI_USE_UTF8)
     load_utf8_data(base + UTF8_FONT_OFFSET);
   #endif
@@ -455,8 +456,8 @@ bool StatusScreen::onTouchEnd(uint8_t tag) {
     default:
       return true;
   }
-  // If a passcode is enabled, the LockScreen will prevent the
-  // user from proceeding.
+  // If a passcode is enabled, the LockScreen will prevent the//如果密码已启用，锁屏将阻止
+  // user from proceeding.//用户无法继续。
   LockScreen::check_passcode();
   return true;
 }
@@ -471,4 +472,4 @@ void StatusScreen::onMediaRemoved() {
     setStatusMessage(GET_TEXT_F(MSG_MEDIA_REMOVED));
 }
 
-#endif // FTDI_STATUS_SCREEN
+#endif // FTDI_STATUS_SCREEN//FTDI_状态_屏幕

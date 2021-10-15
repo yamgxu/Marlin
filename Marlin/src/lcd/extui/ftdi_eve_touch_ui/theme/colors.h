@@ -1,3 +1,4 @@
+/** translatione by yx */
 /************
  * colors.h *
  ************/
@@ -27,46 +28,46 @@ namespace Theme {
   #if ENABLED(TOUCH_UI_COCOA_THEME)
     constexpr int      accent_hue           = 23;
 
-    // Browns and Oranges
-    constexpr uint32_t accent_color_1       = hsl_to_rgb(12.8,0.597,0.263); // Darkest
+    // Browns and Oranges//棕色和橙色
+    constexpr uint32_t accent_color_1       = hsl_to_rgb(12.8,0.597,0.263); // Darkest//黑暗的
     constexpr uint32_t accent_color_2       = hsl_to_rgb(12.8,0.597,0.263);
     constexpr uint32_t accent_color_3       = hsl_to_rgb( 9.6,0.664,0.443);
     constexpr uint32_t accent_color_4       = hsl_to_rgb(16.3,0.873,0.537);
     constexpr uint32_t accent_color_5       = hsl_to_rgb(23.0,0.889,0.539);
-    constexpr uint32_t accent_color_6       = hsl_to_rgb(23.0,0.889,0.539); // Lightest
+    constexpr uint32_t accent_color_6       = hsl_to_rgb(23.0,0.889,0.539); // Lightest//最轻的
   #else
-    // Use linear accent colors
+    // Use linear accent colors//使用线性强调色
 
     #if ANY(TOUCH_UI_ROYAL_THEME, TOUCH_UI_FROZEN_THEME)
-        // Dark blue accent colors
+        // Dark blue accent colors//深蓝色强调色
         constexpr int      accent_hue       = 216;
         constexpr float    accent_sat       = 0.7;
     #else
-        // Green accent colors
+        // Green accent colors//绿色强调色
         constexpr int      accent_hue       = 68;
         constexpr float    accent_sat       = 0.68;
     #endif
 
-    // Shades of accent color
-    constexpr uint32_t accent_color_0       = hsl_to_rgb(accent_hue, accent_sat, 0.15); // Darkest
+    // Shades of accent color//色调
+    constexpr uint32_t accent_color_0       = hsl_to_rgb(accent_hue, accent_sat, 0.15); // Darkest//黑暗的
     constexpr uint32_t accent_color_1       = hsl_to_rgb(accent_hue, accent_sat, 0.26);
     constexpr uint32_t accent_color_2       = hsl_to_rgb(accent_hue, accent_sat, 0.39);
     constexpr uint32_t accent_color_3       = hsl_to_rgb(accent_hue, accent_sat, 0.52);
     constexpr uint32_t accent_color_4       = hsl_to_rgb(accent_hue, accent_sat, 0.65);
     constexpr uint32_t accent_color_5       = hsl_to_rgb(accent_hue, accent_sat, 0.78);
-    constexpr uint32_t accent_color_6       = hsl_to_rgb(accent_hue, accent_sat, 0.91); // Lightest
+    constexpr uint32_t accent_color_6       = hsl_to_rgb(accent_hue, accent_sat, 0.91); // Lightest//最轻的
   #endif
 
-  // Shades of gray
+  // Shades of gray//灰色阴影
 
   constexpr float    gray_sat               = 0.14;
-  constexpr uint32_t gray_color_0           = hsl_to_rgb(accent_hue, gray_sat, 0.15); // Darkest
+  constexpr uint32_t gray_color_0           = hsl_to_rgb(accent_hue, gray_sat, 0.15); // Darkest//黑暗的
   constexpr uint32_t gray_color_1           = hsl_to_rgb(accent_hue, gray_sat, 0.26);
   constexpr uint32_t gray_color_2           = hsl_to_rgb(accent_hue, gray_sat, 0.39);
   constexpr uint32_t gray_color_3           = hsl_to_rgb(accent_hue, gray_sat, 0.52);
   constexpr uint32_t gray_color_4           = hsl_to_rgb(accent_hue, gray_sat, 0.65);
   constexpr uint32_t gray_color_5           = hsl_to_rgb(accent_hue, gray_sat, 0.78);
-  constexpr uint32_t gray_color_6           = hsl_to_rgb(accent_hue, gray_sat, 0.91); // Lightest
+  constexpr uint32_t gray_color_6           = hsl_to_rgb(accent_hue, gray_sat, 0.91); // Lightest//最轻的
 
   #if ENABLED(TOUCH_UI_ROYAL_THEME)
     constexpr uint32_t theme_darkest        = accent_color_1;
@@ -155,7 +156,7 @@ namespace Theme {
   constexpr uint32_t feedrate               = axis_label;
   constexpr uint32_t other                  = axis_label;
 
-  // Status screen
+  // Status screen//状态屏幕
   constexpr uint32_t progress               = axis_label;
   constexpr uint32_t status_msg             = axis_label;
   #if ENABLED(TOUCH_UI_ROYAL_THEME)
@@ -168,7 +169,7 @@ namespace Theme {
 
   constexpr uint32_t disabled_icon          = gray_color_1;
 
-  // Calibration Registers Screen
+  // Calibration Registers Screen//校准寄存器屏幕
   constexpr uint32_t transformA             = 0x3010D0;
   constexpr uint32_t transformB             = 0x4010D0;
   constexpr uint32_t transformC             = 0x5010D0;
@@ -184,7 +185,7 @@ namespace Theme {
   constexpr btn_colors ui_slider            = {.bg = theme_darkest, .grad = 0xFFFFFF,    .fg = theme_dark,   .rgb = accent_color_3 };
   constexpr btn_colors ui_toggle            = {.bg = theme_darkest, .grad = 0xFFFFFF,    .fg = theme_dark,   .rgb = 0xFFFFFF };
 
-  // Temperature color scale
+  // Temperature color scale//温度色标
 
   const rgb_t cool_rgb (  0,   0,   0);
   const rgb_t low_rgb  (128,   0,   0);

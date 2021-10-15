@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -35,7 +36,7 @@
 #define DISPLAY_CHARSET_ISO10646_TR
 
 namespace Language_tr {
-  using namespace Language_en; // Inherit undefined strings from English
+  using namespace Language_en; // Inherit undefined strings from English//从英语中继承未定义的字符串
 
   constexpr uint8_t    CHARSIZE                            = 2;
   PROGMEM Language_Str LANGUAGE                            = _UxGT("Turkish");
@@ -52,7 +53,7 @@ namespace Language_tr {
   PROGMEM Language_Str MSG_MEDIA_READ_ERROR                = _UxGT("Kart Okuma Hatası");
   PROGMEM Language_Str MSG_MEDIA_USB_REMOVED               = _UxGT("USB Çıkarıldı");
   PROGMEM Language_Str MSG_MEDIA_USB_FAILED                = _UxGT("USB Başlat. Hatası");
-  PROGMEM Language_Str MSG_LCD_ENDSTOPS                    = _UxGT("Enstops"); // Max length 8 characters
+  PROGMEM Language_Str MSG_LCD_ENDSTOPS                    = _UxGT("Enstops"); // Max length 8 characters//最大长度为8个字符
   PROGMEM Language_Str MSG_LCD_SOFT_ENDSTOPS               = _UxGT("Yazılımsal Endstops");
   PROGMEM Language_Str MSG_MAIN                            = _UxGT("Ana");
   PROGMEM Language_Str MSG_ADVANCED_SETTINGS               = _UxGT("Gelişmiş Ayarlar");
@@ -408,9 +409,9 @@ namespace Language_tr {
   PROGMEM Language_Str MSG_ERR_MINTEMP                     = _UxGT("Hata: MIN.SICAKLIK");
   PROGMEM Language_Str MSG_HALTED                          = _UxGT("YAZICI DURDURULDU");
   PROGMEM Language_Str MSG_PLEASE_RESET                    = _UxGT("Lütfen Resetleyin");
-  PROGMEM Language_Str MSG_SHORT_DAY                       = _UxGT("G"); // One character only
-  PROGMEM Language_Str MSG_SHORT_HOUR                      = _UxGT("S"); // One character only
-  PROGMEM Language_Str MSG_SHORT_MINUTE                    = _UxGT("D"); // One character only
+  PROGMEM Language_Str MSG_SHORT_DAY                       = _UxGT("G"); // One character only//只有一个字符
+  PROGMEM Language_Str MSG_SHORT_HOUR                      = _UxGT("S"); // One character only//只有一个字符
+  PROGMEM Language_Str MSG_SHORT_MINUTE                    = _UxGT("D"); // One character only//只有一个字符
   PROGMEM Language_Str MSG_HEATING                         = _UxGT("Isınıyor...");
   PROGMEM Language_Str MSG_COOLING                         = _UxGT("Soğuyor...");
   PROGMEM Language_Str MSG_BED_HEATING                     = _UxGT("Tabla Isınıyor...");
@@ -529,10 +530,10 @@ namespace Language_tr {
   PROGMEM Language_Str MSG_SNAKE                           = _UxGT("Sn4k3");
   PROGMEM Language_Str MSG_MAZE                            = _UxGT("Maze");
 
-  //
-  // Filament Değişim ekranları 4 satırlı ekranda 3 satıra kadar gösterilir
-  //                        ...veya 3 satırlı ekranda 2 satıra kadar
-  //
+  ////
+  // Filament Değişim ekranları 4 satırlı ekranda 3 satıra kadar gösterilir//德伊姆·埃克兰拉尔·萨塔尔·埃克兰达3号萨塔尔·卡达尔·格斯特里里尔灯丝
+  //                        ...veya 3 satırlı ekranda 2 satıra kadar//…维雅3号赛特拉尔·埃克兰达2号赛特拉尔·卡达尔
+  ////
   #if LCD_HEIGHT >= 4
 
     PROGMEM Language_Str MSG_ADVANCED_PAUSE_WAITING        = _UxGT(MSG_2_LINE("Baskıya devam etmek", "için Butona bas"));

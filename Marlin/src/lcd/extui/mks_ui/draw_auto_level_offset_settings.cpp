@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -86,4 +87,4 @@ void lv_clear_auto_level_offset_settings() {
   lv_obj_del(scr);
 }
 
-#endif // HAS_TFT_LVGL_UI && HAS_BED_PROBE
+#endif // HAS_TFT_LVGL_UI && HAS_BED_PROBE//有TFT、LVGL、UI和BED探头

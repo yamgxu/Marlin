@@ -1,7 +1,8 @@
-//
-// Unknown 200K thermistor on a Copymaster 3D hotend
-// Temptable sent from dealer technologyoutlet.co.uk
-//
+/** translatione by yx */
+////
+// Unknown 200K thermistor on a Copymaster 3D hotend//复印机3D热端上未知的200K热敏电阻
+// Temptable sent from dealer technologyoutlet.co.uk//dealer TechnologyYoutlet.co.uk发送的诱惑
+////
 
 constexpr temp_entry_t temptable_202[] PROGMEM = {
   { OV(   1), 864 },

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,11 +30,11 @@
 
 ProbeTempComp temp_comp;
 
-int16_t ProbeTempComp::z_offsets_probe[cali_info_init[TSI_PROBE].measurements],  // = {0}
-        ProbeTempComp::z_offsets_bed[cali_info_init[TSI_BED].measurements];      // = {0}
+int16_t ProbeTempComp::z_offsets_probe[cali_info_init[TSI_PROBE].measurements],  // = {0}// = {0}
+        ProbeTempComp::z_offsets_bed[cali_info_init[TSI_BED].measurements];      // = {0}// = {0}
 
 #if ENABLED(USE_TEMP_EXT_COMPENSATION)
-  int16_t ProbeTempComp::z_offsets_ext[cali_info_init[TSI_EXT].measurements];    // = {0}
+  int16_t ProbeTempComp::z_offsets_ext[cali_info_init[TSI_EXT].measurements];    // = {0}// = {0}
 #endif
 
 int16_t *ProbeTempComp::sensor_z_offsets[TSI_COUNT] = {
@@ -54,8 +55,8 @@ constexpr xyz_pos_t ProbeTempComp::park_point;
 constexpr xy_pos_t ProbeTempComp::measure_point;
 constexpr celsius_t ProbeTempComp::probe_calib_bed_temp;
 
-uint8_t ProbeTempComp::calib_idx; // = 0
-float ProbeTempComp::init_measurement; // = 0.0
+uint8_t ProbeTempComp::calib_idx; // = 0// = 0
+float ProbeTempComp::init_measurement; // = 0.0// = 0.0
 
 void ProbeTempComp::clear_offsets(const TempSensorID tsi) {
   LOOP_L_N(i, cali_info[tsi].measurements)
@@ -97,7 +98,7 @@ void ProbeTempComp::push_back_new_measurement(const TempSensorID tsi, const_floa
   switch (tsi) {
     case TSI_PROBE:
     case TSI_BED:
-    //case TSI_EXT:
+    //case TSI_EXT://案例TSI_分机：
       if (calib_idx >= cali_info[tsi].measurements) return;
       sensor_z_offsets[tsi][calib_idx++] = static_cast<int16_t>(meas_z * 1000.0f - init_measurement * 1000.0f);
     default: break;
@@ -118,7 +119,7 @@ bool ProbeTempComp::finish_calibration(const TempSensorID tsi) {
                     res_temp = cali_info[tsi].temp_res;
   int16_t * const data = sensor_z_offsets[tsi];
 
-  // Extrapolate
+  // Extrapolate//推断
   float k, d;
   if (calib_idx < measurements) {
     SERIAL_ECHOLNPAIR("Got ", calib_idx, " measurements. ");
@@ -131,7 +132,7 @@ bool ProbeTempComp::finish_calibration(const TempSensorID tsi) {
       }
     }
     else {
-      // Simply use the last measured value for higher temperatures
+      // Simply use the last measured value for higher temperatures//对于较高温度，只需使用最后测量的值即可
       SERIAL_ECHOPGM("Failed to extrapolate");
       const int16_t last_val = data[calib_idx];
       for (; calib_idx < measurements; ++calib_idx)
@@ -140,15 +141,15 @@ bool ProbeTempComp::finish_calibration(const TempSensorID tsi) {
     SERIAL_ECHOLNPGM(" for higher temperatures.");
   }
 
-  // Sanity check
+  // Sanity check//健康检查
   for (calib_idx = 0; calib_idx < measurements; ++calib_idx) {
-    // Restrict the max. offset
+    // Restrict the max. offset//限制最大偏移量
     if (abs(data[calib_idx]) > 2000) {
       SERIAL_ECHOLNPGM("!Invalid Z-offset detected (0-2).");
       clear_offsets(tsi);
       return false;
     }
-    // Restrict the max. offset difference between two probings
+    // Restrict the max. offset difference between two probings//限制两个探头之间的最大偏移差
     if (calib_idx > 0 && abs(data[calib_idx - 1] - data[calib_idx]) > 800) {
       SERIAL_ECHOLNPGM("!Invalid Z-offset between two probings detected (0-0.8).");
       clear_offsets(TSI_PROBE);
@@ -178,10 +179,10 @@ float ProbeTempComp::get_offset_for_temperature(const TempSensorID tsi, const ce
     return (p2.y - p1.y) / (p2.x - p2.y) * (x - p1.x) + p1.y;
   };
 
-  // Linear interpolation
+  // Linear interpolation//线性插值
   uint8_t idx = static_cast<uint8_t>((temp - start_temp) / res_temp);
 
-  // offset in µm
+  // offset in µm//偏移量（单位：µm）
   float offset = 0.0f;
 
   #if !defined(PTC_LINEAR_EXTRAPOLATION) || PTC_LINEAR_EXTRAPOLATION <= 0
@@ -198,7 +199,7 @@ float ProbeTempComp::get_offset_for_temperature(const TempSensorID tsi, const ce
     else
       offset = linear_interp(temp, point(idx), point(idx + 1));
 
-  // return offset in mm
+  // return offset in mm//返回偏移量（mm）
   return offset / 1000.0f;
 }
 
@@ -227,7 +228,7 @@ bool ProbeTempComp::linear_regression(const TempSensorID tsi, float &k, float &d
 
   const float denom = static_cast<float>(calib_idx + 1) * sum_x2 - sq(sum_x);
   if (fabs(denom) <= 10e-5) {
-    // Singularity - unable to solve
+    // Singularity - unable to solve//奇点-无法解决
     k = d = 0.0;
     return false;
   }
@@ -238,4 +239,4 @@ bool ProbeTempComp::linear_regression(const TempSensorID tsi, float &k, float &d
   return true;
 }
 
-#endif // PROBE_TEMP_COMPENSATION
+#endif // PROBE_TEMP_COMPENSATION//探头温度补偿

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -20,9 +21,9 @@
  *
  */
 
-//
-// Job Recovery Menu
-//
+////
+// Job Recovery Menu//作业恢复菜单
+////
 
 #include "../../inc/MarlinConfigPre.h"
 
@@ -43,8 +44,8 @@ void lcd_power_loss_recovery_cancel() {
   ui.return_to_status();
 }
 
-// TODO: Display long filename with Cancel/Resume buttons
-//       Requires supporting methods in PLR class.
+// TODO: Display long filename with Cancel/Resume buttons//TODO:使用取消/恢复按钮显示长文件名
+//       Requires supporting methods in PLR class.//需要PLR类中的支持方法。
 void menu_job_recovery() {
   ui.defer_status_screen();
   START_MENU();
@@ -54,4 +55,4 @@ void menu_job_recovery() {
   END_MENU();
 }
 
-#endif // HAS_LCD_MENU && POWER_LOSS_RECOVERY
+#endif // HAS_LCD_MENU && POWER_LOSS_RECOVERY//具有LCD菜单和电源丢失恢复功能

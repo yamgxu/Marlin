@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -46,22 +47,22 @@ public:
 
   static T divisor, value[Cfg::SIZE], dir[Cfg::SIZE], dividend[Cfg::SIZE], counter[Cfg::SIZE];
 
-  // Default: Instantiate all items with the identical parameters
+  // Default: Instantiate all items with the identical parameters//默认值：实例化具有相同参数的所有项
   Bresenham(const T &inDivisor=1, const int8_t &inDir=1, const T &inDividend=1, const T &inValue=0) {
     for (uint8_t i = 0; i < Cfg::SIZE; i++) init(i, inDivisor, inDir, inDividend, inValue);
   }
 
-  // Instantiate all items with the same divisor
+  // Instantiate all items with the same divisor//实例化具有相同除数的所有项
   Bresenham(const T &inDivisor, const int8_t (&inDir)[Cfg::SIZE], const T (&inDividend)[Cfg::SIZE], const T (&inValue)[Cfg::SIZE]={0}) {
     init(inDivisor, inDir, inDividend, inValue);
   }
 
-  // Instantiate all items with the same divisor and direction
+  // Instantiate all items with the same divisor and direction//实例化具有相同除数和方向的所有项
   Bresenham(const T &inDivisor, const int8_t &inDir, const T (&inDividend)[Cfg::SIZE], const T (&inValue)[Cfg::SIZE]={0}) {
     init(inDivisor, inDir, inDividend, inValue);
   }
 
-  // Init all items with the same parameters
+  // Init all items with the same parameters//初始化具有相同参数的所有项
   FORCE_INLINE static void init(const uint8_t index, const T &inDivisor=1, const int8_t &inDir=1, const T &inDividend=1, const T &inValue=0) {
     divisor         = inDivisor;
     dir[index]      = inDir;
@@ -70,7 +71,7 @@ public:
     prime(index);
   }
 
-  // Init all items with the same divisor
+  // Init all items with the same divisor//使用相同的除数初始化所有项
   FORCE_INLINE static void init(const T &inDivisor, const int8_t (&inDir)[Cfg::SIZE], const T (&inDividend)[Cfg::SIZE], const T (&inValue)[Cfg::SIZE]={0}) {
     divisor = inDivisor;
     for (uint8_t i = 0; i < Cfg::SIZE; i++) {
@@ -81,7 +82,7 @@ public:
     prime();
   }
 
-  // Init all items with the same divisor and direction
+  // Init all items with the same divisor and direction//初始化具有相同除数和方向的所有项
   FORCE_INLINE static void init(const T &inDivisor, const int8_t &inDir, const T (&inDividend)[Cfg::SIZE], const T (&inValue)[Cfg::SIZE]={0}) {
     divisor = inDivisor;
     for (uint8_t i = 0; i < Cfg::SIZE; i++) {
@@ -92,7 +93,7 @@ public:
     prime();
   }
 
-  // Reinit item with new dir, dividend, value keeping the same divisor
+  // Reinit item with new dir, dividend, value keeping the same divisor//使用新的目录、股息、值重新输入项，并保持相同的除数
   FORCE_INLINE static void reinit(const uint8_t index, const int8_t &inDir=1, const T &inDividend=1, const T &inValue=0) {
     dir[index]      = inDir;
     dividend[index] = inDividend;

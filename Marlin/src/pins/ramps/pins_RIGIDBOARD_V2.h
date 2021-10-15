@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,24 +30,24 @@
 
 #include "pins_RIGIDBOARD.h"
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 
-// I2C based DAC like on the Printrboard REVF
+// I2C based DAC like on the Printrboard REVF//PrinterBoard REVF上基于I2C的类DAC
 #define HAS_MOTOR_CURRENT_DAC
 
-// Channels available for DAC, For Rigidboard there are 4
+// Channels available for DAC, For Rigidboard there are 4//DAC可用的通道，对于刚体有4个
 #define DAC_STEPPER_ORDER { 0, 1, 2, 3 }
 
-#define DAC_STEPPER_SENSE    0.05   // sense resistors on rigidboard stepper chips are .05 value
+#define DAC_STEPPER_SENSE    0.05   // sense resistors on rigidboard stepper chips are .05 value//刚性板步进芯片上的检测电阻为.05
 #define DAC_STEPPER_ADDRESS                   0
-#define DAC_STEPPER_MAX                     4096  // was 5000 but max allowable value is actually 4096
-#define DAC_STEPPER_VREF                      1   // internal Vref, gain 2x = 4.096V
-#define DAC_STEPPER_GAIN                      1   // value of 1 here sets gain of 2
-#define DAC_DISABLE_PIN                      42   // set low to enable DAC
+#define DAC_STEPPER_MAX                     4096  // was 5000 but max allowable value is actually 4096//是5000，但最大允许值实际上是4096
+#define DAC_STEPPER_VREF                      1   // internal Vref, gain 2x = 4.096V//内部Vref，增益2x=4.096V
+#define DAC_STEPPER_GAIN                      1   // value of 1 here sets gain of 2//这里的值为1时，增益为2
+#define DAC_DISABLE_PIN                      42   // set low to enable DAC//设置为低以启用DAC
 #define DAC_OR_ADDRESS 0x01
 
 #ifndef DAC_MOTOR_CURRENT_DEFAULT
-  #define DAC_MOTOR_CURRENT_DEFAULT { 70, 80, 90, 80 } // Default drive percent - X, Y, Z, E axis
+  #define DAC_MOTOR_CURRENT_DEFAULT { 70, 80, 90, 80 } // Default drive percent - X, Y, Z, E axis//默认驱动百分比-X、Y、Z、E轴
 #endif

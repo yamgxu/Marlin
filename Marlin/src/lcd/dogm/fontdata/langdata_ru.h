@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Generated automatically by buildroot/share/fonts/uxggenpages.sh
  * Contents will be REPLACED by future processing!
@@ -66,8 +67,8 @@ const u8g_fntpgm_uint8_t fontpage_8_209_209[30] U8G_FONT_SECTION("fontpage_8_209
 
 #define FONTDATA_ITEM(page, begin, end, data) { page, begin, end, COUNT(data), data }
 static const uxg_fontinfo_t g_fontinfo[] PROGMEM = {
-    FONTDATA_ITEM(8, 144, 168, fontpage_8_144_168), // 'А' -- 'Ш'
-    FONTDATA_ITEM(8, 171, 173, fontpage_8_171_173), // 'Ы' -- 'Э'
-    FONTDATA_ITEM(8, 175, 207, fontpage_8_175_207), // 'Я' -- 'я'
-    FONTDATA_ITEM(8, 209, 209, fontpage_8_209_209), // 'ё' -- 'ё'
+    FONTDATA_ITEM(8, 144, 168, fontpage_8_144_168), // 'А' -- 'Ш'// 'А' -- 'Ш'
+    FONTDATA_ITEM(8, 171, 173, fontpage_8_171_173), // 'Ы' -- 'Э'// 'Ы' -- 'Э'
+    FONTDATA_ITEM(8, 175, 207, fontpage_8_175_207), // 'Я' -- 'я'// 'Я' -- 'я'
+    FONTDATA_ITEM(8, 209, 209, fontpage_8_209_209), // 'ё' -- 'ё'// 'ё' -- 'ё'
 };

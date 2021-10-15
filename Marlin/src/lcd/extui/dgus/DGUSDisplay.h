@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -27,7 +28,7 @@
 
 #include "../../../inc/MarlinConfigPre.h"
 
-#include <stdlib.h>    // size_t
+#include <stdlib.h>    // size_t//尺寸
 
 #if HAS_BED_PROBE
   #include "../../../module/probe.h"
@@ -36,18 +37,18 @@
 
 enum DGUSLCD_Screens : uint8_t;
 
-//#define DEBUG_DGUSLCD
+//#define DEBUG_DGUSLCD//#定义DEBUG_DGUSLCD
 #define DEBUG_OUT ENABLED(DEBUG_DGUSLCD)
 #include "../../../core/debug_out.h"
 
 typedef enum : uint8_t {
-  DGUS_IDLE,           //< waiting for DGUS_HEADER1.
-  DGUS_HEADER1_SEEN,   //< DGUS_HEADER1 received
-  DGUS_HEADER2_SEEN,   //< DGUS_HEADER2 received
-  DGUS_WAIT_TELEGRAM,  //< LEN received, Waiting for to receive all bytes.
+  DGUS_IDLE,           //< waiting for DGUS_HEADER1.//<等待DGUS_负责人1。
+  DGUS_HEADER1_SEEN,   //< DGUS_HEADER1 received//<DGUS_头1已收到
+  DGUS_HEADER2_SEEN,   //< DGUS_HEADER2 received//<DGUS_头2已收到
+  DGUS_WAIT_TELEGRAM,  //< LEN received, Waiting for to receive all bytes.//<LEN已接收，等待接收所有字节。
 } rx_datagram_state_t;
 
-// Low-Level access to the display.
+// Low-Level access to the display.//显示器的低电平访问。
 class DGUSDisplay {
 public:
 
@@ -55,7 +56,7 @@ public:
 
   static void InitDisplay();
 
-  // Variable access.
+  // Variable access.//可变访问。
   static void WriteVariable(uint16_t adr, const void *values, uint8_t valueslen, bool isstr=false);
   static void WriteVariablePGM(uint16_t adr, const void *values, uint8_t valueslen, bool isstr=false);
   static void WriteVariable(uint16_t adr, int16_t value);
@@ -66,7 +67,7 @@ public:
   static void MKS_WriteVariable(uint16_t adr, uint8_t value);
 
 
-  // Utility functions for bridging ui_api and dbus
+  // Utility functions for bridging ui_api and dbus//用于桥接ui_api和DBU的实用程序函数
   template<typename T, float(*Getter)(const T), T selector, typename WireType=uint16_t>
   static void SetVariable(DGUS_VP_Variable &var) {
     WriteVariable(var.VP, (WireType)Getter(selector));
@@ -78,23 +79,23 @@ public:
     Setter(newvalue, selector);
   }
 
-  // Until now I did not need to actively read from the display. That's why there is no ReadVariable
-  // (I extensively use the auto upload of the display)
+  // Until now I did not need to actively read from the display. That's why there is no ReadVariable//直到现在，我还不需要从显示器上主动阅读。这就是为什么没有ReadVariable
+  // (I extensively use the auto upload of the display)//（我广泛使用显示器的自动上传功能）
 
-  // Force display into another screen.
-  // (And trigger update of containing VPs)
-  // (to implement a pop up message, which may not be nested)
+  // Force display into another screen.//强制显示到另一个屏幕。
+  // (And trigger update of containing VPs)//（并触发包含VPs的更新）
+  // (to implement a pop up message, which may not be nested)//（实现一个弹出消息，该消息不能嵌套）
   static void RequestScreen(DGUSLCD_Screens screen);
 
-  // Periodic tasks, eg. Rx-Queue handling.
+  // Periodic tasks, eg. Rx-Queue handling.//定期任务，例如Rx队列处理。
   static void loop();
 
 public:
-  // Helper for users of this class to estimate if an interaction would be blocking.
+  // Helper for users of this class to estimate if an interaction would be blocking.//帮助此类用户估计交互是否会阻塞。
   static size_t GetFreeTxBuffer();
 
-  // Checks two things: Can we confirm the presence of the display and has we initiliazed it.
-  // (both boils down that the display answered to our chatting)
+  // Checks two things: Can we confirm the presence of the display and has we initiliazed it.//检查两件事：我们是否可以确认显示器的存在以及是否初始化了它。
+  // (both boils down that the display answered to our chatting)//（两者都归结为显示器响应了我们的聊天）
   static inline bool isInitialized() { return Initialized; }
 
 private:
@@ -113,11 +114,11 @@ private:
 
 extern DGUSDisplay dgusdisplay;
 
-// compile-time x^y
+// compile-time x^y//编译时x^y
 constexpr float cpow(const float x, const int y) { return y == 0 ? 1.0 : x * cpow(x, y - 1); }
 
-/// Find the flash address of a DGUS_VP_Variable for the VP.
+/// Find the flash address of a DGUS_VP_Variable for the VP.///查找VP的DGUS_VP_变量的闪存地址。
 const DGUS_VP_Variable* DGUSLCD_FindVPVar(const uint16_t vp);
 
-/// Helper to populate a DGUS_VP_Variable for a given VP. Return false if not found.
+/// Helper to populate a DGUS_VP_Variable for a given VP. Return false if not found.///帮助器为给定VP填充DGUS_VP_变量。如果未找到，则返回false。
 bool populate_VPVar(const uint16_t VP, DGUS_VP_Variable * const ramcopy);

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -20,7 +21,7 @@
  *
  */
 
-//  https://github.com/ktand/Armed
+//  https://github.com/ktand/Armed//  https://github.com/ktand/Armed
 
 #pragma once
 
@@ -34,37 +35,37 @@
   #define ARMED_V1_1
 #endif
 
-#undef BOARD_INFO_NAME                            // Defined on the command line by Arduino Core STM32
+#undef BOARD_INFO_NAME                            // Defined on the command line by Arduino Core STM32//由Arduino Core STM32在命令行上定义
 #define BOARD_INFO_NAME      "Arm'ed"
 #define DEFAULT_MACHINE_NAME BOARD_INFO_NAME
 
 #define I2C_EEPROM
-#define MARLIN_EEPROM_SIZE                0x1000  // 4KB
+#define MARLIN_EEPROM_SIZE                0x1000  // 4KB//4KB
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_STOP_PIN                          PE0
 #define Y_STOP_PIN                          PE1
 #define Z_STOP_PIN                          PE14
 
-//
-// Z Probe (when not Z_MIN_PIN)
-//
-//#ifndef Z_MIN_PROBE_PIN
-//  #define Z_MIN_PROBE_PIN  PA4
-//#endif
+////
+// Z Probe (when not Z_MIN_PIN)//Z探头（非Z_MIN_引脚时）
+////
+//#ifndef Z_MIN_PROBE_PIN//#ifndef Z_MIN_探头_引脚
+//  #define Z_MIN_PROBE_PIN  PA4//#定义Z_最小_探针_引脚PA4
+//#endif//#恩迪夫
 
-//
-// Filament Runout Sensor
-//
+////
+// Filament Runout Sensor//灯丝偏移传感器
+////
 #ifndef FIL_RUNOUT_PIN
   #define FIL_RUNOUT_PIN                    PA3
 #endif
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 
 #ifdef ARMED_SWAP_X_E1
   #define X_STEP_PIN                        PE4
@@ -109,53 +110,53 @@
   #define E1_CS_PIN                         PE5
 #endif
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                          PC0   // Analog Input
-#define TEMP_1_PIN                          PC1   // Analog Input
-#define TEMP_BED_PIN                        PC2   // Analog Input
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                          PC0   // Analog Input//模拟输入
+#define TEMP_1_PIN                          PC1   // Analog Input//模拟输入
+#define TEMP_BED_PIN                        PC2   // Analog Input//模拟输入
 
 #if HOTENDS == 1 && TEMP_SENSOR_PROBE
   #define TEMP_PROBE_PIN                    PC1
 #endif
 
-//
-// Heaters / Fans
-//
-#define HEATER_0_PIN                        PA1   // Hardware PWM
-#define HEATER_1_PIN                        PA2   // Hardware PWM
-#define HEATER_BED_PIN                      PA0   // Hardware PWM
+////
+// Heaters / Fans//加热器/风扇
+////
+#define HEATER_0_PIN                        PA1   // Hardware PWM//硬件脉宽调制
+#define HEATER_1_PIN                        PA2   // Hardware PWM//硬件脉宽调制
+#define HEATER_BED_PIN                      PA0   // Hardware PWM//硬件脉宽调制
 
-#define FAN_PIN                             PC6   // Hardware PWM, Part cooling fan
-#define FAN1_PIN                            PC7   // Hardware PWM, Extruder fan
-#define FAN2_PIN                            PC8   // Hardware PWM, Controller fan
+#define FAN_PIN                             PC6   // Hardware PWM, Part cooling fan//硬件PWM，部分冷却风扇
+#define FAN1_PIN                            PC7   // Hardware PWM, Extruder fan//硬件PWM，挤出机风扇
+#define FAN2_PIN                            PC8   // Hardware PWM, Controller fan//硬件PWM，控制器风扇
 
-//
-// Misc functions
-//
+////
+// Misc functions//杂项功能
+////
 #define SDSS                                PE7
-#define LED_PIN                             PB7   // Heart beat
+#define LED_PIN                             PB7   // Heart beat//心跳
 #define PS_ON_PIN                           PA10
 #define KILL_PIN                            PA8
-#define PWR_LOSS                            PA4   // Power loss / nAC_FAULT
+#define PWR_LOSS                            PA4   // Power loss / nAC_FAULT//电源丢失/nAC_故障
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 #define SD_DETECT_PIN                       PA15
 #define BEEPER_PIN                          PC9
 
 #if ENABLED(FYSETC_MINI_12864)
-  //
-  // See https://wiki.fysetc.com/Mini12864_Panel/?fbclid=IwAR1FyjuNdVOOy9_xzky3qqo_WeM5h-4gpRnnWhQr_O1Ef3h0AFnFXmCehK8
-  //
+  ////
+  // See https://wiki.fysetc.com/Mini12864_Panel/?fbclid=IwAR1FyjuNdVOOy9_xzky3qqo_WeM5h-4gpRnnWhQr_O1Ef3h0AFnFXmCehK8//看https://wiki.fysetc.com/Mini12864_Panel/?fbclid=IwAR1FyjuNdVOOy9_xzky3qqo_WeM5h-4gpRnnWhQr_O1Ef3h0AFnFXmCehK8
+  ////
   #define DOGLCD_A0                         PE9
   #define DOGLCD_CS                         PE8
 
   #define LCD_BACKLIGHT_PIN                 -1
 
-  #define LCD_RESET_PIN                     PB12  // Must be high or open for LCD to operate normally.
+  #define LCD_RESET_PIN                     PB12  // Must be high or open for LCD to operate normally.//必须为高电平或开路，LCD才能正常工作。
 
   #if EITHER(FYSETC_MINI_12864_1_2, FYSETC_MINI_12864_2_0)
     #ifndef RGB_LED_R_PIN
@@ -188,9 +189,9 @@
 #define BTN_EN2                             PC5
 #define BTN_ENC                             PC3
 
-//
-// Extension pins
-//
+////
+// Extension pins//延长销
+////
 #define EXT0_PIN                            PB0
 #define EXT1_PIN                            PB1
 #define EXT2_PIN                            PB2
@@ -203,10 +204,10 @@
 #define EXT9_PIN                            PB11
 
 #if HAS_TMC_UART
-  // TMC2208/TMC2209 stepper drivers
-  //
-  // Software serial
-  //
+  // TMC2208/TMC2209 stepper drivers//TMC2208/TMC2209步进驱动器
+  ////
+  // Software serial//软件系列
+  ////
   #define X_SERIAL_TX_PIN               EXT0_PIN
   #define X_SERIAL_RX_PIN               EXT0_PIN
 

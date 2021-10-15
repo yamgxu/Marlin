@@ -1,3 +1,4 @@
+/** translatione by yx */
 /***************************
  * max_velocity_screen.cpp *
  ***************************/
@@ -86,4 +87,4 @@ bool MaxVelocityScreen::onTouchHeld(uint8_t tag) {
   return true;
 }
 
-#endif // FTDI_MAX_VELOCITY_SCREEN
+#endif // FTDI_MAX_VELOCITY_SCREEN//FTDI_最大速度_屏幕

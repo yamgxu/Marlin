@@ -1,3 +1,4 @@
+/** translatione by yx */
 /* Copyright (C) 2015-2016 Andrew J. Kroll
    and
 Copyright (C) 2011 Circuits At Home, LTD. All rights reserved.
@@ -20,7 +21,7 @@ Contact information
 -------------------
 
 Circuits At Home, LTD
-Web      :  https://www.circuitsathome.com
+Web      :  https://www.circuitsathome.com//www.circuitsathome.com
 e-mail   :  support@circuitsathome.com
  */
 #if !defined(_UHS_host_h_) || defined(__MESSAGE_H__)
@@ -88,4 +89,4 @@ template <class ERROR_TYPE> void ErrorMessage(NOTUSED(char const * msg), ERROR_T
 #endif
 }
 
-#endif // __MESSAGE_H__
+#endif // __MESSAGE_H__//_uuu消息u H__

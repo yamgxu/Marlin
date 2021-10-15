@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**************************************
  * confirm_abort_print_dialog_box.cpp *
  **************************************/
@@ -49,4 +50,4 @@ bool ConfirmAbortPrintDialogBox::onTouchEnd(uint8_t tag) {
   }
 }
 
-#endif // FTDI_CONFIRM_ABORT_PRINT_DIALOG_BOX
+#endif // FTDI_CONFIRM_ABORT_PRINT_DIALOG_BOX//FTDI确认中止打印对话框

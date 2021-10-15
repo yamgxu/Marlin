@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -52,9 +53,9 @@
 #endif
 #define MAX7219_LINES (8 * (MAX7219_NUMBER_UNITS))
 
-//
-// MAX7219 registers
-//
+////
+// MAX7219 registers//MAX7219寄存器
+////
 #define max7219_reg_noop        0x00
 #define max7219_reg_digit0      0x01
 #define max7219_reg_digit1      0x02
@@ -82,60 +83,60 @@ public:
   static void putbyte(uint8_t data);
   static void pulse_load();
 
-  // Set a single register (e.g., a whole native row)
+  // Set a single register (e.g., a whole native row)//设置单个寄存器（例如，整个本机行）
   static void send(const uint8_t reg, const uint8_t data);
 
-  // Refresh all units
+  // Refresh all units//刷新所有单元
   static inline void refresh() { for (uint8_t i = 0; i < 8; i++) refresh_line(i); }
 
-  // Suspend / resume updates to the LED unit
-  // Use these methods to speed up multiple changes
-  // or to apply updates from interrupt context.
+  // Suspend / resume updates to the LED unit//暂停/恢复对LED单元的更新
+  // Use these methods to speed up multiple changes//使用这些方法可以加速多个更改
+  // or to apply updates from interrupt context.//或者从中断上下文应用更新。
   static inline void suspend() { suspended++; }
   static inline void resume() { suspended--; suspended |= 0x80; }
 
-  // Update a single native line on all units
+  // Update a single native line on all units//在所有单元上更新单个本机行
   static void refresh_line(const uint8_t line);
 
-  // Update a single native line on just one unit
+  // Update a single native line on just one unit//仅在一台设备上更新一条本机线路
   static void refresh_unit_line(const uint8_t line);
 
   #if ENABLED(MAX7219_NUMERIC)
-    // Draw an integer with optional leading zeros and optional decimal point
+    // Draw an integer with optional leading zeros and optional decimal point//绘制一个带可选前导零和可选小数点的整数
     void print(const uint8_t start, int16_t value, uint8_t size, const bool leadzero=false, bool dec=false);
-    // Draw a float with a decimal point and optional digits
+    // Draw a float with a decimal point and optional digits//绘制带有小数点和可选数字的浮点
     void print(const uint8_t start, const_float_t value, const uint8_t pre_size, const uint8_t post_size, const bool leadzero=false);
   #endif
 
-  // Set a single LED by XY coordinate
+  // Set a single LED by XY coordinate//通过XY坐标设置单个LED
   static void led_set(const uint8_t x, const uint8_t y, const bool on);
   static void led_on(const uint8_t x, const uint8_t y);
   static void led_off(const uint8_t x, const uint8_t y);
   static void led_toggle(const uint8_t x, const uint8_t y);
 
-  // Set all LEDs in a single column
+  // Set all LEDs in a single column//在一列中设置所有LED
   static void set_column(const uint8_t col, const uint32_t val);
   static void clear_column(const uint8_t col);
 
-  // Set all LEDs in a single row
+  // Set all LEDs in a single row//将所有LED设置为一行
   static void set_row(const uint8_t row, const uint32_t val);
   static void clear_row(const uint8_t row);
 
-  // 16 and 32 bit versions of Row and Column functions
-  // Multiple rows and columns will be used to display the value if
-  // the array of matrix LED's is too narrow to accomplish the goal
+  // 16 and 32 bit versions of Row and Column functions//行和列函数的16位和32位版本
+  // Multiple rows and columns will be used to display the value if//如果需要，将使用多行和多列来显示值
+  // the array of matrix LED's is too narrow to accomplish the goal//矩阵LED阵列太窄，无法实现此目标
   static void set_rows_16bits(const uint8_t y, uint32_t val);
   static void set_rows_32bits(const uint8_t y, uint32_t val);
   static void set_columns_16bits(const uint8_t x, uint32_t val);
   static void set_columns_32bits(const uint8_t x, uint32_t val);
 
-  // Quickly clear the whole matrix
+  // Quickly clear the whole matrix//快速清除整个矩阵
   static void clear();
 
-  // Quickly fill the whole matrix
+  // Quickly fill the whole matrix//快速填充整个矩阵
   static void fill();
 
-  // Apply custom code to update the matrix
+  // Apply custom code to update the matrix//应用自定义代码更新矩阵
   static void idle_tasks();
 
 private:

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,8 +22,8 @@
  */
 #pragma once
 
-// Perform a backtrace to the serial port
+// Perform a backtrace to the serial port//对串行端口执行回溯跟踪
 void backtrace();
 
-// Perform a backtrace to the serial port
+// Perform a backtrace to the serial port//对串行端口执行回溯跟踪
 void backtrace_ex(unsigned long sp, unsigned long lr, unsigned long pc);

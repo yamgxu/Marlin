@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * \file
  *
@@ -41,7 +42,7 @@
  *
  */
 /*
- * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>
+ * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>//www.atmel.com/design support/“>atmel支持</a>
  */
 
 #ifndef _UDI_CDC_H_
@@ -54,7 +55,7 @@
 #include "udc_desc.h"
 #include "udi.h"
 
-// Check the number of port
+// Check the number of port//检查端口号
 #ifndef UDI_CDC_PORT_NB
 # define  UDI_CDC_PORT_NB 1
 #endif
@@ -71,10 +72,10 @@ extern "C" {
  * @{
  */
 
-//! Global structure which contains standard UDI API for UDC
+//! Global structure which contains standard UDI API for UDC//! 包含UDC标准UDI API的全局结构
 extern UDC_DESC_STORAGE udi_api_t udi_api_cdc_comm;
 extern UDC_DESC_STORAGE udi_api_t udi_api_cdc_data;
-//@}
+//@}//@}
 
 /**
  * \ingroup udi_cdc_group
@@ -83,7 +84,7 @@ extern UDC_DESC_STORAGE udi_api_t udi_api_cdc_data;
  * The following structures provide predefined USB interface descriptors.
  * It must be used to define the final USB descriptors.
  */
-//@{
+//@{//@{
 
 /**
  * \brief Communication Class interface descriptor
@@ -92,17 +93,17 @@ extern UDC_DESC_STORAGE udi_api_t udi_api_cdc_data;
  * descriptors for the CDC Communication Class interface.
  */
 typedef struct {
-	//! Standard interface descriptor
+	//! Standard interface descriptor//！标准接口描述符
 	usb_iface_desc_t iface;
-	//! CDC Header functional descriptor
+	//! CDC Header functional descriptor//！CDC头函数描述符
 	usb_cdc_hdr_desc_t header;
-	//! CDC Abstract Control Model functional descriptor
+	//! CDC Abstract Control Model functional descriptor//！CDC抽象控制模型功能描述符
 	usb_cdc_acm_desc_t acm;
-	//! CDC Union functional descriptor
+	//! CDC Union functional descriptor//！CDC联合函数描述符
 	usb_cdc_union_desc_t union_desc;
-	//! CDC Call Management functional descriptor
+	//! CDC Call Management functional descriptor//！CDC呼叫管理功能描述符
 	usb_cdc_call_mgmt_desc_t call_mgmt;
-	//! Notification endpoint descriptor
+	//! Notification endpoint descriptor//！通知终结点描述符
 	usb_ep_desc_t ep_notify;
 } udi_cdc_comm_desc_t;
 
@@ -114,27 +115,27 @@ typedef struct {
  * CDC Data Class interface.
  */
 typedef struct {
-	//! Standard interface descriptor
+	//! Standard interface descriptor//！标准接口描述符
 	usb_iface_desc_t iface;
-	//! Data IN/OUT endpoint descriptors
+	//! Data IN/OUT endpoint descriptors//！数据输入/输出端点描述符
 	usb_ep_desc_t ep_in;
 	usb_ep_desc_t ep_out;
 } udi_cdc_data_desc_t;
 
 
-//! CDC communication endpoints size for all speeds
+//! CDC communication endpoints size for all speeds//！CDC通信终结点大小适用于所有速度
 #define UDI_CDC_COMM_EP_SIZE        64
-//! CDC data endpoints size for FS speed (8B, 16B, 32B, 64B)
+//! CDC data endpoints size for FS speed (8B, 16B, 32B, 64B)//！用于FS速度的CDC数据终结点大小（8B、16B、32B、64B）
 #define UDI_CDC_DATA_EPS_FS_SIZE    64
-//! CDC data endpoints size for HS speed (512B only)
+//! CDC data endpoints size for HS speed (512B only)//! HS speed的CDC数据端点大小（仅512B）
 #define UDI_CDC_DATA_EPS_HS_SIZE    512
 
 /**
  * \name Content of interface descriptors
  * Up to 7 CDC interfaces can be implemented on a USB device.
  */
-//@{
-//! By default no string associated to these interfaces
+//@{//@{
+//! By default no string associated to these interfaces//！默认情况下，没有与这些接口关联的字符串
 #ifndef UDI_CDC_IAD_STRING_ID_0
 #define UDI_CDC_IAD_STRING_ID_0   0
 #endif
@@ -149,7 +150,7 @@ typedef struct {
 #define UDI_CDC_DATA_DESC_0_FS  UDI_CDC_DATA_DESC_FS(0)
 #define UDI_CDC_DATA_DESC_0_HS  UDI_CDC_DATA_DESC_HS(0)
 
-//! By default no string associated to these interfaces
+//! By default no string associated to these interfaces//！默认情况下，没有与这些接口关联的字符串
 #ifndef UDI_CDC_IAD_STRING_ID_1
 #define UDI_CDC_IAD_STRING_ID_1  0
 #endif
@@ -164,7 +165,7 @@ typedef struct {
 #define UDI_CDC_DATA_DESC_1_FS  UDI_CDC_DATA_DESC_FS(1)
 #define UDI_CDC_DATA_DESC_1_HS  UDI_CDC_DATA_DESC_HS(1)
 
-//! By default no string associated to these interfaces
+//! By default no string associated to these interfaces//！默认情况下，没有与这些接口关联的字符串
 #ifndef UDI_CDC_IAD_STRING_ID_2
 #define UDI_CDC_IAD_STRING_ID_2   0
 #endif
@@ -179,7 +180,7 @@ typedef struct {
 #define UDI_CDC_DATA_DESC_2_FS  UDI_CDC_DATA_DESC_FS(2)
 #define UDI_CDC_DATA_DESC_2_HS  UDI_CDC_DATA_DESC_HS(2)
 
-//! By default no string associated to these interfaces
+//! By default no string associated to these interfaces//！默认情况下，没有与这些接口关联的字符串
 #ifndef UDI_CDC_IAD_STRING_ID_3
 #define UDI_CDC_IAD_STRING_ID_3   0
 #endif
@@ -194,7 +195,7 @@ typedef struct {
 #define UDI_CDC_DATA_DESC_3_FS  UDI_CDC_DATA_DESC_FS(3)
 #define UDI_CDC_DATA_DESC_3_HS  UDI_CDC_DATA_DESC_HS(3)
 
-//! By default no string associated to these interfaces
+//! By default no string associated to these interfaces//! 默认情况下，没有与这些接口关联的字符串
 #ifndef UDI_CDC_IAD_STRING_ID_4
 #define UDI_CDC_IAD_STRING_ID_4   0
 #endif
@@ -209,7 +210,7 @@ typedef struct {
 #define UDI_CDC_DATA_DESC_4_FS  UDI_CDC_DATA_DESC_FS(4)
 #define UDI_CDC_DATA_DESC_4_HS  UDI_CDC_DATA_DESC_HS(4)
 
-//! By default no string associated to these interfaces
+//! By default no string associated to these interfaces//！默认情况下，没有与这些接口关联的字符串
 #ifndef UDI_CDC_IAD_STRING_ID_5
 #define UDI_CDC_IAD_STRING_ID_5   0
 #endif
@@ -224,7 +225,7 @@ typedef struct {
 #define UDI_CDC_DATA_DESC_5_FS  UDI_CDC_DATA_DESC_FS(5)
 #define UDI_CDC_DATA_DESC_5_HS  UDI_CDC_DATA_DESC_HS(5)
 
-//! By default no string associated to these interfaces
+//! By default no string associated to these interfaces//！默认情况下，没有与这些接口关联的字符串
 #ifndef UDI_CDC_IAD_STRING_ID_6
 #define UDI_CDC_IAD_STRING_ID_6   0
 #endif
@@ -238,10 +239,10 @@ typedef struct {
 #define UDI_CDC_COMM_DESC_6     UDI_CDC_COMM_DESC(6)
 #define UDI_CDC_DATA_DESC_6_FS  UDI_CDC_DATA_DESC_FS(6)
 #define UDI_CDC_DATA_DESC_6_HS  UDI_CDC_DATA_DESC_HS(6)
-//@}
+//@}//@}
 
 
-//! Content of CDC IAD interface descriptor for all speeds
+//! Content of CDC IAD interface descriptor for all speeds//！所有速度的CDC IAD接口描述符的内容
 #define UDI_CDC_IAD_DESC(port) { \
    .bLength                      = sizeof(usb_iad_desc_t),\
    .bDescriptorType              = USB_DT_IAD,\
@@ -253,7 +254,7 @@ typedef struct {
    .iFunction                    = UDI_CDC_IAD_STRING_ID_##port,\
    }
 
-//! Content of CDC COMM interface descriptor for all speeds
+//! Content of CDC COMM interface descriptor for all speeds//！所有速度的CDC COMM接口描述符的内容
 #define UDI_CDC_COMM_DESC(port) { \
    .iface.bLength                = sizeof(usb_iface_desc_t),\
    .iface.bDescriptorType        = USB_DT_INTERFACE,\
@@ -291,7 +292,7 @@ typedef struct {
    .iface.iInterface             = UDI_CDC_COMM_STRING_ID_##port,\
    }
 
-//! Content of CDC DATA interface descriptors
+//! Content of CDC DATA interface descriptors//！CDC数据接口描述符的内容
 #define UDI_CDC_DATA_DESC_COMMON \
    .iface.bLength                = sizeof(usb_iface_desc_t),\
    .iface.bDescriptorType        = USB_DT_INTERFACE,\
@@ -329,7 +330,7 @@ typedef struct {
    .iface.iInterface             = UDI_CDC_DATA_STRING_ID_##port,\
    }
 
-//@}
+//@}//@}
 
 /**
  * \ingroup udi_group
@@ -347,7 +348,7 @@ typedef struct {
 /**
  * \name Interface for application with single CDC interface support
  */
-//@{
+//@{//@{
 
 /**
  * \brief Notify a state change of DCD signal
@@ -454,12 +455,12 @@ int udi_cdc_putc(int value);
  * \return the number of data remaining
  */
 iram_size_t udi_cdc_write_buf(const void* buf, iram_size_t size);
-//@}
+//@}//@}
 
 /**
  * \name Interface for application with multi CDC interfaces support
  */
-//@{
+//@{//@{
 
 /**
  * \brief Notify a state change of DCD signal
@@ -576,9 +577,9 @@ int udi_cdc_multi_putc(uint8_t port, int value);
  * \return the number of data remaining
  */
 iram_size_t udi_cdc_multi_write_buf(uint8_t port, const void* buf, iram_size_t size);
-//@}
+//@}//@}
 
-//@}
+//@}//@}
 
 /**
  * \page udi_cdc_quickstart Quick start guide for USB device Communication Class Device module (UDI CDC)
@@ -807,4 +808,4 @@ iram_size_t udi_cdc_multi_write_buf(uint8_t port, const void* buf, iram_size_t s
 #ifdef __cplusplus
 }
 #endif
-#endif // _UDI_CDC_H_
+#endif // _UDI_CDC_H_//_UDI_CDC_H_

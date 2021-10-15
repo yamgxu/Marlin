@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -53,9 +54,9 @@
 
 #endif
 
-//
-// Default Status Screen Heater or Hotends bitmaps
-//
+////
+// Default Status Screen Heater or Hotends bitmaps//默认状态屏幕加热器或热端位图
+////
 #if !STATUS_HEATERS_WIDTH && !STATUS_HOTEND1_WIDTH
   #if ENABLED(STATUS_COMBINE_HEATERS)
     #include "status/combined.h"
@@ -68,9 +69,9 @@
   #endif
 #endif
 
-//
-// Laser / Spindle
-//
+////
+// Laser / Spindle//激光/主轴
+////
 #if !STATUS_CUTTER_WIDTH && HAS_CUTTER
   #include "status/cutter.h"
 #endif
@@ -81,9 +82,9 @@
     #define STATUS_CUTTER_BYTEWIDTH BW(STATUS_CUTTER_WIDTH)
   #endif
 
-//
-// Laser cooler
-//
+////
+// Laser cooler//激光冷却器
+////
 #if !STATUS_COOLER_WIDTH && HAS_COOLER
   #include "status/cooler.h"
 #endif
@@ -94,9 +95,9 @@
   #define STATUS_COOLER_BYTEWIDTH BW(STATUS_COOLER_WIDTH)
 #endif
 
-//
-// Laser Flowmeter
-//
+////
+// Laser Flowmeter//激光流量计
+////
 #if !STATUS_FLOWMETER_WIDTH && ENABLED(LASER_COOLANT_FLOW_METER)
   #include "status/cooler.h"
 #endif
@@ -107,9 +108,9 @@
   #define STATUS_FLOWMETER_BYTEWIDTH BW(STATUS_FLOWMETER_WIDTH)
 #endif
 
-//
-// Laser Ammeter
-//
+////
+// Laser Ammeter//激光安培计
+////
 #if ENABLED(I2C_AMMETER)
   #if !STATUS_AMMETER_WIDTH
     #include "status/ammeter.h"
@@ -119,9 +120,9 @@
   #endif
 #endif
 
-//
-// Bed
-//
+////
+// Bed//床
+////
 #if !STATUS_BED_WIDTH && HAS_HEATED_BED && DISABLED(STATUS_COMBINE_HEATERS)
   #include "status/bed.h"
 #endif
@@ -129,9 +130,9 @@
   #define STATUS_BED_WIDTH 0
 #endif
 
-//
-// Chamber
-//
+////
+// Chamber//密室
+////
 #if !STATUS_CHAMBER_WIDTH && HAS_TEMP_CHAMBER && ((HOTENDS <= 4 && !HAS_HEATED_BED) || (HOTENDS <= 3 && HAS_HEATED_BED))
   #include "status/chamber.h"
 #endif
@@ -139,9 +140,9 @@
   #define STATUS_CHAMBER_WIDTH 0
 #endif
 
-// Can also be overridden in Configuration_adv.h
-// If you can afford it, try the 3-frame fan animation!
-// Don't compile in the fan animation with no fan
+// Can also be overridden in Configuration_adv.h//也可以在配置\u adv.h中重写
+// If you can afford it, try the 3-frame fan animation!//如果你能负担得起，试试3帧风扇动画！
+// Don't compile in the fan animation with no fan//不要在没有风扇的风扇动画中编译
 #if !HAS_FAN0 || (HOTENDS == 5 || (HOTENDS == 4 && BED_OR_CHAMBER) || BOTH(STATUS_COMBINE_HEATERS, HAS_HEATED_CHAMBER))
   #undef STATUS_FAN_FRAMES
 #elif !STATUS_FAN_FRAMES
@@ -156,9 +157,9 @@
   #define STATUS_HEATERS_XSPACE 24
 #endif
 
-//
-// Provide default Fan Bitmaps
-//
+////
+// Provide default Fan Bitmaps//提供默认风扇位图
+////
 #if !STATUS_FAN_WIDTH && STATUS_FAN_FRAMES > 0
   #include "status/fan.h"
 #else
@@ -168,15 +169,15 @@
 
 #define _EXTRA_WIDTH (STATUS_FAN_WIDTH + STATUS_CHAMBER_WIDTH + STATUS_BED_WIDTH)
 
-//
-// Heater Bitmap X Space Requirements
-//
+////
+// Heater Bitmap X Space Requirements//加热器位图X空间要求
+////
 #if !defined(STATUS_HEATERS_XSPACE) && (STATUS_HOTEND1_WIDTH || STATUS_HEATERS_WIDTH)
   #if (HOTENDS == 3 || HOTENDS == 4) && ENABLED(STATUS_COMBINE_HEATERS)
-    // If more heaters or they're combined, 3 bytes
+    // If more heaters or they're combined, 3 bytes//如果多个加热器或它们组合在一起，则为3字节
     #define STATUS_HEATERS_XSPACE 24
-  #elif STATUS_LOGO_WIDTH > (LCD_PIXEL_WIDTH - (_EXTRA_WIDTH) - 26 * (HOTENDS)) // 128 - (20 + 24 + 26) == 58
-    // If the logo won't fit at 26 width
+  #elif STATUS_LOGO_WIDTH > (LCD_PIXEL_WIDTH - (_EXTRA_WIDTH) - 26 * (HOTENDS)) // 128 - (20 + 24 + 26) == 58// 128 - (20 + 24 + 26) == 58
+    // If the logo won't fit at 26 width//如果徽标在26宽度处不合适
     #define STATUS_HEATERS_XSPACE 24
   #else
     #define STATUS_HEATERS_XSPACE 26
@@ -184,11 +185,11 @@
 #endif
 
 #if ENABLED(CUSTOM_STATUS_SCREEN_IMAGE)
-  //
-  // Disable the logo bitmap if insufficient space
-  //
+  ////
+  // Disable the logo bitmap if insufficient space//如果空间不足，请禁用徽标位图
+  ////
   #if STATUS_HEATERS_XSPACE
-    #define _HEATERS_WIDTH (HOTENDS * (STATUS_HEATERS_XSPACE)) // as many hotends as possible
+    #define _HEATERS_WIDTH (HOTENDS * (STATUS_HEATERS_XSPACE)) // as many hotends as possible//尽可能多的热端
   #elif STATUS_HEATERS_WIDTH
     #define _HEATERS_WIDTH STATUS_HEATERS_WIDTH
   #elif HOTENDS
@@ -213,9 +214,9 @@
   #endif
 #endif
 
-//
-// Custom Logo Bitmap Properties
-//
+////
+// Custom Logo Bitmap Properties//自定义徽标位图属性
+////
 #ifndef STATUS_LOGO_WIDTH
   #define STATUS_LOGO_WIDTH 0
 #endif
@@ -242,9 +243,9 @@
   );
 #endif
 
-//
-// Hotend Heater Bitmap starting X position
-//
+////
+// Hotend Heater Bitmap starting X position//热端加热器位图起始X位置
+////
 #if !defined(STATUS_HEATERS_X) && (STATUS_HOTEND1_WIDTH || STATUS_HEATERS_WIDTH)
   #if STATUS_LOGO_BYTEWIDTH
     #define STATUS_HEATERS_X (STATUS_LOGO_BYTEWIDTH * 8)
@@ -255,16 +256,16 @@
     #if BOTH(STATUS_COMBINE_HEATERS, HAS_HEATED_BED) && HOTENDS <= 4
       #define STATUS_HEATERS_X 5
     #else
-      #define STATUS_HEATERS_X 8 // Like the included bitmaps
+      #define STATUS_HEATERS_X 8 // Like the included bitmaps//就像包含的位图一样
     #endif
   #endif
 #endif
 
 #if STATUS_HOTEND1_WIDTH
 
-  //
-  // Hotend images. A base hotend image and optional "ON" state image.
-  //
+  ////
+  // Hotend images. A base hotend image and optional "ON" state image.//热端图像。基本热端映像和可选的“打开”状态映像。
+  ////
   #ifndef STATUS_HOTEND_BITMAPS
     #define STATUS_HOTEND_BITMAPS 1
   #endif
@@ -450,16 +451,16 @@
     "Status heaters bitmap (status_heaters_bmp) dimensions don't match data."
   );
 
-#else // HOTENDS == 0
+#else // HOTENDS == 0//热端==0
 
   #define STATUS_HOTEND_TEXT_X(N) 0
   #define STATUS_HEATERS_Y 0
 
 #endif
 
-//
-// Cutter Bitmap Properties
-//
+////
+// Cutter Bitmap Properties//切割器位图属性
+////
 #if HAS_CUTTER
   #if STATUS_CUTTER_WIDTH
 
@@ -501,9 +502,9 @@
   #endif
 #endif
 
-//
-// Chamber Bitmap Properties
-//
+////
+// Chamber Bitmap Properties//腔室位图属性
+////
 #ifndef STATUS_CHAMBER_BYTEWIDTH
   #define STATUS_CHAMBER_BYTEWIDTH BW(STATUS_CHAMBER_WIDTH)
 #endif
@@ -542,9 +543,9 @@
 
 #endif
 
-//
-// Cooler Bitmap Properties
-//
+////
+// Cooler Bitmap Properties//更酷的位图属性
+////
 #if HAS_COOLER
   #if STATUS_COOLER_WIDTH
 
@@ -578,9 +579,9 @@
   #endif
 #endif
 
-//
-//  Flowmeter Bitmap Properties
-//
+////
+//  Flowmeter Bitmap Properties//流量计位图属性
+////
 #if ENABLED(LASER_COOLANT_FLOW_METER)
   #if STATUS_FLOWMETER_WIDTH
 
@@ -613,9 +614,9 @@
   #endif
 #endif
 
-//
-// I2C Laser Ammeter
-//
+////
+// I2C Laser Ammeter//I2C激光安培计
+////
 #if ENABLED(I2C_AMMETER) && STATUS_AMMETER_WIDTH
   #ifndef STATUS_AMMETER_BYTEWIDTH
     #define STATUS_AMMETER_BYTEWIDTH BW(STATUS_AMMETER_WIDTH)
@@ -638,9 +639,9 @@
   );
 #endif
 
-//
-// Bed Bitmap Properties
-//
+////
+// Bed Bitmap Properties//床位图属性
+////
 #ifndef STATUS_BED_BYTEWIDTH
   #define STATUS_BED_BYTEWIDTH BW(STATUS_BED_WIDTH)
 #endif
@@ -678,9 +679,9 @@
   #endif
 #endif
 
-//
-// Fan Bitmap Properties
-//
+////
+// Fan Bitmap Properties//风扇位图属性
+////
 #ifndef STATUS_FAN_BYTEWIDTH
   #define STATUS_FAN_BYTEWIDTH BW(STATUS_FAN_WIDTH)
 #endif

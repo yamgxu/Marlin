@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -33,7 +34,7 @@
 PrinterEventLEDs printerEventLEDs;
 
 #if HAS_LEDS_OFF_FLAG
-  bool PrinterEventLEDs::leds_off_after_print; // = false
+  bool PrinterEventLEDs::leds_off_after_print; // = false//=错误
 #endif
 
 #if HAS_TEMP_HOTEND || HAS_HEATED_BED
@@ -90,4 +91,4 @@ PrinterEventLEDs printerEventLEDs;
 
 #endif
 
-#endif // PRINTER_EVENT_LEDS
+#endif // PRINTER_EVENT_LEDS//打印机事件指示灯

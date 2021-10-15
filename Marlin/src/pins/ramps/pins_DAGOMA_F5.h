@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -27,9 +28,9 @@
 
 #define BOARD_INFO_NAME "Dagoma3D F5"
 
-//
-// Endstops
-//
+////
+// Endstops//终点站
+////
 #define X_STOP_PIN                             2
 #define Y_STOP_PIN                             3
 #define Z_STOP_PIN                            15
@@ -39,18 +40,18 @@
   #define FIL_RUNOUT2_PIN                     14
 #endif
 
-//
-// LCD delays
-//
+////
+// LCD delays//液晶显示延迟
+////
 #if HAS_MARLINUI_U8GLIB
   #define BOARD_ST7920_DELAY_1 DELAY_NS(0)
   #define BOARD_ST7920_DELAY_2 DELAY_NS(250)
   #define BOARD_ST7920_DELAY_3 DELAY_NS(250)
 #endif
 
-//
-// DAC steppers
-//
+////
+// DAC steppers//DAC步进器
+////
 #define HAS_MOTOR_CURRENT_DAC
 
 #define DAC_STEPPER_ORDER { 0, 1, 2, 3 }
@@ -62,7 +63,7 @@
 #define DAC_STEPPER_GAIN     0
 #define DAC_OR_ADDRESS       0x00
 
-//
-// Import default RAMPS 1.4 pins
-//
+////
+// Import default RAMPS 1.4 pins//导入默认渐变1.4引脚
+////
 #include "pins_RAMPS.h"

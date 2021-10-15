@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -73,74 +74,74 @@
 #define DEFAULT_MACHINE_NAME "Makibox"
 #define BOARD_INFO_NAME      "5DPrint D8"
 
-//
-// Servos
-//
+////
+// Servos//伺服
+////
 #define SERVO0_PIN                            41
 #define SERVO1_PIN                            42
 #define SERVO2_PIN                            43
 #define SERVO3_PIN                            44
 
-//
-// Limit Switches
-//
-#define X_STOP_PIN                            37  // E5
-#define Y_STOP_PIN                            36  // E4
-#define Z_STOP_PIN                            19  // E7
+////
+// Limit Switches//限位开关
+////
+#define X_STOP_PIN                            37  // E5//E5
+#define Y_STOP_PIN                            36  // E4//E4
+#define Z_STOP_PIN                            19  // E7//E7
 
-//
-// Steppers
-//
-#define X_STEP_PIN                            28  // A0
-#define X_DIR_PIN                             29  // A1
-#define X_ENABLE_PIN                          17  // C7
+////
+// Steppers//踏步机
+////
+#define X_STEP_PIN                            28  // A0//A0
+#define X_DIR_PIN                             29  // A1//A1
+#define X_ENABLE_PIN                          17  // C7//C7
 
-#define Y_STEP_PIN                            30  // A2
-#define Y_DIR_PIN                             31  // A3
-#define Y_ENABLE_PIN                          13  // C3
+#define Y_STEP_PIN                            30  // A2//A2
+#define Y_DIR_PIN                             31  // A3//A3
+#define Y_ENABLE_PIN                          13  // C3//C3
 
-#define Z_STEP_PIN                            32  // A4
-#define Z_DIR_PIN                             33  // A5
-#define Z_ENABLE_PIN                          12  // C2
+#define Z_STEP_PIN                            32  // A4//A4
+#define Z_DIR_PIN                             33  // A5//A5
+#define Z_ENABLE_PIN                          12  // C2//C2
 
-#define E0_STEP_PIN                           34  // A6
-#define E0_DIR_PIN                            35  // A7
-#define E0_ENABLE_PIN                         11  // C1
+#define E0_STEP_PIN                           34  // A6//A6
+#define E0_DIR_PIN                            35  // A7//A7
+#define E0_ENABLE_PIN                         11  // C1//C1
 
-//
-// Digital Microstepping
-//
-#define X_MS1_PIN                             25  // B5
-#define X_MS2_PIN                             26  // B6
-#define Y_MS1_PIN                              9  // E1
-#define Y_MS2_PIN                              8  // E0
-#define Z_MS1_PIN                              7  // D7
-#define Z_MS2_PIN                              6  // D6
-#define E0_MS1_PIN                             5  // D5
-#define E0_MS2_PIN                             4  // D4
+////
+// Digital Microstepping//数字微步
+////
+#define X_MS1_PIN                             25  // B5//B5
+#define X_MS2_PIN                             26  // B6//B6
+#define Y_MS1_PIN                              9  // E1//E1
+#define Y_MS2_PIN                              8  // E0//E0
+#define Z_MS1_PIN                              7  // D7//D7
+#define Z_MS2_PIN                              6  // D6//D6
+#define E0_MS1_PIN                             5  // D5//D5
+#define E0_MS2_PIN                             4  // D4//D4
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                             1  // F1  Analog Input
-#define TEMP_BED_PIN                           0  // F0  Analog Input
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                             1  // F1  Analog Input//F1模拟输入
+#define TEMP_BED_PIN                           0  // F0  Analog Input//模拟输入
 
-//
-// Heaters / Fans
-//
-#define HEATER_0_PIN                          15  // C5
-#define HEATER_BED_PIN                        14  // C4
+////
+// Heaters / Fans//加热器/风扇
+////
+#define HEATER_0_PIN                          15  // C5//碳五
+#define HEATER_BED_PIN                        14  // C4//C4
 
 #ifndef FAN_PIN
-  #define FAN_PIN                             16  // C6  PWM3A
+  #define FAN_PIN                             16  // C6  PWM3A//C6 PWM3A
 #endif
 
-//
-// Misc. Functions
-//
-#define SDSS                                  20  // B0
+////
+// Misc. Functions//杂项。功能
+////
+#define SDSS                                  20  // B0//B0
 
-//DIGIPOTS slave addresses
+//DIGIPOTS slave addresses//DIGIPOTS从属地址
 #ifndef DIGIPOT_I2C_ADDRESS_A
-  #define DIGIPOT_I2C_ADDRESS_A             0x2C  // unshifted slave address for DIGIPOT 0x2C (0x58 <- 0x2C << 1)
+  #define DIGIPOT_I2C_ADDRESS_A             0x2C  // unshifted slave address for DIGIPOT 0x2C (0x58 <- 0x2C << 1)//DIGIPOT 0x2C的未移位从属地址（0x58<-0x2C<<1）
 #endif

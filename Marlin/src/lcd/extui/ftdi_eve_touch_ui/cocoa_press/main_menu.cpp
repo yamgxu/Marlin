@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*****************************
  * cocoa_press/main_menu.cpp *
  *****************************/
@@ -97,4 +98,4 @@ bool MainMenu::onTouchEnd(uint8_t tag) {
   return true;
 }
 
-#endif // COCOA_MAIN_MENU
+#endif // COCOA_MAIN_MENU//可可豆主菜单

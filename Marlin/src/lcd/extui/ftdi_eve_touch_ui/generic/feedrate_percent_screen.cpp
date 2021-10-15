@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*******************************
  * feedrate_percent_screen.cpp *
  *******************************/
@@ -48,4 +49,4 @@ bool FeedratePercentScreen::onTouchHeld(uint8_t tag) {
   return true;
 }
 
-#endif // FTDI_FEEDRATE_PERCENT_SCREEN
+#endif // FTDI_FEEDRATE_PERCENT_SCREEN//FTDI_进给速度_百分比_屏幕

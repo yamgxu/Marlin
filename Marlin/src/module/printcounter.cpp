@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -25,9 +26,9 @@
 #if DISABLED(PRINTCOUNTER)
 
 #include "../libs/stopwatch.h"
-Stopwatch print_job_timer;      // Global Print Job Timer instance
+Stopwatch print_job_timer;      // Global Print Job Timer instance//全局打印作业计时器实例
 
-#else // PRINTCOUNTER
+#else // PRINTCOUNTER//打印计数器
 
 #if ENABLED(EXTENSIBLE_UI)
   #include "../lcd/extui/ui_api.h"
@@ -46,7 +47,7 @@ Stopwatch print_job_timer;      // Global Print Job Timer instance
   #warning "To prevent step loss, motion will pause for PRINTCOUNTER auto-save."
 #endif
 
-// Service intervals
+// Service intervals//服务间隔
 #if HAS_SERVICE_INTERVALS
   #if SERVICE_INTERVAL_1 > 0
     #define SERVICE_INTERVAL_SEC_1   (3600UL * SERVICE_INTERVAL_1)
@@ -65,7 +66,7 @@ Stopwatch print_job_timer;      // Global Print Job Timer instance
   #endif
 #endif
 
-PrintCounter print_job_timer;   // Global Print Job Timer instance
+PrintCounter print_job_timer;   // Global Print Job Timer instance//全局打印作业计时器实例
 
 printStatistics PrintCounter::data;
 
@@ -84,10 +85,10 @@ millis_t PrintCounter::deltaDuration() {
 void PrintCounter::incFilamentUsed(float const &amount) {
   TERN_(DEBUG_PRINTCOUNTER, debug(PSTR("incFilamentUsed")));
 
-  // Refuses to update data if object is not loaded
+  // Refuses to update data if object is not loaded//如果未加载对象，则拒绝更新数据
   if (!isLoaded()) return;
 
-  data.filamentUsed += amount; // mm
+  data.filamentUsed += amount; // mm//嗯
 }
 
 void PrintCounter::initStats() {
@@ -129,7 +130,7 @@ void PrintCounter::initStats() {
 void PrintCounter::loadStats() {
   TERN_(DEBUG_PRINTCOUNTER, debug(PSTR("loadStats")));
 
-  // Check if the EEPROM block is initialized
+  // Check if the EEPROM block is initialized//检查EEPROM块是否已初始化
   uint8_t value = 0;
   persistentStore.access_start();
   persistentStore.read_data(address, &value, sizeof(uint8_t));
@@ -156,18 +157,18 @@ void PrintCounter::loadStats() {
     #else
       UNUSED(doBuzz);
     #endif
-  #endif // HAS_SERVICE_INTERVALS
+  #endif // HAS_SERVICE_INTERVALS//有保养间隔吗
 }
 
 void PrintCounter::saveStats() {
   TERN_(DEBUG_PRINTCOUNTER, debug(PSTR("saveStats")));
 
-  // Refuses to save data if object is not loaded
+  // Refuses to save data if object is not loaded//如果未加载对象，则拒绝保存数据
   if (!isLoaded()) return;
 
   TERN_(PRINTCOUNTER_SYNC, planner.synchronize());
 
-  // Saves the struct to EEPROM
+  // Saves the struct to EEPROM//将结构保存到EEPROM
   persistentStore.access_start();
   persistentStore.write_data(address + sizeof(uint8_t), (uint8_t*)&data, sizeof(printStatistics));
   persistentStore.access_finish();
@@ -191,7 +192,7 @@ void PrintCounter::showStats() {
     "Prints: ", data.totalPrints,
     ", Finished: ", data.finishedPrints,
     ", Failed: ", data.totalPrints - data.finishedPrints
-                    - ((isRunning() || isPaused()) ? 1 : 0) // Remove 1 from failures with an active counter
+                    - ((isRunning() || isPaused()) ? 1 : 0) // Remove 1 from failures with an active counter//使用活动计数器从故障中删除1
   );
 
   SERIAL_ECHOPGM(STR_STATS);
@@ -231,7 +232,7 @@ void PrintCounter::tick() {
 
   millis_t now = millis();
 
-  static millis_t update_next; // = 0
+  static millis_t update_next; // = 0// = 0
   if (ELAPSED(now, update_next)) {
     update_next = now + updateInterval;
 
@@ -252,7 +253,7 @@ void PrintCounter::tick() {
   }
 
   #if PRINTCOUNTER_SAVE_INTERVAL > 0
-    static millis_t eeprom_next; // = 0
+    static millis_t eeprom_next; // = 0// = 0
     if (ELAPSED(now, eeprom_next)) {
       eeprom_next = now + saveInterval;
       saveStats();
@@ -260,7 +261,7 @@ void PrintCounter::tick() {
   #endif
 }
 
-// @Override
+// @Override//@覆盖
 bool PrintCounter::start() {
   TERN_(DEBUG_PRINTCOUNTER, debug(PSTR("start")));
 
@@ -293,7 +294,7 @@ bool PrintCounter::_stop(const bool completed) {
   return did_stop;
 }
 
-// @Override
+// @Override//@覆盖
 void PrintCounter::reset() {
   TERN_(DEBUG_PRINTCOUNTER, debug(PSTR("stop")));
 
@@ -334,7 +335,7 @@ void PrintCounter::reset() {
     }
   }
 
-#endif // HAS_SERVICE_INTERVALS
+#endif // HAS_SERVICE_INTERVALS//有保养间隔吗
 
 #if ENABLED(DEBUG_PRINTCOUNTER)
 
@@ -348,4 +349,4 @@ void PrintCounter::reset() {
 
 #endif
 
-#endif // PRINTCOUNTER
+#endif // PRINTCOUNTER//打印计数器

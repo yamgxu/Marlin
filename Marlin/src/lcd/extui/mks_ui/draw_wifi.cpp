@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -83,7 +84,7 @@ void lv_draw_wifi() {
     if (gCfgItems.cloud_enable) label_Cloud = lv_label_create_empty(buttonCloud);
   }
 
-  // Create an Image button
+  // Create an Image button//创建图像按钮
   lv_obj_t *buttonBack = lv_imgbtn_create(scr, "F:/bmp_return.bin", BTN_X_PIXEL * 3 + INTERVAL_V * 4, BTN_Y_PIXEL + INTERVAL_H + titleHeight, event_handler, ID_W_RETURN);
   if (enc_ena) lv_group_add_obj(g, buttonBack);
   lv_obj_t *label_Back = lv_label_create_empty(buttonBack);
@@ -162,5 +163,5 @@ void lv_clear_wifi() {
   lv_obj_del(scr);
 }
 
-#endif // MKS_WIFI_MODULE
-#endif // HAS_TFT_LVGL_UI
+#endif // MKS_WIFI_MODULE//MKS_无线模块
+#endif // HAS_TFT_LVGL_UI//有TFT\U LVGL\U用户界面

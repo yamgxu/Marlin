@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -129,7 +130,7 @@
 #define CROSSHAIRS_SIZE 3
 
 #ifndef G26_RETRACT_MULTIPLIER
-  #define G26_RETRACT_MULTIPLIER 1.0 // x 1mm
+  #define G26_RETRACT_MULTIPLIER 1.0 // x 1mm//x 1mm
 #endif
 
 #ifndef G26_XY_FEEDRATE
@@ -162,7 +163,7 @@ float g26_random_deviation = 0.0;
    * If the LCD is clicked, cancel, wait for release, return true
    */
   bool user_canceled() {
-    if (!ui.button_pressed()) return false; // Return if the button isn't pressed
+    if (!ui.button_pressed()) return false; // Return if the button isn't pressed//如果未按下按钮，则返回
     ui.set_status_P(GET_TEXT(MSG_G26_CANCELED), 99);
     TERN_(HAS_LCD_MENU, ui.quick_feedback());
     ui.wait_for_release();
@@ -176,19 +177,19 @@ void move_to(const_float_t rx, const_float_t ry, const_float_t z, const_float_t 
 
   const xy_pos_t dest = { rx, ry };
 
-  const bool has_xy_component = dest != current_position, // Check if X or Y is involved in the movement.
+  const bool has_xy_component = dest != current_position, // Check if X or Y is involved in the movement.//检查运动中是否涉及X或Y。
              has_e_component = e_delta != 0.0;
 
   if (z != last_z) {
     last_z = z;
     destination.set(current_position.x, current_position.y, z, current_position.e);
-    const feedRate_t fr_mm_s = planner.settings.max_feedrate_mm_s[Z_AXIS] * 0.5f; // Use half of the Z_AXIS max feed rate
+    const feedRate_t fr_mm_s = planner.settings.max_feedrate_mm_s[Z_AXIS] * 0.5f; // Use half of the Z_AXIS max feed rate//使用Z_轴最大进给速度的一半
     prepare_internal_move_to_destination(fr_mm_s);
   }
 
-  // If X or Y in combination with E is involved do a 'normal' move.
-  // If X or Y with no E is involved do a 'fast' move
-  // Otherwise retract/recover/hop.
+  // If X or Y in combination with E is involved do a 'normal' move.//如果涉及X或Y与E的组合，则执行“正常”移动。
+  // If X or Y with no E is involved do a 'fast' move//如果涉及没有E的X或Y，则执行“快速”移动
+  // Otherwise retract/recover/hop.//否则收回/恢复/跳跃。
   destination = dest;
   destination.e += e_delta;
   const feedRate_t fr_mm_s = has_xy_component
@@ -210,34 +211,34 @@ typedef struct {
 
   float nozzle                = MESH_TEST_NOZZLE_SIZE,
         filament_diameter     = DEFAULT_NOMINAL_FILAMENT_DIA,
-        ooze_amount;            // 'O' ... OOZE_AMOUNT
+        ooze_amount;            // 'O' ... OOZE_AMOUNT//“O”。。。渗出量
 
-  bool continue_with_closest,   // 'C'
-       keep_heaters_on;         // 'K'
+  bool continue_with_closest,   // 'C'//“C”
+       keep_heaters_on;         // 'K'//“K”
 
-  xy_pos_t xy_pos; // = { 0, 0 }
+  xy_pos_t xy_pos; // = { 0, 0 }// = { 0, 0 }
 
   int8_t prime_flag = 0;
 
-  bool g26_retracted = false;  // Track the retracted state during G26 so mismatched
-                               // retracts/recovers don't result in a bad state.
+  bool g26_retracted = false;  // Track the retracted state during G26 so mismatched//在G26期间跟踪缩回状态，因此不匹配
+                               // retracts/recovers don't result in a bad state.//收回/恢复不会导致不良状态。
 
   void retract_filament(const xyz_pos_t &where) {
-    if (!g26_retracted) { // Only retract if we are not already retracted!
+    if (!g26_retracted) { // Only retract if we are not already retracted!//只有在我们还没有撤退时才撤退！
       g26_retracted = true;
       move_to(where, -1.0f * retraction_multiplier);
     }
   }
 
-  // TODO: Parameterize the Z lift with a define
+  // TODO: Parameterize the Z lift with a define//TODO:使用定义参数化Z提升
   void retract_lift_move(const xyz_pos_t &s) {
     retract_filament(destination);
-    move_to(current_position.x, current_position.y, current_position.z + 0.5f, 0.0f);  // Z lift to minimize scraping
-    move_to(s.x, s.y, s.z + 0.5f, 0.0f);  // Get to the starting point with no extrusion while lifted
+    move_to(current_position.x, current_position.y, current_position.z + 0.5f, 0.0f);  // Z lift to minimize scraping//Z提升，最大程度减少刮擦
+    move_to(s.x, s.y, s.z + 0.5f, 0.0f);  // Get to the starting point with no extrusion while lifted//在提升时到达起点，无挤压
   }
 
   void recover_filament(const xyz_pos_t &where) {
-    if (g26_retracted) { // Only un-retract if we are retracted.
+    if (g26_retracted) { // Only un-retract if we are retracted.//只有当我们被撤回时才能取消撤回。
       move_to(where, 1.2f * retraction_multiplier);
       g26_retracted = false;
     }
@@ -260,27 +261,27 @@ typedef struct {
    */
   void print_line_from_here_to_there(const xyz_pos_t &s, const xyz_pos_t &e) {
 
-    // Distances to the start / end of the line
+    // Distances to the start / end of the line//到线路起点/终点的距离
     xy_float_t svec = current_position - s, evec = current_position - e;
 
     const float dist_start = HYPOT2(svec.x, svec.y),
                 dist_end = HYPOT2(evec.x, evec.y),
                 line_length = HYPOT(e.x - s.x, e.y - s.y);
 
-    // If the end point of the line is closer to the nozzle, flip the direction,
-    // moving from the end to the start. On very small lines the optimization isn't worth it.
+    // If the end point of the line is closer to the nozzle, flip the direction,//如果线的端点更靠近喷嘴，则翻转方向，
+    // moving from the end to the start. On very small lines the optimization isn't worth it.//从结尾到开头。在非常小的线路上，优化是不值得的。
     if (dist_end < dist_start && (INTERSECTION_CIRCLE_RADIUS) < ABS(line_length))
       return print_line_from_here_to_there(e, s);
 
-    // Decide whether to retract & lift
+    // Decide whether to retract & lift//决定是否收回并提起
     if (dist_start > 2.0) retract_lift_move(s);
 
-    move_to(s, 0.0); // Get to the starting point with no extrusion / un-Z lift
+    move_to(s, 0.0); // Get to the starting point with no extrusion / un-Z lift//在没有挤压/un-Z提升的情况下到达起点
 
     const float e_pos_delta = line_length * g26_e_axis_feedrate * extrusion_multiplier;
 
     recover_filament(destination);
-    move_to(e, e_pos_delta);  // Get to the ending point with an appropriate amount of extrusion
+    move_to(e, e_pos_delta);  // Get to the ending point with an appropriate amount of extrusion//以适当的拉伸量到达终点
   }
 
   void connect_neighbor_with_line(const xy_int8_t &p1, int8_t dx, int8_t dy) {
@@ -329,7 +330,7 @@ typedef struct {
         #endif
         thermalManager.setTargetBed(bed_temp);
 
-        // Wait for the temperature to stabilize
+        // Wait for the temperature to stabilize//等待温度稳定下来
         if (!thermalManager.wait_for_bed(true OPTARG(G26_CLICK_CAN_CANCEL, true)))
           return G26_ERR;
       }
@@ -338,16 +339,16 @@ typedef struct {
 
       UNUSED(bed_temp);
 
-    #endif // HAS_HEATED_BED
+    #endif // HAS_HEATED_BED//你给床加热了吗
 
-    // Start heating the active nozzle
+    // Start heating the active nozzle//开始加热活动喷嘴
     #if HAS_WIRED_LCD
       ui.set_status_P(GET_TEXT(MSG_G26_HEATING_NOZZLE), 99);
       ui.quick_feedback();
     #endif
     thermalManager.setTargetHotend(hotend_temp, active_extruder);
 
-    // Wait for the temperature to stabilize
+    // Wait for the temperature to stabilize//等待温度稳定下来
     if (!thermalManager.wait_for_hotend(active_extruder, true OPTARG(G26_CLICK_CAN_CANCEL, true)))
       return G26_ERR;
 
@@ -365,19 +366,19 @@ typedef struct {
   bool prime_nozzle() {
 
     const feedRate_t fr_slow_e = planner.settings.max_feedrate_mm_s[E_AXIS] / 15.0f;
-    #if HAS_LCD_MENU && !HAS_TOUCH_BUTTONS // ui.button_pressed issue with touchscreen
+    #if HAS_LCD_MENU && !HAS_TOUCH_BUTTONS // ui.button_pressed issue with touchscreen//ui.button\u触摸屏按下问题
       #if ENABLED(PREVENT_LENGTHY_EXTRUDE)
         float Total_Prime = 0.0;
       #endif
 
-      if (prime_flag == -1) {  // The user wants to control how much filament gets purged
+      if (prime_flag == -1) {  // The user wants to control how much filament gets purged//用户希望控制清除多少灯丝
         ui.capture();
         ui.set_status_P(GET_TEXT(MSG_G26_MANUAL_PRIME), 99);
         ui.chirp();
 
         destination = current_position;
 
-        recover_filament(destination); // Make sure G26 doesn't think the filament is retracted().
+        recover_filament(destination); // Make sure G26 doesn't think the filament is retracted().//确保G26不会认为灯丝缩回（）。
 
         while (!ui.button_pressed()) {
           ui.chirp();
@@ -391,10 +392,10 @@ typedef struct {
           #endif
           prepare_internal_move_to_destination(fr_slow_e);
           destination = current_position;
-          planner.synchronize();    // Without this synchronize, the purge is more consistent,
-                                    // but because the planner has a buffer, we won't be able
-                                    // to stop as quickly. So we put up with the less smooth
-                                    // action to give the user a more responsive 'Stop'.
+          planner.synchronize();    // Without this synchronize, the purge is more consistent,//如果不同步，则清除更加一致，
+                                    // but because the planner has a buffer, we won't be able//但是因为计划员有缓冲区，我们不能
+                                    // to stop as quickly. So we put up with the less smooth//尽快停止。所以我们忍受了不太顺利的情况
+                                    // action to give the user a more responsive 'Stop'.//为用户提供更具响应性的“停止”的操作。
         }
 
         ui.wait_for_release();
@@ -433,7 +434,7 @@ typedef struct {
       auto test_func = [](uint8_t i, uint8_t j, void *data) -> bool {
         if (!circle_flags.marked(i, j)) {
           mesh_index_pair *out_point = (mesh_index_pair*)data;
-          out_point->pos.set(i, j);  // Save its data
+          out_point->pos.set(i, j);  // Save its data//保存它的数据
           return true;
         }
         return false;
@@ -447,24 +448,24 @@ typedef struct {
 
       GRID_LOOP(i, j) {
         if (!circle_flags.marked(i, j)) {
-          // We found a circle that needs to be printed
+          // We found a circle that needs to be printed//我们找到了一个需要打印的圆
           const xy_pos_t m = { _GET_MESH_X(i), _GET_MESH_Y(j) };
 
-          // Get the distance to this intersection
+          // Get the distance to this intersection//计算到这个十字路口的距离
           float f = (pos - m).magnitude();
 
-          // It is possible that we are being called with the values
-          // to let us find the closest circle to the start position.
-          // But if this is not the case, add a small weighting to the
-          // distance calculation to help it choose a better place to continue.
+          // It is possible that we are being called with the values//我们可能被调用时使用了这些值
+          // to let us find the closest circle to the start position.//让我们找到离起始位置最近的圆。
+          // But if this is not the case, add a small weighting to the//但如果情况并非如此，则在
+          // distance calculation to help it choose a better place to continue.//距离计算帮助它选择更好的位置继续。
           f += (xy_pos - m).magnitude() / 15.0f;
 
-          // Add the specified amount of Random Noise to our search
+          // Add the specified amount of Random Noise to our search//将指定数量的随机噪声添加到搜索中
           if (g26_random_deviation > 1.0) f += random(0.0, g26_random_deviation);
 
           if (f < closest) {
-            closest = f;          // Found a closer un-printed location
-            out_point.pos.set(i, j);  // Save its data
+            closest = f;          // Found a closer un-printed location//找到一个更靠近的未打印位置
+            out_point.pos.set(i, j);  // Save its data//保存它的数据
             out_point.distance = closest;
           }
         }
@@ -472,7 +473,7 @@ typedef struct {
 
     #endif
 
-    circle_flags.mark(out_point); // Mark this location as done.
+    circle_flags.mark(out_point); // Mark this location as done.//将此位置标记为已完成。
     return out_point;
   }
 
@@ -506,11 +507,11 @@ typedef struct {
 void GcodeSuite::G26() {
   SERIAL_ECHOLNPGM("G26 starting...");
 
-  // Don't allow Mesh Validation without homing first,
-  // or if the parameter parsing did not go OK, abort
+  // Don't allow Mesh Validation without homing first,//不允许在未先重设原点的情况下进行网格验证，
+  // or if the parameter parsing did not go OK, abort//或者，如果参数解析没有正常进行，则中止
   if (homing_needed_error()) return;
 
-  // Change the tool first, if specified
+  // Change the tool first, if specified//如果指定，请先更换工具
   if (parser.seenval('T')) tool_change(parser.value_int());
 
   g26_helper_t g26;
@@ -519,22 +520,22 @@ void GcodeSuite::G26() {
   g26.continue_with_closest = parser.boolval('C');
   g26.keep_heaters_on       = parser.boolval('K');
 
-  // Accept 'I' if temperature presets are defined
+  // Accept 'I' if temperature presets are defined//如果定义了温度预设，则接受“I”
   #if PREHEAT_COUNT
     const uint8_t preset_index = parser.seenval('I') ? _MIN(parser.value_byte(), PREHEAT_COUNT - 1) + 1 : 0;
   #endif
 
   #if HAS_HEATED_BED
 
-    // Get a temperature from 'I' or 'B'
+    // Get a temperature from 'I' or 'B'//从“I”或“B”获取温度
     celsius_t bedtemp = 0;
 
-    // Use the 'I' index if temperature presets are defined
+    // Use the 'I' index if temperature presets are defined//如果定义了温度预设，则使用“I”索引
     #if PREHEAT_COUNT
       if (preset_index) bedtemp = ui.material_preset[preset_index - 1].bed_temp;
     #endif
 
-    // Look for 'B' Bed Temperature
+    // Look for 'B' Bed Temperature//查找“B”床温
     if (parser.seenval('B')) bedtemp = parser.value_celsius();
 
     if (bedtemp) {
@@ -545,7 +546,7 @@ void GcodeSuite::G26() {
       g26.bed_temp = bedtemp;
     }
 
-  #endif // HAS_HEATED_BED
+  #endif // HAS_HEATED_BED//你给床加热了吗
 
   if (parser.seenval('L')) {
     g26.layer_height = parser.value_linear_units();
@@ -603,24 +604,24 @@ void GcodeSuite::G26() {
       return;
     }
   }
-  g26.extrusion_multiplier *= sq(1.75) / sq(g26.filament_diameter); // If we aren't using 1.75mm filament, we need to
-                                                                    // scale up or down the length needed to get the
-                                                                    // same volume of filament
+  g26.extrusion_multiplier *= sq(1.75) / sq(g26.filament_diameter); // If we aren't using 1.75mm filament, we need to//如果我们不使用1.75毫米灯丝，我们需要
+                                                                    // scale up or down the length needed to get the//放大或缩小所需的长度以获得
+                                                                    // same volume of filament//等体积长丝
 
-  g26.extrusion_multiplier *= g26.filament_diameter * sq(g26.nozzle) / sq(0.3); // Scale up by nozzle size
+  g26.extrusion_multiplier *= g26.filament_diameter * sq(g26.nozzle) / sq(0.3); // Scale up by nozzle size//按喷嘴尺寸放大
 
-  // Get a temperature from 'I' or 'H'
+  // Get a temperature from 'I' or 'H'//从“I”或“H”获取温度
   celsius_t noztemp = 0;
 
-  // Accept 'I' if temperature presets are defined
+  // Accept 'I' if temperature presets are defined//如果定义了温度预设，则接受“I”
   #if PREHEAT_COUNT
     if (preset_index) noztemp = ui.material_preset[preset_index - 1].hotend_temp;
   #endif
 
-  // Look for 'H' Hotend Temperature
+  // Look for 'H' Hotend Temperature//查找“H”热端温度
   if (parser.seenval('H')) noztemp = parser.value_celsius();
 
-  // If any preset or temperature was specified
+  // If any preset or temperature was specified//如果指定了任何预设或温度
   if (noztemp) {
     if (!WITHIN(noztemp, 165, (HEATER_0_MAXTEMP) - (HOTEND_OVERSHOOT))) {
       SERIAL_ECHOLNPGM("?Specified nozzle temperature not plausible.");
@@ -629,14 +630,14 @@ void GcodeSuite::G26() {
     g26.hotend_temp = noztemp;
   }
 
-  // 'U' to Randomize and optionally set circle deviation
+  // 'U' to Randomize and optionally set circle deviation//“U”可随机化并可选择设置圆偏差
   if (parser.seen('U')) {
     randomSeed(millis());
-    // This setting will persist for the next G26
+    // This setting will persist for the next G26//此设置将持续到下一个G26
     g26_random_deviation = parser.has_value() ? parser.value_float() : 50.0;
   }
 
-  // Get repeat from 'R', otherwise do one full circuit
+  // Get repeat from 'R', otherwise do one full circuit//从“R”重复，否则执行一个完整回路
   int16_t g26_repeats;
   #if HAS_LCD_MENU
     g26_repeats = parser.intval('R', GRID_MAX_POINTS + 1);
@@ -653,7 +654,7 @@ void GcodeSuite::G26() {
     return;
   }
 
-  // Set a position with 'X' and/or 'Y'. Default: current_position
+  // Set a position with 'X' and/or 'Y'. Default: current_position//用“X”和/或“Y”设置一个位置。默认值：当前位置
   g26.xy_pos.set(parser.seenval('X') ? RAW_X_POSITION(parser.value_linear_units()) : current_position.x,
                  parser.seenval('Y') ? RAW_Y_POSITION(parser.value_linear_units()) : current_position.y);
   if (!position_is_reachable(g26.xy_pos)) {
@@ -693,7 +694,7 @@ void GcodeSuite::G26() {
 
   circle_flags.reset();
 
-  // Move nozzle to the specified height for the first layer
+  // Move nozzle to the specified height for the first layer//将喷嘴移动到第一层的指定高度
   destination = current_position;
   destination.z = g26.layer_height;
   move_to(destination, 0.0);
@@ -719,23 +720,23 @@ void GcodeSuite::G26() {
     LOOP_L_N(i, A_CNT)
       trig_table[i] = INTERSECTION_CIRCLE_RADIUS * cos(RADIANS(i * A_INT));
 
-  #endif // !ARC_SUPPORT
+  #endif // !ARC_SUPPORT// !弧形支架
 
   mesh_index_pair location;
   TERN_(EXTENSIBLE_UI, ExtUI::onMeshUpdate(location.pos, ExtUI::G26_START));
   do {
-    // Find the nearest confluence
+    // Find the nearest confluence//找到最近的汇合点
     location = g26.find_closest_circle_to_print(g26.continue_with_closest ? xy_pos_t(current_position) : g26.xy_pos);
 
     if (location.valid()) {
       TERN_(EXTENSIBLE_UI, ExtUI::onMeshUpdate(location.pos, ExtUI::G26_POINT_START));
       const xy_pos_t circle = _GET_MESH_POS(location.pos);
 
-      // If this mesh location is outside the printable radius, skip it.
+      // If this mesh location is outside the printable radius, skip it.//如果此网格位置在可打印半径之外，请跳过它。
       if (!position_is_reachable(circle)) continue;
 
-      // Determine where to start and end the circle,
-      // which is always drawn counter-clockwise.
+      // Determine where to start and end the circle,//确定圆的起点和终点，
+      // which is always drawn counter-clockwise.//它总是逆时针绘制的。
       const xy_int8_t st = location;
       const bool f = st.y == 0,
                  r = st.x >= GRID_MAX_POINTS_X - 1,
@@ -749,14 +750,14 @@ void GcodeSuite::G26() {
         xy_float_t e = { circle.x + INTERSECTION_CIRCLE_RADIUS, circle.y };
         xyz_float_t s = e;
 
-        // Figure out where to start and end the arc - we always print counterclockwise
+        // Figure out where to start and end the arc - we always print counterclockwise//找出弧的起点和终点-我们总是逆时针打印
         float arc_length = ARC_LENGTH(4);
-        if (st.x == 0) {                             // left edge
+        if (st.x == 0) {                             // left edge//左边缘
           if (!f) { s.x = circle.x; s.y -= INTERSECTION_CIRCLE_RADIUS; }
           if (!b) { e.x = circle.x; e.y += INTERSECTION_CIRCLE_RADIUS; }
           arc_length = (f || b) ? ARC_LENGTH(1) : ARC_LENGTH(2);
         }
-        else if (r) {                               // right edge
+        else if (r) {                               // right edge//右边缘
           if (b) s.set(circle.x - (INTERSECTION_CIRCLE_RADIUS), circle.y);
           else   s.set(circle.x, circle.y + INTERSECTION_CIRCLE_RADIUS);
           if (f) e.set(circle.x - (INTERSECTION_CIRCLE_RADIUS), circle.y);
@@ -773,7 +774,7 @@ void GcodeSuite::G26() {
         }
 
         const ab_float_t arc_offset = circle - s;
-        const xy_float_t dist = current_position - s;   // Distance from the start of the actual circle
+        const xy_float_t dist = current_position - s;   // Distance from the start of the actual circle//距实际圆起点的距离
         const float dist_start = HYPOT2(dist.x, dist.y);
         const xyze_pos_t endpoint = {
           e.x, e.y, g26.layer_height,
@@ -786,59 +787,59 @@ void GcodeSuite::G26() {
         }
 
         s.z = g26.layer_height;
-        move_to(s, 0.0);  // Get to the starting point with no extrusion / un-Z lift
+        move_to(s, 0.0);  // Get to the starting point with no extrusion / un-Z lift//在没有挤压/un-Z提升的情况下到达起点
 
         g26.recover_filament(destination);
 
         { REMEMBER(fr, feedrate_mm_s, PLANNER_XY_FEEDRATE() * 0.1f);
-          plan_arc(endpoint, arc_offset, false, 0);  // Draw a counter-clockwise arc
+          plan_arc(endpoint, arc_offset, false, 0);  // Draw a counter-clockwise arc//画一条逆时针的弧
           destination = current_position;
         }
 
-        if (TERN0(HAS_LCD_MENU, user_canceled())) goto LEAVE; // Check if the user wants to stop the Mesh Validation
+        if (TERN0(HAS_LCD_MENU, user_canceled())) goto LEAVE; // Check if the user wants to stop the Mesh Validation//检查用户是否要停止网格验证
 
-      #else // !ARC_SUPPORT
+      #else // !ARC_SUPPORT// !弧形支架
 
-        int8_t start_ind = -2, end_ind = 9; // Assume a full circle (from 5:00 to 5:00)
-        if (st.x == 0) {                    // Left edge? Just right half.
-          start_ind = f ? 0 : -3;           //  03:00 to 12:00 for front-left
-          end_ind = b ? 0 : 2;              //  06:00 to 03:00 for back-left
+        int8_t start_ind = -2, end_ind = 9; // Assume a full circle (from 5:00 to 5:00)//假设一整圈（从5:00到5:00）
+        if (st.x == 0) {                    // Left edge? Just right half.//左边缘？正好一半。
+          start_ind = f ? 0 : -3;           //  03:00 to 12:00 for front-left//左前03:00至12:00
+          end_ind = b ? 0 : 2;              //  06:00 to 03:00 for back-left//06:00至03:00（左后）
         }
-        else if (r) {                       // Right edge? Just left half.
-          start_ind = b ? 6 : 3;            //  12:00 to 09:00 for front-right
-          end_ind = f ? 5 : 8;              //  09:00 to 06:00 for back-right
+        else if (r) {                       // Right edge? Just left half.//右边缘？就剩一半了。
+          start_ind = b ? 6 : 3;            //  12:00 to 09:00 for front-right//右前12:00至09:00
+          end_ind = f ? 5 : 8;              //  09:00 to 06:00 for back-right//09:00至06:00（右后）
         }
-        else if (f) {                       // Front edge? Just back half.
-          start_ind = 0;                    //  03:00
-          end_ind = 5;                      //  09:00
+        else if (f) {                       // Front edge? Just back half.//前沿？刚刚下半场。
+          start_ind = 0;                    //  03:00//  03:00
+          end_ind = 5;                      //  09:00//  09:00
         }
-        else if (b) {                       // Back edge? Just front half.
-          start_ind = 6;                    //  09:00
-          end_ind = 11;                     //  03:00
+        else if (b) {                       // Back edge? Just front half.//后缘？就在前半部。
+          start_ind = 6;                    //  09:00//  09:00
+          end_ind = 11;                     //  03:00//  03:00
         }
 
         for (int8_t ind = start_ind; ind <= end_ind; ind++) {
 
-          if (TERN0(HAS_LCD_MENU, user_canceled())) goto LEAVE; // Check if the user wants to stop the Mesh Validation
+          if (TERN0(HAS_LCD_MENU, user_canceled())) goto LEAVE; // Check if the user wants to stop the Mesh Validation//检查用户是否要停止网格验证
 
           xyz_float_t p = { circle.x + _COS(ind    ), circle.y + _SIN(ind    ), g26.layer_height },
                       q = { circle.x + _COS(ind + 1), circle.y + _SIN(ind + 1), g26.layer_height };
 
           #if IS_KINEMATIC
-            // Check to make sure this segment is entirely on the bed, skip if not.
+            // Check to make sure this segment is entirely on the bed, skip if not.//检查以确保该部分完全在床上，如果没有，则跳过。
             if (!position_is_reachable(p) || !position_is_reachable(q)) continue;
           #elif HAS_ENDSTOPS
-            LIMIT(p.x, X_MIN_POS + 1, X_MAX_POS - 1); // Prevent hitting the endstops
+            LIMIT(p.x, X_MIN_POS + 1, X_MAX_POS - 1); // Prevent hitting the endstops//防止撞击末端止动块
             LIMIT(p.y, Y_MIN_POS + 1, Y_MAX_POS - 1);
             LIMIT(q.x, X_MIN_POS + 1, X_MAX_POS - 1);
             LIMIT(q.y, Y_MIN_POS + 1, Y_MAX_POS - 1);
           #endif
 
           g26.print_line_from_here_to_there(p, q);
-          SERIAL_FLUSH();   // Prevent host M105 buffer overrun.
+          SERIAL_FLUSH();   // Prevent host M105 buffer overrun.//防止主机M105缓冲区溢出。
         }
 
-      #endif // !ARC_SUPPORT
+      #endif // !ARC_SUPPORT// !弧形支架
 
       g26.connect_neighbor_with_line(location.pos, -1,  0);
       g26.connect_neighbor_with_line(location.pos,  1,  0);
@@ -849,7 +850,7 @@ void GcodeSuite::G26() {
       if (TERN0(HAS_LCD_MENU, user_canceled())) goto LEAVE;
     }
 
-    SERIAL_FLUSH(); // Prevent host M105 buffer overrun.
+    SERIAL_FLUSH(); // Prevent host M105 buffer overrun.//防止主机M105缓冲区溢出。
 
   } while (--g26_repeats && location.valid());
 
@@ -859,14 +860,14 @@ void GcodeSuite::G26() {
 
   g26.retract_filament(destination);
   destination.z = Z_CLEARANCE_BETWEEN_PROBES;
-  move_to(destination, 0);                                   // Raise the nozzle
+  move_to(destination, 0);                                   // Raise the nozzle//抬起喷嘴
 
   #if DISABLED(NO_VOLUMETRICS)
     parser.volumetric_enabled = volumetric_was_enabled;
     planner.calculate_volumetric_multipliers();
   #endif
 
-  TERN_(HAS_LCD_MENU, ui.release()); // Give back control of the LCD
+  TERN_(HAS_LCD_MENU, ui.release()); // Give back control of the LCD//液晶显示器的反馈控制
 
   if (!g26.keep_heaters_on) {
     TERN_(HAS_HEATED_BED, thermalManager.setTargetBed(0));
@@ -874,4 +875,4 @@ void GcodeSuite::G26() {
   }
 }
 
-#endif // G26_MESH_VALIDATION
+#endif // G26_MESH_VALIDATION//G26网格验证

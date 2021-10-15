@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -33,24 +34,24 @@
 
 #define DEFAULT_MACHINE_NAME BOARD_INFO_NAME
 
-// Use soft PWM for fans - PWM is not working properly when paired with STM32 Arduino Core v1.7.0
-// This can be removed when Core version is updated and PWM behaviour is fixed.
+// Use soft PWM for fans - PWM is not working properly when paired with STM32 Arduino Core v1.7.0//对风扇使用软PWM-与STM32 Arduino Core v1.7.0配对时，PWM工作不正常
+// This can be removed when Core version is updated and PWM behaviour is fixed.//当核心版本更新且PWM行为固定时，可以删除此项。
 #define FAN_SOFT_PWM
 
-//
-// Configure Timers
-// TIM6 is used for TONE
-// TIM7 is used for SERVO
-// TIMER_SERIAL defaults to TIM7 and must be overridden in the platformio.h file if SERVO will also be used.
-//              This will be difficult to solve from the Arduino IDE, without modifying the RUMBA32 variant
-//              included with the STM32 framework.
+////
+// Configure Timers//配置定时器
+// TIM6 is used for TONE//TIM6是用来表示音调的
+// TIM7 is used for SERVO//TIM7用于伺服
+// TIMER_SERIAL defaults to TIM7 and must be overridden in the platformio.h file if SERVO will also be used.//TIMER_SERIAL默认为TIM7，如果还将使用伺服，则必须在platformio.h文件中重写。
+//              This will be difficult to solve from the Arduino IDE, without modifying the RUMBA32 variant//如果不修改RUMBA32变体，这将很难从Arduino IDE中解决
+//              included with the STM32 framework.//包含在STM32框架中。
 
 #define STEP_TIMER 10
 #define TEMP_TIMER 14
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_MIN_PIN                           PB12
 #define X_MAX_PIN                           PB13
 #define Y_MIN_PIN                           PB15
@@ -58,9 +59,9 @@
 #define Z_MIN_PIN                           PD9
 #define Z_MAX_PIN                           PD10
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                          PA0
 #define X_DIR_PIN                           PC15
 #define X_ENABLE_PIN                        PC11
@@ -103,18 +104,18 @@
   #endif
 #endif
 
-//
-// Temperature Sensors
-//
+////
+// Temperature Sensors//温度传感器
+////
 #define TEMP_0_PIN                          PC4
 #define TEMP_1_PIN                          PC3
 #define TEMP_2_PIN                          PC2
 #define TEMP_3_PIN                          PC1
 #define TEMP_BED_PIN                        PC0
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_0_PIN                        PC6
 #define HEATER_1_PIN                        PC7
 #define HEATER_2_PIN                        PC8
@@ -123,16 +124,16 @@
 #define FAN_PIN                             PC9
 #define FAN1_PIN                            PA8
 
-//
-// SPI
-//
+////
+// SPI//SPI
+////
 #define SD_SCK_PIN                          PA5
 #define SD_MISO_PIN                         PA6
 #define SD_MOSI_PIN                         PA7
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define LED_PIN                             PB14
 #define BTN_PIN                             PC10
 #define PS_ON_PIN                           PE11
@@ -142,9 +143,9 @@
 #define SD_DETECT_PIN                       PB0
 #define BEEPER_PIN                          PE8
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 #if HAS_WIRED_LCD
 
   #define BTN_EN1                           PB2
@@ -166,12 +167,12 @@
     #define LCD_PINS_D7                     PE15
 
     #if ENABLED(REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER)
-      #define BTN_ENC_EN             LCD_PINS_D7  // Detect the presence of the encoder
+      #define BTN_ENC_EN             LCD_PINS_D7  // Detect the presence of the encoder//检测编码器的存在
     #endif
 
   #endif
 
-  // Alter timing for graphical display
+  // Alter timing for graphical display//改变图形显示的时间
   #if HAS_MARLINUI_U8GLIB
     #ifndef BOARD_ST7920_DELAY_1
       #define BOARD_ST7920_DELAY_1 DELAY_NS(96)

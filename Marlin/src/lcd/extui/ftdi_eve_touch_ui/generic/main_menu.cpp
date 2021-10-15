@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*****************
  * main_menu.cpp *
  *****************/
@@ -127,4 +128,4 @@ bool MainMenu::onTouchEnd(uint8_t tag) {
   return true;
 }
 
-#endif // FTDI_MAIN_MENU
+#endif // FTDI_MAIN_MENU//FTDI_主菜单

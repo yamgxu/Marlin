@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  *
@@ -39,7 +40,7 @@ FIL eeprom_file;
 bool eeprom_file_open = false;
 
 #ifndef MARLIN_EEPROM_SIZE
-  #define MARLIN_EEPROM_SIZE size_t(0x1000) // 4KiB of Emulated EEPROM
+  #define MARLIN_EEPROM_SIZE size_t(0x1000) // 4KiB of Emulated EEPROM//4KB模拟EEPROM
 #endif
 size_t PersistentStore::capacity() { return MARLIN_EEPROM_SIZE; }
 
@@ -78,8 +79,8 @@ bool PersistentStore::access_finish() {
   return true;
 }
 
-// This extra chit-chat goes away soon, but is helpful for now
-// to see errors that are happening in read_data / write_data
+// This extra chit-chat goes away soon, but is helpful for now//这种额外的闲聊很快就会消失，但现在很有帮助
+// to see errors that are happening in read_data / write_data//查看读/写数据中发生的错误
 static void debug_rw(const bool write, int &pos, const uint8_t *value, const size_t size, const FRESULT s, const size_t total=0) {
   PGM_P const rw_str = write ? PSTR("write") : PSTR("read");
   SERIAL_CHAR(' ');
@@ -95,31 +96,31 @@ static void debug_rw(const bool write, int &pos, const uint8_t *value, const siz
     SERIAL_ECHOLNPAIR(" f_lseek()=", s);
 }
 
-// File function return codes for type FRESULT. This goes away soon, but
-// is helpful right now to see any errors in read_data and write_data.
-//
-//  typedef enum {
-//    FR_OK = 0,               /* (0) Succeeded */
-//    FR_DISK_ERR,             /* (1) A hard error occurred in the low level disk I/O layer */
-//    FR_INT_ERR,              /* (2) Assertion failed */
-//    FR_NOT_READY,            /* (3) The physical drive cannot work */
-//    FR_NO_FILE,              /* (4) Could not find the file */
-//    FR_NO_PATH,              /* (5) Could not find the path */
-//    FR_INVALID_NAME,         /* (6) The path name format is invalid */
-//    FR_DENIED,               /* (7) Access denied due to prohibited access or directory full */
-//    FR_EXIST,                /* (8) Access denied due to prohibited access */
-//    FR_INVALID_OBJECT,       /* (9) The file/directory object is invalid */
-//    FR_WRITE_PROTECTED,      /* (10) The physical drive is write protected */
-//    FR_INVALID_DRIVE,        /* (11) The logical drive number is invalid */
-//    FR_NOT_ENABLED,          /* (12) The volume has no work area */
-//    FR_NO_FILESYSTEM,        /* (13) There is no valid FAT volume */
-//    FR_MKFS_ABORTED,         /* (14) The f_mkfs() aborted due to any problem */
-//    FR_TIMEOUT,              /* (15) Could not get a grant to access the volume within defined period */
-//    FR_LOCKED,               /* (16) The operation is rejected according to the file sharing policy */
-//    FR_NOT_ENOUGH_CORE,      /* (17) LFN working buffer could not be allocated */
-//    FR_TOO_MANY_OPEN_FILES,  /* (18) Number of open files > FF_FS_LOCK */
-//    FR_INVALID_PARAMETER     /* (19) Given parameter is invalid */
-//  } FRESULT;
+// File function return codes for type FRESULT. This goes away soon, but//FRESULT类型的文件函数返回代码。这种情况很快就会消失，但是
+// is helpful right now to see any errors in read_data and write_data.//现在查看读取和写入数据中的任何错误都很有帮助。
+////
+//  typedef enum {//类型定义枚举{
+//    FR_OK = 0,               /* (0) Succeeded *///FR_OK=0，/*（0）成功*/
+//    FR_DISK_ERR,             /* (1) A hard error occurred in the low level disk I/O layer *///FR_DISK_ERR，/*（1）在低级别磁盘I/O层中发生了一个硬错误*/
+//    FR_INT_ERR,              /* (2) Assertion failed *///FR_INT_ERR，/*（2）断言失败*/
+//    FR_NOT_READY,            /* (3) The physical drive cannot work *///FR\u未准备就绪，/*（3）物理驱动器无法工作*/
+//    FR_NO_FILE,              /* (4) Could not find the file *///FR_NO_文件，/*（4）找不到该文件*/
+//    FR_NO_PATH,              /* (5) Could not find the path *///FR_NO_PATH，/*（5）找不到路径*/
+//    FR_INVALID_NAME,         /* (6) The path name format is invalid *///FR\u无效\u名称，/*（6）路径名格式无效*/
+//    FR_DENIED,               /* (7) Access denied due to prohibited access or directory full *///FR_拒绝，/*（7）由于禁止访问或目录已满而拒绝访问*/
+//    FR_EXIST,                /* (8) Access denied due to prohibited access *///FR_存在，/*（8）由于禁止访问而拒绝访问*/
+//    FR_INVALID_OBJECT,       /* (9) The file/directory object is invalid *///FR\u无效\u对象，/*（9）文件/目录对象无效*/
+//    FR_WRITE_PROTECTED,      /* (10) The physical drive is write protected *///FR_WRITE_PROTECTED，/*（10）物理驱动器是写保护的*/
+//    FR_INVALID_DRIVE,        /* (11) The logical drive number is invalid *///FR\u无效\u驱动器，/*（11）逻辑驱动器号无效*/
+//    FR_NOT_ENABLED,          /* (12) The volume has no work area *///FR\u未启用，/*（12）卷没有工作区*/
+//    FR_NO_FILESYSTEM,        /* (13) There is no valid FAT volume *///FR_NO_文件系统，/*（13）没有有效的FAT卷*/
+//    FR_MKFS_ABORTED,         /* (14) The f_mkfs() aborted due to any problem *///FR_MKFS_中止，/*（14）f_MKFS（）由于任何问题中止*/
+//    FR_TIMEOUT,              /* (15) Could not get a grant to access the volume within defined period *///FR_超时，/*（15）无法在定义的时间段内获得访问卷的授权*/
+//    FR_LOCKED,               /* (16) The operation is rejected according to the file sharing policy *///FR_LOCKED，/*（16）根据文件共享策略拒绝该操作*/
+//    FR_NOT_ENOUGH_CORE,      /* (17) LFN working buffer could not be allocated *///FR_不够_核心，/*（17）无法分配LFN工作缓冲区*/
+//    FR_TOO_MANY_OPEN_FILES,  /* (18) Number of open files > FF_FS_LOCK *///FR\u打开的文件太多，/*（18）打开的文件数>FF\u FS\u锁*/
+//    FR_INVALID_PARAMETER     /* (19) Given parameter is invalid *///FR\u无效\u参数/*（19）给定参数无效*/
+//  } FRESULT;//}FRESULT；
 
 bool PersistentStore::write_data(int &pos, const uint8_t *value, size_t size, uint16_t *crc) {
   if (!eeprom_file_open) return true;
@@ -139,7 +140,7 @@ bool PersistentStore::write_data(int &pos, const uint8_t *value, size_t size, ui
   }
   crc16(crc, value, size);
   pos += size;
-  return bytes_written != size;  // return true for any error
+  return bytes_written != size;  // return true for any error//对于任何错误，返回true
 }
 
 bool PersistentStore::read_data(int &pos, uint8_t *value, const size_t size, uint16_t *crc, const bool writing/*=true*/) {
@@ -169,8 +170,8 @@ bool PersistentStore::read_data(int &pos, uint8_t *value, const size_t size, uin
   }
 
   pos += size;
-  return bytes_read != size;  // return true for any error
+  return bytes_read != size;  // return true for any error//对于任何错误，返回true
 }
 
-#endif // SDCARD_EEPROM_EMULATION
-#endif // TARGET_LPC1768
+#endif // SDCARD_EEPROM_EMULATION//SD卡EEPROM模拟
+#endif // TARGET_LPC1768//目标为LPC1768

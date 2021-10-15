@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  *
@@ -23,8 +24,8 @@
 #define _useTimer1
 #define _useTimer2
 
-#define TRIM_DURATION           5   // compensation ticks to trim adjust for digitalWrite delays
-#define SERVO_TIMER_PRESCALER   64  // timer prescaler factor to 64 (avoid overflowing 16-bit clock counter, at 120MHz this is 1831 ticks per millisecond
+#define TRIM_DURATION           5   // compensation ticks to trim adjust for digitalWrite delays//用于调整数字写入延迟的补偿刻度
+#define SERVO_TIMER_PRESCALER   64  // timer prescaler factor to 64 (avoid overflowing 16-bit clock counter, at 120MHz this is 1831 ticks per millisecond//定时器预分频器系数为64（避免16位时钟计数器溢出，在120MHz时，这是每毫秒1831个时钟
 
 #define SERVO_TC                3
 

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /* Copyright (C) 2015-2016 Andrew J. Kroll
    and
 Copyright (C) 2011 Circuits At Home, LTD. All rights reserved.
@@ -20,7 +21,7 @@ Contact information
 -------------------
 
 Circuits At Home, LTD
-Web      :  https://www.circuitsathome.com
+Web      :  https://www.circuitsathome.com//www.circuitsathome.com
 e-mail   :  support@circuitsathome.com
  */
 
@@ -32,7 +33,7 @@ e-mail   :  support@circuitsathome.com
  */
 
 
-// Just in case...
+// Just in case...//以防万一。。。
 #ifndef SERIAL_PORT_MONITOR
 #define SERIAL_PORT_MONITOR Serial
 #endif
@@ -40,14 +41,14 @@ e-mail   :  support@circuitsathome.com
 #ifndef INT16_MIN
 #define INT16_MIN -32768
 #endif
-// require 10607+
+// require 10607+//需要10607+
 #if defined(ARDUINO) && ARDUINO >=10607
-// nop :-)
+// nop :-)//否：-）
 #else
 #error "Arduino version too old, and must be at least 1.6.7"
 #endif
 
-// Nuke screwed up macro junk from the IDE.
+// Nuke screwed up macro junk from the IDE.//Nuke从IDE搞砸了宏垃圾。
 #ifdef __cplusplus
 #ifdef true
 #undef true
@@ -77,8 +78,8 @@ e-mail   :  support@circuitsathome.com
 #endif
 
 #elif defined(FLASHEND) && !defined(FLASHSTART)
-// Assumes flash starts at 0x00000, is this a safe assumption?
-// 192K + should be OK
+// Assumes flash starts at 0x00000, is this a safe assumption?//假设闪存在0x00000启动，这是一个安全的假设吗？
+// 192K + should be OK//192K+应该可以
 #if FLASHEND > 0x02FFFFU
 #define UHS_BIG_FLASH 1
 #else
@@ -102,7 +103,7 @@ e-mail   :  support@circuitsathome.com
 #elif defined(ARDUINO_spresense_ast)
 #define UHS_BIG_FLASH 1
 #else
-// safe default
+// safe default//安全违约
 #warning Small flash?
 #define UHS_BIG_FLASH 0
 #endif
@@ -119,9 +120,9 @@ e-mail   :  support@circuitsathome.com
 #define UHS_PIN_WRITE(p, v) digitalWriteFast(p, v)
 #define UHS_PIN_READ(p) digitalReadFast(p)
 #endif
-// TODO: Fast inline code for AVR and SAM based microcontrollers
-//       This can be done pretty easily.
-//       For now, this will just work out-of-the-box.
+// TODO: Fast inline code for AVR and SAM based microcontrollers//TODO:基于AVR和SAM的微控制器的快速内联代码
+//       This can be done pretty easily.//这很容易做到。
+//       For now, this will just work out-of-the-box.//现在，这只是开箱即用。
 #ifndef UHS_PIN_WRITE
 #define UHS_PIN_WRITE(p, v) digitalWrite(p, v)
 #endif
@@ -129,7 +130,7 @@ e-mail   :  support@circuitsathome.com
 #define UHS_PIN_READ(p) digitalRead(p)
 #endif
 
-#if defined( __PIC32MX__ ) && !defined(interrupts) // compiling with Microchip XC32 compiler
+#if defined( __PIC32MX__ ) && !defined(interrupts) // compiling with Microchip XC32 compiler//用微芯片XC32编译器编译
 #define interrupts() __builtin_enable_interrupts()
 #edfine noInterrupts() __builtin_disable_interrupts()
 #endif
@@ -146,15 +147,15 @@ e-mail   :  support@circuitsathome.com
 
 #include "../../../../HAL/shared/progmem.h"
 
-////////////////////////////////////////////////////////////////////////////////
-// HANDY MACROS
-////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// HANDY MACROS//方便的宏
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Atmoically set/clear single bits using bitbands.
-// Believe it or not, this boils down to a constant,
-// and is less code than using |= &= operators.
-// Bonus, it makes code easier to read too.
-// Bitbanding is a wonderful thing.
+// Atmoically set/clear single bits using bitbands.//使用位带自动设置/清除单个位。
+// Believe it or not, this boils down to a constant,//信不信由你，这归结为一个常数，
+// and is less code than using |= &= operators.//与使用|=&=运算符相比，它的代码更少。
+// Bonus, it makes code easier to read too.//另外，它还使代码更易于阅读。
+// Bitbanding is a wonderful thing.//比特绑定是一件美妙的事情。
 #define BITNR(i) (i&0x1?0:i&0x2?1:i&0x4?2:i&0x8?3:i&0x10?4:i&0x20?5:i&0x40?6:i&0x80?7:i&0x100?8:i&0x200?9:i&0x400?10:i&0x800?11:i&0x1000?12:i&0x2000?13:i&0x4000?14:i&0x8000?15:i&0x10000?16:i&0x20000?17:i&0x40000?18:i&0x80000?19:i&0x100000?20:i&0x200000?21:i&0x400000?22:i&0x800000?23:i&0x1000000?24:i&0x2000000?25:i&0x4000000?26:i&0x8000000?27:i&0x10000000?28:i&0x20000000?29:i&0x40000000?30:i&0x80000000?31:32)
 #define UHS_KIO_BITBAND_ADDR(r, i) (((uint32_t)&(r) - 0x40000000) * 32 + (i) * 4 + 0x42000000)
 #define UHS_KIO_SETBIT_ATOMIC(r, m) (*(uint32_t *)UHS_KIO_BITBAND_ADDR((r), BITNR((m)))) = 1
@@ -170,7 +171,7 @@ e-mail   :  support@circuitsathome.com
 #ifndef __BYTE_GRABBING_DEFINED__
 #define __BYTE_GRABBING_DEFINED__ 1
 #ifdef BROKEN_OPTIMIZER_LITTLE_ENDIAN
-// Note: Use this if your compiler generates horrible assembler!
+// Note: Use this if your compiler generates horrible assembler!//注意：如果编译器生成可怕的汇编程序，请使用此选项！
 #define UHS_UINT8_BYTE0(__usi__)  (((uint8_t *)&(__usi__))[0])
 #define UHS_UINT8_BYTE1(__usi__)  (((uint8_t *)&(__usi__))[1])
 #define UHS_UINT8_BYTE2(__usi__)  (((uint8_t *)&(__usi__))[2])
@@ -180,9 +181,9 @@ e-mail   :  support@circuitsathome.com
 #define UHS_UINT8_BYTE6(__usi__)  (((uint8_t *)&(__usi__))[6])
 #define UHS_UINT8_BYTE7(__usi__)  (((uint8_t *)&(__usi__))[7])
 #else
-// Note: The cast alone to uint8_t is actually enough.
-// GCC throws out the "& 0xFF", and the size is no different.
-// Some compilers need it.
+// Note: The cast alone to uint8_t is actually enough.//注：仅对uint8_t进行强制转换实际上就足够了。
+// GCC throws out the "& 0xFF", and the size is no different.//GCC抛出了“&0xFF”，大小也一样。
+// Some compilers need it.//有些编译器需要它。
 #define UHS_UINT8_BYTE0(__usi__)  ((uint8_t)((__usi__) & 0xFF ))
 #define UHS_UINT8_BYTE1(__usi__)  ((uint8_t)(((__usi__) >> 8) & 0xFF))
 #define UHS_UINT8_BYTE2(__usi__)  ((uint8_t)(((__usi__) >> 16) & 0xFF))
@@ -204,7 +205,7 @@ e-mail   :  support@circuitsathome.com
 #define UHS_UINT64_SET_BYTE6(__usi__)  ((uint64_t)(__usi__) << 48)
 #define UHS_UINT64_SET_BYTE7(__usi__)  ((uint64_t)(__usi__) << 56)
 
-// These are the smallest and fastest ways I have found so far in pure C/C++.
+// These are the smallest and fastest ways I have found so far in pure C/C++.//这些是迄今为止我在纯C/C++中发现的最小和最快的方法。
 #define UHS_BYTES_TO_UINT16(__usc1__,__usc0__) ((uint16_t)((uint16_t)(__usc0__) | (uint16_t)UHS_UINT16_SET_BYTE1(__usc1__)))
 #define UHS_BYTES_TO_UINT32(__usc3__,__usc2__,__usc1__,__usc0__) ((uint32_t)((uint32_t)(__usc0__) | UHS_UINT32_SET_BYTE1(__usc1__) | UHS_UINT32_SET_BYTE2(__usc2__) | UHS_UINT32_SET_BYTE3(__usc3__)))
 #define UHS_BYTES_TO_UINT64(__usc7__,__usc6__,__usc5__,__usc4__,__usc3__,__usc2__,__usc1__,__usc0__) ((uint64_t)((uint64_t)__usc0__ | UHS_UINT64_SET_BYTE1(__usc1__) | UHS_UINT64_SET_BYTE2(__usc2__) | UHS_UINT64_SET_BYTE3(__usc3__) | UHS_UINT64_SET_BYTE4(__usc4__) | UHS_UINT64_SET_BYTE5(__usc5__) | UHS_UINT64_SET_BYTE6(__usc6__) | UHS_UINT64_SET_BYTE7(__usc7__)))

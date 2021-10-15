@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -108,7 +109,7 @@ bool MarlinUI::detected() { return true; }
 #if ENABLED(SHOW_BOOTSCREEN)
 
   #if ENABLED(SHOW_CUSTOM_BOOTSCREEN)
-    // Draws a slice of a particular frame of the custom bootscreen, without the u8g loop
+    // Draws a slice of a particular frame of the custom bootscreen, without the u8g loop//绘制自定义引导屏幕特定帧的切片，不带u8g循环
     void MarlinUI::draw_custom_bootscreen(const uint8_t frame/*=0*/) {
       constexpr u8g_uint_t left = u8g_uint_t((LCD_PIXEL_WIDTH  - (CUSTOM_BOOTSCREEN_BMPWIDTH)) / 2),
                             top = u8g_uint_t(CUSTOM_BOOTSCREEN_Y);
@@ -142,7 +143,7 @@ bool MarlinUI::detected() { return true; }
       #endif
     }
 
-    // Shows the custom bootscreen, with the u8g loop, animations and delays
+    // Shows the custom bootscreen, with the u8g loop, animations and delays//显示带有u8g循环、动画和延迟的自定义引导屏幕
     void MarlinUI::show_custom_bootscreen() {
       #if DISABLED(CUSTOM_BOOTSCREEN_ANIMATED)
         constexpr millis_t frame_time = 0;
@@ -170,17 +171,17 @@ bool MarlinUI::detected() { return true; }
         safe_delay(CUSTOM_BOOTSCREEN_TIMEOUT);
       #endif
     }
-  #endif // SHOW_CUSTOM_BOOTSCREEN
+  #endif // SHOW_CUSTOM_BOOTSCREEN//显示自定义引导屏幕
 
-  // Two-part needed to display all info
+  // Two-part needed to display all info//需要两部分来显示所有信息
   constexpr bool two_part = ((LCD_PIXEL_HEIGHT) - (START_BMPHEIGHT)) < ((MENU_FONT_ASCENT) * 2);
   constexpr uint8_t bootscreen_pages = 1 + two_part;
 
-  // Draw the static Marlin bootscreen from a u8g loop
-  // or the animated boot screen within its own u8g loop
+  // Draw the static Marlin bootscreen from a u8g loop//从u8g循环绘制静态Marlin引导屏幕
+  // or the animated boot screen within its own u8g loop//或在其自己的u8g循环内的动画引导屏幕
   void MarlinUI::draw_marlin_bootscreen(const bool line2/*=false*/) {
 
-    // Determine text space needed
+    // Determine text space needed//确定所需的文本空间
     constexpr u8g_uint_t text_width_1 = u8g_uint_t((sizeof(SHORT_BUILD_VERSION) - 1) * (MENU_FONT_WIDTH)),
                          text_width_2 = u8g_uint_t((sizeof(MARLIN_WEBSITE_URL) - 1) * (MENU_FONT_WIDTH)),
                          text_max_width = _MAX(text_width_1, text_width_2),
@@ -190,21 +191,21 @@ bool MarlinUI::detected() { return true; }
 
     u8g_int_t offx, offy, txt_base, txt_offx_1, txt_offx_2;
 
-    // Can the text fit to the right of the bitmap?
+    // Can the text fit to the right of the bitmap?//文本是否适合位图的右侧？
     if (text_max_width < rspace) {
-      constexpr int8_t inter = (width - text_max_width - (START_BMPWIDTH)) / 3; // Evenly distribute horizontal space
-      offx = inter;                             // First the boot logo...
-      offy = (height - (START_BMPHEIGHT)) / 2;  // ...V-aligned in the full height
-      txt_offx_1 = txt_offx_2 = inter + (START_BMPWIDTH) + inter; // Text right of the bitmap
-      txt_base = (height + MENU_FONT_ASCENT + text_total_height - (MENU_FONT_HEIGHT)) / 2; // Text vertical center
+      constexpr int8_t inter = (width - text_max_width - (START_BMPWIDTH)) / 3; // Evenly distribute horizontal space//均匀分布水平空间
+      offx = inter;                             // First the boot logo...//首先是启动标志。。。
+      offy = (height - (START_BMPHEIGHT)) / 2;  // ...V-aligned in the full height//…全高度V形对齐
+      txt_offx_1 = txt_offx_2 = inter + (START_BMPWIDTH) + inter; // Text right of the bitmap//位图的文本右侧
+      txt_base = (height + MENU_FONT_ASCENT + text_total_height - (MENU_FONT_HEIGHT)) / 2; // Text vertical center//文本垂直中心
     }
     else {
-      constexpr int8_t inter = (height - text_total_height - (START_BMPHEIGHT)) / 3; // Evenly distribute vertical space
-      offx = rspace / 2;                        // Center the boot logo in the whole space
-      offy = inter;                             // V-align boot logo proportionally
-      txt_offx_1 = (width - text_width_1) / 2;  // Text 1 centered
-      txt_offx_2 = (width - text_width_2) / 2;  // Text 2 centered
-      txt_base = offy + START_BMPHEIGHT + offy + text_total_height - (MENU_FONT_DESCENT);   // Even spacing looks best
+      constexpr int8_t inter = (height - text_total_height - (START_BMPHEIGHT)) / 3; // Evenly distribute vertical space//垂直空间均匀分布
+      offx = rspace / 2;                        // Center the boot logo in the whole space//将后备箱徽标置于整个空间的中心
+      offy = inter;                             // V-align boot logo proportionally//按比例V形对齐引导标志
+      txt_offx_1 = (width - text_width_1) / 2;  // Text 1 centered//文本1居中
+      txt_offx_2 = (width - text_width_2) / 2;  // Text 2 centered//文本2居中
+      txt_base = offy + START_BMPHEIGHT + offy + text_total_height - (MENU_FONT_DESCENT);   // Even spacing looks best//即使是间距看起来也是最好的
     }
     NOLESS(offx, 0);
     NOLESS(offy, 0);
@@ -231,7 +232,7 @@ bool MarlinUI::detected() { return true; }
     #endif
   }
 
-  // Show the Marlin bootscreen, with the u8g loop and delays
+  // Show the Marlin bootscreen, with the u8g loop and delays//显示带有u8g循环和延迟的Marlin引导屏幕
   void MarlinUI::show_marlin_bootscreen() {
     for (uint8_t q = bootscreen_pages; q--;) {
       draw_marlin_bootscreen(q == 0);
@@ -248,13 +249,13 @@ bool MarlinUI::detected() { return true; }
     if ((BOOTSCREEN_TIMEOUT) / bootscreen_pages > sofar) safe_delay((BOOTSCREEN_TIMEOUT) / bootscreen_pages - sofar);
   }
 
-#endif // SHOW_BOOTSCREEN
+#endif // SHOW_BOOTSCREEN//显示启动屏幕
 
 #if ENABLED(LIGHTWEIGHT_UI)
   #include "status_screen_lite_ST7920.h"
 #endif
 
-// Initialize or re-initialize the LCD
+// Initialize or re-initialize the LCD//初始化或重新初始化LCD
 void MarlinUI::init_lcd() {
 
   static bool did_init_u8g = false;
@@ -264,7 +265,7 @@ void MarlinUI::init_lcd() {
   }
 
   #if PIN_EXISTS(LCD_BACKLIGHT)
-    OUT_WRITE(LCD_BACKLIGHT_PIN, DISABLED(DELAYED_BACKLIGHT_INIT)); // Illuminate after reset or right away
+    OUT_WRITE(LCD_BACKLIGHT_PIN, DISABLED(DELAYED_BACKLIGHT_INIT)); // Illuminate after reset or right away//重置后或立即点亮
   #endif
 
   #if ANY(MKS_12864OLED, MKS_12864OLED_SSD1306, FYSETC_242_OLED_12864, ZONESTAR_12864OLED, K3D_242_OLED_CONTROLLER)
@@ -275,7 +276,7 @@ void MarlinUI::init_lcd() {
   #endif
 
   #if PIN_EXISTS(LCD_RESET)
-    // Perform a clean hardware reset with needed delays
+    // Perform a clean hardware reset with needed delays//在需要延迟的情况下执行干净的硬件重置
     OUT_WRITE(LCD_RESET_PIN, LOW);
     _delay_ms(5);
     WRITE(LCD_RESET_PIN, HIGH);
@@ -296,7 +297,7 @@ void MarlinUI::init_lcd() {
   uxg_SetUtf8Fonts(g_fontinfo, COUNT(g_fontinfo));
 }
 
-// The kill screen is displayed for unrecoverable conditions
+// The kill screen is displayed for unrecoverable conditions//对于不可恢复的情况，将显示压井屏幕
 void MarlinUI::draw_kill_screen() {
   TERN_(LIGHTWEIGHT_UI, ST7920_Lite_Status_Screen::clear_text_buffer());
   const u8g_uint_t h4 = u8g.getHeight() / 4;
@@ -309,7 +310,7 @@ void MarlinUI::draw_kill_screen() {
   } while (u8g.nextPage());
 }
 
-void MarlinUI::clear_lcd() { } // Automatically cleared by Picture Loop
+void MarlinUI::clear_lcd() { } // Automatically cleared by Picture Loop//由图片循环自动清除
 
 #if HAS_LCD_MENU
 
@@ -335,10 +336,10 @@ void MarlinUI::clear_lcd() { } // Automatically cleared by Picture Loop
         lcd_put_u8str(i16tostr3rj(thermalManager.degTargetHotend(extruder)));
     }
 
-  #endif // ADVANCED_PAUSE_FEATURE
+  #endif // ADVANCED_PAUSE_FEATURE//高级暂停功能
 
-  // Mark a menu item and set font color if selected.
-  // Return 'false' if the item is not on screen.
+  // Mark a menu item and set font color if selected.//标记菜单项并设置字体颜色（如果选中）。
+  // Return 'false' if the item is not on screen.//如果项目不在屏幕上，则返回“false”。
   static bool mark_as_selected(const uint8_t row, const bool sel) {
     row_y1 = row * (MENU_FONT_HEIGHT) + 1;
     row_y2 = row_y1 + MENU_FONT_HEIGHT - 1;
@@ -350,13 +351,13 @@ void MarlinUI::clear_lcd() { } // Automatically cleared by Picture Loop
         u8g.drawHLine(0, row_y1 + 1, LCD_PIXEL_WIDTH);
         u8g.drawHLine(0, row_y2 + 2, LCD_PIXEL_WIDTH);
       #else
-        u8g.setColorIndex(1); // solid outline
+        u8g.setColorIndex(1); // solid outline//立体轮廓
         u8g.drawBox(0, row_y1 + 2, LCD_PIXEL_WIDTH, MENU_FONT_HEIGHT - 1);
-        u8g.setColorIndex(0); // inverted text
+        u8g.setColorIndex(0); // inverted text//倒装文本
       #endif
     }
     #if DISABLED(MENU_HOLLOW_FRAME)
-      else u8g.setColorIndex(1); // solid text
+      else u8g.setColorIndex(1); // solid text//纯文本
     #endif
 
     if (!PAGE_CONTAINS(row_y1, row_y2)) return false;
@@ -365,11 +366,11 @@ void MarlinUI::clear_lcd() { } // Automatically cleared by Picture Loop
     return true;
   }
 
-  // Draw a static line of text in the same idiom as a menu item
+  // Draw a static line of text in the same idiom as a menu item//用与菜单项相同的习惯用法绘制静态文本行
   void MenuItem_static::draw(const uint8_t row, PGM_P const pstr, const uint8_t style/*=SS_DEFAULT*/, const char * const vstr/*=nullptr*/) {
 
     if (mark_as_selected(row, style & SS_INVERT)) {
-      pixel_len_t n = LCD_PIXEL_WIDTH; // pixel width of string allowed
+      pixel_len_t n = LCD_PIXEL_WIDTH; // pixel width of string allowed//允许字符串的像素宽度
  
       const int plen = pstr ? calculateWidth(pstr) : 0,
                 vlen = vstr ? utf8_strlen(vstr) : 0;
@@ -384,7 +385,7 @@ void MarlinUI::clear_lcd() { } // Automatically cleared by Picture Loop
     }
   }
 
-  // Draw a generic menu item
+  // Draw a generic menu item//绘制通用菜单项
   void MenuItemBase::_draw(const bool sel, const uint8_t row, PGM_P const pstr, const char, const char post_char) {
     if (mark_as_selected(row, sel)) {
       pixel_len_t n = lcd_put_u8str_ind_P(pstr, itemIndex, itemString, LCD_WIDTH - 1) * (MENU_FONT_WIDTH);
@@ -394,7 +395,7 @@ void MarlinUI::clear_lcd() { } // Automatically cleared by Picture Loop
     }
   }
 
-  // Draw a menu item with an editable value
+  // Draw a menu item with an editable value//绘制具有可编辑值的菜单项
   void MenuEditItemBase::draw(const bool sel, const uint8_t row, PGM_P const pstr, const char * const inStr, const bool pgm) {
     if (mark_as_selected(row, sel)) {
       const uint8_t vallen = (pgm ? utf8_strlen_P(inStr) : utf8_strlen((char*)inStr)),
@@ -419,7 +420,7 @@ void MarlinUI::clear_lcd() { } // Automatically cleared by Picture Loop
     bool extra_row = labellen * prop > LCD_WIDTH - 2 - vallen * prop;
 
     #if ENABLED(USE_BIG_EDIT_FONT)
-      // Use the menu font if the label won't fit on a single line
+      // Use the menu font if the label won't fit on a single line//如果标签无法在一行中显示，请使用菜单字体
       constexpr u8g_uint_t lcd_edit_width = (LCD_PIXEL_WIDTH) / (EDIT_FONT_WIDTH);
       u8g_uint_t lcd_chr_fit, one_chr_width;
       if (labellen * prop <= lcd_edit_width - 1) {
@@ -438,24 +439,24 @@ void MarlinUI::clear_lcd() { } // Automatically cleared by Picture Loop
                            one_chr_width = MENU_FONT_WIDTH;
     #endif
 
-    // Center the label and value lines on the middle line
+    // Center the label and value lines on the middle line//将标签线和值线居中放置在中间线上
     u8g_uint_t baseline = extra_row ? (LCD_PIXEL_HEIGHT) / 2 - 1
                                     : (LCD_PIXEL_HEIGHT + EDIT_FONT_ASCENT) / 2;
 
-    // Assume the label is alpha-numeric (with a descender)
+    // Assume the label is alpha-numeric (with a descender)//假设标签是字母数字的（带下降符号）
     bool onpage = PAGE_CONTAINS(baseline - (EDIT_FONT_ASCENT - 1), baseline + EDIT_FONT_DESCENT);
     if (onpage) lcd_put_u8str_ind_P(0, baseline, pstr, itemIndex, itemString);
 
-    // If a value is included, print a colon, then print the value right-justified
+    // If a value is included, print a colon, then print the value right-justified//如果包含值，请打印冒号，然后右对齐打印该值
     if (value) {
       lcd_put_wchar(':');
       if (extra_row) {
-        // Assume that value is numeric (with no descender)
+        // Assume that value is numeric (with no descender)//假设该值是数值（不带降序）
         baseline += EDIT_FONT_ASCENT + 2;
         onpage = PAGE_CONTAINS(baseline - (EDIT_FONT_ASCENT - 1), baseline);
       }
       if (onpage) {
-        lcd_put_wchar(((lcd_chr_fit - 1) - (vallen * prop + 1)) * one_chr_width, baseline, ' '); // Right-justified, padded, add a leading space
+        lcd_put_wchar(((lcd_chr_fit - 1) - (vallen * prop + 1)) * one_chr_width, baseline, ' '); // Right-justified, padded, add a leading space//右对齐，填充，添加前导空格
         lcd_put_u8str(value);
       }
     }
@@ -494,20 +495,20 @@ void MarlinUI::clear_lcd() { } // Automatically cleared by Picture Loop
       }
     }
 
-  #endif // SDSUPPORT
+  #endif // SDSUPPORT//SDSUPPORT
 
   #if ENABLED(AUTO_BED_LEVELING_UBL)
 
     /**
      * UBL LCD "radar" map data
      */
-    #define MAP_UPPER_LEFT_CORNER_X 35  // These probably should be moved to the .h file  But for now,
-    #define MAP_UPPER_LEFT_CORNER_Y  8  // it is easier to play with things having them here
+    #define MAP_UPPER_LEFT_CORNER_X 35  // These probably should be moved to the .h file  But for now,//这些可能应该移到.h文件中，但现在，
+    #define MAP_UPPER_LEFT_CORNER_Y  8  // it is easier to play with things having them here//在这里玩东西更容易
     #define MAP_MAX_PIXELS_X        53
     #define MAP_MAX_PIXELS_Y        49
 
     void MarlinUI::ubl_plot(const uint8_t x_plot, const uint8_t y_plot) {
-      // Scale the box pixels appropriately
+      // Scale the box pixels appropriately//适当缩放长方体像素
       u8g_uint_t x_map_pixels = ((MAP_MAX_PIXELS_X - 4) / (GRID_MAX_POINTS_X)) * (GRID_MAX_POINTS_X),
                  y_map_pixels = ((MAP_MAX_PIXELS_Y - 4) / (GRID_MAX_POINTS_Y)) * (GRID_MAX_POINTS_Y),
 
@@ -517,18 +518,18 @@ void MarlinUI::clear_lcd() { } // Automatically cleared by Picture Loop
               x_offset = MAP_UPPER_LEFT_CORNER_X + 1 + (MAP_MAX_PIXELS_X - x_map_pixels - 2) / 2,
               y_offset = MAP_UPPER_LEFT_CORNER_Y + 1 + (MAP_MAX_PIXELS_Y - y_map_pixels - 2) / 2;
 
-      // Clear the Mesh Map
+      // Clear the Mesh Map//清除网格贴图
 
       if (PAGE_CONTAINS(y_offset - 2, y_offset + y_map_pixels + 4)) {
-        u8g.setColorIndex(1);  // First draw the bigger box in White so we have a border around the mesh map box
+        u8g.setColorIndex(1);  // First draw the bigger box in White so we have a border around the mesh map box//首先用白色绘制较大的框，以便在网格贴图框周围有一个边框
         u8g.drawBox(x_offset - 2, y_offset - 2, x_map_pixels + 4, y_map_pixels + 4);
         if (PAGE_CONTAINS(y_offset, y_offset + y_map_pixels)) {
-          u8g.setColorIndex(0);  // Now actually clear the mesh map box
+          u8g.setColorIndex(0);  // Now actually clear the mesh map box//现在实际清除网格贴图框
           u8g.drawBox(x_offset, y_offset, x_map_pixels, y_map_pixels);
         }
       }
 
-      // Display Mesh Point Locations
+      // Display Mesh Point Locations//显示网格点位置
 
       u8g.setColorIndex(1);
       const u8g_uint_t sx = x_offset + pixels_per_x_mesh_pnt / 2;
@@ -538,10 +539,10 @@ void MarlinUI::clear_lcd() { } // Automatically cleared by Picture Loop
           for (uint8_t i = 0, x = sx; i < GRID_MAX_POINTS_X; i++, x += pixels_per_x_mesh_pnt)
             u8g.drawBox(x, y, 1, 1);
 
-      // Fill in the Specified Mesh Point
+      // Fill in the Specified Mesh Point//填充指定的网格点
 
-      const uint8_t y_plot_inv = (GRID_MAX_POINTS_Y) - 1 - y_plot;  // The origin is typically in the lower right corner.  We need to
-                                                                    // invert the Y to get it to plot in the right location.
+      const uint8_t y_plot_inv = (GRID_MAX_POINTS_Y) - 1 - y_plot;  // The origin is typically in the lower right corner.  We need to//原点通常位于右下角。我们需要
+                                                                    // invert the Y to get it to plot in the right location.//反转Y以使其在正确位置进行打印。
 
       const u8g_uint_t by = y_offset + y_plot_inv * pixels_per_y_mesh_pnt;
       if (PAGE_CONTAINS(by, by + pixels_per_y_mesh_pnt))
@@ -550,9 +551,9 @@ void MarlinUI::clear_lcd() { } // Automatically cleared by Picture Loop
           pixels_per_x_mesh_pnt, pixels_per_y_mesh_pnt
         );
 
-      // Put Relevant Text on Display
+      // Put Relevant Text on Display//显示相关文本
 
-      // Show X and Y positions at top of screen
+      // Show X and Y positions at top of screen//在屏幕顶部显示X和Y位置
       u8g.setColorIndex(1);
       if (PAGE_UNDER(7)) {
         const xy_pos_t pos = { ubl.mesh_index_to_xpos(x_plot), ubl.mesh_index_to_ypos(y_plot) },
@@ -563,7 +564,7 @@ void MarlinUI::clear_lcd() { } // Automatically cleared by Picture Loop
         lcd_put_u8str(ftostr52(lpos.y));
       }
 
-      // Print plot position
+      // Print plot position//打印打印位置
       if (PAGE_CONTAINS(LCD_PIXEL_HEIGHT - (INFO_FONT_HEIGHT - 1), LCD_PIXEL_HEIGHT)) {
         lcd_put_wchar(5, LCD_PIXEL_HEIGHT, '(');
         u8g.print(x_plot);
@@ -571,7 +572,7 @@ void MarlinUI::clear_lcd() { } // Automatically cleared by Picture Loop
         u8g.print(y_plot);
         lcd_put_wchar(')');
 
-        // Show the location value
+        // Show the location value//显示位置值
         lcd_put_u8str_P(74, LCD_PIXEL_HEIGHT, Z_LBL);
         if (!isnan(ubl.z_values[x_plot][y_plot]))
           lcd_put_u8str(ftostr43sign(ubl.z_values[x_plot][y_plot]));
@@ -581,15 +582,15 @@ void MarlinUI::clear_lcd() { } // Automatically cleared by Picture Loop
 
     }
 
-  #endif // AUTO_BED_LEVELING_UBL
+  #endif // AUTO_BED_LEVELING_UBL//自动调平床
 
   #if EITHER(BABYSTEP_ZPROBE_GFX_OVERLAY, MESH_EDIT_GFX_OVERLAY)
 
-    //
-    // Draw knob rotation => Z motion key for:
-    //  - menu.cpp:lcd_babystep_zoffset
-    //  - menu_ubl.cpp:_lcd_mesh_fine_tune
-    //
+    ////
+    // Draw knob rotation => Z motion key for://绘制旋钮旋转=>Z运动键，用于：
+    //  - menu.cpp:lcd_babystep_zoffset//-menu.cpp:lcd\u babystep\u zoffset
+    //  - menu_ubl.cpp:_lcd_mesh_fine_tune//-菜单_ubl.cpp:_lcd_mesh_fine_tune
+    ////
 
     const unsigned char cw_bmp[] PROGMEM = {
       B00000000,B11111110,B00000000,
@@ -681,7 +682,7 @@ void MarlinUI::clear_lcd() { } // Automatically cleared by Picture Loop
     };
 
     void _lcd_zoffset_overlay_gfx(const_float_t zvalue) {
-      // Determine whether the user is raising or lowering the nozzle.
+      // Determine whether the user is raising or lowering the nozzle.//确定用户是升高还是降低喷嘴。
       static int8_t dir;
       static float old_zvalue;
       if (zvalue != old_zvalue) {
@@ -696,11 +697,11 @@ void MarlinUI::clear_lcd() { } // Automatically cleared by Picture Loop
                right = TERN(USE_BIG_EDIT_FONT, 45, 90),
               nozzle = TERN(USE_BIG_EDIT_FONT, 95, 60);
 
-      // Draw nozzle lowered or raised according to direction moved
+      // Draw nozzle lowered or raised according to direction moved//根据移动方向降低或升高吸嘴
       if (PAGE_CONTAINS( 3, 16)) u8g.drawBitmapP(nozzle + 6,  4 - dir, 2, 12, nozzle_bmp);
       if (PAGE_CONTAINS(20, 20)) u8g.drawBitmapP(nozzle + 0, 20      , 3,  1, offset_bedline_bmp);
 
-      // Draw cw/ccw indicator and up/down arrows.
+      // Draw cw/ccw indicator and up/down arrows.//绘制顺时针/逆时针指示器和上/下箭头。
       if (PAGE_CONTAINS(47, 62)) {
         u8g.drawBitmapP(right +  0, 48 - dir, 2, 13, up_arrow_bmp);
         u8g.drawBitmapP(left  +  0, 49 - dir, 2, 13, down_arrow_bmp);
@@ -709,8 +710,8 @@ void MarlinUI::clear_lcd() { } // Automatically cleared by Picture Loop
       }
     }
 
-  #endif // BABYSTEP_ZPROBE_GFX_OVERLAY || MESH_EDIT_GFX_OVERLAY
+  #endif // BABYSTEP_ZPROBE_GFX_OVERLAY || MESH_EDIT_GFX_OVERLAY//BABYSTEP_ZPROBE_GFX_覆盖| |网格|编辑_GFX_覆盖
 
-#endif // HAS_LCD_MENU
+#endif // HAS_LCD_MENU//有LCD菜单吗
 
-#endif // HAS_MARLINUI_U8GLIB
+#endif // HAS_MARLINUI_U8GLIB//马林努伊能说会道吗

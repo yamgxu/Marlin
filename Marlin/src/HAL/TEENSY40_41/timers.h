@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -26,31 +27,31 @@
 
 #include <stdint.h>
 
-// ------------------------
-// Defines
-// ------------------------
+// ------------------------// ------------------------
+// Defines//定义
+// ------------------------// ------------------------
 
 #define FORCE_INLINE __attribute__((always_inline)) inline
 
 typedef uint32_t hal_timer_t;
 #define HAL_TIMER_TYPE_MAX 0xFFFFFFFE
 
-#define GPT_TIMER_RATE F_BUS_ACTUAL   // 150MHz
+#define GPT_TIMER_RATE F_BUS_ACTUAL   // 150MHz//150MHz
 
 #define GPT1_TIMER_PRESCALE 2
 #define GPT2_TIMER_PRESCALE 10
 
-#define GPT1_TIMER_RATE (GPT_TIMER_RATE / GPT1_TIMER_PRESCALE) // 75MHz
-#define GPT2_TIMER_RATE (GPT_TIMER_RATE / GPT2_TIMER_PRESCALE) // 15MHz
+#define GPT1_TIMER_RATE (GPT_TIMER_RATE / GPT1_TIMER_PRESCALE) // 75MHz//75MHz
+#define GPT2_TIMER_RATE (GPT_TIMER_RATE / GPT2_TIMER_PRESCALE) // 15MHz//15MHz
 
 #ifndef STEP_TIMER_NUM
-  #define STEP_TIMER_NUM        0  // Timer Index for Stepper
+  #define STEP_TIMER_NUM        0  // Timer Index for Stepper//步进电机的定时器索引
 #endif
 #ifndef PULSE_TIMER_NUM
   #define PULSE_TIMER_NUM       STEP_TIMER_NUM
 #endif
 #ifndef TEMP_TIMER_NUM
-  #define TEMP_TIMER_NUM        1  // Timer Index for Temperature
+  #define TEMP_TIMER_NUM        1  // Timer Index for Temperature//温度计时器索引
 #endif
 
 #define TEMP_TIMER_RATE        1000000
@@ -60,7 +61,7 @@ typedef uint32_t hal_timer_t;
 #define STEPPER_TIMER_TICKS_PER_US ((STEPPER_TIMER_RATE) / 1000000)
 #define STEPPER_TIMER_PRESCALE ((GPT_TIMER_RATE / 1000000) / STEPPER_TIMER_TICKS_PER_US)
 
-#define PULSE_TIMER_RATE       STEPPER_TIMER_RATE   // frequency of pulse timer
+#define PULSE_TIMER_RATE       STEPPER_TIMER_RATE   // frequency of pulse timer//脉冲定时器频率
 #define PULSE_TIMER_PRESCALE   STEPPER_TIMER_PRESCALE
 #define PULSE_TIMER_TICKS_PER_US STEPPER_TIMER_TICKS_PER_US
 
@@ -72,10 +73,10 @@ typedef uint32_t hal_timer_t;
 #define DISABLE_TEMPERATURE_INTERRUPT() HAL_timer_disable_interrupt(TEMP_TIMER_NUM)
 
 #ifndef HAL_STEP_TIMER_ISR
-  #define HAL_STEP_TIMER_ISR() extern "C" void stepTC_Handler() // GPT1_Handler()
+  #define HAL_STEP_TIMER_ISR() extern "C" void stepTC_Handler() // GPT1_Handler()//GPT1_处理器（）
 #endif
 #ifndef HAL_TEMP_TIMER_ISR
-  #define HAL_TEMP_TIMER_ISR() extern "C" void tempTC_Handler() // GPT2_Handler()
+  #define HAL_TEMP_TIMER_ISR() extern "C" void tempTC_Handler() // GPT2_Handler()//GPT2_处理器（）
 #endif
 
 extern "C" {
@@ -117,5 +118,5 @@ void HAL_timer_disable_interrupt(const uint8_t timer_num);
 bool HAL_timer_interrupt_enabled(const uint8_t timer_num);
 
 void HAL_timer_isr_prologue(const uint8_t timer_num);
-//void HAL_timer_isr_epilogue(const uint8_t timer_num) {}
+//void HAL_timer_isr_epilogue(const uint8_t timer_num) {}//无效计时器是尾声（常量计时器数）{}
 #define HAL_timer_isr_epilogue(TIMER_NUM)

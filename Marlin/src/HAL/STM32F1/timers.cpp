@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  *
@@ -28,13 +29,13 @@
 
 #include "../../inc/MarlinConfig.h"
 
-// ------------------------
-// Local defines
-// ------------------------
+// ------------------------// ------------------------
+// Local defines//局部定义
+// ------------------------// ------------------------
 
-// ------------------------
-// Public functions
-// ------------------------
+// ------------------------// ------------------------
+// Public functions//公共职能
+// ------------------------// ------------------------
 
 /**
  * Timer_clock1: Prescaler   2 ->  36    MHz
@@ -59,7 +60,7 @@ void timer_set_interrupt_priority(uint_fast8_t timer_num, uint_fast8_t priority)
     case 4: irq_num = NVIC_TIMER4; break;
     case 5: irq_num = NVIC_TIMER5; break;
     #ifdef STM32_HIGH_DENSITY
-      // 6 & 7 are basic timers, avoid them
+      // 6 & 7 are basic timers, avoid them//6和7是基本计时器，避免使用
       case 8: irq_num = NVIC_TIMER8_CC; break;
     #endif
     default:
@@ -83,13 +84,13 @@ void HAL_timer_start(const uint8_t timer_num, const uint32_t frequency) {
   switch (timer_num) {
     case STEP_TIMER_NUM:
       timer_pause(STEP_TIMER_DEV);
-      timer_set_mode(STEP_TIMER_DEV, STEP_TIMER_CHAN, TIMER_OUTPUT_COMPARE); // counter
+      timer_set_mode(STEP_TIMER_DEV, STEP_TIMER_CHAN, TIMER_OUTPUT_COMPARE); // counter//柜台
       timer_set_count(STEP_TIMER_DEV, 0);
       timer_set_prescaler(STEP_TIMER_DEV, (uint16_t)(STEPPER_TIMER_PRESCALE - 1));
       timer_set_reload(STEP_TIMER_DEV, 0xFFFF);
-      timer_oc_set_mode(STEP_TIMER_DEV, STEP_TIMER_CHAN, TIMER_OC_MODE_FROZEN, TIMER_OC_NO_PRELOAD); // no output pin change
+      timer_oc_set_mode(STEP_TIMER_DEV, STEP_TIMER_CHAN, TIMER_OC_MODE_FROZEN, TIMER_OC_NO_PRELOAD); // no output pin change//无输出引脚变化
       timer_set_compare(STEP_TIMER_DEV, STEP_TIMER_CHAN, _MIN(hal_timer_t(HAL_TIMER_TYPE_MAX), (STEPPER_TIMER_RATE) / frequency));
-      timer_no_ARR_preload_ARPE(STEP_TIMER_DEV); // Need to be sure no preload on ARR register
+      timer_no_ARR_preload_ARPE(STEP_TIMER_DEV); // Need to be sure no preload on ARR register//需要确保ARR寄存器上没有预加载
       timer_attach_interrupt(STEP_TIMER_DEV, STEP_TIMER_CHAN, stepTC_Handler);
       timer_set_interrupt_priority(STEP_TIMER_NUM, STEP_TIMER_IRQ_PRIO);
       timer_generate_update(STEP_TIMER_DEV);
@@ -184,4 +185,4 @@ timer_dev* get_timer_dev(int number) {
   }
 }
 
-#endif // __STM32F1__
+#endif // __STM32F1__//_uustm32f1__

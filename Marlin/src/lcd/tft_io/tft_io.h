@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -54,22 +55,22 @@
 #define TFT_ROTATE_270_MIRROR_X   (TFT_ROTATE_270 ^ TFT_INVERT_Y)
 #define TFT_ROTATE_270_MIRROR_Y   (TFT_ROTATE_270 ^ TFT_INVERT_X)
 
-// TFT_ROTATION is user configurable
+// TFT_ROTATION is user configurable//TFT_旋转是用户可配置的
 #ifndef TFT_ROTATION
   #define TFT_ROTATION TFT_NO_ROTATION
 #endif
 
 
-// TFT_ORIENTATION is the "sum" of TFT_DEFAULT_ORIENTATION plus user TFT_ROTATION
+// TFT_ORIENTATION is the "sum" of TFT_DEFAULT_ORIENTATION plus user TFT_ROTATION//TFT_方向是TFT_默认方向加上用户TFT_旋转的“和”
 #define TFT_ORIENTATION ((TFT_DEFAULT_ORIENTATION) ^ (TFT_ROTATION))
 
 #define TFT_COLOR_RGB   _BV32(3)
 #define TFT_COLOR_BGR   _BV32(4)
 
-// Each TFT Driver is responsible for its default color mode.
-// #ifndef TFT_COLOR
-//   #define TFT_COLOR   TFT_COLOR_RGB
-// #endif
+// Each TFT Driver is responsible for its default color mode.//每个TFT驱动程序负责其默认颜色模式。
+// #ifndef TFT_COLOR//#ifndef TFT#U颜色
+//   #define TFT_COLOR   TFT_COLOR_RGB//#定义TFT_颜色TFT_颜色RGB
+// #endif//#endif
 
 #define TOUCH_ORIENTATION_NONE  0
 #define TOUCH_LANDSCAPE         1
@@ -108,7 +109,7 @@ public:
   static void set_window(uint16_t Xmin, uint16_t Ymin, uint16_t Xmax, uint16_t Ymax);
   static void write_esc_sequence(const uint16_t *Sequence);
 
-  // Deletaged methods
+  // Deletaged methods//去标记方法
   inline static void Init() { io.Init(); io.Abort(); };
   inline static bool isBusy() { return io.isBusy(); };
   inline static void Abort() { io.Abort(); };
@@ -116,13 +117,13 @@ public:
 
   inline static void DataTransferBegin(uint16_t DataWidth = DATASIZE_16BIT) { io.DataTransferBegin(DataWidth); }
   inline static void DataTransferEnd() { io.DataTransferEnd(); };
-  // inline static void DataTransferAbort() { io.DataTransferAbort(); };
+  // inline static void DataTransferAbort() { io.DataTransferAbort(); };//内联静态void DataTransferAbort（）{io.DataTransferAbort（）；}；
 
   inline static void WriteData(uint16_t Data) { io.WriteData(Data); };
   inline static void WriteReg(uint16_t Reg) { io.WriteReg(Reg); };
 
   inline static void WriteSequence(uint16_t *Data, uint16_t Count) { io.WriteSequence(Data, Count); };
-  // static void WriteMultiple(uint16_t Color, uint16_t Count) { static uint16_t Data; Data = Color; TransmitDMA(DMA_MINC_DISABLE, &Data, Count); }
+  // static void WriteMultiple(uint16_t Color, uint16_t Count) { static uint16_t Data; Data = Color; TransmitDMA(DMA_MINC_DISABLE, &Data, Count); }//静态void WriteMultiple（uint16_t Color，uint16_t Count）{static uint16_t Data；Data=Color；TransmitDMA（DMA_MINC_DISABLE，&Data，Count）；}
   inline static void WriteMultiple(uint16_t Color, uint32_t Count) { io.WriteMultiple(Color, Count); };
 
 protected:

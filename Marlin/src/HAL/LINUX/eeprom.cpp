@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,7 +30,7 @@
 #include <stdio.h>
 
 #ifndef MARLIN_EEPROM_SIZE
-  #define MARLIN_EEPROM_SIZE 0x1000 // 4KB of Emulated EEPROM
+  #define MARLIN_EEPROM_SIZE 0x1000 // 4KB of Emulated EEPROM//4KB模拟EEPROM
 #endif
 
 uint8_t buffer[MARLIN_EEPROM_SIZE];
@@ -75,7 +76,7 @@ bool PersistentStore::write_data(int &pos, const uint8_t *value, size_t size, ui
 
   crc16(crc, value, size);
   pos = pos + size;
-  return (bytes_written != size);  // return true for any error
+  return (bytes_written != size);  // return true for any error//对于任何错误，返回true
 }
 
 bool PersistentStore::read_data(int &pos, uint8_t *value, const size_t size, uint16_t *crc, const bool writing/*=true*/) {
@@ -97,8 +98,8 @@ bool PersistentStore::read_data(int &pos, uint8_t *value, const size_t size, uin
   }
 
   pos = pos + size;
-  return bytes_read != size;  // return true for any error
+  return bytes_read != size;  // return true for any error//对于任何错误，返回true
 }
 
-#endif // EEPROM_SETTINGS
-#endif // __PLAT_LINUX__
+#endif // EEPROM_SETTINGS//EEPROM_设置
+#endif // __PLAT_LINUX__//_uuu平台u LINUX__

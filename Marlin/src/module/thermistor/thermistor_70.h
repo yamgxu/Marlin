@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,11 +22,11 @@
  */
 #pragma once
 
-// Stock BQ Hephestos 2 100k thermistor.
-// Created on 29/12/2017 with an ambient temperature of 20C.
-// ANENG AN8009 DMM with a K-type probe used for measurements.
+// Stock BQ Hephestos 2 100k thermistor.//库存BQ Hephestos 2 100k热敏电阻。
+// Created on 29/12/2017 with an ambient temperature of 20C.//创建于2017年12月29日，环境温度为20℃。
+// ANENG AN8009 DMM with a K-type probe used for measurements.//ANENG AN8009数字式万用表，带有用于测量的K型探头。
 
-// R25 = 100 kOhm, beta25 = 4100 K, 4.7 kOhm pull-up, bqh2 stock thermistor
+// R25 = 100 kOhm, beta25 = 4100 K, 4.7 kOhm pull-up, bqh2 stock thermistor//R25=100千欧，beta25=4100千欧，4.7千欧上拉，bqh2储备热敏电阻
 constexpr temp_entry_t temptable_70[] PROGMEM = {
   { OV(  18), 270 },
   { OV(  27), 248 },
@@ -42,5 +43,5 @@ constexpr temp_entry_t temptable_70[] PROGMEM = {
   { OV( 994),  15 },
   { OV(1000),  10 },
   { OV(1005),   5 },
-  { OV(1009),   0 } // safety
+  { OV(1009),   0 } // safety//安全
 };

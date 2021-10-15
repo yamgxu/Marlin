@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*****************************
  * linear_advance_screen.cpp *
  *****************************/
@@ -73,4 +74,4 @@ bool LinearAdvanceScreen::onTouchHeld(uint8_t tag) {
   return true;
 }
 
-#endif // FTDI_LINEAR_ADVANCE_SCREEN
+#endif // FTDI_LINEAR_ADVANCE_SCREEN//FTDI_线性_前进_屏幕

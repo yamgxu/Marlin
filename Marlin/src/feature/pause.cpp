@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,7 +30,7 @@
 
 #if ENABLED(ADVANCED_PAUSE_FEATURE)
 
-//#define DEBUG_PAUSE_RESUME
+//#define DEBUG_PAUSE_RESUME//#定义调试\暂停\恢复
 
 #include "../MarlinCore.h"
 #include "../gcode/gcode.h"
@@ -71,7 +72,7 @@
 #define DEBUG_OUT ENABLED(DEBUG_PAUSE_RESUME)
 #include "../core/debug_out.h"
 
-// private:
+// private://私人：
 
 static xyze_pos_t resume_position;
 
@@ -106,7 +107,7 @@ fil_change_settings_t fc_settings[EXTRUDERS];
 
     const millis_t ms = millis();
     if (ELAPSED(ms, next_buzz)) {
-      if (always || runout_beep < max_beep_count + 5) { // Only beep as long as we're supposed to
+      if (always || runout_beep < max_beep_count + 5) { // Only beep as long as we're supposed to//只要我们按计划发出嘟嘟声就行
         next_buzz = ms + ((always || runout_beep < max_beep_count) ? 1000 : 500);
         BUZZ(50, 880 - (runout_beep & 1) * 220);
         runout_beep++;
@@ -141,14 +142,14 @@ static bool ensure_safe_temperature(const bool wait=true, const PauseMode mode=P
 
   if (wait) return thermalManager.wait_for_hotend(active_extruder);
 
-  // Allow interruption by Emergency Parser M108
+  // Allow interruption by Emergency Parser M108//允许通过紧急解析器M108进行中断
   wait_for_heatup = TERN1(PREVENT_COLD_EXTRUSION, !thermalManager.allow_cold_extrude);
   while (wait_for_heatup && ABS(thermalManager.wholeDegHotend(active_extruder) - thermalManager.degTargetHotend(active_extruder)) > (TEMP_WINDOW))
     idle();
   wait_for_heatup = false;
 
   #if ENABLED(PREVENT_COLD_EXTRUSION)
-    // A user can cancel wait-for-heating with M108
+    // A user can cancel wait-for-heating with M108//用户可以使用M108取消等待加热
     if (!DEBUGGING(DRYRUN) && thermalManager.targetTooColdToExtrude(active_extruder)) {
       SERIAL_ECHO_MSG(STR_ERR_HOTEND_TOO_COLD);
       return false;
@@ -190,7 +191,7 @@ bool load_filament(const_float_t slow_load_length/*=0*/, const_float_t fast_load
     first_impatient_beep(max_beep_count);
 
     KEEPALIVE_STATE(PAUSED_FOR_USER);
-    wait_for_user = true;    // LCD click or M108 will clear this
+    wait_for_user = true;    // LCD click or M108 will clear this//LCD单击或M108将清除此项
     #if ENABLED(HOST_PROMPT_SUPPORT)
       const char tool = '0' + TERN0(MULTI_FILAMENT_SENSOR, active_extruder);
       host_prompt_do(PROMPT_USER_CONTINUE, PSTR("Load Filament T"), tool, CONTINUE_STR);
@@ -212,10 +213,10 @@ bool load_filament(const_float_t slow_load_length/*=0*/, const_float_t fast_load
     set_duplication_enabled(false, DXC_ext);
   #endif
 
-  // Slow Load filament
+  // Slow Load filament//慢负荷灯丝
   if (slow_load_length) unscaled_e_move(slow_load_length, FILAMENT_CHANGE_SLOW_LOAD_FEEDRATE);
 
-  // Fast Load Filament
+  // Fast Load Filament//快速加载灯丝
   if (fast_load_length) {
     #if FILAMENT_CHANGE_FAST_LOAD_ACCEL > 0
       const float saved_acceleration = planner.settings.retract_acceleration;
@@ -229,7 +230,7 @@ bool load_filament(const_float_t slow_load_length/*=0*/, const_float_t fast_load
     #endif
   }
 
-  #if ENABLED(DUAL_X_CARRIAGE)      // Tie the two extruders movement back together.
+  #if ENABLED(DUAL_X_CARRIAGE)      // Tie the two extruders movement back together.//将两台挤出机的运动重新连接在一起。
     set_duplication_enabled(saved_ext_dup_mode, saved_ext);
   #endif
 
@@ -239,7 +240,7 @@ bool load_filament(const_float_t slow_load_length/*=0*/, const_float_t fast_load
 
     TERN_(HOST_PROMPT_SUPPORT, host_prompt_do(PROMPT_USER_CONTINUE, PSTR("Filament Purging..."), CONTINUE_STR));
     TERN_(EXTENSIBLE_UI, ExtUI::onUserConfirmRequired_P(PSTR("Filament Purging...")));
-    wait_for_user = true; // A click or M108 breaks the purge_length loop
+    wait_for_user = true; // A click or M108 breaks the purge_length loop//单击或M108将中断清除长度循环
     for (float purge_count = purge_length; purge_count > 0 && wait_for_user; --purge_count)
       unscaled_e_move(1, ADVANCED_PAUSE_PURGE_FEEDRATE);
     wait_for_user = false;
@@ -248,22 +249,22 @@ bool load_filament(const_float_t slow_load_length/*=0*/, const_float_t fast_load
 
     do {
       if (purge_length > 0) {
-        // "Wait for filament purge"
+        // "Wait for filament purge"//“等待灯丝吹扫”
         if (show_lcd) ui.pause_show_message(PAUSE_MESSAGE_PURGE);
 
-        // Extrude filament to get into hotend
+        // Extrude filament to get into hotend//挤出长丝进入热端
         unscaled_e_move(purge_length, ADVANCED_PAUSE_PURGE_FEEDRATE);
       }
 
-      TERN_(HOST_PROMPT_SUPPORT, filament_load_host_prompt()); // Initiate another host prompt.
+      TERN_(HOST_PROMPT_SUPPORT, filament_load_host_prompt()); // Initiate another host prompt.//启动另一个主机提示符。
 
       #if M600_PURGE_MORE_RESUMABLE
         if (show_lcd) {
-          // Show "Purge More" / "Resume" menu and wait for reply
+          // Show "Purge More" / "Resume" menu and wait for reply//显示“清除更多”/“恢复”菜单并等待回复
           KEEPALIVE_STATE(PAUSED_FOR_USER);
           wait_for_user = false;
           #if HAS_LCD_MENU
-            ui.pause_show_message(PAUSE_MESSAGE_OPTION); // Also sets PAUSE_RESPONSE_WAIT_FOR
+            ui.pause_show_message(PAUSE_MESSAGE_OPTION); // Also sets PAUSE_RESPONSE_WAIT_FOR//还设置暂停\响应\等待
           #else
             pause_menu_response = PAUSE_RESPONSE_WAIT_FOR;
           #endif
@@ -271,7 +272,7 @@ bool load_filament(const_float_t slow_load_length/*=0*/, const_float_t fast_load
         }
       #endif
 
-      // Keep looping if "Purge More" was selected
+      // Keep looping if "Purge More" was selected//如果选择“清除更多”，则保持循环
     } while (TERN0(M600_PURGE_MORE_RESUMABLE, show_lcd && pause_menu_response == PAUSE_RESPONSE_EXTRUDE_MORE));
 
   #endif
@@ -326,17 +327,17 @@ bool unload_filament(const_float_t unload_length, const bool show_lcd/*=false*/,
 
   if (show_lcd) ui.pause_show_message(PAUSE_MESSAGE_UNLOAD, mode);
 
-  // Retract filament
+  // Retract filament//缩回灯丝
   unscaled_e_move(-(FILAMENT_UNLOAD_PURGE_RETRACT) * mix_multiplier, (PAUSE_PARK_RETRACT_FEEDRATE) * mix_multiplier);
 
-  // Wait for filament to cool
+  // Wait for filament to cool//等待灯丝冷却
   safe_delay(FILAMENT_UNLOAD_PURGE_DELAY);
 
-  // Quickly purge
+  // Quickly purge//快速清洗
   unscaled_e_move((FILAMENT_UNLOAD_PURGE_RETRACT + FILAMENT_UNLOAD_PURGE_LENGTH) * mix_multiplier,
                   (FILAMENT_UNLOAD_PURGE_FEEDRATE) * mix_multiplier);
 
-  // Unload filament
+  // Unload filament//卸载灯丝
   #if FILAMENT_CHANGE_UNLOAD_ACCEL > 0
     const float saved_acceleration = planner.settings.retract_acceleration;
     planner.settings.retract_acceleration = FILAMENT_CHANGE_UNLOAD_ACCEL;
@@ -348,13 +349,13 @@ bool unload_filament(const_float_t unload_length, const bool show_lcd/*=false*/,
     planner.settings.retract_acceleration = saved_acceleration;
   #endif
 
-  // Disable the Extruder for manual change
+  // Disable the Extruder for manual change//禁用挤出机进行手动更换
   disable_active_extruder();
 
   return true;
 }
 
-// public:
+// public://公众：
 
 /**
  * Pause procedure
@@ -377,7 +378,7 @@ bool pause_print(const_float_t retract, const xyz_pos_t &park_point, const bool 
 
   UNUSED(show_lcd);
 
-  if (did_pause_print) return false; // already paused
+  if (did_pause_print) return false; // already paused//已经暂停
 
   #if ENABLED(HOST_ACTION_COMMANDS)
     #ifdef ACTION_ON_PAUSED
@@ -389,47 +390,47 @@ bool pause_print(const_float_t retract, const xyz_pos_t &park_point, const bool 
 
   TERN_(HOST_PROMPT_SUPPORT, host_prompt_open(PROMPT_INFO, PSTR("Pause"), DISMISS_STR));
 
-  // Indicate that the printer is paused
+  // Indicate that the printer is paused//指示打印机已暂停
   ++did_pause_print;
 
-  // Pause the print job and timer
+  // Pause the print job and timer//暂停打印作业和计时器
   #if ENABLED(SDSUPPORT)
     const bool was_sd_printing = IS_SD_PRINTING();
     if (was_sd_printing) {
       card.pauseSDPrint();
-      ++did_pause_print; // Indicate SD pause also
+      ++did_pause_print; // Indicate SD pause also//同时指示SD暂停
     }
   #endif
 
   print_job_timer.pause();
 
-  // Save current position
+  // Save current position//保存当前位置
   resume_position = current_position;
 
-  // Will the nozzle be parking?
+  // Will the nozzle be parking?//喷嘴会停吗？
   const bool do_park = !axes_should_home();
 
   #if ENABLED(POWER_LOSS_RECOVERY)
-    // Save PLR info in case the power goes out while parked
+    // Save PLR info in case the power goes out while parked//保存PLR信息，以防驻车时断电
     const float park_raise = do_park ? nozzle.park_mode_0_height(park_point.z) - current_position.z : POWER_LOSS_ZRAISE;
     if (was_sd_printing && recovery.enabled) recovery.save(true, park_raise, do_park);
   #endif
 
-  // Wait for buffered blocks to complete
+  // Wait for buffered blocks to complete//等待缓冲块完成
   planner.synchronize();
 
   #if ENABLED(ADVANCED_PAUSE_FANS_PAUSE) && HAS_FAN
     thermalManager.set_fans_paused(true);
   #endif
 
-  // Initial retract before move to filament change position
+  // Initial retract before move to filament change position//移动到灯丝更换位置前的初始缩回
   if (retract && thermalManager.hotEnoughToExtrude(active_extruder)) {
     DEBUG_ECHOLNPAIR("... retract:", retract);
     unscaled_e_move(retract, PAUSE_PARK_RETRACT_FEEDRATE);
   }
 
-  // If axes don't need to home then the nozzle can park
-  if (do_park) nozzle.park(0, park_point); // Park the nozzle by doing a Minimum Z Raise followed by an XY Move
+  // If axes don't need to home then the nozzle can park//如果轴不需要回到原点，则喷嘴可以停驻
+  if (do_park) nozzle.park(0, park_point); // Park the nozzle by doing a Minimum Z Raise followed by an XY Move//通过在XY移动后进行最小Z向提升，驻车喷嘴
 
   #if ENABLED(DUAL_X_CARRIAGE)
     const int8_t saved_ext        = active_extruder;
@@ -437,7 +438,7 @@ bool pause_print(const_float_t retract, const xyz_pos_t &park_point, const bool 
     set_duplication_enabled(false, DXC_ext);
   #endif
 
-  // Unload the filament, if specified
+  // Unload the filament, if specified//如有规定，卸载灯丝
   if (unload_length)
     unload_filament(unload_length, show_lcd, PAUSE_MODE_CHANGE_FILAMENT);
 
@@ -445,7 +446,7 @@ bool pause_print(const_float_t retract, const xyz_pos_t &park_point, const bool 
     set_duplication_enabled(saved_ext_dup_mode, saved_ext);
   #endif
 
-  // Disable the Extruder for manual change
+  // Disable the Extruder for manual change//禁用挤出机进行手动更换
   disable_active_extruder();
 
   return true;
@@ -483,7 +484,7 @@ void wait_for_confirmation(const bool is_reload/*=false*/, const int8_t max_beep
 
   first_impatient_beep(max_beep_count);
 
-  // Start the heater idle timers
+  // Start the heater idle timers//启动加热器怠速定时器
   const millis_t nozzle_timeout = SEC_TO_MS(PAUSE_PARK_NOZZLE_TIMEOUT);
 
   HOTEND_LOOP() thermalManager.heater_idle[e].start(nozzle_timeout);
@@ -494,20 +495,20 @@ void wait_for_confirmation(const bool is_reload/*=false*/, const int8_t max_beep
     set_duplication_enabled(false, DXC_ext);
   #endif
 
-  // Wait for filament insert by user and press button
+  // Wait for filament insert by user and press button//等待用户插入灯丝并按下按钮
   KEEPALIVE_STATE(PAUSED_FOR_USER);
   TERN_(HOST_PROMPT_SUPPORT, host_prompt_do(PROMPT_USER_CONTINUE, GET_TEXT(MSG_NOZZLE_PARKED), CONTINUE_STR));
   TERN_(EXTENSIBLE_UI, ExtUI::onUserConfirmRequired_P(GET_TEXT(MSG_NOZZLE_PARKED)));
-  wait_for_user = true;    // LCD click or M108 will clear this
+  wait_for_user = true;    // LCD click or M108 will clear this//LCD单击或M108将清除此项
   while (wait_for_user) {
     impatient_beep(max_beep_count);
 
-    // If the nozzle has timed out...
+    // If the nozzle has timed out...//如果喷嘴超时。。。
     if (!nozzle_timed_out)
       HOTEND_LOOP() nozzle_timed_out |= thermalManager.heater_idle[e].timed_out;
 
-    // Wait for the user to press the button to re-heat the nozzle, then
-    // re-heat the nozzle, re-show the continue prompt, restart idle timers, start over
+    // Wait for the user to press the button to re-heat the nozzle, then//等待用户按下按钮重新加热喷嘴，然后
+    // re-heat the nozzle, re-show the continue prompt, restart idle timers, start over//重新加热喷嘴，重新显示继续提示，重新启动怠速定时器，重新启动
     if (nozzle_timed_out) {
       ui.pause_show_message(PAUSE_MESSAGE_HEAT);
       SERIAL_ECHO_MSG(_PMSG(STR_FILAMENT_CHANGE_HEAT));
@@ -516,22 +517,22 @@ void wait_for_confirmation(const bool is_reload/*=false*/, const int8_t max_beep
 
       TERN_(EXTENSIBLE_UI, ExtUI::onUserConfirmRequired_P(GET_TEXT(MSG_HEATER_TIMEOUT)));
 
-      wait_for_user_response(0, true); // Wait for LCD click or M108
+      wait_for_user_response(0, true); // Wait for LCD click or M108//等待LCD点击或M108
 
       TERN_(HOST_PROMPT_SUPPORT, host_prompt_do(PROMPT_INFO, GET_TEXT(MSG_REHEATING)));
 
       TERN_(EXTENSIBLE_UI, ExtUI::onStatusChanged_P(GET_TEXT(MSG_REHEATING)));
 
-      // Re-enable the heaters if they timed out
+      // Re-enable the heaters if they timed out//如果加热器超时，则重新启用加热器
       HOTEND_LOOP() thermalManager.reset_hotend_idle_timer(e);
 
-      // Wait for the heaters to reach the target temperatures
+      // Wait for the heaters to reach the target temperatures//等待加热器达到目标温度
       ensure_safe_temperature(false);
 
-      // Show the prompt to continue
+      // Show the prompt to continue//显示继续的提示
       show_continue_prompt(is_reload);
 
-      // Start the heater idle timers
+      // Start the heater idle timers//启动加热器怠速定时器
       const millis_t nozzle_timeout = SEC_TO_MS(PAUSE_PARK_NOZZLE_TIMEOUT);
 
       HOTEND_LOOP() thermalManager.heater_idle[e].start(nozzle_timeout);
@@ -580,11 +581,11 @@ void resume_print(const_float_t slow_load_length/*=0*/, const_float_t fast_load_
     "\nactive_extruder:", active_extruder,
     "\n"
   );
-  //*/
+  //*///*/
 
   if (!did_pause_print) return;
 
-  // Re-enable the heaters if they timed out
+  // Re-enable the heaters if they timed out//如果加热器超时，则重新启用加热器
   bool nozzle_timed_out = false;
   HOTEND_LOOP() {
     nozzle_timed_out |= thermalManager.heater_idle[e].timed_out;
@@ -594,7 +595,7 @@ void resume_print(const_float_t slow_load_length/*=0*/, const_float_t fast_load_
   if (targetTemp > thermalManager.degTargetHotend(active_extruder))
     thermalManager.setTargetHotend(targetTemp, active_extruder);
 
-  // Load the new filament
+  // Load the new filament//装入新灯丝
   load_filament(slow_load_length, fast_load_length, purge_length, max_beep_count, true, nozzle_timed_out, PAUSE_MODE_SAME DXC_PASS);
 
   if (targetTemp > 0) {
@@ -604,40 +605,40 @@ void resume_print(const_float_t slow_load_length/*=0*/, const_float_t fast_load_
 
   ui.pause_show_message(PAUSE_MESSAGE_RESUME);
 
-  // Check Temperature before moving hotend
+  // Check Temperature before moving hotend//移动热端前检查温度
   ensure_safe_temperature();
 
-  // Retract to prevent oozing
+  // Retract to prevent oozing//缩回以防止渗出
   unscaled_e_move(-(PAUSE_PARK_RETRACT_LENGTH), feedRate_t(PAUSE_PARK_RETRACT_FEEDRATE));
 
   if (!axes_should_home()) {
-    // Move XY back to saved position
+    // Move XY back to saved position//将XY移回保存的位置
     destination.set(resume_position.x, resume_position.y, current_position.z, current_position.e);
     prepare_internal_move_to_destination(NOZZLE_PARK_XY_FEEDRATE);
 
-    // Move Z back to saved position
+    // Move Z back to saved position//将Z移回保存的位置
     destination.z = resume_position.z;
     prepare_internal_move_to_destination(NOZZLE_PARK_Z_FEEDRATE);
   }
 
-  // Unretract
+  // Unretract//不受约束
   unscaled_e_move(PAUSE_PARK_RETRACT_LENGTH, feedRate_t(PAUSE_PARK_RETRACT_FEEDRATE));
 
-  // Intelligent resuming
+  // Intelligent resuming//智能恢复
   #if ENABLED(FWRETRACT)
-    // If retracted before goto pause
+    // If retracted before goto pause//如果在转到暂停前收回
     if (fwretract.retracted[active_extruder])
       unscaled_e_move(-fwretract.settings.retract_length, fwretract.settings.retract_feedrate_mm_s);
   #endif
 
-  // If resume_position is negative
+  // If resume_position is negative//如果resume_位置为负值
   if (resume_position.e < 0) unscaled_e_move(resume_position.e, feedRate_t(PAUSE_PARK_RETRACT_FEEDRATE));
   #if ADVANCED_PAUSE_RESUME_PRIME != 0
     unscaled_e_move(ADVANCED_PAUSE_RESUME_PRIME, feedRate_t(ADVANCED_PAUSE_PURGE_FEEDRATE));
   #endif
 
-  // Now all extrusion positions are resumed and ready to be confirmed
-  // Set extruder to saved position
+  // Now all extrusion positions are resumed and ready to be confirmed//现在，所有挤压位置都已恢复并准备好进行确认
+  // Set extruder to saved position//将挤出机设置到保存位置
   planner.set_e_position_mm((destination.e = current_position.e = resume_position.e));
 
   ui.pause_show_message(PAUSE_MESSAGE_STATUS);
@@ -652,14 +653,14 @@ void resume_print(const_float_t slow_load_length/*=0*/, const_float_t fast_load_
 
   TERN_(HOST_PROMPT_SUPPORT, host_prompt_open(PROMPT_INFO, PSTR("Resuming"), DISMISS_STR));
 
-  // Resume the print job timer if it was running
+  // Resume the print job timer if it was running//如果打印作业计时器正在运行，请恢复该计时器
   if (print_job_timer.isPaused()) print_job_timer.start();
 
   #if ENABLED(SDSUPPORT)
     if (did_pause_print) {
       --did_pause_print;
       card.startOrResumeFilePrinting();
-      // Write PLR now to update the z axis value
+      // Write PLR now to update the z axis value//立即写入PLR以更新z轴值
       TERN_(POWER_LOSS_RECOVERY, if (recovery.enabled) recovery.save(true));
     }
   #endif
@@ -674,4 +675,4 @@ void resume_print(const_float_t slow_load_length/*=0*/, const_float_t fast_load_
   TERN_(HAS_LCD_MENU, ui.return_to_status());
 }
 
-#endif // ADVANCED_PAUSE_FEATURE
+#endif // ADVANCED_PAUSE_FEATURE//高级暂停功能

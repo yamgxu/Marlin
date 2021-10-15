@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*******************
  * lock_screen.cpp *
  *******************/
@@ -74,7 +75,7 @@ void LockScreen::onRedraw(draw_mode_t what) {
       default:
         message = passcode ? GET_TEXT_F(MSG_PASSCODE_REQUEST) : GET_TEXT_F(MSG_PASSCODE_SELECT);
     }
-    message_style() = '\0'; // Terminate the string.
+    message_style() = '\0'; // Terminate the string.//终止字符串。
 
     constexpr uint8_t l = TERN(TOUCH_UI_PORTRAIT, 6, 3);
 
@@ -115,21 +116,21 @@ void LockScreen::onRedraw(draw_mode_t what) {
 }
 
 char &LockScreen::message_style() {
-  // We use the last byte of the passcode string as a flag to indicate,
-  // which message to show.
+  // We use the last byte of the passcode string as a flag to indicate,//我们使用密码字符串的最后一个字节作为标志，
+  // which message to show.//要显示的消息。
   constexpr uint8_t last_char = sizeof(mydata.passcode)-1;
   return mydata.passcode[last_char];
 }
 
 void LockScreen::onPasscodeEntered() {
-  if (passcode == 0) {                        // We are defining a passcode
+  if (passcode == 0) {                        // We are defining a passcode//我们正在定义密码
     message_style() = 0;
     onRefresh();
     sound.play(twinkle, PLAY_SYNCHRONOUS);
     passcode = compute_checksum();
     GOTO_PREVIOUS();
   }
-  else if (passcode == compute_checksum()) {  // We are verifying a passcode
+  else if (passcode == compute_checksum()) {  // We are verifying a passcode//我们正在验证密码
     message_style() = 'g';
     onRefresh();
     sound.play(twinkle, PLAY_SYNCHRONOUS);
@@ -139,7 +140,7 @@ void LockScreen::onPasscodeEntered() {
     message_style() = 'w';
     onRefresh();
     sound.play(sad_trombone, PLAY_SYNCHRONOUS);
-    current_screen.forget(); // Discard the screen the user was trying to go to.
+    current_screen.forget(); // Discard the screen the user was trying to go to.//放弃用户试图进入的屏幕。
     GOTO_PREVIOUS();
   }
 }
@@ -149,15 +150,15 @@ bool LockScreen::onTouchEnd(uint8_t tag) {
   if (c) {
     if (tag == '<') {
       if (c != mydata.passcode) {
-        // Backspace deletes previous entered characters.
+        // Backspace deletes previous entered characters.//退格删除以前输入的字符。
         *--c = '_';
       }
     }
     else {
-      // Append character to passcode
+      // Append character to passcode//将字符附加到密码
       *c++ = tag;
       if (*c == '\0') {
-        // If at last character, then process the code.
+        // If at last character, then process the code.//如果是最后一个字符，则处理代码。
         onPasscodeEntered();
       }
     }
@@ -171,17 +172,17 @@ uint16_t LockScreen::compute_checksum() {
   while (*c) {
     checksum = (checksum << 2) ^ *c++;
   }
-  if (checksum == 0) checksum = 0xFFFF; // Prevent a zero checksum
+  if (checksum == 0) checksum = 0xFFFF; // Prevent a zero checksum//防止零校验和
   return checksum;
 }
 
-// This function should be called *after* calling GOTO_SCREEN
-// to move to new screen. If a passcode is enabled, it will
-// immediately jump to the keypad screen, pushing the previous
-// screen onto the stack. If the code is entered correctly,
-// the stack will be popped, allowing the user to proceed to
-// the new screen. Otherwise it will be popped twice, taking
-// the user back to where they were before.
+// This function should be called *after* calling GOTO_SCREEN//此函数应在调用GOTO_屏幕*后调用*
+// to move to new screen. If a passcode is enabled, it will//移动到新屏幕。如果启用了密码，它将
+// immediately jump to the keypad screen, pushing the previous//立即跳转到键盘屏幕，按下上一个按钮
+// screen onto the stack. If the code is entered correctly,//屏幕上的堆栈。如果代码输入正确，
+// the stack will be popped, allowing the user to proceed to//堆栈将弹出，允许用户继续
+// the new screen. Otherwise it will be popped twice, taking//新屏幕。否则会弹出两次，每次
+// the user back to where they were before.//用户返回到以前的位置。
 void LockScreen::check_passcode() {
   if (passcode == 0) return;
   message_style() = 0;
@@ -202,4 +203,4 @@ void LockScreen::enable() {
   GOTO_SCREEN(LockScreen);
 }
 
-#endif // FTDI_LOCK_SCREEN
+#endif // FTDI_LOCK_SCREEN//FTDI锁定屏幕

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -20,11 +21,11 @@
  *
  */
 
-//
-// Serial aliases for debugging.
-// Include this header after defining DEBUG_OUT
-//  (or not) in a given .cpp file
-//
+////
+// Serial aliases for debugging.//用于调试的串行别名。
+// Include this header after defining DEBUG_OUT//在定义DEBUG_OUT后包含此标头
+//  (or not) in a given .cpp file//（或不）在给定的.cpp文件中
+////
 
 #undef DEBUG_SECTION
 #undef DEBUG_ECHOPGM_P

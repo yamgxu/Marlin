@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -66,4 +67,4 @@ void GcodeSuite::M412() {
   }
 }
 
-#endif // HAS_FILAMENT_SENSOR
+#endif // HAS_FILAMENT_SENSOR//有灯丝传感器吗

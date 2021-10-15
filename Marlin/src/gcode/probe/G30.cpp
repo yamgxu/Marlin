@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -45,7 +46,7 @@ void GcodeSuite::G30() {
 
   if (!probe.can_reach(pos)) return;
 
-  // Disable leveling so the planner won't mess with us
+  // Disable leveling so the planner won't mess with us//禁用水平调整，这样计划员就不会打扰我们了
   TERN_(HAS_LEVELING, set_bed_leveling_enabled(false));
 
   remember_feedrate_scaling_off();
@@ -63,4 +64,4 @@ void GcodeSuite::G30() {
   report_current_position();
 }
 
-#endif // HAS_BED_PROBE
+#endif // HAS_BED_PROBE//你有床吗

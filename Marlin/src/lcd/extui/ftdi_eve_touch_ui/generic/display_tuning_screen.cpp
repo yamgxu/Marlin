@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*****************************
  * display_tuning_screen.cpp *
  *****************************/
@@ -57,4 +58,4 @@ bool DisplayTuningScreen::onTouchHeld(uint8_t tag) {
   return true;
 }
 
-#endif // FTDI_DISPLAY_TUNING_SCREEN
+#endif // FTDI_DISPLAY_TUNING_SCREEN//FTDI显示调谐屏幕

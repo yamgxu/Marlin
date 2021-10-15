@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -54,7 +55,7 @@ void printer_state_polling() {
 
         gcode.process_subcommands_now_P(PSTR("M25"));
 
-        //save the positon
+        //save the positon//保存位置
         uiCfg.current_x_position_bak = current_position.x;
         uiCfg.current_y_position_bak = current_position.y;
         uiCfg.current_z_position_bak = current_position.z;
@@ -118,7 +119,7 @@ void printer_state_polling() {
 
       recovery.resume();
       #if 0
-        // Move back to the saved XY
+        // Move back to the saved XY//移回保存的XY
         char str_1[16], str_2[16];
         sprintf_P(public_buf_m, PSTR("G1 X%s Y%s F2000"),
           dtostrf(recovery.info.current_position.x, 1, 3, str_1),
@@ -235,4 +236,4 @@ void filament_check() {
   }
 }
 
-#endif // HAS_TFT_LVGL_UI
+#endif // HAS_TFT_LVGL_UI//有TFT\U LVGL\U用户界面

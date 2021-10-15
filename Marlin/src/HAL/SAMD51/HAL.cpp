@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  *
@@ -42,9 +43,9 @@
   #endif
 #endif
 
-// ------------------------
-// Local defines
-// ------------------------
+// ------------------------// ------------------------
+// Local defines//局部定义
+// ------------------------// ------------------------
 
 #define GET_TEMP_0_ADC()          TERN(HAS_TEMP_ADC_0,        PIN_TO_ADC(TEMP_0_PIN),       -1)
 #define GET_TEMP_1_ADC()          TERN(HAS_TEMP_ADC_1,        PIN_TO_ADC(TEMP_1_PIN),       -1)
@@ -89,30 +90,30 @@
   #define DMA_IS_REQUIRED 1
 #endif
 
-// ------------------------
-// Types
-// ------------------------
+// ------------------------// ------------------------
+// Types//类型
+// ------------------------// ------------------------
 
 #if DMA_IS_REQUIRED
 
-  // Struct must be 32 bits aligned because of DMA accesses but fields needs to be 8 bits packed
+  // Struct must be 32 bits aligned because of DMA accesses but fields needs to be 8 bits packed//由于DMA访问，结构必须32位对齐，但字段需要8位压缩
   typedef struct  __attribute__((aligned(4), packed)) {
     ADC_INPUTCTRL_Type INPUTCTRL;
-  } HAL_DMA_DAC_Registers;    // DMA transfered registers
+  } HAL_DMA_DAC_Registers;    // DMA transfered registers//DMA传输寄存器
 
 #endif
 
-// ------------------------
-// Private Variables
-// ------------------------
+// ------------------------// ------------------------
+// Private Variables//私有变量
+// ------------------------// ------------------------
 
 uint16_t HAL_adc_result;
 
 #if ADC_IS_REQUIRED
 
-  // Pins used by ADC inputs. Order must be ADC0 inputs first then ADC1
+  // Pins used by ADC inputs. Order must be ADC0 inputs first then ADC1//ADC输入使用的引脚。订单必须是ADC0输入，然后是ADC1
   const uint8_t adc_pins[] = {
-    // ADC0 pins
+    // ADC0 pins//ADC0引脚
     #if GET_TEMP_0_ADC() == 0
       TEMP_0_PIN,
     #endif
@@ -155,7 +156,7 @@ uint16_t HAL_adc_result;
     #if GET_BUTTONS_ADC() == 0
       ADC_KEYPAD_PIN,
     #endif
-    // ADC1 pins
+    // ADC1 pins//ADC1引脚
     #if GET_TEMP_0_ADC() == 1
       TEMP_0_PIN,
     #endif
@@ -252,7 +253,7 @@ uint16_t HAL_adc_result;
     };
 
     #define ADC0_AINCOUNT   COUNT(adc0_dma_regs_list)
-  #endif // ADC0_IS_REQUIRED
+  #endif // ADC0_IS_REQUIRED//需要ADC0_
 
   #if ADC1_IS_REQUIRED
     Adafruit_ZeroDMA adc1DMAProgram,
@@ -304,13 +305,13 @@ uint16_t HAL_adc_result;
     };
 
     #define ADC1_AINCOUNT   COUNT(adc1_dma_regs_list)
-  #endif // ADC1_IS_REQUIRED
+  #endif // ADC1_IS_REQUIRED//ADC1_是必需的
 
-#endif // ADC_IS_REQUIRED
+#endif // ADC_IS_REQUIRED//需要ADC_
 
-// ------------------------
-// Private functions
-// ------------------------
+// ------------------------// ------------------------
+// Private functions//私人职能
+// ------------------------// ------------------------
 
 #if DMA_IS_REQUIRED
 
@@ -323,14 +324,14 @@ uint16_t HAL_adc_result;
       adc0DMAProgram.loop(true);
       if (adc0DMAProgram.allocate() == DMA_STATUS_OK) {
         descriptor = adc0DMAProgram.addDescriptor(
-          (void *)adc0_dma_regs_list,         // SRC
-          (void *)&ADC0->DSEQDATA.reg,        // DEST
-          sizeof(adc0_dma_regs_list) / 4,     // CNT
+          (void *)adc0_dma_regs_list,         // SRC//SRC
+          (void *)&ADC0->DSEQDATA.reg,        // DEST//目的地
+          sizeof(adc0_dma_regs_list) / 4,     // CNT//碳纳米管
           DMA_BEAT_SIZE_WORD,
-          true,                               // SRCINC
-          false,                              // DSTINC
-          DMA_ADDRESS_INCREMENT_STEP_SIZE_1,  // STEPSIZE
-          DMA_STEPSEL_SRC                     // STEPSEL
+          true,                               // SRCINC//SRC公司
+          false,                              // DSTINC//DSTINC
+          DMA_ADDRESS_INCREMENT_STEP_SIZE_1,  // STEPSIZE//步长
+          DMA_STEPSEL_SRC                     // STEPSEL//斯特普塞尔
         );
         if (descriptor)
           descriptor->BTCTRL.bit.EVOSEL = DMA_EVENT_OUTPUT_BEAT;
@@ -342,14 +343,14 @@ uint16_t HAL_adc_result;
       adc0DMARead.loop(true);
       if (adc0DMARead.allocate() == DMA_STATUS_OK) {
         adc0DMARead.addDescriptor(
-          (void *)&ADC0->RESULT.reg,          // SRC
-          &HAL_adc_results,                   // DEST
-          ADC0_AINCOUNT,                      // CNT
+          (void *)&ADC0->RESULT.reg,          // SRC//SRC
+          &HAL_adc_results,                   // DEST//目的地
+          ADC0_AINCOUNT,                      // CNT//碳纳米管
           DMA_BEAT_SIZE_HWORD,
-          false,                              // SRCINC
-          true,                               // DSTINC
-          DMA_ADDRESS_INCREMENT_STEP_SIZE_1,  // STEPSIZE
-          DMA_STEPSEL_DST                     // STEPSEL
+          false,                              // SRCINC//SRC公司
+          true,                               // DSTINC//DSTINC
+          DMA_ADDRESS_INCREMENT_STEP_SIZE_1,  // STEPSIZE//步长
+          DMA_STEPSEL_DST                     // STEPSEL//斯特普塞尔
         );
         adc0DMARead.startJob();
       }
@@ -360,14 +361,14 @@ uint16_t HAL_adc_result;
       adc1DMAProgram.loop(true);
       if (adc1DMAProgram.allocate() == DMA_STATUS_OK) {
         descriptor = adc1DMAProgram.addDescriptor(
-          (void *)adc1_dma_regs_list,         // SRC
-          (void *)&ADC1->DSEQDATA.reg,        // DEST
-          sizeof(adc1_dma_regs_list) / 4,     // CNT
+          (void *)adc1_dma_regs_list,         // SRC//SRC
+          (void *)&ADC1->DSEQDATA.reg,        // DEST//目的地
+          sizeof(adc1_dma_regs_list) / 4,     // CNT//碳纳米管
           DMA_BEAT_SIZE_WORD,
-          true,                               // SRCINC
-          false,                              // DSTINC
-          DMA_ADDRESS_INCREMENT_STEP_SIZE_1,  // STEPSIZE
-          DMA_STEPSEL_SRC                     // STEPSEL
+          true,                               // SRCINC//SRC公司
+          false,                              // DSTINC//DSTINC
+          DMA_ADDRESS_INCREMENT_STEP_SIZE_1,  // STEPSIZE//步长
+          DMA_STEPSEL_SRC                     // STEPSEL//斯特普塞尔
         );
         if (descriptor)
           descriptor->BTCTRL.bit.EVOSEL = DMA_EVENT_OUTPUT_BEAT;
@@ -379,40 +380,40 @@ uint16_t HAL_adc_result;
       adc1DMARead.loop(true);
       if (adc1DMARead.allocate() == DMA_STATUS_OK) {
         adc1DMARead.addDescriptor(
-          (void *)&ADC1->RESULT.reg,          // SRC
-          &HAL_adc_results[ADC0_AINCOUNT],    // DEST
-          ADC1_AINCOUNT,                      // CNT
+          (void *)&ADC1->RESULT.reg,          // SRC//SRC
+          &HAL_adc_results[ADC0_AINCOUNT],    // DEST//目的地
+          ADC1_AINCOUNT,                      // CNT//碳纳米管
           DMA_BEAT_SIZE_HWORD,
-          false,                              // SRCINC
-          true,                               // DSTINC
-          DMA_ADDRESS_INCREMENT_STEP_SIZE_1,  // STEPSIZE
-          DMA_STEPSEL_DST                     // STEPSEL
+          false,                              // SRCINC//SRC公司
+          true,                               // DSTINC//DSTINC
+          DMA_ADDRESS_INCREMENT_STEP_SIZE_1,  // STEPSIZE//步长
+          DMA_STEPSEL_DST                     // STEPSEL//斯特普塞尔
         );
         adc1DMARead.startJob();
       }
     #endif
 
-    DMAC->PRICTRL0.bit.RRLVLEN0 = true;                         // Activate round robin for DMA channels required by ADCs
+    DMAC->PRICTRL0.bit.RRLVLEN0 = true;                         // Activate round robin for DMA channels required by ADCs//激活ADC所需DMA信道的循环
   }
 
-#endif // DMA_IS_REQUIRED
+#endif // DMA_IS_REQUIRED//DMA_是必需的
 
-// ------------------------
-// Public functions
-// ------------------------
+// ------------------------// ------------------------
+// Public functions//公共职能
+// ------------------------// ------------------------
 
-// HAL initialization task
+// HAL initialization task//HAL初始化任务
 void HAL_init() {
   TERN_(DMA_IS_REQUIRED, dma_init());
   #if ENABLED(SDSUPPORT)
     #if SD_CONNECTION_IS(ONBOARD) && PIN_EXISTS(SD_DETECT)
       SET_INPUT_PULLUP(SD_DETECT_PIN);
     #endif
-    OUT_WRITE(SDSS, HIGH);  // Try to set SDSS inactive before any other SPI users start up
+    OUT_WRITE(SDSS, HIGH);  // Try to set SDSS inactive before any other SPI users start up//在任何其他SPI用户启动之前，尝试将SDS设置为非活动状态
   #endif
 }
 
-// HAL idle task
+// HAL idle task//HAL空闲任务
 /*
 void HAL_idletask() {
 }
@@ -421,7 +422,7 @@ void HAL_idletask() {
 void HAL_clear_reset_source() { }
 
 #pragma push_macro("WDT")
-#undef WDT    // Required to be able to use '.bit.WDT'. Compiler wrongly replace struct field with WDT define
+#undef WDT    // Required to be able to use '.bit.WDT'. Compiler wrongly replace struct field with WDT define//需要能够使用“.bit.WDT”。编译器错误地将结构字段替换为WDT define
 uint8_t HAL_get_reset_source() {
   RSTC_RCAUSE_Type resetCause;
 
@@ -441,22 +442,22 @@ void HAL_reboot() { NVIC_SystemReset(); }
 extern "C" {
   void * _sbrk(int incr);
 
-  extern unsigned int __bss_end__; // end of bss section
+  extern unsigned int __bss_end__; // end of bss section//bss部分结束
 }
 
-// Return free memory between end of heap (or end bss) and whatever is current
+// Return free memory between end of heap (or end bss) and whatever is current//返回堆端（或bss端）和任何当前值之间的可用内存
 int freeMemory() {
   int free_memory, heap_end = (int)_sbrk(0);
   return (int)&free_memory - (heap_end ?: (int)&__bss_end__);
 }
 
-// ------------------------
-// ADC
-// ------------------------
+// ------------------------// ------------------------
+// ADC//模数转换器
+// ------------------------// ------------------------
 
 void HAL_adc_init() {
   #if ADC_IS_REQUIRED
-    memset(HAL_adc_results, 0xFF, sizeof(HAL_adc_results));                 // Fill result with invalid values
+    memset(HAL_adc_results, 0xFF, sizeof(HAL_adc_results));                 // Fill result with invalid values//用无效值填充结果
 
     LOOP_L_N(pi, COUNT(adc_pins))
       pinPeripheral(adc_pins[pi], PIO_ANALOG);
@@ -464,31 +465,31 @@ void HAL_adc_init() {
     LOOP_S_LE_N(ai, FIRST_ADC, LAST_ADC) {
       Adc* adc = ((Adc*[])ADC_INSTS)[ai];
 
-      // ADC clock setup
+      // ADC clock setup//ADC时钟设置
       GCLK->PCHCTRL[ADC0_GCLK_ID + ai].bit.CHEN = false;
       SYNC(GCLK->PCHCTRL[ADC0_GCLK_ID + ai].bit.CHEN);
-      GCLK->PCHCTRL[ADC0_GCLK_ID + ai].reg = GCLK_PCHCTRL_GEN_GCLK1 | GCLK_PCHCTRL_CHEN;   // 48MHz startup code programmed
+      GCLK->PCHCTRL[ADC0_GCLK_ID + ai].reg = GCLK_PCHCTRL_GEN_GCLK1 | GCLK_PCHCTRL_CHEN;   // 48MHz startup code programmed//48MHz启动代码已编程
       SYNC(!GCLK->PCHCTRL[ADC0_GCLK_ID + ai].bit.CHEN);
-      adc->CTRLA.bit.PRESCALER = ADC_CTRLA_PRESCALER_DIV32_Val;             // 1.5MHZ adc clock
+      adc->CTRLA.bit.PRESCALER = ADC_CTRLA_PRESCALER_DIV32_Val;             // 1.5MHZ adc clock//1.5MHZ模数转换器时钟
 
-      // ADC setup
-      // Preloaded data (fixed for all ADC instances hence not loaded by DMA)
-      adc->REFCTRL.bit.REFSEL = ADC_REFCTRL_REFSEL_AREFA_Val;               // VRefA pin
+      // ADC setup//ADC设置
+      // Preloaded data (fixed for all ADC instances hence not loaded by DMA)//预加载的数据（已修复所有ADC实例，因此不由DMA加载）
+      adc->REFCTRL.bit.REFSEL = ADC_REFCTRL_REFSEL_AREFA_Val;               // VRefA pin//VRefA引脚
       SYNC(adc->SYNCBUSY.bit.REFCTRL);
-      adc->CTRLB.bit.RESSEL = ADC_CTRLB_RESSEL_10BIT_Val;                   // ... ADC_CTRLB_RESSEL_16BIT_Val
+      adc->CTRLB.bit.RESSEL = ADC_CTRLB_RESSEL_10BIT_Val;                   // ... ADC_CTRLB_RESSEL_16BIT_Val// ... ADC\u CTRLB\u Restel\u 16位值
       SYNC(adc->SYNCBUSY.bit.CTRLB);
-      adc->SAMPCTRL.bit.SAMPLEN = (6 - 1);                                  // Sampling clocks
-      //adc->AVGCTRL.reg = ADC_AVGCTRL_SAMPLENUM_16 | ADC_AVGCTRL_ADJRES(4);  // 16 Accumulated conversions and shift 4 to get oversampled 12 bits result
-      //SYNC(adc->SYNCBUSY.bit.AVGCTRL);
+      adc->SAMPCTRL.bit.SAMPLEN = (6 - 1);                                  // Sampling clocks//取样钟
+      //adc->AVGCTRL.reg = ADC_AVGCTRL_SAMPLENUM_16 | ADC_AVGCTRL_ADJRES(4);  // 16 Accumulated conversions and shift 4 to get oversampled 12 bits result//adc->AVGCTRL.reg=adc_AVGCTRL_SAMPLENUM_16 | adc_AVGCTRL_ADJRES（4）；//16累计转换和移位4以获得过采样12位结果
+      //SYNC(adc->SYNCBUSY.bit.AVGCTRL);//同步（adc->SYNCBUSY.bit.AVGCTRL）；
 
-      // Registers loaded by DMA
+      // Registers loaded by DMA//DMA加载的寄存器
       adc->DSEQCTRL.bit.INPUTCTRL = true;
-      adc->DSEQCTRL.bit.AUTOSTART = true;                                   // Start conversion after DMA sequence
+      adc->DSEQCTRL.bit.AUTOSTART = true;                                   // Start conversion after DMA sequence//在DMA序列之后开始转换
 
-      adc->CTRLA.bit.ENABLE = true;                                         // Enable ADC
+      adc->CTRLA.bit.ENABLE = true;                                         // Enable ADC//启用ADC
       SYNC(adc->SYNCBUSY.bit.ENABLE);
     }
-  #endif // ADC_IS_REQUIRED
+  #endif // ADC_IS_REQUIRED//需要ADC_
 }
 
 void HAL_adc_start_conversion(const uint8_t adc_pin) {
@@ -504,4 +505,4 @@ void HAL_adc_start_conversion(const uint8_t adc_pin) {
   HAL_adc_result = 0xFFFF;
 }
 
-#endif // __SAMD51__
+#endif // __SAMD51__//_uusamd51__

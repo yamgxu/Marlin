@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -88,7 +89,7 @@ static void say_successfully_calibrated()   { SERIAL_ECHOPGM("Successfully calib
 static void say_failed_to_calibrate()       { SERIAL_ECHOPGM("!Failed to calibrate"); }
 
 void GcodeSuite::G76() {
-  // Check if heated bed is available and z-homing is done with probe
+  // Check if heated bed is available and z-homing is done with probe//检查加热床是否可用，并使用探头完成z-归位
   #if TEMP_SENSOR_BED == 0 || !(HOMING_Z_WITH_PROBE)
     return;
   #endif
@@ -111,8 +112,8 @@ void GcodeSuite::G76() {
   };
 
   auto g76_probe = [](const TempSensorID sid, celsius_t &targ, const xy_pos_t &nozpos) {
-    do_z_clearance(5.0); // Raise nozzle before probing
-    const float measured_z = probe.probe_at_point(nozpos, PROBE_PT_STOW, 0, false);  // verbose=0, probe_relative=false
+    do_z_clearance(5.0); // Raise nozzle before probing//在探测前升起喷嘴
+    const float measured_z = probe.probe_at_point(nozpos, PROBE_PT_STOW, 0, false);  // verbose=0, probe_relative=false//详细信息=0，探测相对信息=false
     if (isnan(measured_z))
       SERIAL_ECHOLNPGM("!Received NAN. Aborting.");
     else {
@@ -127,7 +128,7 @@ void GcodeSuite::G76() {
   };
 
   #if ENABLED(BLTOUCH)
-    // Make sure any BLTouch error condition is cleared
+    // Make sure any BLTouch error condition is cleared//确保清除任何BLTouch错误条件
     bltouch_command(BLTOUCH_RESET, BLTOUCH_RESET_DELAY);
     set_bltouch_deployed(false);
   #endif
@@ -135,20 +136,20 @@ void GcodeSuite::G76() {
   bool do_bed_cal = parser.boolval('B'), do_probe_cal = parser.boolval('P');
   if (!do_bed_cal && !do_probe_cal) do_bed_cal = do_probe_cal = true;
 
-  // Synchronize with planner
+  // Synchronize with planner//与计划器同步
   planner.synchronize();
 
   const xyz_pos_t parkpos = temp_comp.park_point,
             probe_pos_xyz = xyz_pos_t(temp_comp.measure_point) + xyz_pos_t({ 0.0f, 0.0f, PTC_PROBE_HEATING_OFFSET }),
-              noz_pos_xyz = probe_pos_xyz - probe.offset_xy;  // Nozzle position based on probe position
+              noz_pos_xyz = probe_pos_xyz - probe.offset_xy;  // Nozzle position based on probe position//基于探头位置的喷嘴位置
 
   if (do_bed_cal || do_probe_cal) {
-    // Ensure park position is reachable
+    // Ensure park position is reachable//确保可到达停车位置
     bool reachable = position_is_reachable(parkpos) || WITHIN(parkpos.z, Z_MIN_POS - fslop, Z_MAX_POS + fslop);
     if (!reachable)
       SERIAL_ECHOLNPGM("!Park");
     else {
-      // Ensure probe position is reachable
+      // Ensure probe position is reachable//确保可到达探头位置
       reachable = probe.can_reach(probe_pos_xyz);
       if (!reachable) SERIAL_ECHOLNPGM("!Probe");
     }
@@ -167,7 +168,7 @@ void GcodeSuite::G76() {
    * Calibrate bed temperature offsets
    ******************************************/
 
-  // Report temperatures every second and handle heating timeouts
+  // Report temperatures every second and handle heating timeouts//每秒报告一次温度并处理加热超时
   millis_t next_temp_report = millis() + 1000;
 
   auto report_targets = [&](const celsius_t tb, const celsius_t tp) {
@@ -183,7 +184,7 @@ void GcodeSuite::G76() {
     while (thermalManager.wholeDegBed() > target_bed || thermalManager.wholeDegProbe() > target_probe)
       report_temps(next_temp_report);
 
-    // Disable leveling so it won't mess with us
+    // Disable leveling so it won't mess with us//禁用水平，这样它就不会干扰我们
     TERN_(HAS_LEVELING, set_bed_leveling_enabled(false));
 
     for (;;) {
@@ -191,16 +192,16 @@ void GcodeSuite::G76() {
 
       report_targets(target_bed, target_probe);
 
-      // Park nozzle
+      // Park nozzle//驻车喷嘴
       do_blocking_move_to(parkpos);
 
-      // Wait for heatbed to reach target temp and probe to cool below target temp
+      // Wait for heatbed to reach target temp and probe to cool below target temp//等待加热床达到目标温度，探头冷却到目标温度以下
       if (wait_for_temps(target_bed, target_probe, next_temp_report, millis() + MIN_TO_MS(15))) {
         SERIAL_ECHOLNPGM("!Bed heating timeout.");
         break;
       }
 
-      // Move the nozzle to the probing point and wait for the probe to reach target temp
+      // Move the nozzle to the probing point and wait for the probe to reach target temp//将喷嘴移至探测点，等待探针达到目标温度
       do_blocking_move_to(noz_pos_xyz);
       say_waiting_for_probe_heating();
       SERIAL_EOL();
@@ -221,10 +222,10 @@ void GcodeSuite::G76() {
       SERIAL_ECHOLNPGM(" bed. Values reset.");
     }
 
-    // Cleanup
+    // Cleanup//清理
     thermalManager.setTargetBed(0);
     TERN_(HAS_LEVELING, set_bed_leveling_enabled(true));
-  } // do_bed_cal
+  } // do_bed_cal//你睡觉吗
 
   /********************************************
    * Calibrate probe temperature offsets
@@ -232,10 +233,10 @@ void GcodeSuite::G76() {
 
   if (do_probe_cal) {
 
-    // Park nozzle
+    // Park nozzle//驻车喷嘴
     do_blocking_move_to(parkpos);
 
-    // Initialize temperatures
+    // Initialize temperatures//初始化温度
     const celsius_t target_bed = temp_comp.probe_calib_bed_temp;
     thermalManager.setTargetBed(target_bed);
 
@@ -243,15 +244,15 @@ void GcodeSuite::G76() {
 
     report_targets(target_bed, target_probe);
 
-    // Wait for heatbed to reach target temp and probe to cool below target temp
+    // Wait for heatbed to reach target temp and probe to cool below target temp//等待加热床达到目标温度，探头冷却到目标温度以下
     wait_for_temps(target_bed, target_probe, next_temp_report);
 
-    // Disable leveling so it won't mess with us
+    // Disable leveling so it won't mess with us//禁用水平，这样它就不会干扰我们
     TERN_(HAS_LEVELING, set_bed_leveling_enabled(false));
 
     bool timeout = false;
     for (;;) {
-      // Move probe to probing point and wait for it to reach target temperature
+      // Move probe to probing point and wait for it to reach target temperature//将探头移动到探测点，等待其达到目标温度
       do_blocking_move_to(noz_pos_xyz);
 
       say_waiting_for_probe_heating();
@@ -277,13 +278,13 @@ void GcodeSuite::G76() {
       say_failed_to_calibrate();
     SERIAL_ECHOLNPGM(" probe.");
 
-    // Cleanup
+    // Cleanup//清理
     thermalManager.setTargetBed(0);
     TERN_(HAS_LEVELING, set_bed_leveling_enabled(true));
 
     SERIAL_ECHOLNPGM("Final compensation values:");
     temp_comp.print_offsets();
-  } // do_probe_cal
+  } // do_probe_cal//你要调查吗
 
   restore_feedrate_and_scaling();
 }
@@ -309,7 +310,7 @@ void GcodeSuite::G76() {
 void GcodeSuite::M871() {
 
   if (parser.seen('R')) {
-    // Reset z-probe offsets to factory defaults
+    // Reset z-probe offsets to factory defaults//将z探头偏移重置为出厂默认值
     temp_comp.clear_all_offsets();
     SERIAL_ECHOLNPGM("Offsets reset to default.");
   }
@@ -330,7 +331,7 @@ void GcodeSuite::M871() {
       SERIAL_ECHOLNPGM("!Invalid index. Failed to set value (note: value at index 0 is constant).");
 
   }
-  else // Print current Z-probe adjustments. Note: Values in EEPROM might differ.
+  else // Print current Z-probe adjustments. Note: Values in EEPROM might differ.//打印当前Z探头调整。注：EEPROM中的值可能不同。
     temp_comp.print_offsets();
 }
 
@@ -355,4 +356,4 @@ void GcodeSuite::M192() {
   thermalManager.wait_for_probe(target_temp, no_wait_for_cooling);
 }
 
-#endif // PROBE_TEMP_COMPENSATION
+#endif // PROBE_TEMP_COMPENSATION//探头温度补偿

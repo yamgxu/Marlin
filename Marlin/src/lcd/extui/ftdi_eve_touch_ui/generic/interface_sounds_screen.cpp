@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*******************************
  * interface_sounds_screen.cpp *
  *******************************/
@@ -156,4 +157,4 @@ void InterfaceSoundsScreen::onIdle() {
   BaseScreen::onIdle();
 }
 
-#endif // FTDI_INTERFACE_SOUNDS_SCREEN
+#endif // FTDI_INTERFACE_SOUNDS_SCREEN//FTDI_接口_声音_屏幕

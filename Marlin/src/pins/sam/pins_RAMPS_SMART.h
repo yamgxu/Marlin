@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -64,56 +65,56 @@
 #define ALLOW_SAM3X8E
 #include "../ramps/pins_RAMPS.h"
 
-// I2C EEPROM with 4K of space
+// I2C EEPROM with 4K of space//具有4K空间的I2C EEPROM
 #define I2C_EEPROM
 #define MARLIN_EEPROM_SIZE                0x1000
 
 #define SDA_PIN                               20
 #define SCL_PIN                               21
 
-// See EEPROM device datasheet for the following values. These are for 24xx256
-#define EEPROM_SERIAL_ADDR                  0x50  // 7 bit i2c address (without R/W bit)
-#define EEPROM_PAGE_SIZE                      64  // page write buffer size
-#define EEPROM_PAGE_WRITE_TIME                 7  // page write time in milliseconds (docs say 5ms but that is too short)
+// See EEPROM device datasheet for the following values. These are for 24xx256//有关以下值，请参阅EEPROM设备数据表。这些是24xx256的
+#define EEPROM_SERIAL_ADDR                  0x50  // 7 bit i2c address (without R/W bit)//7位i2c地址（无R/W位）
+#define EEPROM_PAGE_SIZE                      64  // page write buffer size//页写入缓冲区大小
+#define EEPROM_PAGE_WRITE_TIME                 7  // page write time in milliseconds (docs say 5ms but that is too short)//页面写入时间以毫秒为单位（文档称为5ms，但太短）
 
 #define TWI_CLOCK_FREQ                    400000
-#define EEPROM_ADDRSZ_BYTES TWI_MMR_IADRSZ_2_BYTE // TWI_MMR_IADRSZ_1_BYTE for 1 byte, or TWI_MMR_IADRSZ_2_BYTE for 2 byte
+#define EEPROM_ADDRSZ_BYTES TWI_MMR_IADRSZ_2_BYTE // TWI_MMR_IADRSZ_1_BYTE for 1 byte, or TWI_MMR_IADRSZ_2_BYTE for 2 byte//两个MMR\U IADRSZ\U 1字节对应一个字节，或两个MMR\U IADRSZ\U 2字节对应两个字节
 #define EEPROM_AVAILABLE              EEPROM_I2C
 
-#define RESET_PIN                             42  // Resets the board if the jumper is attached
+#define RESET_PIN                             42  // Resets the board if the jumper is attached//如果连接了跳线，则重置电路板
 
-//
-// Temperature Sensors
-//
+////
+// Temperature Sensors//温度传感器
+////
 #undef TEMP_0_PIN
-#define TEMP_0_PIN                             9  // Analog Input
+#define TEMP_0_PIN                             9  // Analog Input//模拟输入
 
 #undef TEMP_1_PIN
-#define TEMP_1_PIN                            10  // Analog Input
+#define TEMP_1_PIN                            10  // Analog Input//模拟输入
 
 #undef TEMP_BED_PIN
-#define TEMP_BED_PIN                          11  // Analog Input
+#define TEMP_BED_PIN                          11  // Analog Input//模拟输入
 
-// SPI for Max6675 or Max31855 Thermocouple
+// SPI for Max6675 or Max31855 Thermocouple//Max6675或Max31855热电偶的SPI
 #undef MAX6675_SS_PIN
 #if DISABLED(SDSUPPORT)
-  #define MAX6675_SS_PIN                      67  // Don't use 53 if using Display/SD card
+  #define MAX6675_SS_PIN                      67  // Don't use 53 if using Display/SD card//如果使用显示卡/SD卡，请不要使用53
 #else
-  #define MAX6675_SS_PIN                      67  // Don't use 49 (SD_DETECT_PIN)
+  #define MAX6675_SS_PIN                      67  // Don't use 49 (SD_DETECT_PIN)//不要使用49（SD_DETECT_引脚）
 #endif
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 
-// Support for AZSMZ 12864 LCD with SD Card 3D printer smart controller control panel
+// Support for AZSMZ 12864 LCD with SD Card 3D printer smart controller control panel//支持带SD卡3D打印机的AZSMZ 12864 LCD智能控制器控制面板
 #if ENABLED(AZSMZ_12864)
-  #define BEEPER_PIN                          66  // Smart RAMPS 1.42 pinout diagram on RepRap WIKI erroneously says this should be pin 65
+  #define BEEPER_PIN                          66  // Smart RAMPS 1.42 pinout diagram on RepRap WIKI erroneously says this should be pin 65//RepRap WIKI上的Smart RAMPS 1.42引脚图错误地表示这应该是引脚65
   #define DOGLCD_A0                           59
   #define DOGLCD_CS                           44
   #define BTN_EN1                             58
   #define BTN_EN2                             40
-  #define BTN_ENC                             67  // Smart RAMPS 1.42 pinout diagram on RepRap WIKI erroneously says this should be pin 66
-  #define SD_DETECT_PIN                       49  // Pin 49 for display sd interface, 72 for easy adapter board
+  #define BTN_ENC                             67  // Smart RAMPS 1.42 pinout diagram on RepRap WIKI erroneously says this should be pin 66//RepRap WIKI上的Smart RAMPS 1.42引脚图错误地表示这应该是引脚66
+  #define SD_DETECT_PIN                       49  // Pin 49 for display sd interface, 72 for easy adapter board//引脚49用于显示sd接口，72用于简易适配器板
   #define KILL_PIN                            42
 #endif

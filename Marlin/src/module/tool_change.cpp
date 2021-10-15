@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,13 +32,13 @@
 
 #include "../MarlinCore.h"
 
-//#define DEBUG_TOOL_CHANGE
+//#define DEBUG_TOOL_CHANGE//#定义调试工具更改
 
 #define DEBUG_OUT ENABLED(DEBUG_TOOL_CHANGE)
 #include "../core/debug_out.h"
 
 #if HAS_MULTI_EXTRUDER
-  toolchange_settings_t toolchange_settings;  // Initialized by settings.load()
+  toolchange_settings_t toolchange_settings;  // Initialized by settings.load()//由settings.load（）初始化
 #endif
 
 #if ENABLED(TOOLCHANGE_MIGRATION_FEATURE)
@@ -121,7 +122,7 @@
     }
   }
 
-#endif // DO_SWITCH_EXTRUDER
+#endif // DO_SWITCH_EXTRUDER//请勿切换挤出机
 
 #if ENABLED(SWITCHING_NOZZLE)
 
@@ -148,7 +149,7 @@
 
   #endif
 
-#endif // SWITCHING_NOZZLE
+#endif // SWITCHING_NOZZLE//切换喷嘴
 
 void _line_to_current(const AxisEnum fr_axis, const float fscale=1) {
   line_to_current_position(planner.settings.max_feedrate_mm_s[fr_axis] * fscale);
@@ -158,11 +159,11 @@ void fast_line_to_current(const AxisEnum fr_axis) { _line_to_current(fr_axis, 0.
 
 #if ENABLED(MAGNETIC_PARKING_EXTRUDER)
 
-  float parkingposx[2],           // M951 R L
-        parkinggrabdistance,      // M951 I
-        parkingslowspeed,         // M951 J
-        parkinghighspeed,         // M951 H
-        parkingtraveldistance,    // M951 D
+  float parkingposx[2],           // M951 R L//M951 R L
+        parkinggrabdistance,      // M951 I//M951 I
+        parkingslowspeed,         // M951 J//M951 J
+        parkinghighspeed,         // M951 H//M951H
+        parkingtraveldistance,    // M951 D//M951 D
         compensationmultiplier;
 
   inline void magnetic_parking_extruder_tool_change(const uint8_t new_tool) {
@@ -185,7 +186,7 @@ void fast_line_to_current(const AxisEnum fr_axis) { _line_to_current(fr_axis, 0.
      *   6. Move to starting position
      */
 
-    // STEP 1
+    // STEP 1//第一步
 
     current_position.x = mpe_settings.parking_xpos[new_tool] + offsetcompensation;
 
@@ -195,7 +196,7 @@ void fast_line_to_current(const AxisEnum fr_axis) { _line_to_current(fr_axis, 0.
     planner.buffer_line(current_position, mpe_settings.fast_feedrate, new_tool);
     planner.synchronize();
 
-    // STEP 2
+    // STEP 2//步骤2
 
     current_position.x = grabpos + offsetcompensation;
 
@@ -205,10 +206,10 @@ void fast_line_to_current(const AxisEnum fr_axis) { _line_to_current(fr_axis, 0.
     planner.buffer_line(current_position, mpe_settings.slow_feedrate, new_tool);
     planner.synchronize();
 
-    // Delay before moving tool, to allow magnetic coupling
+    // Delay before moving tool, to allow magnetic coupling//移动工具前的延迟，以允许磁耦合
     gcode.dwell(150);
 
-    // STEP 3
+    // STEP 3//步骤3
 
     current_position.x = mpe_settings.parking_xpos[new_tool] + offsetcompensation;
 
@@ -218,7 +219,7 @@ void fast_line_to_current(const AxisEnum fr_axis) { _line_to_current(fr_axis, 0.
     planner.buffer_line(current_position, mpe_settings.slow_feedrate, new_tool);
     planner.synchronize();
 
-    // STEP 4
+    // STEP 4//步骤4
 
     current_position.x = mpe_settings.parking_xpos[active_extruder] + (active_extruder == 0 ? MPE_TRAVEL_DISTANCE : -MPE_TRAVEL_DISTANCE) + offsetcompensation;
 
@@ -228,7 +229,7 @@ void fast_line_to_current(const AxisEnum fr_axis) { _line_to_current(fr_axis, 0.
     planner.buffer_line(current_position, mpe_settings.fast_feedrate, new_tool);
     planner.synchronize();
 
-    // STEP 5
+    // STEP 5//步骤5
 
     current_position.x = mpe_settings.parking_xpos[active_extruder] + offsetcompensation;
 
@@ -238,7 +239,7 @@ void fast_line_to_current(const AxisEnum fr_axis) { _line_to_current(fr_axis, 0.
     planner.buffer_line(current_position, mpe_settings.slow_feedrate, new_tool);
     planner.synchronize();
 
-    // STEP 6
+    // STEP 6//步骤6
 
     current_position.x = oldx;
 
@@ -269,11 +270,11 @@ void fast_line_to_current(const AxisEnum fr_axis) { _line_to_current(fr_axis, 0.
 
   bool extruder_parked = true, do_solenoid_activation = true;
 
-  // Modifies tool_change() behavior based on homing side
+  // Modifies tool_change() behavior based on homing side//基于归位侧修改工具的\u change（）行为
   bool parking_extruder_unpark_after_homing(const uint8_t final_tool, bool homed_towards_final_tool) {
-    do_solenoid_activation = false; // Tell parking_extruder_tool_change to skip solenoid activation
+    do_solenoid_activation = false; // Tell parking_extruder_tool_change to skip solenoid activation//告诉停车场\u挤出机\u刀具\u更换以跳过电磁阀激活
 
-    if (!extruder_parked) return false; // nothing to do
+    if (!extruder_parked) return false; // nothing to do//无事可做
 
     if (homed_towards_final_tool) {
       pe_solenoid_magnet_off(1 - final_tool);
@@ -310,11 +311,11 @@ void fast_line_to_current(const AxisEnum fr_axis) { _line_to_current(fr_axis, 0.
        * 6. Lower Z-Axis
        */
 
-      // STEP 1
+      // STEP 1//第一步
 
       DEBUG_POS("Start PE Tool-Change", current_position);
 
-      // Don't park the active_extruder unless unparked
+      // Don't park the active_extruder unless unparked//除非断开，否则不要停放活动的_挤出机
       if (!extruder_parked) {
         current_position.x = parkingposx[active_extruder] + x_offset;
 
@@ -323,15 +324,15 @@ void fast_line_to_current(const AxisEnum fr_axis) { _line_to_current(fr_axis, 0.
 
         fast_line_to_current(X_AXIS);
 
-        // STEP 2
+        // STEP 2//步骤2
 
         planner.synchronize();
         DEBUG_ECHOLNPGM("(2) Disengage magnet");
         pe_solenoid_magnet_off(active_extruder);
 
-        // STEP 3
+        // STEP 3//步骤3
 
-        current_position.x += active_extruder ? -10 : 10; // move 10mm away from parked extruder
+        current_position.x += active_extruder ? -10 : 10; // move 10mm away from parked extruder//从停放的挤出机移开10mm
 
         DEBUG_ECHOLNPGM("(3) Move near new extruder");
         DEBUG_POS("Move away from parked extruder", current_position);
@@ -339,16 +340,16 @@ void fast_line_to_current(const AxisEnum fr_axis) { _line_to_current(fr_axis, 0.
         fast_line_to_current(X_AXIS);
       }
 
-      // STEP 4
+      // STEP 4//步骤4
 
       planner.synchronize();
       DEBUG_ECHOLNPGM("(4) Engage magnetic field");
 
-      // Just save power for inverted magnets
+      // Just save power for inverted magnets//只需为倒置的磁铁省电即可
       TERN_(PARKING_EXTRUDER_SOLENOIDS_INVERT, pe_solenoid_magnet_on(active_extruder));
       pe_solenoid_magnet_on(new_tool);
 
-      // STEP 5
+      // STEP 5//步骤5
 
       current_position.x = grabpos + (new_tool ? -10 : 10);
       fast_line_to_current(X_AXIS);
@@ -360,7 +361,7 @@ void fast_line_to_current(const AxisEnum fr_axis) { _line_to_current(fr_axis, 0.
 
       slow_line_to_current(X_AXIS);
 
-      // STEP 6
+      // STEP 6//步骤6
 
       current_position.x = DIFF_TERN(HAS_HOTEND_OFFSET, midpos, hotend_offset[new_tool].x);
 
@@ -368,26 +369,26 @@ void fast_line_to_current(const AxisEnum fr_axis) { _line_to_current(fr_axis, 0.
       DEBUG_POS("(6) Move midway between hotends", current_position);
 
       fast_line_to_current(X_AXIS);
-      planner.synchronize(); // Always sync the final move
+      planner.synchronize(); // Always sync the final move//始终同步最后一步
 
       DEBUG_POS("PE Tool-Change done.", current_position);
       parking_extruder_set_parked(false);
     }
     else if (do_solenoid_activation) {
-      // Deactivate current extruder solenoid
+      // Deactivate current extruder solenoid//停用当前挤出机电磁阀
       pe_solenoid_set_pin_state(active_extruder, !PARKING_EXTRUDER_SOLENOIDS_PINS_ACTIVE);
-      // Engage new extruder magnetic field
+      // Engage new extruder magnetic field//接合新的挤出机磁场
       pe_solenoid_set_pin_state(new_tool, PARKING_EXTRUDER_SOLENOIDS_PINS_ACTIVE);
     }
 
-    do_solenoid_activation = true; // Activate solenoid for subsequent tool_change()
+    do_solenoid_activation = true; // Activate solenoid for subsequent tool_change()//启动电磁阀以进行后续的工具更换（）
   }
 
-#endif // PARKING_EXTRUDER
+#endif // PARKING_EXTRUDER//挤压机
 
 #if ENABLED(SWITCHING_TOOLHEAD)
 
-  // Return a bitmask of tool sensor states
+  // Return a bitmask of tool sensor states//返回刀具传感器状态的位掩码
   inline uint8_t poll_tool_sensor_pins() {
     return (0
       #if ENABLED(TOOL_SENSOR)
@@ -421,10 +422,10 @@ void fast_line_to_current(const AxisEnum fr_axis) { _line_to_current(fr_axis, 0.
 
   #if ENABLED(TOOL_SENSOR)
 
-    bool tool_sensor_disabled; // = false
+    bool tool_sensor_disabled; // = false//=错误
 
     uint8_t check_tool_sensor_stats(const uint8_t tool_index, const bool kill_on_error/*=false*/, const bool disable/*=false*/) {
-      static uint8_t sensor_tries; // = 0
+      static uint8_t sensor_tries; // = 0// = 0
       for (;;) {
         if (poll_tool_sensor_pins() == _BV(tool_index)) {
           sensor_tries = 0;
@@ -463,7 +464,7 @@ void fast_line_to_current(const AxisEnum fr_axis) { _line_to_current(fr_axis, 0.
     switching_toolhead_lock(true);
 
     #if ENABLED(TOOL_SENSOR)
-      // Init tool sensors
+      // Init tool sensors//初始化工具传感器
       #if PIN_EXISTS(TOOL_SENSOR1)
         SET_INPUT_PULLUP(TOOL_SENSOR1_PIN);
       #endif
@@ -515,7 +516,7 @@ void fast_line_to_current(const AxisEnum fr_axis) { _line_to_current(fr_axis, 0.
      * 4. Grab and lock the new toolhead
      */
 
-    // 1. Move to switch position of current toolhead
+    // 1. Move to switch position of current toolhead// 1. 移动到当前刀头的开关位置
 
     DEBUG_POS("Start ST Tool-Change", current_position);
 
@@ -533,7 +534,7 @@ void fast_line_to_current(const AxisEnum fr_axis) { _line_to_current(fr_axis, 0.
 
     slow_line_to_current(Y_AXIS);
 
-    // 2. Unlock tool and drop it in the dock
+    // 2. Unlock tool and drop it in the dock// 2. 解锁工具并将其放入坞中
     TERN_(TOOL_SENSOR, tool_sensor_disabled = true);
 
     planner.synchronize();
@@ -545,17 +546,17 @@ void fast_line_to_current(const AxisEnum fr_axis) { _line_to_current(fr_axis, 0.
     DEBUG_POS("Move Y SwitchPos", current_position);
     slow_line_to_current(Y_AXIS);
 
-    // Wait for move to complete, then another 0.2s
+    // Wait for move to complete, then another 0.2s//等待移动完成，然后再等待0.2秒
     planner.synchronize();
     safe_delay(200);
 
     current_position.y -= SWITCHING_TOOLHEAD_Y_CLEAR;
     DEBUG_POS("Move back Y clear", current_position);
-    slow_line_to_current(Y_AXIS); // move away from docked toolhead
+    slow_line_to_current(Y_AXIS); // move away from docked toolhead//远离停靠的工具头
 
     (void)check_tool_sensor_stats(active_extruder);
 
-    // 3. Move to the new toolhead
+    // 3. Move to the new toolhead// 3. 移动到新的工具头
 
     current_position.x = grabxpos;
 
@@ -572,7 +573,7 @@ void fast_line_to_current(const AxisEnum fr_axis) { _line_to_current(fr_axis, 0.
 
     slow_line_to_current(Y_AXIS);
 
-    // 4. Grab and lock the new toolhead
+    // 4. Grab and lock the new toolhead// 4. 抓住并锁定新的工具头
 
     current_position.y = SWITCHING_TOOLHEAD_Y_POS;
 
@@ -582,7 +583,7 @@ void fast_line_to_current(const AxisEnum fr_axis) { _line_to_current(fr_axis, 0.
 
     slow_line_to_current(Y_AXIS);
 
-    // Wait for move to finish, pause 0.2s, move servo, pause 0.5s
+    // Wait for move to finish, pause 0.2s, move servo, pause 0.5s//等待移动完成，暂停0.2秒，移动伺服，暂停0.5秒
     planner.synchronize();
     safe_delay(200);
 
@@ -593,8 +594,8 @@ void fast_line_to_current(const AxisEnum fr_axis) { _line_to_current(fr_axis, 0.
 
     current_position.y -= SWITCHING_TOOLHEAD_Y_CLEAR;
     DEBUG_POS("Move back Y clear", current_position);
-    slow_line_to_current(Y_AXIS); // Move away from docked toolhead
-    planner.synchronize();        // Always sync the final move
+    slow_line_to_current(Y_AXIS); // Move away from docked toolhead//远离停靠的工具头
+    planner.synchronize();        // Always sync the final move//始终同步最后一步
 
     (void)check_tool_sensor_stats(new_tool, true, true);
 
@@ -623,7 +624,7 @@ void fast_line_to_current(const AxisEnum fr_axis) { _line_to_current(fr_axis, 0.
 
     DEBUG_POS("Start MST Tool-Change", current_position);
 
-    // 1. Move to switch position current toolhead
+    // 1. Move to switch position current toolhead// 1. 移动到当前刀头的开关位置
 
     current_position.y = SWITCHING_TOOLHEAD_Y_POS + SWITCHING_TOOLHEAD_Y_CLEAR;
 
@@ -653,7 +654,7 @@ void fast_line_to_current(const AxisEnum fr_axis) { _line_to_current(fr_axis, 0.
 
     line_to_current_position(planner.settings.max_feedrate_mm_s[X_AXIS] * 0.25f);
 
-    // 2. Release and place toolhead in the dock
+    // 2. Release and place toolhead in the dock// 2. 释放工具头并将其放入坞中
 
     DEBUG_SYNCHRONIZE();
     DEBUG_ECHOLNPGM("(2) Release and Place Toolhead");
@@ -669,7 +670,7 @@ void fast_line_to_current(const AxisEnum fr_axis) { _line_to_current(fr_axis, 0.
 
     line_to_current_position(planner.settings.max_feedrate_mm_s[Y_AXIS]);
 
-    // 3. Move to new toolhead position
+    // 3. Move to new toolhead position// 3. 移动到新的刀头位置
 
     DEBUG_SYNCHRONIZE();
     DEBUG_ECHOLNPGM("(3) Move to new toolhead position");
@@ -678,7 +679,7 @@ void fast_line_to_current(const AxisEnum fr_axis) { _line_to_current(fr_axis, 0.
     DEBUG_POS("Move to new toolhead X", current_position);
     fast_line_to_current(X_AXIS);
 
-    // 4. Grab the new toolhead and move to security position
+    // 4. Grab the new toolhead and move to security position// 4. 抓住新工具头并移动到安全位置
 
     DEBUG_SYNCHRONIZE();
     DEBUG_ECHOLNPGM("(4) Grab new toolhead, move to security position");
@@ -705,19 +706,19 @@ void fast_line_to_current(const AxisEnum fr_axis) { _line_to_current(fr_axis, 0.
       #endif
     #else
       planner.synchronize();
-      safe_delay(100); // Give switch time to settle
+      safe_delay(100); // Give switch time to settle//给转换时间来解决
     #endif
 
     current_position.x = grabxclear;
     DEBUG_POS("Move to new toolhead X + Security", current_position);
     _line_to_current(X_AXIS, 0.1f);
     planner.synchronize();
-    safe_delay(100); // Give switch time to settle
+    safe_delay(100); // Give switch time to settle//给转换时间来解决
 
     current_position.y += SWITCHING_TOOLHEAD_Y_CLEAR;
     DEBUG_POS("Move back Y clear", current_position);
-    fast_line_to_current(Y_AXIS); // move away from docked toolhead
-    planner.synchronize(); // Always sync last tool-change move
+    fast_line_to_current(Y_AXIS); // move away from docked toolhead//远离停靠的工具头
+    planner.synchronize(); // Always sync last tool-change move//始终同步上次换刀移动
 
     DEBUG_POS("MST Tool-Change done.", current_position);
   }
@@ -750,13 +751,13 @@ void fast_line_to_current(const AxisEnum fr_axis) { _line_to_current(fr_axis, 0.
 
     DEBUG_POS("Start EMST Tool-Change", current_position);
 
-    // 1. Raise Z-Axis to give enough clearance
+    // 1. Raise Z-Axis to give enough clearance// 1. 提升Z轴以提供足够的间隙
 
     current_position.z += SWITCHING_TOOLHEAD_Z_HOP;
     DEBUG_POS("(1) Raise Z-Axis ", current_position);
     fast_line_to_current(Z_AXIS);
 
-    // 2. Move to position near active extruder parking
+    // 2. Move to position near active extruder parking// 2. 移动到主动挤出机停车位附近的位置
 
     DEBUG_SYNCHRONIZE();
     DEBUG_ECHOLNPAIR("(2) Move near active extruder parking", active_extruder);
@@ -766,7 +767,7 @@ void fast_line_to_current(const AxisEnum fr_axis) { _line_to_current(fr_axis, 0.
                          hoffs.y + SWITCHING_TOOLHEAD_Y_POS + SWITCHING_TOOLHEAD_Y_CLEAR);
     fast_line_to_current(X_AXIS);
 
-    // 3. Move gently to park position of active extruder
+    // 3. Move gently to park position of active extruder// 3. 轻轻移动到主动挤出机的停车位置
 
     DEBUG_SYNCHRONIZE();
     SERIAL_ECHOLNPAIR("(3) Move gently to park position of active extruder", active_extruder);
@@ -775,13 +776,13 @@ void fast_line_to_current(const AxisEnum fr_axis) { _line_to_current(fr_axis, 0.
     current_position.y -= SWITCHING_TOOLHEAD_Y_CLEAR;
     slow_line_to_current(Y_AXIS);
 
-    // 4. Disengage magnetic field, wait for delay
+    // 4. Disengage magnetic field, wait for delay// 4. 断开磁场，等待延迟
 
     planner.synchronize();
     DEBUG_ECHOLNPGM("(4) Disengage magnet");
     est_deactivate_solenoid();
 
-    // 5. Leave extruder and move to position near new extruder parking
+    // 5. Leave extruder and move to position near new extruder parking// 5. 离开挤出机，移动到新挤出机停车场附近的位置
 
     DEBUG_ECHOLNPGM("(5) Move near new extruder parking");
     DEBUG_POS("Moving ParkPos", current_position);
@@ -792,7 +793,7 @@ void fast_line_to_current(const AxisEnum fr_axis) { _line_to_current(fr_axis, 0.
                          hoffs.y + SWITCHING_TOOLHEAD_Y_POS + SWITCHING_TOOLHEAD_Y_CLEAR);
     fast_line_to_current(X_AXIS);
 
-    // 6. Move gently to park position of new extruder
+    // 6. Move gently to park position of new extruder// 6. 轻轻移动到新挤出机的停车位置
 
     current_position.y -= SWITCHING_TOOLHEAD_Y_CLEAR;
     if (DEBUGGING(LEVELING)) {
@@ -801,20 +802,20 @@ void fast_line_to_current(const AxisEnum fr_axis) { _line_to_current(fr_axis, 0.
     }
     slow_line_to_current(Y_AXIS);
 
-    // 7. Engage magnetic field for new extruder parking
+    // 7. Engage magnetic field for new extruder parking// 7. 为新挤出机停车接合磁场
 
     DEBUG_SYNCHRONIZE();
     DEBUG_ECHOLNPGM("(7) Engage magnetic field");
     est_activate_solenoid();
 
-    // 8. Unpark extruder
+    // 8. Unpark extruder// 8. Unpark挤出机
 
     current_position.y += SWITCHING_TOOLHEAD_Y_CLEAR;
     DEBUG_ECHOLNPGM("(8) Unpark extruder");
     slow_line_to_current(X_AXIS);
-    planner.synchronize(); // Always sync the final move
+    planner.synchronize(); // Always sync the final move//始终同步最后一步
 
-    // 9. Apply Z hotend offset to current position
+    // 9. Apply Z hotend offset to current position// 9. 将Z热端偏移应用于当前位置
 
     DEBUG_POS("(9) Applying Z-offset", current_position);
     current_position.z += hoffs.z - hotend_offset[new_tool].z;
@@ -822,7 +823,7 @@ void fast_line_to_current(const AxisEnum fr_axis) { _line_to_current(fr_axis, 0.
     DEBUG_POS("EMST Tool-Change done.", current_position);
   }
 
-#endif // ELECTROMAGNETIC_SWITCHING_TOOLHEAD
+#endif // ELECTROMAGNETIC_SWITCHING_TOOLHEAD//电磁开关工具头
 
 #if HAS_EXTRUDERS
   inline void invalid_extruder_error(const uint8_t e) {
@@ -851,32 +852,32 @@ void fast_line_to_current(const AxisEnum fr_axis) { _line_to_current(fr_axis, 0.
       case DXC_MIRRORED_MODE:     DEBUG_ECHOLNPGM("MIRRORED");     break;
     }
 
-    // Get the home position of the currently-active tool
+    // Get the home position of the currently-active tool//获取当前激活刀具的原始位置
     const float xhome = x_home_pos(active_extruder);
 
-    if (dual_x_carriage_mode == DXC_AUTO_PARK_MODE                  // If Auto-Park mode is enabled
-        && IsRunning() && !no_move                                  // ...and movement is permitted
-        && (delayed_move_time || current_position.x != xhome)       // ...and delayed_move_time is set OR not "already parked"...
+    if (dual_x_carriage_mode == DXC_AUTO_PARK_MODE                  // If Auto-Park mode is enabled//如果启用自动驻车模式
+        && IsRunning() && !no_move                                  // ...and movement is permitted//…并且允许移动
+        && (delayed_move_time || current_position.x != xhome)       // ...and delayed_move_time is set OR not "already parked"...//…并且延迟移动时间已设置或未“已驻车”。。。
     ) {
       DEBUG_ECHOLNPAIR("MoveX to ", xhome);
       current_position.x = xhome;
-      line_to_current_position(planner.settings.max_feedrate_mm_s[X_AXIS]);   // Park the current head
+      line_to_current_position(planner.settings.max_feedrate_mm_s[X_AXIS]);   // Park the current head//停在当前的头上
       planner.synchronize();
     }
 
-    // Activate the new extruder ahead of calling set_axis_is_at_home!
+    // Activate the new extruder ahead of calling set_axis_is_at_home!//在调用set_axis_is_at_home之前激活新挤出机！
     active_extruder = new_tool;
 
-    // This function resets the max/min values - the current position may be overwritten below.
+    // This function resets the max/min values - the current position may be overwritten below.//此功能重置最大/最小值-当前位置可能会被覆盖。
     set_axis_is_at_home(X_AXIS);
 
     DEBUG_POS("New Extruder", current_position);
 
     switch (dual_x_carriage_mode) {
       case DXC_FULL_CONTROL_MODE:
-        // New current position is the position of the activated extruder
+        // New current position is the position of the activated extruder//新的当前位置是激活挤出机的位置
         current_position.x = inactive_extruder_x;
-        // Save the inactive extruder's position (from the old current_position)
+        // Save the inactive extruder's position (from the old current_position)//保存非活动挤出机的位置（从旧的当前位置）
         inactive_extruder_x = destination.x;
         DEBUG_ECHOLNPAIR("DXC Full Control curr.x=", current_position.x, " dest.x=", destination.x);
         break;
@@ -887,14 +888,14 @@ void fast_line_to_current(const AxisEnum fr_axis) { _line_to_current(fr_axis, 0.
         break;
     }
 
-    // Ensure X axis DIR pertains to the correct carriage
+    // Ensure X axis DIR pertains to the correct carriage//确保X轴方向与正确的托架相关
     stepper.set_directions();
 
     DEBUG_ECHOLNPAIR("Active extruder parked: ", active_extruder_parked ? "yes" : "no");
     DEBUG_POS("New extruder (parked)", current_position);
   }
 
-#endif // DUAL_X_CARRIAGE
+#endif // DUAL_X_CARRIAGE//双_X_车厢
 
 /**
  * Prime active tool using TOOLCHANGE_FILAMENT_SWAP settings
@@ -905,18 +906,18 @@ void fast_line_to_current(const AxisEnum fr_axis) { _line_to_current(fr_axis, 0.
     if (toolchange_settings.extra_prime > 0
       && TERN(PREVENT_COLD_EXTRUSION, !thermalManager.targetTooColdToExtrude(active_extruder), 1)
     ) {
-      destination = current_position; // Remember the old position
+      destination = current_position; // Remember the old position//还记得以前的位置吗
 
       const bool ok = TERN1(TOOLCHANGE_PARK, all_axes_homed() && toolchange_settings.enable_park);
 
       #if HAS_FAN && TOOLCHANGE_FS_FAN >= 0
-        // Store and stop fan. Restored on any exit.
+        // Store and stop fan. Restored on any exit.//储存并停止风扇。在任何出口恢复。
         REMEMBER(fan, thermalManager.fan_speed[TOOLCHANGE_FS_FAN], 0);
       #endif
 
-      // Z raise
+      // Z raise//Z升起
       if (ok) {
-        // Do a small lift to avoid the workpiece in the move back (below)
+        // Do a small lift to avoid the workpiece in the move back (below)//进行小幅度提升，以避免工件向后移动（下图）
         current_position.z += toolchange_settings.z_raise;
         #if HAS_SOFTWARE_ENDSTOPS
           NOMORE(current_position.z, soft_endstop.max.z);
@@ -925,7 +926,7 @@ void fast_line_to_current(const AxisEnum fr_axis) { _line_to_current(fr_axis, 0.
         planner.synchronize();
       }
 
-      // Park
+      // Park//停车场
       #if ENABLED(TOOLCHANGE_PARK)
         if (ok) {
           IF_DISABLED(TOOLCHANGE_PARK_Y_ONLY, current_position.x = toolchange_settings.change_point.x);
@@ -935,22 +936,22 @@ void fast_line_to_current(const AxisEnum fr_axis) { _line_to_current(fr_axis, 0.
         }
       #endif
 
-      // Prime (All distances are added and slowed down to ensure secure priming in all circumstances)
+      // Prime (All distances are added and slowed down to ensure secure priming in all circumstances)//充注（所有距离都增加并减慢，以确保在所有情况下都能安全充注）
       unscaled_e_move(toolchange_settings.swap_length + toolchange_settings.extra_prime, MMM_TO_MMS(toolchange_settings.prime_speed));
 
-      // Cutting retraction
+      // Cutting retraction//切削收缩
       #if TOOLCHANGE_FS_WIPE_RETRACT
         unscaled_e_move(-(TOOLCHANGE_FS_WIPE_RETRACT), MMM_TO_MMS(toolchange_settings.retract_speed));
       #endif
 
-      // Cool down with fan
+      // Cool down with fan//用风扇冷却
       #if HAS_FAN && TOOLCHANGE_FS_FAN >= 0
         thermalManager.fan_speed[TOOLCHANGE_FS_FAN] = toolchange_settings.fan_speed;
         gcode.dwell(SEC_TO_MS(toolchange_settings.fan_time));
         thermalManager.fan_speed[TOOLCHANGE_FS_FAN] = 0;
       #endif
 
-      // Move back
+      // Move back//退后
       #if ENABLED(TOOLCHANGE_PARK)
         if (ok) {
           #if ENABLED(TOOLCHANGE_NO_RETURN)
@@ -962,16 +963,16 @@ void fast_line_to_current(const AxisEnum fr_axis) { _line_to_current(fr_axis, 0.
         }
       #endif
 
-      // Cutting recover
+      // Cutting recover//切割回收
       unscaled_e_move(toolchange_settings.extra_resume + TOOLCHANGE_FS_WIPE_RETRACT, MMM_TO_MMS(toolchange_settings.unretract_speed));
 
-      // Resume at the old E position
+      // Resume at the old E position//恢复到原来的E位置
       current_position.e = destination.e;
       sync_plan_position_e();
     }
   }
 
-#endif // TOOLCHANGE_FILAMENT_SWAP
+#endif // TOOLCHANGE_FILAMENT_SWAP//更换工具\u灯丝\u更换
 
 /**
  * Perform a tool-change, which may result in moving the
@@ -990,7 +991,7 @@ void tool_change(const uint8_t new_tool, bool no_move/*=false*/) {
       return invalid_extruder_error(new_tool);
 
     #if MIXING_VIRTUAL_TOOLS > 1
-      // T0-Tnnn: Switch virtual tool by changing the index to the mix
+      // T0-Tnnn: Switch virtual tool by changing the index to the mix//T0 Tnnn：通过将索引更改为混合来切换虚拟工具
       mixer.T(new_tool);
     #endif
 
@@ -1002,7 +1003,7 @@ void tool_change(const uint8_t new_tool, bool no_move/*=false*/) {
 
   #elif EXTRUDERS == 0
 
-    // Nothing to do
+    // Nothing to do//无事可做
     UNUSED(new_tool); UNUSED(no_move);
 
   #elif EXTRUDERS < 2
@@ -1016,7 +1017,7 @@ void tool_change(const uint8_t new_tool, bool no_move/*=false*/) {
 
     planner.synchronize();
 
-    #if ENABLED(DUAL_X_CARRIAGE)  // Only T0 allowed if the Printer is in DXC_DUPLICATION_MODE or DXC_MIRRORED_MODE
+    #if ENABLED(DUAL_X_CARRIAGE)  // Only T0 allowed if the Printer is in DXC_DUPLICATION_MODE or DXC_MIRRORED_MODE//仅当打印机处于DXC_复制模式或DXC_镜像模式时才允许T0
       if (new_tool != 0 && idex_is_duplicating())
          return invalid_extruder_error(new_tool);
     #endif
@@ -1041,32 +1042,32 @@ void tool_change(const uint8_t new_tool, bool no_move/*=false*/) {
     const bool can_move_away = !no_move && !idex_full_control;
 
     #if HAS_LEVELING
-      // Set current position to the physical position
+      // Set current position to the physical position//将当前位置设置为物理位置
       TEMPORARY_BED_LEVELING_STATE(false);
     #endif
 
-    // First tool priming. To prime again, reboot the machine.
+    // First tool priming. To prime again, reboot the machine.//第一个工具启动。要重新启动，请重新启动计算机。
     #if ENABLED(TOOLCHANGE_FS_PRIME_FIRST_USED)
       static bool first_tool_is_primed = false;
       if (new_tool == old_tool && !first_tool_is_primed && enable_first_prime) {
         tool_change_prime();
         first_tool_is_primed = true;
-        TERN_(TOOLCHANGE_FS_INIT_BEFORE_SWAP, toolchange_extruder_ready[old_tool] = true); // Primed and initialized
+        TERN_(TOOLCHANGE_FS_INIT_BEFORE_SWAP, toolchange_extruder_ready[old_tool] = true); // Primed and initialized//启动和初始化
       }
     #endif
 
-    if (new_tool != old_tool || TERN0(PARKING_EXTRUDER, extruder_parked)) { // PARKING_EXTRUDER may need to attach old_tool when homing
+    if (new_tool != old_tool || TERN0(PARKING_EXTRUDER, extruder_parked)) { // PARKING_EXTRUDER may need to attach old_tool when homing//重新归位时，停车挤出机可能需要连接旧的工具
       destination = current_position;
 
       #if BOTH(TOOLCHANGE_FILAMENT_SWAP, HAS_FAN) && TOOLCHANGE_FS_FAN >= 0
-        // Store and stop fan. Restored on any exit.
+        // Store and stop fan. Restored on any exit.//储存并停止风扇。在任何出口恢复。
         REMEMBER(fan, thermalManager.fan_speed[TOOLCHANGE_FS_FAN], 0);
       #endif
 
-      // Z raise before retraction
+      // Z raise before retraction//Z缩回前升起
       #if ENABLED(TOOLCHANGE_ZRAISE_BEFORE_RETRACT) && DISABLED(SWITCHING_NOZZLE)
         if (can_move_away && TERN1(TOOLCHANGE_PARK, toolchange_settings.enable_park)) {
-          // Do a small lift to avoid the workpiece in the move back (below)
+          // Do a small lift to avoid the workpiece in the move back (below)//进行小幅度提升，以避免工件向后移动（下图）
           current_position.z += toolchange_settings.z_raise;
           #if HAS_SOFTWARE_ENDSTOPS
             NOMORE(current_position.z, soft_endstop.max.z);
@@ -1076,7 +1077,7 @@ void tool_change(const uint8_t new_tool, bool no_move/*=false*/) {
         }
       #endif
 
-      // Unload / Retract
+      // Unload / Retract//卸载/收回
       #if ENABLED(TOOLCHANGE_FILAMENT_SWAP)
         const bool should_swap = can_move_away && toolchange_settings.swap_length,
                    too_cold = TERN0(PREVENT_COLD_EXTRUSION,
@@ -1088,10 +1089,10 @@ void tool_change(const uint8_t new_tool, bool no_move/*=false*/) {
             if (ENABLED(SINGLENOZZLE)) { active_extruder = new_tool; return; }
           }
           else {
-            // For first new tool, change without unloading the old. 'Just prime/init the new'
+            // For first new tool, change without unloading the old. 'Just prime/init the new'//对于第一个新刀具，在不卸载旧刀具的情况下进行更换。”只需初始化/初始化新的'
             if (TERN1(TOOLCHANGE_FS_PRIME_FIRST_USED, first_tool_is_primed))
               unscaled_e_move(-toolchange_settings.swap_length, MMM_TO_MMS(toolchange_settings.retract_speed));
-            TERN_(TOOLCHANGE_FS_PRIME_FIRST_USED, first_tool_is_primed = true); // The first new tool will be primed by toolchanging
+            TERN_(TOOLCHANGE_FS_PRIME_FIRST_USED, first_tool_is_primed = true); // The first new tool will be primed by toolchanging//第一个新刀具将通过更换刀具来准备
           }
         }
       #endif
@@ -1115,7 +1116,7 @@ void tool_change(const uint8_t new_tool, bool no_move/*=false*/) {
 
       #if DISABLED(TOOLCHANGE_ZRAISE_BEFORE_RETRACT) && DISABLED(SWITCHING_NOZZLE)
         if (can_move_away && TERN1(TOOLCHANGE_PARK, toolchange_settings.enable_park)) {
-          // Do a small lift to avoid the workpiece in the move back (below)
+          // Do a small lift to avoid the workpiece in the move back (below)//进行小幅度提升，以避免工件向后移动（下图）
           current_position.z += toolchange_settings.z_raise;
           #if HAS_SOFTWARE_ENDSTOPS
             NOMORE(current_position.z, soft_endstop.max.z);
@@ -1124,7 +1125,7 @@ void tool_change(const uint8_t new_tool, bool no_move/*=false*/) {
         }
       #endif
 
-      // Toolchange park
+      // Toolchange park//工具更换公园
       #if ENABLED(TOOLCHANGE_PARK) && DISABLED(SWITCHING_NOZZLE)
         if (can_move_away && toolchange_settings.enable_park) {
           IF_DISABLED(TOOLCHANGE_PARK_Y_ONLY, current_position.x = toolchange_settings.change_point.x);
@@ -1143,23 +1144,23 @@ void tool_change(const uint8_t new_tool, bool no_move/*=false*/) {
 
       #if ENABLED(DUAL_X_CARRIAGE)
         dualx_tool_change(new_tool, no_move);
-      #elif ENABLED(PARKING_EXTRUDER)                                   // Dual Parking extruder
+      #elif ENABLED(PARKING_EXTRUDER)                                   // Dual Parking extruder//双停车挤出机
         parking_extruder_tool_change(new_tool, no_move);
-      #elif ENABLED(MAGNETIC_PARKING_EXTRUDER)                          // Magnetic Parking extruder
+      #elif ENABLED(MAGNETIC_PARKING_EXTRUDER)                          // Magnetic Parking extruder//磁力停车挤出机
         magnetic_parking_extruder_tool_change(new_tool);
-      #elif ENABLED(SWITCHING_TOOLHEAD)                                 // Switching Toolhead
+      #elif ENABLED(SWITCHING_TOOLHEAD)                                 // Switching Toolhead//开关刀头
         switching_toolhead_tool_change(new_tool, no_move);
-      #elif ENABLED(MAGNETIC_SWITCHING_TOOLHEAD)                        // Magnetic Switching Toolhead
+      #elif ENABLED(MAGNETIC_SWITCHING_TOOLHEAD)                        // Magnetic Switching Toolhead//磁开关刀头
         magnetic_switching_toolhead_tool_change(new_tool, no_move);
-      #elif ENABLED(ELECTROMAGNETIC_SWITCHING_TOOLHEAD)                 // Magnetic Switching ToolChanger
+      #elif ENABLED(ELECTROMAGNETIC_SWITCHING_TOOLHEAD)                 // Magnetic Switching ToolChanger//磁开关换刀器
         em_switching_toolhead_tool_change(new_tool, no_move);
-      #elif ENABLED(SWITCHING_NOZZLE) && !SWITCHING_NOZZLE_TWO_SERVOS   // Switching Nozzle (single servo)
-        // Raise by a configured distance to avoid workpiece, except with
-        // SWITCHING_NOZZLE_TWO_SERVOS, as both nozzles will lift instead.
+      #elif ENABLED(SWITCHING_NOZZLE) && !SWITCHING_NOZZLE_TWO_SERVOS   // Switching Nozzle (single servo)//切换喷嘴（单伺服）
+        // Raise by a configured distance to avoid workpiece, except with//升高一个配置的距离以避开工件，除非使用
+        // SWITCHING_NOZZLE_TWO_SERVOS, as both nozzles will lift instead.//切换两个喷嘴，因为两个喷嘴都将提升。
         if (!no_move) {
           const float newz = current_position.z + _MAX(-diff.z, 0.0);
 
-          // Check if Z has space to compensate at least z_offset, and if not, just abort now
+          // Check if Z has space to compensate at least z_offset, and if not, just abort now//检查Z是否有空间至少补偿Z_偏移，如果没有，现在就中止
           const float maxz = _MIN(TERN(HAS_SOFTWARE_ENDSTOPS, soft_endstop.max.z, Z_MAX_POS), Z_MAX_POS);
           if (newz > maxz) return;
 
@@ -1169,27 +1170,27 @@ void tool_change(const uint8_t new_tool, bool no_move/*=false*/) {
         move_nozzle_servo(new_tool);
       #endif
 
-      IF_DISABLED(DUAL_X_CARRIAGE, active_extruder = new_tool); // Set the new active extruder
+      IF_DISABLED(DUAL_X_CARRIAGE, active_extruder = new_tool); // Set the new active extruder//设置新的主动挤出机
 
       TERN_(TOOL_SENSOR, tool_sensor_disabled = false);
 
       (void)check_tool_sensor_stats(active_extruder, true);
 
-      // The newly-selected extruder XYZ is actually at...
+      // The newly-selected extruder XYZ is actually at...//新选择的挤出机XYZ实际上位于。。。
       DEBUG_ECHOLNPAIR("Offset Tool XYZ by { ", diff.x, ", ", diff.y, ", ", diff.z, " }");
       current_position += diff;
 
-      // Tell the planner the new "current position"
+      // Tell the planner the new "current position"//告诉计划员新的“当前位置”
       sync_plan_position();
 
       #if ENABLED(DELTA)
-        //LOOP_LINEAR_AXES(i) update_software_endstops(i); // or modify the constrain function
+        //LOOP_LINEAR_AXES(i) update_software_endstops(i); // or modify the constrain function//循环(线性)轴(i)更新(i)软件(i)终止(i)//或修改约束函数
         const bool safe_to_move = current_position.z < delta_clip_start_height - 1;
       #else
         constexpr bool safe_to_move = true;
       #endif
 
-      // Return to position and lower again
+      // Return to position and lower again//返回位置并再次降下
       const bool should_move = safe_to_move && !no_move && IsRunning();
       if (should_move) {
 
@@ -1205,23 +1206,23 @@ void tool_change(const uint8_t new_tool, bool no_move/*=false*/) {
             #if ENABLED(TOOLCHANGE_FS_INIT_BEFORE_SWAP)
               if (!toolchange_extruder_ready[new_tool]) {
                 toolchange_extruder_ready[new_tool] = true;
-                fr = toolchange_settings.prime_speed;       // Next move is a prime
-                unscaled_e_move(0, MMM_TO_MMS(fr));         // Init planner with 0 length move
+                fr = toolchange_settings.prime_speed;       // Next move is a prime//下一步是一个主要步骤
+                unscaled_e_move(0, MMM_TO_MMS(fr));         // Init planner with 0 length move//长度为0的初始计划器移动
               }
             #endif
 
-            // Unretract (or Prime)
+            // Unretract (or Prime)//未收缩（或基本）
             unscaled_e_move(toolchange_settings.swap_length, MMM_TO_MMS(fr));
 
-            // Extra Prime
+            // Extra Prime//额外素数
             unscaled_e_move(toolchange_settings.extra_prime, MMM_TO_MMS(toolchange_settings.prime_speed));
 
-            // Cutting retraction
+            // Cutting retraction//切削收缩
             #if TOOLCHANGE_FS_WIPE_RETRACT
               unscaled_e_move(-(TOOLCHANGE_FS_WIPE_RETRACT), MMM_TO_MMS(toolchange_settings.retract_speed));
             #endif
 
-            // Cool down with fan
+            // Cool down with fan//用风扇冷却
             #if HAS_FAN && TOOLCHANGE_FS_FAN >= 0
               thermalManager.fan_speed[TOOLCHANGE_FS_FAN] = toolchange_settings.fan_speed;
               gcode.dwell(SEC_TO_MS(toolchange_settings.fan_time));
@@ -1230,9 +1231,9 @@ void tool_change(const uint8_t new_tool, bool no_move/*=false*/) {
           }
         #endif
 
-        // Prevent a move outside physical bounds
+        // Prevent a move outside physical bounds//阻止超出物理边界的移动
         #if ENABLED(MAGNETIC_SWITCHING_TOOLHEAD)
-          // If the original position is within tool store area, go to X origin at once
+          // If the original position is within tool store area, go to X origin at once//如果原始位置在刀具存储区域内，请立即转到X原点
           if (destination.y < SWITCHING_TOOLHEAD_Y_POS + SWITCHING_TOOLHEAD_Y_CLEAR) {
             current_position.x = X_MIN_POS;
             planner.buffer_line(current_position, planner.settings.max_feedrate_mm_s[X_AXIS], new_tool);
@@ -1242,17 +1243,17 @@ void tool_change(const uint8_t new_tool, bool no_move/*=false*/) {
           apply_motion_limits(destination);
         #endif
 
-        // Should the nozzle move back to the old position?
+        // Should the nozzle move back to the old position?//喷嘴是否应移回原来的位置？
         if (can_move_away) {
           #if ENABLED(TOOLCHANGE_NO_RETURN)
-            // Just move back down
+            // Just move back down//往后退
             DEBUG_ECHOLNPGM("Move back Z only");
 
             if (TERN1(TOOLCHANGE_PARK, toolchange_settings.enable_park))
               do_blocking_move_to_z(destination.z, planner.settings.max_feedrate_mm_s[Z_AXIS]);
 
           #else
-            // Move back to the original (or adjusted) position
+            // Move back to the original (or adjusted) position//移回原始（或调整）位置
             DEBUG_POS("Move back", destination);
 
             #if ENABLED(TOOLCHANGE_PARK)
@@ -1269,12 +1270,12 @@ void tool_change(const uint8_t new_tool, bool no_move/*=false*/) {
 
         #if ENABLED(TOOLCHANGE_FILAMENT_SWAP)
           if (should_swap && !too_cold) {
-            // Cutting recover
+            // Cutting recover//切割回收
             unscaled_e_move(toolchange_settings.extra_resume + TOOLCHANGE_FS_WIPE_RETRACT, MMM_TO_MMS(toolchange_settings.unretract_speed));
             current_position.e = 0;
-            sync_plan_position_e(); // New extruder primed and set to 0
+            sync_plan_position_e(); // New extruder primed and set to 0//新挤出机已涂底漆并设置为0
 
-            // Restart Fan
+            // Restart Fan//重新启动风扇
             #if HAS_FAN && TOOLCHANGE_FS_FAN >= 0
               RESTORE(fan);
             #endif
@@ -1285,14 +1286,14 @@ void tool_change(const uint8_t new_tool, bool no_move/*=false*/) {
       }
 
       #if ENABLED(SWITCHING_NOZZLE)
-        // Move back down. (Including when the new tool is higher.)
+        // Move back down. (Including when the new tool is higher.)//向下移动。（包括新工具较高时。）
         if (!should_move)
           do_blocking_move_to_z(destination.z, planner.settings.max_feedrate_mm_s[Z_AXIS]);
       #endif
 
       TERN_(SWITCHING_NOZZLE_TWO_SERVOS, lower_nozzle(new_tool));
 
-    } // (new_tool != old_tool)
+    } // (new_tool != old_tool)//（新工具！=旧工具）
 
     planner.synchronize();
 
@@ -1332,7 +1333,7 @@ void tool_change(const uint8_t new_tool, bool no_move/*=false*/) {
 
     SERIAL_ECHO_MSG(STR_ACTIVE_EXTRUDER, active_extruder);
 
-  #endif // HAS_MULTI_EXTRUDER
+  #endif // HAS_MULTI_EXTRUDER//HAS_多_挤出机
 }
 
 #if ENABLED(TOOLCHANGE_MIGRATION_FEATURE)
@@ -1349,7 +1350,7 @@ void tool_change(const uint8_t new_tool, bool no_move/*=false*/) {
       }
     #endif
 
-    // No auto-migration or specified target?
+    // No auto-migration or specified target?//没有自动迁移或指定的目标？
     if (!migration.target && active_extruder >= migration.last) {
       DEBUG_ECHO_MSG("No Migration Target");
       DEBUG_ECHO_MSG("Target: ", migration.target, " Last: ", migration.last, " Active: ", active_extruder);
@@ -1357,13 +1358,13 @@ void tool_change(const uint8_t new_tool, bool no_move/*=false*/) {
       return false;
     }
 
-    // Migrate to a target or the next extruder
+    // Migrate to a target or the next extruder//迁移到目标或下一台挤出机
 
     uint8_t migration_extruder = active_extruder;
 
     if (migration.target) {
       DEBUG_ECHOLNPGM("Migration using fixed target");
-      // Specified target ok?
+      // Specified target ok?//指定的目标可以吗？
       const int16_t t = migration.target - 1;
       if (t != active_extruder) migration_extruder = t;
     }
@@ -1375,24 +1376,24 @@ void tool_change(const uint8_t new_tool, bool no_move/*=false*/) {
       return false;
     }
 
-    // Migration begins
+    // Migration begins//迁移开始了
     DEBUG_ECHOLNPGM("Beginning migration");
 
-    migration.in_progress = true; // Prevent runout script
+    migration.in_progress = true; // Prevent runout script//防止输出脚本
     planner.synchronize();
 
-    // Remember position before migration
+    // Remember position before migration//迁移前记住位置
     const float resume_current_e = current_position.e;
 
-    // Migrate the flow
+    // Migrate the flow//迁移流
     planner.set_flow(migration_extruder, planner.flow_percentage[active_extruder]);
 
-    // Migrate the retracted state
+    // Migrate the retracted state//迁移收回状态
     #if ENABLED(FWRETRACT)
       fwretract.retracted[migration_extruder] = fwretract.retracted[active_extruder];
     #endif
 
-    // Migrate the temperature to the new hotend
+    // Migrate the temperature to the new hotend//将温度迁移到新的热端
     #if HAS_MULTI_HOTEND
       thermalManager.setTargetHotend(thermalManager.degTargetHotend(active_extruder), migration_extruder);
       TERN_(AUTOTEMP, planner.autotemp_update());
@@ -1400,19 +1401,19 @@ void tool_change(const uint8_t new_tool, bool no_move/*=false*/) {
       thermalManager.wait_for_hotend(active_extruder);
     #endif
 
-    // Migrate Linear Advance K factor to the new extruder
+    // Migrate Linear Advance K factor to the new extruder//将线性推进K系数迁移到新挤出机
     TERN_(LIN_ADVANCE, planner.extruder_advance_K[active_extruder] = planner.extruder_advance_K[migration_extruder]);
 
-    // Perform the tool change
+    // Perform the tool change//执行刀具更换
     tool_change(migration_extruder);
 
-    // Retract if previously retracted
+    // Retract if previously retracted//如果先前已收回，则收回
     #if ENABLED(FWRETRACT)
       if (fwretract.retracted[active_extruder])
         unscaled_e_move(-fwretract.settings.retract_length, fwretract.settings.retract_feedrate_mm_s);
     #endif
 
-    // If no available extruder
+    // If no available extruder//如果没有可用的挤出机
     if (EXTRUDERS < 2 || active_extruder >= EXTRUDERS - 2 || active_extruder == migration.last)
       migration.automode = false;
 
@@ -1421,9 +1422,9 @@ void tool_change(const uint8_t new_tool, bool no_move/*=false*/) {
     current_position.e = resume_current_e;
 
     planner.synchronize();
-    planner.set_e_position_mm(current_position.e); // New extruder primed and ready
+    planner.set_e_position_mm(current_position.e); // New extruder primed and ready//新挤出机已涂底漆并准备就绪
     DEBUG_ECHOLNPGM("Migration Complete");
     return true;
   }
 
-#endif // TOOLCHANGE_MIGRATION_FEATURE
+#endif // TOOLCHANGE_MIGRATION_FEATURE//工具更改\迁移\功能

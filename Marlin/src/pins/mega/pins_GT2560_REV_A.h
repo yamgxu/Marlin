@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -35,9 +36,9 @@
 #endif
 #define DEFAULT_MACHINE_NAME "Prusa i3 Pro B"
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_MIN_PIN                             22
 #define X_MAX_PIN                             24
 #define Y_MIN_PIN                             26
@@ -56,9 +57,9 @@
   #define Z_MAX_PIN                           32
 #endif
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                            25
 #define X_DIR_PIN                             23
 #define X_ENABLE_PIN                          27
@@ -79,16 +80,16 @@
 #define E1_DIR_PIN                            47
 #define E1_ENABLE_PIN                         48
 
-//
-// Temperature Sensors
-//
+////
+// Temperature Sensors//温度传感器
+////
 #define TEMP_0_PIN                             8
 #define TEMP_1_PIN                             9
 #define TEMP_BED_PIN                          10
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_0_PIN                           2
 #define HEATER_1_PIN                           3
 #define HEATER_BED_PIN                         4
@@ -96,13 +97,13 @@
   #define FAN_PIN                              7
 #endif
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define SDSS                                  53
 #define LED_PIN                               13
 #define PS_ON_PIN                             12
-#define SUICIDE_PIN                           54  // Must be enabled at startup to keep power flowing
+#define SUICIDE_PIN                           54  // Must be enabled at startup to keep power flowing//必须在启动时启用，以保持功率流动
 #define KILL_PIN                              -1
 
 #if HAS_WIRED_LCD
@@ -117,7 +118,7 @@
       #define BTN_EN1                         40
       #define BTN_EN2                         42
     #elif ENABLED(FYSETC_MINI_12864)
-      // Disconnect EXP2-1 and EXP2-2, otherwise future firmware upload won't work.
+      // Disconnect EXP2-1 and EXP2-2, otherwise future firmware upload won't work.//断开EXP2-1和EXP2-2的连接，否则将来的固件上载将无法工作。
       #define DOGLCD_A0                       20
       #define DOGLCD_CS                       17
 
@@ -144,7 +145,7 @@
     #define BTN_ENC                           19
     #define SD_DETECT_PIN                     38
 
-  #else                                           // !IS_NEWPANEL
+  #else                                           // !IS_NEWPANEL// !这是新小组吗
 
     #define SHIFT_CLK_PIN                     38
     #define SHIFT_LD_PIN                      42
@@ -159,11 +160,11 @@
     #define LCD_PINS_D7                       19
 
     #if ENABLED(REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER)
-      #define BTN_ENC_EN             LCD_PINS_D7  // Detect the presence of the encoder
+      #define BTN_ENC_EN             LCD_PINS_D7  // Detect the presence of the encoder//检测编码器的存在
     #endif
 
     #define SD_DETECT_PIN                     -1
 
-  #endif // !IS_NEWPANEL
+  #endif // !IS_NEWPANEL// !这是新小组吗
 
-#endif // HAS_WIRED_LCD
+#endif // HAS_WIRED_LCD//有有线液晶显示器吗

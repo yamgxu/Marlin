@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -23,17 +24,17 @@
 
 #include "../inc/MarlinConfig.h"
 
-//#define MIXER_NORMALIZER_DEBUG
+//#define MIXER_NORMALIZER_DEBUG//#定义混频器\规格化器\调试
 
-#ifndef __AVR__ // || HAS_DUAL_MIXING
-  // Use 16-bit (or fastest) data for the integer mix factors
+#ifndef __AVR__ // || HAS_DUAL_MIXING//| |有|双|混合
+  // Use 16-bit (or fastest) data for the integer mix factors//使用16位（或最快）数据作为整数混合因子
   typedef uint_fast16_t mixer_comp_t;
   typedef uint_fast16_t mixer_accu_t;
   #define COLOR_A_MASK 0x8000
   #define COLOR_MASK 0x7FFF
 #else
-  // Use 8-bit data for the integer mix factors
-  // Exactness is sacrificed for speed
+  // Use 8-bit data for the integer mix factors//使用8位数据作为整数混合因子
+  // Exactness is sacrificed for speed//精确性是为了速度而牺牲的
   #define MIXER_ACCU_SIGNED
   typedef uint8_t mixer_comp_t;
   typedef int8_t mixer_accu_t;
@@ -66,14 +67,14 @@ static_assert(NR_MIXING_VIRTUAL_TOOLS <= MAX_VTOOLS, "MIXING_VIRTUAL_TOOLS must 
 #if ENABLED(GRADIENT_MIX)
 
   typedef struct {
-    bool enabled;                         // This gradient is enabled
-    mixer_comp_t color[MIXING_STEPPERS];  // The current gradient color
-    float start_z, end_z;                 // Region for gradient
-    int8_t start_vtool, end_vtool;        // Start and end virtual tools
-    mixer_perc_t start_mix[MIXING_STEPPERS],  // Start and end mixes from those tools
+    bool enabled;                         // This gradient is enabled//此渐变已启用
+    mixer_comp_t color[MIXING_STEPPERS];  // The current gradient color//当前渐变颜色
+    float start_z, end_z;                 // Region for gradient//梯度区域
+    int8_t start_vtool, end_vtool;        // Start and end virtual tools//开始和结束虚拟工具
+    mixer_perc_t start_mix[MIXING_STEPPERS],  // Start and end mixes from those tools//从这些工具开始和结束混合
                  end_mix[MIXING_STEPPERS];
     #if ENABLED(GRADIENT_VTOOL)
-      int8_t vtool_index;                 // Use this virtual tool number as index
+      int8_t vtool_index;                 // Use this virtual tool number as index//使用此虚拟刀具编号作为索引
     #endif
   } gradient_t;
 
@@ -86,14 +87,14 @@ static_assert(NR_MIXING_VIRTUAL_TOOLS <= MAX_VTOOLS, "MIXING_VIRTUAL_TOOLS must 
 class Mixer {
   public:
 
-  static float collector[MIXING_STEPPERS];    // M163 components, also editable from LCD
+  static float collector[MIXING_STEPPERS];    // M163 components, also editable from LCD//M163组件，也可从LCD编辑
 
-  static void init(); // Populate colors at boot time
+  static void init(); // Populate colors at boot time//在启动时填充颜色
 
   static void reset_vtools();
   static void refresh_collector(const float proportion=1.0, const uint8_t t=selected_vtool, float (&c)[MIXING_STEPPERS]=collector);
 
-  // Used up to Planner level
+  // Used up to Planner level//用于计划员级别
   FORCE_INLINE static void set_collector(const uint8_t c, const float f) { collector[c] = _MAX(f, 0.0f); }
 
   static void normalize(const uint8_t tool_index);
@@ -107,7 +108,7 @@ class Mixer {
     TERN_(HAS_DUAL_MIXING, update_mix_from_vtool());
   }
 
-  // Used when dealing with blocks
+  // Used when dealing with blocks//在处理块时使用
   FORCE_INLINE static void populate_block(mixer_comp_t b_color[MIXING_STEPPERS]) {
     #if ENABLED(GRADIENT_MIX)
       if (gradient.enabled) {
@@ -124,16 +125,16 @@ class Mixer {
 
   #if EITHER(HAS_DUAL_MIXING, GRADIENT_MIX)
 
-    static mixer_perc_t mix[MIXING_STEPPERS];  // Scratch array for the Mix in proportion to 100
+    static mixer_perc_t mix[MIXING_STEPPERS];  // Scratch array for the Mix in proportion to 100//按比例为100的混合物的刮擦阵列
 
     static inline void copy_mix_to_color(mixer_comp_t (&tcolor)[MIXING_STEPPERS]) {
-      // Scale each component to the largest one in terms of COLOR_A_MASK
-      // So the largest component will be COLOR_A_MASK and the other will be in proportion to it
+      // Scale each component to the largest one in terms of COLOR_A_MASK//根据颜色和遮罩将每个组件缩放为最大的组件
+      // So the largest component will be COLOR_A_MASK and the other will be in proportion to it//因此，最大的组成部分将是彩色遮罩，另一个将与之成比例
       const float scale = (COLOR_A_MASK) * RECIPROCAL(_MAX(
         LIST_N(MIXING_STEPPERS, mix[0], mix[1], mix[2], mix[3], mix[4], mix[5])
       ));
 
-      // Scale all values so their maximum is COLOR_A_MASK
+      // Scale all values so their maximum is COLOR_A_MASK//缩放所有值，使其最大值为颜色遮罩
       MIXER_STEPPER_LOOP(i) tcolor[i] = mix[i] * scale;
 
       #ifdef MIXER_NORMALIZER_DEBUG
@@ -148,7 +149,7 @@ class Mixer {
     static inline void update_mix_from_vtool(const uint8_t j=selected_vtool) {
       float ctot = 0;
       MIXER_STEPPER_LOOP(i) ctot += color[j][i];
-      //MIXER_STEPPER_LOOP(i) mix[i] = 100.0f * color[j][i] / ctot;
+      //MIXER_STEPPER_LOOP(i) mix[i] = 100.0f * color[j][i] / ctot;//混合器步进器环路（i）混合[i]=100.0f*颜色[j][i]/ctot；
       MIXER_STEPPER_LOOP(i) mix[i] = mixer_perc_t(100.0f * color[j][i] / ctot);
 
       #ifdef MIXER_NORMALIZER_DEBUG
@@ -160,26 +161,26 @@ class Mixer {
       #endif
     }
 
-  #endif // HAS_DUAL_MIXING || GRADIENT_MIX
+  #endif // HAS_DUAL_MIXING || GRADIENT_MIX//具有|双|混合|梯度|混合
 
   #if HAS_DUAL_MIXING
 
-    // Update the virtual tool from an edited mix
+    // Update the virtual tool from an edited mix//从已编辑的组合更新虚拟工具
     static inline void update_vtool_from_mix() {
       copy_mix_to_color(color[selected_vtool]);
       TERN_(GRADIENT_MIX, refresh_gradient());
-      // MIXER_STEPPER_LOOP(i) collector[i] = mix[i];
-      // normalize();
+      // MIXER_STEPPER_LOOP(i) collector[i] = mix[i];//混频器步进器环路（i）采集器[i]=mix[i]；
+      // normalize();//规范化（）；
     }
 
-  #endif // HAS_DUAL_MIXING
+  #endif // HAS_DUAL_MIXING//有双重混合吗
 
   #if ENABLED(GRADIENT_MIX)
 
     static gradient_t gradient;
     static float prev_z;
 
-    // Update the current mix from the gradient for a given Z
+    // Update the current mix from the gradient for a given Z//根据给定Z的渐变更新当前混合
     static void update_gradient_for_z(const_float_t z);
     static void update_gradient_for_planner_z();
     static inline void gradient_control(const_float_t z) {
@@ -205,7 +206,7 @@ class Mixer {
       #endif
     }
 
-    // Refresh the gradient after a change
+    // Refresh the gradient after a change//更改后刷新渐变
     static void refresh_gradient() {
       #if ENABLED(GRADIENT_VTOOL)
         const bool is_grd = (gradient.vtool_index == -1 || selected_vtool == (uint8_t)gradient.vtool_index);
@@ -226,9 +227,9 @@ class Mixer {
       }
     }
 
-  #endif // GRADIENT_MIX
+  #endif // GRADIENT_MIX//梯度混合
 
-  // Used in Stepper
+  // Used in Stepper//用于步进电机
   FORCE_INLINE static uint8_t get_stepper() { return runner; }
   FORCE_INLINE static uint8_t get_next_stepper() {
     for (;;) {
@@ -249,11 +250,11 @@ class Mixer {
 
   private:
 
-  // Used up to Planner level
+  // Used up to Planner level//用于计划员级别
   static uint_fast8_t selected_vtool;
   static mixer_comp_t color[NR_MIXING_VIRTUAL_TOOLS][MIXING_STEPPERS];
 
-  // Used in Stepper
+  // Used in Stepper//用于步进电机
   static int_fast8_t  runner;
   static mixer_comp_t s_color[MIXING_STEPPERS];
   static mixer_accu_t accu[MIXING_STEPPERS];

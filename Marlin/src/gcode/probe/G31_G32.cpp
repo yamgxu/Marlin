@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -37,4 +38,4 @@ void GcodeSuite::G31() { probe.deploy(); }
  */
 void GcodeSuite::G32() { probe.stow(); }
 
-#endif // Z_PROBE_SLED
+#endif // Z_PROBE_SLED//Z_探头(SLED)

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Copyright (C) 2011 Circuits At Home, LTD. All rights reserved.
  *
@@ -28,9 +29,9 @@
   #error "Never include macros.h directly; include Usb.h instead"
 #endif
 
-////////////////////////////////////////////////////////////////////////////////
-// HANDY MACROS
-////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// HANDY MACROS//方便的宏
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #define VALUE_BETWEEN(v,l,h) (((v)>(l)) && ((v)<(h)))
 #define VALUE_WITHIN(v,l,h) (((v)>=(l)) && ((v)<=(h)))
@@ -41,7 +42,7 @@
 #ifndef __BYTE_GRABBING_DEFINED__
 #define __BYTE_GRABBING_DEFINED__ 1
 #ifdef BROKEN_OPTIMIZER_LITTLE_ENDIAN
-// Note: Use this if your compiler generates horrible assembler!
+// Note: Use this if your compiler generates horrible assembler!//注意：如果编译器生成可怕的汇编程序，请使用此选项！
 #define BGRAB0(__usi__)  (((uint8_t *)&(__usi__))[0])
 #define BGRAB1(__usi__)  (((uint8_t *)&(__usi__))[1])
 #define BGRAB2(__usi__)  (((uint8_t *)&(__usi__))[2])
@@ -51,9 +52,9 @@
 #define BGRAB6(__usi__)  (((uint8_t *)&(__usi__))[6])
 #define BGRAB7(__usi__)  (((uint8_t *)&(__usi__))[7])
 #else
-// Note: The cast alone to uint8_t is actually enough.
-// GCC throws out the "& 0xFF", and the size is no different.
-// Some compilers need it.
+// Note: The cast alone to uint8_t is actually enough.//注：仅对uint8_t进行强制转换实际上就足够了。
+// GCC throws out the "& 0xFF", and the size is no different.//GCC抛出了“&0xFF”，大小也一样。
+// Some compilers need it.//有些编译器需要它。
 #define BGRAB0(__usi__)  ((uint8_t)((__usi__) & 0xFF ))
 #define BGRAB1(__usi__)  ((uint8_t)(((__usi__) >> 8) & 0xFF))
 #define BGRAB2(__usi__)  ((uint8_t)(((__usi__) >> 16) & 0xFF))
@@ -71,7 +72,7 @@
 #define BOVER6(__usi__)  ((uint64_t)(__usi__) << 48)
 #define BOVER7(__usi__)  ((uint64_t)(__usi__) << 56)
 
-// These are the smallest and fastest ways I have found so far in pure C/C++.
+// These are the smallest and fastest ways I have found so far in pure C/C++.//这些是迄今为止我在纯C/C++中发现的最小和最快的方法。
 #define BMAKE16(__usc1__,__usc0__) ((uint16_t)((uint16_t)(__usc0__) | (uint16_t)BOVER1(__usc1__)))
 #define BMAKE32(__usc3__,__usc2__,__usc1__,__usc0__) ((uint32_t)((uint32_t)(__usc0__) | (uint32_t)BOVER1(__usc1__) | (uint32_t)BOVER2(__usc2__) | (uint32_t)BOVER3(__usc3__)))
 #define BMAKE64(__usc7__,__usc6__,__usc5__,__usc4__,__usc3__,__usc2__,__usc1__,__usc0__) ((uint64_t)((uint64_t)__usc0__ | (uint64_t)BOVER1(__usc1__) | (uint64_t)BOVER2(__usc2__) | (uint64_t)BOVER3(__usc3__) | (uint64_t)BOVER4(__usc4__) | (uint64_t)BOVER5(__usc5__) | (uint64_t)BOVER6(__usc6__) | (uint64_t)BOVER1(__usc7__)))

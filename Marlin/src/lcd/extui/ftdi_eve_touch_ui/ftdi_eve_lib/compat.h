@@ -1,3 +1,4 @@
+/** translatione by yx */
 /****************************************************************************
  *   Written By Marcio Teixeira 2018 - Aleph Objects, Inc.                  *
  *                                                                          *
@@ -21,13 +22,13 @@
 
 #ifdef __MARLIN_FIRMWARE__
 
-  // Marlin will define the I/O functions for us
+  // Marlin will define the I/O functions for us//Marlin将为我们定义I/O功能
   #if ENABLED(TOUCH_UI_FTDI_EVE)
     #define FTDI_BASIC
     #define FTDI_EXTENDED
   #endif
 
-#else // !__MARLIN_FIRMWARE__
+#else // !__MARLIN_FIRMWARE__// !__马林鱼固件__
 
   #include <Arduino.h>
 
@@ -174,7 +175,7 @@
     MAKE_ARDUINO_PINS(52);
     MAKE_ARDUINO_PINS(53);
     #undef MAKE_ARDUINO_PINS
-  } // namespace fast_io
+  } // namespace fast_io//名称空间快速io
 
   #define SET_INPUT(pin)              fast_io::pin::set_input()
   #define SET_INPUT_PULLUP(pin)       do{ fast_io::pin::set_input(); fast_io::pin::set_high(); }while(0)
@@ -195,12 +196,12 @@
   #define pgm_read_ptr_far pgm_read_ptr
   #endif
 
-  // Use NUM_ARGS(__VA_ARGS__) to get the number of variadic arguments
+  // Use NUM_ARGS(__VA_ARGS__) to get the number of variadic arguments//使用NUM_ARGS（uu VA_ARGS_uu）获取可变参数的数量
   #define _NUM_ARGS(_,Z,Y,X,W,V,U,T,S,R,Q,P,O,N,M,L,K,J,I,H,G,F,E,D,C,B,A,OUT,...) OUT
   #define NUM_ARGS(V...) _NUM_ARGS(0,V,26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0)
 
-  // SERIAL_ECHOPAIR / SERIAL_ECHOPAIR_P is used to output a key value pair. The key must be a string and the value can be anything
-  // Print up to 12 pairs of values. Odd elements auto-wrapped in PSTR().
+  // SERIAL_ECHOPAIR / SERIAL_ECHOPAIR_P is used to output a key value pair. The key must be a string and the value can be anything//串行回波对/串行回波对用于输出键值对。键必须是字符串，值可以是任何内容
+  // Print up to 12 pairs of values. Odd elements auto-wrapped in PSTR().//最多打印12对值。奇数元素自动包装在PSTR（）中。
   #define __SEP_N(N,V...)   _SEP_##N(V)
   #define _SEP_N(N,V...)    __SEP_N(N,V)
   #define _SEP_1(PRE)       SERIAL_ECHOPGM(PRE)
@@ -208,7 +209,7 @@
   #define _SEP_3(a,b,c)     do{ _SEP_2(a,b); SERIAL_ECHOPGM(c); }while(0)
   #define _SEP_4(a,b,V...)  do{ _SEP_2(a,b); _SEP_2(V); }while(0)
 
-  // Print up to 1 pairs of values followed by newline
+  // Print up to 1 pairs of values followed by newline//最多打印1对值，后跟换行符
   #define __SELP_N(N,V...)            _SELP_##N(V)
   #define _SELP_N(N,V...)             __SELP_N(N,V)
   #define _SELP_1(PRE)                SERIAL_ECHOLNPGM(PRE)
@@ -224,9 +225,9 @@
 
   #define safe_delay delay
 
-  // Define macros for compatibility
+  // Define macros for compatibility//定义宏以实现兼容性
 
-  // Use NUM_ARGS(__VA_ARGS__) to get the number of variadic arguments
+  // Use NUM_ARGS(__VA_ARGS__) to get the number of variadic arguments//使用NUM_ARGS（uu VA_ARGS_uu）获取可变参数的数量
   #define _NUM_ARGS(_,Z,Y,X,W,V,U,T,S,R,Q,P,O,N,M,L,K,J,I,H,G,F,E,D,C,B,A,OUT,...) OUT
   #define NUM_ARGS(V...) _NUM_ARGS(0,V,26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0)
 
@@ -237,11 +238,11 @@
   #define SECOND(a,b,...)  b
   #define THIRD(a,b,c,...) c
 
-  #define IS_PROBE(V...) SECOND(V, 0)     // Get the second item passed, or 0
-  #define PROBE() ~, 1                    // Second item will be 1 if this is passed
+  #define IS_PROBE(V...) SECOND(V, 0)     // Get the second item passed, or 0//获取通过的第二项，或0
+  #define PROBE() ~, 1                    // Second item will be 1 if this is passed//如果通过，则第二项将为1
   #define _NOT_0 PROBE()
-  #define NOT(x) IS_PROBE(_CAT(_NOT_, x)) // NOT('0') gets '1'. Anything else gets '0'.
-  #define _BOOL(x) NOT(NOT(x))            // NOT('0') gets '0'. Anything else gets '1'.
+  #define NOT(x) IS_PROBE(_CAT(_NOT_, x)) // NOT('0') gets '1'. Anything else gets '0'.//NOT（'0'）获取“1”。其他任何内容都将获得“0”。
+  #define _BOOL(x) NOT(NOT(x))            // NOT('0') gets '0'. Anything else gets '1'.//NOT（'0'）获取“0”。其他任何东西都会得到“1”。
 
   #define _DO_1(W,C,A)       (_##W##_1(A))
   #define _DO_2(W,C,A,B)     (_##W##_1(A) C _##W##_1(B))
@@ -269,13 +270,13 @@
   #define ENABLED(V...)       DO(ENA,&&,V)
   #define DISABLED(V...)      DO(DIS,&&,V)
 
-  #define TERN(O,A,B)         _TERN(_ENA_1(O),B,A)    // OPTION converted to '0' or '1'
-  #define TERN0(O,A)          _TERN(_ENA_1(O),0,A)    // OPTION converted to A or '0'
-  #define TERN1(O,A)          _TERN(_ENA_1(O),1,A)    // OPTION converted to A or '1'
-  #define TERN_(O,A)          _TERN(_ENA_1(O),,A)     // OPTION converted to A or '<nul>'
-  #define _TERN(E,V...)       __TERN(_CAT(T_,E),V)    // Prepend 'T_' to get 'T_0' or 'T_1'
-  #define __TERN(T,V...)      ___TERN(_CAT(_NO,T),V)  // Prepend '_NO' to get '_NOT_0' or '_NOT_1'
-  #define ___TERN(P,V...)     THIRD(P,V)              // If first argument has a comma, A. Else B.
+  #define TERN(O,A,B)         _TERN(_ENA_1(O),B,A)    // OPTION converted to '0' or '1'//选项已转换为“0”或“1”
+  #define TERN0(O,A)          _TERN(_ENA_1(O),0,A)    // OPTION converted to A or '0'//已转换为或“0”的选项
+  #define TERN1(O,A)          _TERN(_ENA_1(O),1,A)    // OPTION converted to A or '1'//已转换为或“1”的选项
+  #define TERN_(O,A)          _TERN(_ENA_1(O),,A)     // OPTION converted to A or '<nul>'//选项转换为或“<nul>”
+  #define _TERN(E,V...)       __TERN(_CAT(T_,E),V)    // Prepend 'T_' to get 'T_0' or 'T_1'//前置'T_'以获取'T_0'或'T_1'
+  #define __TERN(T,V...)      ___TERN(_CAT(_NO,T),V)  // Prepend '_NO' to get '_NOT_0' or '_NOT_1'//预加“\u NO”以获取“\u NOT\u 0”或“\u NOT\u 1”
+  #define ___TERN(P,V...)     THIRD(P,V)              // If first argument has a comma, A. Else B.//若第一个参数有一个逗号，a。否则B。
 
   #define IF_ENABLED          TERN_
   #define IF_DISABLED(O,A)    _TERN(_ENA_1(O),,A)
@@ -286,7 +287,7 @@
   #define BOTH(V1,V2)         ALL(V1,V2)
   #define EITHER(V1,V2)       ANY(V1,V2)
 
-  // Remove compiler warning on an unused variable
+  // Remove compiler warning on an unused variable//删除未使用变量上的编译器警告
   #ifndef UNUSED
     #if defined(ARDUINO_ARCH_STM32) && !defined(STM32GENERIC)
       #define UNUSED(X) (void)X
@@ -295,4 +296,4 @@
     #endif
   #endif
 
-#endif // !__MARLIN_FIRMWARE__
+#endif // !__MARLIN_FIRMWARE__// !__马林鱼固件__

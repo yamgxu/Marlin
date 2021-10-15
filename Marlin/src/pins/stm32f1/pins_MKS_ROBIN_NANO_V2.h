@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -37,38 +38,38 @@
 
 #define BOARD_NO_NATIVE_USB
 
-// Avoid conflict with TIMER_SERVO when using the STM32 HAL
+// Avoid conflict with TIMER_SERVO when using the STM32 HAL//使用STM32 HAL时，避免与定时器_伺服发生冲突
 #define TEMP_TIMER 5
 
-//
-// Release PB4 (Y_ENABLE_PIN) from JTAG NRST role
-//
+////
+// Release PB4 (Y_ENABLE_PIN) from JTAG NRST role//从JTAG NRST角色中释放PB4（Y_启用_引脚）
+////
 #define DISABLE_DEBUG
 
-//
-// EEPROM
-//
-//#define FLASH_EEPROM_EMULATION
-//#define SDCARD_EEPROM_EMULATION
+////
+// EEPROM//电可擦可编程只读存储器
+////
+//#define FLASH_EEPROM_EMULATION//#定义FLASH_EEPROM_仿真
+//#define SDCARD_EEPROM_EMULATION//#定义SD卡\u EEPROM\u仿真
 
 #if EITHER(NO_EEPROM_SELECTED, I2C_EEPROM)
-  #define I2C_EEPROM                              // EEPROM on I2C-0
-  #define MARLIN_EEPROM_SIZE              0x1000  // 4KB
+  #define I2C_EEPROM                              // EEPROM on I2C-0//I2C-0上的EEPROM
+  #define MARLIN_EEPROM_SIZE              0x1000  // 4KB//4KB
 #endif
 
-//
-// Note: MKS Robin board is using SPI2 interface.
-//
+////
+// Note: MKS Robin board is using SPI2 interface.//注：MKS Robin板使用SPI2接口。
+////
 #define SPI_DEVICE                             2
 
-//
-// Servos
-//
-#define SERVO0_PIN                          PA8   // Enable BLTOUCH
+////
+// Servos//伺服
+////
+#define SERVO0_PIN                          PA8   // Enable BLTOUCH//启用BLTOUCH
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_DIAG_PIN                          PA15
 #define Y_DIAG_PIN                          PA12
 #define Z_DIAG_PIN                          PA11
@@ -80,9 +81,9 @@
 #define Z_MIN_PIN                           PA11
 #define Z_MAX_PIN                           PC4
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_ENABLE_PIN                        PE4
 #define X_STEP_PIN                          PE3
 #define X_DIR_PIN                           PE2
@@ -118,9 +119,9 @@
   #define E1_CS_PIN                         PD8
 #endif
 
-//
-// Software SPI pins for TMC2130 stepper drivers
-//
+////
+// Software SPI pins for TMC2130 stepper drivers//TMC2130步进驱动器的软件SPI引脚
+////
 #if ENABLED(TMC_USE_SW_SPI)
   #ifndef TMC_SW_MOSI
     #define TMC_SW_MOSI                     PD14
@@ -140,15 +141,15 @@
    * Hardware serial communication ports.
    * If undefined software serial is used according to the pins below
    */
-  //#define X_HARDWARE_SERIAL  MSerial1
-  //#define Y_HARDWARE_SERIAL  MSerial1
-  //#define Z_HARDWARE_SERIAL  MSerial1
-  //#define E0_HARDWARE_SERIAL MSerial1
-  //#define E1_HARDWARE_SERIAL MSerial1
+  //#define X_HARDWARE_SERIAL  MSerial1//#定义X_硬件_串行MSerial1
+  //#define Y_HARDWARE_SERIAL  MSerial1//#定义Y_硬件_串行MSerial1
+  //#define Z_HARDWARE_SERIAL  MSerial1//#定义Z_硬件_串行MSerial1
+  //#define E0_HARDWARE_SERIAL MSerial1//#定义E0_硬件_串行MSerial1
+  //#define E1_HARDWARE_SERIAL MSerial1//#定义E1_硬件_串行MSerial1
 
-  //
-  // Software serial
-  //
+  ////
+  // Software serial//软件系列
+  ////
 
   #define X_SERIAL_TX_PIN                   PD5
   #define X_SERIAL_RX_PIN                   PD5
@@ -165,80 +166,80 @@
   #define E1_SERIAL_TX_PIN                  PD8
   #define E1_SERIAL_RX_PIN                  PD8
 
-  // Reduce baud rate to improve software serial reliability
+  // Reduce baud rate to improve software serial reliability//降低波特率以提高软件串行可靠性
   #define TMC_BAUD_RATE                    19200
-#endif // HAS_TMC_UART
+#endif // HAS_TMC_UART//有TMC UART
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                          PC1   // TH1
-#define TEMP_1_PIN                          PC2   // TH2
-#define TEMP_BED_PIN                        PC0   // TB1
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                          PC1   // TH1//TH1
+#define TEMP_1_PIN                          PC2   // TH2//TH2
+#define TEMP_BED_PIN                        PC0   // TB1//TB1
 
-//
-// Heaters / Fans
-//
-#define HEATER_0_PIN                        PC3   // HEATER1
-#define HEATER_1_PIN                        PB0   // HEATER2
-#define HEATER_BED_PIN                      PA0   // HOT BED
+////
+// Heaters / Fans//加热器/风扇
+////
+#define HEATER_0_PIN                        PC3   // HEATER1//加热器1
+#define HEATER_1_PIN                        PB0   // HEATER2//加热器2
+#define HEATER_BED_PIN                      PA0   // HOT BED//热床
 
-#define FAN_PIN                             PB1   // FAN
+#define FAN_PIN                             PB1   // FAN//扇子
 
-//
-// Thermocouples
-//
-//#define MAX6675_SS_PIN                    PE5   // TC1 - CS1
-//#define MAX6675_SS_PIN                    PE6   // TC2 - CS2
+////
+// Thermocouples//热电偶
+////
+//#define MAX6675_SS_PIN                    PE5   // TC1 - CS1//#定义MAX6675_不锈钢_引脚PE5//TC1-CS1
+//#define MAX6675_SS_PIN                    PE6   // TC2 - CS2//#定义MAX6675_不锈钢_引脚PE6//TC2-CS2
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #if HAS_TFT_LVGL_UI
-  //#define MKSPWC
+  //#define MKSPWC//#定义MKSPWC
   #ifdef MKSPWC
-    #define SUICIDE_PIN                     PB2   // Enable MKSPWC SUICIDE PIN
-    #define SUICIDE_PIN_INVERTING          false  // Enable MKSPWC PIN STATE
-    #define KILL_PIN                        PA2   // Enable MKSPWC DET PIN
-    #define KILL_PIN_STATE                  true  // Enable MKSPWC PIN STATE
+    #define SUICIDE_PIN                     PB2   // Enable MKSPWC SUICIDE PIN//启用MKSPWC自杀针
+    #define SUICIDE_PIN_INVERTING          false  // Enable MKSPWC PIN STATE//启用MKSPWC引脚状态
+    #define KILL_PIN                        PA2   // Enable MKSPWC DET PIN//启用MKSPWC DET引脚
+    #define KILL_PIN_STATE                  true  // Enable MKSPWC PIN STATE//启用MKSPWC引脚状态
   #endif
 
-  #define MT_DET_1_PIN                      PA4   // LVGL UI FILAMENT RUNOUT1 PIN
-  #define MT_DET_2_PIN                      PE6   // LVGL UI FILAMENT RUNOUT2 PIN
-  #define MT_DET_PIN_INVERTING             false  // LVGL UI filament RUNOUT PIN STATE
+  #define MT_DET_1_PIN                      PA4   // LVGL UI FILAMENT RUNOUT1 PIN//LVGL UI灯丝跳动1引脚
+  #define MT_DET_2_PIN                      PE6   // LVGL UI FILAMENT RUNOUT2 PIN//LVGL UI灯丝跳动2引脚
+  #define MT_DET_PIN_INVERTING             false  // LVGL UI filament RUNOUT PIN STATE//LVGL UI灯丝偏转引脚状态
 
-  #define WIFI_IO0_PIN                      PC13  // MKS ESP WIFI IO0 PIN
-  #define WIFI_IO1_PIN                      PC7   // MKS ESP WIFI IO1 PIN
-  #define WIFI_RESET_PIN                    PE9   // MKS ESP WIFI RESET PIN
+  #define WIFI_IO0_PIN                      PC13  // MKS ESP WIFI IO0 PIN//MKS ESP WIFI IO0引脚
+  #define WIFI_IO1_PIN                      PC7   // MKS ESP WIFI IO1 PIN//MKS ESP WIFI IO1引脚
+  #define WIFI_RESET_PIN                    PE9   // MKS ESP WIFI RESET PIN//MKS ESP无线重置PIN码
 
   #if ENABLED(MKS_TEST)
-    #define MKS_TEST_POWER_LOSS_PIN         PA2   // PW_DET
-    #define MKS_TEST_PS_ON_PIN              PB2   // PW_OFF
+    #define MKS_TEST_POWER_LOSS_PIN         PA2   // PW_DET//普华永道
+    #define MKS_TEST_PS_ON_PIN              PB2   // PW_OFF//普华永道
   #endif
 #else
-  //#define POWER_LOSS_PIN                  PA2   // PW_DET
-  //#define PS_ON_PIN                       PB2   // PW_OFF
+  //#define POWER_LOSS_PIN                  PA2   // PW_DET//#定义电源损耗引脚PA2//PW\U DET
+  //#define PS_ON_PIN                       PB2   // PW_OFF//#定义PS_ON_引脚PB2//PW_OFF
   #define FIL_RUNOUT_PIN                    PA4
   #define FIL_RUNOUT2_PIN                   PE6
 #endif
 
-//#define LED_PIN                           PB2
+//#define LED_PIN                           PB2//#定义LED_引脚PB2
 
-//
-// SD Card
-//
+////
+// SD Card//SD卡
+////
 #ifndef SDCARD_CONNECTION
   #define SDCARD_CONNECTION              ONBOARD
 #endif
 
 #define SDIO_SUPPORT
-#define SDIO_CLOCK                       4500000  // 4.5 MHz
+#define SDIO_CLOCK                       4500000  // 4.5 MHz//4.5兆赫
 #define SD_DETECT_PIN                       PD12
 #define ONBOARD_SD_CS_PIN                   PC11
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 
 /**
  * Note: MKS Robin TFT screens use various TFT controllers.
@@ -248,14 +249,14 @@
 
 #if HAS_SPI_TFT
 
-  // Shared SPI TFT
+  // Shared SPI TFT//共享SPI TFT
 
   #define LCD_BACKLIGHT_PIN                 PD13
 
-  #define TOUCH_CS_PIN                      PE14  // SPI1_NSS
-  #define TOUCH_SCK_PIN                     PA5   // SPI1_SCK
-  #define TOUCH_MISO_PIN                    PA6   // SPI1_MISO
-  #define TOUCH_MOSI_PIN                    PA7   // SPI1_MOSI
+  #define TOUCH_CS_PIN                      PE14  // SPI1_NSS//SPI1\U NSS
+  #define TOUCH_SCK_PIN                     PA5   // SPI1_SCK//SPI1_SCK
+  #define TOUCH_MISO_PIN                    PA6   // SPI1_MISO//味噌
+  #define TOUCH_MOSI_PIN                    PA7   // SPI1_MOSI//SPI1_MOSI
 
   #define BTN_EN1                           PE8
   #define BTN_EN2                           PE11
@@ -280,7 +281,7 @@
 #endif
 
 #if ENABLED(TFT_CLASSIC_UI)
-  // Emulated DOGM SPI
+  // Emulated DOGM SPI//仿真DOGM-SPI
   #define LCD_PINS_ENABLE                   PD13
   #define LCD_PINS_RS                       PC6
   #define BTN_ENC                           PE13
@@ -292,12 +293,12 @@
 
 #if HAS_WIRED_LCD && !HAS_SPI_TFT
 
-  // NON TFT Displays
+  // NON TFT Displays//非TFT显示器
 
   #if ENABLED(MKS_MINI_12864)
 
-    // MKS MINI12864 and MKS LCD12864B
-    // If using MKS LCD12864A (Need to remove RPK2 resistor)
+    // MKS MINI12864 and MKS LCD12864B//MKS MINI12864和MKS LCD12864B
+    // If using MKS LCD12864A (Need to remove RPK2 resistor)//如果使用MKS LCD12864A（需要拆除RPK2电阻器）
 
     #define LCD_BACKLIGHT_PIN               -1
     #define LCD_RESET_PIN                   -1
@@ -319,7 +320,7 @@
       #define BEEPER_PIN                    -1
     #endif
 
-  #else                                           // !MKS_MINI_12864
+  #else                                           // !MKS_MINI_12864// !MKS_MINI_12864
 
     #define LCD_PINS_D4                     PE14
     #if IS_ULTIPANEL
@@ -328,7 +329,7 @@
       #define LCD_PINS_D7                   PD10
 
       #if ENABLED(REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER)
-        #define BTN_ENC_EN           LCD_PINS_D7  // Detect the presence of the encoder
+        #define BTN_ENC_EN           LCD_PINS_D7  // Detect the presence of the encoder//检测编码器的存在
       #endif
 
     #endif
@@ -343,13 +344,13 @@
       #define BOARD_ST7920_DELAY_3 DELAY_NS(125)
     #endif
 
-  #endif // !MKS_MINI_12864
+  #endif // !MKS_MINI_12864// !MKS_MINI_12864
 
-#endif // HAS_WIRED_LCD && !HAS_SPI_TFT
+#endif // HAS_WIRED_LCD && !HAS_SPI_TFT//有线液晶显示器&&！有SPI和TFT吗
 
 #define HAS_SPI_FLASH                          1
 #if HAS_SPI_FLASH
-  #define SPI_FLASH_SIZE               0x1000000  // 16MB
+  #define SPI_FLASH_SIZE               0x1000000  // 16MB//16MB
   #define W25QXX_CS_PIN                     PB12
   #define W25QXX_MOSI_PIN                   PB15
   #define W25QXX_MISO_PIN                   PB14

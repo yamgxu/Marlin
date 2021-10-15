@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -20,9 +21,9 @@
  *
  */
 
-//
-// Configuration Menu
-//
+////
+// Configuration Menu//配置菜单
+////
 
 #include "../../inc/MarlinConfigPre.h"
 
@@ -84,7 +85,7 @@ void menu_advanced_settings();
     #endif
   }
 
-#endif // LCD_PROGRESS_BAR_TEST
+#endif // LCD_PROGRESS_BAR_TEST//LCD\u进度\u条\u测试
 
 #if HAS_DEBUG_MENU
 
@@ -129,7 +130,7 @@ void menu_advanced_settings();
 
   #if ENABLED(TOOLCHANGE_MIGRATION_FEATURE)
 
-    #include "../../module/motion.h" // for active_extruder
+    #include "../../module/motion.h" // for active_extruder//用于主动式挤出机
     #include "../../gcode/queue.h"
 
     void menu_toolchange_migration() {
@@ -138,11 +139,11 @@ void menu_advanced_settings();
       START_MENU();
       BACK_ITEM(MSG_CONFIGURATION);
 
-      // Auto mode ON/OFF
+      // Auto mode ON/OFF//自动模式开/关
       EDIT_ITEM(bool, MSG_TOOL_MIGRATION_AUTO, &migration.automode);
       EDIT_ITEM(uint8, MSG_TOOL_MIGRATION_END, &migration.last, 0, EXTRUDERS - 1);
 
-      // Migrate to a chosen extruder
+      // Migrate to a chosen extruder//迁移到选定的挤出机
       LOOP_L_N(s, EXTRUDERS) {
         if (s != active_extruder) {
           ACTION_ITEM_N_P(s, msg_migrate, []{
@@ -165,8 +166,8 @@ void menu_advanced_settings();
   void menu_tool_offsets() {
 
     auto _recalc_offsets = []{
-      if (active_extruder && all_axes_trusted()) {  // For the 2nd extruder re-home so the next tool-change gets the new offsets.
-        queue.inject_P(G28_STR); // In future, we can babystep the 2nd extruder (if active), making homing unnecessary.
+      if (active_extruder && all_axes_trusted()) {  // For the 2nd extruder re-home so the next tool-change gets the new offsets.//对于第二台挤出机，重新安装，以便下一次换刀时获得新的偏移量。
+        queue.inject_P(G28_STR); // In future, we can babystep the 2nd extruder (if active), making homing unnecessary.//将来，我们可以使用第二台挤出机（如果处于活动状态）进行babystep，这样就不需要重新定位。
         active_extruder = 0;
       }
     };
@@ -197,11 +198,11 @@ void menu_advanced_settings();
 
     GCODES_ITEM(MSG_IDEX_MODE_AUTOPARK,  PSTR("M605S1\nG28X\nG1X0"));
     GCODES_ITEM(MSG_IDEX_MODE_DUPLICATE, need_g28
-      ? PSTR("M605S1\nT0\nG28\nM605S2\nG28X\nG1X0")         // If Y or Z is not homed, do a full G28 first
+      ? PSTR("M605S1\nT0\nG28\nM605S2\nG28X\nG1X0")         // If Y or Z is not homed, do a full G28 first//如果Y或Z未定位，请先进行完整的G28测试
       : PSTR("M605S1\nT0\nM605S2\nG28X\nG1X0")
     );
     GCODES_ITEM(MSG_IDEX_MODE_MIRRORED_COPY, need_g28
-      ? PSTR("M605S1\nT0\nG28\nM605S2\nG28X\nG1X0\nM605S3") // If Y or Z is not homed, do a full G28 first
+      ? PSTR("M605S1\nT0\nG28\nM605S2\nG28X\nG1X0\nM605S3") // If Y or Z is not homed, do a full G28 first//如果Y或Z未定位，请先进行完整的G28测试
       : PSTR("M605S1\nT0\nM605S2\nG28 X\nG1X0\nM605S3")
     );
     GCODES_ITEM(MSG_IDEX_MODE_FULL_CTRL, PSTR("M605S0\nG28X"));
@@ -479,7 +480,7 @@ void menu_advanced_settings();
     END_MENU();
   }
 
-#endif // CUSTOM_MENU_CONFIG
+#endif // CUSTOM_MENU_CONFIG//自定义菜单配置
 
 void menu_configuration() {
   const bool busy = printer_busy();
@@ -487,9 +488,9 @@ void menu_configuration() {
   START_MENU();
   BACK_ITEM(MSG_MAIN);
 
-  //
-  // Debug Menu when certain options are enabled
-  //
+  ////
+  // Debug Menu when certain options are enabled//启用某些选项时的调试菜单
+  ////
   #if HAS_DEBUG_MENU
     SUBMENU(MSG_DEBUG_MENU, menu_debug);
   #endif
@@ -512,9 +513,9 @@ void menu_configuration() {
     EDIT_ITEM(LCD_Z_OFFSET_TYPE, MSG_ZPROBE_ZOFFSET, &probe.offset.z, Z_PROBE_OFFSET_RANGE_MIN, Z_PROBE_OFFSET_RANGE_MAX);
   #endif
 
-  //
-  // Set Fan Controller speed
-  //
+  ////
+  // Set Fan Controller speed//设置风扇控制器速度
+  ////
   #if ENABLED(CONTROLLER_FAN_MENU)
     SUBMENU(MSG_CONTROLLER_FAN, menu_controller_fan);
   #endif
@@ -541,9 +542,9 @@ void menu_configuration() {
     #endif
   }
 
-  //
-  // Set single nozzle filament retract and prime length
-  //
+  ////
+  // Set single nozzle filament retract and prime length//设置单喷嘴灯丝收缩和基本长度
+  ////
   #if HAS_MULTI_EXTRUDER
     SUBMENU(MSG_TOOL_CHANGE, menu_tool_change);
     #if ENABLED(TOOLCHANGE_MIGRATION_FEATURE)
@@ -566,7 +567,7 @@ void menu_configuration() {
     EDIT_ITEM(bool, MSG_OUTAGE_RECOVERY, &recovery.enabled, recovery.changed);
   #endif
 
-  // Preheat configurations
+  // Preheat configurations//预热配置
   #if PREHEAT_COUNT && DISABLED(SLIM_LCD_MENUS)
     LOOP_L_N(m, PREHEAT_COUNT)
       SUBMENU_N_S(m, ui.get_preheat_label(m), MSG_PREHEAT_M_SETTINGS, _menu_configuration_preheat_settings);
@@ -586,4 +587,4 @@ void menu_configuration() {
   END_MENU();
 }
 
-#endif // HAS_LCD_MENU
+#endif // HAS_LCD_MENU//有LCD菜单吗

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -34,11 +35,11 @@
  * The path is relative to the root directory
  */
 void GcodeSuite::M23() {
-  // Simplify3D includes the size, so zero out all spaces (#7227)
+  // Simplify3D includes the size, so zero out all spaces (#7227)//Simplify3D包含大小，因此将所有空间归零（#7227）
   for (char *fn = parser.string_arg; *fn; ++fn) if (*fn == ' ') *fn = '\0';
   card.openFileRead(parser.string_arg);
 
   TERN_(LCD_SET_PROGRESS_MANUALLY, ui.set_progress(0));
 }
 
-#endif // SDSUPPORT
+#endif // SDSUPPORT//SDSUPPORT

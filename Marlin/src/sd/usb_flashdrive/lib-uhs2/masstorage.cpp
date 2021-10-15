@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Copyright (C) 2011 Circuits At Home, LTD. All rights reserved.
  *
@@ -33,9 +34,9 @@ const uint8_t BulkOnly::epDataInIndex = 1;
 const uint8_t BulkOnly::epDataOutIndex = 2;
 const uint8_t BulkOnly::epInterruptInIndex = 3;
 
-////////////////////////////////////////////////////////////////////////////////
-// Interface code
-////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Interface code//接口代码
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
  * Get the capacity of the media
@@ -83,9 +84,9 @@ bool BulkOnly::WriteProtected(uint8_t lun) { return WriteOk[lun]; }
  * @return
  */
 uint8_t BulkOnly::SCSITransaction6(CDB6_t *cdb, uint16_t buf_size, void *buf, uint8_t dir) {
-  // promote buf_size to 32bits.
+  // promote buf_size to 32bits.//将buf_大小提升到32位。
   CommandBlockWrapper cbw = CommandBlockWrapper(++dCBWTag, (uint32_t)buf_size, cdb, dir);
-  //SetCurLUN(cdb->LUN);
+  //SetCurLUN(cdb->LUN);//SetCurLUN（cdb->LUN）；
   return (HandleSCSIError(Transaction(&cbw, buf_size, buf)));
 }
 
@@ -99,9 +100,9 @@ uint8_t BulkOnly::SCSITransaction6(CDB6_t *cdb, uint16_t buf_size, void *buf, ui
  * @return
  */
 uint8_t BulkOnly::SCSITransaction10(CDB10_t *cdb, uint16_t buf_size, void *buf, uint8_t dir) {
-  // promote buf_size to 32bits.
+  // promote buf_size to 32bits.//将buf_大小提升到32位。
   CommandBlockWrapper cbw = CommandBlockWrapper(++dCBWTag, (uint32_t)buf_size, cdb, dir);
-  //SetCurLUN(cdb->LUN);
+  //SetCurLUN(cdb->LUN);//SetCurLUN（cdb->LUN）；
   return (HandleSCSIError(Transaction(&cbw, buf_size, buf)));
 }
 
@@ -213,12 +214,12 @@ again:
   return er;
 }
 
-// End of user functions, the remaining code below is driver internals.
-// Only developer serviceable parts below!
+// End of user functions, the remaining code below is driver internals.//用户函数结束时，下面剩下的代码是驱动程序内部代码。
+// Only developer serviceable parts below!//仅适用于以下可维修部件！
 
-////////////////////////////////////////////////////////////////////////////////
-// Main driver code
-////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Main driver code//主驱动程序代码
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 BulkOnly::BulkOnly(USB *p) :
 pUsb(p),
@@ -227,7 +228,7 @@ bIface(0),
 bNumEP(1),
 qNextPollTime(0),
 bPollEnable(false),
-//dCBWTag(0),
+//dCBWTag(0),//dCBWTag（0），
 bLastUsbError(0) {
   ClearAllEP();
   dCBWTag = 0;
@@ -263,8 +264,8 @@ uint8_t BulkOnly::ConfigureDevice(uint8_t parent, uint8_t port, bool lowspeed) {
 
   if (bAddress) return USB_ERROR_CLASS_INSTANCE_ALREADY_IN_USE;
 
-  // <TECHNICAL>
-  // Get pointer to pseudo device with address 0 assigned
+  // <TECHNICAL>//<TECHNICAL>
+  // Get pointer to pseudo device with address 0 assigned//获取指向已分配地址0的伪设备的指针
   p = addrPool.GetUsbDevicePtr(0);
   if (!p) return USB_ERROR_ADDRESS_NOT_FOUND_IN_POOL;
 
@@ -273,31 +274,31 @@ uint8_t BulkOnly::ConfigureDevice(uint8_t parent, uint8_t port, bool lowspeed) {
     return USB_ERROR_EPINFO_IS_NULL;
   }
 
-  // Save old pointer to EP_RECORD of address 0
+  // Save old pointer to EP_RECORD of address 0//将旧指针保存到地址0的EP_记录
   oldep_ptr = p->epinfo;
 
-  // Temporary assign new pointer to epInfo to p->epinfo in order to avoid toggle inconsistence
+  // Temporary assign new pointer to epInfo to p->epinfo in order to avoid toggle inconsistence//临时将指向epInfo的新指针分配到p->epInfo，以避免切换不一致
   p->epinfo = epInfo;
 
   p->lowspeed = lowspeed;
-  // Get device descriptor
+  // Get device descriptor//获取设备描述符
   rcode = pUsb->getDevDescr(0, 0, constBufSize, (uint8_t*)buf);
 
-  // Restore p->epinfo
+  // Restore p->epinfo//恢复p->epinfo
   p->epinfo = oldep_ptr;
 
   if (rcode) goto FailGetDevDescr;
 
-  // Allocate new address according to device class
+  // Allocate new address according to device class//根据设备类别分配新地址
   bAddress = addrPool.AllocAddress(parent, false, port);
 
   if (!bAddress) return USB_ERROR_OUT_OF_ADDRESS_SPACE_IN_POOL;
 
-  // Extract Max Packet Size from the device descriptor
+  // Extract Max Packet Size from the device descriptor//从设备描述符中提取最大数据包大小
   epInfo[0].maxPktSize = udd->bMaxPacketSize0;
-  // Steal and abuse from epInfo structure to save on memory.
+  // Steal and abuse from epInfo structure to save on memory.//从epInfo结构中窃取和滥用以节省内存。
   epInfo[1].epAddr = udd->bNumConfigurations;
-  // </TECHNICAL>
+  // </TECHNICAL>//</TECHNICAL>
   return USB_ERROR_CONFIG_REQUIRES_ADDITIONAL_RESET;
 
 FailGetDevDescr:
@@ -319,7 +320,7 @@ FailGetDevDescr:
  */
 uint8_t BulkOnly::Init(uint8_t parent __attribute__((unused)), uint8_t port __attribute__((unused)), bool lowspeed) {
   uint8_t rcode;
-  uint8_t num_of_conf = epInfo[1].epAddr; // number of configurations
+  uint8_t num_of_conf = epInfo[1].epAddr; // number of configurations//配置数
   epInfo[1].epAddr = 0;
   USBTRACE("MS Init\r\n");
 
@@ -328,7 +329,7 @@ uint8_t BulkOnly::Init(uint8_t parent __attribute__((unused)), uint8_t port __at
 
   if (!p) return USB_ERROR_ADDRESS_NOT_FOUND_IN_POOL;
 
-  // Assign new address to the device
+  // Assign new address to the device//为设备分配新地址
   delay(2000);
   rcode = pUsb->setAddr(0, 0, bAddress);
 
@@ -350,7 +351,7 @@ uint8_t BulkOnly::Init(uint8_t parent __attribute__((unused)), uint8_t port __at
 
   p->lowspeed = lowspeed;
 
-  // Assign epInfo to epinfo pointer
+  // Assign epInfo to epinfo pointer//将epInfo分配给epInfo指针
   rcode = pUsb->setEpInfoEntry(bAddress, 1, epInfo);
 
   if (rcode) goto FailSetDevTblEntry;
@@ -374,17 +375,17 @@ uint8_t BulkOnly::Init(uint8_t parent __attribute__((unused)), uint8_t port __at
 
   if (bNumEP < 3) return USB_DEV_CONFIG_ERROR_DEVICE_NOT_SUPPORTED;
 
-  // Assign epInfo to epinfo pointer
+  // Assign epInfo to epinfo pointer//将epInfo分配给epInfo指针
   pUsb->setEpInfoEntry(bAddress, bNumEP, epInfo);
 
   USBTRACE2("Conf:", bConfNum);
 
-  // Set Configuration Value
+  // Set Configuration Value//设置配置值
   rcode = pUsb->setConf(bAddress, 0, bConfNum);
 
   if (rcode) goto FailSetConfDescr;
 
-  //Linux does a 1sec delay after this.
+  //Linux does a 1sec delay after this.//在此之后，Linux会延迟1秒。
   delay(1000);
 
   rcode = GetMaxLUN(&bMaxLUN);
@@ -393,7 +394,7 @@ uint8_t BulkOnly::Init(uint8_t parent __attribute__((unused)), uint8_t port __at
   if (bMaxLUN >= MASS_MAX_SUPPORTED_LUN) bMaxLUN = MASS_MAX_SUPPORTED_LUN - 1;
   ErrorMessage<uint8_t> (PSTR("MaxLUN"), bMaxLUN);
 
-  delay(1000); // Delay a bit for slow firmware.
+  delay(1000); // Delay a bit for slow firmware.//对于较慢的固件，延迟一点。
 
   for (uint8_t lun = 0; lun <= bMaxLUN; lun++) {
     InquiryResponse response;
@@ -441,11 +442,11 @@ uint8_t BulkOnly::Init(uint8_t parent __attribute__((unused)), uint8_t port __at
 
       uint8_t tries = 0xF0;
       while ((rcode = TestUnitReady(lun))) {
-        if (rcode == 0x08) break; // break on no media, this is OK to do.
-        // try to lock media and spin up
+        if (rcode == 0x08) break; // break on no media, this is OK to do.//在没有媒体的情况下中断，可以这样做。
+        // try to lock media and spin up//尝试锁定媒体并加速播放
         if (tries < 14) {
           LockMedia(lun, 1);
-          MediaCTL(lun, 1); // I actually have a USB stick that needs this!
+          MediaCTL(lun, 1); // I actually have a USB stick that needs this!//实际上我有一个U盘需要这个！
         } else
           delay(2 * (tries + 1));
         tries++;
@@ -471,7 +472,7 @@ uint8_t BulkOnly::Init(uint8_t parent __attribute__((unused)), uint8_t port __at
 
   bPollEnable = true;
 
-  //USBTRACE("Poll enabled\r\n");
+  //USBTRACE("Poll enabled\r\n");//USBTRACE（“已启用轮询\r\n”）；
   return 0;
 
   FailSetConfDescr:
@@ -495,11 +496,11 @@ uint8_t BulkOnly::Init(uint8_t parent __attribute__((unused)), uint8_t port __at
     goto Fail;
   #endif
 
-  //#ifdef DEBUG_USB_HOST
-  //  FailInvalidSectorSize:
-  //  USBTRACE("Sector Size is NOT VALID: ");
-  //  goto Fail;
-  //#endif
+  //#ifdef DEBUG_USB_HOST//#ifdef调试_USB_主机
+  //  FailInvalidSectorSize://FailInvalidSector大小：
+  //  USBTRACE("Sector Size is NOT VALID: ");//USBTRACE（“扇区大小无效：”）；
+  //  goto Fail;//走向失败；
+  //#endif//#恩迪夫
 
   FailSetDevTblEntry:
   #ifdef DEBUG_USB_HOST
@@ -541,7 +542,7 @@ void BulkOnly::EndpointXtract(uint8_t conf, uint8_t iface, uint8_t alt, uint8_t 
   #if 1
     if ((pep->bmAttributes & bmUSB_TRANSFER_TYPE) == USB_TRANSFER_TYPE_BULK) {
       index = ((pep->bEndpointAddress & 0x80) == 0x80) ? epDataInIndex : epDataOutIndex;
-      // Fill in the endpoint info structure
+      // Fill in the endpoint info structure//填写端点信息结构
       epInfo[index].epAddr = (pep->bEndpointAddress & 0x0F);
       epInfo[index].maxPktSize = (uint8_t)pep->wMaxPacketSize;
       epInfo[index].bmSndToggle = 0;
@@ -559,7 +560,7 @@ void BulkOnly::EndpointXtract(uint8_t conf, uint8_t iface, uint8_t alt, uint8_t 
     else
       return;
 
-    // Fill in the endpoint info structure
+    // Fill in the endpoint info structure//填写端点信息结构
     epInfo[index].epAddr = (pep->bEndpointAddress & 0x0F);
     epInfo[index].maxPktSize = (uint8_t)pep->wMaxPacketSize;
     epInfo[index].bmSndToggle = 0;
@@ -595,7 +596,7 @@ bool BulkOnly::CheckLUN(uint8_t lun) {
 
   rcode = ReadCapacity10(lun, (uint8_t*)capacity.data);
   if (rcode) {
-    //printf(">>>>>>>>>>>>>>>>ReadCapacity returned %i\r\n", rcode);
+    //printf(">>>>>>>>>>>>>>>>ReadCapacity returned %i\r\n", rcode);//printf（“>>>>>>>>>>>>>读取容量返回%i\r\n”，rcode）；
     return false;
   }
   ErrorMessage<uint8_t> (PSTR(">>>>>>>>>>>>>>>>CAPACITY OK ON LUN"), lun);
@@ -603,16 +604,16 @@ bool BulkOnly::CheckLUN(uint8_t lun) {
           D_PrintHex<uint8_t> (capacity.data[i], 0x80);
   Notify(PSTR("\r\n\r\n"), 0x80);
 
-  // Only 512/1024/2048/4096 are valid values!
+  // Only 512/1024/2048/4096 are valid values!//只有512/1024/2048/4096是有效值！
   uint32_t c = BMAKE32(capacity.data[4], capacity.data[5], capacity.data[6], capacity.data[7]);
   if (c != 0x0200UL && c != 0x0400UL && c != 0x0800UL && c != 0x1000UL) return false;
 
-  // Store capacity information.
-  CurrentSectorSize[lun] = (uint16_t)(c); // & 0xFFFF);
+  // Store capacity information.//存储容量信息。
+  CurrentSectorSize[lun] = (uint16_t)(c); // & 0xFFFF);//&0xFFFF）；
 
   CurrentCapacity[lun] = BMAKE32(capacity.data[0], capacity.data[1], capacity.data[2], capacity.data[3]) + 1;
   if (CurrentCapacity[lun] == /*0xFFFFFFFFUL */ 0x01UL || CurrentCapacity[lun] == 0x00UL) {
-    // Buggy firmware will report 0xFFFFFFFF or 0 for no media
+    // Buggy firmware will report 0xFFFFFFFF or 0 for no media//有缺陷的固件将报告0xFFFFFF或0（无介质）
     if (CurrentCapacity[lun])
       ErrorMessage<uint8_t> (PSTR(">>>>>>>>>>>>>>>>BUGGY FIRMWARE. CAPACITY FAIL ON LUN"), lun);
     return false;
@@ -650,16 +651,16 @@ void BulkOnly::CheckMedia() {
  * @return
  */
 uint8_t BulkOnly::Poll() {
-  //uint8_t rcode = 0;
+  //uint8_t rcode = 0;//uint8_t rcode=0；
   if (!bPollEnable) return 0;
   if ((int32_t)((uint32_t)millis() - qNextPollTime) >= 0L) CheckMedia();
-  //rcode = 0;
+  //rcode = 0;//rcode=0；
   return 0;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// SCSI code
-////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// SCSI code//SCSI代码
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
  * For driver use only.
@@ -701,7 +702,7 @@ uint8_t BulkOnly::Inquiry(uint8_t lun, uint16_t bsize, uint8_t *buf) {
  * @return
  */
 uint8_t BulkOnly::TestUnitReady(uint8_t lun) {
-        //SetCurLUN(lun);
+        //SetCurLUN(lun);//SetCurLUN（lun）；
         if (!bAddress)
                 return MASS_ERR_UNIT_NOT_READY;
 
@@ -792,14 +793,14 @@ uint8_t BulkOnly::RequestSense(uint8_t lun, uint16_t size, uint8_t *buf) {
 
         CDB6_t cdb = CDB6_t(SCSI_CMD_REQUEST_SENSE, lun, 0UL, (uint8_t)size, 0);
         CommandBlockWrapper cbw = CommandBlockWrapper(++dCBWTag, (uint32_t)size, &cdb, (uint8_t)MASS_CMD_DIR_IN);
-        //SetCurLUN(lun);
+        //SetCurLUN(lun);//SetCurLUN（lun）；
         return Transaction(&cbw, size, buf);
 }
 
 
-////////////////////////////////////////////////////////////////////////////////
-// USB code
-////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// USB code//USB代码
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
  * For driver use only.
@@ -913,17 +914,17 @@ uint8_t BulkOnly::HandleUsbError(uint8_t error, uint8_t index) {
   uint8_t count = 3;
 
   bLastUsbError = error;
-  //if (error)
-  //ClearEpHalt(index);
+  //if (error)//如果（错误）
+  //ClearEpHalt(index);//ClearEpHalt（索引）；
   while (error && count) {
     if (error != hrSUCCESS) {
       ErrorMessage<uint8_t> (PSTR("USB Error"), error);
       ErrorMessage<uint8_t> (PSTR("Index"), index);
     }
     switch (error) {
-      // case hrWRONGPID:
+      // case hrWRONGPID://案例HRPID：
       case hrSUCCESS: return MASS_ERR_SUCCESS;
-      case hrBUSY: return MASS_ERR_UNIT_BUSY; // SIE is busy, just hang out and try again.
+      case hrBUSY: return MASS_ERR_UNIT_BUSY; // SIE is busy, just hang out and try again.//SIE很忙，请挂断然后再试一次。
       case hrTIMEOUT:
       case hrJERR: return MASS_ERR_DEVICE_DISCONNECTED;
       case hrSTALL:
@@ -937,10 +938,10 @@ uint8_t BulkOnly::HandleUsbError(uint8_t error, uint8_t index) {
         return index ? MASS_ERR_UNIT_BUSY : MASS_ERR_UNIT_BUSY;
 
       case hrTOGERR:
-        // Handle a super rare corner case, where toggles become de-synced.
-        // I've only run into one device that has this firmware bug, and this is
-        // the only clean way to get back into sync with the buggy device firmware.
-        //   --AJK
+        // Handle a super rare corner case, where toggles become de-synced.//处理一个极为罕见的角落情况，其中切换变得不同步。
+        // I've only run into one device that has this firmware bug, and this is//我只遇到一个设备有这个固件错误，这是
+        // the only clean way to get back into sync with the buggy device firmware.//这是恢复与有缺陷的设备固件同步的唯一干净方法。
+        //   --AJK//--AJK
         if (bAddress && bConfNum) {
           error = pUsb->setConf(bAddress, 0, bConfNum);
           if (error) break;
@@ -951,7 +952,7 @@ uint8_t BulkOnly::HandleUsbError(uint8_t error, uint8_t index) {
         return MASS_ERR_GENERAL_USB_ERROR;
     }
     count--;
-  } // while
+  } // while//当
 
   return ((error && !count) ? MASS_ERR_GENERAL_USB_ERROR : MASS_ERR_SUCCESS);
 }
@@ -981,14 +982,14 @@ uint8_t BulkOnly::Transaction(CommandBlockWrapper *pcbw, uint16_t buf_size, void
   bool write = (pcbw->bmCBWFlags & MASS_CMD_DIR_IN) != MASS_CMD_DIR_IN;
   uint8_t ret = 0;
   uint8_t usberr;
-  CommandStatusWrapper csw; // up here, we allocate ahead to save cpu cycles.
+  CommandStatusWrapper csw; // up here, we allocate ahead to save cpu cycles.//在这里，我们提前分配以节省cpu周期。
   SetCurLUN(pcbw->bmCBWLUN);
   ErrorMessage<uint32_t> (PSTR("CBW.dCBWTag"), pcbw->dCBWTag);
 
   while ((usberr = pUsb->outTransfer(bAddress, epInfo[epDataOutIndex].epAddr, sizeof (CommandBlockWrapper), (uint8_t*)pcbw)) == hrBUSY) delay(1);
 
   ret = HandleUsbError(usberr, epDataOutIndex);
-  //ret = HandleUsbError(pUsb->outTransfer(bAddress, epInfo[epDataOutIndex].epAddr, sizeof (CommandBlockWrapper), (uint8_t*)pcbw), epDataOutIndex);
+  //ret = HandleUsbError(pUsb->outTransfer(bAddress, epInfo[epDataOutIndex].epAddr, sizeof (CommandBlockWrapper), (uint8_t*)pcbw), epDataOutIndex);//ret=HandleUsbError（pUsb->outTransfer（错误地址，epInfo[epDataOutIndex].epAddr，sizeof（CommandBlockWrapper），（uint8_t*）pcbw），epDataOutIndex）；
   if (ret)
     ErrorMessage<uint8_t> (PSTR("============================ CBW"), ret);
   else {
@@ -1029,7 +1030,7 @@ uint8_t BulkOnly::Transaction(CommandBlockWrapper *pcbw, uint16_t buf_size, void
     Notify(PSTR("Data Stage:\tOK\r\n"), 0x80);
   }
   else {
-    // Throw away csw, IT IS NOT OF ANY USE.
+    // Throw away csw, IT IS NOT OF ANY USE.//扔掉csw，它没有任何用处。
     ResetRecovery();
     return ret;
   }
@@ -1039,21 +1040,21 @@ uint8_t BulkOnly::Transaction(CommandBlockWrapper *pcbw, uint16_t buf_size, void
 
   if (usberr == hrSUCCESS) {
     if (IsValidCSW(&csw, pcbw)) {
-      //ErrorMessage<uint32_t> (PSTR("CSW.dCBWTag"), csw.dCSWTag);
-      //ErrorMessage<uint8_t> (PSTR("bCSWStatus"), csw.bCSWStatus);
-      //ErrorMessage<uint32_t> (PSTR("dCSWDataResidue"), csw.dCSWDataResidue);
+      //ErrorMessage<uint32_t> (PSTR("CSW.dCBWTag"), csw.dCSWTag);//错误消息（PSTR（“CSW.dCBWTag”）、CSW.dCSWTag）；
+      //ErrorMessage<uint8_t> (PSTR("bCSWStatus"), csw.bCSWStatus);//错误消息（PSTR（“bCSWStatus”）、csw.bCSWStatus）；
+      //ErrorMessage<uint32_t> (PSTR("dCSWDataResidue"), csw.dCSWDataResidue);//错误消息<uint32\u t>（PSTR（“dcswdataresidence”），csw.dcswdataresidence；
       Notify(PSTR("CSW:\t\tOK\r\n\r\n"), 0x80);
       return csw.bCSWStatus;
     }
     else {
-      // NOTE! Sometimes this is caused by the reported residue being wrong.
-      // Get a different device. It isn't compliant, and should have never passed Q&A.
-      // I own one... 05e3:0701 Genesys Logic, Inc. USB 2.0 IDE Adapter.
-      // Other devices that exhibit this behavior exist in the wild too.
-      // Be sure to check quirks in the Linux source code before reporting a bug. --xxxajk
+      // NOTE! Sometimes this is caused by the reported residue being wrong.//注意！有时，这是由于报告的残留物错误造成的。
+      // Get a different device. It isn't compliant, and should have never passed Q&A.//换一台不同的设备。它是不符合要求的，应该永远不会通过Q&A。
+      // I own one... 05e3:0701 Genesys Logic, Inc. USB 2.0 IDE Adapter.//我有一个。。。05e3:0701 Genesys Logic，Inc.USB 2.0 IDE适配器。
+      // Other devices that exhibit this behavior exist in the wild too.//其他表现出这种行为的设备也存在于野外。
+      // Be sure to check quirks in the Linux source code before reporting a bug. --xxxajk//在报告bug之前，一定要检查Linux源代码中的怪癖--xxxajk
       Notify(PSTR("Invalid CSW\r\n"), 0x80);
       ResetRecovery();
-      //return MASS_ERR_SUCCESS;
+      //return MASS_ERR_SUCCESS;//返回质量错误成功；
       return MASS_ERR_INVALID_CSW;
     }
   }
@@ -1111,7 +1112,7 @@ uint8_t BulkOnly::HandleSCSIError(uint8_t status) {
       ErrorMessage<uint8_t> (PSTR("Sense Key"), rsp.bmSenseKey);
       ErrorMessage<uint8_t> (PSTR("Add Sense Code"), rsp.bAdditionalSenseCode);
       ErrorMessage<uint8_t> (PSTR("Add Sense Qual"), rsp.bAdditionalSenseQualifier);
-      // warning, this is not testing ASQ, only SK and ASC.
+      // warning, this is not testing ASQ, only SK and ASC.//警告，这不是测试ASQ，仅测试SK和ASC。
       switch (rsp.bmSenseKey) {
         case SCSI_S_UNIT_ATTENTION:
           switch (rsp.bAdditionalSenseCode) {
@@ -1138,20 +1139,20 @@ uint8_t BulkOnly::HandleSCSIError(uint8_t status) {
           return MASS_ERR_GENERAL_SCSI_ERROR;
       }
 
-      // case 4: return MASS_ERR_UNIT_BUSY; // Busy means retry later.
-      //    case 0x05/0x14: we stalled out
-      //    case 0x15/0x16: we naked out.
+      // case 4: return MASS_ERR_UNIT_BUSY; // Busy means retry later.//案例4：返回质量错误单元忙；//忙意味着稍后重试。
+      //    case 0x05/0x14: we stalled out//案例0x05/0x14：我们陷入困境
+      //    case 0x15/0x16: we naked out.//案例0x15/0x16：我们赤身裸体。
     default:
       ErrorMessage<uint8_t> (PSTR("Gen SCSI Err"), status);
       ErrorMessage<uint8_t> (PSTR("LUN"), bTheLUN);
       return status;
-  } // switch
+  } // switch//开关
 }
 
 
-////////////////////////////////////////////////////////////////////////////////
-// Debugging code
-////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Debugging code//调试代码
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
  * @param ep_ptr
@@ -1173,9 +1174,9 @@ void BulkOnly::PrintEndpointDescriptor(const USB_FD_ENDPOINT_DESCRIPTOR * ep_ptr
   Notify(PSTR("\r\n"), 0x80);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// misc/to kill/to-do
-////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// misc/to kill/to-do//杂项/待办事项/待办事项
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /* We won't be needing this... */
 uint8_t BulkOnly::Read(uint8_t lun __attribute__((unused)), uint32_t addr __attribute__((unused)), uint16_t bsize __attribute__((unused)), uint8_t blocks __attribute__((unused)), USBReadParser * prs __attribute__((unused))) {
@@ -1206,4 +1207,4 @@ uint8_t BulkOnly::Read(uint8_t lun __attribute__((unused)), uint32_t addr __attr
   #endif
 }
 
-#endif // USB_FLASH_DRIVE_SUPPORT
+#endif // USB_FLASH_DRIVE_SUPPORT//USB闪存驱动器支持

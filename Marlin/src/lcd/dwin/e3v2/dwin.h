@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -39,7 +40,7 @@
 #endif
 
 enum processID : uint8_t {
-  // Process ID
+  // Process ID//进程ID
   MainMenu,
   SelectFile,
   Prepare,
@@ -68,20 +69,20 @@ enum processID : uint8_t {
   HomeOffY,
   HomeOffZ,
 
-  // Last Process ID
+  // Last Process ID//最后进程ID
   Last_Prepare,
 
-  // Advance Settings
+  // Advance Settings//预先设置
   AdvSet,
   ProbeOff,
   ProbeOffX,
   ProbeOffY,
 
-  // Back Process ID
+  // Back Process ID//后台进程ID
   Back_Main,
   Back_Print,
 
-  // Date variable ID
+  // Date variable ID//日期变量ID
   Move_X,
   Move_Y,
   Move_Z,
@@ -98,17 +99,17 @@ enum processID : uint8_t {
   #endif
   PrintSpeed,
 
-  // Window ID
+  // Window ID//窗口ID
   Print_window,
   Popup_Window
 };
 
-// Picture ID
+// Picture ID//图片ID
 #define Start_Process       0
 #define Language_English    1
 #define Language_Chinese    2
 
-// ICON ID
+// ICON ID//图标ID
 #define ICON                      0x09
 #define ICON_LOGO                  0
 #define ICON_Print_0               1
@@ -234,19 +235,19 @@ enum processID : uint8_t {
 #define font28x56 0x08
 #define font32x64 0x09
 
-// Color
+// Color//颜色
 #define Color_White       0xFFFF
 #define Color_Yellow      0xFF0F
-#define Color_Bg_Window   0x31E8  // Popup background color
-#define Color_Bg_Blue     0x1125  // Dark blue background color
-#define Color_Bg_Black    0x0841  // Black background color
-#define Color_Bg_Red      0xF00F  // Red background color
-#define Popup_Text_Color  0xD6BA  // Popup font background color
-#define Line_Color        0x3A6A  // Split line color
-#define Rectangle_Color   0xEE2F  // Blue square cursor color
-#define Percent_Color     0xFE29  // Percentage color
-#define BarFill_Color     0x10E4  // Fill color of progress bar
-#define Select_Color      0x33BB  // Selected color
+#define Color_Bg_Window   0x31E8  // Popup background color//弹出背景色
+#define Color_Bg_Blue     0x1125  // Dark blue background color//深蓝色背景色
+#define Color_Bg_Black    0x0841  // Black background color//黑色背景色
+#define Color_Bg_Red      0xF00F  // Red background color//红色背景色
+#define Popup_Text_Color  0xD6BA  // Popup font background color//弹出字体背景色
+#define Line_Color        0x3A6A  // Split line color//分割线颜色
+#define Rectangle_Color   0xEE2F  // Blue square cursor color//蓝色方形光标颜色
+#define Percent_Color     0xFE29  // Percentage color//百分比颜色
+#define BarFill_Color     0x10E4  // Fill color of progress bar//进度条的填充颜色
+#define Select_Color      0x33BB  // Selected color//选定颜色
 
 extern uint8_t checkkey;
 extern float zprobe_zoffset;
@@ -276,7 +277,7 @@ typedef struct {
     float Move_E_scaled   = 0;
   #endif
   float offset_value      = 0;
-  int8_t show_mode        = 0; // -1: Temperature control    0: Printing temperature
+  int8_t show_mode        = 0; // -1: Temperature control    0: Printing temperature//-1：温度控制0：打印温度
   float Home_OffX_scaled  = 0;
   float Home_OffY_scaled  = 0;
   float Home_OffZ_scaled  = 0;
@@ -295,7 +296,7 @@ typedef struct {
   bool done_confirm_flag:1;
   bool select_flag:1;
   bool home_flag:1;
-  bool heat_flag:1;  // 0: heating done  1: during heating
+  bool heat_flag:1;  // 0: heating done  1: during heating//0:加热完成1:加热过程中
   #if ENABLED(PREVENT_COLD_EXTRUSION)
     bool ETempTooLow_flag:1;
   #endif
@@ -308,7 +309,7 @@ typedef struct {
 extern HMI_value_t HMI_ValueStruct;
 extern HMI_Flag_t HMI_flag;
 
-// Show ICO
+// Show ICO//显示图标
 void ICON_Print(bool show);
 void ICON_Prepare(bool show);
 void ICON_Control(bool show);
@@ -321,7 +322,7 @@ void ICON_Continue(bool show);
 void ICON_Stop(bool show);
 
 #if HAS_HOTEND || HAS_HEATED_BED
-  // Popup message window
+  // Popup message window//弹出消息窗口
   void DWIN_Popup_Temperature(const bool toohigh);
 #endif
 
@@ -336,7 +337,7 @@ void Popup_Window_Leveling();
 void Goto_PrintProcess();
 void Goto_MainMenu();
 
-// Variable control
+// Variable control//变量控制
 void HMI_Move_X();
 void HMI_Move_Y();
 void HMI_Move_Z();
@@ -364,40 +365,40 @@ void HMI_StepXYZE();
 void update_variable();
 void DWIN_Draw_Signed_Float(uint8_t size, uint16_t bColor, uint8_t iNum, uint8_t fNum, uint16_t x, uint16_t y, long value);
 
-// SD Card
+// SD Card//SD卡
 void HMI_SDCardInit();
 void HMI_SDCardUpdate();
 
-// Main Process
+// Main Process//主要过程
 void Icon_print(bool value);
 void Icon_control(bool value);
 void Icon_temperature(bool value);
 void Icon_leveling(bool value);
 
-// Other
-void Draw_Status_Area(const bool with_update); // Status Area
-void HMI_StartFrame(const bool with_update);   // Prepare the menu view
-void HMI_MainMenu();    // Main process screen
-void HMI_SelectFile();  // File page
-void HMI_Printing();    // Print page
-void HMI_Prepare();     // Prepare page
-void HMI_Control();     // Control page
-void HMI_Leveling();    // Level the page
-void HMI_AxisMove();    // Axis movement menu
-void HMI_Temperature(); // Temperature menu
-void HMI_Motion();      // Sports menu
-void HMI_Info();        // Information menu
-void HMI_Tune();        // Adjust the menu
+// Other//其他
+void Draw_Status_Area(const bool with_update); // Status Area//地位区
+void HMI_StartFrame(const bool with_update);   // Prepare the menu view//准备菜单视图
+void HMI_MainMenu();    // Main process screen//主过程屏幕
+void HMI_SelectFile();  // File page//文件页
+void HMI_Printing();    // Print page//打印页
+void HMI_Prepare();     // Prepare page//准备页面
+void HMI_Control();     // Control page//控制页
+void HMI_Leveling();    // Level the page//整平页面
+void HMI_AxisMove();    // Axis movement menu//轴移动菜单
+void HMI_Temperature(); // Temperature menu//温度菜单
+void HMI_Motion();      // Sports menu//运动菜单
+void HMI_Info();        // Information menu//信息菜单
+void HMI_Tune();        // Adjust the menu//调整菜单
 
 #if HAS_PREHEAT
-  void HMI_PLAPreheatSetting(); // PLA warm-up setting
-  void HMI_ABSPreheatSetting(); // ABS warm-up setting
+  void HMI_PLAPreheatSetting(); // PLA warm-up setting//PLA热身装置
+  void HMI_ABSPreheatSetting(); // ABS warm-up setting//ABS预热设置
 #endif
 
-void HMI_MaxSpeed();        // Maximum speed submenu
-void HMI_MaxAcceleration(); // Maximum acceleration submenu
-void HMI_MaxJerk();         // Maximum jerk speed submenu
-void HMI_Step();            // Transmission ratio
+void HMI_MaxSpeed();        // Maximum speed submenu//最大速度子菜单
+void HMI_MaxAcceleration(); // Maximum acceleration submenu//最大加速度子菜单
+void HMI_MaxJerk();         // Maximum jerk speed submenu//最大加速子菜单
+void HMI_Step();            // Transmission ratio//传动比
 
 void HMI_Init();
 void DWIN_Update();

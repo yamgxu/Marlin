@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,20 +32,20 @@
 #define STEP_TIMER                             4
 #define TEMP_TIMER                             2
 
-//#define I2C_EEPROM
+//#define I2C_EEPROM//#定义I2C_EEPROM
 
-// USB Flash Drive support
+// USB Flash Drive support//USB闪存驱动器支持
 #define HAS_OTG_USB_HOST_SUPPORT
 
-//
-// Servos
-//
+////
+// Servos//伺服
+////
 #define SERVO0_PIN                          PD12
-//#define SERVO1_PIN                        -1
+//#define SERVO1_PIN                        -1//#定义伺服1_引脚-1
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_MIN_PIN                           PG9
 #define Y_MIN_PIN                           PG10
 #define Z_MIN_PIN                           PG11
@@ -53,21 +54,21 @@
 #define Y_MAX_PIN                           PG13
 #define Z_MAX_PIN                           PG14
 
-//
-// Filament runout
-//
+////
+// Filament runout//灯丝跳动
+////
 #define FIL_RUNOUT_PIN                      PC5
 
-//
-// Z Probe (when not Z_MIN_PIN)
-//
+////
+// Z Probe (when not Z_MIN_PIN)//Z探头（非Z_MIN_引脚时）
+////
 #ifndef Z_MIN_PROBE_PIN
   #define Z_MIN_PROBE_PIN                   PG8
 #endif
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                          PF7
 #define X_DIR_PIN                           PF8
 #define X_ENABLE_PIN                        PF6
@@ -88,77 +89,77 @@
 #define E1_DIR_PIN                          PG4
 #define E1_ENABLE_PIN                       PG2
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                          PC0   // See below for activation of thermistor readings
-#define TEMP_1_PIN                          PC1   // See below for activation of thermistor readings
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                          PC0   // See below for activation of thermistor readings//有关热敏电阻读数的激活，请参见下文
+#define TEMP_1_PIN                          PC1   // See below for activation of thermistor readings//有关热敏电阻读数的激活，请参见下文
 #define TEMP_BED_PIN                        PC3
 
-// Lergde-S can choose thermocouple/thermistor mode in software.
-// For use with thermistors, these pins must be OUT/LOW.
-// This is done automatically.
+// Lergde-S can choose thermocouple/thermistor mode in software.//Lergde-S可在软件中选择热电偶/热敏电阻模式。
+// For use with thermistors, these pins must be OUT/LOW.//与热敏电阻一起使用时，这些引脚必须为OUT/LOW。
+// This is done automatically.//这是自动完成的。
 #define TEMP_0_TR_ENABLE_PIN                PF3
 #define TEMP_1_TR_ENABLE_PIN                PF4
 
-// MAX6675 Cold-Junction-Compensated K-Thermocouple to Digital Converter (0°C to +1024°C)
-// https://datasheets.maximintegrated.com/en/ds/MAX6675.pdf
+// MAX6675 Cold-Junction-Compensated K-Thermocouple to Digital Converter (0°C to +1024°C)//MAX6675冷端补偿K热电偶-数字转换器（0°C至+1024°C）
+// https://datasheets.maximintegrated.com/en/ds/MAX6675.pdf// https://datasheets.maximintegrated.com/en/ds/MAX6675.pdf
 
-#define MAX6675_SCK_PIN                     PB3   // max6675 datasheet: SCK pin, found with multimeter, not tested
-#define MAX6675_DO_PIN                      PB4   // max6675 datasheet: SO pin, found with multimeter, not tested
-#define MAX6675_SS_PIN                      PC4   // max6675 datasheet: /CS pin, found with multimeter, not tested and likely wrong
+#define MAX6675_SCK_PIN                     PB3   // max6675 datasheet: SCK pin, found with multimeter, not tested//max6675数据表：SCK引脚，使用万用表发现，未测试
+#define MAX6675_DO_PIN                      PB4   // max6675 datasheet: SO pin, found with multimeter, not tested//max6675数据表：SO引脚，使用万用表发现，未测试
+#define MAX6675_SS_PIN                      PC4   // max6675 datasheet: /CS pin, found with multimeter, not tested and likely wrong//max6675数据表：/CS引脚，使用万用表发现，未测试，可能错误
 
-// Expansion board with second max6675
-// Warning: Some boards leave the slot unpopulated.
+// Expansion board with second max6675//带有第二个max6675的扩展板
+// Warning: Some boards leave the slot unpopulated.//警告：某些电路板未填充插槽。
 
-//#define MAX6675_SCK2_PIN                  PB3   // max6675 datasheet: SCK pin, found with multimeter, not tested
-//#define MAX6675_DO2_PIN                   PB4   // max6675 datasheet: SO pin, found with multimeter, not tested
-//#define MAX6675_SS2_PIN                   PF1   // max6675 datasheet: /CS pin, found with multimeter, not tested
+//#define MAX6675_SCK2_PIN                  PB3   // max6675 datasheet: SCK pin, found with multimeter, not tested//#定义MAX6675_SCK2_引脚PB3//MAX6675数据表：SCK引脚，使用万用表找到，未测试
+//#define MAX6675_DO2_PIN                   PB4   // max6675 datasheet: SO pin, found with multimeter, not tested//#定义MAX6675_DO2_引脚PB4//MAX6675数据表：SO引脚，使用万用表找到，未测试
+//#define MAX6675_SS2_PIN                   PF1   // max6675 datasheet: /CS pin, found with multimeter, not tested//#定义MAX6675_SS2_引脚PF1//MAX6675数据表：/CS引脚，使用万用表找到，未测试
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_0_PIN                        PA0
 #define HEATER_1_PIN                        PA1
 #define HEATER_BED_PIN                      PA3
 
-#define FAN_PIN                             PA15  // heater 0 fan 1
-#define FAN1_PIN                            PB10  // heater 1 fan 2
-#define FAN2_PIN                            PF5   // heater 0 fan 2 and heater 1 fan 1 (two sockets, switched together)
+#define FAN_PIN                             PA15  // heater 0 fan 1//加热器0风扇1
+#define FAN1_PIN                            PB10  // heater 1 fan 2//加热器1风扇2
+#define FAN2_PIN                            PF5   // heater 0 fan 2 and heater 1 fan 1 (two sockets, switched together)//加热器0风扇2和加热器1风扇1（两个插座，一起切换）
 
 #ifndef E0_AUTO_FAN_PIN
   #define E0_AUTO_FAN_PIN                   PF5
 #endif
 
-//
-// Průša i3 MK2 Multi Material Multiplexer Support
-//
-//#define E_MUX0_PIN                        -1
-//#define E_MUX1_PIN                        -1
+////
+// Průša i3 MK2 Multi Material Multiplexer Support//Průša i3 MK2多材料多路复用器支持
+////
+//#define E_MUX0_PIN                        -1//#定义E_MUX0_引脚-1
+//#define E_MUX1_PIN                        -1//#定义E_MUX1_引脚-1
 
-//
-// LED / Lighting
-//
-//Lerdge-S board has two LED connectors (this is the one on the mainboard)
+////
+// LED / Lighting//LED/照明
+////
+//Lerdge-S board has two LED connectors (this is the one on the mainboard)//LERGE-S板有两个LED连接器（这是主板上的一个）
 #define CASE_LIGHT_PIN                      PC7
 
-//on the dual extrusion addon board is a RGB connector
-#define RGB_LED_R_PIN                       PC7   // Shared with the mainboard LED light connector (CASE_LIGHT_PIN)
+//on the dual extrusion addon board is a RGB connector//双挤压插件板上有一个RGB连接器
+#define RGB_LED_R_PIN                       PC7   // Shared with the mainboard LED light connector (CASE_LIGHT_PIN)//与主板LED灯连接器共享（机箱灯插脚）
 #define RGB_LED_G_PIN                       PB0
 #define RGB_LED_B_PIN                       PB1
 
-//
-// Misc. Functions
-//
-#define SDSS                                PC11  // SD is working using SDIO, not sure if this definition is needed?
-#define LED_PIN                             PC6   // Mainboard soldered green LED
-#define PS_ON_PIN                           PB2   // Board has a power module connector
-#define KILL_PIN                            -1    // There is no reset button on the LCD
-#define POWER_LOSS_PIN                      -1    // PB2 could be used for this as well
+////
+// Misc. Functions//杂项。功能
+////
+#define SDSS                                PC11  // SD is working using SDIO, not sure if this definition is needed?//SD正在使用SDIO工作，不确定是否需要此定义？
+#define LED_PIN                             PC6   // Mainboard soldered green LED//主板焊接绿色LED
+#define PS_ON_PIN                           PB2   // Board has a power module connector//电路板有一个电源模块连接器
+#define KILL_PIN                            -1    // There is no reset button on the LCD//LCD上没有复位按钮
+#define POWER_LOSS_PIN                      -1    // PB2 could be used for this as well//PB2也可用于此
 
-//
-// SD support
-//
+////
+// SD support//SD支持
+////
 #define SDIO_SUPPORT
 #define SDIO_CLOCK                       4800000
 
@@ -169,31 +170,31 @@
 
 #define SD_DETECT_PIN                       PG15
 
-//
-// Persistent Storage
-// If no option is selected below the SD Card will be used
-// (this section modelled after pins_LONGER3D_LK.h)
-// Warning: Not tested yet! Pins traced with multimeter, mistakes are possible
-//#define SPI_EEPROM
+////
+// Persistent Storage//持久存储
+// If no option is selected below the SD Card will be used//如果未选择下面的任何选项，则将使用SD卡
+// (this section modelled after pins_LONGER3D_LK.h)//（本节仿照pins_LONGER3D_LK.h）
+// Warning: Not tested yet! Pins traced with multimeter, mistakes are possible//警告：尚未测试！使用万用表跟踪针脚，可能会出错
+//#define SPI_EEPROM//#定义SPI_EEPROM
 
 #if ENABLED(SPI_EEPROM)
-  // Lerdge has an SPI EEPROM Winbond W25Q128 (128Mbits) https://www.pjrc.com/teensy/W25Q128FV.pdf
+  // Lerdge has an SPI EEPROM Winbond W25Q128 (128Mbits) https://www.pjrc.com/teensy/W25Q128FV.pdf//Lerdge有一个SPI EEPROM Winbond W25Q128（128Mbits）https://www.pjrc.com/teensy/W25Q128FV.pdf
   #define SPI_CHAN_EEPROM1                     1
-  #define SPI_EEPROM1_CS                    PB12  // datasheet: /CS pin, found with multimeter, not tested
-  #define EEPROM_SCK                        PB13  // datasheet: CLK pin, found with multimeter, not tested
-  #define EEPROM_MISO                       PB14  // datasheet: DO pin, found with multimeter, not tested
-  #define EEPROM_MOSI                       PB15  // datasheet: DI pin, found with multimeter, not tested
-  #define EEPROM_PAGE_SIZE               0x1000U  // 4KB (from datasheet)
-  #define MARLIN_EEPROM_SIZE 16UL * (EEPROM_PAGE_SIZE)   // Limit to 64KB for now...
+  #define SPI_EEPROM1_CS                    PB12  // datasheet: /CS pin, found with multimeter, not tested//数据表：/CS引脚，使用万用表发现，未测试
+  #define EEPROM_SCK                        PB13  // datasheet: CLK pin, found with multimeter, not tested//数据表：CLK引脚，使用万用表发现，未测试
+  #define EEPROM_MISO                       PB14  // datasheet: DO pin, found with multimeter, not tested//数据表：DO引脚，使用万用表发现，未测试
+  #define EEPROM_MOSI                       PB15  // datasheet: DI pin, found with multimeter, not tested//数据表：DI引脚，使用万用表发现，未测试
+  #define EEPROM_PAGE_SIZE               0x1000U  // 4KB (from datasheet)//4KB（来自数据表）
+  #define MARLIN_EEPROM_SIZE 16UL * (EEPROM_PAGE_SIZE)   // Limit to 64KB for now...//目前限制为64KB。。。
 #else
-  #define MARLIN_EEPROM_SIZE              0x800U  // On SD, Limit to 2KB, require this amount of RAM
+  #define MARLIN_EEPROM_SIZE              0x800U  // On SD, Limit to 2KB, require this amount of RAM//在SD上，限制为2KB，需要此数量的RAM
 #endif
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 
-// The LCD is initialized in FSMC mode
+// The LCD is initialized in FSMC mode//LCD在FSMC模式下初始化
 #define BEEPER_PIN                          PD13
 
 #define BTN_EN1                             PC14
@@ -203,10 +204,10 @@
 #define TFT_RESET_PIN                       PD6
 #define TFT_BACKLIGHT_PIN                   PD3
 
-#define TFT_CS_PIN                          PD7   // TFT works
-#define TFT_RS_PIN                          PD11  // TFT works
+#define TFT_CS_PIN                          PD7   // TFT works//TFT工程
+#define TFT_RS_PIN                          PD11  // TFT works//TFT工程
 
-// There is touch, but calibration is off
+// There is touch, but calibration is off//有触摸，但校准已关闭
 #define TOUCH_CS_PIN                        PB6
 #define TOUCH_SCK_PIN                       PB3
 #define TOUCH_MOSI_PIN                      PB5

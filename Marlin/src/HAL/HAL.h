@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -35,12 +36,12 @@
   #define I2C_ADDRESS(A) uint8_t(A)
 #endif
 
-// Needed for AVR sprintf_P PROGMEM extension
+// Needed for AVR sprintf_P PROGMEM extension//需要AVR sprintf_P程序扩展
 #ifndef S_FMT
   #define S_FMT "%s"
 #endif
 
-// String helper
+// String helper//字符串助手
 #ifndef PGMSTR
   #define PGMSTR(NAM,STR) const char NAM[] = STR
 #endif

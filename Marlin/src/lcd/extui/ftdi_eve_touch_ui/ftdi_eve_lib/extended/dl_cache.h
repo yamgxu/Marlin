@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**************
  * dl_cache.h *
  **************/
@@ -34,7 +35,7 @@
  *   if (dlcache.hasData())
  *     dlcache.append();
  *   else
- *     dlcache.store(); // Add stuff to the DL
+ *     dlcache.store(); // Add stuff to the DL//向DL添加内容
  */
 class DLCache {
   private:

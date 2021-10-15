@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -72,4 +73,4 @@ void GcodeSuite::M575() {
   }
 }
 
-#endif // BAUD_RATE_GCODE
+#endif // BAUD_RATE_GCODE//波特率码

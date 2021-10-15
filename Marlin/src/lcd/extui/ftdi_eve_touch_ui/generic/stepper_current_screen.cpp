@@ -1,3 +1,4 @@
+/** translatione by yx */
 /******************************
  * stepper_current_screen.cpp *
  ******************************/
@@ -123,4 +124,4 @@ bool StepperCurrentScreen::onTouchHeld(uint8_t tag) {
   return true;
 }
 
-#endif // FTDI_STEPPER_CURRENT_SCREEN
+#endif // FTDI_STEPPER_CURRENT_SCREEN//FTDI_步进器_电流_屏幕

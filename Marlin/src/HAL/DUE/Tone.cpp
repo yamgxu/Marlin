@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -54,7 +55,7 @@ HAL_TONE_TIMER_ISR() {
     toggles--;
     extDigitalWrite(tone_pin, (pin_state ^= 1));
   }
-  else noTone(tone_pin);                         // turn off interrupt
+  else noTone(tone_pin);                         // turn off interrupt//关闭中断
 }
 
-#endif // ARDUINO_ARCH_SAM
+#endif // ARDUINO_ARCH_SAM//阿杜伊诺·阿丘·萨姆

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  *
@@ -26,35 +27,35 @@
 
 #include <stdint.h>
 
-// ------------------------
-// Defines
-// ------------------------
+// ------------------------// ------------------------
+// Defines//定义
+// ------------------------// ------------------------
 
 #define FORCE_INLINE __attribute__((always_inline)) inline
 
 typedef uint32_t hal_timer_t;
 #define HAL_TIMER_TYPE_MAX 0xFFFFFFFF
 
-#define HAL_TIMER_RATE         ((SystemCoreClock) / 4)  // frequency of timers peripherals
+#define HAL_TIMER_RATE         ((SystemCoreClock) / 4)  // frequency of timers peripherals//定时器和外围设备的频率
 
 #ifndef STEP_TIMER_NUM
-  #define STEP_TIMER_NUM        0  // Timer Index for Stepper
+  #define STEP_TIMER_NUM        0  // Timer Index for Stepper//步进电机的定时器索引
 #endif
 #ifndef PULSE_TIMER_NUM
   #define PULSE_TIMER_NUM       STEP_TIMER_NUM
 #endif
 #ifndef TEMP_TIMER_NUM
-  #define TEMP_TIMER_NUM        1  // Timer Index for Temperature
+  #define TEMP_TIMER_NUM        1  // Timer Index for Temperature//温度计时器索引
 #endif
 
 #define TEMP_TIMER_RATE        1000000
-#define TEMP_TIMER_FREQUENCY   1000 // temperature interrupt frequency
+#define TEMP_TIMER_FREQUENCY   1000 // temperature interrupt frequency//温度中断频率
 
-#define STEPPER_TIMER_RATE     HAL_TIMER_RATE   // frequency of stepper timer (HAL_TIMER_RATE / STEPPER_TIMER_PRESCALE)
-#define STEPPER_TIMER_TICKS_PER_US ((STEPPER_TIMER_RATE) / 1000000) // stepper timer ticks per µs
+#define STEPPER_TIMER_RATE     HAL_TIMER_RATE   // frequency of stepper timer (HAL_TIMER_RATE / STEPPER_TIMER_PRESCALE)//步进定时器的频率（HAL\u定时器\u速率/步进定时器\u预刻度）
+#define STEPPER_TIMER_TICKS_PER_US ((STEPPER_TIMER_RATE) / 1000000) // stepper timer ticks per µs//步进定时器滴答声每微秒
 #define STEPPER_TIMER_PRESCALE (CYCLES_PER_MICROSECOND / STEPPER_TIMER_TICKS_PER_US)
 
-#define PULSE_TIMER_RATE       STEPPER_TIMER_RATE   // frequency of pulse timer
+#define PULSE_TIMER_RATE       STEPPER_TIMER_RATE   // frequency of pulse timer//脉冲定时器频率
 #define PULSE_TIMER_PRESCALE   STEPPER_TIMER_PRESCALE
 #define PULSE_TIMER_TICKS_PER_US STEPPER_TIMER_TICKS_PER_US
 
@@ -72,7 +73,7 @@ typedef uint32_t hal_timer_t;
   #define HAL_TEMP_TIMER_ISR()  extern "C" void TIMER1_IRQHandler()
 #endif
 
-// PWM timer
+// PWM timer//PWM定时器
 #define HAL_PWM_TIMER
 #define HAL_PWM_TIMER_ISR()   extern "C" void TIMER3_IRQHandler()
 #define HAL_PWM_TIMER_IRQn

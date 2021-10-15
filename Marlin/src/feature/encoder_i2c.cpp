@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -20,12 +21,12 @@
  *
  */
 
-//todo:  add support for multiple encoders on a single axis
-//todo:    add z axis auto-leveling
-//todo:  consolidate some of the related M codes?
-//todo:  add endstop-replacement mode?
-//todo:  try faster I2C speed; tweak TWI_FREQ (400000L, or faster?); or just TWBR = ((CPU_FREQ / 400000L) - 16) / 2;
-//todo:    consider Marlin-optimized Wire library; i.e. MarlinWire, like MarlinSerial
+//todo:  add support for multiple encoders on a single axis//todo:添加对单个轴上多个编码器的支持
+//todo:    add z axis auto-leveling//todo:添加z轴自动调平
+//todo:  consolidate some of the related M codes?//todo:合并一些相关的M代码？
+//todo:  add endstop-replacement mode?//todo:是否添加endstop替换模式？
+//todo:  try faster I2C speed; tweak TWI_FREQ (400000L, or faster?); or just TWBR = ((CPU_FREQ / 400000L) - 16) / 2;//todo：尝试更快的I2C速度；调整TWI_频率（400000L或更快？）；或者仅仅是TWBR=（（CPU_FREQ/400000L）-16）/2；
+//todo:    consider Marlin-optimized Wire library; i.e. MarlinWire, like MarlinSerial/ToDO：考虑MARLIN优化的有线库；i、 马林线，像马林线一样
 
 
 #include "../inc/MarlinConfig.h"
@@ -55,17 +56,17 @@ void I2CPositionEncoder::init(const uint8_t address, const AxisEnum axis) {
 }
 
 void I2CPositionEncoder::update() {
-  if (!initialized || !homed || !active) return; //check encoder is set up and active
+  if (!initialized || !homed || !active) return; //check encoder is set up and active//检查编码器是否已设置并激活
 
   position = get_position();
 
-  //we don't want to stop things just because the encoder missed a message,
-  //so we only care about responses that indicate bad magnetic strength
+  //we don't want to stop things just because the encoder missed a message,//我们不想因为编码器漏掉了一条信息就停止工作，
+  //so we only care about responses that indicate bad magnetic strength//所以我们只关心那些表明磁场强度不好的反应
 
-  if (!passes_test(false)) { //check encoder data is good
+  if (!passes_test(false)) { //check encoder data is good//检查编码器数据是否良好
     lastErrorTime = millis();
     /*
-    if (trusted) { //commented out as part of the note below
+    if (trusted) { //commented out as part of the note below//注释为以下注释的一部分
       trusted = false;
       SERIAL_ECHOLNPAIR("Fault detected on ", AS_CHAR(axis_codes[encoderAxis]), " axis encoder. Disengaging error correction until module is trusted again.");
     }
@@ -87,19 +88,19 @@ void I2CPositionEncoder::update() {
      */
 
     #if 0
-      // If the magnetic strength has been good for a certain time, start trusting the module again
+      // If the magnetic strength has been good for a certain time, start trusting the module again//如果磁场强度在一定时间内保持良好，则再次开始信任该模块
 
       if (millis() - lastErrorTime > I2CPE_TIME_TRUSTED) {
         trusted = true;
 
         SERIAL_ECHOLNPAIR("Untrusted encoder module on ", AS_CHAR(axis_codes[encoderAxis]), " axis has been fault-free for set duration, reinstating error correction.");
 
-        //the encoder likely lost its place when the error occured, so we'll reset and use the printer's
-        //idea of where it the axis is to re-initialize
+        //the encoder likely lost its place when the error occured, so we'll reset and use the printer's//发生错误时，编码器可能丢失了位置，因此我们将重置并使用打印机的
+        //idea of where it the axis is to re-initialize//重新初始化轴的位置的概念
         const float pos = planner.get_axis_position_mm(encoderAxis);
         int32_t positionInTicks = pos * get_ticks_unit();
 
-        //shift position from previous to current position
+        //shift position from previous to current position//将位置从上一个位置切换到当前位置
         zeroOffset -= (positionInTicks - get_position());
 
         #ifdef I2CPE_DEBUG
@@ -119,7 +120,7 @@ void I2CPositionEncoder::update() {
   lastPosition = position;
   const millis_t positionTime = millis();
 
-  //only do error correction if setup and enabled
+  //only do error correction if setup and enabled//仅在设置和启用时执行错误更正
   if (ec && ecMethod != I2CPE_ECM_NONE) {
 
     #ifdef I2CPE_EC_THRESH_PROPORTIONAL
@@ -131,7 +132,7 @@ void I2CPositionEncoder::update() {
       const float threshold = get_error_correct_threshold();
     #endif
 
-    //check error
+    //check error//检查错误
     #if ENABLED(I2CPE_ERR_ROLLING_AVERAGE)
       float sum = 0, diffSum = 0;
 
@@ -143,17 +144,17 @@ void I2CPositionEncoder::update() {
         if (i) diffSum += ABS(err[i-1] - err[i]);
       }
 
-      const int32_t error = int32_t(sum / (I2CPE_ERR_ARRAY_SIZE + 1)); //calculate average for error
+      const int32_t error = int32_t(sum / (I2CPE_ERR_ARRAY_SIZE + 1)); //calculate average for error//计算平均误差
 
     #else
       const int32_t error = get_axis_error_steps(false);
     #endif
 
-    //SERIAL_ECHOLNPAIR("Axis error steps: ", error);
+    //SERIAL_ECHOLNPAIR("Axis error steps: ", error);//串行回波对（“轴错误步数：”，错误）；
 
     #ifdef I2CPE_ERR_THRESH_ABORT
       if (ABS(error) > I2CPE_ERR_THRESH_ABORT * planner.settings.axis_steps_per_mm[encoderAxis]) {
-        //kill(PSTR("Significant Error"));
+        //kill(PSTR("Significant Error"));//终止（PSTR（“重大错误”）；
         SERIAL_ECHOLNPAIR("Axis error over threshold, aborting!", error);
         safe_delay(5000);
       }
@@ -161,13 +162,13 @@ void I2CPositionEncoder::update() {
 
     #if ENABLED(I2CPE_ERR_ROLLING_AVERAGE)
       if (errIdx == 0) {
-        // In order to correct for "error" but avoid correcting for noise and non-skips
-        // it must be > threshold and have a difference average of < 10 and be < 2000 steps
+        // In order to correct for "error" but avoid correcting for noise and non-skips//以纠正“错误”，但避免纠正噪音和非跳跃
+        // it must be > threshold and have a difference average of < 10 and be < 2000 steps//它必须大于阈值，且平均差值小于10且小于2000步
         if (ABS(error) > threshold * planner.settings.axis_steps_per_mm[encoderAxis]
             && diffSum < 10 * (I2CPE_ERR_ARRAY_SIZE - 1)
             && ABS(error) < 2000
-        ) {                              // Check for persistent error (skip)
-          errPrst[errPrstIdx++] = error; // Error must persist for I2CPE_ERR_PRST_ARRAY_SIZE error cycles. This also serves to improve the average accuracy
+        ) {                              // Check for persistent error (skip)//检查持续性错误（跳过）
+          errPrst[errPrstIdx++] = error; // Error must persist for I2CPE_ERR_PRST_ARRAY_SIZE error cycles. This also serves to improve the average accuracy//对于I2CPE\u ERR\u PRST\u ARRAY\u SIZE错误周期，错误必须持续存在。这也有助于提高平均精度
           if (errPrstIdx >= I2CPE_ERR_PRST_ARRAY_SIZE) {
             float sumP = 0;
             LOOP_L_N(i, I2CPE_ERR_PRST_ARRAY_SIZE) sumP += errPrst[i];
@@ -183,8 +184,8 @@ void I2CPositionEncoder::update() {
       }
     #else
       if (ABS(error) > threshold * planner.settings.axis_steps_per_mm[encoderAxis]) {
-        //SERIAL_ECHOLN(error);
-        //SERIAL_ECHOLN(position);
+        //SERIAL_ECHOLN(error);//串行_ECHOLN（错误）；
+        //SERIAL_ECHOLN(position);//序列号（位置）；
         babystep.add_steps(encoderAxis, -LROUND(error / 2));
       }
     #endif
@@ -205,7 +206,7 @@ void I2CPositionEncoder::update() {
 
 void I2CPositionEncoder::set_homed() {
   if (active) {
-    reset();  // Reset module's offset to zero (so current position is homed / zero)
+    reset();  // Reset module's offset to zero (so current position is homed / zero)//将模块的偏移量重置为零（因此当前位置为原点/零）
     delay(10);
 
     zeroOffset = get_raw_count();
@@ -249,7 +250,7 @@ float I2CPositionEncoder::get_axis_error_mm(const bool report) {
   const float target = planner.get_axis_position_mm(encoderAxis),
               actual = mm_from_count(position),
               diff = actual - target,
-              error = ABS(diff) > 10000 ? 0 : diff; // Huge error is a bad reading
+              error = ABS(diff) > 10000 ? 0 : diff; // Huge error is a bad reading//巨大的错误是错误的阅读
 
   if (report) {
     SERIAL_CHAR(axis_codes[encoderAxis]);
@@ -270,18 +271,18 @@ int32_t I2CPositionEncoder::get_axis_error_steps(const bool report) {
 
   float stepperTicksPerUnit;
   int32_t encoderTicks = position, encoderCountInStepperTicksScaled;
-  //int32_t stepperTicks = stepper.position(encoderAxis);
+  //int32_t stepperTicks = stepper.position(encoderAxis);//int32_t stepperTicks=步进器位置（编码器轴）；
 
-  // With a rotary encoder we're concerned with ticks/rev; whereas with a linear we're concerned with ticks/mm
+  // With a rotary encoder we're concerned with ticks/rev; whereas with a linear we're concerned with ticks/mm//对于旋转编码器，我们关注的是滴答声/转速；而对于线性，我们关注的是滴答声/mm
   stepperTicksPerUnit = (type == I2CPE_ENC_TYPE_ROTARY) ? stepperTicks : planner.settings.axis_steps_per_mm[encoderAxis];
 
-  //convert both 'ticks' into same units / base
+  //convert both 'ticks' into same units / base//将两个“刻度”转换为相同的单位/基准
   encoderCountInStepperTicksScaled = LROUND((stepperTicksPerUnit * encoderTicks) / encoderTicksPerUnit);
 
   const int32_t target = stepper.position(encoderAxis);
   int32_t error = encoderCountInStepperTicksScaled - target;
 
-  //suppress discontinuities (might be caused by bad I2C readings...?)
+  //suppress discontinuities (might be caused by bad I2C readings...?)//抑制不连续性（可能由I2C读数错误引起…？）
   const bool suppressOutput = (ABS(error - errorPrev) > 100);
 
   errorPrev = error;
@@ -306,7 +307,7 @@ int32_t I2CPositionEncoder::get_raw_count() {
   encoderCount.val = 0x00;
 
   if (Wire.requestFrom(I2C_ADDRESS(i2cAddress), uint8_t(3)) != 3) {
-    //houston, we have a problem...
+    //houston, we have a problem...//休斯顿，我们有个问题。。。
     H = I2CPE_MAG_SIG_NF;
     return 0;
   }
@@ -314,11 +315,11 @@ int32_t I2CPositionEncoder::get_raw_count() {
   while (Wire.available())
     encoderCount.bval[index++] = (uint8_t)Wire.read();
 
-  //extract the magnetic strength
+  //extract the magnetic strength//提取磁场强度
   H = (B00000011 & (encoderCount.bval[2] >> 6));
 
-  //extract sign bit; sign = (encoderCount.bval[2] & B00100000);
-  //set all upper bits to the sign value to overwrite H
+  //extract sign bit; sign = (encoderCount.bval[2] & B00100000);//提取符号位；符号=（encoderCount.bval[2]&B00100000）；
+  //set all upper bits to the sign value to overwrite H//将所有高位设置为符号值以覆盖H
   encoderCount.val = (encoderCount.bval[2] & B00100000) ? (encoderCount.val | 0xFFC00000) : (encoderCount.val & 0x003FFFFF);
 
   if (invert) encoderCount.val *= -1;
@@ -327,7 +328,7 @@ int32_t I2CPositionEncoder::get_raw_count() {
 }
 
 bool I2CPositionEncoder::test_axis() {
-  // Only works on XYZ Cartesian machines for the time being
+  // Only works on XYZ Cartesian machines for the time being//目前仅适用于XYZ笛卡尔机器
   if (!(encoderAxis == X_AXIS || encoderAxis == Y_AXIS || encoderAxis == Z_AXIS)) return false;
 
   const float startPosition = soft_endstop.min[encoderAxis] + 10,
@@ -352,14 +353,14 @@ bool I2CPositionEncoder::test_axis() {
     planner.synchronize();
   #endif
 
-  // if the module isn't currently trusted, wait until it is (or until it should be if things are working)
+  // if the module isn't currently trusted, wait until it is (or until it should be if things are working)//如果模块当前不受信任，请等待它被信任（或者，如果一切正常，则等待它应该被信任）
   if (!trusted) {
     int32_t startWaitingTime = millis();
     while (!trusted && millis() - startWaitingTime < I2CPE_TIME_TRUSTED)
       safe_delay(500);
   }
 
-  if (trusted) { // if trusted, commence test
+  if (trusted) { // if trusted, commence test//如果信任，开始测试
     TERN_(HAS_EXTRUDERS, endCoord.e = planner.get_axis_position_mm(E_AXIS));
     planner.buffer_line(endCoord, fr_mm_s, 0);
     planner.synchronize();
@@ -412,13 +413,13 @@ void I2CPositionEncoder::calibrate_steps_mm(const uint8_t iter) {
     delay(250);
     startCount = get_position();
 
-    //do_blocking_move_to(endCoord);
+    //do_blocking_move_to(endCoord);//是否阻止移动到（endCoord）；
 
     TERN_(HAS_EXTRUDERS, endCoord.e = planner.get_axis_position_mm(E_AXIS));
     planner.buffer_line(endCoord, fr_mm_s, 0);
     planner.synchronize();
 
-    //Read encoder distance
+    //Read encoder distance//读取编码器距离
     delay(250);
     stopCount = get_position();
 
@@ -427,20 +428,20 @@ void I2CPositionEncoder::calibrate_steps_mm(const uint8_t iter) {
     SERIAL_ECHOLNPAIR("Attempted travel: ", travelDistance, "mm");
     SERIAL_ECHOLNPAIR("   Actual travel:  ", travelledDistance, "mm");
 
-    //Calculate new axis steps per unit
+    //Calculate new axis steps per unit//计算每单位的新轴步数
     old_steps_mm = planner.settings.axis_steps_per_mm[encoderAxis];
     new_steps_mm = (old_steps_mm * travelDistance) / travelledDistance;
 
     SERIAL_ECHOLNPAIR("Old steps/mm: ", old_steps_mm);
     SERIAL_ECHOLNPAIR("New steps/mm: ", new_steps_mm);
 
-    //Save new value
+    //Save new value//保存新值
     planner.settings.axis_steps_per_mm[encoderAxis] = new_steps_mm;
 
     if (iter > 1) {
       total += new_steps_mm;
 
-      // swap start and end points so next loop runs from current position
+      // swap start and end points so next loop runs from current position//交换起点和终点，以便下一个循环从当前位置运行
       const float tempCoord = startCoord[encoderAxis];
       startCoord[encoderAxis] = endCoord[encoderAxis];
       endCoord[encoderAxis] = tempCoord;
@@ -672,14 +673,14 @@ void I2CPositionEncodersMgr::report_position(const int8_t idx, const bool units,
 }
 
 void I2CPositionEncodersMgr::change_module_address(const uint8_t oldaddr, const uint8_t newaddr) {
-  // First check 'new' address is not in use
+  // First check 'new' address is not in use//首次检查“新”地址未被使用
   Wire.beginTransmission(I2C_ADDRESS(newaddr));
   if (!Wire.endTransmission()) {
     SERIAL_ECHOLNPAIR("?There is already a device with that address on the I2C bus! (", newaddr, ")");
     return;
   }
 
-  // Now check that we can find the module on the oldaddr address
+  // Now check that we can find the module on the oldaddr address//现在检查是否可以在oldaddr地址上找到模块
   Wire.beginTransmission(I2C_ADDRESS(oldaddr));
   if (Wire.endTransmission()) {
     SERIAL_ECHOLNPAIR("?No module detected at this address! (", oldaddr, ")");
@@ -688,7 +689,7 @@ void I2CPositionEncodersMgr::change_module_address(const uint8_t oldaddr, const 
 
   SERIAL_ECHOLNPAIR("Module found at ", oldaddr, ", changing address to ", newaddr);
 
-  // Change the modules address
+  // Change the modules address//更改模块地址
   Wire.beginTransmission(I2C_ADDRESS(oldaddr));
   Wire.write(I2CPE_SET_ADDR);
   Wire.write(newaddr);
@@ -696,10 +697,10 @@ void I2CPositionEncodersMgr::change_module_address(const uint8_t oldaddr, const 
 
   SERIAL_ECHOLNPGM("Address changed, resetting and waiting for confirmation..");
 
-  // Wait for the module to reset (can probably be improved by polling address with a timeout).
+  // Wait for the module to reset (can probably be improved by polling address with a timeout).//等待模块复位（可能通过超时轮询地址来改进）。
   safe_delay(I2CPE_REBOOT_TIME);
 
-  // Look for the module at the new address.
+  // Look for the module at the new address.//在新地址查找模块。
   Wire.beginTransmission(I2C_ADDRESS(newaddr));
   if (Wire.endTransmission()) {
     SERIAL_ECHOLNPGM("Address change failed! Check encoder module.");
@@ -708,8 +709,8 @@ void I2CPositionEncodersMgr::change_module_address(const uint8_t oldaddr, const 
 
   SERIAL_ECHOLNPGM("Address change successful!");
 
-  // Now, if this module is configured, find which encoder instance it's supposed to correspond to
-  // and enable it (it will likely have failed initialization on power-up, before the address change).
+  // Now, if this module is configured, find which encoder instance it's supposed to correspond to//现在，如果配置了此模块，请找到它应该对应的编码器实例
+  // and enable it (it will likely have failed initialization on power-up, before the address change).//并启用它（在地址更改之前，它可能在通电时初始化失败）。
   const int8_t idx = idx_from_addr(newaddr);
   if (idx >= 0 && !encoders[idx].get_active()) {
     SERIAL_CHAR(axis_codes[encoders[idx].get_axis()]);
@@ -719,7 +720,7 @@ void I2CPositionEncodersMgr::change_module_address(const uint8_t oldaddr, const 
 }
 
 void I2CPositionEncodersMgr::report_module_firmware(const uint8_t address) {
-  // First check there is a module
+  // First check there is a module//首先检查是否有一个模块
   Wire.beginTransmission(I2C_ADDRESS(address));
   if (Wire.endTransmission()) {
     SERIAL_ECHOLNPAIR("?No module detected at this address! (", address, ")");
@@ -733,7 +734,7 @@ void I2CPositionEncodersMgr::report_module_firmware(const uint8_t address) {
   Wire.write(I2CPE_REPORT_VERSION);
   Wire.endTransmission();
 
-  // Read value
+  // Read value//读取值
   if (Wire.requestFrom(I2C_ADDRESS(address), uint8_t(32))) {
     char c;
     while (Wire.available() > 0 && (c = (char)Wire.read()) > 0)
@@ -741,7 +742,7 @@ void I2CPositionEncodersMgr::report_module_firmware(const uint8_t address) {
     SERIAL_EOL();
   }
 
-  // Set module back to normal (distance) mode
+  // Set module back to normal (distance) mode//将模块设置回正常（距离）模式
   Wire.beginTransmission(I2C_ADDRESS(address));
   Wire.write(I2CPE_SET_REPORT_MODE);
   Wire.write(I2CPE_REPORT_DISTANCE);
@@ -759,7 +760,7 @@ int8_t I2CPositionEncodersMgr::parse() {
     };
 
     I2CPE_addr = parser.value_byte();
-    if (!WITHIN(I2CPE_addr, 30, 200)) { // reserve the first 30 and last 55
+    if (!WITHIN(I2CPE_addr, 30, 200)) { // reserve the first 30 and last 55//预订前30张和后55张
       SERIAL_ECHOLNPGM("?Address out of range. [30-200]");
       return I2CPE_PARSE_ERR;
     }
@@ -1125,4 +1126,4 @@ void I2CPositionEncodersMgr::M869() {
     report_error(I2CPE_idx);
 }
 
-#endif // I2C_POSITION_ENCODERS
+#endif // I2C_POSITION_ENCODERS//I2C_位置_编码器

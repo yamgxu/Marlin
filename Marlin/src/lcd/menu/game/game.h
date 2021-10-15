@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -26,7 +27,7 @@
 #include "../../lcdprint.h"
 #include "../../marlinui.h"
 
-//#define MUTE_GAMES
+//#define MUTE_GAMES//#定义哑巴游戏
 
 #if ENABLED(MUTE_GAMES) || !HAS_BUZZER
   #define _BUZZ(D,F) NOOP
@@ -51,7 +52,7 @@
   #include "snake.h"
 #endif
 
-// Pool game data to save SRAM
+// Pool game data to save SRAM//共享游戏数据以保存SRAM
 union MarlinGameData {
   #if ENABLED(MARLIN_BRICKOUT)
     brickout_data_t brickout;

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -68,7 +69,7 @@
 
 void u8g_SetPIOutput_DUE(u8g_t *u8g, uint8_t pin_index) {
   PIO_Configure(g_APinDescription[u8g->pin_list[pin_index]].pPort, PIO_OUTPUT_1,
-    g_APinDescription[u8g->pin_list[pin_index]].ulPin, g_APinDescription[u8g->pin_list[pin_index]].ulPinConfiguration);  // OUTPUT
+    g_APinDescription[u8g->pin_list[pin_index]].ulPin, g_APinDescription[u8g->pin_list[pin_index]].ulPinConfiguration);  // OUTPUT//输出
 }
 
 void u8g_SetPILevel_DUE(u8g_t *u8g, uint8_t pin_index, uint8_t level) {
@@ -80,7 +81,7 @@ void u8g_SetPILevel_DUE(u8g_t *u8g, uint8_t pin_index, uint8_t level) {
 Pio *SCK_pPio, *MOSI_pPio;
 uint32_t SCK_dwMask, MOSI_dwMask;
 
-void u8g_spiSend_sw_DUE_mode_0(uint8_t val) { // 3MHz
+void u8g_spiSend_sw_DUE_mode_0(uint8_t val) { // 3MHz//3MHz
   LOOP_L_N(i, 8) {
     if (val & 0x80)
       MOSI_pPio->PIO_SODR = MOSI_dwMask;
@@ -94,7 +95,7 @@ void u8g_spiSend_sw_DUE_mode_0(uint8_t val) { // 3MHz
   }
 }
 
-void u8g_spiSend_sw_DUE_mode_3(uint8_t val) { // 3.5MHz
+void u8g_spiSend_sw_DUE_mode_3(uint8_t val) { // 3.5MHz//3.5MHz
   LOOP_L_N(i, 8) {
     SCK_pPio->PIO_CODR = SCK_dwMask;
     DELAY_NS(50);
@@ -109,5 +110,5 @@ void u8g_spiSend_sw_DUE_mode_3(uint8_t val) { // 3.5MHz
   }
 }
 
-#endif // HAS_MARLINUI_U8GLIB
-#endif // ARDUINO_ARCH_SAM
+#endif // HAS_MARLINUI_U8GLIB//马林努伊能说会道吗
+#endif // ARDUINO_ARCH_SAM//阿杜伊诺·阿丘·萨姆

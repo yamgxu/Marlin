@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -33,14 +34,14 @@ static libServo *servos[NUM_SERVOS] = {0};
 constexpr millis_t servoDelay[] = SERVO_DELAY;
 static_assert(COUNT(servoDelay) == NUM_SERVOS, "SERVO_DELAY must be an array NUM_SERVOS long.");
 
-// Initialize to the default timer priority. This will be overridden by a call from timers.cpp.
-// This allows all timer interrupt priorities to be managed from a single location in the HAL.
+// Initialize to the default timer priority. This will be overridden by a call from timers.cpp.//初始化为默认计时器优先级。这将被来自timers.cpp的调用覆盖。
+// This allows all timer interrupt priorities to be managed from a single location in the HAL.//这允许从HAL中的单个位置管理所有定时器中断优先级。
 static uint32_t servo_interrupt_priority = NVIC_EncodePriority(NVIC_GetPriorityGrouping(), TIM_IRQ_PRIO, TIM_IRQ_SUBPRIO);
 
-// This must be called after the STM32 Servo class has intialized the timer.
-// It may only be needed after the first call to attach(), but it is possible
-// that is is necessary after every detach() call. To be safe this is currently
-// called after every call to attach().
+// This must be called after the STM32 Servo class has intialized the timer.//这必须在STM32伺服类初始化计时器后调用。
+// It may only be needed after the first call to attach(), but it is possible//可能仅在第一次调用attach（）之后才需要它，但这是可能的
+// that is is necessary after every detach() call. To be safe this is currently//这在每次detach（）调用之后都是必需的。为了安全起见，这是目前的情况
+// called after every call to attach().//在每次调用attach（）后调用。
 static void fixServoTimerInterruptPriority() {
   NVIC_SetPriority(getTimerUpIrq(TIMER_SERVO), servo_interrupt_priority);
 }
@@ -106,5 +107,5 @@ void libServo::setInterruptPriority(uint32_t preemptPriority, uint32_t subPriori
   servo_interrupt_priority = NVIC_EncodePriority(NVIC_GetPriorityGrouping(), preemptPriority, subPriority);
 }
 
-#endif // HAS_SERVOS
-#endif // ARDUINO_ARCH_STM32 && !STM32GENERIC
+#endif // HAS_SERVOS//有伺服系统吗
+#endif // ARDUINO_ARCH_STM32 && !STM32GENERIC//ARDUINO_ARCH_STM32&&！STM32通用

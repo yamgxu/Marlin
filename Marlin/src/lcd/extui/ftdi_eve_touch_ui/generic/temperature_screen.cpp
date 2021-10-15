@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**************************
  * temperature_screen.cpp *
  **************************/
@@ -110,4 +111,4 @@ bool TemperatureScreen::onTouchHeld(uint8_t tag) {
   return true;
 }
 
-#endif // FTDI_TEMPERATURE_SCREEN
+#endif // FTDI_TEMPERATURE_SCREEN//FTDI_温度_屏幕

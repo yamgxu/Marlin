@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -38,25 +39,25 @@
 
 #define BOARD_NO_NATIVE_USB
 
-//#define DISABLE_DEBUG
+//#define DISABLE_DEBUG//#定义禁用调试
 #define DISABLE_JTAG
 
-//
-// Servos
-//
+////
+// Servos//伺服
+////
 #define SERVO0_PIN                          PA3
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_STOP_PIN                          PA12
 #define Y_STOP_PIN                          PA11
 #define Z_MIN_PIN                           PC6
 #define Z_MAX_PIN                           PB1
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                          PC0
 #define X_DIR_PIN                           PB2
 #define X_ENABLE_PIN                        PC13
@@ -77,26 +78,26 @@
 #define E1_DIR_PIN                          PC11
 #define E1_ENABLE_PIN                       PD2
 
-//
-// Heaters 0,1 / Fans / Bed
-//
+////
+// Heaters 0,1 / Fans / Bed//加热器0.1/风扇/床
+////
 #define HEATER_0_PIN                        PC9
 #define HEATER_1_PIN                        PC7
 #define FAN_PIN                             PA8
 #define HEATER_BED_PIN                      PC8
 
-//
-// Temperature Sensors
-//
-#define TEMP_BED_PIN                        PA1   // TB
-#define TEMP_0_PIN                          PA0   // TH1
-#define TEMP_1_PIN                          PA2   // TH2
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_BED_PIN                        PA1   // TB//结核病
+#define TEMP_0_PIN                          PA0   // TH1//TH1
+#define TEMP_1_PIN                          PA2   // TH2//TH2
 
-#define FIL_RUNOUT_PIN                      PB10  // MT_DET
+#define FIL_RUNOUT_PIN                      PB10  // MT_DET//德特山
 
-//
-// LCD Pins
-//
+////
+// LCD Pins//LCD引脚
+////
 #if HAS_WIRED_LCD
 
   #define BEEPER_PIN                        PC1
@@ -106,7 +107,7 @@
   #define BTN_EN1                           PB11
   #define BTN_EN2                           PB0
 
-  // MKS MINI12864 and MKS LCD12864B; If using MKS LCD12864A (Need to remove RPK2 resistor)
+  // MKS MINI12864 and MKS LCD12864B; If using MKS LCD12864A (Need to remove RPK2 resistor)//MKS MINI12864和MKS LCD12864B；如果使用MKS LCD12864A（需要拆除RPK2电阻器）
   #if ENABLED(MKS_MINI_12864)
 
     #define LCD_BACKLIGHT_PIN               -1
@@ -122,7 +123,7 @@
       #define TFTGLCD_CS                    PB11
     #endif
 
-  #else                                           // !MKS_MINI_12864
+  #else                                           // !MKS_MINI_12864// !MKS_MINI_12864
 
     #define LCD_PINS_D4                     PA6
     #if IS_ULTIPANEL
@@ -131,27 +132,27 @@
       #define LCD_PINS_D7                   PC5
 
       #if ENABLED(REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER)
-        #define BTN_ENC_EN           LCD_PINS_D7  // Detect the presence of the encoder
+        #define BTN_ENC_EN           LCD_PINS_D7  // Detect the presence of the encoder//检测编码器的存在
       #endif
 
     #endif
 
-  #endif // !MKS_MINI_12864
+  #endif // !MKS_MINI_12864// !MKS_MINI_12864
 
   #define BOARD_ST7920_DELAY_1     DELAY_NS(125)
   #define BOARD_ST7920_DELAY_2     DELAY_NS(125)
   #define BOARD_ST7920_DELAY_3     DELAY_NS(125)
 
-#endif // HAS_WIRED_LCD
+#endif // HAS_WIRED_LCD//有有线液晶显示器吗
 
-//
-// SD Card
-//
+////
+// SD Card//SD卡
+////
 #define SD_DETECT_PIN                       PC10
 
-//
-// SPI
-//
+////
+// SPI//SPI
+////
 #define SPI_DEVICE                             2
 #define SD_SCK_PIN                          PB13
 #define SD_MISO_PIN                         PB14

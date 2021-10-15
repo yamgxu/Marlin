@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -30,7 +31,7 @@
   * Translation by cristyanul
   */
 namespace Language_ro {
-  using namespace Language_en; // Inherit undefined strings from English
+  using namespace Language_en; // Inherit undefined strings from English//从英语中继承未定义的字符串
 
   constexpr uint8_t    CHARSIZE                            = 2;
   PROGMEM Language_Str LANGUAGE                            = _UxGT("Romanian");
@@ -48,7 +49,7 @@ namespace Language_ro {
   PROGMEM Language_Str MSG_MEDIA_USB_REMOVED               = _UxGT("Dispozitiv USB Inlaturat");
   PROGMEM Language_Str MSG_MEDIA_USB_FAILED                = _UxGT("Pornire USB Esuata");
   PROGMEM Language_Str MSG_KILL_SUBCALL_OVERFLOW           = _UxGT("Eroare:Subcall Overflow");
-  PROGMEM Language_Str MSG_LCD_ENDSTOPS                    = _UxGT("Endstops"); // Max length 8 characters
+  PROGMEM Language_Str MSG_LCD_ENDSTOPS                    = _UxGT("Endstops"); // Max length 8 characters//最大长度为8个字符
   PROGMEM Language_Str MSG_LCD_SOFT_ENDSTOPS               = _UxGT("Soft Endstops");
   PROGMEM Language_Str MSG_MAIN                            = _UxGT("Principal");
   PROGMEM Language_Str MSG_ADVANCED_SETTINGS               = _UxGT("Setari Avansate");
@@ -437,9 +438,9 @@ namespace Language_ro {
   PROGMEM Language_Str MSG_ERR_MINTEMP                     = _UxGT("Err: MINTEMP");
   PROGMEM Language_Str MSG_HALTED                          = _UxGT("PRINTER HALTED");
   PROGMEM Language_Str MSG_PLEASE_RESET                    = _UxGT("Please Reset");
-  PROGMEM Language_Str MSG_SHORT_DAY                       = _UxGT("d"); // One character only
-  PROGMEM Language_Str MSG_SHORT_HOUR                      = _UxGT("h"); // One character only
-  PROGMEM Language_Str MSG_SHORT_MINUTE                    = _UxGT("m"); // One character only
+  PROGMEM Language_Str MSG_SHORT_DAY                       = _UxGT("d"); // One character only//只有一个字符
+  PROGMEM Language_Str MSG_SHORT_HOUR                      = _UxGT("h"); // One character only//只有一个字符
+  PROGMEM Language_Str MSG_SHORT_MINUTE                    = _UxGT("m"); // One character only//只有一个字符
   PROGMEM Language_Str MSG_HEATING                         = _UxGT("Heating...");
   PROGMEM Language_Str MSG_COOLING                         = _UxGT("Cooling...");
   PROGMEM Language_Str MSG_BED_HEATING                     = _UxGT("Bed Heating...");
@@ -565,10 +566,10 @@ namespace Language_ro {
   PROGMEM Language_Str MSG_BAD_PAGE                        = _UxGT("Bad page index");
   PROGMEM Language_Str MSG_BAD_PAGE_SPEED                  = _UxGT("Bad page speed");
 
-  //
-  // Filament Inlocuire screens show up to 3 lines on a 4-line display
-  //                        ...or up to 2 lines on a 3-line display
-  //
+  ////
+  // Filament Inlocuire screens show up to 3 lines on a 4-line display//灯丝InLouire屏幕在4行显示屏上最多显示3行
+  //                        ...or up to 2 lines on a 3-line display//…或在3行显示器上最多显示2行
+  ////
 #if LCD_HEIGHT >= 4
   PROGMEM Language_Str MSG_ADVANCED_PAUSE_WAITING          = _UxGT(MSG_2_LINE("Apasa Butonul", "pentru a reveni la print"));
   PROGMEM Language_Str MSG_PAUSE_PRINT_PARKING             = _UxGT(MSG_1_LINE("Parcare..."));

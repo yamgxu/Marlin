@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -28,14 +29,14 @@
 
 #include "../../inc/MarlinConfig.h"
 
-// TMC26X drivers have STEP/DIR on normal pins, but ENABLE via SPI
+// TMC26X drivers have STEP/DIR on normal pins, but ENABLE via SPI//TMC26X驱动器在正常引脚上具有阶跃/直插，但通过SPI启用
 
 #include <SPI.h>
 #include <TMC26XStepper.h>
 
 void tmc26x_init_to_defaults();
 
-// X Stepper
+// X Stepper//X步进机
 #if AXIS_DRIVER_TYPE_X(TMC26X)
   extern TMC26XStepper stepperX;
   #define X_ENABLE_INIT() NOOP
@@ -43,7 +44,7 @@ void tmc26x_init_to_defaults();
   #define X_ENABLE_READ() stepperX.isEnabled()
 #endif
 
-// Y Stepper
+// Y Stepper//Y步进机
 #if AXIS_DRIVER_TYPE_Y(TMC26X)
   extern TMC26XStepper stepperY;
   #define Y_ENABLE_INIT() NOOP
@@ -51,7 +52,7 @@ void tmc26x_init_to_defaults();
   #define Y_ENABLE_READ() stepperY.isEnabled()
 #endif
 
-// Z Stepper
+// Z Stepper//Z步进机
 #if AXIS_DRIVER_TYPE_Z(TMC26X)
   extern TMC26XStepper stepperZ;
   #define Z_ENABLE_INIT() NOOP
@@ -59,7 +60,7 @@ void tmc26x_init_to_defaults();
   #define Z_ENABLE_READ() stepperZ.isEnabled()
 #endif
 
-// X2 Stepper
+// X2 Stepper//X2步进机
 #if HAS_X2_ENABLE && AXIS_DRIVER_TYPE_X2(TMC26X)
   extern TMC26XStepper stepperX2;
   #define X2_ENABLE_INIT() NOOP
@@ -67,7 +68,7 @@ void tmc26x_init_to_defaults();
   #define X2_ENABLE_READ() stepperX2.isEnabled()
 #endif
 
-// Y2 Stepper
+// Y2 Stepper//Y2步进机
 #if HAS_Y2_ENABLE && AXIS_DRIVER_TYPE_Y2(TMC26X)
   extern TMC26XStepper stepperY2;
   #define Y2_ENABLE_INIT() NOOP
@@ -75,7 +76,7 @@ void tmc26x_init_to_defaults();
   #define Y2_ENABLE_READ() stepperY2.isEnabled()
 #endif
 
-// Z2 Stepper
+// Z2 Stepper//Z2步进机
 #if HAS_Z2_ENABLE && AXIS_DRIVER_TYPE_Z2(TMC26X)
   extern TMC26XStepper stepperZ2;
   #define Z2_ENABLE_INIT() NOOP
@@ -83,7 +84,7 @@ void tmc26x_init_to_defaults();
   #define Z2_ENABLE_READ() stepperZ2.isEnabled()
 #endif
 
-// Z3 Stepper
+// Z3 Stepper//Z3步进电机
 #if HAS_Z3_ENABLE && AXIS_DRIVER_TYPE_Z3(TMC26X)
   extern TMC26XStepper stepperZ3;
   #define Z3_ENABLE_INIT() NOOP
@@ -91,7 +92,7 @@ void tmc26x_init_to_defaults();
   #define Z3_ENABLE_READ() stepperZ3.isEnabled()
 #endif
 
-// Z4 Stepper
+// Z4 Stepper//Z4步进机
 #if HAS_Z4_ENABLE && AXIS_DRIVER_TYPE_Z4(TMC26X)
   extern TMC26XStepper stepperZ4;
   #define Z4_ENABLE_INIT() NOOP
@@ -99,7 +100,7 @@ void tmc26x_init_to_defaults();
   #define Z4_ENABLE_READ() stepperZ4.isEnabled()
 #endif
 
-// I Stepper
+// I Stepper//步进电机
 #if HAS_I_ENABLE && AXIS_DRIVER_TYPE_I(TMC26X)
   extern TMC26XStepper stepperI;
   #define I_ENABLE_INIT() NOOP
@@ -107,7 +108,7 @@ void tmc26x_init_to_defaults();
   #define I_ENABLE_READ() stepperI.isEnabled()
 #endif
 
-// J Stepper
+// J Stepper//J步进机
 #if HAS_J_ENABLE && AXIS_DRIVER_TYPE_J(TMC26X)
   extern TMC26XStepper stepperJ;
   #define J_ENABLE_INIT() NOOP
@@ -115,7 +116,7 @@ void tmc26x_init_to_defaults();
   #define J_ENABLE_READ() stepperJ.isEnabled()
 #endif
 
-// K Stepper
+// K Stepper//步进电机
 #if HAS_K_ENABLE && AXIS_DRIVER_TYPE_K(TMC26X)
   extern TMC26XStepper stepperK;
   #define K_ENABLE_INIT() NOOP
@@ -123,7 +124,7 @@ void tmc26x_init_to_defaults();
   #define K_ENABLE_READ() stepperK.isEnabled()
 #endif
 
-// E0 Stepper
+// E0 Stepper//E0步进机
 #if AXIS_DRIVER_TYPE_E0(TMC26X)
   extern TMC26XStepper stepperE0;
   #define E0_ENABLE_INIT() NOOP
@@ -131,7 +132,7 @@ void tmc26x_init_to_defaults();
   #define E0_ENABLE_READ() stepperE0.isEnabled()
 #endif
 
-// E1 Stepper
+// E1 Stepper//E1步进器
 #if AXIS_DRIVER_TYPE_E1(TMC26X)
   extern TMC26XStepper stepperE1;
   #define E1_ENABLE_INIT() NOOP
@@ -139,7 +140,7 @@ void tmc26x_init_to_defaults();
   #define E1_ENABLE_READ() stepperE1.isEnabled()
 #endif
 
-// E2 Stepper
+// E2 Stepper//E2步进机
 #if AXIS_DRIVER_TYPE_E2(TMC26X)
   extern TMC26XStepper stepperE2;
   #define E2_ENABLE_INIT() NOOP
@@ -147,7 +148,7 @@ void tmc26x_init_to_defaults();
   #define E2_ENABLE_READ() stepperE2.isEnabled()
 #endif
 
-// E3 Stepper
+// E3 Stepper//E3步进机
 #if AXIS_DRIVER_TYPE_E3(TMC26X)
   extern TMC26XStepper stepperE3;
   #define E3_ENABLE_INIT() NOOP
@@ -155,7 +156,7 @@ void tmc26x_init_to_defaults();
   #define E3_ENABLE_READ() stepperE3.isEnabled()
 #endif
 
-// E4 Stepper
+// E4 Stepper//E4步进机
 #if AXIS_DRIVER_TYPE_E4(TMC26X)
   extern TMC26XStepper stepperE4;
   #define E4_ENABLE_INIT() NOOP
@@ -163,7 +164,7 @@ void tmc26x_init_to_defaults();
   #define E4_ENABLE_READ() stepperE4.isEnabled()
 #endif
 
-// E5 Stepper
+// E5 Stepper//E5步进电机
 #if AXIS_DRIVER_TYPE_E5(TMC26X)
   extern TMC26XStepper stepperE5;
   #define E5_ENABLE_INIT() NOOP
@@ -171,7 +172,7 @@ void tmc26x_init_to_defaults();
   #define E5_ENABLE_READ() stepperE5.isEnabled()
 #endif
 
-// E6 Stepper
+// E6 Stepper//E6步进电机
 #if AXIS_DRIVER_TYPE_E6(TMC26X)
   extern TMC26XStepper stepperE6;
   #define E6_ENABLE_INIT() NOOP
@@ -179,7 +180,7 @@ void tmc26x_init_to_defaults();
   #define E6_ENABLE_READ() stepperE6.isEnabled()
 #endif
 
-// E7 Stepper
+// E7 Stepper//E7步进机
 #if AXIS_DRIVER_TYPE_E7(TMC26X)
   extern TMC26XStepper stepperE7;
   #define E7_ENABLE_INIT() NOOP

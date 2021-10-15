@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -73,23 +74,23 @@
 
 void MarlinSerial::begin(unsigned long baud, uint8_t config) {
   HardwareSerial::begin(baud, config);
-  // Replace the IRQ callback with the one we have defined
+  // Replace the IRQ callback with the one we have defined//将IRQ回调替换为我们定义的回调
   TERN_(EMERGENCY_PARSER, _serial.rx_callback = _rx_callback);
 }
 
-// This function is Copyright (c) 2006 Nicholas Zambetti.
+// This function is Copyright (c) 2006 Nicholas Zambetti.//此功能版权所有（c）2006 Nicholas Zambetti。
 void MarlinSerial::_rx_complete_irq(serial_t *obj) {
-  // No Parity error, read byte and store it in the buffer if there is room
+  // No Parity error, read byte and store it in the buffer if there is room//无奇偶校验错误，读取字节并将其存储在缓冲区（如果有空间）
   unsigned char c;
 
   if (uart_getc(obj, &c) == 0) {
 
     rx_buffer_index_t i = (unsigned int)(obj->rx_head + 1) % SERIAL_RX_BUFFER_SIZE;
 
-    // if we should be storing the received character into the location
-    // just before the tail (meaning that the head would advance to the
-    // current location of the tail), we're about to overflow the buffer
-    // and so we don't write the character or advance the head.
+    // if we should be storing the received character into the location//如果我们应该将接收到的字符存储到该位置
+    // just before the tail (meaning that the head would advance to the//就在尾巴的前面（意思是头部会向前移动）
+    // current location of the tail), we're about to overflow the buffer//尾的当前位置），我们将使缓冲区溢出
+    // and so we don't write the character or advance the head.//因此，我们不写人物或推进头部。
     if (i != obj->rx_tail) {
       obj->rx_buff[obj->rx_head] = c;
       obj->rx_head = i;
@@ -101,4 +102,4 @@ void MarlinSerial::_rx_complete_irq(serial_t *obj) {
   }
 }
 
-#endif // ARDUINO_ARCH_STM32 && !STM32GENERIC
+#endif // ARDUINO_ARCH_STM32 && !STM32GENERIC//ARDUINO_ARCH_STM32&&！STM32通用

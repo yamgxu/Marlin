@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -37,15 +38,15 @@
   #error "You must set ([XYZ]|Z2|E0)_DRIVER_TYPE to DRV8825 in Configuration.h for RL200."
 #endif
 
-#define E0_STEP_PIN                           26  // (RUMBA E1 pins)
+#define E0_STEP_PIN                           26  // (RUMBA E1 pins)//（伦巴E1引脚）
 #define E0_DIR_PIN                            25
 #define E0_ENABLE_PIN                         27
 
-#define E1_STEP_PIN                           29  // (RUMBA E2 pins)
+#define E1_STEP_PIN                           29  // (RUMBA E2 pins)//（伦巴E2引脚）
 #define E1_DIR_PIN                            28
 #define E1_ENABLE_PIN                         39
 
-#define Z2_STEP_PIN                           23  // (RUMBA E0 pins)
+#define Z2_STEP_PIN                           23  // (RUMBA E0 pins)//（伦巴E0引脚）
 #define Z2_DIR_PIN                            22
 #define Z2_ENABLE_PIN                         24
 

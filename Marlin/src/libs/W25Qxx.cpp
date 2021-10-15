@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -73,7 +74,7 @@ void W25QXXFlash::init(uint8_t spiRate) {
     case SPI_EIGHTH_SPEED:  clock = SPI_CLOCK_DIV16; break;
     case SPI_SPEED_5:       clock = SPI_CLOCK_DIV32; break;
     case SPI_SPEED_6:       clock = SPI_CLOCK_DIV64; break;
-    default:                clock = SPI_CLOCK_DIV2;// Default from the SPI library
+    default:                clock = SPI_CLOCK_DIV2;// Default from the SPI library//SPI库中的默认值
   }
 
   mySPI.setClockDivider(clock);
@@ -146,11 +147,11 @@ uint16_t W25QXXFlash::W25QXX_ReadID(void) {
 }
 
 void W25QXXFlash::SPI_FLASH_WriteEnable(void) {
-  // Select the FLASH: Chip Select low
+  // Select the FLASH: Chip Select low//选择闪存：芯片选择低
   W25QXX_CS_L;
-  // Send "Write Enable" instruction
+  // Send "Write Enable" instruction//发送“写启用”指令
   spi_flash_Send(W25X_WriteEnable);
-  // Deselect the FLASH: Chip Select high
+  // Deselect the FLASH: Chip Select high//取消选择闪存：芯片选择高
   W25QXX_CS_H;
 }
 
@@ -166,54 +167,54 @@ void W25QXXFlash::SPI_FLASH_WriteEnable(void) {
 void W25QXXFlash::SPI_FLASH_WaitForWriteEnd(void) {
   uint8_t FLASH_Status = 0;
 
-  // Select the FLASH: Chip Select low
+  // Select the FLASH: Chip Select low//选择闪存：芯片选择低
   W25QXX_CS_L;
-  // Send "Read Status Register" instruction
+  // Send "Read Status Register" instruction//发送“读取状态寄存器”指令
   spi_flash_Send(W25X_ReadStatusReg);
 
-  // Loop as long as the memory is busy with a write cycle
+  // Loop as long as the memory is busy with a write cycle//循环，只要内存正忙着写周期
   do
     /* Send a dummy byte to generate the clock needed by the FLASH
     and put the value of the status register in FLASH_Status variable */
     FLASH_Status = spi_flash_Rec();
-  while ((FLASH_Status & WIP_Flag) == 0x01); // Write in progress
+  while ((FLASH_Status & WIP_Flag) == 0x01); // Write in progress//正在写入
 
-  // Deselect the FLASH: Chip Select high
+  // Deselect the FLASH: Chip Select high//取消选择闪存：芯片选择高
   W25QXX_CS_H;
 }
 
 void W25QXXFlash::SPI_FLASH_SectorErase(uint32_t SectorAddr) {
-  // Send write enable instruction
+  // Send write enable instruction//发送写启用指令
   SPI_FLASH_WriteEnable();
 
-  // Sector Erase
-  // Select the FLASH: Chip Select low
+  // Sector Erase//扇区擦除
+  // Select the FLASH: Chip Select low//选择闪存：芯片选择低
   W25QXX_CS_L;
-  // Send Sector Erase instruction
+  // Send Sector Erase instruction//发送扇区擦除指令
   spi_flash_Send(W25X_SectorErase);
-  // Send SectorAddr high nybble address byte
+  // Send SectorAddr high nybble address byte//发送扇区地址高nybble地址字节
   spi_flash_Send((SectorAddr & 0xFF0000) >> 16);
-  // Send SectorAddr medium nybble address byte
+  // Send SectorAddr medium nybble address byte//发送扇区地址介质nybble地址字节
   spi_flash_Send((SectorAddr & 0xFF00) >> 8);
-  // Send SectorAddr low nybble address byte
+  // Send SectorAddr low nybble address byte//发送扇区地址低nybble地址字节
   spi_flash_Send(SectorAddr & 0xFF);
-  // Deselect the FLASH: Chip Select high
+  // Deselect the FLASH: Chip Select high//取消选择闪存：芯片选择高
 
   W25QXX_CS_H;
-  // Wait the end of Flash writing
+  // Wait the end of Flash writing//等待Flash写入的结束
   SPI_FLASH_WaitForWriteEnd();
 }
 
 void W25QXXFlash::SPI_FLASH_BlockErase(uint32_t BlockAddr) {
   SPI_FLASH_WriteEnable();
   W25QXX_CS_L;
-  // Send Sector Erase instruction
+  // Send Sector Erase instruction//发送扇区擦除指令
   spi_flash_Send(W25X_BlockErase);
-  // Send SectorAddr high nybble address byte
+  // Send SectorAddr high nybble address byte//发送扇区地址高nybble地址字节
   spi_flash_Send((BlockAddr & 0xFF0000) >> 16);
-  // Send SectorAddr medium nybble address byte
+  // Send SectorAddr medium nybble address byte//发送扇区地址介质nybble地址字节
   spi_flash_Send((BlockAddr & 0xFF00) >> 8);
-  // Send SectorAddr low nybble address byte
+  // Send SectorAddr low nybble address byte//发送扇区地址低nybble地址字节
   spi_flash_Send(BlockAddr & 0xFF);
 
   W25QXX_CS_H;
@@ -229,18 +230,18 @@ void W25QXXFlash::SPI_FLASH_BlockErase(uint32_t BlockAddr) {
 * Return         : None
 *******************************************************************************/
 void W25QXXFlash::SPI_FLASH_BulkErase(void) {
-  // Send write enable instruction
+  // Send write enable instruction//发送写启用指令
   SPI_FLASH_WriteEnable();
 
-  // Bulk Erase
-  // Select the FLASH: Chip Select low
+  // Bulk Erase//批量擦除
+  // Select the FLASH: Chip Select low//选择闪存：芯片选择低
   W25QXX_CS_L;
 
-  // Send Bulk Erase instruction
+  // Send Bulk Erase instruction//发送批量擦除指令
   spi_flash_Send(W25X_ChipErase);
-  // Deselect the FLASH: Chip Select high
+  // Deselect the FLASH: Chip Select high//取消选择闪存：芯片选择高
   W25QXX_CS_H;
-  // Wait the end of Flash writing
+  // Wait the end of Flash writing//等待Flash写入的结束
   SPI_FLASH_WaitForWriteEnd();
 }
 
@@ -258,34 +259,34 @@ void W25QXXFlash::SPI_FLASH_BulkErase(void) {
 * Return         : None
 *******************************************************************************/
 void W25QXXFlash::SPI_FLASH_PageWrite(uint8_t *pBuffer, uint32_t WriteAddr, uint16_t NumByteToWrite) {
-  // Enable the write access to the FLASH
+  // Enable the write access to the FLASH//启用对闪存的写入访问
   SPI_FLASH_WriteEnable();
 
-  // Select the FLASH: Chip Select low
+  // Select the FLASH: Chip Select low//选择闪存：芯片选择低
   W25QXX_CS_L;
-  // Send "Write to Memory " instruction
+  // Send "Write to Memory " instruction//发送“写入内存”指令
   spi_flash_Send(W25X_PageProgram);
-  // Send WriteAddr high nybble address byte to write to
+  // Send WriteAddr high nybble address byte to write to//发送WriteAddr要写入的高nybble地址字节
   spi_flash_Send((WriteAddr & 0xFF0000) >> 16);
-  // Send WriteAddr medium nybble address byte to write to
+  // Send WriteAddr medium nybble address byte to write to//发送WriteAddr介质nybble地址字节以写入
   spi_flash_Send((WriteAddr & 0xFF00) >> 8);
-  // Send WriteAddr low nybble address byte to write to
+  // Send WriteAddr low nybble address byte to write to//发送WriteAddr要写入的低nybble地址字节
   spi_flash_Send(WriteAddr & 0xFF);
 
   NOMORE(NumByteToWrite, SPI_FLASH_PerWritePageSize);
 
-  // While there is data to be written on the FLASH
+  // While there is data to be written on the FLASH//当有数据要写在闪存上时
   while (NumByteToWrite--) {
-    // Send the current byte
+    // Send the current byte//发送当前字节
     spi_flash_Send(*pBuffer);
-    // Point on the next byte to be written
+    // Point on the next byte to be written//指向要写入的下一个字节
     pBuffer++;
   }
 
-  // Deselect the FLASH: Chip Select high
+  // Deselect the FLASH: Chip Select high//取消选择闪存：芯片选择高
   W25QXX_CS_H;
 
-  // Wait the end of Flash writing
+  // Wait the end of Flash writing//等待Flash写入的结束
   SPI_FLASH_WaitForWriteEnd();
 }
 
@@ -308,11 +309,11 @@ void W25QXXFlash::SPI_FLASH_BufferWrite(uint8_t *pBuffer, uint32_t WriteAddr, ui
   NumOfPage = NumByteToWrite / SPI_FLASH_PageSize;
   NumOfSingle = NumByteToWrite % SPI_FLASH_PageSize;
 
-  if (Addr == 0) { // WriteAddr is SPI_FLASH_PageSize aligned
-    if (NumOfPage == 0) { // NumByteToWrite < SPI_FLASH_PageSize
+  if (Addr == 0) { // WriteAddr is SPI_FLASH_PageSize aligned//WriteADR与SPI\U FLASH\U页面大小对齐
+    if (NumOfPage == 0) { // NumByteToWrite < SPI_FLASH_PageSize//NumbytoWrite<SPI\u FLASH\u页面大小
       SPI_FLASH_PageWrite(pBuffer, WriteAddr, NumByteToWrite);
     }
-    else { // NumByteToWrite > SPI_FLASH_PageSize
+    else { // NumByteToWrite > SPI_FLASH_PageSize//NumbyteTowWrite>SPI\u FLASH\u页面大小
       while (NumOfPage--) {
         SPI_FLASH_PageWrite(pBuffer, WriteAddr, SPI_FLASH_PageSize);
         WriteAddr += SPI_FLASH_PageSize;
@@ -321,9 +322,9 @@ void W25QXXFlash::SPI_FLASH_BufferWrite(uint8_t *pBuffer, uint32_t WriteAddr, ui
       SPI_FLASH_PageWrite(pBuffer, WriteAddr, NumOfSingle);
     }
   }
-  else { // WriteAddr is not SPI_FLASH_PageSize aligned
-    if (NumOfPage == 0) { // NumByteToWrite < SPI_FLASH_PageSize
-      if (NumOfSingle > count) { // (NumByteToWrite + WriteAddr) > SPI_FLASH_PageSize
+  else { // WriteAddr is not SPI_FLASH_PageSize aligned//WriteADR未与SPI\u FLASH\u页面大小对齐
+    if (NumOfPage == 0) { // NumByteToWrite < SPI_FLASH_PageSize//NumbytoWrite<SPI\u FLASH\u页面大小
+      if (NumOfSingle > count) { // (NumByteToWrite + WriteAddr) > SPI_FLASH_PageSize//（NumByteToWrite+WriteADR）>SPI\u FLASH\u页面大小
         temp = NumOfSingle - count;
         SPI_FLASH_PageWrite(pBuffer, WriteAddr, count);
         WriteAddr += count;
@@ -333,7 +334,7 @@ void W25QXXFlash::SPI_FLASH_BufferWrite(uint8_t *pBuffer, uint32_t WriteAddr, ui
       else
         SPI_FLASH_PageWrite(pBuffer, WriteAddr, NumByteToWrite);
     }
-    else { // NumByteToWrite > SPI_FLASH_PageSize
+    else { // NumByteToWrite > SPI_FLASH_PageSize//NumbyteTowWrite>SPI\u FLASH\u页面大小
       NumByteToWrite -= count;
       NumOfPage = NumByteToWrite / SPI_FLASH_PageSize;
       NumOfSingle = NumByteToWrite % SPI_FLASH_PageSize;
@@ -365,24 +366,24 @@ void W25QXXFlash::SPI_FLASH_BufferWrite(uint8_t *pBuffer, uint32_t WriteAddr, ui
 * Return         : None
 *******************************************************************************/
 void W25QXXFlash::SPI_FLASH_BufferRead(uint8_t *pBuffer, uint32_t ReadAddr, uint16_t NumByteToRead) {
-  // Select the FLASH: Chip Select low
+  // Select the FLASH: Chip Select low//选择闪存：芯片选择低
   W25QXX_CS_L;
 
-  // Send "Read from Memory " instruction
+  // Send "Read from Memory " instruction//发送“从存储器读取”指令
   spi_flash_Send(W25X_ReadData);
 
-  // Send ReadAddr high nybble address byte to read from
+  // Send ReadAddr high nybble address byte to read from//发送要读取的ReadAddr高nybble地址字节
   spi_flash_Send((ReadAddr & 0xFF0000) >> 16);
-  // Send ReadAddr medium nybble address byte to read from
+  // Send ReadAddr medium nybble address byte to read from//发送要读取的ReadAddr介质nybble地址字节
   spi_flash_Send((ReadAddr & 0xFF00) >> 8);
-  // Send ReadAddr low nybble address byte to read from
+  // Send ReadAddr low nybble address byte to read from//发送要读取的ReadAddr低nybble地址字节
   spi_flash_Send(ReadAddr & 0xFF);
 
   if (NumByteToRead <= 32 || !flash_dma_mode) {
-    while (NumByteToRead--) { // While there is data to be read
-      // Read a byte from the FLASH
+    while (NumByteToRead--) { // While there is data to be read//当有数据要读取时
+      // Read a byte from the FLASH//从闪存中读取一个字节
       *pBuffer = spi_flash_Rec();
-      // Point to the next location where the byte read will be saved
+      // Point to the next location where the byte read will be saved//指向将保存字节读取的下一个位置
       pBuffer++;
     }
   }
@@ -392,4 +393,4 @@ void W25QXXFlash::SPI_FLASH_BufferRead(uint8_t *pBuffer, uint32_t ReadAddr, uint
   W25QXX_CS_H;
 }
 
-#endif // HAS_SPI_FLASH
+#endif // HAS_SPI_FLASH//有闪光吗

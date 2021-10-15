@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -46,7 +47,7 @@
 
 DGUSDisplay dgusdisplay;
 
-// Preamble... 2 Bytes, usually 0x5A 0xA5, but configurable
+// Preamble... 2 Bytes, usually 0x5A 0xA5, but configurable//序言。。。2个字节，通常为0x5A 0xA5，但可配置
 constexpr uint8_t DGUS_HEADER1 = 0x5A;
 constexpr uint8_t DGUS_HEADER2 = 0xA5;
 
@@ -54,7 +55,7 @@ constexpr uint8_t DGUS_CMD_WRITEVAR = 0x82;
 constexpr uint8_t DGUS_CMD_READVAR = 0x83;
 
 #if ENABLED(DEBUG_DGUSLCD)
-  bool dguslcd_local_debug; // = false;
+  bool dguslcd_local_debug; // = false;//=假；
 #endif
 
 void DGUSDisplay::InitDisplay() {
@@ -63,8 +64,8 @@ void DGUSDisplay::InitDisplay() {
   #endif
   LCD_SERIAL.begin(LCD_BAUDRATE);
 
-  if (TERN1(POWER_LOSS_RECOVERY, !recovery.valid())) {  // If no Power-Loss Recovery is needed...
-    TERN_(DGUS_LCD_UI_MKS, delay(LOGO_TIME_DELAY));     // Show the logo for a little while
+  if (TERN1(POWER_LOSS_RECOVERY, !recovery.valid())) {  // If no Power-Loss Recovery is needed...//如果不需要电源损耗恢复。。。
+    TERN_(DGUS_LCD_UI_MKS, delay(LOGO_TIME_DELAY));     // Show the logo for a little while//将徽标显示一会儿
   }
 
   RequestScreen(TERN(SHOW_BOOTSCREEN, DGUSLCD_SCREEN_BOOT, DGUSLCD_SCREEN_MAIN));
@@ -139,11 +140,11 @@ void DGUSDisplay::ProcessRx() {
 
   #if ENABLED(SERIAL_STATS_RX_BUFFER_OVERRUNS)
     if (!LCD_SERIAL.available() && LCD_SERIAL.buffer_overruns()) {
-      // Overrun, but reset the flag only when the buffer is empty
-      // We want to extract as many as valid datagrams possible...
+      // Overrun, but reset the flag only when the buffer is empty//溢出，但仅当缓冲区为空时才重置标志
+      // We want to extract as many as valid datagrams possible...//我们希望提取尽可能多的有效数据报。。。
       DEBUG_ECHOPGM("OVFL");
       rx_datagram_state = DGUS_IDLE;
-      //LCD_SERIAL.reset_rx_overun();
+      //LCD_SERIAL.reset_rx_overun();//LCD_SERIAL.reset_rx_overun（）；
       LCD_SERIAL.flush();
     }
   #endif
@@ -152,35 +153,35 @@ void DGUSDisplay::ProcessRx() {
   while (LCD_SERIAL.available()) {
     switch (rx_datagram_state) {
 
-      case DGUS_IDLE: // Waiting for the first header byte
+      case DGUS_IDLE: // Waiting for the first header byte//正在等待第一个头字节
         receivedbyte = LCD_SERIAL.read();
-        //DEBUG_ECHOPAIR("< ",x);
+        //DEBUG_ECHOPAIR("< ",x);//调试回声对（“<”，x）；
         if (DGUS_HEADER1 == receivedbyte) rx_datagram_state = DGUS_HEADER1_SEEN;
         break;
 
-      case DGUS_HEADER1_SEEN: // Waiting for the second header byte
+      case DGUS_HEADER1_SEEN: // Waiting for the second header byte//正在等待第二个头字节
         receivedbyte = LCD_SERIAL.read();
-        //DEBUG_ECHOPAIR(" ",x);
+        //DEBUG_ECHOPAIR(" ",x);//调试回声对（“，x）；
         rx_datagram_state = (DGUS_HEADER2 == receivedbyte) ? DGUS_HEADER2_SEEN : DGUS_IDLE;
         break;
 
-      case DGUS_HEADER2_SEEN: // Waiting for the length byte
+      case DGUS_HEADER2_SEEN: // Waiting for the length byte//等待长度字节
         rx_datagram_len = LCD_SERIAL.read();
         DEBUG_ECHOPAIR(" (", rx_datagram_len, ") ");
 
-        // Telegram min len is 3 (command and one word of payload)
+        // Telegram min len is 3 (command and one word of payload)//电报最小长度为3（有效载荷的命令和一个字）
         rx_datagram_state = WITHIN(rx_datagram_len, 3, DGUS_RX_BUFFER_SIZE) ? DGUS_WAIT_TELEGRAM : DGUS_IDLE;
         break;
 
-      case DGUS_WAIT_TELEGRAM: // wait for complete datagram to arrive.
+      case DGUS_WAIT_TELEGRAM: // wait for complete datagram to arrive.//等待完整的数据报到达。
         if (LCD_SERIAL.available() < rx_datagram_len) return;
 
-        Initialized = true; // We've talked to it, so we defined it as initialized.
+        Initialized = true; // We've talked to it, so we defined it as initialized.//我们已经和它谈过了，所以我们将它定义为已初始化。
         uint8_t command = LCD_SERIAL.read();
 
         DEBUG_ECHOPAIR("# ", command);
 
-        uint8_t readlen = rx_datagram_len - 1;  // command is part of len.
+        uint8_t readlen = rx_datagram_len - 1;  // command is part of len.//命令是len的一部分。
         unsigned char tmp[rx_datagram_len - 1];
         unsigned char *ptmp = tmp;
         while (readlen--) {
@@ -189,7 +190,7 @@ void DGUSDisplay::ProcessRx() {
           *ptmp++ = receivedbyte;
         }
         DEBUG_ECHOPGM(" # ");
-        // mostly we'll get this: 5A A5 03 82 4F 4B -- ACK on 0x82, so discard it.
+        // mostly we'll get this: 5A A5 03 82 4F 4B -- ACK on 0x82, so discard it.//大多数情况下，我们会得到：5A A5 03 82 4F 4B--0x82上的ACK，所以丢弃它。
         if (command == DGUS_CMD_WRITEVAR && 'O' == tmp[0] && 'K' == tmp[1]) {
           DEBUG_ECHOLNPGM(">");
           rx_datagram_state = DGUS_IDLE;
@@ -205,8 +206,8 @@ void DGUSDisplay::ProcessRx() {
         |           Command          DataLen (in Words) */
         if (command == DGUS_CMD_READVAR) {
           const uint16_t vp = tmp[0] << 8 | tmp[1];
-          //const uint8_t dlen = tmp[2] << 1;  // Convert to Bytes. (Display works with words)
-          //DEBUG_ECHOPAIR(" vp=", vp, " dlen=", dlen);
+          //const uint8_t dlen = tmp[2] << 1;  // Convert to Bytes. (Display works with words)//const uint8_t dlen=tmp[2]<<1；//转换为字节。（显示与文字一起工作）
+          //DEBUG_ECHOPAIR(" vp=", vp, " dlen=", dlen);//调试回声对（“vp=”，vp，“dlen=”，dlen）；
           DGUS_VP_Variable ramcopy;
           if (populate_VPVar(vp, &ramcopy)) {
             if (ramcopy.set_by_display_handler)
@@ -221,7 +222,7 @@ void DGUSDisplay::ProcessRx() {
           break;
         }
 
-      // discard anything else
+      // discard anything else//丢弃任何其他东西
       rx_datagram_state = DGUS_IDLE;
     }
   }
@@ -243,7 +244,7 @@ void DGUSDisplay::WritePGM(const char str[], uint8_t len) {
 }
 
 void DGUSDisplay::loop() {
-  // protect against recursion… ProcessRx() may indirectly call idle() when injecting gcode commands.
+  // protect against recursion… ProcessRx() may indirectly call idle() when injecting gcode commands.//防止递归…在注入gcode命令时，ProcessRx（）可能会间接调用idle（）。
   if (!no_reentrance) {
     no_reentrance = true;
     ProcessRx();
@@ -256,16 +257,16 @@ uint8_t DGUSDisplay::rx_datagram_len = 0;
 bool DGUSDisplay::Initialized = false;
 bool DGUSDisplay::no_reentrance = false;
 
-// A SW memory barrier, to ensure GCC does not overoptimize loops
+// A SW memory barrier, to ensure GCC does not overoptimize loops//软件内存屏障，确保GCC不会过度优化循环
 #define sw_barrier() asm volatile("": : :"memory");
 
 bool populate_VPVar(const uint16_t VP, DGUS_VP_Variable * const ramcopy) {
-  // DEBUG_ECHOPAIR("populate_VPVar ", VP);
+  // DEBUG_ECHOPAIR("populate_VPVar ", VP);//调试回声对（“填充”VPVar），VP）；
   const DGUS_VP_Variable *pvp = DGUSLCD_FindVPVar(VP);
-  // DEBUG_ECHOLNPAIR(" pvp ", (uint16_t )pvp);
+  // DEBUG_ECHOLNPAIR(" pvp ", (uint16_t )pvp);//调试回声对（pvp），（uint16）pvp）；
   if (!pvp) return false;
   memcpy_P(ramcopy, pvp, sizeof(DGUS_VP_Variable));
   return true;
 }
 
-#endif // HAS_DGUS_LCD
+#endif // HAS_DGUS_LCD//有液晶显示器吗

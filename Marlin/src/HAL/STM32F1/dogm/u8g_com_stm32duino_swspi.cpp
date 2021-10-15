@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -26,8 +27,8 @@
 #include "../../shared/HAL_SPI.h"
 
 #ifndef LCD_SPI_SPEED
-  #define LCD_SPI_SPEED SPI_FULL_SPEED    // Fastest
-  //#define LCD_SPI_SPEED SPI_QUARTER_SPEED // Slower
+  #define LCD_SPI_SPEED SPI_FULL_SPEED    // Fastest//最快的
+  //#define LCD_SPI_SPEED SPI_QUARTER_SPEED // Slower//#定义LCD\u SPI\u速度SPI\u四分之一\u速度//较慢
 #endif
 
 static uint8_t SPI_speed = LCD_SPI_SPEED;
@@ -65,7 +66,7 @@ static inline uint8_t swSpiTransfer_mode_3(uint8_t b, const uint8_t spi_speed, c
     if (spi_speed == 0) {
       WRITE(DOGLCD_SCK, LOW);
       WRITE(DOGLCD_MOSI, state);
-      WRITE(DOGLCD_MOSI, state);  // need some setup time
+      WRITE(DOGLCD_MOSI, state);  // need some setup time//需要一些设置时间吗
       WRITE(DOGLCD_SCK, HIGH);
     }
     else {
@@ -119,15 +120,15 @@ uint8_t u8g_com_HAL_STM32F1_sw_spi_fn(u8g_t *u8g, uint8_t msg, uint8_t arg_val, 
       break;
 
     case U8G_COM_MSG_CHIP_SELECT:
-      #if ENABLED(FYSETC_MINI_12864) // This LCD SPI is running mode 3 while SD card is running mode 0
-        if (arg_val) {               // SCK idle state needs to be set to the proper idle state before
-                                     // the next chip select goes active
-          WRITE(DOGLCD_SCK, HIGH);   // Set SCK to mode 3 idle state before CS goes active
+      #if ENABLED(FYSETC_MINI_12864) // This LCD SPI is running mode 3 while SD card is running mode 0//此LCD SPI在运行模式3，而SD卡在运行模式0
+        if (arg_val) {               // SCK idle state needs to be set to the proper idle state before//SCK空闲状态需要设置为正确的空闲状态，然后
+                                     // the next chip select goes active//下一个芯片选择激活
+          WRITE(DOGLCD_SCK, HIGH);   // Set SCK to mode 3 idle state before CS goes active//在CS激活之前，将SCK设置为模式3空闲状态
           WRITE(DOGLCD_CS, LOW);
         }
         else {
           WRITE(DOGLCD_CS, HIGH);
-          WRITE(DOGLCD_SCK, LOW);  // Set SCK to mode 0 idle state after CS goes inactive
+          WRITE(DOGLCD_SCK, LOW);  // Set SCK to mode 0 idle state after CS goes inactive//在CS变为非活动状态后，将SCK设置为模式0空闲状态
         }
       #else
         WRITE(DOGLCD_CS, !arg_val);
@@ -162,5 +163,5 @@ uint8_t u8g_com_HAL_STM32F1_sw_spi_fn(u8g_t *u8g, uint8_t msg, uint8_t arg_val, 
   return 1;
 }
 
-#endif // HAS_MARLINUI_U8GLIB && FORCE_SOFT_SPI
-#endif // STM32F1
+#endif // HAS_MARLINUI_U8GLIB && FORCE_SOFT_SPI//是否有MARLINUI、U8GLIB和FORCE、SOFT、SPI
+#endif // STM32F1//STM32F1

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -34,29 +35,29 @@
 
 #define DISABLE_JTAG
 
-//
-// EEPROM
-//
+////
+// EEPROM//电可擦可编程只读存储器
+////
 #define FLASH_EEPROM_EMULATION
 #if ENABLED(FLASH_EEPROM_EMULATION)
-  // SoC Flash (framework-arduinoststm32-maple/STM32F1/libraries/EEPROM/EEPROM.h)
+  // SoC Flash (framework-arduinoststm32-maple/STM32F1/libraries/EEPROM/EEPROM.h)//SoC闪存（framework-TSTM32-maple/STM32F1/libraries/EEPROM/EEPROM.h）
   #define EEPROM_START_ADDRESS (0x8000000UL + (512 * 1024) - 2 * EEPROM_PAGE_SIZE)
-  #define EEPROM_PAGE_SIZE     (0x800U)           // 2KB, but will use 2x more (4KB)
+  #define EEPROM_PAGE_SIZE     (0x800U)           // 2KB, but will use 2x more (4KB)//2KB，但将使用2倍以上（4KB）
   #define MARLIN_EEPROM_SIZE    EEPROM_PAGE_SIZE
 #else
-  #define MARLIN_EEPROM_SIZE              0x800U  // On SD, Limit to 2KB, require this amount of RAM
+  #define MARLIN_EEPROM_SIZE              0x800U  // On SD, Limit to 2KB, require this amount of RAM//在SD上，限制为2KB，需要此数量的RAM
 #endif
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_STOP_PIN                          PG10
 #define Y_STOP_PIN                          PA12
 #define Z_STOP_PIN                          PA14
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_ENABLE_PIN                        PC13
 #define X_STEP_PIN                          PE5
 #define X_DIR_PIN                           PE6
@@ -77,62 +78,62 @@
 #define E1_STEP_PIN                         PC7
 #define E1_DIR_PIN                          PC6
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                          PA1   // TH1
-#define TEMP_BED_PIN                        PA0   // TB1
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                          PA1   // TH1//TH1
+#define TEMP_BED_PIN                        PA0   // TB1//TB1
 
-//
-// Heaters
-//
-#define HEATER_0_PIN                        PG12  // HEATER1
-#define HEATER_BED_PIN                      PG11  // HOT BED
+////
+// Heaters//加热器
+////
+#define HEATER_0_PIN                        PG12  // HEATER1//加热器1
+#define HEATER_BED_PIN                      PG11  // HOT BED//热床
 
-//
-// Fans
-//
-#define CONTROLLER_FAN_PIN                  PD6   // BOARD FAN
-#define FAN_PIN                             PG13  // FAN
+////
+// Fans//扇子
+////
+#define CONTROLLER_FAN_PIN                  PD6   // BOARD FAN//板扇
+#define FAN_PIN                             PG13  // FAN//扇子
 #define FAN2_PIN                            PG14
 
-//
-// Misc
-//
+////
+// Misc//杂项
+////
 #define BEEPER_PIN                          PB0
-//#define LED_PIN                           -1
-//#define POWER_LOSS_PIN                    -1
+//#define LED_PIN                           -1//#定义LED_引脚-1
+//#define POWER_LOSS_PIN                    -1//#定义电源损耗引脚-1
 #define FIL_RUNOUT_PIN                      PA15
 
-// SPI Flash
+// SPI Flash//SPI闪光
 #define HAS_SPI_FLASH                          1
 #if HAS_SPI_FLASH
-  #define SPI_FLASH_SIZE                0x200000  // 2MB
+  #define SPI_FLASH_SIZE                0x200000  // 2MB//2MB
 #endif
 
-// SPI 2
+// SPI 2//SPI 2
 #define W25QXX_CS_PIN                       PB12
 #define W25QXX_MOSI_PIN                     PB15
 #define W25QXX_MISO_PIN                     PB14
 #define W25QXX_SCK_PIN                      PB13
 
-//
-// TronXY TFT Support
-//
+////
+// TronXY TFT Support//TronXY TFT支架
+////
 
 #if HAS_FSMC_TFT
 
-  // Shared FSMC
+  // Shared FSMC//共享FSMC
 
-  #define TOUCH_CS_PIN                      PB7   // SPI1_NSS
-  #define TOUCH_SCK_PIN                     PA5   // SPI1_SCK
-  #define TOUCH_MISO_PIN                    PA6   // SPI1_MISO
-  #define TOUCH_MOSI_PIN                    PA7   // SPI1_MOSI
+  #define TOUCH_CS_PIN                      PB7   // SPI1_NSS//SPI1\U NSS
+  #define TOUCH_SCK_PIN                     PA5   // SPI1_SCK//SPI1_SCK
+  #define TOUCH_MISO_PIN                    PA6   // SPI1_MISO//味噌
+  #define TOUCH_MOSI_PIN                    PA7   // SPI1_MOSI//SPI1_MOSI
 
   #define TFT_RESET_PIN                     PF11
   #define TFT_BACKLIGHT_PIN                 PD13
 
-  #define LCD_USE_DMA_FSMC                        // Use DMA transfers to send data to the TFT
+  #define LCD_USE_DMA_FSMC                        // Use DMA transfers to send data to the TFT//使用DMA传输将数据发送到TFT
   #define FSMC_CS_PIN                       PD7
   #define FSMC_RS_PIN                       PD11
   #define FSMC_DMA_DEV                      DMA2
@@ -141,7 +142,7 @@
 #endif
 
 #if ENABLED(TFT_LVGL_UI)
-  // LVGL
+  // LVGL//LVGL
   #define HAS_SPI_FLASH_FONT                   1
   #define HAS_GCODE_PREVIEW                    1
   #define HAS_GCODE_DEFAULT_VIEW_IN_FLASH      0
@@ -149,22 +150,22 @@
   #define HAS_BAK_VIEW_IN_FLASH                0
   #define HAS_LOGO_IN_FLASH                    0
 #elif ENABLED(TFT_COLOR_UI)
-  // Color UI
+  // Color UI//彩色用户界面
   #define TFT_BUFFER_SIZE                  14400
 #endif
 
-// SPI1(PA7)=LCD & SPI3(PB5)=STUFF, are not available
-// Needs to use SPI2
+// SPI1(PA7)=LCD & SPI3(PB5)=STUFF, are not available//SPI1（PA7）=LCD和SPI3（PB5）=材料不可用
+// Needs to use SPI2//需要使用SPI2
 #define SPI_DEVICE                             2
 #define SD_SCK_PIN                          PB13
 #define SD_MISO_PIN                         PB14
 #define SD_MOSI_PIN                         PB15
 #define SD_SS_PIN                           PB12
 
-//
-// SD Card
-//
+////
+// SD Card//SD卡
+////
 #define SDIO_SUPPORT
-#define SD_DETECT_PIN                       -1    // PF0, but it isn't connected
+#define SD_DETECT_PIN                       -1    // PF0, but it isn't connected//PF0，但它未连接
 #define SDIO_CLOCK                       4500000
 #define SDIO_READ_RETRIES                     16

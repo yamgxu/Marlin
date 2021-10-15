@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  *
@@ -47,9 +48,9 @@
 
 #include "MarlinSerial.h"
 
-// ------------------------
-// Defines
-// ------------------------
+// ------------------------// ------------------------
+// Defines//定义
+// ------------------------// ------------------------
 
 #ifndef STM32_FLASH_SIZE
   #if ANY(MCU_STM32F103RE, MCU_STM32F103VE, MCU_STM32F103ZE)
@@ -83,7 +84,7 @@
 #elif WITHIN(SERIAL_PORT, 1, NUM_UARTS)
   #define MYSERIAL1 MSERIAL(SERIAL_PORT)
 #else
-  #define MYSERIAL1 MSERIAL(1) // dummy port
+  #define MYSERIAL1 MSERIAL(1) // dummy port//虚拟端口
   static_assert(false, "SERIAL_PORT must be from 1 to " STRINGIFY(NUM_UARTS) ". You can also use -1 if the board supports Native USB.")
 #endif
 
@@ -93,7 +94,7 @@
   #elif WITHIN(SERIAL_PORT_2, 1, NUM_UARTS)
     #define MYSERIAL2 MSERIAL(SERIAL_PORT_2)
   #else
-    #define MYSERIAL2 MSERIAL(1) // dummy port
+    #define MYSERIAL2 MSERIAL(1) // dummy port//虚拟端口
     static_assert(false, "SERIAL_PORT_2 must be from 1 to " STRINGIFY(NUM_UARTS) ". You can also use -1 if the board supports Native USB.")
   #endif
 #endif
@@ -104,7 +105,7 @@
   #elif WITHIN(SERIAL_PORT_3, 1, NUM_UARTS)
     #define MYSERIAL3 MSERIAL(SERIAL_PORT_3)
   #else
-    #define MYSERIAL3 MSERIAL(1) // dummy port
+    #define MYSERIAL3 MSERIAL(1) // dummy port//虚拟端口
     static_assert(false, "SERIAL_PORT_3 must be from 1 to " STRINGIFY(NUM_UARTS) ". You can also use -1 if the board supports Native USB.")
   #endif
 #endif
@@ -115,7 +116,7 @@
   #elif WITHIN(MMU2_SERIAL_PORT, 1, NUM_UARTS)
     #define MMU2_SERIAL MSERIAL(MMU2_SERIAL_PORT)
   #else
-    #define MMU2_SERIAL MSERIAL(1) // dummy port
+    #define MMU2_SERIAL MSERIAL(1) // dummy port//虚拟端口
     static_assert(false, "MMU2_SERIAL_PORT must be from 1 to " STRINGIFY(NUM_UARTS) ". You can also use -1 if the board supports Native USB.")
   #endif
 #endif
@@ -126,7 +127,7 @@
   #elif WITHIN(LCD_SERIAL_PORT, 1, NUM_UARTS)
     #define LCD_SERIAL MSERIAL(LCD_SERIAL_PORT)
   #else
-    #define LCD_SERIAL MSERIAL(1) // dummy port
+    #define LCD_SERIAL MSERIAL(1) // dummy port//虚拟端口
     static_assert(false, "LCD_SERIAL_PORT must be from 1 to " STRINGIFY(NUM_UARTS) ". You can also use -1 if the board supports Native USB.")
   #endif
   #if HAS_DGUS_LCD
@@ -134,7 +135,7 @@
   #endif
 #endif
 
-// Set interrupt grouping for this MCU
+// Set interrupt grouping for this MCU//设置此MCU的中断分组
 void HAL_init();
 #define HAL_IDLETASK 1
 void HAL_idletask();
@@ -157,7 +158,7 @@ void HAL_idletask();
 #define ENABLE_ISRS()  ((void)__iSeiRetVal())
 #define DISABLE_ISRS() ((void)__iCliRetVal())
 
-// On AVR this is in math.h?
+// On AVR this is in math.h?//在AVR上这是在数学上，h？
 #define square(x) ((x)*(x))
 
 #define RST_POWER_ON   1
@@ -168,36 +169,36 @@ void HAL_idletask();
 #define RST_SOFTWARE   32
 #define RST_BACKUP     64
 
-// ------------------------
-// Types
-// ------------------------
+// ------------------------// ------------------------
+// Types//类型
+// ------------------------// ------------------------
 
 typedef int8_t pin_t;
 
-// ------------------------
-// Public Variables
-// ------------------------
+// ------------------------// ------------------------
+// Public Variables//公共变量
+// ------------------------// ------------------------
 
-// Result of last ADC conversion
+// Result of last ADC conversion//上次ADC转换的结果
 extern uint16_t HAL_adc_result;
 
-// ------------------------
-// Public functions
-// ------------------------
+// ------------------------// ------------------------
+// Public functions//公共职能
+// ------------------------// ------------------------
 
-// Disable interrupts
+// Disable interrupts//禁用中断
 #define cli() noInterrupts()
 
-// Enable interrupts
+// Enable interrupts//启用中断
 #define sei() interrupts()
 
-// Memory related
+// Memory related//记忆相关
 #define __bss_end __bss_end__
 
-// Clear reset reason
+// Clear reset reason//清除重置原因
 void HAL_clear_reset_source();
 
-// Reset reason
+// Reset reason//重置原因
 uint8_t HAL_get_reset_source();
 
 void HAL_reboot();
@@ -222,9 +223,9 @@ static inline int freeMemory() {
 
 #pragma GCC diagnostic pop
 
-//
-// ADC
-//
+////
+// ADC//模数转换器
+////
 
 #define HAL_ANALOG_SELECT(pin) pinMode(pin, INPUT_ANALOG);
 
@@ -239,8 +240,8 @@ void HAL_adc_init();
 void HAL_adc_start_conversion(const uint8_t adc_pin);
 uint16_t HAL_adc_get_result();
 
-uint16_t analogRead(pin_t pin); // need HAL_ANALOG_SELECT() first
-void analogWrite(pin_t pin, int pwm_val8); // PWM only! mul by 257 in maple!?
+uint16_t analogRead(pin_t pin); // need HAL_ANALOG_SELECT() first//首先需要HAL_模拟_选择（）
+void analogWrite(pin_t pin, int pwm_val8); // PWM only! mul by 257 in maple!?//仅限PWM！在枫树里乘257英里！？
 
 #define GET_PIN_MAP_PIN(index) index
 #define GET_PIN_MAP_INDEX(pin) pin
@@ -252,7 +253,7 @@ void analogWrite(pin_t pin, int pwm_val8); // PWM only! mul by 257 in maple!?
 #define PLATFORM_M997_SUPPORT
 void flashFirmware(const int16_t);
 
-#define HAL_CAN_SET_PWM_FREQ   // This HAL supports PWM Frequency adjustment
+#define HAL_CAN_SET_PWM_FREQ   // This HAL supports PWM Frequency adjustment//该HAL支持PWM频率调整
 
 /**
  * set_pwm_frequency

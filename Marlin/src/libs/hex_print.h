@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -23,9 +24,9 @@
 
 #include <stdint.h>
 
-//
-// Utility functions to create and print hex strings as nybble, byte, and word.
-//
+////
+// Utility functions to create and print hex strings as nybble, byte, and word.//实用程序函数用于创建和打印十六进制字符串，如nybble、byte和word。
+////
 
 FORCE_INLINE char hex_nybble(const uint8_t n) {
   return (n & 0xF) + ((n & 0xF) < 10 ? '0' : 'A' - 10);

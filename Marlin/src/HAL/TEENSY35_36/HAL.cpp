@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -42,33 +43,33 @@ USBSerialType USBSerial(false, SerialUSB);
 uint16_t HAL_adc_result, HAL_adc_select;
 
 static const uint8_t pin2sc1a[] = {
-  5, 14, 8, 9, 13, 12, 6, 7, 15, 4, 3, 19+128, 14+128, 15+128, // 0-13 -> A0-A13
-  5, 14, 8, 9, 13, 12, 6, 7, 15, 4, // 14-23 are A0-A9
-  255, 255, 255, 255, 255, 255, 255, // 24-30 are digital only
-  14+128, 15+128, 17, 18, 4+128, 5+128, 6+128, 7+128, 17+128,  // 31-39 are A12-A20
-  255, 255, 255, 255, 255, 255, 255, 255, 255,  // 40-48 are digital only
-  10+128, 11+128, // 49-50 are A23-A24
-  255, 255, 255, 255, 255, 255, 255, // 51-57 are digital only
-  255, 255, 255, 255, 255, 255, // 58-63 (sd card pins) are digital only
-  3, 19+128, // 64-65 are A10-A11
-  23, 23+128,// 66-67 are A21-A22 (DAC pins)
-  1, 1+128,  // 68-69 are A25-A26 (unused USB host port on Teensy 3.5)
-  26,        // 70 is Temperature Sensor
-  18+128     // 71 is Vref
+  5, 14, 8, 9, 13, 12, 6, 7, 15, 4, 3, 19+128, 14+128, 15+128, // 0-13 -> A0-A13//0-13->A0-A13
+  5, 14, 8, 9, 13, 12, 6, 7, 15, 4, // 14-23 are A0-A9//14-23是A0-A9
+  255, 255, 255, 255, 255, 255, 255, // 24-30 are digital only//24-30是数字的
+  14+128, 15+128, 17, 18, 4+128, 5+128, 6+128, 7+128, 17+128,  // 31-39 are A12-A20//31-39是A12-A20
+  255, 255, 255, 255, 255, 255, 255, 255, 255,  // 40-48 are digital only//40-48是数字的
+  10+128, 11+128, // 49-50 are A23-A24//49-50是A23-A24
+  255, 255, 255, 255, 255, 255, 255, // 51-57 are digital only//51-57仅为数字
+  255, 255, 255, 255, 255, 255, // 58-63 (sd card pins) are digital only//58-63（sd卡引脚）仅为数字
+  3, 19+128, // 64-65 are A10-A11//64-65是A10-A11
+  23, 23+128,// 66-67 are A21-A22 (DAC pins)//66-67为A21-A22（DAC引脚）
+  1, 1+128,  // 68-69 are A25-A26 (unused USB host port on Teensy 3.5)//68-69为A25-A26（Teensy 3.5上未使用的USB主机端口）
+  26,        // 70 is Temperature Sensor//70是温度传感器
+  18+128     // 71 is Vref//71是Vref
 };
 
 /*
-  // disable interrupts
+  // disable interrupts//禁用中断
   void cli() { noInterrupts(); }
 
-  // enable interrupts
+  // enable interrupts//启用中断
   void sei() { interrupts(); }
 */
 
 void HAL_adc_init() {
   analog_init();
-  while (ADC0_SC3 & ADC_SC3_CAL) {}; // Wait for calibration to finish
-  while (ADC1_SC3 & ADC_SC3_CAL) {}; // Wait for calibration to finish
+  while (ADC0_SC3 & ADC_SC3_CAL) {}; // Wait for calibration to finish//等待校准完成
+  while (ADC1_SC3 & ADC_SC3_CAL) {}; // Wait for calibration to finish//等待校准完成
   NVIC_ENABLE_IRQ(IRQ_FTM1);
 }
 
@@ -79,9 +80,9 @@ uint8_t HAL_get_reset_source() {
     case 128: return RST_POWER_ON; break;
     case 64: return RST_EXTERNAL; break;
     case 32: return RST_WATCHDOG; break;
-    // case 8: return RST_LOSS_OF_LOCK; break;
-    // case 4: return RST_LOSS_OF_CLOCK; break;
-    // case 2: return RST_LOW_VOLTAGE; break;
+    // case 8: return RST_LOSS_OF_LOCK; break;//案例8：返回第一个锁丢失；打破
+    // case 4: return RST_LOSS_OF_CLOCK; break;//情况4：返回时钟的第一次丢失；打破
+    // case 2: return RST_LOW_VOLTAGE; break;//情况2：返回RST_低电压；打破
   }
   return 0;
 }
@@ -106,7 +107,7 @@ extern "C" {
 void HAL_adc_start_conversion(const uint8_t adc_pin) {
   const uint16_t pin = pin2sc1a[adc_pin];
   if (pin == 0xFF) {
-    // Digital only
+    // Digital only//仅数字
     HAL_adc_select = -1;
   }
   else if (pin & 0x80) {
@@ -127,4 +128,4 @@ uint16_t HAL_adc_get_result() {
   return 0;
 }
 
-#endif // __MK64FX512__ || __MK66FX1M0__
+#endif // __MK64FX512__ || __MK66FX1M0__//_uu MK64FX512__124; 124; _uumk66fx1m0__

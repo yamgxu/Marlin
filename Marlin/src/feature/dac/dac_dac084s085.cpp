@@ -1,3 +1,4 @@
+/** translatione by yx */
 /***************************************************************
  *
  * External DAC for Alligator Board
@@ -17,9 +18,9 @@
 dac084s085::dac084s085() { }
 
 void dac084s085::begin() {
-  uint8_t externalDac_buf[] = { 0x20, 0x00 }; // all off
+  uint8_t externalDac_buf[] = { 0x20, 0x00 }; // all off//全速
 
-  // All SPI chip-select HIGH
+  // All SPI chip-select HIGH//所有SPI芯片选择高
   SET_OUTPUT(DAC0_SYNC);
   #if HAS_MULTI_EXTRUDER
     SET_OUTPUT(DAC1_SYNC);
@@ -27,7 +28,7 @@ void dac084s085::begin() {
   cshigh();
   spiBegin();
 
-  //init onboard DAC
+  //init onboard DAC//机载DAC初始化
   DELAY_US(2);
   WRITE(DAC0_SYNC, LOW);
   DELAY_US(2);
@@ -39,7 +40,7 @@ void dac084s085::begin() {
   WRITE(DAC0_SYNC, HIGH);
 
   #if HAS_MULTI_EXTRUDER
-    //init Piggy DAC
+    //init Piggy DAC//init Piggy DAC
     DELAY_US(2);
     WRITE(DAC1_SYNC, LOW);
     DELAY_US(2);
@@ -55,24 +56,24 @@ void dac084s085::begin() {
 }
 
 void dac084s085::setValue(const uint8_t channel, const uint8_t value) {
-  if (channel >= 7) return; // max channel (X,Y,Z,E0,E1,E2,E3)
+  if (channel >= 7) return; // max channel (X,Y,Z,E0,E1,E2,E3)//最大通道（X、Y、Z、E0、E1、E2、E3）
 
   const uint8_t externalDac_buf[] = {
     0x10 | ((channel > 3 ? 7 : 3) - channel << 6) | (value >> 4),
     0x00 | (value << 4)
   };
 
-  // All SPI chip-select HIGH
+  // All SPI chip-select HIGH//所有SPI芯片选择高
   cshigh();
 
-  if (channel > 3) {        // DAC Piggy E1,E2,E3
+  if (channel > 3) {        // DAC Piggy E1,E2,E3//DAC清管器E1、E2、E3
     WRITE(DAC1_SYNC, LOW);
     DELAY_US(2);
     WRITE(DAC1_SYNC, HIGH);
     DELAY_US(2);
     WRITE(DAC1_SYNC, LOW);
   }
-  else {                    // DAC onboard X,Y,Z,E0
+  else {                    // DAC onboard X,Y,Z,E0//机载DAC X、Y、Z、E0
     WRITE(DAC0_SYNC, LOW);
     DELAY_US(2);
     WRITE(DAC0_SYNC, HIGH);
@@ -95,4 +96,4 @@ void dac084s085::cshigh() {
   WRITE(SD_SS_PIN, HIGH);
 }
 
-#endif // MB(ALLIGATOR)
+#endif // MB(ALLIGATOR)//MB（鳄鱼）

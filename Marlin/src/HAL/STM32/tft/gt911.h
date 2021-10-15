@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2021 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -66,7 +67,7 @@ class SW_IIC {
 
   public:
     SW_IIC(uint16_t sda, uint16_t scl);
-    // setSCL/SDA have to be called before begin()
+    // setSCL/SDA have to be called before begin()//必须在begin（）之前调用setSCL/SDA
     void setSCL(uint16_t scl)
     {
       scl_pin = scl;
@@ -75,12 +76,12 @@ class SW_IIC {
     {
       sda_pin = sda;
     };
-    void init();                // Initialize the IO port of IIC
-    void start();               // Send IIC start signal
-    void stop();                // Send IIC stop signal
-    void send_byte(uint8_t txd); // IIC sends a byte
-    uint8_t read_byte(bool ack); // IIC reads a byte
-    void send_ack(bool ack);            // IIC sends ACK or NACK signal
+    void init();                // Initialize the IO port of IIC//初始化IIC的IO端口
+    void start();               // Send IIC start signal//发送IIC启动信号
+    void stop();                // Send IIC stop signal//发送IIC停止信号
+    void send_byte(uint8_t txd); // IIC sends a byte//IIC发送一个字节
+    uint8_t read_byte(bool ack); // IIC reads a byte//IIC读取一个字节
+    void send_ack(bool ack);            // IIC sends ACK or NACK signal//IIC发送ACK或NACK信号
     bool read_ack();
 };
 
@@ -98,10 +99,10 @@ typedef struct __attribute__((__packed__)) {
 typedef union __attribute__((__packed__)) {
   uint8_t map[42];
   struct {
-    uint8_t status;    // 0x814E
-    uint8_t track_id;  // 0x814F
+    uint8_t status;    // 0x814E//0x814E
+    uint8_t track_id;  // 0x814F//0x814F
 
-    GT911_POINT point[5]; // [0]:0x8150 - 0x8157 / [1]:0x8158 - 0x815F / [2]:0x8160 - 0x8167 / [3]:0x8168 - 0x816F / [4]:0x8170 - 0x8177
+    GT911_POINT point[5]; // [0]:0x8150 - 0x8157 / [1]:0x8158 - 0x815F / [2]:0x8160 - 0x8167 / [3]:0x8168 - 0x816F / [4]:0x8170 - 0x8177//[0]：0x8150-0x8157/[1]：0x8158-0x815F/[2]：0x8160-0x8167/[3]：0x8168-0x816F/[4]：0x8170-0x8177
  } REG;
 } GT911_REG_MAP;
 

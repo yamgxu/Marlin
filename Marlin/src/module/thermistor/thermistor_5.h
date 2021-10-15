@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,14 +22,14 @@
  */
 #pragma once
 
-// R25 = 100 kOhm, beta25 = 4267 K, 4.7 kOhm pull-up
-// 100k ParCan thermistor (104GT-2)
-// ATC Semitec 104GT-2/104NT-4-R025H42G (Used in ParCan)
-// Verified by linagee. Source: https://www.mouser.com/datasheet/2/362/semitec%20usa%20corporation_gtthermistor-1202937.pdf
-// Calculated using 4.7kohm pullup, voltage divider math, and manufacturer provided temp/resistance
+// R25 = 100 kOhm, beta25 = 4267 K, 4.7 kOhm pull-up//R25=100千欧，beta25=4267千欧，上拉4.7千欧
+// 100k ParCan thermistor (104GT-2)//100k帕坎热敏电阻（104GT-2）
+// ATC Semitec 104GT-2/104NT-4-R025H42G (Used in ParCan)//ATC Semitec 104GT-2/104NT-4-R025H42G（用于ParCan）
+// Verified by linagee. Source: https://www.mouser.com/datasheet/2/362/semitec%20usa%20corporation_gtthermistor-1202937.pdf//经利纳吉核实。资料来源：https://www.mouser.com/datasheet/2/362/semitec%20usa%20corporation_gtthermistor-1202937.pdf
+// Calculated using 4.7kohm pullup, voltage divider math, and manufacturer provided temp/resistance//使用4.7kohm上拉、分压器数学和制造商提供的温度/电阻进行计算
 constexpr temp_entry_t temptable_5[] PROGMEM = {
   { OV(   1), 713 },
-  { OV(  17), 300 }, // top rating 300C
+  { OV(  17), 300 }, // top rating 300C//最高额定值300C
   { OV(  20), 290 },
   { OV(  23), 280 },
   { OV(  27), 270 },

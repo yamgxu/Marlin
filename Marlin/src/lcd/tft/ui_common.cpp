@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -58,9 +59,9 @@ void menu_item(const uint8_t row, bool sel ) {
   #endif
 }
 
-//
-// lcdprint.h functions
-//
+////
+// lcdprint.h functions//lcdprint.h函数
+////
 
 #define TFT_COL_WIDTH ((TFT_WIDTH) / (LCD_WIDTH))
 
@@ -99,24 +100,24 @@ int lcd_put_u8str_max(const char * utf8_str, pixel_len_t max_length) {
 }
 
 void lcd_put_int(const int i) {
-  // 3 digits max for this one...
+  // 3 digits max for this one...//这个最多3位数。。。
   const char* str = i16tostr3left(int16_t(i));
   lcd_put_u8str_max(str, 3);
 }
 
-//
-// Menu Item methods
-//
+////
+// Menu Item methods//菜单项方法
+////
 
-// Draw a generic menu item with pre_char (if selected) and post_char
+// Draw a generic menu item with pre_char (if selected) and post_char//用pre_char（如果选中）和post_char绘制通用菜单项
 void MenuItemBase::_draw(const bool sel, const uint8_t row, PGM_P const pstr, const char pre_char, const char post_char) {
   menu_item(row, sel);
 
   uint8_t *string = (uint8_t *)pstr;
   MarlinImage image = noImage;
   switch (*string) {
-    case 0x01: image = imgRefresh; break;  // LCD_STR_REFRESH
-    case 0x02: image = imgDirectory; break;  // LCD_STR_FOLDER
+    case 0x01: image = imgRefresh; break;  // LCD_STR_REFRESH//LCD_STR_刷新
+    case 0x02: image = imgDirectory; break;  // LCD_STR_FOLDER//LCD_STR_文件夹
   }
 
   uint8_t offset = MENU_TEXT_X_OFFSET;
@@ -130,7 +131,7 @@ void MenuItemBase::_draw(const bool sel, const uint8_t row, PGM_P const pstr, co
   tft.add_text(offset, MENU_TEXT_Y_OFFSET, COLOR_MENU_TEXT, tft_string);
 }
 
-// Draw a menu item with a (potentially) editable value
+// Draw a menu item with a (potentially) editable value//绘制具有（可能）可编辑值的菜单项
 void MenuEditItemBase::draw(const bool sel, const uint8_t row, PGM_P const pstr, const char * const data, const bool pgm) {
   menu_item(row, sel);
 
@@ -142,7 +143,7 @@ void MenuEditItemBase::draw(const bool sel, const uint8_t row, PGM_P const pstr,
   }
 }
 
-// Draw a static item with no left-right margin required. Centered by default.
+// Draw a static item with no left-right margin required. Centered by default.//绘制不需要左右边距的静态项。默认情况下居中。
 void MenuItem_static::draw(const uint8_t row, PGM_P const pstr, const uint8_t style/*=SS_DEFAULT*/, const char * const vstr/*=nullptr*/) {
   menu_item(row);
   tft_string.set(pstr, itemIndex, itemString);
@@ -162,9 +163,9 @@ void MenuItem_static::draw(const uint8_t row, PGM_P const pstr, const uint8_t st
 
 #endif
 
-//
-// MarlinUI methods
-//
+////
+// MarlinUI methods//MarlinUI方法
+////
 
 bool MarlinUI::detected() { return true; }
 
@@ -241,6 +242,6 @@ void MarlinUI::clear_lcd() {
     tft.add_text(tft_string.center(TFT_WIDTH), 0, COLOR_MENU_TEXT, tft_string);
   }
 
-#endif // TOUCH_SCREEN_CALIBRATION
+#endif // TOUCH_SCREEN_CALIBRATION//触摸屏校准
 
-#endif // HAS_GRAPHICAL_TFT
+#endif // HAS_GRAPHICAL_TFT//有图形化的TFT

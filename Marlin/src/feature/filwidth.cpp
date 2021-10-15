@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -28,16 +29,16 @@
 
 FilamentWidthSensor filwidth;
 
-bool FilamentWidthSensor::enabled; // = false;                          // (M405-M406) Filament Width Sensor ON/OFF.
-uint32_t FilamentWidthSensor::accum; // = 0                             // ADC accumulator
-uint16_t FilamentWidthSensor::raw; // = 0                               // Measured filament diameter - one extruder only
-float FilamentWidthSensor::nominal_mm = DEFAULT_NOMINAL_FILAMENT_DIA,   // (M104) Nominal filament width
-      FilamentWidthSensor::measured_mm = DEFAULT_MEASURED_FILAMENT_DIA, // Measured filament diameter
+bool FilamentWidthSensor::enabled; // = false;                          // (M405-M406) Filament Width Sensor ON/OFF.//=假；//（M405-M406）灯丝宽度传感器开/关。
+uint32_t FilamentWidthSensor::accum; // = 0                             // ADC accumulator//=0//ADC累加器
+uint16_t FilamentWidthSensor::raw; // = 0                               // Measured filament diameter - one extruder only//=0//测得的长丝直径-仅一台挤出机
+float FilamentWidthSensor::nominal_mm = DEFAULT_NOMINAL_FILAMENT_DIA,   // (M104) Nominal filament width//（M104）标称灯丝宽度
+      FilamentWidthSensor::measured_mm = DEFAULT_MEASURED_FILAMENT_DIA, // Measured filament diameter//测得的灯丝直径
       FilamentWidthSensor::e_count = 0,
       FilamentWidthSensor::delay_dist = 0;
-uint8_t FilamentWidthSensor::meas_delay_cm = MEASUREMENT_DELAY_CM;      // Distance delay setting
-int8_t FilamentWidthSensor::ratios[MAX_MEASUREMENT_DELAY + 1],          // Ring buffer to delay measurement. (Extruder factor minus 100)
-       FilamentWidthSensor::index_r,                                    // Indexes into ring buffer
+uint8_t FilamentWidthSensor::meas_delay_cm = MEASUREMENT_DELAY_CM;      // Distance delay setting//距离延迟设置
+int8_t FilamentWidthSensor::ratios[MAX_MEASUREMENT_DELAY + 1],          // Ring buffer to delay measurement. (Extruder factor minus 100)//环形缓冲区延迟测量。（挤出机系数减100）
+       FilamentWidthSensor::index_r,                                    // Indexes into ring buffer//索引到环形缓冲区
        FilamentWidthSensor::index_w;
 
 void FilamentWidthSensor::init() {
@@ -46,4 +47,4 @@ void FilamentWidthSensor::init() {
   index_r = index_w = 0;
 }
 
-#endif // FILAMENT_WIDTH_SENSOR
+#endif // FILAMENT_WIDTH_SENSOR//灯丝宽度传感器

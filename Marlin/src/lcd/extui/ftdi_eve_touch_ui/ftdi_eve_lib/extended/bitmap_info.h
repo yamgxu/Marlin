@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*****************
  * bitmap_info.h *
  *****************/
@@ -26,11 +27,11 @@
 #endif
 
 namespace FTDI {
-   // The following functions *must* be inlined since we are relying on the compiler to do
-   // substitution of the constants from the data structure rather than actually storing
-   // it in PROGMEM (which would fail, since we are not using pgm_read to read them).
-   // Plus, by inlining, all the equations are evaluated at compile-time as everything
-   // should be a constant.
+   // The following functions *must* be inlined since we are relying on the compiler to do//以下函数*必须*内联，因为我们依赖于编译器来完成
+   // substitution of the constants from the data structure rather than actually storing//从数据结构中替换常量，而不是实际存储
+   // it in PROGMEM (which would fail, since we are not using pgm_read to read them).//它在PROGMEM中运行（这将失败，因为我们没有使用pgm_read来读取它们）。
+   // Plus, by inlining, all the equations are evaluated at compile-time as everything//另外，通过内联，所有的方程在编译时都作为所有的函数进行计算
+   // should be a constant.//应该是一个常数。
 
    typedef struct {
      const uint8_t  format;

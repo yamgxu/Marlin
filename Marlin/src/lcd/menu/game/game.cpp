@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -35,7 +36,7 @@ MarlinGameData marlin_game_data;
 bool MarlinGame::game_frame() {
   static int8_t slew;
   if (ui.first_page) slew = 2;
-  ui.refresh(LCDVIEW_CALL_NO_REDRAW); // Refresh as often as possible
+  ui.refresh(LCDVIEW_CALL_NO_REDRAW); // Refresh as often as possible//尽可能经常刷新
   return (game_state && slew-- > 0);
 }
 
@@ -63,4 +64,4 @@ void MarlinGame::exit_game() {
   ui.goto_previous_screen_no_defer();
 }
 
-#endif // HAS_GAMES
+#endif // HAS_GAMES//有很多游戏吗

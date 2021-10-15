@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,7 +22,7 @@
  */
 #pragma once
 
-// R25 = 100 kOhm, beta25 = 4120 K, 4.7 kOhm pull-up, mendel-parts
+// R25 = 100 kOhm, beta25 = 4120 K, 4.7 kOhm pull-up, mendel-parts//R25=100千欧，beta25=4120千欧，4.7千欧上拉，孟德尔零件
 constexpr temp_entry_t temptable_3[] PROGMEM = {
   { OV(   1), 864 },
   { OV(  21), 300 },

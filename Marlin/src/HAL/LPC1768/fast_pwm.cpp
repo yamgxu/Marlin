@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -23,7 +24,7 @@
 
 #include "../../inc/MarlinConfigPre.h"
 
-#if NEEDS_HARDWARE_PWM // Specific meta-flag for features that mandate PWM
+#if NEEDS_HARDWARE_PWM // Specific meta-flag for features that mandate PWM//指定PWM的功能的特定元标志
 
 #include <pwm.h>
 
@@ -35,5 +36,5 @@ void set_pwm_duty(const pin_t pin, const uint16_t v, const uint16_t v_size/*=255
   LPC176x::pwm_write_ratio(pin, invert ? 1.0f - (float)v / v_size : (float)v / v_size);
 }
 
-#endif // NEEDS_HARDWARE_PWM
-#endif // TARGET_LPC1768
+#endif // NEEDS_HARDWARE_PWM//需要硬件\u PWM
+#endif // TARGET_LPC1768//目标为LPC1768

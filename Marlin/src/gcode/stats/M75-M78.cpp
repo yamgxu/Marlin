@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -24,7 +25,7 @@
 #include "../../module/printcounter.h"
 #include "../../lcd/marlinui.h"
 
-#include "../../MarlinCore.h" // for startOrResumeJob
+#include "../../MarlinCore.h" // for startOrResumeJob//对于startOrResumeJob
 
 /**
  * M75: Start print timer
@@ -53,7 +54,7 @@ void GcodeSuite::M77() {
  * M78: Show print statistics
  */
 void GcodeSuite::M78() {
-  if (parser.intval('S') == 78) {  // "M78 S78" will reset the statistics
+  if (parser.intval('S') == 78) {  // "M78 S78" will reset the statistics//“M78 S78”将重置统计信息
     print_job_timer.initStats();
     ui.reset_status();
     return;
@@ -70,4 +71,4 @@ void GcodeSuite::M78() {
   print_job_timer.showStats();
 }
 
-#endif // PRINTCOUNTER
+#endif // PRINTCOUNTER//打印计数器

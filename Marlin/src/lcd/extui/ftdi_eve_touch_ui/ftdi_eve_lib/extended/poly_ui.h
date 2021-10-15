@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*************
  * poly_ui.h *
  *************/
@@ -71,7 +72,7 @@ class PolyReader {
   public:
     type_t x, y;
 
-    // Begin reading a polygon data structure
+    // Begin reading a polygon data structure//开始读取多边形数据结构
     PolyReader(const uint16_t data[], const size_t n_elements) : top(data), end(data + n_elements) {
       start();
     }
@@ -82,7 +83,7 @@ class PolyReader {
       next();
     }
 
-    // Reads the next point in the polygon data structure
+    // Reads the next point in the polygon data structure//读取多边形数据结构中的下一个点
     void next() {
       if (!p) return;
 
@@ -130,7 +131,7 @@ class TransformedPolyReader : public PolyReader {
     typedef int16_t fix_t;
     fix_t makefix(float f) { return f * (1 << fract_bits); }
 
-    // First two rows of 3x3 transformation matrix
+    // First two rows of 3x3 transformation matrix//3x3变换矩阵的前两行
     fix_t a, b, c;
     fix_t d, e, f;
 
@@ -165,7 +166,7 @@ class TransformedPolyReader : public PolyReader {
       transform();
     }
 
-    // Set an arbitrary affine transform
+    // Set an arbitrary affine transform//设置任意仿射变换
     void set_transform(
       float A, float B, float C,
       float D, float E, float F
@@ -176,7 +177,7 @@ class TransformedPolyReader : public PolyReader {
       );
     }
 
-    // Scale the data to fit a specified bounding box
+    // Scale the data to fit a specified bounding box//缩放数据以适合指定的边界框
     void scale_to_fit(type_t x_min, type_t y_min, type_t x_max, type_t y_max) {
       fix_t sx = makefix(x_max - x_min);
       fix_t sy = makefix(y_max - y_min);
@@ -188,7 +189,7 @@ class TransformedPolyReader : public PolyReader {
       );
     }
 
-    // Scale to fit the entire display (default)
+    // Scale to fit the entire display (default)//缩放以适应整个显示（默认）
     void scale_to_fit() {
       scale_to_fit(0, 0, FTDI::display_width, FTDI::display_height);
     }
@@ -242,7 +243,7 @@ class GenericPolyUI {
   private:
     CommandProcessor &cmd;
 
-    // Attributes used to paint buttons
+    // Attributes used to paint buttons//用于绘制按钮的属性
 
     uint32_t btn_fill_color   = 0x000000;
     uint32_t btn_shadow_color = 0xF3E0E0;
@@ -264,15 +265,15 @@ class GenericPolyUI {
 
     GenericPolyUI(CommandProcessor &c, draw_mode_t what = BOTH) : cmd(c), mode(what) {}
 
-    // Fills a polygon with the current COLOR_RGB
+    // Fills a polygon with the current COLOR_RGB//使用当前颜色_RGB填充多边形
     void fill(poly_reader_t r, bool clip = true) {
       using namespace FTDI;
       int16_t x, y, w, h;
 
       if (clip) {
-        // Clipping reduces the number of pixels that are
-        // filled, allowing more complex shapes to be drawn
-        // in the alloted time.
+        // Clipping reduces the number of pixels that are//剪裁减少了所显示的像素数
+        // filled, allowing more complex shapes to be drawn//填充，允许绘制更复杂的形状
+        // in the alloted time.//在规定的时间内。
         bounds(r, x, y, w, h);
         cmd.cmd(SAVE_CONTEXT());
         cmd.cmd(SCISSOR_XY(x, y));
@@ -306,7 +307,7 @@ class GenericPolyUI {
       #endif
     }
 
-    // Strokes a polygon with the current COLOR_RGB
+    // Strokes a polygon with the current COLOR_RGB//使用当前颜色_RGB绘制多边形
     void stroke(poly_reader_t r) {
       using namespace FTDI;
       Polygon p(cmd);
@@ -323,7 +324,7 @@ class GenericPolyUI {
       p.end_stroke();
     }
 
-    // Compute the bounds of a polygon
+    // Compute the bounds of a polygon//计算多边形的边界
     void bounds(poly_reader_t r, int16_t &x, int16_t &y, int16_t &w, int16_t &h) {
       int16_t x_min = INT16_MAX;
       int16_t y_min = INT16_MAX;
@@ -363,7 +364,7 @@ class GenericPolyUI {
 
     void button(const uint8_t tag, poly_reader_t r, uint8_t style = REGULAR) {
       using namespace FTDI;
-      // Draw the shadow
+      // Draw the shadow//画影子
       #if FTDI_API_LEVEL >= 810
       if (mode & BACKGROUND && style & SHADOW) {
         cmd.cmd(SAVE_CONTEXT());
@@ -380,12 +381,12 @@ class GenericPolyUI {
         cmd.cmd(SAVE_CONTEXT());
         #if FTDI_API_LEVEL >= 810
           if (EventLoop::get_pressed_tag() == tag) {
-            // "Push" the button
+            // "Push" the button//“按”按钮
             cmd.cmd(VERTEX_TRANSLATE_X(btn_shadow_depth * 16));
             cmd.cmd(VERTEX_TRANSLATE_Y(btn_shadow_depth * 16));
           }
         #endif
-        // Draw the fill and stroke
+        // Draw the fill and stroke//绘制填充和笔划
         cmd.cmd(TAG(tag));
         if (style & FILL) {
           cmd.cmd(COLOR_RGB(btn_fill_color));

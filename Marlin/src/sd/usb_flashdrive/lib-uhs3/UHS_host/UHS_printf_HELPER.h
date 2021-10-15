@@ -1,3 +1,4 @@
+/** translatione by yx */
 /* Copyright (C) 2015-2016 Andrew J. Kroll
    and
 Copyright (C) 2011 Circuits At Home, LTD. All rights reserved.
@@ -20,7 +21,7 @@ Contact information
 -------------------
 
 Circuits At Home, LTD
-Web      :  https://www.circuitsathome.com
+Web      :  https://www.circuitsathome.com//www.circuitsathome.com
 e-mail   :  support@circuitsathome.com
  */
 
@@ -38,21 +39,21 @@ e-mail   :  support@circuitsathome.com
 
 #ifndef STDIO_IS_OK_TO_USE_AS_IS
 #if defined(ARDUINO_SAMD_ZERO) || defined(ARDUINO_SAM_DUE) || defined(ARDUINO_spresense_ast)
-// STDIO patching not required.
+// STDIO patching not required.//不需要STDIO修补。
 #define STDIO_IS_OK_TO_USE_AS_IS
 #endif
 #endif
 
 #ifndef STDIO_IS_OK_TO_USE_AS_IS
-// We need to patch STDIO so it can be used.
+// We need to patch STDIO so it can be used.//我们需要修补STDIO以便它可以使用。
 
 #ifndef SERIAL_PORT_MONITOR
-// Some don't define this.
+// Some don't define this.//有些人对此没有定义。
 #define SERIAL_PORT_MONITOR Serial
 #endif
 
 #ifndef SERIAL_PORT_HARDWARE
-// Some don't define this.
+// Some don't define this.//有些人对此没有定义。
 #define SERIAL_PORT_HARDWARE SERIAL_PORT_MONITOR
 #endif
 
@@ -165,14 +166,14 @@ extern "C" {
 }
 #else
 #error no STDIO
-#endif // defined(ARDUINO_ARCH_PIC32)
+#endif // defined(ARDUINO_ARCH_PIC32)//已定义（ARDUINO_ARCH_PIC32）
 
 
 
 #ifdef __AVR__
-// The only wierdo in the bunch...
+// The only wierdo in the bunch...//这群人中唯一的维尔多。。。
 void UHS_AVR_printf_HELPER_init() {
-        // Set up stdio/stderr
+        // Set up stdio/stderr//设置stdio/stderr
         tty_stdio.put = tty_std_putc;
         tty_stdio.get = tty_std_getc;
         tty_stdio.flags = _FDEV_SETUP_RW;

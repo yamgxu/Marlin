@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -30,24 +31,24 @@
 
 #include "../fastio.h"
 
-// change for your board
+// change for your board//为你的董事会换钱
 #define DEBUG_LED   DIO46
 
-// UART
+// UART//通用异步收发器
 #define RXD         DIO0
 #define TXD         DIO1
 
-// SPI
+// SPI//SPI
 #define SCK         DIO10
 #define MISO        DIO12
 #define MOSI        DIO11
 #define SS          DIO16
 
-// TWI (I2C)
+// TWI (I2C)//TWI（I2C）
 #define SCL         DIO17
 #define SDA         DIO18
 
-// Timers and PWM
+// Timers and PWM//定时器和脉宽调制
 #define OC0A        DIO9
 #define OC0B        DIO4
 #define OC1A        DIO7
@@ -57,7 +58,7 @@
 #define OC3B        DIO2
 #define OC3C        DIO3
 
-// Digital I/O
+// Digital I/O//数字I/O
 
 #define DIO0_PIN    PINE0
 #define DIO0_RPORT  PINE

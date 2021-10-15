@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -56,13 +57,13 @@ static void extrapolate_one_point(const uint8_t x, const uint8_t y, const int8_t
     DEBUG_ECHOLNPGM("]");
   }
 
-  // Get X neighbors, Y neighbors, and XY neighbors
+  // Get X neighbors, Y neighbors, and XY neighbors//获取X个邻居、Y个邻居和XY个邻居
   const uint8_t x1 = x + xdir, y1 = y + ydir, x2 = x1 + xdir, y2 = y1 + ydir;
   float a1 = z_values[x1][y ], a2 = z_values[x2][y ],
         b1 = z_values[x ][y1], b2 = z_values[x ][y2],
         c1 = z_values[x1][y1], c2 = z_values[x2][y2];
 
-  // Treat far unprobed points as zero, near as equal to far
+  // Treat far unprobed points as zero, near as equal to far//将远未固定点视为零，近等于远
   if (isnan(a2)) a2 = 0.0;
   if (isnan(a1)) a1 = a2;
   if (isnan(b2)) b2 = 0.0;
@@ -72,17 +73,17 @@ static void extrapolate_one_point(const uint8_t x, const uint8_t y, const int8_t
 
   const float a = 2 * a1 - a2, b = 2 * b1 - b2, c = 2 * c1 - c2;
 
-  // Take the average instead of the median
+  // Take the average instead of the median//取平均值而不是中位数
   z_values[x][y] = (a + b + c) / 3.0;
   TERN_(EXTENSIBLE_UI, ExtUI::onMeshUpdate(x, y, z_values[x][y]));
 
-  // Median is robust (ignores outliers).
-  // z_values[x][y] = (a < b) ? ((b < c) ? b : (c < a) ? a : c)
-  //                                : ((c < b) ? b : (a < c) ? a : c);
+  // Median is robust (ignores outliers).//中值稳健（忽略异常值）。
+  // z_values[x][y] = (a < b) ? ((b < c) ? b : (c < a) ? a : c)//z_值[x][y]=（a<b）？（（b<c）？b：（c<a）？a:c）
+  //                                : ((c < b) ? b : (a < c) ? a : c);//：（（c<b）b：（a<c）a:c）；
 }
 
-//Enable this if your SCARA uses 180° of total area
-//#define EXTRAPOLATE_FROM_EDGE
+//Enable this if your SCARA uses 180° of total area//如果您的SCARA使用180°的总面积，则启用此选项
+//#define EXTRAPOLATE_FROM_EDGE//#定义从_边推断_
 
 #if ENABLED(EXTRAPOLATE_FROM_EDGE)
   #if (GRID_MAX_POINTS_X) < (GRID_MAX_POINTS_Y)
@@ -100,16 +101,16 @@ void extrapolate_unprobed_bed_level() {
   #ifdef HALF_IN_X
     constexpr uint8_t ctrx2 = 0, xend = GRID_MAX_POINTS_X - 1;
   #else
-    constexpr uint8_t ctrx1 = (GRID_MAX_CELLS_X) / 2, // left-of-center
-                      ctrx2 = (GRID_MAX_POINTS_X) / 2,  // right-of-center
+    constexpr uint8_t ctrx1 = (GRID_MAX_CELLS_X) / 2, // left-of-center//中间偏左
+                      ctrx2 = (GRID_MAX_POINTS_X) / 2,  // right-of-center//中间偏右
                       xend = ctrx1;
   #endif
 
   #ifdef HALF_IN_Y
     constexpr uint8_t ctry2 = 0, yend = GRID_MAX_POINTS_Y - 1;
   #else
-    constexpr uint8_t ctry1 = (GRID_MAX_CELLS_Y) / 2, // top-of-center
-                      ctry2 = (GRID_MAX_POINTS_Y) / 2,  // bottom-of-center
+    constexpr uint8_t ctry1 = (GRID_MAX_CELLS_Y) / 2, // top-of-center//居中顶部
+                      ctry2 = (GRID_MAX_POINTS_Y) / 2,  // bottom-of-center//中底
                       yend = ctry1;
   #endif
 
@@ -122,14 +123,14 @@ void extrapolate_unprobed_bed_level() {
       #ifndef HALF_IN_Y
         const uint8_t y1 = ctry1 - yo;
         #ifndef HALF_IN_X
-          extrapolate_one_point(x1, y1, +1, +1);   //  left-below + +
+          extrapolate_one_point(x1, y1, +1, +1);   //  left-below + +//左下方++
         #endif
-        extrapolate_one_point(x2, y1, -1, +1);     // right-below - +
+        extrapolate_one_point(x2, y1, -1, +1);     // right-below - +//正下方-+
       #endif
       #ifndef HALF_IN_X
-        extrapolate_one_point(x1, y2, +1, -1);     //  left-above + -
+        extrapolate_one_point(x1, y2, +1, -1);     //  left-above + -//左上方+-
       #endif
-      extrapolate_one_point(x2, y2, -1, -1);       // right-above - -
+      extrapolate_one_point(x2, y2, -1, -1);       // right-above - -//正上方--
     }
 
 }
@@ -162,11 +163,11 @@ void print_bilinear_leveling_grid() {
   float bed_level_virt_coord(const uint8_t x, const uint8_t y) {
     uint8_t ep = 0, ip = 1;
     if (x > (GRID_MAX_POINTS_X) + 1 || y > (GRID_MAX_POINTS_Y) + 1) {
-      // The requested point requires extrapolating two points beyond the mesh.
-      // These values are only requested for the edges of the mesh, which are always an actual mesh point,
-      // and do not require interpolation. When interpolation is not needed, this "Mesh + 2" point is
-      // cancelled out in bed_level_virt_cmr and does not impact the result. Return 0.0 rather than
-      // making this function more complex by extrapolating two points.
+      // The requested point requires extrapolating two points beyond the mesh.//请求的点需要在网格之外外推两个点。
+      // These values are only requested for the edges of the mesh, which are always an actual mesh point,//仅对网格的边请求这些值，这些边始终是实际网格点，
+      // and do not require interpolation. When interpolation is not needed, this "Mesh + 2" point is//并且不需要插值。当不需要插值时，此“网格+2”点为
+      // cancelled out in bed_level_virt_cmr and does not impact the result. Return 0.0 rather than//取消了床上级别的cmr，不会影响结果。返回0.0而不是
+      // making this function more complex by extrapolating two points.//通过外推两点使该函数更加复杂。
       return 0.0;
     }
     if (!x || x == ABL_TEMP_POINTS_X - 1) {
@@ -242,9 +243,9 @@ void print_bilinear_leveling_grid() {
               );
           }
   }
-#endif // ABL_BILINEAR_SUBDIVISION
+#endif // ABL_BILINEAR_SUBDIVISION//ABL_双线性_细分
 
-// Refresh after other values have been updated
+// Refresh after other values have been updated//更新其他值后刷新
 void refresh_bed_level() {
   bilinear_grid_factor = bilinear_grid_spacing.reciprocal();
   TERN_(ABL_BILINEAR_SUBDIVISION, bed_level_virt_interpolate());
@@ -264,34 +265,34 @@ void refresh_bed_level() {
   #define ABL_BG_GRID(X,Y)  z_values[X][Y]
 #endif
 
-// Get the Z adjustment for non-linear bed leveling
+// Get the Z adjustment for non-linear bed leveling//获得非线性河床平整的Z调整
 float bilinear_z_offset(const xy_pos_t &raw) {
 
   static float z1, d2, z3, d4, L, D;
 
   static xy_pos_t prev { -999.999, -999.999 }, ratio;
 
-  // Whole units for the grid line indices. Constrained within bounds.
+  // Whole units for the grid line indices. Constrained within bounds.//网格线索引的整数单位。限制在一定范围内。
   static xy_int8_t thisg, nextg, lastg { -99, -99 };
 
-  // XY relative to the probed area
+  // XY relative to the probed area//相对于探测区域的XY
   xy_pos_t rel = raw - bilinear_start.asFloat();
 
   #if ENABLED(EXTRAPOLATE_BEYOND_GRID)
-    #define FAR_EDGE_OR_BOX 2   // Keep using the last grid box
+    #define FAR_EDGE_OR_BOX 2   // Keep using the last grid box//继续使用最后一个网格框
   #else
-    #define FAR_EDGE_OR_BOX 1   // Just use the grid far edge
+    #define FAR_EDGE_OR_BOX 1   // Just use the grid far edge//只需使用网格远边
   #endif
 
   if (prev.x != rel.x) {
     prev.x = rel.x;
     ratio.x = rel.x * ABL_BG_FACTOR(x);
     const float gx = constrain(FLOOR(ratio.x), 0, ABL_BG_POINTS_X - (FAR_EDGE_OR_BOX));
-    ratio.x -= gx;      // Subtract whole to get the ratio within the grid box
+    ratio.x -= gx;      // Subtract whole to get the ratio within the grid box//减去整数得到网格框内的比率
 
     #if DISABLED(EXTRAPOLATE_BEYOND_GRID)
-      // Beyond the grid maintain height at grid edges
-      NOLESS(ratio.x, 0); // Never <0 (>1 is ok when nextg.x==thisg.x)
+      // Beyond the grid maintain height at grid edges//超出栅格时，保持栅格边缘的高度
+      NOLESS(ratio.x, 0); // Never <0 (>1 is ok when nextg.x==thisg.x)//从不小于0（>1在nextg.x==thisg.x时是可以的）
     #endif
 
     thisg.x = gx;
@@ -307,8 +308,8 @@ float bilinear_z_offset(const xy_pos_t &raw) {
       ratio.y -= gy;
 
       #if DISABLED(EXTRAPOLATE_BEYOND_GRID)
-        // Beyond the grid maintain height at grid edges
-        NOLESS(ratio.y, 0); // Never < 0.0. (> 1.0 is ok when nextg.y==thisg.y.)
+        // Beyond the grid maintain height at grid edges//超出栅格时，保持栅格边缘的高度
+        NOLESS(ratio.y, 0); // Never < 0.0. (> 1.0 is ok when nextg.y==thisg.y.)//从不小于0.0。（>1.0在nextg.y==thisg.y时是可以的。）
       #endif
 
       thisg.y = gy;
@@ -317,21 +318,21 @@ float bilinear_z_offset(const xy_pos_t &raw) {
 
     if (lastg != thisg) {
       lastg = thisg;
-      // Z at the box corners
-      z1 = ABL_BG_GRID(thisg.x, thisg.y);       // left-front
-      d2 = ABL_BG_GRID(thisg.x, nextg.y) - z1;  // left-back (delta)
-      z3 = ABL_BG_GRID(nextg.x, thisg.y);       // right-front
-      d4 = ABL_BG_GRID(nextg.x, nextg.y) - z3;  // right-back (delta)
+      // Z at the box corners//在盒子的拐角处
+      z1 = ABL_BG_GRID(thisg.x, thisg.y);       // left-front//左前
+      d2 = ABL_BG_GRID(thisg.x, nextg.y) - z1;  // left-back (delta)//左后卫（三角）
+      z3 = ABL_BG_GRID(nextg.x, thisg.y);       // right-front//右前方
+      d4 = ABL_BG_GRID(nextg.x, nextg.y) - z3;  // right-back (delta)//右后卫（三角）
     }
 
-    // Bilinear interpolate. Needed since rel.y or thisg.x has changed.
-                L = z1 + d2 * ratio.y;   // Linear interp. LF -> LB
-    const float R = z3 + d4 * ratio.y;   // Linear interp. RF -> RB
+    // Bilinear interpolate. Needed since rel.y or thisg.x has changed.//双线性插值。由于rel.y或thisg.x已更改，因此需要。
+                L = z1 + d2 * ratio.y;   // Linear interp. LF -> LB//线性插值。低频->磅
+    const float R = z3 + d4 * ratio.y;   // Linear interp. RF -> RB//线性插值。射频->射频
 
     D = R - L;
   }
 
-  const float offset = L + ratio.x * D;   // the offset almost always changes
+  const float offset = L + ratio.x * D;   // the offset almost always changes//偏移量几乎总是变化的
 
   /*
   static float last_offset = 0;
@@ -343,7 +344,7 @@ float bilinear_z_offset(const xy_pos_t &raw) {
     SERIAL_ECHOLNPAIR(" L=", L, " R=", R, " offset=", offset);
   }
   last_offset = offset;
-  //*/
+  //*///*/
 
   return offset;
 }
@@ -357,7 +358,7 @@ float bilinear_z_offset(const xy_pos_t &raw) {
    * splitting the move where it crosses grid borders.
    */
   void bilinear_line_to_destination(const_feedRate_t scaled_fr_mm_s, uint16_t x_splits, uint16_t y_splits) {
-    // Get current and destination cells for this line
+    // Get current and destination cells for this line//获取此行的当前单元格和目标单元格
     xy_int_t c1 { CELL_INDEX(x, current_position.x), CELL_INDEX(y, current_position.y) },
              c2 { CELL_INDEX(x, destination.x), CELL_INDEX(y, destination.y) };
     LIMIT(c1.x, 0, ABL_BG_POINTS_X - 2);
@@ -365,7 +366,7 @@ float bilinear_z_offset(const xy_pos_t &raw) {
     LIMIT(c2.x, 0, ABL_BG_POINTS_X - 2);
     LIMIT(c2.y, 0, ABL_BG_POINTS_Y - 2);
 
-    // Start and end in the same cell? No split needed.
+    // Start and end in the same cell? No split needed.//在同一单元格中开始和结束？不需要拆分。
     if (c1 == c2) {
       current_position = destination;
       line_to_current_position(scaled_fr_mm_s);
@@ -378,19 +379,19 @@ float bilinear_z_offset(const xy_pos_t &raw) {
     xyze_pos_t end;
     const xy_int8_t gc { _MAX(c1.x, c2.x), _MAX(c1.y, c2.y) };
 
-    // Crosses on the X and not already split on this X?
-    // The x_splits flags are insurance against rounding errors.
+    // Crosses on the X and not already split on this X?//在X上交叉，但尚未在此X上拆分？
+    // The x_splits flags are insurance against rounding errors.//x_分割标志是防止舍入错误的保险。
     if (c2.x != c1.x && TEST(x_splits, gc.x)) {
-      // Split on the X grid line
+      // Split on the X grid line//在X轴网线上拆分
       CBI(x_splits, gc.x);
       end = destination;
       destination.x = bilinear_start.x + ABL_BG_SPACING(x) * gc.x;
       normalized_dist = (destination.x - current_position.x) / (end.x - current_position.x);
       destination.y = LINE_SEGMENT_END(y);
     }
-    // Crosses on the Y and not already split on this Y?
+    // Crosses on the Y and not already split on this Y?//在Y轴上交叉，但在Y轴上尚未拆分？
     else if (c2.y != c1.y && TEST(y_splits, gc.y)) {
-      // Split on the Y grid line
+      // Split on the Y grid line//在Y轴网线上拆分
       CBI(y_splits, gc.y);
       end = destination;
       destination.y = bilinear_start.y + ABL_BG_SPACING(y) * gc.y;
@@ -398,8 +399,8 @@ float bilinear_z_offset(const xy_pos_t &raw) {
       destination.x = LINE_SEGMENT_END(x);
     }
     else {
-      // Must already have been split on these border(s)
-      // This should be a rare case.
+      // Must already have been split on these border(s)//必须已在这些边界上拆分
+      // This should be a rare case.//这应该是一个罕见的案例。
       current_position = destination;
       line_to_current_position(scaled_fr_mm_s);
       return;
@@ -408,14 +409,14 @@ float bilinear_z_offset(const xy_pos_t &raw) {
     destination.z = LINE_SEGMENT_END(z);
     destination.e = LINE_SEGMENT_END(e);
 
-    // Do the split and look for more borders
+    // Do the split and look for more borders//进行拆分并查找更多边框
     bilinear_line_to_destination(scaled_fr_mm_s, x_splits, y_splits);
 
-    // Restore destination from stack
+    // Restore destination from stack//从堆栈还原目标
     destination = end;
     bilinear_line_to_destination(scaled_fr_mm_s, x_splits, y_splits);
   }
 
-#endif // IS_CARTESIAN && !SEGMENT_LEVELED_MOVES
+#endif // IS_CARTESIAN && !SEGMENT_LEVELED_MOVES//是笛卡尔的&！段\水平\移动
 
-#endif // AUTO_BED_LEVELING_BILINEAR
+#endif // AUTO_BED_LEVELING_BILINEAR//自动调平床双线性

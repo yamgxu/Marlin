@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -38,7 +39,7 @@
 
 void GcodeSuite::G34() {
 
-  // Home before the alignment procedure
+  // Home before the alignment procedure//在校准程序开始之前返回原位
   home_if_needed();
 
   TERN_(HAS_LEVELING, TEMPORARY_BED_LEVELING_STATE(false));
@@ -52,7 +53,7 @@ void GcodeSuite::G34() {
   #endif
 
   #ifdef GANTRY_CALIBRATION_SAFE_POSITION
-    // Move XY to safe position
+    // Move XY to safe position//将XY移动到安全位置
     if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPGM("Parking XY");
     const xy_pos_t safe_pos = GANTRY_CALIBRATION_SAFE_POSITION;
     do_blocking_move_to(safe_pos, MMM_TO_MMS(GANTRY_CALIBRATION_XY_PARK_FEEDRATE));
@@ -62,11 +63,11 @@ void GcodeSuite::G34() {
               zbase = ENABLED(GANTRY_CALIBRATION_TO_MIN) ? Z_MIN_POS : Z_MAX_POS,
               zpounce = zbase - move_distance, zgrind = zbase + move_distance;
 
-  // Move Z to pounce position
+  // Move Z to pounce position//移动Z到突袭位置
   if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPGM("Setting Z Pounce");
   do_blocking_move_to_z(zpounce, homing_feedrate(Z_AXIS));
 
-  // Store current motor settings, then apply reduced value
+  // Store current motor settings, then apply reduced value//存储当前电机设置，然后应用减少的值
 
   #define _REDUCE_CURRENT ANY(HAS_MOTOR_CURRENT_SPI, HAS_MOTOR_CURRENT_PWM, HAS_MOTOR_CURRENT_DAC, HAS_MOTOR_CURRENT_I2C, HAS_TRINAMIC_CONFIG)
   #if _REDUCE_CURRENT
@@ -110,16 +111,16 @@ void GcodeSuite::G34() {
     #endif
   #endif
 
-  // Do Final Z move to adjust
+  // Do Final Z move to adjust//最后Z移动以进行调整
   if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPGM("Final Z Move");
   do_blocking_move_to_z(zgrind, MMM_TO_MMS(GANTRY_CALIBRATION_FEEDRATE));
 
-  // Back off end plate, back to normal motion range
+  // Back off end plate, back to normal motion range//退回端板，回到正常运动范围
   if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPGM("Z Backoff");
   do_blocking_move_to_z(zpounce, MMM_TO_MMS(GANTRY_CALIBRATION_FEEDRATE));
 
   #if _REDUCE_CURRENT
-    // Reset current to original values
+    // Reset current to original values//将电流重置为原始值
     if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPGM("Restore Current");
   #endif
 
@@ -154,4 +155,4 @@ void GcodeSuite::G34() {
   SET_SOFT_ENDSTOP_LOOSE(false);
 }
 
-#endif // MECHANICAL_GANTRY_CALIBRATION
+#endif // MECHANICAL_GANTRY_CALIBRATION//机械门架校准

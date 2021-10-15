@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -46,7 +47,7 @@ void GcodeSuite::M28() {
       while (*p == ' ') ++p;
     }
 
-    // Binary transfer mode
+    // Binary transfer mode//二进制传输模式
     if ((card.flag.binary_mode = binary_mode)) {
       SERIAL_ECHO_MSG("Switching to Binary Protocol");
       TERN_(HAS_MULTI_SERIAL, card.transfer_port_index = queue.ring_buffer.command_port().index);
@@ -69,4 +70,4 @@ void GcodeSuite::M29() {
   card.flag.saving = false;
 }
 
-#endif // SDSUPPORT
+#endif // SDSUPPORT//SDSUPPORT

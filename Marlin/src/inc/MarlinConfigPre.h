@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -25,9 +26,9 @@
 #define __MARLIN_FIRMWARE__
 #endif
 
-//
-// Prefix header to acquire configurations
-//
+////
+// Prefix header to acquire configurations//前缀头以获取配置
+////
 #include <stdint.h>
 
 #ifndef __MARLIN_DEPS__

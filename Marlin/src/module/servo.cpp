@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -39,7 +40,7 @@ HAL_SERVO_LIB servo[NUM_SERVOS];
 void servo_init() {
   #if NUM_SERVOS >= 1 && HAS_SERVO_0
     servo[0].attach(SERVO0_PIN);
-    servo[0].detach(); // Just set up the pin. We don't have a position yet. Don't move to a random position.
+    servo[0].detach(); // Just set up the pin. We don't have a position yet. Don't move to a random position.//只需设置pin。我们还没有职位。不要随意移动。
   #endif
   #if NUM_SERVOS >= 2 && HAS_SERVO_1
     servo[1].attach(SERVO1_PIN);
@@ -55,4 +56,4 @@ void servo_init() {
   #endif
 }
 
-#endif // HAS_SERVOS
+#endif // HAS_SERVOS//有伺服系统吗

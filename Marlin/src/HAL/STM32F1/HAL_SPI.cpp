@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -32,22 +33,22 @@
 #include "../../inc/MarlinConfig.h"
 #include <SPI.h>
 
-// ------------------------
-// Public functions
-// ------------------------
+// ------------------------// ------------------------
+// Public functions//公共职能
+// ------------------------// ------------------------
 
 #if ENABLED(SOFTWARE_SPI)
 
-  // ------------------------
-  // Software SPI
-  // ------------------------
+  // ------------------------// ------------------------
+  // Software SPI//软件SPI
+  // ------------------------// ------------------------
   #error "Software SPI not supported for STM32F1. Use hardware SPI."
 
 #else
 
-// ------------------------
-// Hardware SPI
-// ------------------------
+// ------------------------// ------------------------
+// Hardware SPI//硬件SPI
+// ------------------------// ------------------------
 
 /**
  * VGPV SPI speed start and F_CPU/2, by default 72/2 = 36Mhz
@@ -93,7 +94,7 @@ void spiInit(uint8_t spiRate) {
     case SPI_EIGHTH_SPEED:  clock = SPI_CLOCK_DIV16; break;
     case SPI_SPEED_5:       clock = SPI_CLOCK_DIV32; break;
     case SPI_SPEED_6:       clock = SPI_CLOCK_DIV64; break;
-    default:                clock = SPI_CLOCK_DIV2;  // Default from the SPI library
+    default:                clock = SPI_CLOCK_DIV2;  // Default from the SPI library//SPI库中的默认值
   }
   SPI.setModule(SPI_DEVICE);
   SPI.begin();
@@ -153,19 +154,19 @@ void spiSendBlock(uint8_t token, const uint8_t *buf) {
 
 #if ENABLED(SPI_EEPROM)
 
-// Read single byte from specified SPI channel
+// Read single byte from specified SPI channel//从指定的SPI通道读取单个字节
 uint8_t spiRec(uint32_t chan) { return SPI.transfer(0xFF); }
 
-// Write single byte to specified SPI channel
+// Write single byte to specified SPI channel//将单个字节写入指定的SPI通道
 void spiSend(uint32_t chan, byte b) { SPI.send(b); }
 
-// Write buffer to specified SPI channel
+// Write buffer to specified SPI channel//将缓冲区写入指定的SPI通道
 void spiSend(uint32_t chan, const uint8_t *buf, size_t n) {
   for (size_t p = 0; p < n; p++) spiSend(chan, buf[p]);
 }
 
-#endif // SPI_EEPROM
+#endif // SPI_EEPROM//电可擦可编程只读存储器
 
-#endif // SOFTWARE_SPI
+#endif // SOFTWARE_SPI//软件SPI
 
-#endif // __STM32F1__
+#endif // __STM32F1__//_uustm32f1__

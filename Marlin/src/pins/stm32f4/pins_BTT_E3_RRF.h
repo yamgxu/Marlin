@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2021 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,59 +30,59 @@
   #define BOARD_INFO_NAME "BTT E3 RRF"
 #endif
 
-// Add-on board for IDEX conversion
-//#define BTT_E3_RRF_IDEX_BOARD
+// Add-on board for IDEX conversion//用于IDEX转换的附加板
+//#define BTT_E3_RRF_IDEX_BOARD//#定义BTT_E3_RRF_IDEX_板
 
-// Onboard I2C EEPROM
+// Onboard I2C EEPROM//板载I2C EEPROM
 #define I2C_EEPROM
-#define MARLIN_EEPROM_SIZE 0x1000                 // 4KB
+#define MARLIN_EEPROM_SIZE 0x1000                 // 4KB//4KB
 
-//
-// Servos
-//
-#define SERVO0_PIN                          PB0   // SERVOS
+////
+// Servos//伺服
+////
+#define SERVO0_PIN                          PB0   // SERVOS//伺服
 
-//
-// Limit Switches
-//
-#define X_STOP_PIN                          PC0   // X-STOP
-#define Y_STOP_PIN                          PC1   // Y-STOP
-#define Z_STOP_PIN                          PC2   // Z-STOP
+////
+// Limit Switches//限位开关
+////
+#define X_STOP_PIN                          PC0   // X-STOP//X光圈
+#define Y_STOP_PIN                          PC1   // Y-STOP//Y形挡块
+#define Z_STOP_PIN                          PC2   // Z-STOP//Z-STOP
 
 #if ENABLED(BTT_E3_RRF_IDEX_BOARD)
   #if X2_USE_ENDSTOP == _XMAX_
-    #define X_MAX_PIN                   FPC2_PIN  // X2-STOP
+    #define X_MAX_PIN                   FPC2_PIN  // X2-STOP//X2-STOP
   #elif X2_USE_ENDSTOP == _XMIN_
-    #define X_MIN_PIN                   FPC2_PIN  // X2-STOP
+    #define X_MIN_PIN                   FPC2_PIN  // X2-STOP//X2-STOP
   #endif
 #endif
 
-//
-// Z Probe must be this pin
-//
-#define Z_MIN_PROBE_PIN                     PC5   // PROBE
+////
+// Z Probe must be this pin//Z探头必须位于该引脚上
+////
+#define Z_MIN_PROBE_PIN                     PC5   // PROBE//探测
 
-//
-// Filament Runout Sensor
-//
+////
+// Filament Runout Sensor//灯丝偏移传感器
+////
 #ifndef FIL_RUNOUT_PIN
-  #define FIL_RUNOUT_PIN                    PC3   // E0-STOP
+  #define FIL_RUNOUT_PIN                    PC3   // E0-STOP//E0停止
 #endif
 
 #if !defined(FIL1_RUNOUT2_PIN) && ENABLED(BTT_E3_RRF_IDEX_BOARD)
-  #define FIL_RUNOUT2_PIN               FPC3_PIN  // E1-STOP
+  #define FIL_RUNOUT2_PIN               FPC3_PIN  // E1-STOP//E1-STOP
 #endif
 
-//
-// Power-loss Detection
-//
+////
+// Power-loss Detection//功率损耗检测
+////
 #ifndef POWER_LOSS_PIN
-  #define POWER_LOSS_PIN                    PE0   // Power Loss Detection: PWR-DET
+  #define POWER_LOSS_PIN                    PE0   // Power Loss Detection: PWR-DET//功率损耗检测：PWR-DET
 #endif
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_ENABLE_PIN                        PD7
 #define X_STEP_PIN                          PD5
 #define X_DIR_PIN                           PD4
@@ -99,22 +100,22 @@
 #define E0_DIR_PIN                          PD13
 
 #if ENABLED(BTT_E3_RRF_IDEX_BOARD)
-  #define E1_ENABLE_PIN                 FPC7_PIN  // E1EN
-  #define E1_STEP_PIN                   FPC5_PIN  // E1STP
-  #define E1_DIR_PIN                    FPC4_PIN  // E1DIR
+  #define E1_ENABLE_PIN                 FPC7_PIN  // E1EN//E1EN
+  #define E1_STEP_PIN                   FPC5_PIN  // E1STP//E1STP
+  #define E1_DIR_PIN                    FPC4_PIN  // E1DIR//E1DIR
 
-  #define X2_ENABLE_PIN                FPC13_PIN  // X2EN
-  #define X2_STEP_PIN                  FPC11_PIN  // X2STP
-  #define X2_DIR_PIN                   FPC10_PIN  // X2DIR
+  #define X2_ENABLE_PIN                FPC13_PIN  // X2EN//X2EN
+  #define X2_STEP_PIN                  FPC11_PIN  // X2STP//X2STP
+  #define X2_DIR_PIN                   FPC10_PIN  // X2DIR//X2DIR
 #endif
 
 /**
  * TMC2208/TMC2209 stepper drivers
  */
 #if HAS_TMC_UART
-  //
-  // Software serial
-  //
+  ////
+  // Software serial//软件系列
+  ////
   #define X_SERIAL_TX_PIN                   PD6
   #define X_SERIAL_RX_PIN                   PD6
 
@@ -128,60 +129,60 @@
   #define E0_SERIAL_RX_PIN                  PD11
 
   #if ENABLED(BTT_E3_RRF_IDEX_BOARD)
-    #define X2_SERIAL_TX_PIN           FPC12_PIN  // X2UART
-    #define X2_SERIAL_RX_PIN           FPC12_PIN  // X2UART
+    #define X2_SERIAL_TX_PIN           FPC12_PIN  // X2UART//X2UART
+    #define X2_SERIAL_RX_PIN           FPC12_PIN  // X2UART//X2UART
 
-    #define E1_SERIAL_TX_PIN            FPC6_PIN  // E1UART
-    #define E1_SERIAL_RX_PIN            FPC6_PIN  // E1UART
+    #define E1_SERIAL_TX_PIN            FPC6_PIN  // E1UART//E1UART
+    #define E1_SERIAL_RX_PIN            FPC6_PIN  // E1UART//E1UART
   #endif
 
-  // Reduce baud rate to improve software serial reliability
+  // Reduce baud rate to improve software serial reliability//降低波特率以提高软件串行可靠性
   #define TMC_BAUD_RATE 19200
 #endif
 
-//
-// Temperature Sensors
-//
-#define TEMP_BED_PIN                        PA1   // Analog Input "TB"
-#define TEMP_0_PIN                          PA0   // Analog Input "TH0"
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_BED_PIN                        PA1   // Analog Input "TB"//模拟输入“TB”
+#define TEMP_0_PIN                          PA0   // Analog Input "TH0"//模拟输入“TH0”
 
 #if ENABLED(BTT_E3_RRF_IDEX_BOARD)
-  #define TEMP_1_PIN                    FPC9_PIN  // Analog Input "TH1"
-  #define PT100_PIN                     FPC8_PIN  // Analog Input "PT100" (INA826)
+  #define TEMP_1_PIN                    FPC9_PIN  // Analog Input "TH1"//模拟输入“TH1”
+  #define PT100_PIN                     FPC8_PIN  // Analog Input "PT100" (INA826)//模拟输入“PT100”（INA826）
 #endif
 
-//
-// Heaters / Fans
-//
-#define HEATER_BED_PIN                      PB4   // "HB"
-#define HEATER_0_PIN                        PB3   // "HE0"
+////
+// Heaters / Fans//加热器/风扇
+////
+#define HEATER_BED_PIN                      PB4   // "HB"//“血红蛋白”
+#define HEATER_0_PIN                        PB3   // "HE0"//“HE0”
 
 #if ENABLED(BTT_E3_RRF_IDEX_BOARD)
-  #define HEATER_1_PIN                 FPC16_PIN  // "HE1"
+  #define HEATER_1_PIN                 FPC16_PIN  // "HE1"//“HE1”
 #endif
 
-#define FAN_PIN                             PB5   // "FAN0"
+#define FAN_PIN                             PB5   // "FAN0"//“FAN0”
 
 #ifndef CONTROLLER_FAN_PIN
-  #define CONTROLLER_FAN_PIN                PB6   // "FAN1"
+  #define CONTROLLER_FAN_PIN                PB6   // "FAN1"//“FAN1”
 #endif
 
 #if ENABLED(BTT_E3_RRF_IDEX_BOARD)
-  #define FAN1_PIN                     FPC15_PIN  // "FAN0" in IDEX board
-  #define FAN2_PIN                     FPC14_PIN  // "FAN1" in IDEX board
+  #define FAN1_PIN                     FPC15_PIN  // "FAN0" in IDEX board//IDEX板中的“FAN0”
+  #define FAN2_PIN                     FPC14_PIN  // "FAN1" in IDEX board//IDEX板中的“FAN1”
 #else
-  //#define FAN1_PIN                        PB6   // "FAN1"
+  //#define FAN1_PIN                        PB6   // "FAN1"//#定义风扇1_引脚PB6/“风扇1”
 #endif
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #ifndef NEOPIXEL_PIN
-  #define NEOPIXEL_PIN                      PB7   // LED driving pin
+  #define NEOPIXEL_PIN                      PB7   // LED driving pin//LED驱动引脚
 #endif
 
 #ifndef PS_ON_PIN
-  #define PS_ON_PIN                         PE1   // Power Supply Control
+  #define PS_ON_PIN                         PE1   // Power Supply Control//电源控制
 #endif
 
 /**
@@ -210,12 +211,12 @@
     #define LCD_PINS_ENABLE                 PE11
     #define LCD_PINS_D4                     PE10
 
-    // CR10_STOCKDISPLAY default timing is too fast
+    // CR10_STOCKDISPLAY default timing is too fast//CR10\u STOCKDISPLAY默认计时太快
     #undef BOARD_ST7920_DELAY_1
     #undef BOARD_ST7920_DELAY_2
     #undef BOARD_ST7920_DELAY_3
 
-  #elif ENABLED(ZONESTAR_LCD)                     // ANET A8 LCD Controller - Must convert to 3.3V - CONNECTING TO 5V WILL DAMAGE THE BOARD!
+  #elif ENABLED(ZONESTAR_LCD)                     // ANET A8 LCD Controller - Must convert to 3.3V - CONNECTING TO 5V WILL DAMAGE THE BOARD!//ANET A8 LCD控制器-必须转换为3.3V-连接到5V会损坏电路板！
 
     #error "CAUTION! ZONESTAR_LCD requires wiring modifications. See 'pins_BTT_E3_RRF.h' for details. Comment out this line to continue."
 
@@ -225,7 +226,7 @@
     #define LCD_PINS_D5                     PB2
     #define LCD_PINS_D6                     PE7
     #define LCD_PINS_D7                     PE8
-    #define ADC_KEYPAD_PIN                  PB0   // Repurpose servo pin for ADC - CONNECTING TO 5V WILL DAMAGE THE BOARD!
+    #define ADC_KEYPAD_PIN                  PB0   // Repurpose servo pin for ADC - CONNECTING TO 5V WILL DAMAGE THE BOARD!//将伺服引脚重新用于ADC-连接到5V会损坏电路板！
 
   #elif EITHER(MKS_MINI_12864, ENDER2_STOCKDISPLAY)
 
@@ -284,7 +285,7 @@
     #error "Only CR10_STOCKDISPLAY, ZONESTAR_LCD, ENDER2_STOCKDISPLAY, MKS_MINI_12864, and TFTGLCD_PANEL_(SPI|I2C) are currently supported on the BTT_E3_RRF."
   #endif
 
-  // Alter timing for graphical display
+  // Alter timing for graphical display//改变图形显示的时间
   #if HAS_MARLINUI_U8GLIB
     #ifndef BOARD_ST7920_DELAY_1
       #define BOARD_ST7920_DELAY_1 DELAY_NS(96)
@@ -297,7 +298,7 @@
     #endif
   #endif
 
-#endif // HAS_WIRED_LCD
+#endif // HAS_WIRED_LCD//有有线液晶显示器吗
 
 #if BOTH(TOUCH_UI_FTDI_EVE, LCD_FYSETC_TFT81050)
 
@@ -331,25 +332,25 @@
    *  EXP1-10 ----------- EXP1-7
    */
 
-  #define CLCD_SPI_BUS                         1  // SPI1 connector
+  #define CLCD_SPI_BUS                         1  // SPI1 connector//SPI1连接器
 
   #define BEEPER_PIN                        PE9
 
   #define CLCD_MOD_RESET                    PE7
   #define CLCD_SPI_CS                       PB1
 
-#endif // TOUCH_UI_FTDI_EVE && LCD_FYSETC_TFT81050
+#endif // TOUCH_UI_FTDI_EVE && LCD_FYSETC_TFT81050//触摸屏FTDI EVE和LCD FYSETC TFT81050
 
-//
-// SD Support
-//
+////
+// SD Support//SD支持
+////
 
 #ifndef SDCARD_CONNECTION
   #define SDCARD_CONNECTION              ONBOARD
 #endif
 
 #if SD_CONNECTION_IS(ONBOARD)
-  #define SDIO_SUPPORT                            // Use SDIO for onboard SD
+  #define SDIO_SUPPORT                            // Use SDIO for onboard SD//将SDIO用于车载SD
   #define SDIO_D0_PIN                       PC8
   #define SDIO_D1_PIN                       PC9
   #define SDIO_D2_PIN                       PC10
@@ -357,18 +358,18 @@
   #define SDIO_CK_PIN                       PC12
   #define SDIO_CMD_PIN                      PD2
 
-  //#define SDIO_CLOCK                  48000000
+  //#define SDIO_CLOCK                  48000000//#定义SDIO_时钟48000000
   #define SD_DETECT_PIN                     PC4
 #elif SD_CONNECTION_IS(CUSTOM_CABLE)
   #error "SD CUSTOM_CABLE is not compatible with BTT E3 RRF."
 #endif
 
-//
-// WIFI
-//
+////
+// WIFI//无线网络
+////
 
-#define ESP_WIFI_MODULE_COM                    3  // Must also set either SERIAL_PORT or SERIAL_PORT_2 to this
-#define ESP_WIFI_MODULE_BAUDRATE        BAUDRATE  // Must use same BAUDRATE as SERIAL_PORT & SERIAL_PORT_2
+#define ESP_WIFI_MODULE_COM                    3  // Must also set either SERIAL_PORT or SERIAL_PORT_2 to this//还必须将串行_端口或串行_端口_2设置为该值
+#define ESP_WIFI_MODULE_BAUDRATE        BAUDRATE  // Must use same BAUDRATE as SERIAL_PORT & SERIAL_PORT_2//必须使用与串行端口和串行端口2相同的波特率
 #define ESP_WIFI_MODULE_RESET_PIN           PA4
 #define ESP_WIFI_MODULE_ENABLE_PIN          PA5
 #define ESP_WIFI_MODULE_GPIO0_PIN           PA6

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  *
@@ -41,15 +42,15 @@
 #define ST7920_DELAY_2 DELAY_NS(750)
 #define ST7920_DELAY_3 DELAY_NS(750)
 
-// ------------------------
-// Defines
-// ------------------------
+// ------------------------// ------------------------
+// Defines//定义
+// ------------------------// ------------------------
 
 #define IS_32BIT_TEENSY 1
 #define IS_TEENSY_35_36 1
 #ifdef __MK66FX1M0__
   #define IS_TEENSY36 1
-#else // __MK64FX512__
+#else // __MK64FX512__//_uuumk64fx512__
   #define IS_TEENSY35 1
 #endif
 
@@ -95,10 +96,10 @@ typedef int8_t pin_t;
 
 inline void HAL_init() {}
 
-// Clear reset reason
+// Clear reset reason//清除重置原因
 void HAL_clear_reset_source();
 
-// Reset reason
+// Reset reason//重置原因
 uint8_t HAL_get_reset_source();
 
 void HAL_reboot();
@@ -116,7 +117,7 @@ extern "C" int freeMemory();
   #pragma GCC diagnostic pop
 #endif
 
-// ADC
+// ADC//模数转换器
 
 void HAL_adc_init();
 

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -30,9 +31,9 @@
 
 #define BOARD_INFO_NAME "Ultratronics v1.0"
 
-//
-// Servos
-//
+////
+// Servos//伺服
+////
 #if NUM_SERVOS > 0
   #define SERVO0_PIN                          11
   #if NUM_SERVOS > 1
@@ -40,9 +41,9 @@
   #endif
 #endif
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_MIN_PIN                             31
 #define X_MAX_PIN                             30
 #define Y_MIN_PIN                             12
@@ -50,9 +51,9 @@
 #define Z_MIN_PIN                             29
 #define Z_MAX_PIN                             28
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                            35
 #define X_DIR_PIN                             34
 #define X_ENABLE_PIN                          37
@@ -102,18 +103,18 @@
   #define E3_CS_PIN                           -1
 #endif
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                             0  // Analog Input
-#define TEMP_1_PIN                             2  // Analog Input
-#define TEMP_2_PIN                             3  // Analog Input
-#define TEMP_3_PIN                             4  // Analog Input
-#define TEMP_BED_PIN                           1  // Analog Input
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                             0  // Analog Input//模拟输入
+#define TEMP_1_PIN                             2  // Analog Input//模拟输入
+#define TEMP_2_PIN                             3  // Analog Input//模拟输入
+#define TEMP_3_PIN                             4  // Analog Input//模拟输入
+#define TEMP_BED_PIN                           1  // Analog Input//模拟输入
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_0_PIN                           3
 #define HEATER_1_PIN                           8
 #define HEATER_2_PIN                           7
@@ -125,19 +126,19 @@
 #endif
 #define FAN2_PIN                               5
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define SDSS                                  59
 #define SD_DETECT_PIN                         60
 #define LED_PIN                               13
 #define PS_ON_PIN                             32
 
-//
-// SPI Buses
-//
+////
+// SPI Buses//SPI总线
+////
 
-#define DAC0_SYNC                             53  // PB14
+#define DAC0_SYNC                             53  // PB14//PB14
 #define SPI_CHAN_DAC                           1
 
 #define SPI_CHAN_EEPROM1                      -1
@@ -149,7 +150,7 @@
 #define SD_MISO_PIN                           74
 #define SD_MOSI_PIN                           75
 
-// SPI for Max6675 or Max31855 Thermocouple
+// SPI for Max6675 or Max31855 Thermocouple//Max6675或Max31855热电偶的SPI
 #define MAX6675_SS_PIN                        65
 #define MAX31855_SS0                          65
 #define MAX31855_SS1                          52
@@ -158,20 +159,20 @@
 
 #define ENC424_SS                             61
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 
 #define BEEPER_PIN                            27
 
 #if ENABLED(REPRAPWORLD_GRAPHICAL_LCD)
 
-  #define LCD_PINS_RS                         A8  // CS chip select / SS chip slave select
-  #define LCD_PINS_ENABLE                   MOSI  // SID (MOSI)
-  #define LCD_PINS_D4                        SCK  // SCK (CLK) clock
+  #define LCD_PINS_RS                         A8  // CS chip select / SS chip slave select//CS芯片选择/SS芯片从属选择
+  #define LCD_PINS_ENABLE                   MOSI  // SID (MOSI)//SID（MOSI）
+  #define LCD_PINS_D4                        SCK  // SCK (CLK) clock//时钟
 
   #define BTN_EN1                             20
   #define BTN_EN2                             21
   #define BTN_ENC                             64
 
-#endif // REPRAPWORLD_GRAPHICAL_LCD
+#endif // REPRAPWORLD_GRAPHICAL_LCD//REPRAPWORLD_图形_LCD

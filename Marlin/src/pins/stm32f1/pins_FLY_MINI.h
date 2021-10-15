@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -27,22 +28,22 @@
 #define BOARD_WEBSITE_URL "github.com/FLYmaker"
 #define DISABLE_JTAG
 
-//
-// Flash EEPROM Emulation
-//
+////
+// Flash EEPROM Emulation//flasheeprom仿真
+////
 #define FLASH_EEPROM_EMULATION
-#define EEPROM_PAGE_SIZE     0x800 // 2KB
-#define EEPROM_START_ADDRESS (0x8000000 + 256 * 1024 - 2 * EEPROM_PAGE_SIZE) // 256K firmware space
+#define EEPROM_PAGE_SIZE     0x800 // 2KB//2KB
+#define EEPROM_START_ADDRESS (0x8000000 + 256 * 1024 - 2 * EEPROM_PAGE_SIZE) // 256K firmware space//256K固件空间
 #define MARLIN_EEPROM_SIZE   EEPROM_PAGE_SIZE
 
-//
-// Servos
-//
+////
+// Servos//伺服
+////
 #define SERVO0_PIN                          PA8
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_MIN_PIN                           PC12
 #define X_MAX_PIN                           PC11
 #define Y_MIN_PIN                           PC10
@@ -50,9 +51,9 @@
 #define Z_MIN_PIN                           PA14
 #define Z_MAX_PIN                           PA13
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                          PB1
 #define X_DIR_PIN                           PB2
 #define X_ENABLE_PIN                        PB10
@@ -94,9 +95,9 @@
 #endif
 
 #if HAS_TMC_UART
-  //
-  // Software serial
-  //
+  ////
+  // Software serial//软件系列
+  ////
   #define X_SERIAL_TX_PIN                   PB0
   #define X_SERIAL_RX_PIN                   PB0
   #define Y_SERIAL_TX_PIN                   PA7
@@ -107,9 +108,9 @@
   #define E0_SERIAL_RX_PIN                  PC2
 #endif
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_0_PIN                        PC6
 #define HEATER_BED_PIN                      PC7
 #ifndef FAN_PIN
@@ -117,19 +118,19 @@
 #endif
 #define FAN1_PIN                            PC9
 
-//
-// Temperature Sensors
-//
-#define TEMP_BED_PIN                        PC0   // Analog Input
-#define TEMP_0_PIN                          PC1   // Analog Input
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_BED_PIN                        PC0   // Analog Input//模拟输入
+#define TEMP_0_PIN                          PC1   // Analog Input//模拟输入
 
-//
-// LCD Pins
-//
+////
+// LCD Pins//LCD引脚
+////
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 #define SPI_DEVICE                             2
 #define SD_SS_PIN                           PB12
 #define SD_SCK_PIN                          PB13
@@ -153,16 +154,16 @@
 #define BTN_ENC                             PC13
 
 #if ENABLED(REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER)
-  #define BTN_ENC_EN                 LCD_PINS_D7  // Detect the presence of the encoder
+  #define BTN_ENC_EN                 LCD_PINS_D7  // Detect the presence of the encoder//检测编码器的存在
 #endif
 
-//
-// Filament runout
-//
+////
+// Filament runout//灯丝跳动
+////
 
-//
-// ST7920 Delays
-//
+////
+// ST7920 Delays//ST7920延迟
+////
 #ifndef ST7920_DELAY_1
   #define ST7920_DELAY_1            DELAY_NS(96)
 #endif

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -101,5 +102,5 @@ void init_gb2312_font() {
   gb2312_puhui32.base_line = 0;
 }
 
-#endif // HAS_SPI_FLASH_FONT
-#endif // HAS_TFT_LVGL_UI
+#endif // HAS_SPI_FLASH_FONT//有SPI FLASH字体吗
+#endif // HAS_TFT_LVGL_UI//有TFT\U LVGL\U用户界面

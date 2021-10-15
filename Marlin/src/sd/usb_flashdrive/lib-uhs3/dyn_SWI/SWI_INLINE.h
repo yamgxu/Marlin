@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*
  * File:   SWI_INLINE.h
  * Author: xxxajk@gmail.com
@@ -45,19 +46,19 @@ extern "C" {
 __attribute__((always_inline)) static inline void __DSB() {
         __asm__ volatile ("dsb");
 }
-#endif // defined(__USE_CMSIS_VECTORS__)
-#else // defined(__arm__)
+#endif // defined(__USE_CMSIS_VECTORS__)//已定义（使用向量）
+#else // defined(__arm__)//已定义（手臂）
 __attribute__((always_inline)) static inline void __DSB() {
         __asm__ volatile ("sync" : : : "memory");
 }
-#endif // defined(__arm__)
+#endif // defined(__arm__)//已定义（手臂）
 
 /**
  * Execute queued class ISR routines.
  */
 #ifdef ARDUINO_ARCH_PIC32
-static p32_regset *ifs = ((p32_regset *) & IFS0) + (SWI_IRQ_NUM / 32); //interrupt flag register set
-static p32_regset *iec = ((p32_regset *) & IEC0) + (SWI_IRQ_NUM / 32); //interrupt enable control reg set
+static p32_regset *ifs = ((p32_regset *) & IFS0) + (SWI_IRQ_NUM / 32); //interrupt flag register set//中断标志寄存器集
+static p32_regset *iec = ((p32_regset *) & IEC0) + (SWI_IRQ_NUM / 32); //interrupt enable control reg set//中断启用控制寄存器集
 static uint32_t swibit = 1 << (SWI_IRQ_NUM % 32);
 
 void
@@ -75,15 +76,15 @@ void softISR() {
 #endif
 #endif
 
-        //
-        // TO-DO: Perhaps limit to 8, and inline this?
-        //
+        ////
+        // TO-DO: Perhaps limit to 8, and inline this?//待办事项：可能限制为8，并将其内联？
+        ////
 
 
-        // Make a working copy, while clearing the queue.
+        // Make a working copy, while clearing the queue.//在清除队列的同时制作工作副本。
         noInterrupts();
 #ifdef ARDUINO_ARCH_PIC32
-        //ifs->clr = swibit;
+        //ifs->clr = swibit;//ifs->clr=swibit；
 #endif
         for(int i = 0; i < SWI_MAXIMUM_ALLOWED; i++) {
                 dyn_SWI_EXEC[i] = dyn_SWI_LIST[i];
@@ -92,7 +93,7 @@ void softISR() {
         __DSB();
         interrupts();
 
-        // Execute each class SWI
+        // Execute each class SWI//执行每个类SWI
         for(int i = 0; i < SWI_MAXIMUM_ALLOWED; i++) {
                 if(dyn_SWI_EXEC[i]) {
 #ifdef __DYN_SWI_DEBUG_LED__
@@ -172,26 +173,26 @@ int exec_SWI(const dyn_SWI* klass) {
         int rc = 0;
 
         uint8_t irestore = interruptsStatus();
-        // Allow use from inside a critical section...
-        // ... and prevent races if also used inside an ISR
+        // Allow use from inside a critical section...//允许从关键部分内部使用。。。
+        // ... and prevent races if also used inside an ISR// ... 如果在ISR中也使用，则可防止种族冲突
         noInterrupts();
         for(int i = 0; i < SWI_MAXIMUM_ALLOWED; i++) {
                 if(!dyn_SWI_LIST[i]) {
-                        rc = 1 + i; // Success!
+                        rc = 1 + i; // Success!//成功！
                         dyn_SWI_LIST[i] = (dyn_SWI*)klass;
 #ifndef ARDUINO_spresense_ast
                         if(!NVIC_GET_PENDING(SWI_IRQ_NUM)) NVIC_SET_PENDING(SWI_IRQ_NUM);
 #else
-                        // Launch 1-shot timer as an emulated SWI
-                        // Hopefully the value of Zero is legal.
-                        // 1 microsecond latency would suck!
+                        // Launch 1-shot timer as an emulated SWI//作为模拟SWI启动单次定时器
+                        // Hopefully the value of Zero is legal.//希望零的值是合法的。
+                        // 1 microsecond latency would suck!//1微秒的延迟太糟糕了！
                         attachTimerInterrupt(softISR, 100);
 #endif
                         DDSB();
                         break;
                 }
         }
-        // Restore interrupts, if they were on.
+        // Restore interrupts, if they were on.//恢复中断，如果它们处于打开状态。
         if(irestore) interrupts();
         return rc;
 }
@@ -205,7 +206,7 @@ static void Init_dyn_SWI() {
                 uint32_t sreg = disableInterrupts();
 
                 setIntVector(SWI_VECTOR, softISR);
-                setIntPriority(SWI_VECTOR, 1, 1); // Lowest priority, ever.
+                setIntPriority(SWI_VECTOR, 1, 1); // Lowest priority, ever.//最低优先级，永远。
                 ifs->clr = swibit;
                 iec->clr = swibit;
                 iec->set = swibit;
@@ -226,7 +227,7 @@ int exec_SWI(const dyn_SWI* klass) {
         uint32_t sreg = disableInterrupts();
         for(int i = 0; i < SWI_MAXIMUM_ALLOWED; i++) {
                 if(!dyn_SWI_LIST[i]) {
-                        rc = 1 + i; // Success!
+                        rc = 1 + i; // Success!//成功！
                         dyn_SWI_LIST[i] = (dyn_SWI*)klass;
                         if(!(ifs->reg & swibit)) ifs->set = swibit;
                         ;

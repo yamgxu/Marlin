@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -44,9 +45,9 @@ bool PersistentStore::write_data(int &pos, const uint8_t *value, size_t size, ui
   while (size--) {
     uint8_t * const p = (uint8_t * const)pos;
     uint8_t v = *value;
-    if (v != eeprom_read_byte(p)) { // EEPROM has only ~100,000 write cycles, so only write bytes that have changed!
+    if (v != eeprom_read_byte(p)) { // EEPROM has only ~100,000 write cycles, so only write bytes that have changed!//EEPROM只有约100000个写入周期，因此只有已更改的写入字节！
       eeprom_write_byte(p, v);
-      if (++written & 0x7F) delay(2); else safe_delay(2); // Avoid triggering watchdog during long EEPROM writes
+      if (++written & 0x7F) delay(2); else safe_delay(2); // Avoid triggering watchdog during long EEPROM writes//避免在长时间EEPROM写入期间触发看门狗
       if (eeprom_read_byte(p) != v) {
         SERIAL_ECHO_MSG(STR_ERR_EEPROM_WRITE);
         return true;
@@ -67,8 +68,8 @@ bool PersistentStore::read_data(int &pos, uint8_t *value, size_t size, uint16_t 
     pos++;
     value++;
   } while (--size);
-  return false;  // always assume success for AVR's
+  return false;  // always assume success for AVR's//始终假定AVR的成功
 }
 
-#endif // EEPROM_SETTINGS || SD_FIRMWARE_UPDATE
-#endif // __AVR__
+#endif // EEPROM_SETTINGS || SD_FIRMWARE_UPDATE//EEPROM|U设置| SD|U固件|更新
+#endif // __AVR__//_uuuavr__

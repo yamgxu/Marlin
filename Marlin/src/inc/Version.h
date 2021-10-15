@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -110,7 +111,7 @@
 #ifndef USB_DEVICE_PRODUCT_ID
   #define  USB_DEVICE_PRODUCT_ID          0x2424 /* MSC / CDC */
 #endif
-//! USB Device string definitions (Optional)
+//! USB Device string definitions (Optional)//! USB设备字符串定义（可选）
 #ifndef USB_DEVICE_MANUFACTURE_NAME
   #define  USB_DEVICE_MANUFACTURE_NAME    WEBSITE_URL
 #endif

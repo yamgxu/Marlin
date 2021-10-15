@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -56,24 +57,24 @@ void HotendIdleProtection::check_hotends(const millis_t &ms) {
 void HotendIdleProtection::check_e_motion(const millis_t &ms) {
   static float old_e_position = 0;
   if (old_e_position != current_position.e) {
-    old_e_position = current_position.e;          // Track filament motion
-    if (next_protect_ms)                          // If some heater is on then...
-      next_protect_ms = ms + hp_interval;         // ...delay the timeout till later
+    old_e_position = current_position.e;          // Track filament motion//跟踪灯丝运动
+    if (next_protect_ms)                          // If some heater is on then...//如果某个加热器打开，那么。。。
+      next_protect_ms = ms + hp_interval;         // ...delay the timeout till later//…将超时延迟到稍后
   }
 }
 
 void HotendIdleProtection::check() {
-  const millis_t ms = millis();                   // Shared millis
+  const millis_t ms = millis();                   // Shared millis//共享毫秒
 
-  check_hotends(ms);                              // Any hotends need protection?
-  check_e_motion(ms);                             // Motion will protect them
+  check_hotends(ms);                              // Any hotends need protection?//有热端需要保护吗？
+  check_e_motion(ms);                             // Motion will protect them//动议将保护他们
 
-  // Hot and not moving for too long...
+  // Hot and not moving for too long...//太热了，动不了太久。。。
   if (next_protect_ms && ELAPSED(ms, next_protect_ms))
     timed_out();
 }
 
-// Lower (but don't raise) hotend / bed temperatures
+// Lower (but don't raise) hotend / bed temperatures//降低（但不升高）热端/床层温度
 void HotendIdleProtection::timed_out() {
   next_protect_ms = 0;
   SERIAL_ECHOLNPGM("Hotend Idle Timeout");
@@ -88,4 +89,4 @@ void HotendIdleProtection::timed_out() {
   #endif
 }
 
-#endif // HOTEND_IDLE_TIMEOUT
+#endif // HOTEND_IDLE_TIMEOUT//热端空闲超时

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -34,7 +35,7 @@ static SPISettings spiConfig;
  * Standard SPI functions
  */
 
-// Initialize SPI bus
+// Initialize SPI bus//初始化SPI总线
 void spiBegin() {
   #if !PIN_EXISTS(SD_SS)
     #error "SD_SS_PIN not defined!"
@@ -45,18 +46,18 @@ void spiBegin() {
   SET_OUTPUT(SD_MOSI_PIN);
 
   #if 0 && DISABLED(SOFTWARE_SPI)
-    // set SS high - may be chip select for another SPI device
+    // set SS high - may be chip select for another SPI device//设置SS高-可能是另一个SPI设备的芯片选择
     #if SET_SPI_SS_HIGH
       WRITE(SD_SS_PIN, HIGH);
     #endif
-    // set a default rate
-    spiInit(SPI_HALF_SPEED); // 1
+    // set a default rate//设定默认利率
+    spiInit(SPI_HALF_SPEED); // 1// 1
   #endif
 }
 
-// Configure SPI for specified SPI speed
+// Configure SPI for specified SPI speed//为指定的SPI速度配置SPI
 void spiInit(uint8_t spiRate) {
-  // Use data rates Marlin uses
+  // Use data rates Marlin uses//使用马林使用的数据速率
   uint32_t clock;
   switch (spiRate) {
     case SPI_FULL_SPEED:    clock = 10000000; break;
@@ -65,49 +66,49 @@ void spiInit(uint8_t spiRate) {
     case SPI_EIGHTH_SPEED:  clock =  1250000; break;
     case SPI_SPEED_5:       clock =   625000; break;
     case SPI_SPEED_6:       clock =   312500; break;
-    default:                clock = 4000000; // Default from the SPI libarary
+    default:                clock = 4000000; // Default from the SPI libarary//SPI库中的默认值
   }
   spiConfig = SPISettings(clock, MSBFIRST, SPI_MODE0);
   SPI.begin();
 }
 
-// SPI receive a byte
+// SPI receive a byte//SPI接收一个字节
 uint8_t spiRec() {
   SPI.beginTransaction(spiConfig);
   const uint8_t returnByte = SPI.transfer(0xFF);
   SPI.endTransaction();
   return returnByte;
-  //SPDR = 0xFF;
-  //while (!TEST(SPSR, SPIF)) { /* Intentionally left empty */ }
-  //return SPDR;
+  //SPDR = 0xFF;//SPDR=0xFF；
+  //while (!TEST(SPSR, SPIF)) { /* Intentionally left empty */ }//而（！TEST（SPSR，SPIF））{/*故意留空*/}
+  //return SPDR;//返回SPDR；
 }
 
-// SPI read data
+// SPI read data//SPI读取数据
 void spiRead(uint8_t *buf, uint16_t nbyte) {
   SPI.beginTransaction(spiConfig);
   SPI.transfer(buf, nbyte);
   SPI.endTransaction();
-  //if (nbyte-- == 0) return;
-  //  SPDR = 0xFF;
-  //for (uint16_t i = 0; i < nbyte; i++) {
-  //  while (!TEST(SPSR, SPIF)) { /* Intentionally left empty */ }
-  //  buf[i] = SPDR;
-  //  SPDR = 0xFF;
-  //}
-  //while (!TEST(SPSR, SPIF)) { /* Intentionally left empty */ }
-  //buf[nbyte] = SPDR;
+  //if (nbyte-- == 0) return;//如果（n字节--==0）返回；
+  //  SPDR = 0xFF;//SPDR=0xFF；
+  //for (uint16_t i = 0; i < nbyte; i++) {//对于（uint16_t i=0；i<nbyte；i++）{
+  //  while (!TEST(SPSR, SPIF)) { /* Intentionally left empty */ }//而（！TEST（SPSR，SPIF））{/*故意留空*/}
+  //  buf[i] = SPDR;//buf[i]=SPDR；
+  //  SPDR = 0xFF;//SPDR=0xFF；
+  //}//}
+  //while (!TEST(SPSR, SPIF)) { /* Intentionally left empty */ }//而（！TEST（SPSR，SPIF））{/*故意留空*/}
+  //buf[nbyte] = SPDR;//buf[nbyte]=SPDR；
 }
 
-// SPI send a byte
+// SPI send a byte//SPI发送一个字节
 void spiSend(uint8_t b) {
   SPI.beginTransaction(spiConfig);
   SPI.transfer(b);
   SPI.endTransaction();
-  //SPDR = b;
-  //while (!TEST(SPSR, SPIF)) { /* nada */ }
+  //SPDR = b;//SPDR=b；
+  //while (!TEST(SPSR, SPIF)) { /* nada */ }//而（！TEST（SPSR，SPIF））{/*nada*/}
 }
 
-// SPI send block
+// SPI send block//发送块
 void spiSendBlock(uint8_t token, const uint8_t *buf) {
   SPI.beginTransaction(spiConfig);
   SPDR = token;
@@ -122,10 +123,10 @@ void spiSendBlock(uint8_t token, const uint8_t *buf) {
 }
 
 
-// Begin SPI transaction, set clock, bit order, data mode
+// Begin SPI transaction, set clock, bit order, data mode//开始SPI事务、设置时钟、位顺序、数据模式
 void spiBeginTransaction(uint32_t spiClock, uint8_t bitOrder, uint8_t dataMode) {
   spiConfig = SPISettings(spiClock, bitOrder, dataMode);
   SPI.beginTransaction(spiConfig);
 }
 
-#endif // __MK20DX256__
+#endif // __MK20DX256__//_uuumk20dx256__

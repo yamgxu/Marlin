@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * anycubic_i3mega_lcd.h  --- Support for Anycubic i3 Mega TFT
  * Created by Christian Hopp on 09.12.17.
@@ -21,7 +22,7 @@
 #pragma once
 
 #include "../../../inc/MarlinConfigPre.h"
-#include "../../../sd/SdFatConfig.h"   // for the FILENAME_LENGTH macro
+#include "../../../sd/SdFatConfig.h"   // for the FILENAME_LENGTH macro//对于FILENAME\u LENGTH宏
 
 #define TFTBUFSIZE 4
 #define TFT_MAX_CMD_SIZE 96

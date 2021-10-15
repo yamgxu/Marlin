@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2021 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -25,10 +26,10 @@
  * lcd/extui/nextion/FileNavigator.cpp
  * ****************************************
  * Extensible_UI implementation for Nextion
- * https://github.com/Skorpi08
+ * https://github.com/Skorpi08//github.com/Skorpi08
  * ***************************************/
 
-#include "nextion_tft_defs.h" // for MAX_PATH_LEN
+#include "nextion_tft_defs.h" // for MAX_PATH_LEN//对于最大路径长度
 #include "../ui_api.h"
 
 using namespace ExtUI;

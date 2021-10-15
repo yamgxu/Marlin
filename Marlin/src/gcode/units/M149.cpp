@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -35,4 +36,4 @@ void GcodeSuite::M149() {
   else if (parser.seenval('F')) parser.set_input_temp_units(TEMPUNIT_F);
 }
 
-#endif // TEMPERATURE_UNITS_SUPPORT
+#endif // TEMPERATURE_UNITS_SUPPORT//温度单元支持

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -32,7 +33,7 @@
 #define NOT_EXTENDED_ISO10646_1_5X7
 
 namespace Language_nl {
-  using namespace Language_en; // Inherit undefined strings from English
+  using namespace Language_en; // Inherit undefined strings from English//从英语中继承未定义的字符串
 
   constexpr uint8_t    CHARSIZE                            = 1;
   PROGMEM Language_Str LANGUAGE                            = _UxGT("Dutch");
@@ -41,11 +42,11 @@ namespace Language_nl {
   PROGMEM Language_Str MSG_BACK                            = _UxGT("Terug");
   PROGMEM Language_Str MSG_MEDIA_INSERTED                  = _UxGT("Kaart ingestoken");
   PROGMEM Language_Str MSG_MEDIA_REMOVED                   = _UxGT("Kaart verwijderd");
-  PROGMEM Language_Str MSG_LCD_ENDSTOPS                    = _UxGT("Endstops"); // Max length 8 characters
+  PROGMEM Language_Str MSG_LCD_ENDSTOPS                    = _UxGT("Endstops"); // Max length 8 characters//最大长度为8个字符
   PROGMEM Language_Str MSG_MAIN                            = _UxGT("Hoofdmenu");
   PROGMEM Language_Str MSG_RUN_AUTO_FILES                  = _UxGT("Autostart");
   PROGMEM Language_Str MSG_DISABLE_STEPPERS                = _UxGT("Motoren uit");
-  PROGMEM Language_Str MSG_DEBUG_MENU                      = _UxGT("Debug Menu"); // accepted English terms
+  PROGMEM Language_Str MSG_DEBUG_MENU                      = _UxGT("Debug Menu"); // accepted English terms//公认的英语术语
   PROGMEM Language_Str MSG_PROGRESS_BAR_TEST               = _UxGT("Vooruitgang Test");
 
   PROGMEM Language_Str MSG_LEVEL_BED_WAITING               = _UxGT("Klik voor begin");
@@ -114,8 +115,8 @@ namespace Language_nl {
   PROGMEM Language_Str MSG_TEMPERATURE                     = _UxGT("Temperatuur");
   PROGMEM Language_Str MSG_MOTION                          = _UxGT("Beweging");
   PROGMEM Language_Str MSG_FILAMENT                        = _UxGT("Filament");
-  PROGMEM Language_Str MSG_ADVANCE_K                       = _UxGT("Advance K");        // accepted english dutch
-  PROGMEM Language_Str MSG_ADVANCE_K_E                     = _UxGT("Advance K *"); // accepted english dutch
+  PROGMEM Language_Str MSG_ADVANCE_K                       = _UxGT("Advance K");        // accepted english dutch//接受英语荷兰语
+  PROGMEM Language_Str MSG_ADVANCE_K_E                     = _UxGT("Advance K *"); // accepted english dutch//接受英语荷兰语
   PROGMEM Language_Str MSG_VOLUMETRIC_ENABLED              = _UxGT("E in mm") SUPERSCRIPT_THREE;
   PROGMEM Language_Str MSG_FILAMENT_DIAM                   = _UxGT("Fil. Dia.");
   PROGMEM Language_Str MSG_FILAMENT_DIAM_E                 = _UxGT("Fil. Dia. *");
@@ -138,7 +139,7 @@ namespace Language_nl {
   PROGMEM Language_Str MSG_NO_MOVE                         = _UxGT("Geen beweging.");
   PROGMEM Language_Str MSG_KILLED                          = _UxGT("Afgebroken. ");
   PROGMEM Language_Str MSG_STOPPED                         = _UxGT("Gestopt. ");
-  PROGMEM Language_Str MSG_CONTROL_RETRACT                 = _UxGT("Retract mm");  // accepted English term in Dutch
+  PROGMEM Language_Str MSG_CONTROL_RETRACT                 = _UxGT("Retract mm");  // accepted English term in Dutch//荷兰语的公认英语术语
   PROGMEM Language_Str MSG_CONTROL_RETRACT_SWAP            = _UxGT("Ruil Retract mm");
   PROGMEM Language_Str MSG_CONTROL_RETRACTF                = _UxGT("Retract  F");
   PROGMEM Language_Str MSG_CONTROL_RETRACT_ZHOP            = _UxGT("Hop mm");
@@ -154,7 +155,7 @@ namespace Language_nl {
   PROGMEM Language_Str MSG_BLTOUCH_SELFTEST                = _UxGT("BLTouch Zelf-Test");
   PROGMEM Language_Str MSG_BLTOUCH_RESET                   = _UxGT("Reset BLTouch");
   PROGMEM Language_Str MSG_HOME_FIRST                      = _UxGT("Home %s%s%s Eerst");
-  PROGMEM Language_Str MSG_ZPROBE_ZOFFSET                  = _UxGT("Z Offset");  // accepted English term in Dutch
+  PROGMEM Language_Str MSG_ZPROBE_ZOFFSET                  = _UxGT("Z Offset");  // accepted English term in Dutch//荷兰语的公认英语术语
   PROGMEM Language_Str MSG_BABYSTEP_X                      = _UxGT("Babystap X");
   PROGMEM Language_Str MSG_BABYSTEP_Y                      = _UxGT("Babystap Y");
   PROGMEM Language_Str MSG_BABYSTEP_Z                      = _UxGT("Babystap Z");
@@ -166,9 +167,9 @@ namespace Language_nl {
   PROGMEM Language_Str MSG_ERR_MINTEMP                     = _UxGT("Err: Min. temp");
   PROGMEM Language_Str MSG_HALTED                          = _UxGT("PRINTER GESTOPT");
   PROGMEM Language_Str MSG_PLEASE_RESET                    = _UxGT("Reset A.U.B.");
-  PROGMEM Language_Str MSG_SHORT_DAY                       = _UxGT("d"); //  One character only. Keep English standard
-  PROGMEM Language_Str MSG_SHORT_HOUR                      = _UxGT("h"); //  One character only
-  PROGMEM Language_Str MSG_SHORT_MINUTE                    = _UxGT("m"); //  One character only
+  PROGMEM Language_Str MSG_SHORT_DAY                       = _UxGT("d"); //  One character only. Keep English standard//只有一个字符。保持英语水平
+  PROGMEM Language_Str MSG_SHORT_HOUR                      = _UxGT("h"); //  One character only//只有一个字符
+  PROGMEM Language_Str MSG_SHORT_MINUTE                    = _UxGT("m"); //  One character only//只有一个字符
   PROGMEM Language_Str MSG_HEATING                         = _UxGT("Voorwarmen...");
   PROGMEM Language_Str MSG_BED_HEATING                     = _UxGT("Bed voorverw...");
   PROGMEM Language_Str MSG_DELTA_CALIBRATE                 = _UxGT("Delta Calibratie");
@@ -199,31 +200,31 @@ namespace Language_nl {
 
   PROGMEM Language_Str MSG_INFO_MIN_TEMP                   = _UxGT("Min Temp");
   PROGMEM Language_Str MSG_INFO_MAX_TEMP                   = _UxGT("Max Temp");
-  PROGMEM Language_Str MSG_INFO_PSU                        = _UxGT("PSU");  // accepted English term in Dutch
+  PROGMEM Language_Str MSG_INFO_PSU                        = _UxGT("PSU");  // accepted English term in Dutch//荷兰语的公认英语术语
 
   PROGMEM Language_Str MSG_DRIVE_STRENGTH                  = _UxGT("Motorstroom");
 
   PROGMEM Language_Str MSG_DAC_EEPROM_WRITE                = _UxGT("DAC Opslaan");
   PROGMEM Language_Str MSG_FILAMENT_CHANGE_OPTION_RESUME   = _UxGT("Hervat print");
-  PROGMEM Language_Str MSG_FILAMENT_CHANGE_NOZZLE          = _UxGT(" Nozzle: "); // accepted English term
-  //
-  // Filament Change screens show up to 3 lines on a 4-line display
-  //                        ...or up to 2 lines on a 3-line display
-  //
+  PROGMEM Language_Str MSG_FILAMENT_CHANGE_NOZZLE          = _UxGT(" Nozzle: "); // accepted English term//公认的英语术语
+  ////
+  // Filament Change screens show up to 3 lines on a 4-line display//灯丝更换屏幕在4行显示屏上最多显示3行
+  //                        ...or up to 2 lines on a 3-line display//…或在3行显示器上最多显示2行
+  ////
   #if LCD_HEIGHT >= 4
-    // Up to 3 lines
+    // Up to 3 lines//最多3行
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_INIT          = _UxGT(MSG_3_LINE("Wacht voor start", "filament te", "verwisselen"));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_UNLOAD        = _UxGT(MSG_3_LINE("Wacht voor", "filament uit", "te laden"));
-    PROGMEM Language_Str MSG_FILAMENT_CHANGE_HEAT          = _UxGT(MSG_2_LINE("Klik knop om...", "verw. nozzle.")); //nozzle accepted English term
+    PROGMEM Language_Str MSG_FILAMENT_CHANGE_HEAT          = _UxGT(MSG_2_LINE("Klik knop om...", "verw. nozzle.")); //nozzle accepted English term//通用英语术语
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_HEATING       = _UxGT(MSG_2_LINE("Nozzle verw.", "Wacht a.u.b."));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_INSERT        = _UxGT(MSG_3_LINE("Laad filament", "en druk knop", "om verder..."));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_LOAD          = _UxGT(MSG_3_LINE("Wacht voor", "filament te", "laden"));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_RESUME        = _UxGT(MSG_3_LINE("Wacht voor print", "om verder", "te gaan"));
   #else
-    // Up to 2 lines
+    // Up to 2 lines//最多2行
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_INIT          = _UxGT(MSG_2_LINE("Wacht voor", "start..."));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_UNLOAD        = _UxGT(MSG_2_LINE("Wacht voor", "uitladen..."));
-    PROGMEM Language_Str MSG_FILAMENT_CHANGE_HEAT          = _UxGT(MSG_2_LINE("Klik knop om...", "verw. nozzle.")); //nozzle accepted English term
+    PROGMEM Language_Str MSG_FILAMENT_CHANGE_HEAT          = _UxGT(MSG_2_LINE("Klik knop om...", "verw. nozzle.")); //nozzle accepted English term//通用英语术语
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_HEATING       = _UxGT(MSG_1_LINE("Verwarmen..."));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_INSERT        = _UxGT(MSG_2_LINE("Laad filament", "en druk knop"));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_LOAD          = _UxGT(MSG_2_LINE("Wacht voor", "inladen..."));

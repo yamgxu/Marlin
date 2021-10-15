@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -33,81 +34,81 @@
  *  RAMPS_14_SF  (Spindle, Controller Fan)
  */
 
-// Numbers in parentheses () are the corresponding mega2560 pin numbers
+// Numbers in parentheses () are the corresponding mega2560 pin numbers//括号（）中的数字是对应的mega2560引脚号
 
 #include "env_validate.h"
 
 #define BOARD_INFO_NAME "Re-ARM RAMPS 1.4"
 
-//
-// Servos
-//
-#define SERVO0_PIN                         P1_20  // (11)
-#define SERVO1_PIN                         P1_21  // ( 6) also on J5-1
-#define SERVO2_PIN                         P1_19  // ( 5)
-#define SERVO3_PIN                         P1_18  // ( 4) 5V output
+////
+// Servos//伺服
+////
+#define SERVO0_PIN                         P1_20  // (11)// (11)
+#define SERVO1_PIN                         P1_21  // ( 6) also on J5-1//（6）也在J5-1上
+#define SERVO2_PIN                         P1_19  // ( 5)// ( 5)
+#define SERVO3_PIN                         P1_18  // ( 4) 5V output//（4）5V输出
 
-//
-// Limit Switches
-//
-#define X_MIN_PIN                          P1_24  // ( 3) 10k pullup to 3.3V, 1K series
-#define X_MAX_PIN                          P1_25  // ( 2) 10k pullup to 3.3V, 1K series
-#define Y_MIN_PIN                          P1_26  // (14) 10k pullup to 3.3V, 1K series
-#define Y_MAX_PIN                          P1_27  // (15) 10k pullup to 3.3V, 1K series
-#define Z_MIN_PIN                          P1_29  // (18) 10k pullup to 3.3V, 1K series
-#define Z_MAX_PIN                          P1_28  // (19) 10k pullup to 3.3V, 1K series
-#define ONBOARD_ENDSTOPPULLUPS                    // Board has built-in pullups
+////
+// Limit Switches//限位开关
+////
+#define X_MIN_PIN                          P1_24  // ( 3) 10k pullup to 3.3V, 1K series//（3）10k上拉至3.3V，1K系列
+#define X_MAX_PIN                          P1_25  // ( 2) 10k pullup to 3.3V, 1K series//（2）10k上拉至3.3V，1K系列
+#define Y_MIN_PIN                          P1_26  // (14) 10k pullup to 3.3V, 1K series//（14）10k上拉至3.3V，1K系列
+#define Y_MAX_PIN                          P1_27  // (15) 10k pullup to 3.3V, 1K series//（15）10k上拉至3.3V，1K系列
+#define Z_MIN_PIN                          P1_29  // (18) 10k pullup to 3.3V, 1K series//（18）10k上拉至3.3V，1K系列
+#define Z_MAX_PIN                          P1_28  // (19) 10k pullup to 3.3V, 1K series//（19）10k上拉至3.3V，1K系列
+#define ONBOARD_ENDSTOPPULLUPS                    // Board has built-in pullups//板上有内置的上拉
 
-//
-// Steppers
-//
-#define X_STEP_PIN                         P2_01  // (54)
-#define X_DIR_PIN                          P0_11  // (55)
-#define X_ENABLE_PIN                       P0_10  // (38)
+////
+// Steppers//踏步机
+////
+#define X_STEP_PIN                         P2_01  // (54)// (54)
+#define X_DIR_PIN                          P0_11  // (55)// (55)
+#define X_ENABLE_PIN                       P0_10  // (38)// (38)
 #ifndef X_CS_PIN
-  #define X_CS_PIN                         P1_01  // ETH
+  #define X_CS_PIN                         P1_01  // ETH//以太
 #endif
 
-#define Y_STEP_PIN                         P2_02  // (60)
-#define Y_DIR_PIN                          P0_20  // (61)
-#define Y_ENABLE_PIN                       P0_19  // (56)
+#define Y_STEP_PIN                         P2_02  // (60)// (60)
+#define Y_DIR_PIN                          P0_20  // (61)// (61)
+#define Y_ENABLE_PIN                       P0_19  // (56)// (56)
 #ifndef Y_CS_PIN
-  #define Y_CS_PIN                         P1_04  // ETH
+  #define Y_CS_PIN                         P1_04  // ETH//以太
 #endif
 
-#define Z_STEP_PIN                         P2_03  // (46)
-#define Z_DIR_PIN                          P0_22  // (48)
-#define Z_ENABLE_PIN                       P0_21  // (62)
+#define Z_STEP_PIN                         P2_03  // (46)// (46)
+#define Z_DIR_PIN                          P0_22  // (48)// (48)
+#define Z_ENABLE_PIN                       P0_21  // (62)// (62)
 #ifndef Z_CS_PIN
-  #define Z_CS_PIN                         P1_10  // ETH
+  #define Z_CS_PIN                         P1_10  // ETH//以太
 #endif
 
-#define E0_STEP_PIN                        P2_00  // (26)
-#define E0_DIR_PIN                         P0_05  // (28)
-#define E0_ENABLE_PIN                      P0_04  // (24)
+#define E0_STEP_PIN                        P2_00  // (26)// (26)
+#define E0_DIR_PIN                         P0_05  // (28)// (28)
+#define E0_ENABLE_PIN                      P0_04  // (24)// (24)
 #ifndef E0_CS_PIN
-  #define E0_CS_PIN                        P1_14  // ETH
+  #define E0_CS_PIN                        P1_14  // ETH//以太
 #endif
 
-#define E1_STEP_PIN                        P2_08  // (36)
-#define E1_DIR_PIN                         P2_13  // (34)
-#define E1_ENABLE_PIN                      P4_29  // (30)
+#define E1_STEP_PIN                        P2_08  // (36)// (36)
+#define E1_DIR_PIN                         P2_13  // (34)// (34)
+#define E1_ENABLE_PIN                      P4_29  // (30)// (30)
 #ifndef E1_CS_PIN
   #define E1_CS_PIN                        -1
 #endif
 
-//
-// Software SPI pins for TMC2130 stepper drivers
-//
+////
+// Software SPI pins for TMC2130 stepper drivers//TMC2130步进驱动器的软件SPI引脚
+////
 #if ENABLED(TMC_USE_SW_SPI)
   #ifndef TMC_SW_MOSI
-    #define TMC_SW_MOSI                    P1_00  // ETH
+    #define TMC_SW_MOSI                    P1_00  // ETH//以太
   #endif
   #ifndef TMC_SW_MISO
-    #define TMC_SW_MISO                    P1_08  // ETH
+    #define TMC_SW_MISO                    P1_08  // ETH//以太
   #endif
   #ifndef TMC_SW_SCK
-    #define TMC_SW_SCK                     P1_09  // ETH
+    #define TMC_SW_SCK                     P1_09  // ETH//以太
   #endif
 #endif
 
@@ -119,12 +120,12 @@
    * If undefined software serial is used according to the pins below
    */
 
-  //
-  // Software serial
-  //
+  ////
+  // Software serial//软件系列
+  ////
 
-  // P2_08 E1-Step
-  // P2_13 E1-Dir
+  // P2_08 E1-Step//P2_08 E1步骤
+  // P2_13 E1-Dir//P2_13 E1方向
 
   #ifndef X_SERIAL_TX_PIN
     #define X_SERIAL_TX_PIN                P0_01
@@ -154,26 +155,26 @@
     #define E0_SERIAL_RX_PIN               P2_08
   #endif
 
-  // Reduce baud rate to improve software serial reliability
+  // Reduce baud rate to improve software serial reliability//降低波特率以提高软件串行可靠性
   #define TMC_BAUD_RATE                    19200
 #endif
 
-//
-// Temperature Sensors
-//  3.3V max when defined as an analog input
-//
-#define TEMP_0_PIN                      P0_23_A0  // A0 (T0) - (67) - TEMP_0_PIN
-#define TEMP_BED_PIN                    P0_24_A1  // A1 (T1) - (68) - TEMP_BED_PIN
-#define TEMP_1_PIN                      P0_25_A2  // A2 (T2) - (69) - TEMP_1_PIN
-#define TEMP_2_PIN                      P0_26_A3  // A3 - (63) - J5-3 & AUX-2
-#define TEMP_3_PIN                      P1_30_A4  // A4 - (37) - BUZZER_PIN
-//#define TEMP_4_PIN                    P1_31_A5  // A5 - (49) - SD_DETECT_PIN
-//#define ??                  P0_03_A6            // A6 - ( 0)  - RXD0 - J4-4 & AUX-1
-#define FILWIDTH_PIN                    P0_02_A7  // A7 - ( 1)  - TXD0 - J4-5 & AUX-1
+////
+// Temperature Sensors//温度传感器
+//  3.3V max when defined as an analog input//当定义为模拟输入时，最大电压为3.3V
+////
+#define TEMP_0_PIN                      P0_23_A0  // A0 (T0) - (67) - TEMP_0_PIN//A0（T0）-（67）-温度0针
+#define TEMP_BED_PIN                    P0_24_A1  // A1 (T1) - (68) - TEMP_BED_PIN//A1（T1）-（68）-温度床销
+#define TEMP_1_PIN                      P0_25_A2  // A2 (T2) - (69) - TEMP_1_PIN//A2（T2）-（69）-温度1针
+#define TEMP_2_PIN                      P0_26_A3  // A3 - (63) - J5-3 & AUX-2//A3-（63）-J5-3和AUX-2
+#define TEMP_3_PIN                      P1_30_A4  // A4 - (37) - BUZZER_PIN//A4-（37）-蜂鸣器针脚
+//#define TEMP_4_PIN                    P1_31_A5  // A5 - (49) - SD_DETECT_PIN//#定义温度4引脚P1引脚31引脚A5//A5-（49）-SD引脚
+//#define ??                  P0_03_A6            // A6 - ( 0)  - RXD0 - J4-4 & AUX-1//#定义？？P0_03_A6//A6-（0）-RXD0-J4-4和AUX-1
+#define FILWIDTH_PIN                    P0_02_A7  // A7 - ( 1)  - TXD0 - J4-5 & AUX-1//A7-（1）-TXD0-J4-5和AUX-1
 
-//
-// Augmentation for auto-assigning RAMPS plugs
-//
+////
+// Augmentation for auto-assigning RAMPS plugs//自动分配坡道插头的扩充
+////
 #if NONE(IS_RAMPS_EEB, IS_RAMPS_EEF, IS_RAMPS_EFB, IS_RAMPS_EFF, IS_RAMPS_SF) && !PIN_EXISTS(MOSFET_D)
   #if HAS_MULTI_HOTEND
     #if TEMP_SENSOR_BED
@@ -188,34 +189,34 @@
   #endif
 #endif
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #ifndef MOSFET_D_PIN
   #define MOSFET_D_PIN                     -1
 #endif
 #ifndef RAMPS_D8_PIN
-  #define RAMPS_D8_PIN                     P2_07  // (8)
+  #define RAMPS_D8_PIN                     P2_07  // (8)// (8)
 #endif
 #ifndef RAMPS_D9_PIN
-  #define RAMPS_D9_PIN                     P2_04  // (9)
+  #define RAMPS_D9_PIN                     P2_04  // (9)// (9)
 #endif
 #ifndef RAMPS_D10_PIN
-  #define RAMPS_D10_PIN                    P2_05  // (10)
+  #define RAMPS_D10_PIN                    P2_05  // (10)// (10)
 #endif
 
 #define HEATER_0_PIN               RAMPS_D10_PIN
 
-#if ENABLED(IS_RAMPS_EFB)                         // Hotend, Fan, Bed
+#if ENABLED(IS_RAMPS_EFB)                         // Hotend, Fan, Bed//热端、风扇、床
   #define HEATER_BED_PIN            RAMPS_D8_PIN
-#elif ENABLED(IS_RAMPS_EEF)                       // Hotend, Hotend, Fan
+#elif ENABLED(IS_RAMPS_EEF)                       // Hotend, Hotend, Fan//热端，热端，风扇
   #define HEATER_1_PIN              RAMPS_D9_PIN
-#elif ENABLED(IS_RAMPS_EEB)                       // Hotend, Hotend, Bed
+#elif ENABLED(IS_RAMPS_EEB)                       // Hotend, Hotend, Bed//热端，热端，床
   #define HEATER_1_PIN              RAMPS_D9_PIN
   #define HEATER_BED_PIN            RAMPS_D8_PIN
-#elif ENABLED(IS_RAMPS_EFF)                       // Hotend, Fan, Fan
+#elif ENABLED(IS_RAMPS_EFF)                       // Hotend, Fan, Fan//热端，风扇，风扇
   #define FAN1_PIN                  RAMPS_D8_PIN
-#elif DISABLED(IS_RAMPS_SF)                       // Not Spindle, Fan (i.e., "EFBF" or "EFBE")
+#elif DISABLED(IS_RAMPS_SF)                       // Not Spindle, Fan (i.e., "EFBF" or "EFBE")//非主轴、风扇（即“EFBF”或“EFBE”）
   #define HEATER_BED_PIN            RAMPS_D8_PIN
   #if HOTENDS == 1
     #define FAN1_PIN                MOSFET_D_PIN
@@ -225,43 +226,43 @@
 #endif
 
 #ifndef FAN_PIN
-  #if EITHER(IS_RAMPS_EFB, IS_RAMPS_EFF)          // Hotend, Fan, Bed or Hotend, Fan, Fan
+  #if EITHER(IS_RAMPS_EFB, IS_RAMPS_EFF)          // Hotend, Fan, Bed or Hotend, Fan, Fan//热端，风扇，床或热端，风扇，风扇
     #define FAN_PIN                 RAMPS_D9_PIN
-  #elif EITHER(IS_RAMPS_EEF, IS_RAMPS_SF)         // Hotend, Hotend, Fan or Spindle, Fan
+  #elif EITHER(IS_RAMPS_EEF, IS_RAMPS_SF)         // Hotend, Hotend, Fan or Spindle, Fan//热端，热端，风扇或主轴，风扇
     #define FAN_PIN                 RAMPS_D8_PIN
-  #elif ENABLED(IS_RAMPS_EEB)                     // Hotend, Hotend, Bed
-    #define FAN_PIN                        P1_18  // (4) IO pin. Buffer needed
-  #else                                           // Non-specific are "EFB" (i.e., "EFBF" or "EFBE")
+  #elif ENABLED(IS_RAMPS_EEB)                     // Hotend, Hotend, Bed//热端，热端，床
+    #define FAN_PIN                        P1_18  // (4) IO pin. Buffer needed//（4）IO引脚。需要缓冲区
+  #else                                           // Non-specific are "EFB" (i.e., "EFBF" or "EFBE")//不具体的是“EFB”（即“EFBF”或“EFBE”）
     #define FAN_PIN                 RAMPS_D9_PIN
   #endif
 #endif
 
-//
-// Misc. Functions
-//
-#define LED_PIN                            P4_28  // (13)
+////
+// Misc. Functions//杂项。功能
+////
+#define LED_PIN                            P4_28  // (13)// (13)
 
-// define digital pin 5 for the filament runout sensor. Use the RAMPS 1.4 digital input 5 on the servos connector
+// define digital pin 5 for the filament runout sensor. Use the RAMPS 1.4 digital input 5 on the servos connector//定义灯丝偏移传感器的数字针脚5。使用伺服接头上的斜坡1.4数字输入5
 #ifndef FIL_RUNOUT_PIN
-  #define FIL_RUNOUT_PIN                   P1_19  // (5)
+  #define FIL_RUNOUT_PIN                   P1_19  // (5)// (5)
 #endif
 
-#define PS_ON_PIN                          P2_12  // (12)
+#define PS_ON_PIN                          P2_12  // (12)// (12)
 
 #if !defined(MAX6675_SS_PIN) && DISABLED(USE_ZMAX_PLUG)
   #define MAX6675_SS_PIN                   P1_28
 #endif
 
 #if ENABLED(CASE_LIGHT_ENABLE) && !PIN_EXISTS(CASE_LIGHT) && !defined(SPINDLE_LASER_ENA_PIN)
-  #if !defined(NUM_SERVOS) || NUM_SERVOS < 4      // Try to use servo connector
-    #define CASE_LIGHT_PIN                 P1_18  // (4) MUST BE HARDWARE PWM
+  #if !defined(NUM_SERVOS) || NUM_SERVOS < 4      // Try to use servo connector//尝试使用伺服连接器
+    #define CASE_LIGHT_PIN                 P1_18  // (4) MUST BE HARDWARE PWM//（4）必须是硬件PWM
   #endif
 #endif
 
-//
-// M3/M4/M5 - Spindle/Laser Control
-//            Use servo pins, if available
-//
+////
+// M3/M4/M5 - Spindle/Laser Control//M3/M4/M5-主轴/激光控制
+//            Use servo pins, if available//如果可用，请使用伺服销
+////
 #if HAS_CUTTER && !PIN_EXISTS(SPINDLE_LASER_ENA)
   #if NUM_SERVOS > 1
     #if ENABLED(SPINDLE_FEATURE)
@@ -270,19 +271,19 @@
       #error "LASER_FEATURE requires 3 free servo pins."
     #endif
   #endif
-  #define SPINDLE_LASER_ENA_PIN       SERVO1_PIN  // (6) Pin should have a pullup/pulldown!
-  #define SPINDLE_LASER_PWM_PIN       SERVO3_PIN  // (4) MUST BE HARDWARE PWM
-  #define SPINDLE_DIR_PIN             SERVO2_PIN  // (5)
+  #define SPINDLE_LASER_ENA_PIN       SERVO1_PIN  // (6) Pin should have a pullup/pulldown!//（6）销应具有上拉/下拉功能！
+  #define SPINDLE_LASER_PWM_PIN       SERVO3_PIN  // (4) MUST BE HARDWARE PWM//（4）必须是硬件PWM
+  #define SPINDLE_DIR_PIN             SERVO2_PIN  // (5)// (5)
 #endif
 
-//
-// Průša i3 MK2 Multiplexer Support
-//
+////
+// Průša i3 MK2 Multiplexer Support//Průša i3 MK2多路复用器支持
+////
 #if SERIAL_PORT != 0 && SERIAL_PORT_2 != 0
-  #define E_MUX0_PIN                       P0_03  // ( 0) Z_CS_PIN
-  #define E_MUX1_PIN                       P0_02  // ( 1) E0_CS_PIN
+  #define E_MUX0_PIN                       P0_03  // ( 0) Z_CS_PIN//（0）Z_CS_管脚
+  #define E_MUX1_PIN                       P0_02  // ( 1) E0_CS_PIN//（1）E0_CS_引脚
 #endif
-#define E_MUX2_PIN                         P0_26  // (63) E1_CS_PIN
+#define E_MUX2_PIN                         P0_26  // (63) E1_CS_PIN//（63）E1_CS_引脚
 
 /**
  * LCD / Controller
@@ -308,20 +309,20 @@
 
 #if ENABLED(CR10_STOCKDISPLAY)
 
-  // Re-Arm can support Creality stock display without SD card reader and single cable on EXP3.
-  // Re-Arm J3 pins 1 (p1.31) & 2 (P3.26) are not used. Stock cable will need to have one
-  // 10-pin IDC connector trimmed or replaced with a 12-pin IDC connector to fit J3.
-  // Requires REVERSE_ENCODER_DIRECTION in Configuration.h
+  // Re-Arm can support Creality stock display without SD card reader and single cable on EXP3.//Re-Arm可以支持Creality股票显示，无需SD卡读卡器和EXP3上的单电缆。
+  // Re-Arm J3 pins 1 (p1.31) & 2 (P3.26) are not used. Stock cable will need to have one//未使用重新装配J3销1（p1.31）和2（P3.26）。库存电缆将需要有一个
+  // 10-pin IDC connector trimmed or replaced with a 12-pin IDC connector to fit J3.//10针IDC接头修剪或更换为12针IDC接头，以适合J3。
+  // Requires REVERSE_ENCODER_DIRECTION in Configuration.h//在配置中需要反向编码器。h
 
-  #define BEEPER_PIN                       P2_11  // J3-3 & AUX-4
+  #define BEEPER_PIN                       P2_11  // J3-3 & AUX-4//J3-3和AUX-4
 
-  #define BTN_EN1                          P0_16  // J3-7 & AUX-4
-  #define BTN_EN2                          P1_23  // J3-5 & AUX-4
-  #define BTN_ENC                          P3_25  // J3-4 & AUX-4
+  #define BTN_EN1                          P0_16  // J3-7 & AUX-4//J3-7和AUX-4
+  #define BTN_EN2                          P1_23  // J3-5 & AUX-4//J3-5和AUX-4
+  #define BTN_ENC                          P3_25  // J3-4 & AUX-4//J3-4和AUX-4
 
-  #define LCD_PINS_RS                      P0_15  // J3-9 & AUX-4 (CS)
-  #define LCD_PINS_ENABLE                  P0_18  // J3-10 & AUX-3 (SID, MOSI)
-  #define LCD_PINS_D4                      P2_06  // J3-8 & AUX-3 (SCK, CLK)
+  #define LCD_PINS_RS                      P0_15  // J3-9 & AUX-4 (CS)//J3-9和AUX-4（CS）
+  #define LCD_PINS_ENABLE                  P0_18  // J3-10 & AUX-3 (SID, MOSI)//J3-10和AUX-3（SID、MOSI）
+  #define LCD_PINS_D4                      P2_06  // J3-8 & AUX-3 (SCK, CLK)//J3-8和AUX-3（SCK、CLK）
 
 #elif ENABLED(ZONESTAR_LCD)
 
@@ -330,11 +331,11 @@
 #elif IS_TFTGLCD_PANEL
 
   #if ENABLED(TFTGLCD_PANEL_SPI)
-    #define TFTGLCD_CS                     P3_26  // (31) J3-2 & AUX-4
+    #define TFTGLCD_CS                     P3_26  // (31) J3-2 & AUX-4//（31）J3-2和AUX-4
   #endif
 
-  #define SD_DETECT_PIN                    P1_31  // (49) J3-1 & AUX-3 (NOT 5V tolerant)
-  #define KILL_PIN                         P1_22  // (41) J5-4 & AUX-4
+  #define SD_DETECT_PIN                    P1_31  // (49) J3-1 & AUX-3 (NOT 5V tolerant)//（49）J3-1和AUX-3（非5V容差）
+  #define KILL_PIN                         P1_22  // (41) J5-4 & AUX-4//（41）J5-4和AUX-4
 
 #elif HAS_WIRED_LCD
 
@@ -342,41 +343,41 @@
     #define BEEPER_PIN                     P1_01
     #define BTN_ENC                        P1_04
   #else
-    #define BEEPER_PIN                     P1_30  // (37) not 5V tolerant
-    #define BTN_ENC                        P2_11  // (35) J3-3 & AUX-4
+    #define BEEPER_PIN                     P1_30  // (37) not 5V tolerant//（37）不容忍
+    #define BTN_ENC                        P2_11  // (35) J3-3 & AUX-4//（35）J3-3和AUX-4
   #endif
 
-  #define BTN_EN1                          P3_26  // (31) J3-2 & AUX-4
-  #define BTN_EN2                          P3_25  // (33) J3-4 & AUX-4
+  #define BTN_EN1                          P3_26  // (31) J3-2 & AUX-4//（31）J3-2和AUX-4
+  #define BTN_EN2                          P3_25  // (33) J3-4 & AUX-4//（33）J3-4和AUX-4
 
-  #define SD_DETECT_PIN                    P1_31  // (49) J3-1 & AUX-3 (NOT 5V tolerant)
-  #define KILL_PIN                         P1_22  // (41) J5-4 & AUX-4
-  #define LCD_PINS_RS                      P0_16  // (16) J3-7 & AUX-4
-  #define LCD_SDSS                         P1_23  // (53) J3-5 & AUX-3
+  #define SD_DETECT_PIN                    P1_31  // (49) J3-1 & AUX-3 (NOT 5V tolerant)//（49）J3-1和AUX-3（非5V容差）
+  #define KILL_PIN                         P1_22  // (41) J5-4 & AUX-4//（41）J5-4和AUX-4
+  #define LCD_PINS_RS                      P0_16  // (16) J3-7 & AUX-4//（16）J3-7和AUX-4
+  #define LCD_SDSS                         P1_23  // (53) J3-5 & AUX-3//（53）J3-5和AUX-3
 
   #if IS_NEWPANEL
     #if IS_RRW_KEYPAD
-      #define SHIFT_OUT_PIN                P0_18  // (51) (MOSI) J3-10 & AUX-3
-      #define SHIFT_CLK_PIN                P0_15  // (52) (SCK)  J3-9 & AUX-3
-      #define SHIFT_LD_PIN                 P1_31  // (49)        J3-1 & AUX-3 (NOT 5V tolerant)
+      #define SHIFT_OUT_PIN                P0_18  // (51) (MOSI) J3-10 & AUX-3//（51）（MOSI）J3-10和AUX-3
+      #define SHIFT_CLK_PIN                P0_15  // (52) (SCK)  J3-9 & AUX-3//（52）（SCK）J3-9和AUX-3
+      #define SHIFT_LD_PIN                 P1_31  // (49)        J3-1 & AUX-3 (NOT 5V tolerant)//（49）J3-1和AUX-3（非5V容差）
     #endif
   #else
-    //#define SHIFT_CLK_PIN                P3_26  // (31)  J3-2 & AUX-4
-    //#define SHIFT_LD_PIN                 P3_25  // (33)  J3-4 & AUX-4
-    //#define SHIFT_OUT_PIN                P2_11  // (35)  J3-3 & AUX-4
-    //#define SHIFT_EN_PIN                 P1_22  // (41)  J5-4 & AUX-4
+    //#define SHIFT_CLK_PIN                P3_26  // (31)  J3-2 & AUX-4//#定义换档锁定销P3\U 26/（31）J3-2和AUX-4
+    //#define SHIFT_LD_PIN                 P3_25  // (33)  J3-4 & AUX-4//#定义换档锁定销P3\U 25//（33）J3-4和AUX-4
+    //#define SHIFT_OUT_PIN                P2_11  // (35)  J3-3 & AUX-4//#定义移位针P2\U 11/（35）J3-3和AUX-4
+    //#define SHIFT_EN_PIN                 P1_22  // (41)  J5-4 & AUX-4//#定义换档插脚P1_22/（41）J5-4和AUX-4
   #endif
 
   #if ANY(VIKI2, miniVIKI)
-    //#define LCD_SCREEN_ROT_180
+    //#define LCD_SCREEN_ROT_180//#定义LCD屏幕旋转180
 
-    #define DOGLCD_CS                      P0_16  // (16)
-    #define DOGLCD_A0                      P2_06  // (59) J3-8 & AUX-2
+    #define DOGLCD_CS                      P0_16  // (16)// (16)
+    #define DOGLCD_A0                      P2_06  // (59) J3-8 & AUX-2//（59）J3-8和AUX-2
     #define DOGLCD_SCK                SD_SCK_PIN
     #define DOGLCD_MOSI              SD_MOSI_PIN
 
-    #define STAT_LED_BLUE_PIN              P0_26  // (63)  may change if cable changes
-    #define STAT_LED_RED_PIN               P1_21  // ( 6)  may change if cable changes
+    #define STAT_LED_BLUE_PIN              P0_26  // (63)  may change if cable changes//（63）如果电缆发生变化，可能会发生变化
+    #define STAT_LED_RED_PIN               P1_21  // ( 6)  may change if cable changes//（6）如果电缆发生变化，可能会发生变化
 
   #else
 
@@ -384,13 +385,13 @@
       #define DOGLCD_SCK                   P0_15
       #define DOGLCD_MOSI                  P0_18
 
-      // EXP1 on LCD adapter is not usable - using Ethernet connector instead
+      // EXP1 on LCD adapter is not usable - using Ethernet connector instead//LCD适配器上的EXP1不可用-改用以太网连接器
       #define DOGLCD_CS                    P1_09
       #define DOGLCD_A0                    P1_14
-      //#define FORCE_SOFT_SPI                    // Use this if default of hardware SPI causes display problems
-                                                  //   results in LCD soft SPI mode 3, SD soft SPI mode 0
+      //#define FORCE_SOFT_SPI                    // Use this if default of hardware SPI causes display problems//#定义FORCE\u SOFT\u SPI//如果硬件SPI的默认值导致显示问题，请使用此选项
+                                                  //   results in LCD soft SPI mode 3, SD soft SPI mode 0//结果为LCD软SPI模式3，SD软SPI模式0
 
-      #define LCD_RESET_PIN                P0_16  // Must be high or open for LCD to operate normally.
+      #define LCD_RESET_PIN                P0_16  // Must be high or open for LCD to operate normally.//必须为高电平或开路，LCD才能正常工作。
 
       #if EITHER(FYSETC_MINI_12864_1_2, FYSETC_MINI_12864_2_0)
         #ifndef RGB_LED_R_PIN
@@ -406,65 +407,65 @@
         #define NEOPIXEL_PIN               P1_00
       #endif
     #else
-      #define DOGLCD_CS                    P0_26  // (63) J5-3 & AUX-2
-      #define DOGLCD_A0                    P2_06  // (59) J3-8 & AUX-2
+      #define DOGLCD_CS                    P0_26  // (63) J5-3 & AUX-2//（63）J5-3和AUX-2
+      #define DOGLCD_A0                    P2_06  // (59) J3-8 & AUX-2//（59）J3-8和AUX-2
     #endif
 
-    #define LCD_BACKLIGHT_PIN              P0_16  //(16) J3-7 & AUX-4 - only used on DOGLCD controllers
-    #define LCD_PINS_ENABLE                P0_18  // (51) (MOSI) J3-10 & AUX-3
-    #define LCD_PINS_D4                    P0_15  // (52) (SCK)  J3-9 & AUX-3
+    #define LCD_BACKLIGHT_PIN              P0_16  //(16) J3-7 & AUX-4 - only used on DOGLCD controllers//（16） J3-7和AUX-4-仅用于DOGLCD控制器
+    #define LCD_PINS_ENABLE                P0_18  // (51) (MOSI) J3-10 & AUX-3//（51）（MOSI）J3-10和AUX-3
+    #define LCD_PINS_D4                    P0_15  // (52) (SCK)  J3-9 & AUX-3//（52）（SCK）J3-9和AUX-3
     #if IS_ULTIPANEL
-      #define LCD_PINS_D5                  P1_17  // (71) ENET_MDIO
-      #define LCD_PINS_D6                  P1_14  // (73) ENET_RX_ER
-      #define LCD_PINS_D7                  P1_10  // (75) ENET_RXD1
+      #define LCD_PINS_D5                  P1_17  // (71) ENET_MDIO//（71）ENET_MDIO
+      #define LCD_PINS_D6                  P1_14  // (73) ENET_RX_ER//（73）电子接收
+      #define LCD_PINS_D7                  P1_10  // (75) ENET_RXD1//（75）ENET_RXD1
 
       #if ENABLED(REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER)
-        #define BTN_ENC_EN           LCD_PINS_D7  // Detect the presence of the encoder
+        #define BTN_ENC_EN           LCD_PINS_D7  // Detect the presence of the encoder//检测编码器的存在
       #endif
 
     #endif
   #endif
 
   #if ENABLED(MINIPANEL)
-    // GLCD features
-    // Uncomment screen orientation
-    //#define LCD_SCREEN_ROT_90
-    //#define LCD_SCREEN_ROT_180
-    //#define LCD_SCREEN_ROT_270
+    // GLCD features//GLCD功能
+    // Uncomment screen orientation//取消注释屏幕方向
+    //#define LCD_SCREEN_ROT_90//#定义LCD屏幕旋转90
+    //#define LCD_SCREEN_ROT_180//#定义LCD屏幕旋转180
+    //#define LCD_SCREEN_ROT_270//#定义LCD屏幕旋转270
  #endif
 
-#endif // HAS_WIRED_LCD
+#endif // HAS_WIRED_LCD//有有线液晶显示器吗
 
-//
-// Ethernet pins
-//
+////
+// Ethernet pins//以太网管脚
+////
 #if !IS_ULTIPANEL
-  #define ENET_MDIO                        P1_17  // (71)  J12-4
-  #define ENET_RX_ER                       P1_14  // (73)  J12-6
-  #define ENET_RXD1                        P1_10  // (75)  J12-8
+  #define ENET_MDIO                        P1_17  // (71)  J12-4//（71）J12-4
+  #define ENET_RX_ER                       P1_14  // (73)  J12-6//（73）J12-6
+  #define ENET_RXD1                        P1_10  // (75)  J12-8//（75）J12-8
 #endif
-#define ENET_MOC                           P1_16  // (70)  J12-3
-#define REF_CLK                            P1_15  // (72)  J12-5
-#define ENET_RXD0                          P1_09  // (74)  J12-7
-#define ENET_CRS                           P1_08  // (76)  J12-9
-#define ENET_TX_EN                         P1_04  // (77)  J12-10
-#define ENET_TXD0                          P1_00  // (78)  J12-11
-#define ENET_TXD1                          P1_01  // (79)  J12-12
+#define ENET_MOC                           P1_16  // (70)  J12-3//（70）J12-3
+#define REF_CLK                            P1_15  // (72)  J12-5//（72）J12-5
+#define ENET_RXD0                          P1_09  // (74)  J12-7//（74）J12-7
+#define ENET_CRS                           P1_08  // (76)  J12-9//（76）J12-9
+#define ENET_TX_EN                         P1_04  // (77)  J12-10//（77）J12-10
+#define ENET_TXD0                          P1_00  // (78)  J12-11//（78）J12-11
+#define ENET_TXD1                          P1_01  // (79)  J12-12//（79）J12-12
 
-//
-// SD Support
-//
+////
+// SD Support//SD支持
+////
 #ifndef SDCARD_CONNECTION
   #define SDCARD_CONNECTION              ONBOARD
 #endif
 
-#define ONBOARD_SD_CS_PIN                  P0_06  // Chip select for "System" SD card
+#define ONBOARD_SD_CS_PIN                  P0_06  // Chip select for "System" SD card//“系统”SD卡的芯片选择
 
 #if SD_CONNECTION_IS(LCD)
-  #define SD_SCK_PIN                       P0_15  // (52)  system defined J3-9 & AUX-3
-  #define SD_MISO_PIN                      P0_17  // (50)  system defined J3-10 & AUX-3
-  #define SD_MOSI_PIN                      P0_18  // (51)  system defined J3-10 & AUX-3
-  #define SD_SS_PIN                        P1_23  // (53)  system defined J3-5 & AUX-3 (Sometimes called SDSS) - CS used by Marlin
+  #define SD_SCK_PIN                       P0_15  // (52)  system defined J3-9 & AUX-3//（52）系统定义J3-9和AUX-3
+  #define SD_MISO_PIN                      P0_17  // (50)  system defined J3-10 & AUX-3//（50）系统定义J3-10和AUX-3
+  #define SD_MOSI_PIN                      P0_18  // (51)  system defined J3-10 & AUX-3//（51）系统定义J3-10和AUX-3
+  #define SD_SS_PIN                        P1_23  // (53)  system defined J3-5 & AUX-3 (Sometimes called SDSS) - CS used by Marlin//（53）系统定义的J3-5和AUX-3（有时称为SDSS）-CS供Marlin使用
 #elif SD_CONNECTION_IS(ONBOARD)
   #undef SD_DETECT_PIN
   #define SD_SCK_PIN                       P0_07

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -30,24 +31,24 @@
 #define DEFAULT_MACHINE_NAME "ADIMLab Gantry v2"
 #define BOARD_INFO_NAME      "HJC2560-C"
 
-//
-// Servos
-//
-//#ifndef SERVO0_PIN
-//  #define SERVO0_PIN       11
-//#endif
+////
+// Servos//伺服
+////
+//#ifndef SERVO0_PIN//#ifndef伺服0_引脚
+//  #define SERVO0_PIN       11//#定义伺服0_针脚11
+//#endif//#恩迪夫
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_STOP_PIN                            22
 #define Y_STOP_PIN                            26
 #define Z_STOP_PIN                            29
-//#define EXP_STOP_PIN                        28
+//#define EXP_STOP_PIN                        28//#定义EXP\u STOP\u引脚28
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                            25
 #define X_DIR_PIN                             23
 #define X_ENABLE_PIN                          27
@@ -71,73 +72,73 @@
 #define MOTOR_CURRENT_PWM_XY_PIN              44
 #define MOTOR_CURRENT_PWM_Z_PIN               45
 #define MOTOR_CURRENT_PWM_E_PIN               46
-// Motor current PWM conversion, PWM value = MotorCurrentSetting * 255 / range
+// Motor current PWM conversion, PWM value = MotorCurrentSetting * 255 / range//电机电流PWM转换，PWM值=电机电流设置*255/范围
 #ifndef MOTOR_CURRENT_PWM_RANGE
   #define MOTOR_CURRENT_PWM_RANGE            2000
 #endif
 #define DEFAULT_PWM_MOTOR_CURRENT  { 1300, 1300, 1250 }
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                             8  // Analog Input
-#define TEMP_1_PIN                             9  // Analog Input
-#define TEMP_BED_PIN                          10  // Analog Input
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                             8  // Analog Input//模拟输入
+#define TEMP_1_PIN                             9  // Analog Input//模拟输入
+#define TEMP_BED_PIN                          10  // Analog Input//模拟输入
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_0_PIN                           2
 #define HEATER_1_PIN                           3
 #define HEATER_BED_PIN                         4
 
 #ifndef FAN_PIN
-  #define FAN_PIN                              7  //默认不使用PWM_FAN冷却喷嘴，如果需要，则取消注释
+  #define FAN_PIN                              7  //默认不使用PWM_FAN冷却喷嘴，如果需要，则取消注释//默认不使用脉宽调制风扇冷却喷嘴，如果需要，则取消注释
 #endif
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define SDSS                                  53
 #define SD_DETECT_PIN                         39
-//#define LED_PIN                              8
+//#define LED_PIN                              8//#定义LED_引脚8
 
 #ifndef CASE_LIGHT_PIN
-  #define CASE_LIGHT_PIN                       8  // 8 默认挤出机风扇作为Case LED，如果需要PWM FAN,则需要将FAN_PIN置为7，LED_PIN置为8
+  #define CASE_LIGHT_PIN                       8  // 8 默认挤出机风扇作为Case LED，如果需要PWM FAN,则需要将FAN_PIN置为7，LED_PIN置为8// 8 默认挤出机风扇作为以案例为导向如果需要PWM风扇，则需要将扇形针置为7、发光二极管引脚置为8.
 #endif
 
-//#define SAFETY_TRIGGERED_PIN                28  // PIN to detect the safety circuit has triggered
-//#define MAIN_VOLTAGE_MEASURE_PIN            14  // ANALOG PIN to measure the main voltage, with a 100k - 4k7 resitor divider.
+//#define SAFETY_TRIGGERED_PIN                28  // PIN to detect the safety circuit has triggered//#定义安全触发引脚28//引脚以检测安全电路是否已触发
+//#define MAIN_VOLTAGE_MEASURE_PIN            14  // ANALOG PIN to measure the main voltage, with a 100k - 4k7 resitor divider.//#使用100k-4k7电阻分压器定义主电压测量引脚14//模拟引脚以测量主电压。
 
-//
-// M3/M4/M5 - Spindle/Laser Control
-//
+////
+// M3/M4/M5 - Spindle/Laser Control//M3/M4/M5-主轴/激光控制
+////
 #if ENABLED(SPINDLE_LASER_ENABLE)
   #define SPINDLE_DIR_PIN                     16
-  #define SPINDLE_LASER_ENABLE_PIN            17  // Pin should have a pullup!
-  #define SPINDLE_LASER_PWM_PIN                9  // Hardware PWM
+  #define SPINDLE_LASER_ENABLE_PIN            17  // Pin should have a pullup!//别针应该拉起！
+  #define SPINDLE_LASER_PWM_PIN                9  // Hardware PWM//硬件脉宽调制
 #endif
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 #if HAS_WIRED_LCD
 
   #define BEEPER_PIN                          18
 
   #if IS_NEWPANEL
 
-    #define LCD_PINS_RS                       20  // LCD_CS
-    #define LCD_PINS_ENABLE                   15  // LCD_SDA
-    #define LCD_PINS_D4                       14  // LCD_SCK
+    #define LCD_PINS_RS                       20  // LCD_CS//液晶显示器
+    #define LCD_PINS_ENABLE                   15  // LCD_SDA//液晶显示器
+    #define LCD_PINS_D4                       14  // LCD_SCK//液晶显示器
 
     #if ENABLED(HJC_LCD_SMART_CONTROLLER)
-      #define LCD_BACKLIGHT_PIN                5  // LCD_Backlight
-      //#ifndef LCD_CONTRAST_PIN
-      //  #define LCD_CONTRAST_PIN  5   // LCD_Contrast
-      //#endif
+      #define LCD_BACKLIGHT_PIN                5  // LCD_Backlight//液晶显示器背光
+      //#ifndef LCD_CONTRAST_PIN//#ifndef LCD_对比度_引脚
+      //  #define LCD_CONTRAST_PIN  5   // LCD_Contrast//#定义LCD_对比度_引脚5//LCD_对比度
+      //#endif//#恩迪夫
       #ifndef FIL_RUNOUT_PIN
-        #define FIL_RUNOUT_PIN                24  // Filament runout
+        #define FIL_RUNOUT_PIN                24  // Filament runout//灯丝跳动
       #endif
     #else
       #define LCD_PINS_D5                     21
@@ -153,7 +154,7 @@
 
   #else
 
-    // Buttons attached to a shift register
+    // Buttons attached to a shift register//与移位寄存器相连的按钮
     #define SHIFT_CLK_PIN                     38
     #define SHIFT_LD_PIN                      42
     #define SHIFT_OUT_PIN                     40
@@ -166,6 +167,6 @@
     #define LCD_PINS_D6                       20
     #define LCD_PINS_D7                       19
 
-  #endif // !IS_NEWPANEL
+  #endif // !IS_NEWPANEL// !这是新小组吗
 
-#endif // HAS_WIRED_LCD
+#endif // HAS_WIRED_LCD//有有线液晶显示器吗

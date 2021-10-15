@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -184,24 +185,24 @@ static bool longName2DosName(const char *longName, char *dosName) {
   for (i = FILENAME_LENGTH; i--;) dosName[i] = '\0';
   while (*longName) {
     uint8_t c = *longName++;
-    if (c == '.') { // For a dot...
+    if (c == '.') { // For a dot...//为了一个点。。。
       if (i == 0) return false;
       strcat_P(dosName, PSTR(".GCO"));
       break;
     }
     else {
-      if (c < 0x21 || c == 0x7F) return false;                  // Check size, non-printable characters
-      // Fail for illegal characters
+      if (c < 0x21 || c == 0x7F) return false;                  // Check size, non-printable characters//检查大小，不可打印字符
+      // Fail for illegal characters//无法识别非法字符
       PGM_P p = PSTR("|<>^+=?/[];,*\"\\");
       while (const uint8_t b = pgm_read_byte(p++)) if (b == c) return false;
-      dosName[i++] = c + (WITHIN(c, 'a', 'z') ? 'A' - 'a' : 0); // Uppercase required for 8.3 name
+      dosName[i++] = c + (WITHIN(c, 'a', 'z') ? 'A' - 'a' : 0); // Uppercase required for 8.3 name//8.3名称需要大写字母
     }
     if (i >= 5) {
       strcat_P(dosName, PSTR("~1.GCO"));
       break;
     }
   }
-  return dosName[0] != '\0'; // Return true if any name was set
+  return dosName[0] != '\0'; // Return true if any name was set//如果设置了任何名称，则返回true
 }
 
 static int storeRcvData(volatile uint8_t *bufToCpy, int32_t len) {
@@ -233,10 +234,10 @@ static void dma_ch5_irq_handle() {
     uint8 status_bits = dma_get_isr_bits(DMA1, DMA_CH5);
     dma_clear_isr_bits(DMA1, DMA_CH5);
     if (status_bits & 0x8) {
-      // DMA transmit Error
+      // DMA transmit Error//DMA传输错误
     }
     else if (status_bits & 0x2) {
-      // DMA transmit complete
+      // DMA transmit complete//DMA传输完成
       if (esp_state == TRANSFER_IDLE)
         esp_state = TRANSFERING;
 
@@ -251,7 +252,7 @@ static void dma_ch5_irq_handle() {
       }
     }
     else if (status_bits & 0x4) {
-      // DMA transmit half
+      // DMA transmit half//DMA传输半
       WIFI_IO1_SET();
     }
 }
@@ -261,7 +262,7 @@ static void wifi_usart_dma_init() {
   uint32_t flags = ( DMA_MINC_MODE | DMA_TRNS_CMPLT | DMA_HALF_TRNS | DMA_TRNS_ERR);
   dma_xfer_size dma_bit_size = DMA_SIZE_8BITS;
   dma_setup_transfer(DMA1, DMA_CH5, &USART1_BASE->DR, dma_bit_size,
-             (volatile void*)WIFISERIAL.usart_device->rb->buf, dma_bit_size, flags);// Transmit buffer DMA
+             (volatile void*)WIFISERIAL.usart_device->rb->buf, dma_bit_size, flags);// Transmit buffer DMA//发送缓冲区DMA
   dma_set_priority(DMA1, DMA_CH5, DMA_PRIORITY_LOW);
   dma_attach_interrupt(DMA1, DMA_CH5, &dma_ch5_irq_handle);
 
@@ -269,7 +270,7 @@ static void wifi_usart_dma_init() {
   dma_set_num_transfers(DMA1, DMA_CH5, UART_RX_BUFFER_SIZE);
 
   bb_peri_set_bit(&USART1_BASE->CR3, USART_CR3_DMAR_BIT, 1);
-  dma_enable(DMA1, DMA_CH5);   // enable transmit
+  dma_enable(DMA1, DMA_CH5);   // enable transmit//启用传输
 
   for (uint8_t i = 0; i < TRANS_RCV_FIFO_BLOCK_NUM; i++) {
     wifiDmaRcvFifo.bufferAddr[i] = &bmp_public_buf[1024 * i];
@@ -377,7 +378,7 @@ int package_to_wifi(WIFI_RET_TYPE type, uint8_t *buf, int len) {
         return 0;
 
        if (buf_to_wifi[index_to_wifi + 3] == '\n') {
-        // mask "wait" "busy" "X:"
+        // mask "wait" "busy" "X:"//掩码“等待”“忙”X:
         if (((buf_to_wifi[4] == 'w') && (buf_to_wifi[5] == 'a') && (buf_to_wifi[6] == 'i')  && (buf_to_wifi[7] == 't') )
           || ((buf_to_wifi[4] == 'b') && (buf_to_wifi[5] == 'u') && (buf_to_wifi[6] == 's')  && (buf_to_wifi[7] == 'y') )
           || ((buf_to_wifi[4] == 'X') && (buf_to_wifi[5] == ':') )
@@ -470,7 +471,7 @@ void get_file_list(char *path) {
     TERN_(SDSUPPORT, card.mount());
   }
   else if (gCfgItems.fileSysType == FILE_SYS_USB) {
-    // udisk
+    // udisk//乌迪斯克
   }
   Explore_Disk(path, 0);
 }
@@ -615,7 +616,7 @@ static void wifi_gcode_exec(uint8_t *cmd_line) {
 
       switch (cmd_value) {
 
-        case 20: // M20: Print SD / µdisk file
+        case 20: // M20: Print SD / µdisk file//M20：打印SD/µ磁盘文件
           file_writer.fileTransfer = 0;
           if (uiCfg.print_state == IDLE) {
             int index = 0;
@@ -745,7 +746,7 @@ static void wifi_gcode_exec(uint8_t *cmd_line) {
                   }
                   card.openFileRead(cur_name);
                   if (card.isFileOpen()) {
-                    //saved_feedrate_percentage = feedrate_percentage;
+                    //saved_feedrate_percentage = feedrate_percentage;//保存的进给速度百分比=进给速度百分比；
                     feedrate_percentage = 100;
                     planner.flow_percentage[0] = 100;
                     planner.e_factor[0] = planner.flow_percentage[0] * 0.01f;
@@ -1061,21 +1062,21 @@ static void net_msg_handle(uint8_t * msg, uint16_t msgLen) {
 
   if (msgLen <= 0) return;
 
-  // ip
+  // ip//知识产权
   sprintf_P(ipPara.ip_addr, PSTR("%d.%d.%d.%d"), msg[0], msg[1], msg[2], msg[3]);
 
-  // port
-  // connect state
+  // port//港口
+  // connect state//连接状态
   switch (msg[6]) {
     case 0x0A: wifi_link_state = WIFI_CONNECTED; break;
     case 0x0E: wifi_link_state = WIFI_EXCEPTION; break;
     default:   wifi_link_state = WIFI_NOT_CONFIG; break;
   }
 
-  // mode
+  // mode//模式
   wifiPara.mode = msg[7];
 
-  // wifi name
+  // wifi name//wifi名称
   wifiNameLen = msg[8];
   wifiKeyLen = msg[9 + wifiNameLen];
   if (wifiNameLen < 32) {
@@ -1085,7 +1086,7 @@ static void net_msg_handle(uint8_t * msg, uint16_t msgLen) {
     memset(&wifi_list.wifiConnectedName, 0, sizeof(wifi_list.wifiConnectedName));
     memcpy(&wifi_list.wifiConnectedName, &msg[9], wifiNameLen);
 
-    // wifi key
+    // wifi key//无线键
     if (wifiKeyLen < 64) {
       ZERO(wifiPara.keyCode);
       memcpy(wifiPara.keyCode, &msg[10 + wifiNameLen], wifiKeyLen);
@@ -1102,7 +1103,7 @@ static void net_msg_handle(uint8_t * msg, uint16_t msgLen) {
     cloud_para.port = msg[12 + wifiNameLen + wifiKeyLen + hostLen] + (msg[13 + wifiNameLen + wifiKeyLen + hostLen] << 8);
   }
 
-  // id
+  // id//身份证
   id_len = msg[14 + wifiNameLen + wifiKeyLen + hostLen];
   if (id_len == 20) {
     ZERO(cloud_para.id);
@@ -1174,7 +1175,7 @@ static void wifi_list_msg_handle(uint8_t * msg, uint16_t msgLen) {
           wifiMsgIdex  +=  wifiNameLen;
           wifiMsgIdex  +=  1;
           wifi_name_num--;
-          //i--;
+          //i--;//我--；
           continue;
         }
         if (i < WIFI_TOTAL_NUMBER - 1)
@@ -1225,13 +1226,13 @@ void utf8_2_unicode(uint8_t *source, uint8_t Len) {
   while (1) {
     char_byte_num = source[i] & 0xF0;
     if (source[i] < 0x80) {
-      //ASCII --1byte
+      //ASCII --1byte//ASCII--1字节
       FileName_unicode[char_i] = source[i];
       i += 1;
       char_i += 1;
     }
     else if (char_byte_num == 0xC0 || char_byte_num == 0xD0) {
-      //--2byte
+      //--2byte//--2字节
       u16_h = (((uint16_t)source[i] << 8) & 0x1F00) >> 2;
       u16_l = ((uint16_t)source[i + 1] & 0x003F);
       u16_value = (u16_h | u16_l);
@@ -1241,7 +1242,7 @@ void utf8_2_unicode(uint8_t *source, uint8_t Len) {
       char_i += 2;
     }
     else if (char_byte_num == 0xE0) {
-      //--3byte
+      //--3byte//--3字节
       u16_h = (((uint16_t)source[i] << 8) & 0x0F00) << 4;
       u16_m = (((uint16_t)source[i + 1] << 8) & 0x3F00) >> 2;
       u16_l = ((uint16_t)source[i + 2] & 0x003F);
@@ -1252,9 +1253,9 @@ void utf8_2_unicode(uint8_t *source, uint8_t Len) {
       char_i += 2;
     }
     else if (char_byte_num == 0xF0) {
-      //--4byte
+      //--4byte//--4字节
       i += 4;
-      //char_i += 3;
+      //char_i += 3;//字符i+=3；
     }
     else
       break;
@@ -1329,7 +1330,7 @@ static void file_first_msg_handle(uint8_t * msg, uint16_t msgLen) {
       return;
     }
 
-  #endif // SDSUPPORT
+  #endif // SDSUPPORT//SDSUPPORT
 
   wifi_link_state = WIFI_TRANS_FILE;
 
@@ -1539,13 +1540,13 @@ void stopEspTransfer() {
   wifi_delay(200);
   WIFI_IO1_SET();
 
-  // disable dma
+  // disable dma//禁用dma
   dma_clear_isr_bits(DMA1, DMA_CH5);
   bb_peri_set_bit(&USART1_BASE->CR3, USART_CR3_DMAR_BIT, 0);
   dma_disable(DMA1, DMA_CH5);
 
   wifi_delay(200);
-  changeFlashMode(true); // Set SPI flash to use DMA mode
+  changeFlashMode(true); // Set SPI flash to use DMA mode//将SPI闪存设置为使用DMA模式
   esp_port_begin(1);
   wifi_delay(200);
 
@@ -1597,7 +1598,7 @@ void wifi_rcv_handle() {
     if (len > 0) {
       esp_data_parser((char *)ucStr, len);
       if (wifi_link_state == WIFI_TRANS_FILE) {
-        changeFlashMode(false); // Set SPI flash to use non-DMA mode
+        changeFlashMode(false); // Set SPI flash to use non-DMA mode//将SPI闪存设置为使用非DMA模式
         wifi_delay(10);
         esp_port_begin(0);
         wifi_delay(10);
@@ -1778,17 +1779,17 @@ void get_wifi_commands() {
        */
       if (wifi_char == '\n' || wifi_char == '\r') {
 
-        wifi_comment_mode = false; // end of line == end of comment
+        wifi_comment_mode = false; // end of line == end of comment//行结束==注释结束
 
-        if (!wifi_read_count) continue; // skip empty lines
+        if (!wifi_read_count) continue; // skip empty lines//跳过空行
 
-        wifi_line_buffer[wifi_read_count] = 0; // terminate string
-        wifi_read_count = 0; //reset buffer
+        wifi_line_buffer[wifi_read_count] = 0; // terminate string//终止字符串
+        wifi_read_count = 0; //reset buffer//复位缓冲器
 
         char* command = wifi_line_buffer;
-        while (*command == ' ') command++; // skip any leading spaces
+        while (*command == ' ') command++; // skip any leading spaces//跳过任何前导空格
 
-        // Movement commands alert when stopped
+        // Movement commands alert when stopped//移动命令在停止时发出警报
         if (IsStopped()) {
           char* gpos = strchr(command, 'G');
           if (gpos) {
@@ -1804,7 +1805,7 @@ void get_wifi_commands() {
         }
 
         #if DISABLED(EMERGENCY_PARSER)
-          // Process critical commands early
+          // Process critical commands early//尽早处理关键命令
           if (strcmp(command, "M108") == 0) {
             wait_for_heatup = false;
             TERN_(HAS_LCD_MENU, wait_for_user = false);
@@ -1813,18 +1814,18 @@ void get_wifi_commands() {
           if (strcmp(command, "M410") == 0) quickstop_stepper();
         #endif
 
-        // Add the command to the queue
+        // Add the command to the queue//将命令添加到队列中
         queue.enqueue_one_P(wifi_line_buffer);
       }
       else if (wifi_read_count >= MAX_CMD_SIZE - 1) {
 
       }
-      else { // it's not a newline, carriage return or escape char
+      else { // it's not a newline, carriage return or escape char//这不是换行、回车或转义字符
         if (wifi_char == ';') wifi_comment_mode = true;
         if (!wifi_comment_mode) wifi_line_buffer[wifi_read_count++] = wifi_char;
       }
     }
-  } // queue has space, serial has data
+  } // queue has space, serial has data//队列有空间，串行有数据
   else
     espGcodeFifo.wait_tick++;
 }
@@ -1836,4 +1837,4 @@ int readWifiBuf(int8_t *buf, int32_t len) {
   return i;
 }
 
-#endif // HAS_TFT_LVGL_UI && MKS_WIFI_MODULE
+#endif // HAS_TFT_LVGL_UI && MKS_WIFI_MODULE//具有TFT LVGL UI和MKS WIFI模块

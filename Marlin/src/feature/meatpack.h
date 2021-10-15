@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -80,7 +81,7 @@ enum MeatPack_ConfigStateBits : uint8_t {
 
 class MeatPack {
 
-  // Utility definitions
+  // Utility definitions//效用定义
   static const uint8_t kCommandByte         = 0b11111111,
                        kFirstNotPacked      = 0b00001111,
                        kSecondNotPacked     = 0b11110000,
@@ -90,17 +91,17 @@ class MeatPack {
   static const uint8_t kSpaceCharIdx = 11;
   static const char kSpaceCharReplace = 'E';
 
-  bool cmd_is_next;        // A command is pending
-  uint8_t state;           // Configuration state
-  uint8_t second_char;     // Buffers a character if dealing with out-of-sequence pairs
-  uint8_t cmd_count,       // Counter of command bytes received (need 2)
-          full_char_count, // Counter for full-width characters to be received
-          char_out_count;  // Stores number of characters to be read out.
-  uint8_t char_out_buf[2]; // Output buffer for caching up to 2 characters
+  bool cmd_is_next;        // A command is pending//命令挂起
+  uint8_t state;           // Configuration state//配置状态
+  uint8_t second_char;     // Buffers a character if dealing with out-of-sequence pairs//如果处理无序对，则缓冲字符
+  uint8_t cmd_count,       // Counter of command bytes received (need 2)//接收到的命令字节计数器（需要2个）
+          full_char_count, // Counter for full-width characters to be received//用于接收全宽字符的计数器
+          char_out_count;  // Stores number of characters to be read out.//存储要读取的字符数。
+  uint8_t char_out_buf[2]; // Output buffer for caching up to 2 characters//用于缓存最多2个字符的输出缓冲区
 
 public:
-  // Pass in a character rx'd by SD card or serial. Automatically parses command/ctrl sequences,
-  // and will control state internally.
+  // Pass in a character rx'd by SD card or serial. Automatically parses command/ctrl sequences,//通过SD卡或串口传入一个字符rx'd。自动分析命令/ctrl序列，
+  // and will control state internally.//并将在内部控制国家。
   void handle_rx_char(const uint8_t c, const serial_index_t serial_ind);
 
   /**
@@ -121,7 +122,7 @@ public:
   MeatPack() : cmd_is_next(false), state(0), second_char(0), cmd_count(0), full_char_count(0), char_out_count(0) {}
 };
 
-// Implement the MeatPack serial class so it's transparent to rest of the code
+// Implement the MeatPack serial class so it's transparent to rest of the code//实现MeatPack串行类，使其对其余代码透明
 template <typename SerialT>
 struct MeatpackSerial : public SerialBase <MeatpackSerial < SerialT >> {
   typedef SerialBase< MeatpackSerial<SerialT> > BaseClassT;
@@ -139,19 +140,19 @@ struct MeatpackSerial : public SerialBase <MeatpackSerial < SerialT >> {
   void end()                          { out.end(); }
 
   void msgDone()                      { out.msgDone(); }
-  // Existing instances implement Arduino's operator bool, so use that if it's available
+  // Existing instances implement Arduino's operator bool, so use that if it's available//现有实例实现了Arduino的操作符bool，因此如果可用，请使用它
   bool connected()                    { return Private::HasMember_connected<SerialT>::value ? CALL_IF_EXISTS(bool, &out, connected) : (bool)out; }
   void flushTX()                      { CALL_IF_EXISTS(void, &out, flushTX); }
   SerialFeature features(serial_index_t index) const  { return SerialFeature::MeatPack | CALL_IF_EXISTS(SerialFeature, &out, features, index);  }
 
 
   int available(serial_index_t index) {
-    if (charCount) return charCount;          // The buffer still has data
-    if (out.available(index) <= 0) return 0;  // No data to read
+    if (charCount) return charCount;          // The buffer still has data//缓冲区仍然有数据
+    if (out.available(index) <= 0) return 0;  // No data to read//没有要读取的数据
 
-    // Don't read in read method, instead do it here, so we can make progress in the read method
+    // Don't read in read method, instead do it here, so we can make progress in the read method//不要在read方法中读取，而是在这里执行，这样我们可以在read方法中取得进展
     const int r = out.read(index);
-    if (r == -1) return 0;  // This is an error from the underlying serial code
+    if (r == -1) return 0;  // This is an error from the underlying serial code//这是来自底层串行代码的错误
     meatpack.handle_rx_char((uint8_t)r, index);
     charCount = meatpack.get_result_char(serialBuffer);
     readIndex = 0;
@@ -160,7 +161,7 @@ struct MeatpackSerial : public SerialBase <MeatpackSerial < SerialT >> {
   }
 
   int readImpl(const serial_index_t index) {
-    // Not enough char to make progress?
+    // Not enough char to make progress?//没有足够的字符来取得进展？
     if (charCount == 0 && available(index) == 0) return -1;
 
     charCount--;

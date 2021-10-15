@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -24,7 +25,7 @@
 #include "../inc/MarlinConfig.h"
 
 #if CASE_LIGHT_IS_COLOR_LED
-  #include "leds/leds.h" // for LEDColor
+  #include "leds/leds.h" // for LEDColor//用于LED颜色
 #endif
 
 #if NONE(CASE_LIGHT_NO_BRIGHTNESS, CASE_LIGHT_IS_COLOR_LED) || ENABLED(CASE_LIGHT_USE_NEOPIXEL)

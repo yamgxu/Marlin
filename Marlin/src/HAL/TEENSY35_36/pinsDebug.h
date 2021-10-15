@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -23,7 +24,7 @@
  */
 
 #define NUMBER_PINS_TOTAL NUM_DIGITAL_PINS
-#define MULTI_NAME_PAD 16 // space needed to be pretty if not first name assigned to a pin
+#define MULTI_NAME_PAD 16 // space needed to be pretty if not first name assigned to a pin//如果没有为pin指定名字，则空间必须美观
 
 #define FTM0_CH0_PIN 22
 #define FTM0_CH1_PIN 23
@@ -45,7 +46,7 @@
 #define FTM3_CH5_PIN 36
 #define FTM3_CH6_PIN 37
 #define FTM3_CH7_PIN 38
-#ifdef __MK66FX1M0__ // Teensy3.6
+#ifdef __MK66FX1M0__ // Teensy3.6//微小3.6
   #define TPM1_CH0_PIN 16
   #define TPM1_CH1_PIN 17
 #endif
@@ -75,7 +76,7 @@ void HAL_analog_pin_state(char buffer[], int8_t pin) {
  * Return true if it's currently a PWM pin.
  */
 bool HAL_pwm_status(int8_t pin) {
-  char buffer[20];   // for the sprintf statements
+  char buffer[20];   // for the sprintf statements//对于sprintf语句
   switch (pin) {
     FTM_CASE(0,0);
     FTM_CASE(0,1);

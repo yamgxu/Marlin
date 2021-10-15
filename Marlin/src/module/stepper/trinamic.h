@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -111,7 +112,7 @@ void reset_trinamic_drivers();
 
 #define AXIS_HAS_SQUARE_WAVE(A) (AXIS_IS_TMC(A) && ENABLED(SQUARE_WAVE_STEPPING))
 
-// X Stepper
+// X Stepper//X步进机
 #if AXIS_IS_TMC(X)
   extern TMC_CLASS(X, X) stepperX;
   static constexpr chopper_timing_t chopper_timing_X = CHOPPER_TIMING_X;
@@ -125,7 +126,7 @@ void reset_trinamic_drivers();
   #endif
 #endif
 
-// Y Stepper
+// Y Stepper//Y步进机
 #if AXIS_IS_TMC(Y)
   extern TMC_CLASS(Y, Y) stepperY;
   static constexpr chopper_timing_t chopper_timing_Y = CHOPPER_TIMING_Y;
@@ -139,7 +140,7 @@ void reset_trinamic_drivers();
   #endif
 #endif
 
-// Z Stepper
+// Z Stepper//Z步进机
 #if AXIS_IS_TMC(Z)
   extern TMC_CLASS(Z, Z) stepperZ;
   static constexpr chopper_timing_t chopper_timing_Z = CHOPPER_TIMING_Z;
@@ -153,7 +154,7 @@ void reset_trinamic_drivers();
   #endif
 #endif
 
-// X2 Stepper
+// X2 Stepper//X2步进机
 #if HAS_X2_ENABLE && AXIS_IS_TMC(X2)
   extern TMC_CLASS(X2, X) stepperX2;
   #ifndef CHOPPER_TIMING_X2
@@ -170,7 +171,7 @@ void reset_trinamic_drivers();
   #endif
 #endif
 
-// Y2 Stepper
+// Y2 Stepper//Y2步进机
 #if HAS_Y2_ENABLE && AXIS_IS_TMC(Y2)
   extern TMC_CLASS(Y2, Y) stepperY2;
   #ifndef CHOPPER_TIMING_Y2
@@ -187,7 +188,7 @@ void reset_trinamic_drivers();
   #endif
 #endif
 
-// Z2 Stepper
+// Z2 Stepper//Z2步进机
 #if HAS_Z2_ENABLE && AXIS_IS_TMC(Z2)
   extern TMC_CLASS(Z2, Z) stepperZ2;
   #ifndef CHOPPER_TIMING_Z2
@@ -204,7 +205,7 @@ void reset_trinamic_drivers();
   #endif
 #endif
 
-// Z3 Stepper
+// Z3 Stepper//Z3步进电机
 #if HAS_Z3_ENABLE && AXIS_IS_TMC(Z3)
   extern TMC_CLASS(Z3, Z) stepperZ3;
   #ifndef CHOPPER_TIMING_Z3
@@ -221,7 +222,7 @@ void reset_trinamic_drivers();
   #endif
 #endif
 
-// Z4 Stepper
+// Z4 Stepper//Z4步进机
 #if HAS_Z4_ENABLE && AXIS_IS_TMC(Z4)
   extern TMC_CLASS(Z4, Z) stepperZ4;
   #ifndef CHOPPER_TIMING_Z4
@@ -238,7 +239,7 @@ void reset_trinamic_drivers();
   #endif
 #endif
 
-// I Stepper
+// I Stepper//步进电机
 #if AXIS_IS_TMC(I)
   extern TMC_CLASS(I, I) stepperI;
   static constexpr chopper_timing_t chopper_timing_I = CHOPPER_TIMING_I;
@@ -252,7 +253,7 @@ void reset_trinamic_drivers();
   #endif
 #endif
 
-// J Stepper
+// J Stepper//J步进机
 #if AXIS_IS_TMC(J)
   extern TMC_CLASS(J, J) stepperJ;
   static constexpr chopper_timing_t chopper_timing_J = CHOPPER_TIMING_J;
@@ -266,7 +267,7 @@ void reset_trinamic_drivers();
   #endif
 #endif
 
-// K Stepper
+// K Stepper//步进电机
 #if AXIS_IS_TMC(K)
   extern TMC_CLASS(K, K) stepperK;
   static constexpr chopper_timing_t chopper_timing_K = CHOPPER_TIMING_K;
@@ -280,7 +281,7 @@ void reset_trinamic_drivers();
   #endif
 #endif
 
-// E0 Stepper
+// E0 Stepper//E0步进机
 #if AXIS_IS_TMC(E0)
   extern TMC_CLASS_E(0) stepperE0;
   #ifndef CHOPPER_TIMING_E0
@@ -297,7 +298,7 @@ void reset_trinamic_drivers();
   #endif
 #endif
 
-// E1 Stepper
+// E1 Stepper//E1步进器
 #if AXIS_IS_TMC(E1)
   extern TMC_CLASS_E(1) stepperE1;
   #ifndef CHOPPER_TIMING_E1
@@ -314,7 +315,7 @@ void reset_trinamic_drivers();
   #endif
 #endif
 
-// E2 Stepper
+// E2 Stepper//E2步进机
 #if AXIS_IS_TMC(E2)
   extern TMC_CLASS_E(2) stepperE2;
   #ifndef CHOPPER_TIMING_E2
@@ -331,7 +332,7 @@ void reset_trinamic_drivers();
   #endif
 #endif
 
-// E3 Stepper
+// E3 Stepper//E3步进机
 #if AXIS_IS_TMC(E3)
   extern TMC_CLASS_E(3) stepperE3;
   #ifndef CHOPPER_TIMING_E3
@@ -348,7 +349,7 @@ void reset_trinamic_drivers();
   #endif
 #endif
 
-// E4 Stepper
+// E4 Stepper//E4步进机
 #if AXIS_IS_TMC(E4)
   extern TMC_CLASS_E(4) stepperE4;
   #ifndef CHOPPER_TIMING_E4
@@ -365,7 +366,7 @@ void reset_trinamic_drivers();
   #endif
 #endif
 
-// E5 Stepper
+// E5 Stepper//E5步进电机
 #if AXIS_IS_TMC(E5)
   extern TMC_CLASS_E(5) stepperE5;
   #ifndef CHOPPER_TIMING_E5
@@ -382,7 +383,7 @@ void reset_trinamic_drivers();
   #endif
 #endif
 
-// E6 Stepper
+// E6 Stepper//E6步进电机
 #if AXIS_IS_TMC(E6)
   extern TMC_CLASS_E(6) stepperE6;
   #ifndef CHOPPER_TIMING_E6
@@ -399,7 +400,7 @@ void reset_trinamic_drivers();
   #endif
 #endif
 
-// E7 Stepper
+// E7 Stepper//E7步进机
 #if AXIS_IS_TMC(E7)
   extern TMC_CLASS_E(7) stepperE7;
   #ifndef CHOPPER_TIMING_E7

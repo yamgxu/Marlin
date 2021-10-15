@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,36 +30,39 @@
 
 #include "../../inc/MarlinConfig.h"
 
-// ------------------------
-// Local defines
-// ------------------------
+// ------------------------// ------------------------
+// Local defines//局部定义
+// ------------------------// ------------------------
 
 #define NUM_HARDWARE_TIMERS 4
 
 #define TIMER_STATUS 
 
-// ------------------------
-// Private Variables
-// ------------------------
+// ------------------------// ------------------------
+// Private Variables//私有变量
+// ------------------------// ------------------------
 
 static timg_dev_t *TG[2] = {&TIMERG0, &TIMERG1};
 TaskHandle_t temperatureTaskHandle;
+TaskHandle_t stepTCTaskHandle;
 
 void temperature_isr() {
   vTaskNotifyGiveFromISR(temperatureTaskHandle, NULL);
 }
-
+void stepTC_isr() {
+  vTaskNotifyGiveFromISR(stepTCTaskHandle, NULL);
+}
 const tTimerConfig TimerConfig [NUM_HARDWARE_TIMERS] = {
-  { TIMER_GROUP_0, TIMER_0, STEPPER_TIMER_PRESCALE, stepTC_Handler }, // 0 - Stepper
-  { TIMER_GROUP_0, TIMER_1,    TEMP_TIMER_PRESCALE, temperature_isr }, // 1 - Temperature
-  { TIMER_GROUP_1, TIMER_0,     PWM_TIMER_PRESCALE, pwmTC_Handler  }, // 2 - PWM
-  { TIMER_GROUP_1, TIMER_1,    TONE_TIMER_PRESCALE, toneTC_Handler }, // 3 - Tone
+  { TIMER_GROUP_0, TIMER_0, STEPPER_TIMER_PRESCALE, stepTC_Handler }, // 0 - Stepper//0步进电机
+  { TIMER_GROUP_0, TIMER_1,    TEMP_TIMER_PRESCALE, temperature_isr }, // 1 - Temperature//1-温度
+  { TIMER_GROUP_1, TIMER_0,     PWM_TIMER_PRESCALE, pwmTC_Handler  }, // 2 - PWM//2-PWM
+  { TIMER_GROUP_1, TIMER_1,    TONE_TIMER_PRESCALE, toneTC_Handler }, // 3 - Tone//三音
 };
 
 
-// ------------------------
-// Public functions
-// ------------------------
+// ------------------------// ------------------------
+// Public functions//公共职能
+// ------------------------// ------------------------
 
 
 void temperatureTask(void *params) {
@@ -67,12 +71,18 @@ void temperatureTask(void *params) {
     tempTC_Handler();
   }
 }
+void stepTCTask(void *params) {
+  for (;;) {
+    ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+    stepTC_Handler();
+  }
+}
 
 void IRAM_ATTR timer_isr(void *para) {
   const tTimerConfig& timer = TimerConfig[(int)para];
 
-  // Retrieve the interrupt status and the counter value
-  // from the timer that reported the interrupt
+  // Retrieve the interrupt status and the counter value//检索中断状态和计数器值
+  // from the timer that reported the interrupt//从报告中断的计时器
   #if CONFIG_IDF_TARGET_ESP32
     uint32_t intr_status = TG[timer.group]->int_st_timers.val;
   #elif CONFIG_IDF_TARGET_ESP32S2
@@ -80,7 +90,7 @@ void IRAM_ATTR timer_isr(void *para) {
   #endif
   TG[timer.group]->hw_timer[timer.idx].update.val = 1;
 
-  // Clear the interrupt
+  // Clear the interrupt//清除中断
   if (intr_status & BIT(timer.idx)) {
     #if CONFIG_IDF_TARGET_ESP32
       switch (timer.idx) {
@@ -89,7 +99,7 @@ void IRAM_ATTR timer_isr(void *para) {
         case TIMER_MAX: break;
       }
     #elif CONFIG_IDF_TARGET_ESP32S2
-      // TODO: cleanup
+      // TODO: cleanup//TODO:清理
       switch (timer.idx) {
         case TIMER_0: TG[timer.group]->int_clr.t0 = 1; break;
         case TIMER_1: TG[timer.group]->int_clr.t1 = 1; break;
@@ -100,8 +110,8 @@ void IRAM_ATTR timer_isr(void *para) {
 
   timer.fn();
 
-  // After the alarm has been triggered
-  // Enable it again so it gets triggered the next time
+  // After the alarm has been triggered//警报触发后
+  // Enable it again so it gets triggered the next time//再次启用它，以便下次触发它
   TG[timer.group]->hw_timer[timer.idx].config.alarm_en = TIMER_ALARM_EN;
 }
 
@@ -111,9 +121,10 @@ void IRAM_ATTR timer_isr(void *para) {
  * @param frequency frequency of the timer
  */
 void HAL_timer_start(const uint8_t timer_num, uint32_t frequency) {
-  // Workaround
+  // Workaround//变通办法
   if (timer_num == 1) {
     xTaskCreate(temperatureTask, "TemperatureTask", 2048, NULL, tskIDLE_PRIORITY+1, &temperatureTaskHandle);
+   // xTaskCreate(stepTCTask, "stepTCTask", 2048, NULL, tskIDLE_PRIORITY+1, &stepTCTaskHandle);
   }
 
   const tTimerConfig timer = TimerConfig[timer_num];
@@ -126,13 +137,13 @@ void HAL_timer_start(const uint8_t timer_num, uint32_t frequency) {
   config.intr_type   = TIMER_INTR_LEVEL;
   config.auto_reload = TIMER_AUTORELOAD_EN;
 
-  // Select and initialize the timer
+  // Select and initialize the timer//选择并初始化计时器
   timer_init(timer.group, timer.idx, &config);
 
-  // Timer counter initial value and auto reload on alarm
+  // Timer counter initial value and auto reload on alarm//计时器计数器初始值和报警时自动重新加载
   timer_set_counter_value(timer.group, timer.idx, 0x00000000ULL);
 
-  // Configure the alam value and the interrupt on alarm
+  // Configure the alam value and the interrupt on alarm//配置ALM值和报警中断
   timer_set_alarm_value(timer.group, timer.idx, (HAL_TIMER_RATE) / timer.divider / frequency - 1);
 
   timer_enable_intr(timer.group, timer.idx);
@@ -184,8 +195,8 @@ hal_timer_t HAL_timer_get_count(const uint8_t timer_num) {
  * @param timer_num timer number to enable interrupts on
  */
 void HAL_timer_enable_interrupt(const uint8_t timer_num) {
-  //const tTimerConfig timer = TimerConfig[timer_num];
-  //timer_enable_intr(timer.group, timer.idx);
+  //const tTimerConfig timer = TimerConfig[timer_num];//const tTimerConfig timer=TimerConfig[timer_num]；
+  //timer_enable_intr(timer.group, timer.idx);//timer\u enable\u intr（timer.group、timer.idx）；
 }
 
 /**
@@ -193,8 +204,8 @@ void HAL_timer_enable_interrupt(const uint8_t timer_num) {
  * @param timer_num timer number to disable interrupts on
  */
 void HAL_timer_disable_interrupt(const uint8_t timer_num) {
-  //const tTimerConfig timer = TimerConfig[timer_num];
-  //timer_disable_intr(timer.group, timer.idx);
+   const tTimerConfig timer = TimerConfig[timer_num];//const tTimerConfig timer=TimerConfig[timer_num]；
+   timer_disable_intr(timer.group, timer.idx);//timer\u disable\u intr（timer.group、timer.idx）；
 }
 
 bool HAL_timer_interrupt_enabled(const uint8_t timer_num) {
@@ -202,4 +213,4 @@ bool HAL_timer_interrupt_enabled(const uint8_t timer_num) {
   return TG[timer.group]->int_ena.val | BIT(timer_num);
 }
 
-#endif // ARDUINO_ARCH_ESP32
+#endif // ARDUINO_ARCH_ESP32//ARDUINO_ARCH_ESP32

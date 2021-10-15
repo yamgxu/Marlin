@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -58,18 +59,18 @@
 
 #define BOARD_INFO_NAME "Gen7 Custom"
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_STOP_PIN                             0
 #define Y_STOP_PIN                             1
 #define Z_STOP_PIN                             2
 
-//
-// Steppers
-//
-#define X_STEP_PIN                            21  // different from standard GEN7
-#define X_DIR_PIN                             20  // different from standard GEN7
+////
+// Steppers//踏步机
+////
+#define X_STEP_PIN                            21  // different from standard GEN7//与标准GEN7不同
+#define X_DIR_PIN                             20  // different from standard GEN7//与标准GEN7不同
 #define X_ENABLE_PIN                          24
 
 #define Y_STEP_PIN                            23
@@ -84,37 +85,37 @@
 #define E0_DIR_PIN                            27
 #define E0_ENABLE_PIN                         24
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                             2  // Analog Input
-#define TEMP_BED_PIN                           1  // Analog Input (pin 34 bed)
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                             2  // Analog Input//模拟输入
+#define TEMP_BED_PIN                           1  // Analog Input (pin 34 bed)//模拟输入（引脚34）
 
-//
-// Heaters
-//
+////
+// Heaters//加热器
+////
 #define HEATER_0_PIN                           4
-#define HEATER_BED_PIN                         3  // (bed)
+#define HEATER_BED_PIN                         3  // (bed)//（床）
 
-//
-// Misc. Functions
-//
-#define SDSS                                  31  // SCL pin of I2C header || CS Pin for SD Card support
+////
+// Misc. Functions//杂项。功能
+////
+#define SDSS                                  31  // SCL pin of I2C header || CS Pin for SD Card support//I2C头的SCL引脚| |用于SD卡支持的CS引脚
 #define PS_ON_PIN                             19
 
 #ifndef CASE_LIGHT_PIN
-  #define CASE_LIGHT_PIN                      15  // Hardware PWM
+  #define CASE_LIGHT_PIN                      15  // Hardware PWM//硬件脉宽调制
 #endif
 
-// A pin for debugging
+// A pin for debugging//调试用别针
 #define DEBUG_PIN                             -1
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 #define BEEPER_PIN                            -1
 
-// 4bit LCD Support
+// 4bit LCD Support//4位LCD支持
 #define LCD_PINS_RS                           18
 #define LCD_PINS_ENABLE                       17
 #define LCD_PINS_D4                           16
@@ -122,18 +123,18 @@
 #define LCD_PINS_D6                           13
 #define LCD_PINS_D7                           14
 
-// Buttons are directly    attached
+// Buttons are directly    attached//按钮是直接连接的
 #define BTN_EN1                               11
 #define BTN_EN2                               10
 #define BTN_ENC                               12
 
-// RS485 pins
-//#define TX_ENABLE_PIN                       12
-//#define RX_ENABLE_PIN                       13
+// RS485 pins//RS485引脚
+//#define TX_ENABLE_PIN                       12//#定义TX_启用_引脚12
+//#define RX_ENABLE_PIN                       13//#定义RX_启用_引脚13
 
-//
-// M3/M4/M5 - Spindle/Laser Control
-//
-#define SPINDLE_LASER_ENA_PIN                  5  // Pullup or pulldown!
-#define SPINDLE_LASER_PWM_PIN                 16  // Hardware PWM
+////
+// M3/M4/M5 - Spindle/Laser Control//M3/M4/M5-主轴/激光控制
+////
+#define SPINDLE_LASER_ENA_PIN                  5  // Pullup or pulldown!//拉起还是拉下！
+#define SPINDLE_LASER_PWM_PIN                 16  // Hardware PWM//硬件脉宽调制
 #define SPINDLE_DIR_PIN                        6

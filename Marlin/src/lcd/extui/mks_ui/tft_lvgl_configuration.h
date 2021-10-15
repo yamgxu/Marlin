@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -32,7 +33,7 @@
 
 #include <lvgl.h>
 
-//#define TFT_ROTATION TFT_ROTATE_180
+//#define TFT_ROTATION TFT_ROTATE_180//#定义TFT_旋转TFT_旋转180
 
 extern uint8_t bmp_public_buf[14 * 1024];
 extern uint8_t public_buf[513];

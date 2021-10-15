@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -53,4 +54,4 @@ void GcodeSuite::M381() {
   #endif
 }
 
-#endif // EXT_SOLENOID || MANUAL_SOLENOID_CONTROL
+#endif // EXT_SOLENOID || MANUAL_SOLENOID_CONTROL//外部螺线管| |手动螺线管|控制

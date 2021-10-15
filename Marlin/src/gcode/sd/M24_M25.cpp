@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -45,7 +46,7 @@
   #include "../../lcd/extui/dgus/DGUSDisplayDef.h"
 #endif
 
-#include "../../MarlinCore.h" // for startOrResumeJob
+#include "../../MarlinCore.h" // for startOrResumeJob//对于startOrResumeJob
 
 /**
  * M24: Start or Resume SD Print
@@ -64,14 +65,14 @@ void GcodeSuite::M24() {
 
   #if ENABLED(PARK_HEAD_ON_PAUSE)
     if (did_pause_print) {
-      resume_print(); // will call print_job_timer.start()
+      resume_print(); // will call print_job_timer.start()//将调用print\u job\u timer.start（）
       return;
     }
   #endif
 
   if (card.isFileOpen()) {
-    card.startOrResumeFilePrinting();            // SD card will now be read for commands
-    startOrResumeJob();               // Start (or resume) the print job timer
+    card.startOrResumeFilePrinting();            // SD card will now be read for commands//SD卡现在将读取命令
+    startOrResumeJob();               // Start (or resume) the print job timer//启动（或恢复）打印作业计时器
     TERN_(POWER_LOSS_RECOVERY, recovery.prepare());
   }
 
@@ -100,7 +101,7 @@ void GcodeSuite::M25() {
 
   #else
 
-    // Set initial pause flag to prevent more commands from landing in the queue while we try to pause
+    // Set initial pause flag to prevent more commands from landing in the queue while we try to pause//设置初始暂停标志，以防止在尝试暂停时更多命令进入队列
     #if ENABLED(SDSUPPORT)
       if (IS_SD_PRINTING()) card.pauseSDPrint();
     #endif
@@ -125,4 +126,4 @@ void GcodeSuite::M25() {
   #endif
 }
 
-#endif // SDSUPPORT
+#endif // SDSUPPORT//SDSUPPORT

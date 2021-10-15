@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  *
@@ -43,21 +44,21 @@ Serial1Class<USBCompositeSerial> MarlinCompositeSerial(true);
 
 #if ENABLED(EMERGENCY_PARSER)
 
-  // The original callback is not called (no way to retrieve address).
-  // That callback detects a special STM32 reset sequence: this functionality is not essential
-  // as M997 achieves the same.
+  // The original callback is not called (no way to retrieve address).//未调用原始回调（无法检索地址）。
+  // That callback detects a special STM32 reset sequence: this functionality is not essential//该回调检测到一个特殊的STM32重置序列：此功能不是必需的
+  // as M997 achieves the same.//正如M997实现的一样。
   void my_rx_callback(unsigned int, void*) {
-    // max length of 16 is enough to contain all emergency commands
+    // max length of 16 is enough to contain all emergency commands//最大长度16足以容纳所有紧急命令
     uint8 buf[16];
 
-    //rx is usbSerialPart.endpoints[2]
+    //rx is usbSerialPart.endpoints[2]//rx是usbSerialPart.endpoints[2]
     uint16 len = usb_get_ep_rx_count(usbSerialPart.endpoints[2].address);
     uint32 total = composite_cdcacm_data_available();
 
     if (len == 0 || total == 0 || !WITHIN(total, len, COUNT(buf)))
       return;
 
-    // cannot get character by character due to bug in composite_cdcacm_peek_ex
+    // cannot get character by character due to bug in composite_cdcacm_peek_ex//由于复合_cdcacm_peek_ex中存在错误，无法逐个字符获取
     len = composite_cdcacm_peek(buf, total);
 
     for (uint32 i = 0; i < len; i++)
@@ -68,13 +69,13 @@ Serial1Class<USBCompositeSerial> MarlinCompositeSerial(true);
 
 void MSC_SD_init() {
   USBComposite.setProductId(PRODUCT_ID);
-  // Just set MarlinCompositeSerial enabled to true
-  // because when MarlinCompositeSerial.begin() is used in setup()
-  // it clears all USBComposite devices.
+  // Just set MarlinCompositeSerial enabled to true//只需将MarlinCompositeSerial enabled设置为true
+  // because when MarlinCompositeSerial.begin() is used in setup()//因为在setup（）中使用MarlinCompositeSerial.begin（）时
+  // it clears all USBComposite devices.//它清除所有USBComposite设备。
   MarlinCompositeSerial.begin();
   USBComposite.end();
   USBComposite.clear();
-  // Set api and register mass storage
+  // Set api and register mass storage//设置api并注册大容量存储
   #if SD_CONNECTION_IS(ONBOARD)
     uint32_t cardSize;
     if (disk_initialize(0) == RES_OK) {
@@ -84,7 +85,7 @@ void MSC_SD_init() {
       }
     }
   #endif
-  // Register composite Serial
+  // Register composite Serial//寄存器复合串行
   MarlinCompositeSerial.registerComponent();
   USBComposite.begin();
   #if ENABLED(EMERGENCY_PARSER)
@@ -92,4 +93,4 @@ void MSC_SD_init() {
   #endif
 }
 
-#endif // __STM32F1__ && HAS_SD_HOST_DRIVE
+#endif // __STM32F1__ && HAS_SD_HOST_DRIVE//\uuuu STM32F1\uuuu&&HAS\u SD\u主机\u驱动器

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -38,52 +39,52 @@
 #include "../MarlinCore.h"
 
 #if !USE_MULTIPLE_CARDS
-  // raw block cache
-  uint32_t SdVolume::cacheBlockNumber_;  // current block number
-  cache_t  SdVolume::cacheBuffer_;       // 512 byte cache for Sd2Card
-  DiskIODriver *SdVolume::sdCard_;       // pointer to SD card object
-  bool     SdVolume::cacheDirty_;        // cacheFlush() will write block if true
-  uint32_t SdVolume::cacheMirrorBlock_;  // mirror  block for second FAT
+  // raw block cache//原始块缓存
+  uint32_t SdVolume::cacheBlockNumber_;  // current block number//当前区块编号
+  cache_t  SdVolume::cacheBuffer_;       // 512 byte cache for Sd2Card//Sd2Card的512字节缓存
+  DiskIODriver *SdVolume::sdCard_;       // pointer to SD card object//指向SD卡对象的指针
+  bool     SdVolume::cacheDirty_;        // cacheFlush() will write block if true//如果为true，cacheFlush（）将写入块
+  uint32_t SdVolume::cacheMirrorBlock_;  // mirror  block for second FAT//第二脂肪镜块
 #endif
 
-// find a contiguous group of clusters
+// find a contiguous group of clusters//查找一组连续的群集
 bool SdVolume::allocContiguous(uint32_t count, uint32_t *curCluster) {
   if (ENABLED(SDCARD_READONLY)) return false;
 
-  // start of group
+  // start of group//小组开始
   uint32_t bgnCluster;
-  // end of group
+  // end of group//小组结束
   uint32_t endCluster;
-  // last cluster of FAT
+  // last cluster of FAT//最后一簇脂肪
   uint32_t fatEnd = clusterCount_ + 1;
 
-  // flag to save place to start next search
+  // flag to save place to start next search//保存位置以开始下一次搜索的标志
   bool setStart;
 
-  // set search start cluster
+  // set search start cluster//设置搜索开始群集
   if (*curCluster) {
-    // try to make file contiguous
+    // try to make file contiguous//尝试使文件连续
     bgnCluster = *curCluster + 1;
 
-    // don't save new start location
+    // don't save new start location//不保存新的开始位置
     setStart = false;
   }
   else {
-    // start at likely place for free cluster
+    // start at likely place for free cluster//从可用群集的可能位置开始
     bgnCluster = allocSearchStart_;
 
-    // save next search start if one cluster
+    // save next search start if one cluster//如果有一个群集，则保存下一个搜索开始
     setStart = count == 1;
   }
-  // end of group
+  // end of group//小组结束
   endCluster = bgnCluster;
 
-  // search the FAT for free clusters
+  // search the FAT for free clusters//在FAT中搜索自由簇
   for (uint32_t n = 0;; n++, endCluster++) {
-    // can't find space checked all clusters
+    // can't find space checked all clusters//找不到已选中的所有群集的空间
     if (n >= clusterCount_) return false;
 
-    // past end - start from beginning of FAT
+    // past end - start from beginning of FAT//过去的结束-从脂肪的开始开始
     if (endCluster > fatEnd) {
       bgnCluster = endCluster = 2;
     }
@@ -91,30 +92,30 @@ bool SdVolume::allocContiguous(uint32_t count, uint32_t *curCluster) {
     if (!fatGet(endCluster, &f)) return false;
 
     if (f != 0) {
-      // cluster in use try next cluster as bgnCluster
+      // cluster in use try next cluster as bgnCluster//正在使用的群集作为bgnCluster尝试下一个群集
       bgnCluster = endCluster + 1;
     }
     else if ((endCluster - bgnCluster + 1) == count) {
-      // done - found space
+      // done - found space//完成-找到空间
       break;
     }
   }
-  // mark end of chain
+  // mark end of chain//标记链条末端
   if (!fatPutEOC(endCluster)) return false;
 
-  // link clusters
+  // link clusters//链接群集
   while (endCluster > bgnCluster) {
     if (!fatPut(endCluster - 1, endCluster)) return false;
     endCluster--;
   }
   if (*curCluster != 0) {
-    // connect chains
+    // connect chains//连接链
     if (!fatPut(*curCluster, bgnCluster)) return false;
   }
-  // return first cluster number to caller
+  // return first cluster number to caller//将第一个群集号返回给调用者
   *curCluster = bgnCluster;
 
-  // remember possible next free cluster
+  // remember possible next free cluster//还记得下一个可用集群吗
   if (setStart) allocSearchStart_ = bgnCluster + 1;
 
   return true;
@@ -126,7 +127,7 @@ bool SdVolume::cacheFlush() {
       if (!sdCard_->writeBlock(cacheBlockNumber_, cacheBuffer_.data))
         return false;
 
-      // mirror FAT tables
+      // mirror FAT tables//镜像胖表
       if (cacheMirrorBlock_) {
         if (!sdCard_->writeBlock(cacheMirrorBlock_, cacheBuffer_.data))
           return false;
@@ -148,7 +149,7 @@ bool SdVolume::cacheRawBlock(uint32_t blockNumber, bool dirty) {
   return true;
 }
 
-// return the size in bytes of a cluster chain
+// return the size in bytes of a cluster chain//返回群集链的大小（以字节为单位）
 bool SdVolume::chainSize(uint32_t cluster, uint32_t *size) {
   uint32_t s = 0;
   do {
@@ -159,7 +160,7 @@ bool SdVolume::chainSize(uint32_t cluster, uint32_t *size) {
   return true;
 }
 
-// Fetch a FAT entry
+// Fetch a FAT entry//获取一个大条目
 bool SdVolume::fatGet(uint32_t cluster, uint32_t *value) {
   uint32_t lba;
   if (cluster > (clusterCount_ + 1)) return false;
@@ -194,15 +195,15 @@ bool SdVolume::fatGet(uint32_t cluster, uint32_t *value) {
   return true;
 }
 
-// Store a FAT entry
+// Store a FAT entry//存储一个胖条目
 bool SdVolume::fatPut(uint32_t cluster, uint32_t value) {
   if (ENABLED(SDCARD_READONLY)) return false;
 
   uint32_t lba;
-  // error if reserved cluster
+  // error if reserved cluster//保留群集时出错
   if (cluster < 2) return false;
 
-  // error if not in FAT
+  // error if not in FAT//如果不是在FAT中，则出错
   if (cluster > (clusterCount_ + 1)) return false;
 
   if (FAT12_SUPPORT && fatType_ == 12) {
@@ -210,7 +211,7 @@ bool SdVolume::fatPut(uint32_t cluster, uint32_t value) {
     index += index >> 1;
     lba = fatStartBlock_ + (index >> 9);
     if (!cacheRawBlock(lba, CACHE_FOR_WRITE)) return false;
-    // mirror second FAT
+    // mirror second FAT//镜像第二脂肪
     if (fatCount_ > 1) cacheMirrorBlock_ = lba + blocksPerFat_;
     index &= 0x1FF;
     uint8_t tmp = value;
@@ -223,7 +224,7 @@ bool SdVolume::fatPut(uint32_t cluster, uint32_t value) {
       lba++;
       index = 0;
       if (!cacheRawBlock(lba, CACHE_FOR_WRITE)) return false;
-      // mirror second FAT
+      // mirror second FAT//镜像第二脂肪
       if (fatCount_ > 1) cacheMirrorBlock_ = lba + blocksPerFat_;
     }
     tmp = value >> 4;
@@ -243,27 +244,27 @@ bool SdVolume::fatPut(uint32_t cluster, uint32_t value) {
 
   if (!cacheRawBlock(lba, CACHE_FOR_WRITE)) return false;
 
-  // store entry
+  // store entry//商店入口
   if (fatType_ == 16)
     cacheBuffer_.fat16[cluster & 0xFF] = value;
   else
     cacheBuffer_.fat32[cluster & 0x7F] = value;
 
-  // mirror second FAT
+  // mirror second FAT//镜像第二脂肪
   if (fatCount_ > 1) cacheMirrorBlock_ = lba + blocksPerFat_;
   return true;
 }
 
-// free a cluster chain
+// free a cluster chain//释放集群链
 bool SdVolume::freeChain(uint32_t cluster) {
-  // clear free cluster location
+  // clear free cluster location//清除空闲群集位置
   allocSearchStart_ = 2;
 
   do {
     uint32_t next;
     if (!fatGet(cluster, &next)) return false;
 
-    // free cluster
+    // free cluster//自由簇
     if (!fatPut(cluster, 0)) return false;
 
     cluster = next;
@@ -285,7 +286,7 @@ int32_t SdVolume::freeClusterCount() {
     n = 256;
   else if (fatType_ == 32)
     n = 128;
-  else // put FAT12 here
+  else // put FAT12 here//把FAT12放在这里
     return -1;
 
   for (uint32_t lba = fatStartBlock_; todo; todo -= n, lba++) {
@@ -300,15 +301,15 @@ int32_t SdVolume::freeClusterCount() {
         if (cacheBuffer_.fat32[i] == 0) free++;
     }
     #ifdef ESP32
-      // Needed to reset the idle task watchdog timer on ESP32 as reading the complete FAT may easily
-      // block for 10+ seconds. yield() is insufficient since it blocks lower prio tasks (e.g., idle).
+      // Needed to reset the idle task watchdog timer on ESP32 as reading the complete FAT may easily//需要重置ESP32上的空闲任务看门狗计时器，因为读取完整FAT可能很容易
+      // block for 10+ seconds. yield() is insufficient since it blocks lower prio tasks (e.g., idle).//阻挡10秒以上。yield（）不够，因为它会阻止较低优先级的任务（例如空闲）。
       static millis_t nextTaskTime = 0;
       const millis_t ms = millis();
       if (ELAPSED(ms, nextTaskTime)) {
-        vTaskDelay(1);            // delay 1 tick (Minimum. Usually 10 or 1 ms depending on skdconfig.h)
-        nextTaskTime = ms + 1000; // tickle the task manager again in 1 second
+        vTaskDelay(1);            // delay 1 tick (Minimum. Usually 10 or 1 ms depending on skdconfig.h)//延迟1滴答声（最小值。通常为10或1毫秒，取决于skdconfig.h）
+        nextTaskTime = ms + 1000; // tickle the task manager again in 1 second//在1秒内再次挠痒痒任务管理器
       }
-    #endif // ESP32
+    #endif // ESP32//ESP32
   }
   return free;
 }
@@ -333,18 +334,18 @@ bool SdVolume::init(DiskIODriver* dev, uint8_t part) {
   sdCard_ = dev;
   fatType_ = 0;
   allocSearchStart_ = 2;
-  cacheDirty_ = 0;  // cacheFlush() will write block if true
+  cacheDirty_ = 0;  // cacheFlush() will write block if true//如果为true，cacheFlush（）将写入块
   cacheMirrorBlock_ = 0;
   cacheBlockNumber_ = 0xFFFFFFFF;
 
-  // if part == 0 assume super floppy with FAT boot sector in block zero
-  // if part > 0 assume mbr volume with partition table
+  // if part == 0 assume super floppy with FAT boot sector in block zero//如果part==0，则假定超级软盘在块0中具有FAT引导扇区
+  // if part > 0 assume mbr volume with partition table//如果部分>0，则假定mbr卷具有分区表
   if (part) {
     if (part > 4) return false;
     if (!cacheRawBlock(volumeStartBlock, CACHE_FOR_READ)) return false;
     part_t *p = &cacheBuffer_.mbr.part[part - 1];
     if ((p->boot & 0x7F) != 0  || p->totalSectors < 100 || p->firstSector == 0)
-      return false; // not a valid partition
+      return false; // not a valid partition//不是有效的分区
     volumeStartBlock = p->firstSector;
   }
   if (!cacheRawBlock(volumeStartBlock, CACHE_FOR_READ)) return false;
@@ -353,15 +354,15 @@ bool SdVolume::init(DiskIODriver* dev, uint8_t part) {
       fbs->fatCount == 0 ||
       fbs->reservedSectorCount == 0 ||
       fbs->sectorsPerCluster == 0) {
-    // not valid FAT volume
+    // not valid FAT volume//无效脂肪体积
     return false;
   }
   fatCount_ = fbs->fatCount;
   blocksPerCluster_ = fbs->sectorsPerCluster;
-  // determine shift that is same as multiply by blocksPerCluster_
+  // determine shift that is same as multiply by blocksPerCluster_//确定与乘以blocksPerCluster相同的移位_
   clusterSizeShift_ = 0;
   while (blocksPerCluster_ != _BV(clusterSizeShift_)) {
-    // error if not power of 2
+    // error if not power of 2//如果不是2的幂，则出错
     if (clusterSizeShift_++ > 7) return false;
   }
   blocksPerFat_ = fbs->sectorsPerFat16 ?
@@ -369,26 +370,26 @@ bool SdVolume::init(DiskIODriver* dev, uint8_t part) {
 
   fatStartBlock_ = volumeStartBlock + fbs->reservedSectorCount;
 
-  // count for FAT16 zero for FAT32
+  // count for FAT16 zero for FAT32//FAT16计数为零，FAT32计数为零
   rootDirEntryCount_ = fbs->rootDirEntryCount;
 
-  // directory start for FAT16 dataStart for FAT32
+  // directory start for FAT16 dataStart for FAT32//FAT32的FAT16数据启动目录
   rootDirStart_ = fatStartBlock_ + fbs->fatCount * blocksPerFat_;
 
-  // data start for FAT16 and FAT32
+  // data start for FAT16 and FAT32//FAT16和FAT32的数据启动
   dataStartBlock_ = rootDirStart_ + ((32 * fbs->rootDirEntryCount + 511) / 512);
 
-  // total blocks for FAT16 or FAT32
+  // total blocks for FAT16 or FAT32//FAT16或FAT32的总块数
   totalBlocks = fbs->totalSectors16 ?
                 fbs->totalSectors16 : fbs->totalSectors32;
 
-  // total data blocks
+  // total data blocks//总数据块
   clusterCount_ = totalBlocks - (dataStartBlock_ - volumeStartBlock);
 
-  // divide by cluster size to get cluster count
+  // divide by cluster size to get cluster count//除以群集大小以获得群集计数
   clusterCount_ >>= clusterSizeShift_;
 
-  // FAT type is determined by cluster count
+  // FAT type is determined by cluster count//FAT类型由群集计数确定
   if (clusterCount_ < 4085) {
     fatType_ = 12;
     if (!FAT12_SUPPORT) return false;
@@ -402,4 +403,4 @@ bool SdVolume::init(DiskIODriver* dev, uint8_t part) {
   return true;
 }
 
-#endif // SDSUPPORT
+#endif // SDSUPPORT//SDSUPPORT

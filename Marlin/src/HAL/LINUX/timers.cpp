@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  *
@@ -68,4 +69,4 @@ hal_timer_t HAL_timer_get_count(const uint8_t timer_num) {
   return timers[timer_num].getCount();
 }
 
-#endif // __PLAT_LINUX__
+#endif // __PLAT_LINUX__//_uuu平台u LINUX__

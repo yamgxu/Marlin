@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -30,7 +31,7 @@ uint8_t ServoCount = 0;
 
 #include "Servo.h"
 
-//#include "Servo.h"
+//#include "Servo.h"//#包括“伺服.h”
 
 #include <boards.h>
 #include <io.h>
@@ -45,7 +46,7 @@ uint8_t ServoCount = 0;
  *
  * This uses the smallest prescaler that allows an overflow < 2^16.
  */
-#define MAX_OVERFLOW    UINT16_MAX // _BV(16) - 1
+#define MAX_OVERFLOW    UINT16_MAX // _BV(16) - 1//_BV（16）-1
 #define CYC_MSEC        (1000 * CYCLES_PER_MICROSECOND)
 #define TAU_MSEC        20
 #define TAU_USEC        (TAU_MSEC * 1000)
@@ -53,7 +54,7 @@ uint8_t ServoCount = 0;
 #define SERVO_PRESCALER (TAU_CYC / MAX_OVERFLOW + 1)
 #define SERVO_OVERFLOW  ((uint16_t)round((double)TAU_CYC / SERVO_PRESCALER))
 
-// Unit conversions
+// Unit conversions//单位换算
 #define US_TO_COMPARE(us) uint16_t(map((us), 0, TAU_USEC, 0, SERVO_OVERFLOW))
 #define COMPARE_TO_US(c)  uint32_t(map((c),  0, SERVO_OVERFLOW, 0, TAU_USEC))
 #define ANGLE_TO_US(a)    uint16_t(map((a),  minAngle, maxAngle, SERVO_DEFAULT_MIN_PW, SERVO_DEFAULT_MAX_PW))
@@ -87,7 +88,7 @@ bool libServo::attach(const int32_t inPin, const int32_t inMinAngle, const int32
 
   #ifdef SERVO0_TIMER_NUM
     if (servoIndex == 0 && setupSoftPWM(inPin)) {
-      pin = inPin; // set attached()
+      pin = inPin; // set attached()//附集（）
       return true;
     }
   #endif
@@ -95,18 +96,18 @@ bool libServo::attach(const int32_t inPin, const int32_t inMinAngle, const int32
   if (!PWM_PIN(inPin)) return false;
 
   timer_dev *tdev = PIN_MAP[inPin].timer_device;
-  //uint8_t tchan = PIN_MAP[inPin].timer_channel;
+  //uint8_t tchan = PIN_MAP[inPin].timer_channel;//uint8\u t tchan=引脚映射[inPin]。定时器信道；
 
   SET_PWM(inPin);
   servoWrite(inPin, 0);
 
   timer_pause(tdev);
-  timer_set_prescaler(tdev, SERVO_PRESCALER - 1); // prescaler is 1-based
+  timer_set_prescaler(tdev, SERVO_PRESCALER - 1); // prescaler is 1-based//预分频器是基于1的
   timer_set_reload(tdev, SERVO_OVERFLOW);
   timer_generate_update(tdev);
   timer_resume(tdev);
 
-  pin = inPin; // set attached()
+  pin = inPin; // set attached()//附集（）
   return true;
 }
 
@@ -145,17 +146,17 @@ void libServo::move(const int32_t value) {
   extern "C" void Servo_IRQHandler() {
     static timer_dev *tdev = get_timer_dev(SERVO0_TIMER_NUM);
     uint16_t SR = timer_get_status(tdev);
-    if (SR & TIMER_SR_CC1IF) { // channel 1 off
+    if (SR & TIMER_SR_CC1IF) { // channel 1 off//第一频道关闭
       #ifdef SERVO0_PWM_OD
-        OUT_WRITE_OD(SERVO0_PIN, 1); // off
+        OUT_WRITE_OD(SERVO0_PIN, 1); // off//关
       #else
         OUT_WRITE(SERVO0_PIN, 0);
       #endif
       timer_reset_status_bit(tdev, TIMER_SR_CC1IF_BIT);
     }
-    if (SR & TIMER_SR_CC2IF) { // channel 2 resume
+    if (SR & TIMER_SR_CC2IF) { // channel 2 resume//第二频道继续
       #ifdef SERVO0_PWM_OD
-        OUT_WRITE_OD(SERVO0_PIN, 0); // on
+        OUT_WRITE_OD(SERVO0_PIN, 0); // on//在
       #else
         OUT_WRITE(SERVO0_PIN, 1);
       #endif
@@ -173,10 +174,10 @@ void libServo::move(const int32_t value) {
     #endif
 
     timer_pause(tdev);
-    timer_set_mode(tdev, 1, TIMER_OUTPUT_COMPARE); // counter with isr
-    timer_oc_set_mode(tdev, 1, TIMER_OC_MODE_FROZEN, 0); // no pin output change
-    timer_oc_set_mode(tdev, 2, TIMER_OC_MODE_FROZEN, 0); // no pin output change
-    timer_set_prescaler(tdev, SERVO_PRESCALER - 1); // prescaler is 1-based
+    timer_set_mode(tdev, 1, TIMER_OUTPUT_COMPARE); // counter with isr//与isr对抗
+    timer_oc_set_mode(tdev, 1, TIMER_OC_MODE_FROZEN, 0); // no pin output change//无引脚输出变化
+    timer_oc_set_mode(tdev, 2, TIMER_OC_MODE_FROZEN, 0); // no pin output change//无引脚输出变化
+    timer_set_prescaler(tdev, SERVO_PRESCALER - 1); // prescaler is 1-based//预分频器是基于1的
     timer_set_reload(tdev, SERVO_OVERFLOW);
     timer_set_compare(tdev, 1, SERVO_OVERFLOW);
     timer_set_compare(tdev, 2, SERVO_OVERFLOW);
@@ -200,14 +201,14 @@ void libServo::move(const int32_t value) {
       timer_disable_irq(tdev, 1);
       timer_disable_irq(tdev, 2);
       #ifdef SERVO0_PWM_OD
-        OUT_WRITE_OD(pin, 1); // off
+        OUT_WRITE_OD(pin, 1); // off//关
       #else
         OUT_WRITE(pin, 0);
       #endif
     }
   }
 
-  void libServo::pauseSoftPWM() { // detach
+  void libServo::pauseSoftPWM() { // detach//分离
     timer_dev *tdev = get_timer_dev(SERVO0_TIMER_NUM);
     timer_pause(tdev);
     pwmSetDuty(0);
@@ -221,6 +222,6 @@ void libServo::move(const int32_t value) {
 
 #endif
 
-#endif // HAS_SERVOS
+#endif // HAS_SERVOS//有伺服系统吗
 
-#endif // __STM32F1__
+#endif // __STM32F1__//_uustm32f1__

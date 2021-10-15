@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -55,16 +56,16 @@
  *    P<bool>   = Always show a prompt and await a response
  */
 void GcodeSuite::M125() {
-  // Initial retract before move to filament change position
+  // Initial retract before move to filament change position//移动到灯丝更换位置前的初始缩回
   const float retract = TERN0(HAS_EXTRUDERS, -ABS(parser.axisunitsval('L', E_AXIS, PAUSE_PARK_RETRACT_LENGTH)));
 
   xyz_pos_t park_point = NOZZLE_PARK_POINT;
 
-  // Move XY axes to filament change position or given position
+  // Move XY axes to filament change position or given position//将XY轴移动到灯丝更换位置或给定位置
   if (parser.seenval('X')) park_point.x = RAW_X_POSITION(parser.linearval('X'));
   if (parser.seenval('Y')) park_point.y = RAW_X_POSITION(parser.linearval('Y'));
 
-  // Lift Z axis
+  // Lift Z axis//提升Z轴
   if (parser.seenval('Z')) park_point.z = parser.linearval('Z');
 
   #if HAS_HOTEND_OFFSET && NONE(DUAL_X_CARRIAGE, DELTA)
@@ -75,7 +76,7 @@ void GcodeSuite::M125() {
 
   ui.pause_show_message(PAUSE_MESSAGE_PARKING, PAUSE_MODE_PAUSE_PRINT);
 
-  // If possible, show an LCD prompt with the 'P' flag
+  // If possible, show an LCD prompt with the 'P' flag//如果可能，显示带有“P”标志的LCD提示符
   const bool show_lcd = TERN0(HAS_LCD_MENU, parser.boolval('P'));
 
   if (pause_print(retract, park_point, show_lcd, 0)) {
@@ -86,4 +87,4 @@ void GcodeSuite::M125() {
   }
 }
 
-#endif // PARK_HEAD_ON_PAUSE
+#endif // PARK_HEAD_ON_PAUSE//停下来

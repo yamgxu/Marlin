@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -26,11 +27,11 @@
 #include "hardware/Clock.h"
 #include "../shared/Delay.h"
 
-// Interrupts
-void cli() { } // Disable
-void sei() { } // Enable
+// Interrupts//打断
+void cli() { } // Disable//禁用
+void sei() { } // Enable//使能
 
-// Time functions
+// Time functions//时间函数
 void _delay_ms(const int delay_ms) {
   delay(delay_ms);
 }
@@ -39,7 +40,7 @@ uint32_t millis() {
   return (uint32_t)Clock::millis();
 }
 
-// This is required for some Arduino libraries we are using
+// This is required for some Arduino libraries we are using//这是我们正在使用的一些Arduino库所必需的
 void delayMicroseconds(uint32_t us) {
   Clock::delayMicros(us);
 }
@@ -48,8 +49,8 @@ extern "C" void delay(const int msec) {
   Clock::delayMillis(msec);
 }
 
-// IO functions
-// As defined by Arduino INPUT(0x0), OUTPUT(0x1), INPUT_PULLUP(0x2)
+// IO functions//IO功能
+// As defined by Arduino INPUT(0x0), OUTPUT(0x1), INPUT_PULLUP(0x2)//根据Arduino输入（0x0）、输出（0x1）、输入（0x2）的定义
 void pinMode(const pin_t pin, const uint8_t mode) {
   if (!VALID_PIN(pin)) return;
   Gpio::setMode(pin, mode);
@@ -65,7 +66,7 @@ bool digitalRead(pin_t pin) {
   return Gpio::get(pin);
 }
 
-void analogWrite(pin_t pin, int pwm_value) {  // 1 - 254: pwm_value, 0: LOW, 255: HIGH
+void analogWrite(pin_t pin, int pwm_value) {  // 1 - 254: pwm_value, 0: LOW, 255: HIGH//1-254:pwm_值，0:LOW，255:HIGH
   if (!VALID_PIN(pin)) return;
   Gpio::set(pin, pwm_value);
 }
@@ -98,4 +99,4 @@ int map(uint16_t x, uint16_t in_min, uint16_t in_max, uint16_t out_min, uint16_t
   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
-#endif // __PLAT_LINUX__
+#endif // __PLAT_LINUX__//_uuu平台u LINUX__

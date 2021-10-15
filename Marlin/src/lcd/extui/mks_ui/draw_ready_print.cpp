@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -125,7 +126,7 @@ void lv_draw_ready_print() {
   scr = lv_screen_create(PRINT_READY_UI, "");
 
   if (mks_test_flag == 0x1E) {
-    // Create image buttons
+    // Create image buttons//创建图像按钮
     buttonTool = lv_imgbtn_create(scr, "F:/bmp_tool.bin", event_handler, ID_TOOL);
 
     lv_obj_set_pos(buttonTool, 360, 180);
@@ -182,7 +183,7 @@ void lv_draw_ready_print() {
     lv_big_button_create(scr, "F:/bmp_set.bin", main_menu.set, 180, 180, event_handler, ID_SET);
     lv_big_button_create(scr, "F:/bmp_printing.bin", main_menu.print, 340, 180, event_handler, ID_PRINT);
 
-    // Monitoring
+    // Monitoring//监测
     lv_obj_t *buttonExt1 = lv_big_button_create(scr, "F:/bmp_ext1_state.bin", " ", 55, ICON_POS_Y, event_handler, ID_INFO_EXT);
     #if HAS_MULTI_EXTRUDER
       lv_obj_t *buttonExt2 = lv_big_button_create(scr, "F:/bmp_ext2_state.bin", " ", 163, ICON_POS_Y, event_handler, ID_INFO_EXT);
@@ -247,7 +248,7 @@ void lv_draw_ready_print() {
   }
 
   #if ENABLED(TOUCH_SCREEN_CALIBRATION)
-    // If calibration is required, let's trigger it now, handles the case when there is default value in configuration files
+    // If calibration is required, let's trigger it now, handles the case when there is default value in configuration files//如果需要校准，让我们现在触发它，处理配置文件中有默认值的情况
     if (!touch_calibration.calibration_loaded()) {
       lv_clear_ready_print();
       lv_draw_touch_calibration_screen();
@@ -277,4 +278,4 @@ void lv_clear_ready_print() {
   lv_obj_del(scr);
 }
 
-#endif // HAS_TFT_LVGL_UI
+#endif // HAS_TFT_LVGL_UI//有TFT\U LVGL\U用户界面

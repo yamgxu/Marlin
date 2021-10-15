@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -110,7 +111,7 @@ namespace DirectStepping {
             return false;
         }
       case State::ADDRESS:
-        //TODO: 16 bit address, State::ADDRESS2
+        //TODO: 16 bit address, State::ADDRESS2//TODO:16位地址，状态：：ADDRESS2
         write_page_idx = c;
         write_byte_idx = 0;
         checksum = 0;
@@ -118,7 +119,7 @@ namespace DirectStepping {
         CHECK_PAGE(write_page_idx, true);
 
         if (page_states[write_page_idx] == PageState::FAIL) {
-          // Special case for fail
+          // Special case for fail//失败的特殊情况
           state = State::UNFAIL;
           return true;
         }
@@ -129,7 +130,7 @@ namespace DirectStepping {
 
         return true;
       case State::SIZE:
-        // Zero means full page size
+        // Zero means full page size//零表示整页大小
         write_page_size = c;
         state = State::COLLECT;
         return true;
@@ -137,10 +138,10 @@ namespace DirectStepping {
         pages[write_page_idx][write_byte_idx++] = c;
         checksum ^= c;
 
-        // check if still collecting
+        // check if still collecting//检查是否仍在收集
         if (Cfg::PAGE_SIZE == 256) {
-          // special case for 8-bit, check if rolled back to 0
-          if (Cfg::DIRECTIONAL || !write_page_size) { // full 256 bytes
+          // special case for 8-bit, check if rolled back to 0//8位的特殊情况，检查是否回滚到0
+          if (Cfg::DIRECTIONAL || !write_page_size) { // full 256 bytes//完整256字节
             if (write_byte_idx) return true;
           } else {
             if (write_byte_idx < write_page_size) return true;
@@ -227,36 +228,36 @@ const uint8_t segment_table[DirectStepping::Config::NUM_SEGMENTS][DirectStepping
 
   #if STEPPER_PAGE_FORMAT == SP_4x4D_128
 
-    { 1, 1, 1, 1, 1, 1, 1 }, //  0 = -7
-    { 1, 1, 1, 0, 1, 1, 1 }, //  1 = -6
-    { 1, 1, 1, 0, 1, 0, 1 }, //  2 = -5
-    { 1, 1, 0, 1, 0, 1, 0 }, //  3 = -4
-    { 1, 1, 0, 0, 1, 0, 0 }, //  4 = -3
-    { 0, 0, 1, 0, 0, 0, 1 }, //  5 = -2
-    { 0, 0, 0, 1, 0, 0, 0 }, //  6 = -1
-    { 0, 0, 0, 0, 0, 0, 0 }, //  7 =  0
-    { 0, 0, 0, 1, 0, 0, 0 }, //  8 =  1
-    { 0, 0, 1, 0, 0, 0, 1 }, //  9 =  2
-    { 1, 1, 0, 0, 1, 0, 0 }, // 10 =  3
-    { 1, 1, 0, 1, 0, 1, 0 }, // 11 =  4
-    { 1, 1, 1, 0, 1, 0, 1 }, // 12 =  5
-    { 1, 1, 1, 0, 1, 1, 1 }, // 13 =  6
-    { 1, 1, 1, 1, 1, 1, 1 }, // 14 =  7
+    { 1, 1, 1, 1, 1, 1, 1 }, //  0 = -7//  0 = -7
+    { 1, 1, 1, 0, 1, 1, 1 }, //  1 = -6//  1 = -6
+    { 1, 1, 1, 0, 1, 0, 1 }, //  2 = -5//  2 = -5
+    { 1, 1, 0, 1, 0, 1, 0 }, //  3 = -4//  3 = -4
+    { 1, 1, 0, 0, 1, 0, 0 }, //  4 = -3//  4 = -3
+    { 0, 0, 1, 0, 0, 0, 1 }, //  5 = -2//  5 = -2
+    { 0, 0, 0, 1, 0, 0, 0 }, //  6 = -1//  6 = -1
+    { 0, 0, 0, 0, 0, 0, 0 }, //  7 =  0//  7 =  0
+    { 0, 0, 0, 1, 0, 0, 0 }, //  8 =  1//  8 =  1
+    { 0, 0, 1, 0, 0, 0, 1 }, //  9 =  2//  9 =  2
+    { 1, 1, 0, 0, 1, 0, 0 }, // 10 =  3// 10 =  3
+    { 1, 1, 0, 1, 0, 1, 0 }, // 11 =  4// 11 =  4
+    { 1, 1, 1, 0, 1, 0, 1 }, // 12 =  5// 12 =  5
+    { 1, 1, 1, 0, 1, 1, 1 }, // 13 =  6// 13 =  6
+    { 1, 1, 1, 1, 1, 1, 1 }, // 14 =  7// 14 =  7
     { 0 }
 
   #elif STEPPER_PAGE_FORMAT == SP_4x2_256
 
-    { 0, 0, 0 }, // 0
-    { 0, 1, 0 }, // 1
-    { 1, 0, 1 }, // 2
-    { 1, 1, 1 }, // 3
+    { 0, 0, 0 }, // 0// 0
+    { 0, 1, 0 }, // 1// 1
+    { 1, 0, 1 }, // 2// 2
+    { 1, 1, 1 }, // 3// 3
 
   #elif STEPPER_PAGE_FORMAT == SP_4x1_512
 
-    {0} // Uncompressed format, table not used
+    {0} // Uncompressed format, table not used//未压缩格式，未使用表格
 
   #endif
 
 };
 
-#endif // DIRECT_STEPPING
+#endif // DIRECT_STEPPING//直接步进

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -157,10 +158,10 @@ uint32_t TFT_SPI::ReadID(uint16_t Reg) {
 
     for (i = 0; i < 4; i++) {
       #if TFT_MISO_PIN != TFT_MOSI_PIN
-        //if (hspi->Init.Direction == SPI_DIRECTION_2LINES) {
+        //if (hspi->Init.Direction == SPI_DIRECTION_2LINES) {//如果（hspi->Init.Direction==SPI\u方向\u 2line）{
           while ((SPIx.Instance->SR & SPI_FLAG_TXE) != SPI_FLAG_TXE) {}
           SPIx.Instance->DR = 0;
-        //}
+        //}//}
       #endif
       while ((SPIx.Instance->SR & SPI_FLAG_RXNE) != SPI_FLAG_RXNE) {}
       Data = (Data << 8) | SPIx.Instance->DR;
@@ -191,15 +192,15 @@ bool TFT_SPI::isBusy() {
 }
 
 void TFT_SPI::Abort() {
-  // Wait for any running spi
+  // Wait for any running spi//等待任何正在运行的spi
   while ((SPIx.Instance->SR & SPI_FLAG_TXE) != SPI_FLAG_TXE) {}
   while ((SPIx.Instance->SR & SPI_FLAG_BSY) == SPI_FLAG_BSY) {}
-  // First, abort any running dma
+  // First, abort any running dma//首先，中止任何正在运行的dma
   HAL_DMA_Abort(&DMAtx);
-  // DeInit objects
+  // DeInit objects//脱硝物
   HAL_DMA_DeInit(&DMAtx);
   HAL_SPI_DeInit(&SPIx);
-  // Deselect CS
+  // Deselect CS//取消选择CS
   DataTransferEnd();
 }
 
@@ -215,11 +216,11 @@ void TFT_SPI::Transmit(uint16_t Data) {
   while ((SPIx.Instance->SR & SPI_FLAG_BSY) == SPI_FLAG_BSY) {}
 
   if (TFT_MISO_PIN != TFT_MOSI_PIN)
-    __HAL_SPI_CLEAR_OVRFLAG(&SPIx);   // Clear overrun flag in 2 Lines communication mode because received is not read
+    __HAL_SPI_CLEAR_OVRFLAG(&SPIx);   // Clear overrun flag in 2 Lines communication mode because received is not read//在2线通信模式下清除溢出标志，因为未读取接收到的
 }
 
 void TFT_SPI::TransmitDMA(uint32_t MemoryIncrease, uint16_t *Data, uint16_t Count) {
-  // Wait last dma finish, to start another
+  // Wait last dma finish, to start another//等待上一个dma完成，以启动另一个dma
   while (isBusy()) { /* nada */ }
 
   DMAtx.Init.MemInc = MemoryIncrease;
@@ -233,11 +234,11 @@ void TFT_SPI::TransmitDMA(uint32_t MemoryIncrease, uint16_t *Data, uint16_t Coun
   HAL_DMA_Start(&DMAtx, (uint32_t)Data, (uint32_t)&(SPIx.Instance->DR), Count);
   __HAL_SPI_ENABLE(&SPIx);
 
-  SET_BIT(SPIx.Instance->CR2, SPI_CR2_TXDMAEN);   // Enable Tx DMA Request
+  SET_BIT(SPIx.Instance->CR2, SPI_CR2_TXDMAEN);   // Enable Tx DMA Request//启用Tx DMA请求
 
   HAL_DMA_PollForTransfer(&DMAtx, HAL_DMA_FULL_TRANSFER, HAL_MAX_DELAY);
   Abort();
 }
 
-#endif // HAS_SPI_TFT
-#endif // ARDUINO_ARCH_STM32 && !STM32GENERIC
+#endif // HAS_SPI_TFT//有SPI和TFT吗
+#endif // ARDUINO_ARCH_STM32 && !STM32GENERIC//ARDUINO_ARCH_STM32&&！STM32通用

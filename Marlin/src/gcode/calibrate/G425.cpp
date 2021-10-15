@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -61,13 +62,13 @@
  */
 
 #ifndef CALIBRATION_MEASUREMENT_UNKNOWN
-  #define CALIBRATION_MEASUREMENT_UNKNOWN   5.0 // mm
+  #define CALIBRATION_MEASUREMENT_UNKNOWN   5.0 // mm//嗯
 #endif
 #ifndef CALIBRATION_MEASUREMENT_UNCERTAIN
-  #define CALIBRATION_MEASUREMENT_UNCERTAIN 1.0 // mm
+  #define CALIBRATION_MEASUREMENT_UNCERTAIN 1.0 // mm//嗯
 #endif
 #ifndef CALIBRATION_MEASUREMENT_CERTAIN
-  #define CALIBRATION_MEASUREMENT_CERTAIN   0.5 // mm
+  #define CALIBRATION_MEASUREMENT_CERTAIN   0.5 // mm//嗯
 #endif
 
 #if BOTH(CALIBRATION_MEASURE_LEFT, CALIBRATION_MEASURE_RIGHT)
@@ -96,7 +97,7 @@ static constexpr xyz_float_t dimensions CALIBRATION_OBJECT_DIMENSIONS;
 static constexpr xy_float_t nod = { CALIBRATION_NOZZLE_OUTER_DIAMETER, CALIBRATION_NOZZLE_OUTER_DIAMETER };
 
 struct measurements_t {
-  xyz_pos_t obj_center = true_center; // Non-static must be assigned from xyz_pos_t
+  xyz_pos_t obj_center = true_center; // Non-static must be assigned from xyz_pos_t//非静态必须从xyz_pos_t分配
 
   float obj_side[NUM_SIDES], backlash[NUM_SIDES];
   xyz_float_t pos_error;
@@ -127,11 +128,11 @@ inline void calibration_move() {
  *   uncertainty        in     - How far away from the object top to park
  */
 inline void park_above_object(measurements_t &m, const float uncertainty) {
-  // Move to safe distance above calibration object
+  // Move to safe distance above calibration object//移动到校准对象上方的安全距离
   current_position.z = m.obj_center.z + dimensions.z / 2 + uncertainty;
   calibration_move();
 
-  // Move to center of calibration object in XY
+  // Move to center of calibration object in XY//移动到XY中校准对象的中心
   current_position = xy_pos_t(m.obj_center);
   calibration_move();
 }
@@ -206,19 +207,19 @@ float measuring_movement(const AxisEnum axis, const int dir, const bool stop_sta
 inline float measure(const AxisEnum axis, const int dir, const bool stop_state, float * const backlash_ptr, const float uncertainty) {
   const bool fast = uncertainty == CALIBRATION_MEASUREMENT_UNKNOWN;
 
-  // Save the current position of the specified axis
+  // Save the current position of the specified axis//保存指定轴的当前位置
   const float start_pos = current_position[axis];
 
-  // Take a measurement. Only the specified axis will be affected.
+  // Take a measurement. Only the specified axis will be affected.//测量一下。只有指定的轴会受到影响。
   const float measured_pos = measuring_movement(axis, dir, stop_state, fast);
 
-  // Measure backlash
+  // Measure backlash//测量齿隙
   if (backlash_ptr && !fast) {
     const float release_pos = measuring_movement(axis, -dir, !stop_state, fast);
     *backlash_ptr = ABS(release_pos - measured_pos);
   }
 
-  // Move back to the starting position
+  // Move back to the starting position//回到起始位置
   destination = current_position;
   destination[axis] = start_pos;
   do_blocking_move_to((xyz_pos_t)destination, MMM_TO_MMS(CALIBRATION_FEEDRATE_TRAVEL));
@@ -275,7 +276,7 @@ inline void probe_side(measurements_t &m, const float uncertainty, const side_t 
 
   if (probe_top_at_edge) {
     #if AXIS_CAN_CALIBRATE(Z)
-      // Probe top nearest the side we are probing
+      // Probe top nearest the side we are probing//探头顶部离我们要探测的一侧最近
       current_position[axis] = m.obj_center[axis] + (-dir) * (dimensions[axis] / 2 - m.nozzle_outer_dimension[axis]);
       calibration_move();
       m.obj_side[TOP] = measure(Z_AXIS, -1, true, &m.backlash[TOP], uncertainty);
@@ -284,11 +285,11 @@ inline void probe_side(measurements_t &m, const float uncertainty, const side_t 
   }
 
   if ((AXIS_CAN_CALIBRATE(X) && axis == X_AXIS) || (AXIS_CAN_CALIBRATE(Y) && axis == Y_AXIS)) {
-    // Move to safe distance to the side of the calibration object
+    // Move to safe distance to the side of the calibration object//移动到校准对象一侧的安全距离
     current_position[axis] = m.obj_center[axis] + (-dir) * (dimensions[axis] / 2 + m.nozzle_outer_dimension[axis] / 2 + uncertainty);
     calibration_move();
 
-    // Plunge below the side of the calibration object and measure
+    // Plunge below the side of the calibration object and measure//浸入校准对象侧面下方并测量
     current_position.z = m.obj_side[TOP] - (CALIBRATION_NOZZLE_TIP_HEIGHT) * 0.7f;
     calibration_move();
     const float measurement = measure(axis, dir, true, &m.backlash[side], uncertainty);
@@ -307,8 +308,8 @@ inline void probe_sides(measurements_t &m, const float uncertainty) {
   #if ENABLED(CALIBRATION_MEASURE_AT_TOP_EDGES)
     constexpr bool probe_top_at_edge = true;
   #else
-    // Probing at the exact center only works if the center is flat. Probing on a washer
-    // or bolt will require probing the top near the side edges, away from the center.
+    // Probing at the exact center only works if the center is flat. Probing on a washer//只有在中心是平的情况下，才能在精确的中心进行探测。关于洗衣机的探讨
+    // or bolt will require probing the top near the side edges, away from the center.//或者螺栓需要探测靠近侧边的顶部，远离中心。
     constexpr bool probe_top_at_edge = false;
     probe_side(m, uncertainty, TOP);
   #endif
@@ -324,22 +325,22 @@ inline void probe_sides(measurements_t &m, const float uncertainty) {
   TERN_(CALIBRATION_MEASURE_KMIN,  probe_side(m, uncertainty, KMINIMUM, probe_top_at_edge));
   TERN_(CALIBRATION_MEASURE_KMAX,  probe_side(m, uncertainty, KMAXIMUM, probe_top_at_edge));
 
-  // Compute the measured center of the calibration object.
+  // Compute the measured center of the calibration object.//计算校准对象的测量中心。
   TERN_(HAS_X_CENTER, m.obj_center.x = (m.obj_side[LEFT]     + m.obj_side[RIGHT])    / 2);
   TERN_(HAS_Y_CENTER, m.obj_center.y = (m.obj_side[FRONT]    + m.obj_side[BACK])     / 2);
   TERN_(HAS_I_CENTER, m.obj_center.i = (m.obj_side[IMINIMUM] + m.obj_side[IMAXIMUM]) / 2);
   TERN_(HAS_J_CENTER, m.obj_center.j = (m.obj_side[JMINIMUM] + m.obj_side[JMAXIMUM]) / 2);
   TERN_(HAS_K_CENTER, m.obj_center.k = (m.obj_side[KMINIMUM] + m.obj_side[KMAXIMUM]) / 2);
 
-  // Compute the outside diameter of the nozzle at the height
-  // at which it makes contact with the calibration object
+  // Compute the outside diameter of the nozzle at the height//计算高度处喷嘴的外径
+  // at which it makes contact with the calibration object//与校准对象接触的位置
   TERN_(HAS_X_CENTER, m.nozzle_outer_dimension.x = m.obj_side[RIGHT] - m.obj_side[LEFT] - dimensions.x);
   TERN_(HAS_Y_CENTER, m.nozzle_outer_dimension.y = m.obj_side[BACK]  - m.obj_side[FRONT] - dimensions.y);
 
   park_above_object(m, uncertainty);
 
-  // The difference between the known and the measured location
-  // of the calibration object is the positional error
+  // The difference between the known and the measured location//已知位置和测量位置之间的差异
+  // of the calibration object is the positional error//校准对象的最大误差是位置误差
   LINEAR_AXIS_CODE(
     m.pos_error.x = TERN0(HAS_X_CENTER, true_center.x - m.obj_center.x),
     m.pos_error.y = TERN0(HAS_Y_CENTER, true_center.y - m.obj_center.y),
@@ -504,16 +505,16 @@ inline void probe_sides(measurements_t &m, const float uncertainty) {
   }
 
   #if HAS_HOTEND_OFFSET
-    //
-    // This function requires normalize_hotend_offsets() to be called
-    //
+    ////
+    // This function requires normalize_hotend_offsets() to be called//此函数需要调用normalize_hotend_offset（）
+    ////
     inline void report_hotend_offsets() {
       LOOP_S_L_N(e, 1, HOTENDS)
         SERIAL_ECHOLNPAIR_P(PSTR("T"), e, PSTR(" Hotend Offset X"), hotend_offset[e].x, SP_Y_STR, hotend_offset[e].y, SP_Z_STR, hotend_offset[e].z);
     }
   #endif
 
-#endif // CALIBRATION_REPORTING
+#endif // CALIBRATION_REPORTING//校准报告
 
 /**
  * Probe around the calibration object to measure backlash
@@ -522,10 +523,10 @@ inline void probe_sides(measurements_t &m, const float uncertainty) {
  *   uncertainty    in     - How far away from the object to begin probing
  */
 inline void calibrate_backlash(measurements_t &m, const float uncertainty) {
-  // Backlash compensation should be off while measuring backlash
+  // Backlash compensation should be off while measuring backlash//测量齿隙时，应关闭齿隙补偿
 
   {
-    // New scope for TEMPORARY_BACKLASH_CORRECTION
+    // New scope for TEMPORARY_BACKLASH_CORRECTION//新的临时纠正范围
     TEMPORARY_BACKLASH_CORRECTION(all_off);
     TEMPORARY_BACKLASH_SMOOTHING(0.0f);
 
@@ -575,14 +576,14 @@ inline void calibrate_backlash(measurements_t &m, const float uncertainty) {
         backlash.distance_mm.k = m.backlash[KMAXIMUM];
       #endif
 
-    #endif // BACKLASH_GCODE
+    #endif // BACKLASH_GCODE//齿隙代码
   }
 
   #if ENABLED(BACKLASH_GCODE)
-    // Turn on backlash compensation and move in all
-    // allowed directions to take up any backlash
+    // Turn on backlash compensation and move in all//启用齿隙补偿并全部移动
+    // allowed directions to take up any backlash//允许方向承受任何齿隙
     {
-      // New scope for TEMPORARY_BACKLASH_CORRECTION
+      // New scope for TEMPORARY_BACKLASH_CORRECTION//新的临时纠正范围
       TEMPORARY_BACKLASH_CORRECTION(all_on);
       TEMPORARY_BACKLASH_SMOOTHING(0.0f);
       const xyz_float_t move = LINEAR_AXIS_ARRAY(
@@ -620,7 +621,7 @@ inline void calibrate_toolhead(measurements_t &m, const float uncertainty, const
 
   probe_sides(m, uncertainty);
 
-  // Adjust the hotend offset
+  // Adjust the hotend offset//调整热端偏移
   #if HAS_HOTEND_OFFSET
     if (ENABLED(HAS_X_CENTER) && AXIS_CAN_CALIBRATE(X)) hotend_offset[extruder].x += m.pos_error.x;
     if (ENABLED(HAS_Y_CENTER) && AXIS_CAN_CALIBRATE(Y)) hotend_offset[extruder].y += m.pos_error.y;
@@ -628,8 +629,8 @@ inline void calibrate_toolhead(measurements_t &m, const float uncertainty, const
     normalize_hotend_offsets();
   #endif
 
-  // Correct for positional error, so the object
-  // is at the known actual spot
+  // Correct for positional error, so the object//纠正位置错误，使对象
+  // is at the known actual spot//在已知的实际地点
   planner.synchronize();
   if (ENABLED(HAS_X_CENTER) && AXIS_CAN_CALIBRATE(X)) update_measurements(m, X_AXIS);
   if (ENABLED(HAS_Y_CENTER) && AXIS_CAN_CALIBRATE(Y)) update_measurements(m, Y_AXIS);
@@ -679,21 +680,21 @@ inline void calibrate_all() {
   TEMPORARY_BACKLASH_CORRECTION(all_on);
   TEMPORARY_BACKLASH_SMOOTHING(0.0f);
 
-  // Do a fast and rough calibration of the toolheads
+  // Do a fast and rough calibration of the toolheads//对工具头进行快速粗略校准
   calibrate_all_toolheads(m, CALIBRATION_MEASUREMENT_UNKNOWN);
 
   TERN_(BACKLASH_GCODE, calibrate_backlash(m, CALIBRATION_MEASUREMENT_UNCERTAIN));
 
-  // Cycle the toolheads so the servos settle into their "natural" positions
+  // Cycle the toolheads so the servos settle into their "natural" positions//循环工具头，使伺服装置进入其“自然”位置
   #if HAS_MULTI_HOTEND
     HOTEND_LOOP() set_nozzle(m, e);
   #endif
 
-  // Do a slow and precise calibration of the toolheads
+  // Do a slow and precise calibration of the toolheads//对工具头进行缓慢而精确的校准
   calibrate_all_toolheads(m, CALIBRATION_MEASUREMENT_UNCERTAIN);
 
   current_position.x = X_CENTER;
-  calibration_move();         // Park nozzle away from calibration object
+  calibration_move();         // Park nozzle away from calibration object//将喷嘴停在远离校准对象的位置
 }
 
 /**
@@ -749,4 +750,4 @@ void GcodeSuite::G425() {
   #endif
 }
 
-#endif // CALIBRATION_GCODE
+#endif // CALIBRATION_GCODE//校准码

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -55,18 +56,18 @@ struct vector_3 {
   vector_3(const xyze_float_t &in) { x = in.x; TERN_(HAS_Y_AXIS, y = in.y); TERN_(HAS_Z_AXIS, z = in.z); }
   vector_3() { x = y = z = 0; }
 
-  // Factory method
+  // Factory method//工厂法
   static vector_3 cross(const vector_3 &a, const vector_3 &b);
 
-  // Modifiers
+  // Modifiers//修饰语
   void normalize();
   void apply_rotation(const matrix_3x3 &matrix);
 
-  // Accessors
+  // Accessors//访问者
   float magnitude() const;
   vector_3 get_normal() const;
 
-  // Operators
+  // Operators//操作员
         float& operator[](const int n)       { return pos[n]; }
   const float& operator[](const int n) const { return pos[n]; }
 
@@ -84,7 +85,7 @@ struct vector_3 {
 struct matrix_3x3 {
   vector_3 vectors[3];
 
-  // Factory methods
+  // Factory methods//工厂方法
   static matrix_3x3 create_from_rows(const vector_3 &row_0, const vector_3 &row_1, const vector_3 &row_2);
   static matrix_3x3 create_look_at(const vector_3 &target);
   static matrix_3x3 transpose(const matrix_3x3 &original);

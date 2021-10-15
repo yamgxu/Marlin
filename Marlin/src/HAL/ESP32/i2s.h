@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -23,7 +24,7 @@
 
 #include <stdint.h>
 
-// current value of the outputs provided over i2s
+// current value of the outputs provided over i2s//i2s上提供的输出电流值
 extern uint32_t i2s_port_data;
 
 int i2s_init();

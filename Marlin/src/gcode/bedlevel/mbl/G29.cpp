@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -42,7 +43,7 @@
   #include "../../../lcd/extui/ui_api.h"
 #endif
 
-// Save 130 bytes with non-duplication of PSTR
+// Save 130 bytes with non-duplication of PSTR//使用不重复的PSTR保存130字节
 inline void echo_not_entered(const char c) { SERIAL_CHAR(c); SERIAL_ECHOLNPGM(" not entered."); }
 
 /**
@@ -98,9 +99,9 @@ void GcodeSuite::G29() {
         SERIAL_ECHOLNPGM("Start mesh probing with \"G29 S1\" first.");
         return;
       }
-      // For each G29 S2...
+      // For each G29 S2...//对于每个G29 S2。。。
       if (mbl_probe_index == 0) {
-        // Move close to the bed before the first point
+        // Move close to the bed before the first point//在第一个点之前靠近床移动
         do_blocking_move_to_z(0.4f
           #ifdef MANUAL_PROBE_START_Z
             + (MANUAL_PROBE_START_Z) - 0.4f
@@ -108,21 +109,21 @@ void GcodeSuite::G29() {
         );
       }
       else {
-        // Save Z for the previous mesh position
+        // Save Z for the previous mesh position//为上一个网格位置保存Z
         mbl.set_zigzag_z(mbl_probe_index - 1, current_position.z);
         TERN_(EXTENSIBLE_UI, ExtUI::onMeshUpdate(ix, iy, current_position.z));
         SET_SOFT_ENDSTOP_LOOSE(false);
       }
-      // If there's another point to sample, move there with optional lift.
+      // If there's another point to sample, move there with optional lift.//如果还有另一个采样点，则使用可选提升装置移动到该点。
       if (mbl_probe_index < (GRID_MAX_POINTS)) {
-        // Disable software endstops to allow manual adjustment
-        // If G29 is left hanging without completion they won't be re-enabled!
+        // Disable software endstops to allow manual adjustment//禁用软件止动块以允许手动调整
+        // If G29 is left hanging without completion they won't be re-enabled!//如果G29未完成就挂起，它们将不会重新启用！
         SET_SOFT_ENDSTOP_LOOSE(true);
         mbl.zigzag(mbl_probe_index++, ix, iy);
         _manual_goto_xy({ mbl.index_to_xpos[ix], mbl.index_to_ypos[iy] });
       }
       else {
-        // Move to the after probing position
+        // Move to the after probing position//移动到后探测位置
         current_position.z = (
           #ifdef Z_AFTER_PROBING
             Z_AFTER_PROBING
@@ -133,7 +134,7 @@ void GcodeSuite::G29() {
         line_to_current_position();
         planner.synchronize();
 
-        // After recording the last point, activate home and activate
+        // After recording the last point, activate home and activate//记录最后一点后，激活主页并激活
         mbl_probe_index = -1;
         SERIAL_ECHOLNPGM("Mesh probing done.");
         TERN_(HAS_STATUS_MESSAGE, ui.set_status(GET_TEXT(MSG_MESH_DONE)));
@@ -193,7 +194,7 @@ void GcodeSuite::G29() {
       reset_bed_level();
       break;
 
-  } // switch(state)
+  } // switch(state)//开关（状态）
 
   if (state == MeshNext) {
     SERIAL_ECHOLNPAIR("MBL G29 point ", _MIN(mbl_probe_index, GRID_MAX_POINTS), " of ", GRID_MAX_POINTS);
@@ -205,4 +206,4 @@ void GcodeSuite::G29() {
   TERN_(FULL_REPORT_TO_HOST_FEATURE, set_and_report_grblstate(M_IDLE));
 }
 
-#endif // MESH_BED_LEVELING
+#endif // MESH_BED_LEVELING//网床找平

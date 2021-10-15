@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -32,8 +33,8 @@
    * M7: Mist Coolant On
    */
   void GcodeSuite::M7() {
-    planner.synchronize();                            // Wait for move to arrive
-    WRITE(COOLANT_MIST_PIN, !(COOLANT_MIST_INVERT));  // Turn on Mist coolant
+    planner.synchronize();                            // Wait for move to arrive//等待移动的到来
+    WRITE(COOLANT_MIST_PIN, !(COOLANT_MIST_INVERT));  // Turn on Mist coolant//打开喷雾冷却液
   }
 #endif
 
@@ -47,12 +48,12 @@
    * M8: Flood Coolant / Air Assist ON
    */
   void GcodeSuite::M8() {
-    planner.synchronize();                            // Wait for move to arrive
+    planner.synchronize();                            // Wait for move to arrive//等待移动的到来
     #if ENABLED(COOLANT_FLOOD)
-      WRITE(COOLANT_FLOOD_PIN, !(COOLANT_FLOOD_INVERT)); // Turn on Flood coolant
+      WRITE(COOLANT_FLOOD_PIN, !(COOLANT_FLOOD_INVERT)); // Turn on Flood coolant//打开溢流冷却液
     #endif
     #if ENABLED(AIR_ASSIST)
-      cutter.air_assist_enable();                     // Turn on Air Assist
+      cutter.air_assist_enable();                     // Turn on Air Assist//打开空气辅助
     #endif
   }
 
@@ -62,16 +63,16 @@
  * M9: Coolant / Air Assist OFF
  */
 void GcodeSuite::M9() {
-  planner.synchronize();                              // Wait for move to arrive
+  planner.synchronize();                              // Wait for move to arrive//等待移动的到来
   #if ENABLED(COOLANT_MIST)
-    WRITE(COOLANT_MIST_PIN, COOLANT_MIST_INVERT);     // Turn off Mist coolant
+    WRITE(COOLANT_MIST_PIN, COOLANT_MIST_INVERT);     // Turn off Mist coolant//关闭喷雾冷却液
   #endif
   #if ENABLED(COOLANT_FLOOD)
-    WRITE(COOLANT_FLOOD_PIN, COOLANT_FLOOD_INVERT);   // Turn off Flood coolant
+    WRITE(COOLANT_FLOOD_PIN, COOLANT_FLOOD_INVERT);   // Turn off Flood coolant//关闭溢流冷却液
   #endif
   #if ENABLED(AIR_ASSIST)
-    cutter.air_assist_disable();                      // Turn off Air Assist
+    cutter.air_assist_disable();                      // Turn off Air Assist//关闭空气辅助
   #endif
 }
 
-#endif // COOLANT_MIST | COOLANT_FLOOD | AIR_ASSIST
+#endif // COOLANT_MIST | COOLANT_FLOOD | AIR_ASSIST//冷却液雾|冷却液泛洪|空气辅助

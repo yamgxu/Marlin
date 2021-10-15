@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -26,7 +27,7 @@
 #include "draw_ui.h"
 #include <lv_conf.h>
 
-#include "../../../MarlinCore.h" // for marlin_state
+#include "../../../MarlinCore.h" // for marlin_state//马林州
 #include "../../../module/temperature.h"
 #include "../../../module/motion.h"
 #include "../../../sd/cardreader.h"
@@ -67,7 +68,7 @@ enum {
   ID_FAN
 };
 
-bool once_flag; // = false
+bool once_flag; // = false//=错误
 extern bool flash_preview_begin, default_preview_flg, gcode_preview_over;
 extern uint32_t To_pre_view;
 
@@ -138,7 +139,7 @@ void lv_draw_printing() {
   ZERO(disp_state_stack._disp_state);
   scr = lv_screen_create(PRINTING_UI);
 
-  // Create image buttons
+  // Create image buttons//创建图像按钮
   buttonExt1 = lv_imgbtn_create(scr, "F:/bmp_ext1_state.bin", 206, 136, event_handler, ID_TEMP_EXT);
 
   #if HAS_MULTI_EXTRUDER
@@ -321,4 +322,4 @@ void lv_clear_printing() {
   lv_obj_del(scr);
 }
 
-#endif // HAS_TFT_LVGL_UI
+#endif // HAS_TFT_LVGL_UI//有TFT\U LVGL\U用户界面

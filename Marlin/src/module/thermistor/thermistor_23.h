@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -20,7 +21,7 @@
  *
  */
 
-// 100k hotbed thermistor with 4.7k pull up to 3.3v and 220R to analog input as in GTM32 Pro vB
+// 100k hotbed thermistor with 4.7k pull up to 3.3v and 220R to analog input as in GTM32 Pro vB//100k温床热敏电阻，4.7k上拉至3.3v，220R至GTM32 Pro vB中的模拟输入
 constexpr temp_entry_t temptable_23[] PROGMEM = {
   { OV(   1), 938 },
   { OV(  11), 423 },

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -84,12 +85,12 @@ void GcodeSuite::M3_M4(const bool is_M4) {
 
   #if ENABLED(LASER_POWER_INLINE)
     if (parser.seen('I') == DISABLED(LASER_POWER_INLINE_INVERT)) {
-      // Laser power in inline mode
-      cutter.inline_direction(is_M4); // Should always be unused
+      // Laser power in inline mode//在线模式下的激光功率
+      cutter.inline_direction(is_M4); // Should always be unused//应该一直不用
       #if ENABLED(SPINDLE_LASER_PWM)
         if (parser.seen('O')) {
           cutter.unitPower = cutter.power_to_range(parser.value_byte(), 0);
-          cutter.inline_ocr_power(cutter.unitPower); // The OCR is a value from 0 to 255 (uint8_t)
+          cutter.inline_ocr_power(cutter.unitPower); // The OCR is a value from 0 to 255 (uint8_t)//OCR是一个从0到255（uint8\t）的值
         }
         else
           cutter.inline_power(cutter.upower_to_ocr(get_s_power()));
@@ -98,17 +99,17 @@ void GcodeSuite::M3_M4(const bool is_M4) {
       #endif
       return;
     }
-    // Non-inline, standard case
-    cutter.inline_disable(); // Prevent future blocks re-setting the power
+    // Non-inline, standard case//非内联，标准案例
+    cutter.inline_disable(); // Prevent future blocks re-setting the power//防止将来的块重新设置电源
   #endif
 
-  planner.synchronize();   // Wait for previous movement commands (G0/G0/G2/G3) to complete before changing power
+  planner.synchronize();   // Wait for previous movement commands (G0/G0/G2/G3) to complete before changing power//在更改电源之前，等待先前的移动命令（G0/G0/G2/G3）完成
   cutter.set_reverse(is_M4);
 
   #if ENABLED(SPINDLE_LASER_PWM)
     if (parser.seenval('O')) {
       cutter.unitPower = cutter.power_to_range(parser.value_byte(), 0);
-      cutter.set_ocr_power(cutter.unitPower); // The OCR is a value from 0 to 255 (uint8_t)
+      cutter.set_ocr_power(cutter.unitPower); // The OCR is a value from 0 to 255 (uint8_t)//OCR是一个从0到255（uint8\t）的值
     }
     else
       cutter.set_power(cutter.upower_to_ocr(get_s_power()));
@@ -126,15 +127,15 @@ void GcodeSuite::M3_M4(const bool is_M4) {
 void GcodeSuite::M5() {
   #if ENABLED(LASER_POWER_INLINE)
     if (parser.seen('I') == DISABLED(LASER_POWER_INLINE_INVERT)) {
-      cutter.set_inline_enabled(false); // Laser power in inline mode
+      cutter.set_inline_enabled(false); // Laser power in inline mode//在线模式下的激光功率
       return;
     }
-    // Non-inline, standard case
-    cutter.inline_disable(); // Prevent future blocks re-setting the power
+    // Non-inline, standard case//非内联，标准案例
+    cutter.inline_disable(); // Prevent future blocks re-setting the power//防止将来的块重新设置电源
   #endif
   planner.synchronize();
   cutter.set_enabled(false);
   cutter.menuPower = cutter.unitPower;
 }
 
-#endif // HAS_CUTTER
+#endif // HAS_CUTTER//切割器

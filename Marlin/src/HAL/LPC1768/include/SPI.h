@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -27,7 +28,7 @@
 #include <lpc17xx_ssp.h>
 #include <lpc17xx_gpdma.h>
 
-//#define MSBFIRST 1
+//#define MSBFIRST 1//#定义第一个1
 
 #define SPI_MODE0 0
 #define SPI_MODE1 1
@@ -38,24 +39,24 @@
 #define DATA_SIZE_16BIT SSP_DATABIT_16
 
 #define SPI_CLOCK_MAX_TFT  30000000UL
-#define SPI_CLOCK_DIV2     8333333 //(SCR:  2)  desired: 8,000,000  actual: 8,333,333  +4.2%  SPI_FULL_SPEED
-#define SPI_CLOCK_DIV4     4166667 //(SCR:  5)  desired: 4,000,000  actual: 4,166,667  +4.2%  SPI_HALF_SPEED
-#define SPI_CLOCK_DIV8     2083333 //(SCR: 11)  desired: 2,000,000  actual: 2,083,333  +4.2%  SPI_QUARTER_SPEED
-#define SPI_CLOCK_DIV16    1000000 //(SCR: 24)  desired: 1,000,000  actual: 1,000,000         SPI_EIGHTH_SPEED
-#define SPI_CLOCK_DIV32     500000 //(SCR: 49)  desired:   500,000  actual:   500,000         SPI_SPEED_5
-#define SPI_CLOCK_DIV64     250000 //(SCR: 99)  desired:   250,000  actual:   250,000         SPI_SPEED_6
-#define SPI_CLOCK_DIV128    125000 //(SCR:199)  desired:   125,000  actual:   125,000         Default from HAL.h
+#define SPI_CLOCK_DIV2     8333333 //(SCR:  2)  desired: 8,000,000  actual: 8,333,333  +4.2%  SPI_FULL_SPEED//（SCR:2）期望值：8000000实际值：8333333+4.2%SPI_全速
+#define SPI_CLOCK_DIV4     4166667 //(SCR:  5)  desired: 4,000,000  actual: 4,166,667  +4.2%  SPI_HALF_SPEED//（SCR:5）期望值：4000000实际值：4166667+4.2%SPI_半速
+#define SPI_CLOCK_DIV8     2083333 //(SCR: 11)  desired: 2,000,000  actual: 2,083,333  +4.2%  SPI_QUARTER_SPEED//（SCR:11）期望值：2000000实际值：2083333+4.2%SPI\U四分之一速度
+#define SPI_CLOCK_DIV16    1000000 //(SCR: 24)  desired: 1,000,000  actual: 1,000,000         SPI_EIGHTH_SPEED//（SCR:24）期望：1000000实际：1000000 SPI\U第八速度
+#define SPI_CLOCK_DIV32     500000 //(SCR: 49)  desired:   500,000  actual:   500,000         SPI_SPEED_5//（SCR:49）期望值：500000实际值：500000 SPI_速度_5
+#define SPI_CLOCK_DIV64     250000 //(SCR: 99)  desired:   250,000  actual:   250,000         SPI_SPEED_6//（SCR:99）期望值：250000实际值：250000 SPI_速度6
+#define SPI_CLOCK_DIV128    125000 //(SCR:199)  desired:   125,000  actual:   125,000         Default from HAL.h//（SCR:199）期望值：125000实际值：125000 HAL.h默认值
 
 #define SPI_CLOCK_MAX SPI_CLOCK_DIV2
 
 #define BOARD_NR_SPI 2
 
-//#define BOARD_SPI1_NSS_PIN      PA4 ?!
+//#define BOARD_SPI1_NSS_PIN      PA4 ?!//#定义线路板\u SPI1\u NSS\u引脚PA4？！
 #define BOARD_SPI1_SCK_PIN      P0_15
 #define BOARD_SPI1_MISO_PIN     P0_17
 #define BOARD_SPI1_MOSI_PIN     P0_18
 
-//#define BOARD_SPI2_NSS_PIN      PB12 ?!
+//#define BOARD_SPI2_NSS_PIN      PB12 ?!//#定义电路板SPI2 NSS引脚PB12？！
 #define BOARD_SPI2_SCK_PIN      P0_07
 #define BOARD_SPI2_MISO_PIN     P0_08
 #define BOARD_SPI2_MOSI_PIN     P0_09
@@ -75,17 +76,17 @@ public:
     init_AlwaysInline(4000000, MSBFIRST, SPI_MODE0, DATA_SIZE_8BIT);
   }
 
-  //uint32_t spiRate() const { return spi_speed; }
+  //uint32_t spiRate() const { return spi_speed; }//uint32_t spiRate（）常量{return spi_speed；}
 
   static inline uint32_t spiRate2Clock(uint32_t spiRate) {
-    uint32_t Marlin_speed[7]; // CPSR is always 2
-    Marlin_speed[0] = 8333333; //(SCR:  2)  desired: 8,000,000  actual: 8,333,333  +4.2%  SPI_FULL_SPEED
-    Marlin_speed[1] = 4166667; //(SCR:  5)  desired: 4,000,000  actual: 4,166,667  +4.2%  SPI_HALF_SPEED
-    Marlin_speed[2] = 2083333; //(SCR: 11)  desired: 2,000,000  actual: 2,083,333  +4.2%  SPI_QUARTER_SPEED
-    Marlin_speed[3] = 1000000; //(SCR: 24)  desired: 1,000,000  actual: 1,000,000         SPI_EIGHTH_SPEED
-    Marlin_speed[4] =  500000; //(SCR: 49)  desired:   500,000  actual:   500,000         SPI_SPEED_5
-    Marlin_speed[5] =  250000; //(SCR: 99)  desired:   250,000  actual:   250,000         SPI_SPEED_6
-    Marlin_speed[6] =  125000; //(SCR:199)  desired:   125,000  actual:   125,000         Default from HAL.h
+    uint32_t Marlin_speed[7]; // CPSR is always 2//CPSR始终为2
+    Marlin_speed[0] = 8333333; //(SCR:  2)  desired: 8,000,000  actual: 8,333,333  +4.2%  SPI_FULL_SPEED//（SCR:2）期望值：8000000实际值：8333333+4.2%SPI_全速
+    Marlin_speed[1] = 4166667; //(SCR:  5)  desired: 4,000,000  actual: 4,166,667  +4.2%  SPI_HALF_SPEED//（SCR:5）期望值：4000000实际值：4166667+4.2%SPI_半速
+    Marlin_speed[2] = 2083333; //(SCR: 11)  desired: 2,000,000  actual: 2,083,333  +4.2%  SPI_QUARTER_SPEED//（SCR:11）期望值：2000000实际值：2083333+4.2%SPI\U四分之一速度
+    Marlin_speed[3] = 1000000; //(SCR: 24)  desired: 1,000,000  actual: 1,000,000         SPI_EIGHTH_SPEED//（SCR:24）期望：1000000实际：1000000 SPI\U第八速度
+    Marlin_speed[4] =  500000; //(SCR: 49)  desired:   500,000  actual:   500,000         SPI_SPEED_5//（SCR:49）期望值：500000实际值：500000 SPI_速度_5
+    Marlin_speed[5] =  250000; //(SCR: 99)  desired:   250,000  actual:   250,000         SPI_SPEED_6//（SCR:99）期望值：250000实际值：250000 SPI_速度6
+    Marlin_speed[6] =  125000; //(SCR:199)  desired:   125,000  actual:   125,000         Default from HAL.h//（SCR:199）期望值：125000实际值：125000 HAL.h默认值
     return Marlin_speed[spiRate > 6 ? 6 : spiRate];
   }
 
@@ -100,10 +101,10 @@ private:
     dataSize = inDataSize;
   }
 
-  //uint32_t spi_speed;
+  //uint32_t spi_speed;//uint32速度；
   uint32_t clock;
   uint32_t dataSize;
-  //uint32_t clockDivider;
+  //uint32_t clockDivider;//uint32_t时钟分频器；
   uint8_t bitOrder;
   uint8_t dataMode;
   LPC_SSP_TypeDef *spi_d;
@@ -144,9 +145,9 @@ public:
   void beginTransaction(const SPISettings&);
   void endTransaction() {}
 
-  // Transfer using 1 "Data Size"
+  // Transfer using 1 "Data Size"//使用1“数据大小”进行传输
   uint8_t transfer(uint16_t data);
-  // Transfer 2 bytes in 8 bit mode
+  // Transfer 2 bytes in 8 bit mode//以8位模式传输2个字节
   uint16_t transfer16(uint16_t data);
 
   void send(uint8_t data);

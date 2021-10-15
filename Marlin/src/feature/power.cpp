@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -71,7 +72,7 @@ bool Power::is_power_needed() {
   if (TERN0(AUTO_POWER_COOLER_FAN, thermalManager.coolerfan_speed))
     return true;
 
-  // If any of the drivers or the bed are enabled...
+  // If any of the drivers or the bed are enabled...//如果任何驱动程序或床已启用。。。
   if (X_ENABLE_READ() == X_ENABLE_ON || Y_ENABLE_READ() == Y_ENABLE_ON || Z_ENABLE_READ() == Z_ENABLE_ON
     #if HAS_X2_ENABLE
       || X2_ENABLE_READ() == X_ENABLE_ON
@@ -164,10 +165,10 @@ void Power::power_off() {
 void Power::power_off_soon() {
   #if POWER_OFF_DELAY
     lastPowerOn = millis() - SEC_TO_MS(POWER_TIMEOUT) + SEC_TO_MS(POWER_OFF_DELAY);
-    //if (!lastPowerOn) ++lastPowerOn;
+    //if (!lastPowerOn) ++lastPowerOn;//如果（！lastpowron）+lastpowron；
   #else
     power_off();
   #endif
 }
 
-#endif // AUTO_POWER_CONTROL
+#endif // AUTO_POWER_CONTROL//自动电源控制

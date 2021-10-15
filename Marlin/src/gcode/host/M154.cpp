@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2021 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -37,4 +38,4 @@ void GcodeSuite::M154() {
 
 }
 
-#endif // AUTO_REPORT_POSITION
+#endif // AUTO_REPORT_POSITION//自动报告位置

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -33,11 +34,11 @@
 bool spiffs_initialized;
 
 void spiffs_init() {
- // if (SPIFFS.begin(true))  // formatOnFail = true
- //   spiffs_initialized = true;
- // else
- //   SERIAL_ERROR_MSG("SPIFFS mount failed");
+ // if (SPIFFS.begin(true))  // formatOnFail = true//if（SPIFFS.begin（true））//formatOnFail=true
+ //   spiffs_initialized = true;//spiffs_initialized=true；
+ // else//否则
+ //   SERIAL_ERROR_MSG("SPIFFS mount failed");//串行错误消息（“SPIFFS安装失败”）；
 }
 
-#endif // WIFISUPPORT && WEBSUPPORT
-#endif // ARDUINO_ARCH_ESP32
+#endif // WIFISUPPORT && WEBSUPPORT//WIFISUPPORT&&WEBSUPPORT
+#endif // ARDUINO_ARCH_ESP32//ARDUINO_ARCH_ESP32

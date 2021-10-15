@@ -1,3 +1,4 @@
+/** translatione by yx */
 /********************
  * sound_player.cpp *
  ********************/
@@ -24,7 +25,7 @@
 #if ENABLED(FTDI_EXTENDED)
 
 namespace FTDI {
-  SoundPlayer sound; // Global sound player object
+  SoundPlayer sound; // Global sound player object//全局声音播放器对象
 
   void SoundPlayer::set_volume(uint8_t vol) {
     CLCD::mem_write_8(REG::VOL_SOUND, vol);
@@ -40,7 +41,7 @@ namespace FTDI {
       SERIAL_ECHO_MSG("Playing note ", note, ", instrument ", effect);
     #endif
 
-    // Play the note
+    // Play the note//演奏音符
     CLCD::mem_write_16(REG::SOUND, (note == REST) ? 0 : (((note ? note : NOTE_C4) << 8) | effect));
     CLCD::mem_write_8(REG::PLAY, 1);
   }
@@ -50,13 +51,13 @@ namespace FTDI {
     return note_t(NOTE_A4 + (log(frequency_hz)-log(f0))*12/log(2) + 0.5);
   }
 
-  // Plays a tone of a given frequency and duration. Since the FTDI FT810 only
-  // supports MIDI notes, we round down to the nearest note.
+  // Plays a tone of a given frequency and duration. Since the FTDI FT810 only//播放给定频率和持续时间的音调。因为只有FTDI FT810
+  // supports MIDI notes, we round down to the nearest note.//支持MIDI音符，我们四舍五入到最近的音符。
 
   void SoundPlayer::play_tone(const uint16_t frequency_hz, const uint16_t duration_ms) {
     play(ORGAN, frequency_to_midi_note(frequency_hz));
 
-    // Schedule silence to squelch the note after the duration expires.
+    // Schedule silence to squelch the note after the duration expires.//安排静默以在持续时间到期后压制音符。
     sequence = silence;
     wait = duration_ms;
     timer.start();
@@ -64,12 +65,12 @@ namespace FTDI {
 
   void SoundPlayer::play(const sound_t *seq, play_mode_t mode) {
     sequence = seq;
-    wait     = 250; // Adding this delay causes the note to not be clipped, not sure why.
+    wait     = 250; // Adding this delay causes the note to not be clipped, not sure why.//添加此延迟会导致便笺不被剪裁，不确定原因。
     timer.start();
 
     if (mode == PLAY_ASYNCHRONOUS) return;
 
-    // If playing synchronously, then play all the notes here
+    // If playing synchronously, then play all the notes here//如果同步播放，则在此处播放所有音符
 
     while (has_more_notes()) {
       onIdle();
@@ -103,6 +104,6 @@ namespace FTDI {
       }
     }
   }
-} // namespace FTDI
+} // namespace FTDI//名称空间FTDI
 
-#endif // FTDI_EXTENDED
+#endif // FTDI_EXTENDED//FTDI_扩展

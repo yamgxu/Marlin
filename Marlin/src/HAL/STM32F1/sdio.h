@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  *
@@ -21,14 +22,14 @@
  */
 #pragma once
 
-#include "../../inc/MarlinConfig.h" // Allow pins/pins.h to override SDIO clock / retries
+#include "../../inc/MarlinConfig.h" // Allow pins/pins.h to override SDIO clock / retries//允许引脚/引脚.h覆盖SDIO时钟/重试
 
 #include <libmaple/sdio.h>
 #include <libmaple/dma.h>
 
-// ------------------------
-// Defines
-// ------------------------
+// ------------------------// ------------------------
+// Defines//定义
+// ------------------------// ------------------------
 
 #define SDMMC_CMD_GO_IDLE_STATE                       ((uint8_t)0)   /* Resets the SD memory card. */
 #define SDMMC_CMD_ALL_SEND_CID                        ((uint8_t)2)   /* Asks any card connected to the host to send the CID numbers on the CMD line. */
@@ -108,24 +109,24 @@
   #define SDIO_READ_RETRIES                  3
 #endif
 
-// ------------------------
-// Types
-// ------------------------
+// ------------------------// ------------------------
+// Types//类型
+// ------------------------// ------------------------
 
 typedef struct {
-  uint32_t CardType;      // Card Type
-  uint32_t CardVersion;   // Card version
-  uint32_t Class;         // Class of the card class
-  uint32_t RelCardAdd;    // Relative Card Address
-  uint32_t BlockNbr;      // Card Capacity in blocks
-  uint32_t BlockSize;     // One block size in bytes
-  uint32_t LogBlockNbr;   // Card logical Capacity in blocks
-  uint32_t LogBlockSize;  // Logical block size in bytes
+  uint32_t CardType;      // Card Type//卡片类型
+  uint32_t CardVersion;   // Card version//卡片版本
+  uint32_t Class;         // Class of the card class//卡片类的类
+  uint32_t RelCardAdd;    // Relative Card Address//相对卡地址
+  uint32_t BlockNbr;      // Card Capacity in blocks//以块为单位的卡容量
+  uint32_t BlockSize;     // One block size in bytes//一个块大小（字节）
+  uint32_t LogBlockNbr;   // Card logical Capacity in blocks//以块为单位的卡逻辑容量
+  uint32_t LogBlockSize;  // Logical block size in bytes//逻辑块大小（字节）
 } SDIO_CardInfoTypeDef;
 
-// ------------------------
-// Public functions
-// ------------------------
+// ------------------------// ------------------------
+// Public functions//公共职能
+// ------------------------// ------------------------
 
 inline uint32_t SDIO_GetCardState();
 

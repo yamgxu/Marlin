@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -83,20 +84,20 @@ void Marlin_NeoPixel::set_color_startup(const uint32_t color) {
 }
 
 void Marlin_NeoPixel::init() {
-  neoindex = -1;                       // -1 .. NEOPIXEL_PIXELS-1 range
-  set_brightness(NEOPIXEL_BRIGHTNESS); //  0 .. 255 range
+  neoindex = -1;                       // -1 .. NEOPIXEL_PIXELS-1 range// -1 .. Neopix_像素-1范围
+  set_brightness(NEOPIXEL_BRIGHTNESS); //  0 .. 255 range//  0 .. 255范围
   begin();
-  show();  // initialize to all off
+  show();  // initialize to all off//初始化为全部关闭
 
   #if ENABLED(NEOPIXEL_STARTUP_TEST)
-    set_color_startup(adaneo1.Color(255, 0, 0, 0));  // red
+    set_color_startup(adaneo1.Color(255, 0, 0, 0));  // red//红色的
     safe_delay(500);
-    set_color_startup(adaneo1.Color(0, 255, 0, 0));  // green
+    set_color_startup(adaneo1.Color(0, 255, 0, 0));  // green//绿色的
     safe_delay(500);
-    set_color_startup(adaneo1.Color(0, 0, 255, 0));  // blue
+    set_color_startup(adaneo1.Color(0, 0, 255, 0));  // blue//蓝色的
     safe_delay(500);
     #if HAS_WHITE_LED
-      set_color_startup(adaneo1.Color(0, 0, 0, 255));  // white
+      set_color_startup(adaneo1.Color(0, 0, 0, 255));  // white//白色的
       safe_delay(500);
     #endif
   #endif
@@ -138,20 +139,20 @@ void Marlin_NeoPixel::init() {
   }
 
   void Marlin_NeoPixel2::init() {
-    neoindex = -1;                        // -1 .. NEOPIXEL2_PIXELS-1 range
-    set_brightness(NEOPIXEL2_BRIGHTNESS); //  0 .. 255 range
+    neoindex = -1;                        // -1 .. NEOPIXEL2_PIXELS-1 range// -1 .. 新像素2_像素-1范围
+    set_brightness(NEOPIXEL2_BRIGHTNESS); //  0 .. 255 range//  0 .. 255范围
     begin();
-    show();  // initialize to all off
+    show();  // initialize to all off//初始化为全部关闭
 
     #if ENABLED(NEOPIXEL2_STARTUP_TEST)
-      set_color_startup(adaneo.Color(255, 0, 0, 0));  // red
+      set_color_startup(adaneo.Color(255, 0, 0, 0));  // red//红色的
       safe_delay(500);
-      set_color_startup(adaneo.Color(0, 255, 0, 0));  // green
+      set_color_startup(adaneo.Color(0, 255, 0, 0));  // green//绿色的
       safe_delay(500);
-      set_color_startup(adaneo.Color(0, 0, 255, 0));  // blue
+      set_color_startup(adaneo.Color(0, 0, 255, 0));  // blue//蓝色的
       safe_delay(500);
       #if HAS_WHITE_LED2
-        set_color_startup(adaneo.Color(0, 0, 0, 255));  // white
+        set_color_startup(adaneo.Color(0, 0, 0, 255));  // white//白色的
         safe_delay(500);
       #endif
     #endif
@@ -163,6 +164,6 @@ void Marlin_NeoPixel::init() {
     );
   }
 
-#endif // NEOPIXEL2_SEPARATE
+#endif // NEOPIXEL2_SEPARATE//NEOPIXEL2_分离
 
-#endif // NEOPIXEL_LED
+#endif // NEOPIXEL_LED//Neopix_发光二极管

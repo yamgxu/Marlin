@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -96,7 +97,7 @@ namespace ExtUI {
   void onFactoryReset() { InterfaceSettingsScreen::defaultSettings(); }
   void onStoreSettings(char *buff) { InterfaceSettingsScreen::saveSettings(buff); }
   void onLoadSettings(const char *buff) { InterfaceSettingsScreen::loadSettings(buff); }
-  void onPostprocessSettings() {} // Called after loading or resetting stored settings
+  void onPostprocessSettings() {} // Called after loading or resetting stored settings//加载或重置存储设置后调用
 
   void onConfigurationStoreWritten(bool success) {
     #ifdef ARCHIM2_SPI_FLASH_EEPROM_BACKUP_SIZE
@@ -125,13 +126,13 @@ namespace ExtUI {
   #endif
 
   #if ENABLED(POWER_LOSS_RECOVERY)
-    void onPowerLossResume() {} // Called on resume from power-loss
+    void onPowerLossResume() {} // Called on resume from power-loss//因断电而恢复通话
   #endif
 
   #if HAS_PID_HEATING
     void onPidTuning(const result_t rst) {
-      // Called for temperature PID tuning result
-      //SERIAL_ECHOLNPAIR("OnPidTuning:", rst);
+      // Called for temperature PID tuning result//调用温度PID调整结果
+      //SERIAL_ECHOLNPAIR("OnPidTuning:", rst);//串行回波对（“onpidtunning:”，rst）；
       switch (rst) {
         case PID_BAD_EXTRUDER_NUM:
           StatusScreen::setStatusMessage(GET_TEXT_F(MSG_PID_BAD_EXTRUDER_NUM));
@@ -148,10 +149,10 @@ namespace ExtUI {
       }
       GOTO_SCREEN(StatusScreen);
     }
-  #endif // HAS_PID_HEATING
+  #endif // HAS_PID_HEATING//有没有电加热
 
   void onSteppersDisabled() {}
   void onSteppersEnabled()  {}
 }
 
-#endif // TOUCH_UI_FTDI_EVE
+#endif // TOUCH_UI_FTDI_EVE//触摸屏

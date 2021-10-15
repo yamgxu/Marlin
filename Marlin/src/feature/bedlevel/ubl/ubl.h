@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,7 +22,7 @@
  */
 #pragma once
 
-//#define UBL_DEVEL_DEBUGGING
+//#define UBL_DEVEL_DEBUGGING//#定义UBL_-DEVEL_调试
 
 #include "../../../module/motion.h"
 
@@ -34,7 +35,7 @@
 
 enum MeshPointType : char { INVALID, REAL, SET_IN_BITMAP, CLOSEST };
 
-// External references
+// External references//外部参照
 
 struct mesh_index_pair;
 
@@ -107,8 +108,8 @@ public:
   static void adjust_mesh_to_mean(const bool cflag, const_float_t value);
   static bool sanity_check();
 
-  static void G29() _O0;                          // O0 for no optimization
-  static void smart_fill_wlsf(const_float_t ) _O2; // O2 gives smaller code than Os on A2560
+  static void G29() _O0;                          // O0 for no optimization//O0表示无优化
+  static void smart_fill_wlsf(const_float_t ) _O2; // O2 gives smaller code than Os on A2560//O2提供的代码比A2560上的操作系统小
 
   static int8_t storage_slot;
 
@@ -127,7 +128,7 @@ public:
     static inline void steppers_were_disabled() {}
   #endif
 
-  static volatile int16_t encoder_diff; // Volatile because buttons may change it at interrupt time
+  static volatile int16_t encoder_diff; // Volatile because buttons may change it at interrupt time//易失性，因为按钮可能在中断时更改
 
   unified_bed_leveling();
 
@@ -211,21 +212,21 @@ public:
         DEBUG_ECHOLNPAIR(" out of bounds in z_correction_for_x_on_horizontal_mesh_line(rx0=", rx0, ",x1_i=", x1_i, ",yi=", yi, ")");
       }
 
-      // The requested location is off the mesh. Return UBL_Z_RAISE_WHEN_OFF_MESH or NAN.
+      // The requested location is off the mesh. Return UBL_Z_RAISE_WHEN_OFF_MESH or NAN.//请求的位置已脱离网格。当脱离网格或NAN时返回UBL_Z_RAISE_。
       return _UBL_OUTER_Z_RAISE;
     }
 
     const float xratio = (rx0 - mesh_index_to_xpos(x1_i)) * RECIPROCAL(MESH_X_DIST),
                 z1 = z_values[x1_i][yi];
 
-    return z1 + xratio * (z_values[_MIN(x1_i, (GRID_MAX_POINTS_X) - 2) + 1][yi] - z1);  // Don't allow x1_i+1 to be past the end of the array
-                                                                                        // If it is, it is clamped to the last element of the
-                                                                                        // z_values[][] array and no correction is applied.
+    return z1 + xratio * (z_values[_MIN(x1_i, (GRID_MAX_POINTS_X) - 2) + 1][yi] - z1);  // Don't allow x1_i+1 to be past the end of the array//不允许x1_i+1超过数组的末尾
+                                                                                        // If it is, it is clamped to the last element of the//如果是，则将其夹持到
+                                                                                        // z_values[][] array and no correction is applied.//z_值[][]数组，不应用任何更正。
   }
 
-  //
-  // See comments above for z_correction_for_x_on_horizontal_mesh_line
-  //
+  ////
+  // See comments above for z_correction_for_x_on_horizontal_mesh_line//请参阅上面的注释，了解水平网格线上的z_校正
+  ////
   static inline float z_correction_for_y_on_vertical_mesh_line(const_float_t ry0, const int xi, const int y1_i) {
     if (!WITHIN(xi, 0, (GRID_MAX_POINTS_X) - 1) || !WITHIN(y1_i, 0, (GRID_MAX_POINTS_Y) - 1)) {
 
@@ -234,16 +235,16 @@ public:
         DEBUG_ECHOLNPAIR(" out of bounds in z_correction_for_y_on_vertical_mesh_line(ry0=", ry0, ", xi=", xi, ", y1_i=", y1_i, ")");
       }
 
-      // The requested location is off the mesh. Return UBL_Z_RAISE_WHEN_OFF_MESH or NAN.
+      // The requested location is off the mesh. Return UBL_Z_RAISE_WHEN_OFF_MESH or NAN.//请求的位置已脱离网格。当脱离网格或NAN时返回UBL_Z_RAISE_。
       return _UBL_OUTER_Z_RAISE;
     }
 
     const float yratio = (ry0 - mesh_index_to_ypos(y1_i)) * RECIPROCAL(MESH_Y_DIST),
                 z1 = z_values[xi][y1_i];
 
-    return z1 + yratio * (z_values[xi][_MIN(y1_i, (GRID_MAX_POINTS_Y) - 2) + 1] - z1);  // Don't allow y1_i+1 to be past the end of the array
-                                                                                        // If it is, it is clamped to the last element of the
-                                                                                        // z_values[][] array and no correction is applied.
+    return z1 + yratio * (z_values[xi][_MIN(y1_i, (GRID_MAX_POINTS_Y) - 2) + 1] - z1);  // Don't allow y1_i+1 to be past the end of the array//不允许y1_i+1超过数组的末尾
+                                                                                        // If it is, it is clamped to the last element of the//如果是，则将其夹持到
+                                                                                        // z_values[][] array and no correction is applied.//z_值[][]数组，不应用任何更正。
   }
 
   /**
@@ -253,7 +254,7 @@ public:
    * on the Y position within the cell.
    */
   static float get_z_correction(const_float_t rx0, const_float_t ry0) {
-    const int8_t cx = cell_index_x(rx0), cy = cell_index_y(ry0); // return values are clamped
+    const int8_t cx = cell_index_x(rx0), cy = cell_index_y(ry0); // return values are clamped//返回值被钳制
 
     /**
      * Check if the requested location is off the mesh.  If so, and
@@ -269,11 +270,11 @@ public:
     const float z2 = calc_z0(rx0, mesh_index_to_xpos(cx), z_values[cx][my], mesh_index_to_xpos(cx + 1), z_values[mx][my]);
     float z0 = calc_z0(ry0, mesh_index_to_ypos(cy), z1, mesh_index_to_ypos(cy + 1), z2);
 
-    if (isnan(z0)) { // if part of the Mesh is undefined, it will show up as NAN
-      z0 = 0.0;      // in ubl.z_values[][] and propagate through the
-                     // calculations. If our correction is NAN, we throw it out
-                     // because part of the Mesh is undefined and we don't have the
-                     // information we need to complete the height correction.
+    if (isnan(z0)) { // if part of the Mesh is undefined, it will show up as NAN//如果部分网格未定义，它将显示为NAN
+      z0 = 0.0;      // in ubl.z_values[][] and propagate through the//在ubl.z_中，值[][]，并通过
+                     // calculations. If our correction is NAN, we throw it out//计算。如果我们的修正是NAN，我们就把它扔掉
+                     // because part of the Mesh is undefined and we don't have the//因为部分网格是未定义的，我们没有
+                     // information we need to complete the height correction.//完成高度校正所需的信息。
 
       if (DEBUGGING(MESH_ADJUST)) DEBUG_ECHOLNPAIR("??? Yikes! NAN in ");
     }
@@ -305,7 +306,7 @@ public:
     return true;
   }
 
-}; // class unified_bed_leveling
+}; // class unified_bed_leveling//阶级统一(基床)(水准测量)
 
 extern unified_bed_leveling ubl;
 
@@ -313,5 +314,5 @@ extern unified_bed_leveling ubl;
 #define _GET_MESH_Y(J) ubl.mesh_index_to_ypos(J)
 #define Z_VALUES_ARR ubl.z_values
 
-// Prevent debugging propagating to other files
+// Prevent debugging propagating to other files//防止调试传播到其他文件
 #include "../../../core/debug_out.h"

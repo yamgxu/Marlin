@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -26,7 +27,7 @@
 #define BINARY_STREAM_COMPRESSION
 #if ENABLED(BINARY_STREAM_COMPRESSION)
   #include "../libs/heatshrink/heatshrink_decoder.h"
-  // STM32 (and others?) require a word-aligned buffer for SD card transfers via DMA
+  // STM32 (and others?) require a word-aligned buffer for SD card transfers via DMA//STM32（和其他？）需要一个字对齐的缓冲区，以便通过DMA进行SD卡传输
   static __attribute__((aligned(sizeof(size_t)))) uint8_t decode_buffer[512] = {};
   static heatshrink_decoder hsd;
 #endif
@@ -55,7 +56,7 @@ private:
       static char* filename() { return data; }
       private:
         uint8_t dummy, compression;
-        static char* data;  // variable length strings complicate things
+        static char* data;  // variable length strings complicate things//可变长度字符串使事情复杂化
     };
   };
 
@@ -101,7 +102,7 @@ private:
   static bool file_close() {
     if (!dummy_transfer) {
       #if ENABLED(BINARY_STREAM_COMPRESSION)
-        // flush any buffered data
+        // flush any buffered data//刷新任何缓冲数据
         if (data_waiting) {
           if (card.write(decode_buffer, data_waiting) < 0) return false;
           data_waiting = 0;
@@ -134,7 +135,7 @@ private:
 public:
 
   static void idle() {
-    // If a transfer is interrupted and a file is left open, abort it after TIMEOUT ms
+    // If a transfer is interrupted and a file is left open, abort it after TIMEOUT ms//如果传输被中断且文件保持打开状态，则在超时毫秒后中止传输
     const millis_t ms = millis();
     if (transfer_active && ELAPSED(ms, idle_timeout)) {
       idle_timeout = ms + IDLE_PERIOD;
@@ -206,17 +207,17 @@ public:
   enum class StreamState : uint8_t { PACKET_RESET, PACKET_WAIT, PACKET_HEADER, PACKET_DATA, PACKET_FOOTER,
                                      PACKET_PROCESS, PACKET_RESEND, PACKET_TIMEOUT, PACKET_ERROR };
 
-  struct Packet { // 10 byte protocol overhead, ascii with checksum and line number has a minimum of 7 increasing with line
+  struct Packet { // 10 byte protocol overhead, ascii with checksum and line number has a minimum of 7 increasing with line//10字节协议开销，带校验和和和行号的ascii最小值为7，随行号的增加而增加
 
     union Header {
       static constexpr uint16_t HEADER_TOKEN = 0xB5AD;
       struct [[gnu::packed]] {
-        uint16_t token;       // packet start token
-        uint8_t sync;         // stream sync, resend id and packet loss detection
-        uint8_t meta;         // 4 bit protocol,
-                              // 4 bit packet type
-        uint16_t size;        // data length
-        uint16_t checksum;    // header checksum
+        uint16_t token;       // packet start token//包启动令牌
+        uint8_t sync;         // stream sync, resend id and packet loss detection//流同步、重发id和丢包检测
+        uint8_t meta;         // 4 bit protocol,//4位协议，
+                              // 4 bit packet type//4位数据包类型
+        uint16_t size;        // data length//数据长度
+        uint16_t checksum;    // header checksum//报头校验和
       };
       uint8_t protocol() { return (meta >> 4) & 0xF; }
       uint8_t type() { return meta & 0xF; }
@@ -226,7 +227,7 @@ public:
 
     union Footer {
       struct [[gnu::packed]] {
-        uint16_t checksum; // full packet checksum
+        uint16_t checksum; // full packet checksum//全包校验和
       };
       void reset() { checksum = 0; }
       uint8_t data[1];
@@ -256,15 +257,15 @@ public:
     buffer_next_index = 0;
   }
 
-  // fletchers 16 checksum
+  // fletchers 16 checksum//弗莱彻16校验和
   uint32_t checksum(uint32_t cs, uint8_t value) {
     uint16_t cs_low = (((cs & 0xFF) + value) % 255);
     return ((((cs >> 8) + cs_low) % 255) << 8)  | cs_low;
   }
 
-  // read the next byte from the data stream keeping track of
-  // whether the stream times out from data starvation
-  // takes the data variable by reference in order to return status
+  // read the next byte from the data stream keeping track of//从数据流中读取下一个字节，跟踪
+  // whether the stream times out from data starvation//流是否因数据不足而超时
+  // takes the data variable by reference in order to return status//通过引用获取数据变量以返回状态
   bool stream_read(uint8_t& data) {
     if (stream_state != StreamState::PACKET_WAIT && ELAPSED(millis(), packet.timeout)) {
       stream_state = StreamState::PACKET_TIMEOUT;
@@ -297,14 +298,14 @@ public:
           packet.reset();
           stream_state = StreamState::PACKET_WAIT;
         case StreamState::PACKET_WAIT:
-          if (!stream_read(data)) { idle(); return; }  // no active packet so don't wait
+          if (!stream_read(data)) { idle(); return; }  // no active packet so don't wait//没有活动数据包，所以不要等待
           packet.header.data[1] = data;
           if (packet.header.token == packet.header.HEADER_TOKEN) {
             packet.bytes_received = 2;
             stream_state = StreamState::PACKET_HEADER;
           }
           else {
-            // stream corruption drop data
+            // stream corruption drop data//流损坏丢弃数据
             packet.header.data[0] = data;
           }
           break;
@@ -314,13 +315,13 @@ public:
           packet.header.data[packet.bytes_received++] = data;
           packet.checksum = checksum(packet.checksum, data);
 
-          // header checksum calculation can't contain the checksum
+          // header checksum calculation can't contain the checksum//标头校验和计算不能包含校验和
           if (packet.bytes_received == sizeof(Packet::header) - 2)
             packet.header_checksum = packet.checksum;
 
           if (packet.bytes_received == sizeof(Packet::header)) {
             if (packet.header.checksum == packet.header_checksum) {
-              // The SYNC control packet is a special case in that it doesn't require the stream sync to be correct
+              // The SYNC control packet is a special case in that it doesn't require the stream sync to be correct//同步控制包是一种特殊情况，它不要求流同步正确
               if (static_cast<Protocol>(packet.header.protocol()) == Protocol::CONTROL && static_cast<ProtocolControl>(packet.header.type()) == ProtocolControl::SYNC) {
                   SERIAL_ECHOLNPAIR("ss", sync, ",", buffer_size, ",", VERSION_MAJOR, ".", VERSION_MINOR, ".", VERSION_PATCH);
                   stream_state = StreamState::PACKET_RESET;
@@ -331,17 +332,17 @@ public:
                 packet.bytes_received = 0;
                 if (packet.header.size) {
                   stream_state = StreamState::PACKET_DATA;
-                  packet.buffer = static_cast<char *>(&buffer[0]); // multipacket buffering not implemented, always allocate whole buffer to packet
+                  packet.buffer = static_cast<char *>(&buffer[0]); // multipacket buffering not implemented, always allocate whole buffer to packet//未实现多数据包缓冲，始终将整个缓冲区分配给数据包
                 }
                 else
                   stream_state = StreamState::PACKET_PROCESS;
               }
-              else if (packet.header.sync == sync - 1) {           // ok response must have been lost
-                SERIAL_ECHOLNPAIR("ok", packet.header.sync);  // transmit valid packet received and drop the payload
+              else if (packet.header.sync == sync - 1) {           // ok response must have been lost//ok响应一定丢失了
+                SERIAL_ECHOLNPAIR("ok", packet.header.sync);  // transmit valid packet received and drop the payload//发送接收到的有效数据包并丢弃有效负载
                 stream_state = StreamState::PACKET_RESET;
               }
               else if (packet_retries) {
-                stream_state = StreamState::PACKET_RESET; // could be packets already buffered on flow controlled connections, drop them without ack
+                stream_state = StreamState::PACKET_RESET; // could be packets already buffered on flow controlled connections, drop them without ack//可能数据包已经在流控制连接上缓冲，在没有ack的情况下丢弃它们
               }
               else {
                 SERIAL_ECHO_MSG("Datastream packet out of order");
@@ -393,7 +394,7 @@ public:
           packet_retries = 0;
           bytes_received += packet.header.size;
 
-          SERIAL_ECHOLNPAIR("ok", packet.header.sync); // transmit valid packet received
+          SERIAL_ECHOLNPAIR("ok", packet.header.sync); // transmit valid packet received//发送接收到的有效数据包
           dispatch();
           stream_state = StreamState::PACKET_RESET;
           break;
@@ -413,7 +414,7 @@ public:
           break;
         case StreamState::PACKET_ERROR:
           SERIAL_ECHOLNPAIR("fe", packet.header.sync);
-          reset(); // reset everything, resync required
+          reset(); // reset everything, resync required//重置所有内容，需要重新同步
           stream_state = StreamState::PACKET_RESET;
           break;
       }
@@ -426,7 +427,7 @@ public:
     switch (static_cast<Protocol>(packet.header.protocol())) {
       case Protocol::CONTROL:
         switch (static_cast<ProtocolControl>(packet.header.type())) {
-          case ProtocolControl::CLOSE: // revert back to ASCII mode
+          case ProtocolControl::CLOSE: // revert back to ASCII mode//恢复到ASCII模式
             card.flag.binary_mode = false;
             break;
           default:
@@ -434,7 +435,7 @@ public:
         }
         break;
       case Protocol::FILE_TRANSFER:
-        SDFileTransferProtocol::process(packet.header.type(), packet.buffer, packet.header.size); // send user data to be processed
+        SDFileTransferProtocol::process(packet.header.type(), packet.buffer, packet.header.size); // send user data to be processed//发送要处理的用户数据
       break;
       default:
         SERIAL_ECHO_MSG("Unsupported Binary Protocol");
@@ -442,7 +443,7 @@ public:
   }
 
   void idle() {
-    // Some Protocols may need periodic updates without new data
+    // Some Protocols may need periodic updates without new data//某些协议可能需要定期更新，而不需要新数据
     SDFileTransferProtocol::idle();
   }
 

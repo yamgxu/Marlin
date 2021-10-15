@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -66,31 +67,31 @@ void GcodeSuite::M900() {
 
     float &lref = other_extruder_advance_K[tool_index];
 
-    const bool old_slot = TEST(lin_adv_slot, tool_index), // The tool's current slot (0 or 1)
-               new_slot = parser.boolval('S', old_slot);  // The passed slot (default = current)
+    const bool old_slot = TEST(lin_adv_slot, tool_index), // The tool's current slot (0 or 1)//工具的当前插槽（0或1）
+               new_slot = parser.boolval('S', old_slot);  // The passed slot (default = current)//传递的插槽（默认值=当前）
 
-    // If a new slot is being selected swap the current and
-    // saved K values. Do here so K/L will apply correctly.
-    if (new_slot != old_slot) {                       // Not the same slot?
-      SET_BIT_TO(lin_adv_slot, tool_index, new_slot); // Update the slot for the tool
-      newK = lref;                                    // Get new K value from backup
-      lref = oldK;                                    // Save K to backup
+    // If a new slot is being selected swap the current and//如果选择了新插槽，则交换当前插槽和
+    // saved K values. Do here so K/L will apply correctly.//保存的K值。在此处执行此操作，以便正确应用K/L。
+    if (new_slot != old_slot) {                       // Not the same slot?//不一样？
+      SET_BIT_TO(lin_adv_slot, tool_index, new_slot); // Update the slot for the tool//更新该工具的插槽
+      newK = lref;                                    // Get new K value from backup//从备份中获取新的K值
+      lref = oldK;                                    // Save K to backup//将K保存到备份
     }
 
-    // Set the main K value. Apply if the main slot is active.
+    // Set the main K value. Apply if the main slot is active.//设置主K值。如果主插槽处于活动状态，则应用。
     if (parser.seenval('K')) {
       const float K = parser.value_float();
       if (!WITHIN(K, 0, 10)) echo_value_oor('K');
-      else if (new_slot)        lref = K;             // S1 Knn
-      else                      newK = K;             // S0 Knn
+      else if (new_slot)        lref = K;             // S1 Knn//S1 Knn
+      else                      newK = K;             // S0 Knn//S0 Knn
     }
 
-    // Set the extra K value. Apply if the extra slot is active.
+    // Set the extra K value. Apply if the extra slot is active.//设置额外的K值。如果额外插槽处于活动状态，则应用。
     if (parser.seenval('L')) {
       const float L = parser.value_float();
       if (!WITHIN(L, 0, 10)) echo_value_oor('L');
-      else if (!new_slot)       lref = L;             // S0 Lnn
-      else                      newK = L;             // S1 Lnn
+      else if (!new_slot)       lref = L;             // S0 Lnn//S0 Lnn
+      else                      newK = L;             // S1 Lnn//S1 Lnn
     }
 
   #else
@@ -144,4 +145,4 @@ void GcodeSuite::M900() {
 
 }
 
-#endif // LIN_ADVANCE
+#endif // LIN_ADVANCE//林乌前进

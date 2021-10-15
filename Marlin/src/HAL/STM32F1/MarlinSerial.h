@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -28,14 +29,14 @@
 #include "../../inc/MarlinConfigPre.h"
 #include "../../core/serial_hook.h"
 
-// Increase priority of serial interrupts, to reduce overflow errors
+// Increase priority of serial interrupts, to reduce overflow errors//增加串行中断的优先级，以减少溢出错误
 #define UART_IRQ_PRIO 1
 
 struct MarlinSerial : public HardwareSerial {
   MarlinSerial(struct usart_dev *usart_device, uint8 tx_pin, uint8 rx_pin) : HardwareSerial(usart_device, tx_pin, rx_pin) { }
 
   #ifdef UART_IRQ_PRIO
-    // Shadow the parent methods to set IRQ priority after begin()
+    // Shadow the parent methods to set IRQ priority after begin()//在begin（）之后对父方法进行阴影处理以设置IRQ优先级
     void begin(uint32 baud) {
       MarlinSerial::begin(baud, SERIAL_8N1);
     }

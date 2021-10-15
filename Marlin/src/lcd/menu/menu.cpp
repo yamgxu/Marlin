@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -42,29 +43,29 @@
   #include "../../feature/bedlevel/bedlevel.h"
 #endif
 
-////////////////////////////////////////////
-///////////// Global Variables /////////////
-////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+///////////// Global Variables //////////////////////////全局变量/////////////
+////////////////////////////////////////////////////////////////////////////////////////
 
-// Menu Navigation
+// Menu Navigation//菜单导航
 int8_t encoderTopLine, encoderLine, screen_items;
 
 typedef struct {
-  screenFunc_t menu_function;     // The screen's function
-  uint32_t encoder_position;      // The position of the encoder
-  int8_t top_line, items;         // The amount of scroll, and the number of items
+  screenFunc_t menu_function;     // The screen's function//屏幕的功能
+  uint32_t encoder_position;      // The position of the encoder//编码器的位置
+  int8_t top_line, items;         // The amount of scroll, and the number of items//滚动的数量和项目的数量
   #if SCREENS_CAN_TIME_OUT
-    bool sticky;                  // The screen is sticky
+    bool sticky;                  // The screen is sticky//屏幕是粘的
   #endif
 } menuPosition;
 menuPosition screen_history[6];
 uint8_t screen_history_depth = 0;
 
-int8_t MenuItemBase::itemIndex;   // Index number for draw and action
-PGM_P MenuItemBase::itemString;   // A PSTR for substitution
-chimera_t editable;               // Value Editing
+int8_t MenuItemBase::itemIndex;   // Index number for draw and action//绘制和操作的索引编号
+PGM_P MenuItemBase::itemString;   // A PSTR for substitution//用于替换的PSTR
+chimera_t editable;               // Value Editing//价值编辑
 
-// Menu Edit Items
+// Menu Edit Items//菜单编辑项
 PGM_P        MenuEditItemBase::editLabel;
 void*        MenuEditItemBase::editValue;
 int32_t      MenuEditItemBase::minEditValue,
@@ -72,9 +73,9 @@ int32_t      MenuEditItemBase::minEditValue,
 screenFunc_t MenuEditItemBase::callbackFunc;
 bool         MenuEditItemBase::liveEdit;
 
-////////////////////////////////////////////
-//////// Menu Navigation & History /////////
-////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+//////// Menu Navigation & History /////////////////菜单导航和历史记录/////////
+////////////////////////////////////////////////////////////////////////////////////////
 
 void MarlinUI::return_to_status() { goto_screen(status_screen); }
 
@@ -99,9 +100,9 @@ void MarlinUI::_goto_previous_screen(TERN_(TURBO_BACK_MENU_ITEM, const bool is_b
     return_to_status();
 }
 
-////////////////////////////////////////////
-/////////// Menu Editing Actions ///////////
-////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+/////////// Menu Editing Actions //////////////////////菜单编辑操作///////////
+////////////////////////////////////////////////////////////////////////////////////////
 
 /**
  * Functions for editing single values
@@ -140,14 +141,14 @@ void MenuEditItemBase::edit_screen(strfunc_t strfunc, loadfunc_t loadfunc) {
 }
 
 void MenuEditItemBase::goto_edit_screen(
-  PGM_P const el,         // Edit label
-  void * const ev,        // Edit value pointer
-  const int32_t minv,     // Encoder minimum
-  const int32_t maxv,     // Encoder maximum
-  const uint16_t ep,      // Initial encoder value
-  const screenFunc_t cs,  // MenuItem_type::draw_edit_screen => MenuEditItemBase::edit()
-  const screenFunc_t cb,  // Callback after edit
-  const bool le           // Flag to call cb() during editing
+  PGM_P const el,         // Edit label//编辑标签
+  void * const ev,        // Edit value pointer//编辑值指针
+  const int32_t minv,     // Encoder minimum//编码器最小值
+  const int32_t maxv,     // Encoder maximum//编码器最大值
+  const uint16_t ep,      // Initial encoder value//编码器初始值
+  const screenFunc_t cs,  // MenuItem_type::draw_edit_screen => MenuEditItemBase::edit()//MenuItem_type:：draw_edit_screen=>MenuEditItemBase:：edit（）
+  const screenFunc_t cb,  // Callback after edit//编辑后的回调
+  const bool le           // Flag to call cb() during editing//编辑期间调用cb（）的标志
 ) {
   TERN_(HAS_TOUCH_BUTTONS, ui.on_edit_screen = true);
   ui.screen_changed = true;
@@ -163,9 +164,9 @@ void MenuEditItemBase::goto_edit_screen(
   liveEdit = le;
 }
 
-////////////////////////////////////////////
-///////////////// Menu Tree ////////////////
-////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+///////////////// Menu Tree /////////////////////////////////菜单树////////////////
+////////////////////////////////////////////////////////////////////////////////////////
 
 #include "../../MarlinCore.h"
 
@@ -185,8 +186,8 @@ void MarlinUI::goto_screen(screenFunc_t screen, const uint16_t encoder/*=0*/, co
 
     #if BOTH(DOUBLECLICK_FOR_Z_BABYSTEPPING, BABYSTEPPING)
       static millis_t doubleclick_expire_ms = 0;
-      // Going to menu_main from status screen? Remember first click time.
-      // Going back to status screen within a very short time? Go to Z babystepping.
+      // Going to menu_main from status screen? Remember first click time.//从状态屏幕转到主菜单？记住第一次点击时间。
+      // Going back to status screen within a very short time? Go to Z babystepping.//在很短的时间内返回状态屏幕？去Z babystepping。
       if (screen == menu_main) {
         if (on_status_screen())
           doubleclick_expire_ms = millis() + DOUBLECLICK_MAX_INTERVAL;
@@ -215,7 +216,7 @@ void MarlinUI::goto_screen(screenFunc_t screen, const uint16_t encoder/*=0*/, co
 
     clear_lcd();
 
-    // Re-initialize custom characters that may be re-used
+    // Re-initialize custom characters that may be re-used//重新初始化可重复使用的自定义字符
     #if HAS_MARLINUI_HD44780
       if (TERN1(AUTO_BED_LEVELING_UBL, !ubl.lcd_map_control))
         set_custom_characters(on_status_screen() ? CHARSET_INFO : CHARSET_MENU);
@@ -231,14 +232,14 @@ void MarlinUI::goto_screen(screenFunc_t screen, const uint16_t encoder/*=0*/, co
   }
 }
 
-////////////////////////////////////////////
-///////////// Manual Movement //////////////
-////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+///////////// Manual Movement ///////////////////////////手动运动//////////////
+////////////////////////////////////////////////////////////////////////////////////////
 
-//
-// Display a "synchronize" screen with a custom message until
-// all moves are finished. Go back to calling screen when done.
-//
+////
+// Display a "synchronize" screen with a custom message until//显示带有自定义消息的“同步”屏幕，直到
+// all moves are finished. Go back to calling screen when done.//所有动作都完成了。完成后返回呼叫屏幕。
+////
 void MarlinUI::synchronize(PGM_P const msg/*=nullptr*/) {
   static PGM_P sync_message = msg ?: GET_TEXT(MSG_MOVING);
   push_current_screen();
@@ -246,7 +247,7 @@ void MarlinUI::synchronize(PGM_P const msg/*=nullptr*/) {
     if (should_draw()) MenuItem_static::draw(LCD_HEIGHT >= 4, sync_message);
   });
   defer_status_screen();
-  planner.synchronize(); // idle() is called until moves complete
+  planner.synchronize(); // idle() is called until moves complete//直到移动完成，才会调用idle（）
   goto_previous_screen_no_defer();
 }
 
@@ -343,7 +344,7 @@ void scroll_screen(const uint8_t limit, const bool is_menu) {
     }
   }
 
-#endif // BABYSTEP_ZPROBE_OFFSET
+#endif // BABYSTEP_ZPROBE_OFFSET//BABYSTEP_ZPROBE_偏移量
 
 void _lcd_draw_homing() {
   if (ui.should_draw()) {
@@ -357,10 +358,10 @@ void _lcd_draw_homing() {
   void _lcd_toggle_bed_leveling() { set_bed_leveling_enabled(!planner.leveling_active); }
 #endif
 
-//
-// Selection screen presents a prompt and two options
-//
-bool MarlinUI::selection; // = false
+////
+// Selection screen presents a prompt and two options//选择屏幕显示提示和两个选项
+////
+bool MarlinUI::selection; // = false//=错误
 bool MarlinUI::update_selection() {
   encoder_direction_select();
   if (encoderPosition) {
@@ -386,4 +387,4 @@ void MenuItem_confirm::select_screen(
   }
 }
 
-#endif // HAS_LCD_MENU
+#endif // HAS_LCD_MENU//有LCD菜单吗

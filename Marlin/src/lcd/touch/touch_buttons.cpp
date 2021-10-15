@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -38,8 +39,8 @@
   #include "../tft_io/touch_calibration.h"
 #endif
 
-#include "../buttons.h" // For EN_C bit mask
-#include "../marlinui.h" // For ui.refresh
+#include "../buttons.h" // For EN_C bit mask//对于EN_C位掩码
+#include "../marlinui.h" // For ui.refresh//用于ui.refresh
 #include "../tft_io/tft_io.h"
 
 #define DOGM_AREA_LEFT   TFT_PIXEL_OFFSET_X
@@ -74,7 +75,7 @@ uint8_t TouchButtons::read_buttons() {
       y = uint16_t((uint32_t(y) * TOUCH_CALIBRATION_Y) >> 16) + TOUCH_OFFSET_Y;
     #endif
 
-    // Touch within the button area simulates an encoder button
+    // Touch within the button area simulates an encoder button//按钮区域内的触摸模拟编码器按钮
     if (y > BUTTON_AREA_TOP && y < BUTTON_AREA_BOT)
       return WITHIN(x, BUTTOND_X_LO, BUTTOND_X_HI) ? EN_D
            : WITHIN(x, BUTTONA_X_LO, BUTTONA_X_HI) ? EN_A
@@ -86,14 +87,14 @@ uint8_t TouchButtons::read_buttons() {
       || !WITHIN(y, DOGM_AREA_TOP,  DOGM_AREA_TOP  + DOGM_AREA_HEIGHT)
     ) return 0;
 
-    // Column and row above BUTTON_AREA_TOP
+    // Column and row above BUTTON_AREA_TOP//按钮上方的列和行\u区域\u顶部
     int8_t col = (x - (DOGM_AREA_LEFT)) * (LCD_WIDTH)  / (DOGM_AREA_WIDTH),
            row = (y - (DOGM_AREA_TOP))  * (LCD_HEIGHT) / (DOGM_AREA_HEIGHT);
 
-    // Send the touch to the UI (which will simulate the encoder wheel)
+    // Send the touch to the UI (which will simulate the encoder wheel)//将触摸发送到UI（将模拟编码器滚轮）
     MarlinUI::screen_click(row, col, x, y);
   #endif
   return 0;
 }
 
-#endif // HAS_TOUCH_BUTTONS
+#endif // HAS_TOUCH_BUTTONS//有触摸按钮吗

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -36,17 +37,17 @@
 
 #define BOARD_INFO_NAME "MKS GEN >= v1.3"
 
-//
-// Heaters / Fans
-//
-// Power outputs EFBF or EFBE
+////
+// Heaters / Fans//加热器/风扇
+////
+// Power outputs EFBF or EFBE//功率输出EFBF或EFBE
 #define MOSFET_D_PIN                           7
 
-//
-// PSU / SERVO
-//
-// If PSU_CONTROL is specified, always hijack Servo 3
-//
+////
+// PSU / SERVO//PSU/伺服
+////
+// If PSU_CONTROL is specified, always hijack Servo 3//如果指定了PSU_控制，则始终劫持伺服3
+////
 #if ENABLED(PSU_CONTROL)
   #define SERVO3_PIN                          -1
   #define PS_ON_PIN                            4
@@ -54,9 +55,9 @@
 
 #include "pins_RAMPS.h"
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 #if ANY(VIKI2, miniVIKI)
   /**
    * VIKI2 Has two groups of wires with...
@@ -99,49 +100,49 @@
   #undef STAT_LED_RED_PIN
   #undef STAT_LED_BLUE_PIN
 
-  //
-  // VIKI2 12-wire lead
-  //
+  ////
+  // VIKI2 12-wire lead//VIKI2 12线引线
+  ////
 
-  // orange/white          SDCD
+  // orange/white          SDCD//橙色/白色SDCD
   #define SD_DETECT_PIN                       49
 
-  // white                 ENCA
+  // white                 ENCA//白恩卡
   #define BTN_EN1                             35
 
-  // green                 ENCB
+  // green                 ENCB//绿色ENCB
   #define BTN_EN2                             37
 
-  // purple                ENCBTN
+  // purple                ENCBTN//紫色ENCBTN
   #define BTN_ENC                             31
 
-  // brown                 A0
+  // brown                 A0//棕色A0
   #define DOGLCD_A0                           27
 
-  // green/white           LCS
+  // green/white           LCS//绿色/白色液晶显示器
   #define DOGLCD_CS                           29
 
-                        // 50    gray   MISO
-                        // 51    yellow MOSI
-                        // 52    orange SCK
+                        // 50    gray   MISO//50灰色味噌
+                        // 51    yellow MOSI//51黄色摩西
+                        // 52    orange SCK//52橙色SCK
 
-  // blue                  SDCS
-  //#define SDSS                              53
+  // blue                  SDCS//蓝色SDC
+  //#define SDSS                              53//#定义SDSS 53
 
-  //
-  // VIKI2 4-wire lead
-  //
+  ////
+  // VIKI2 4-wire lead//VIKI2四线引线
+  ////
 
-  // blue                  BTN
+  // blue                  BTN//蓝色BTN
   #define KILL_PIN                            23
 
-  // green                 BUZZER
+  // green                 BUZZER//绿色蜂鸣器
   #define BEEPER_PIN                          25
 
-  // yellow                RED-LED
+  // yellow                RED-LED//黄色红色发光二极管
   #define STAT_LED_RED_PIN                    16
 
-  // white                 BLUE-LED
+  // white                 BLUE-LED//白色蓝色发光二极管
   #define STAT_LED_BLUE_PIN                   17
 
 #endif

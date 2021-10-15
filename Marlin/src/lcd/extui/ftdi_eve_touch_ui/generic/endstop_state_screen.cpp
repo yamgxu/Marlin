@@ -1,3 +1,4 @@
+/** translatione by yx */
 /****************************
  * endstop_state_screen.cpp *
  ****************************/
@@ -148,4 +149,4 @@ void EndstopStatesScreen::onIdle() {
   BaseScreen::onIdle();
 }
 
-#endif // FTDI_ENDSTOP_STATE_SCREEN
+#endif // FTDI_ENDSTOP_STATE_SCREEN//FTDI_结束停止_状态_屏幕

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -25,7 +26,7 @@
   #include <NativeEthernet.h>
 #endif
 
-// Teensy 4.1 uses internal MAC Address
+// Teensy 4.1 uses internal MAC Address//Teensy 4.1使用内部MAC地址
 
 class MarlinEthernet {
   public:

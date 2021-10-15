@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*****************************
  * dialog_box_base_class.cpp *
  *****************************/
@@ -83,4 +84,4 @@ void DialogBoxBaseClass::onIdle() {
   reset_menu_timeout();
 }
 
-#endif // FTDI_DIALOG_BOX_BASE_CLASS
+#endif // FTDI_DIALOG_BOX_BASE_CLASS//FTDI对话框基本类

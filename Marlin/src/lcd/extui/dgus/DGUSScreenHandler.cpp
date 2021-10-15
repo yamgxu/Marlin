@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -83,7 +84,7 @@ void DGUSScreenHandler::sendinfoscreen(const char *line1, const char *line2, con
 }
 
 void DGUSScreenHandler::HandleUserConfirmationPopUp(uint16_t VP, const char *line1, const char *line2, const char *line3, const char *line4, bool l1, bool l2, bool l3, bool l4) {
-  if (current_screen == DGUSLCD_SCREEN_CONFIRM) // Already showing a pop up, so we need to cancel that first.
+  if (current_screen == DGUSLCD_SCREEN_CONFIRM) // Already showing a pop up, so we need to cancel that first.//已经显示了一个弹出窗口，所以我们需要先取消它。
     PopToOldScreen();
 
   ConfirmVP = VP;
@@ -107,11 +108,11 @@ void DGUSScreenHandler::setstatusmessagePGM(PGM_P const msg) {
   }
 }
 
-// Send an 8 bit or 16 bit value to the display.
+// Send an 8 bit or 16 bit value to the display.//向显示器发送8位或16位值。
 void DGUSScreenHandler::DGUSLCD_SendWordValueToDisplay(DGUS_VP_Variable &var) {
   if (var.memadr) {
-    //DEBUG_ECHOPAIR(" DGUS_LCD_SendWordValueToDisplay ", var.VP);
-    //DEBUG_ECHOLNPAIR(" data ", *(uint16_t *)var.memadr);
+    //DEBUG_ECHOPAIR(" DGUS_LCD_SendWordValueToDisplay ", var.VP);//调试回声对（“DGUS\U LCD\U SendWordValueToDisplay”，var.VP）；
+    //DEBUG_ECHOLNPAIR(" data ", *(uint16_t *)var.memadr);//调试回音对（“数据”*（uint16_t*）变量memadr）；
     if (var.size > 1)
       dgusdisplay.WriteVariable(var.VP, *(int16_t*)var.memadr);
     else
@@ -119,27 +120,27 @@ void DGUSScreenHandler::DGUSLCD_SendWordValueToDisplay(DGUS_VP_Variable &var) {
   }
 }
 
-// Send an uint8_t between 0 and 255 to the display, but scale to a percentage (0..100)
+// Send an uint8_t between 0 and 255 to the display, but scale to a percentage (0..100)//向显示器发送一个介于0和255之间的uint8_t，但按百分比缩放（0..100）
 void DGUSScreenHandler::DGUSLCD_SendPercentageToDisplay(DGUS_VP_Variable &var) {
   if (var.memadr) {
-    //DEBUG_ECHOPAIR(" DGUS_LCD_SendWordValueToDisplay ", var.VP);
-    //DEBUG_ECHOLNPAIR(" data ", *(uint16_t *)var.memadr);
-    uint16_t tmp = *(uint8_t *) var.memadr + 1; // +1 -> avoid rounding issues for the display.
+    //DEBUG_ECHOPAIR(" DGUS_LCD_SendWordValueToDisplay ", var.VP);//调试回声对（“DGUS\U LCD\U SendWordValueToDisplay”，var.VP）；
+    //DEBUG_ECHOLNPAIR(" data ", *(uint16_t *)var.memadr);//调试回音对（“数据”*（uint16_t*）变量memadr）；
+    uint16_t tmp = *(uint8_t *) var.memadr + 1; // +1 -> avoid rounding issues for the display.//+1->避免显示的舍入问题。
     tmp = map(tmp, 0, 255, 0, 100);
     dgusdisplay.WriteVariable(var.VP, tmp);
   }
 }
 
-// Send the current print progress to the display.
+// Send the current print progress to the display.//将当前打印进度发送到显示器。
 void DGUSScreenHandler::DGUSLCD_SendPrintProgressToDisplay(DGUS_VP_Variable &var) {
-  //DEBUG_ECHOPAIR(" DGUSLCD_SendPrintProgressToDisplay ", var.VP);
+  //DEBUG_ECHOPAIR(" DGUSLCD_SendPrintProgressToDisplay ", var.VP);//调试回声对（“DGUSLCD\U SendPrintProgressToDisplay”，var.VP）；
   uint16_t tmp = ExtUI::getProgress_percent();
-  //DEBUG_ECHOLNPAIR(" data ", tmp);
+  //DEBUG_ECHOLNPAIR(" data ", tmp);//调试回声对（“数据”，tmp）；
   dgusdisplay.WriteVariable(var.VP, tmp);
 }
 
-// Send the current print time to the display.
-// It is using a hex display for that: It expects BSD coded data in the format xxyyzz
+// Send the current print time to the display.//将当前打印时间发送到显示器。
+// It is using a hex display for that: It expects BSD coded data in the format xxyyzz//它使用十六进制显示：它期望BSD编码数据的格式为xxyyzz
 void DGUSScreenHandler::DGUSLCD_SendPrintTimeToDisplay(DGUS_VP_Variable &var) {
   duration_t elapsed = print_job_timer.duration();
   char buf[32];
@@ -147,7 +148,7 @@ void DGUSScreenHandler::DGUSLCD_SendPrintTimeToDisplay(DGUS_VP_Variable &var) {
   dgusdisplay.WriteVariable(VP_PrintTime, buf, var.size, true);
 }
 
-// Send an uint8_t between 0 and 100 to a variable scale to 0..255
+// Send an uint8_t between 0 and 100 to a variable scale to 0..255//发送一个介于0和100之间的uint8_t到一个0..255的可变比例
 void DGUSScreenHandler::DGUSLCD_PercentageToUint8(DGUS_VP_Variable &var, void *val_ptr) {
   if (var.memadr) {
     uint16_t value = swap16(*(uint16_t*)val_ptr);
@@ -157,17 +158,17 @@ void DGUSScreenHandler::DGUSLCD_PercentageToUint8(DGUS_VP_Variable &var, void *v
   }
 }
 
-// Sends a (RAM located) string to the DGUS Display
-// (Note: The DGUS Display does not clear after the \0, you have to
-// overwrite the remainings with spaces.// var.size has the display buffer size!
+// Sends a (RAM located) string to the DGUS Display//向DGUS显示器发送（RAM定位）字符串
+// (Note: The DGUS Display does not clear after the \0, you have to//（注意：DGUS显示在\0之后不清除，您必须
+// overwrite the remainings with spaces.// var.size has the display buffer size!//用空格覆盖剩余内容//var.size具有显示缓冲区大小！
 void DGUSScreenHandler::DGUSLCD_SendStringToDisplay(DGUS_VP_Variable &var) {
   char *tmp = (char*) var.memadr;
   dgusdisplay.WriteVariable(var.VP, tmp, var.size, true);
 }
 
-// Sends a (flash located) string to the DGUS Display
-// (Note: The DGUS Display does not clear after the \0, you have to
-// overwrite the remainings with spaces.// var.size has the display buffer size!
+// Sends a (flash located) string to the DGUS Display//向DGUS显示器发送（闪存定位）字符串
+// (Note: The DGUS Display does not clear after the \0, you have to//（注意：DGUS显示在\0之后不清除，您必须
+// overwrite the remainings with spaces.// var.size has the display buffer size!//用空格覆盖剩余内容//var.size具有显示缓冲区大小！
 void DGUSScreenHandler::DGUSLCD_SendStringToDisplayPGM(DGUS_VP_Variable &var) {
   char *tmp = (char*) var.memadr;
   dgusdisplay.WriteVariablePGM(var.VP, tmp, var.size, true);
@@ -210,8 +211,8 @@ void DGUSScreenHandler::DGUSLCD_SendStringToDisplayPGM(DGUS_VP_Variable &var) {
 
 #if ENABLED(PRINTCOUNTER)
 
-  // Send the accumulate print time to the display.
-  // It is using a hex display for that: It expects BSD coded data in the format xxyyzz
+  // Send the accumulate print time to the display.//将累计打印时间发送到显示器。
+  // It is using a hex display for that: It expects BSD coded data in the format xxyyzz//它使用十六进制显示：它期望BSD编码数据的格式为xxyyzz
   void DGUSScreenHandler::DGUSLCD_SendPrintAccTimeToDisplay(DGUS_VP_Variable &var) {
     printStatistics state = print_job_timer.getStats();
     char buf[22];
@@ -229,7 +230,7 @@ void DGUSScreenHandler::DGUSLCD_SendStringToDisplayPGM(DGUS_VP_Variable &var) {
 
 #endif
 
-// Send fan status value to the display.
+// Send fan status value to the display.//将风扇状态值发送到显示器。
 #if HAS_FAN
 
   void DGUSScreenHandler::DGUSLCD_SendFanStatusToDisplay(DGUS_VP_Variable &var) {
@@ -244,7 +245,7 @@ void DGUSScreenHandler::DGUSLCD_SendStringToDisplayPGM(DGUS_VP_Variable &var) {
 
 #endif
 
-// Send heater status value to the display.
+// Send heater status value to the display.//将加热器状态值发送至显示器。
 void DGUSScreenHandler::DGUSLCD_SendHeaterStatusToDisplay(DGUS_VP_Variable &var) {
   if (var.memadr) {
     DEBUG_ECHOPAIR(" DGUSLCD_SendHeaterStatusToDisplay ", var.VP);
@@ -258,14 +259,14 @@ void DGUSScreenHandler::DGUSLCD_SendHeaterStatusToDisplay(DGUS_VP_Variable &var)
 #if ENABLED(DGUS_UI_WAITING)
 
   void DGUSScreenHandler::DGUSLCD_SendWaitingStatusToDisplay(DGUS_VP_Variable &var) {
-    // In FYSETC UI design there are 10 statuses to loop
+    // In FYSETC UI design there are 10 statuses to loop//在FYSETC UI设计中，有10种状态需要循环
     static uint16_t period = 0;
     static uint16_t index = 0;
-    //DEBUG_ECHOPAIR(" DGUSLCD_SendWaitingStatusToDisplay ", var.VP);
-    //DEBUG_ECHOLNPAIR(" data ", swap16(index));
+    //DEBUG_ECHOPAIR(" DGUSLCD_SendWaitingStatusToDisplay ", var.VP);//调试回声对（“DGUSLCD_SendWaitingStatusToDisplay”，var.VP）；
+    //DEBUG_ECHOLNPAIR(" data ", swap16(index));//调试回声对（“数据”，swap16（索引））；
     if (period++ > DGUS_UI_WAITING_STATUS_PERIOD) {
       dgusdisplay.WriteVariable(var.VP, index);
-      //DEBUG_ECHOLNPAIR(" data ", swap16(index));
+      //DEBUG_ECHOLNPAIR(" data ", swap16(index));//调试回声对（“数据”，swap16（索引））；
       if (++index >= DGUS_UI_WAITING_STATUS) index = 0;
       period = 0;
     }
@@ -276,22 +277,22 @@ void DGUSScreenHandler::DGUSLCD_SendHeaterStatusToDisplay(DGUS_VP_Variable &var)
 #if ENABLED(SDSUPPORT)
 
   void DGUSScreenHandler::ScreenChangeHookIfSD(DGUS_VP_Variable &var, void *val_ptr) {
-    // default action executed when there is a SD card, but not printing
+    // default action executed when there is a SD card, but not printing//存在SD卡但未打印时执行的默认操作
     if (ExtUI::isMediaInserted() && !ExtUI::isPrintingFromMedia()) {
       ScreenChangeHook(var, val_ptr);
       dgusdisplay.RequestScreen(current_screen);
       return;
     }
 
-    // if we are printing, we jump to two screens after the requested one.
-    // This should host e.g a print pause / print abort / print resume dialog.
-    // This concept allows to recycle this hook for other file
+    // if we are printing, we jump to two screens after the requested one.//如果我们正在打印，则在请求的屏幕之后跳转到两个屏幕。
+    // This should host e.g a print pause / print abort / print resume dialog.//这应该会有一个打印暂停/打印中止/打印恢复对话框。
+    // This concept allows to recycle this hook for other file//这个概念允许为其他文件回收这个钩子
     if (ExtUI::isPrintingFromMedia() && !card.flag.abort_sd_printing) {
       GotoScreen(DGUSLCD_SCREEN_SDPRINTMANIPULATION);
       return;
     }
 
-    // Don't let the user in the dark why there is no reaction.
+    // Don't let the user in the dark why there is no reaction.//不要让用户不知道为什么没有反应。
     if (!ExtUI::isMediaInserted()) {
       setstatusmessagePGM(GET_TEXT(MSG_NO_MEDIA));
       return;
@@ -334,7 +335,7 @@ void DGUSScreenHandler::DGUSLCD_SendHeaterStatusToDisplay(DGUS_VP_Variable &var)
   }
 
   void DGUSScreenHandler::DGUSLCD_SD_PrintTune(DGUS_VP_Variable &var, void *val_ptr) {
-    if (!ExtUI::isPrintingFromMedia()) return; // avoid race condition when user stays in this menu and printer finishes.
+    if (!ExtUI::isPrintingFromMedia()) return; // avoid race condition when user stays in this menu and printer finishes.//当用户停留在此菜单中且打印机完成时，避免竞争条件。
     GotoScreen(DGUSLCD_SCREEN_SDPRINTTUNE);
   }
 
@@ -344,7 +345,7 @@ void DGUSScreenHandler::DGUSLCD_SendHeaterStatusToDisplay(DGUS_VP_Variable &var)
     SetupConfirmAction(nullptr);
     GotoScreen(DGUSLCD_SCREEN_POPUP);
   }
-#endif // SDSUPPORT
+#endif // SDSUPPORT//SDSUPPORT
 
 void DGUSScreenHandler::ScreenConfirmedOK(DGUS_VP_Variable &var, void *val_ptr) {
   DGUS_VP_Variable ramcopy;
@@ -384,7 +385,7 @@ void DGUSScreenHandler::ScreenChangeHookIfIdle(DGUS_VP_Variable &var, void *val_
 
 void DGUSScreenHandler::HandleAllHeatersOff(DGUS_VP_Variable &var, void *val_ptr) {
   thermalManager.disable_all_heaters();
-  ForceCompleteUpdate(); // hint to send all data.
+  ForceCompleteUpdate(); // hint to send all data.//提示发送所有数据。
 }
 
 void DGUSScreenHandler::HandleTemperatureChanged(DGUS_VP_Variable &var, void *val_ptr) {
@@ -416,9 +417,9 @@ void DGUSScreenHandler::HandleTemperatureChanged(DGUS_VP_Variable &var, void *va
     #endif
   }
 
-  // reply to display the new value to update the view if the new value was rejected by the Thermal Manager.
+  // reply to display the new value to update the view if the new value was rejected by the Thermal Manager.//reply显示新值，以在Thermal Manager拒绝新值时更新视图。
   if (newvalue != acceptedvalue && var.send_to_display_handler) var.send_to_display_handler(var);
-  skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel
+  skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel//不要在下次更新时覆盖该值，因为显示可能会并行自动递增
 }
 
 void DGUSScreenHandler::HandleFlowRateChanged(DGUS_VP_Variable &var, void *val_ptr) {
@@ -434,7 +435,7 @@ void DGUSScreenHandler::HandleFlowRateChanged(DGUS_VP_Variable &var, void *val_p
     }
 
     planner.set_flow(target_extruder, newvalue);
-    skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel
+    skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel//不要在下次更新时覆盖该值，因为显示可能会并行自动递增
   #else
     UNUSED(var); UNUSED(val_ptr);
   #endif
@@ -476,7 +477,7 @@ void DGUSScreenHandler::HandleMotorLockUnlock(DGUS_VP_Variable &var, void *val_p
   const int16_t lock = swap16(*(uint16_t*)val_ptr);
   strcpy_P(buf, lock ? PSTR("M18") : PSTR("M17"));
 
-  //DEBUG_ECHOPAIR(" ", buf);
+  //DEBUG_ECHOPAIR(" ", buf);//调试回声对（“，buf）；
   queue.enqueue_one_now(buf);
 }
 
@@ -511,7 +512,7 @@ void DGUSScreenHandler::HandleStepPerMMChanged(DGUS_VP_Variable &var, void *val_
   DEBUG_ECHOLNPAIR_F("value:", value);
   ExtUI::setAxisSteps_per_mm(value, axis);
   DEBUG_ECHOLNPAIR_F("value_set:", ExtUI::getAxisSteps_per_mm(axis));
-  skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel
+  skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel//不要在下次更新时覆盖该值，因为显示可能会并行自动递增
   return;
 }
 
@@ -534,7 +535,7 @@ void DGUSScreenHandler::HandleStepPerMMExtruderChanged(DGUS_VP_Variable &var, vo
   DEBUG_ECHOLNPAIR_F("value:", value);
   ExtUI::setAxisSteps_per_mm(value, extruder);
   DEBUG_ECHOLNPAIR_F("value_set:", ExtUI::getAxisSteps_per_mm(extruder));
-  skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel
+  skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel//不要在下次更新时覆盖该值，因为显示可能会并行自动递增
 }
 
 #if HAS_PID_HEATING
@@ -547,7 +548,7 @@ void DGUSScreenHandler::HandleStepPerMMExtruderChanged(DGUS_VP_Variable &var, vo
       default: break;
         #if ENABLED(PIDTEMP)
           #if HAS_HOTEND
-            case VP_PID_AUTOTUNE_E0: // Autotune Extruder 0
+            case VP_PID_AUTOTUNE_E0: // Autotune Extruder 0//自动调谐挤出机0
               sprintf_P(buf, PSTR("M303 E%d C5 S210 U1"), ExtUI::extruder_t::E0);
               break;
           #endif
@@ -571,7 +572,7 @@ void DGUSScreenHandler::HandleStepPerMMExtruderChanged(DGUS_VP_Variable &var, vo
       GotoScreen(DGUSLCD_SCREEN_WAITING);
     #endif
   }
-#endif // HAS_PID_HEATING
+#endif // HAS_PID_HEATING//有没有电加热
 
 #if HAS_BED_PROBE
   void DGUSScreenHandler::HandleProbeOffsetZChanged(DGUS_VP_Variable &var, void *val_ptr) {
@@ -579,7 +580,7 @@ void DGUSScreenHandler::HandleStepPerMMExtruderChanged(DGUS_VP_Variable &var, vo
 
     const float offset = float(int16_t(swap16(*(uint16_t*)val_ptr))) / 100.0f;
     ExtUI::setZOffset_mm(offset);
-    skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel
+    skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel//不要在下次更新时覆盖该值，因为显示可能会并行自动递增
     return;
   }
 #endif
@@ -628,32 +629,32 @@ void DGUSScreenHandler::HandleHeaterControl(DGUS_VP_Variable &var, void *val_ptr
     const uint16_t preheat_option = swap16(*(uint16_t*)val_ptr);
     switch (preheat_option) {
       default:
-      case 0: // Preheat PLA
+      case 0: // Preheat PLA//预热聚乳酸
         #if defined(PREHEAT_1_TEMP_HOTEND) && defined(PREHEAT_1_TEMP_BED)
           e_temp = PREHEAT_1_TEMP_HOTEND;
           TERN_(HAS_HEATED_BED, bed_temp = PREHEAT_1_TEMP_BED);
         #endif
         break;
-      case 1: // Preheat ABS
+      case 1: // Preheat ABS//预热腹肌
         #if defined(PREHEAT_2_TEMP_HOTEND) && defined(PREHEAT_2_TEMP_BED)
           e_temp = PREHEAT_2_TEMP_HOTEND;
           TERN_(HAS_HEATED_BED, bed_temp = PREHEAT_2_TEMP_BED);
         #endif
         break;
-      case 2: // Preheat PET
+      case 2: // Preheat PET//预热宠物
         #if defined(PREHEAT_3_TEMP_HOTEND) && defined(PREHEAT_3_TEMP_BED)
           e_temp = PREHEAT_3_TEMP_HOTEND;
           TERN_(HAS_HEATED_BED, bed_temp = PREHEAT_3_TEMP_BED);
         #endif
         break;
-      case 3: // Preheat FLEX
+      case 3: // Preheat FLEX//预热弯板
         #if defined(PREHEAT_4_TEMP_HOTEND) && defined(PREHEAT_4_TEMP_BED)
           e_temp = PREHEAT_4_TEMP_HOTEND;
           TERN_(HAS_HEATED_BED, bed_temp = PREHEAT_4_TEMP_BED);
         #endif
         break;
-      case 7: break; // Custom preheat
-      case 9: break; // Cool down
+      case 7: break; // Custom preheat//定制预热
+      case 9: break; // Cool down//冷静下来
     }
 
     switch (var.VP) {
@@ -672,11 +673,11 @@ void DGUSScreenHandler::HandleHeaterControl(DGUS_VP_Variable &var, void *val_ptr
         #endif
     }
 
-    // Go to the preheat screen to show the heating progress
+    // Go to the preheat screen to show the heating progress//转到预热屏幕以显示加热进度
     GotoScreen(DGUSLCD_SCREEN_PREHEAT);
   }
 
-#endif // DGUS_PREHEAT_UI
+#endif // DGUS_PREHEAT_UI//DGUS_预热_UI
 
 #if ENABLED(POWER_LOSS_RECOVERY)
 
@@ -720,10 +721,10 @@ void DGUSScreenHandler::UpdateScreenVPData() {
   if (!VPList) {
     DEBUG_ECHOLNPAIR(" NO SCREEN FOR: ", current_screen);
     ScreenComplete = true;
-    return; // nothing to do, likely a bug or boring screen.
+    return; // nothing to do, likely a bug or boring screen.//无事可做，可能是bug或无聊的屏幕。
   }
 
-  // Round-robin updating of all VPs.
+  // Round-robin updating of all VPs.//所有VP的循环更新。
   VPList += update_ptr;
 
   bool sent_one = false;
@@ -734,27 +735,27 @@ void DGUSScreenHandler::UpdateScreenVPData() {
       update_ptr = 0;
       DEBUG_ECHOLNPGM(" UpdateScreenVPData done");
       ScreenComplete = true;
-      return; // Screen completed.
+      return; // Screen completed.//屏幕已完成。
     }
 
     if (VP == skipVP) { skipVP = 0; continue; }
 
     DGUS_VP_Variable rcpy;
     if (populate_VPVar(VP, &rcpy)) {
-      uint8_t expected_tx = 6 + rcpy.size; // expected overhead is 6 bytes + payload.
-      // Send the VP to the display, but try to avoid overrunning the Tx Buffer.
-      // But send at least one VP, to avoid getting stalled.
+      uint8_t expected_tx = 6 + rcpy.size; // expected overhead is 6 bytes + payload.//预期开销为6字节+有效负载。
+      // Send the VP to the display, but try to avoid overrunning the Tx Buffer.//将VP发送至显示器，但尽量避免超出Tx缓冲区。
+      // But send at least one VP, to avoid getting stalled.//但至少派一名副总裁，以避免陷入停滞。
       if (rcpy.send_to_display_handler && (!sent_one || expected_tx <= dgusdisplay.GetFreeTxBuffer())) {
-        //DEBUG_ECHOPAIR(" calling handler for ", rcpy.VP);
+        //DEBUG_ECHOPAIR(" calling handler for ", rcpy.VP);//DEBUG_ECHOPAIR（“调用处理程序”，rcpy.VP）；
         sent_one = true;
         rcpy.send_to_display_handler(rcpy);
       }
       else {
-        // auto x=dgusdisplay.GetFreeTxBuffer();
-        //DEBUG_ECHOLNPAIR(" tx almost full: ", x);
-        //DEBUG_ECHOPAIR(" update_ptr ", update_ptr);
+        // auto x=dgusdisplay.GetFreeTxBuffer();//auto x=dgusdisplay.GetFreeTxBuffer（）；
+        //DEBUG_ECHOLNPAIR(" tx almost full: ", x);//调试回声对（“tx几乎满了：”，x）；
+        //DEBUG_ECHOPAIR(" update_ptr ", update_ptr);//调试回声对（“更新”，更新）；
         ScreenComplete = false;
-        return; // please call again!
+        return; // please call again!//请再打电话！
       }
     }
 
@@ -772,4 +773,4 @@ void DGUSDisplay::RequestScreen(DGUSLCD_Screens screen) {
   WriteVariable(0x84, gotoscreen, sizeof(gotoscreen));
 }
 
-#endif // HAS_DGUS_LCD
+#endif // HAS_DGUS_LCD//有液晶显示器吗

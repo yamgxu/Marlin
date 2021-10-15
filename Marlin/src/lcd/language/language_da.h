@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,7 +32,7 @@
 #define DISPLAY_CHARSET_ISO10646_1
 
 namespace Language_da {
-  using namespace Language_en; // Inherit undefined strings from English
+  using namespace Language_en; // Inherit undefined strings from English//从英语中继承未定义的字符串
 
   constexpr uint8_t    CHARSIZE                            = 2;
   PROGMEM Language_Str LANGUAGE                            = _UxGT("Danish");
@@ -41,7 +42,7 @@ namespace Language_da {
   PROGMEM Language_Str MSG_MEDIA_REMOVED                   = _UxGT("Kort fjernet");
   PROGMEM Language_Str MSG_MAIN                            = _UxGT("Menu");
   PROGMEM Language_Str MSG_DISABLE_STEPPERS                = _UxGT("Slå alle steppere fra");
-  PROGMEM Language_Str MSG_AUTO_HOME                       = _UxGT("Auto Home"); // G28
+  PROGMEM Language_Str MSG_AUTO_HOME                       = _UxGT("Auto Home"); // G28//G28
   PROGMEM Language_Str MSG_LEVEL_BED_WAITING               = _UxGT("Klik når du er klar");
   PROGMEM Language_Str MSG_LEVEL_BED_NEXT_POINT            = _UxGT("Næste punkt");
   PROGMEM Language_Str MSG_LEVEL_BED_DONE                  = _UxGT("Bed level er færdig!");
@@ -144,9 +145,9 @@ namespace Language_da {
   PROGMEM Language_Str MSG_ERR_MINTEMP                     = _UxGT("Fejl: Min temp");
   PROGMEM Language_Str MSG_HALTED                          = _UxGT("PRINTER STOPPET");
   PROGMEM Language_Str MSG_PLEASE_RESET                    = _UxGT("Reset Venligst");
-  PROGMEM Language_Str MSG_SHORT_DAY                       = _UxGT("d"); // Kun et bogstav
-  PROGMEM Language_Str MSG_SHORT_HOUR                      = _UxGT("h"); // Kun et bogstav
-  PROGMEM Language_Str MSG_SHORT_MINUTE                    = _UxGT("m"); // Kun et bogstav
+  PROGMEM Language_Str MSG_SHORT_DAY                       = _UxGT("d"); // Kun et bogstav//Kun et bogstav
+  PROGMEM Language_Str MSG_SHORT_HOUR                      = _UxGT("h"); // Kun et bogstav//Kun et bogstav
+  PROGMEM Language_Str MSG_SHORT_MINUTE                    = _UxGT("m"); // Kun et bogstav//Kun et bogstav
   PROGMEM Language_Str MSG_HEATING                         = _UxGT("Opvarmer...");
   PROGMEM Language_Str MSG_BED_HEATING                     = _UxGT("Opvarmer plade...");
   PROGMEM Language_Str MSG_DELTA_CALIBRATE                 = _UxGT("Delta Kalibrering");
@@ -193,11 +194,11 @@ namespace Language_da {
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_INSERT        = _UxGT(MSG_3_LINE("Indsæt filament", "og tryk på knap", "for at fortsætte..."));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_LOAD          = _UxGT(MSG_2_LINE("Vent på", "filament indtag"));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_RESUME        = _UxGT(MSG_2_LINE("Vent på at print", "fortsætter"));
-  #else // LCD_HEIGHT < 4
+  #else // LCD_HEIGHT < 4//LCD_高度<4
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_INIT          = _UxGT(MSG_1_LINE("Vent venligst..."));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_UNLOAD        = _UxGT(MSG_1_LINE("Udskyder..."));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_INSERT        = _UxGT(MSG_1_LINE("Indsæt og klik"));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_LOAD          = _UxGT(MSG_1_LINE("Indtager..."));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_RESUME        = _UxGT(MSG_1_LINE("Fortsætter..."));
-  #endif // LCD_HEIGHT < 4
+  #endif // LCD_HEIGHT < 4//LCD_高度<4
 }

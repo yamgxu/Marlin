@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -47,11 +48,11 @@
  */
 void GcodeSuite::M301() {
 
-  // multi-extruder PID patch: M301 updates or prints a single extruder's PID values
-  // default behavior (omitting E parameter) is to update for extruder 0 only
-  const uint8_t e = parser.byteval('E'); // extruder being updated
+  // multi-extruder PID patch: M301 updates or prints a single extruder's PID values//多挤出机PID修补程序：M301更新或打印单个挤出机的PID值
+  // default behavior (omitting E parameter) is to update for extruder 0 only//默认行为（省略E参数）仅针对挤出机0进行更新
+  const uint8_t e = parser.byteval('E'); // extruder being updated//挤出机正在更新
 
-  if (e < HOTENDS) { // catch bad input value
+  if (e < HOTENDS) { // catch bad input value//捕获错误的输入值
     if (parser.seen('P')) PID_PARAM(Kp, e) = parser.value_float();
     if (parser.seen('I')) PID_PARAM(Ki, e) = scalePID_i(parser.value_float());
     if (parser.seen('D')) PID_PARAM(Kd, e) = scalePID_d(parser.value_float());
@@ -70,7 +71,7 @@ void GcodeSuite::M301() {
 
     SERIAL_ECHO_START();
     #if ENABLED(PID_PARAMS_PER_HOTEND)
-      SERIAL_ECHOPAIR(" e:", e); // specify extruder in serial output
+      SERIAL_ECHOPAIR(" e:", e); // specify extruder in serial output//在串行输出中指定挤出机
     #endif
     SERIAL_ECHOPAIR(" p:", PID_PARAM(Kp, e),
                     " i:", unscalePID_i(PID_PARAM(Ki, e)),
@@ -88,4 +89,4 @@ void GcodeSuite::M301() {
     SERIAL_ERROR_MSG(STR_INVALID_EXTRUDER);
 }
 
-#endif // PIDTEMP
+#endif // PIDTEMP//皮特姆

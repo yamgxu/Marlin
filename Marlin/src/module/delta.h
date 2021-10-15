@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -77,7 +78,7 @@ void recalc_delta_settings();
  *   (see above)
  */
 
-// Macro to obtain the Z position of an individual tower
+// Macro to obtain the Z position of an individual tower//宏以获取单个塔的Z位置
 #define DELTA_Z(V,T) V.z + SQRT(          \
   delta_diagonal_rod_2_tower[T] - HYPOT2( \
       delta_tower[T].x - V.x,             \

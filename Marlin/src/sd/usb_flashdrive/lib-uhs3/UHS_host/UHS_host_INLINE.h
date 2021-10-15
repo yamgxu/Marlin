@@ -1,3 +1,4 @@
+/** translatione by yx */
 /* Copyright (C) 2015-2016 Andrew J. Kroll
    and
 Copyright (C) 2011 Circuits At Home, LTD. All rights reserved.
@@ -20,7 +21,7 @@ Contact information
 -------------------
 
 Circuits At Home, LTD
-Web      :  https://www.circuitsathome.com
+Web      :  https://www.circuitsathome.com//www.circuitsathome.com
 e-mail   :  support@circuitsathome.com
  */
 
@@ -132,18 +133,18 @@ uint8_t UHS_USB_HOST_BASE::doSoftReset(uint8_t parent, uint8_t port, uint8_t add
         uint8_t rcode = 0;
 
         if(parent == 0) {
-                // Send a bus reset on the root interface.
+                // Send a bus reset on the root interface.//在根接口上发送总线重置。
                 doHostReset();
         } else {
-                // reset parent port
+                // reset parent port//重置父端口
                 devConfig[parent]->ResetHubPort(port);
         }
 
-        //
-        // Many devices require a delay before setting the address here...
-        // We loop upon fails for up to 2 seconds instead.
-        // Most devices will be happy without a retry.
-        //
+        ////
+        // Many devices require a delay before setting the address here...//许多设备在设置地址之前需要延迟。。。
+        // We loop upon fails for up to 2 seconds instead.//相反，我们在失败后循环最多2秒。
+        // Most devices will be happy without a retry.//大多数设备无需重试即可正常运行。
+        ////
         uint8_t retries = 0;
         if(address) {
                 do {
@@ -168,10 +169,10 @@ uint8_t UHS_USB_HOST_BASE::doSoftReset(uint8_t parent, uint8_t port, uint8_t add
  *      GetDevDescr();
  *      reset;
  *      If there are no configuration descriptors {
- *              //
- *              // Note: I know of no device that does this.
- *              // I suppose there could be one though.
- *              //
+ *              ////
+ *              // Note: I know of no device that does this.//注：据我所知，没有任何设备能做到这一点。
+ *              // I suppose there could be one though.//我想可能会有一个。
+ *              ////
  *              try to enumerate.
  *      } else {
  *              last success count = 0
@@ -205,7 +206,7 @@ uint8_t UHS_USB_HOST_BASE::doSoftReset(uint8_t parent, uint8_t port, uint8_t add
  *                      will not enumerate without it. For devices that do not
  *                      need it, the additional reset is harmless. Here is an
  *                      example of one of these documents, see page Five:
- *                      https://www.ftdichip.com/Support/Documents/TechnicalNotes/TN_113_Simplified%20Description%20of%20USB%20Device%20Enumeration.pdf
+ *                      https://www.ftdichip.com/Support/Documents/TechnicalNotes/TN_113_Simplified%20Description%20of%20USB%20Device%20Enumeration.pdf//www.ftdichip.com/Support/Documents/TechnicalNotes/TN_113_Simplified%20%20USB%20设备%20Enumeration.pdf的说明%20
  *
  */
 
@@ -218,14 +219,14 @@ uint8_t UHS_USB_HOST_BASE::doSoftReset(uint8_t parent, uint8_t port, uint8_t add
  * @return Zero for success, or error code
  */
 uint8_t UHS_USB_HOST_BASE::Configuring(uint8_t parent, uint8_t port, uint8_t speed) {
-        //uint8_t bAddress = 0;
+        //uint8_t bAddress = 0;//uint8_t bAddress=0；
         HOST_DEBUG("\r\n\r\n\r\nConfiguring: parent = %i, port = %i, speed = %i\r\n", parent, port, speed);
         uint8_t rcode = 0;
         uint8_t retries = 0;
         uint8_t numinf = 0;
         uint8_t configs;
         UHS_Device *p = NULL;
-        //EpInfo epInfo; // cap at 16, this should be fairly reasonable.
+        //EpInfo epInfo; // cap at 16, this should be fairly reasonable.//EpInfo EpInfo；//上限为16，这应该是相当合理的。
         ENUMERATION_INFO ei;
         uint8_t bestconf = 0;
         uint8_t bestsuccess = 0;
@@ -234,7 +235,7 @@ uint8_t UHS_USB_HOST_BASE::Configuring(uint8_t parent, uint8_t port, uint8_t spe
 
 #if UHS_DEVICE_WINDOWS_USB_SPEC_VIOLATION_DESCRIPTOR_DEVICE
         const uint8_t biggest = 0x40;
-        // wrap in {} to throw away the 64 byte buffer when we are done with it
+        // wrap in {} to throw away the 64 byte buffer when we are done with it//在{}中换行以在使用完64字节缓冲区后将其丢弃
         {
                 uint8_t buf[biggest];
                 USB_FD_DEVICE_DESCRIPTOR *udd = reinterpret_cast<USB_FD_DEVICE_DESCRIPTOR *>(buf);
@@ -245,15 +246,15 @@ uint8_t UHS_USB_HOST_BASE::Configuring(uint8_t parent, uint8_t port, uint8_t spe
         USB_FD_CONFIGURATION_DESCRIPTOR *ucd = reinterpret_cast<USB_FD_CONFIGURATION_DESCRIPTOR *>(buf);
 #endif
 
-                //for(devConfigIndex = 0; devConfigIndex < UHS_HOST_MAX_INTERFACE_DRIVERS; devConfigIndex++) {
-                //        if((devConfig[devConfigIndex]->bAddress) && (!devConfig[devConfigIndex]->bPollEnable)) {
-                //                devConfig[devConfigIndex]->bAddress = 0;
-                //        }
-                //}
-                //        Serial.print("HOST USB Host @ 0x");
-                //        Serial.println((uint32_t)this, HEX);
-                //        Serial.print("HOST USB Host Address Pool @ 0x");
-                //        Serial.println((uint32_t)GetAddressPool(), HEX);
+                //for(devConfigIndex = 0; devConfigIndex < UHS_HOST_MAX_INTERFACE_DRIVERS; devConfigIndex++) {//对于（devConfigIndex=0；devConfigIndex<UHS\u主机\u最大接口\u驱动程序；devConfigIndex++）{
+                //        if((devConfig[devConfigIndex]->bAddress) && (!devConfig[devConfigIndex]->bPollEnable)) {//if（（devConfig[devConfig索引]->bAddress）&&（！devConfig[devConfig索引]->bPollEnable））{
+                //                devConfig[devConfigIndex]->bAddress = 0;//devConfig[devConfig索引]->bAddress=0；
+                //        }//        }
+                //}//}
+                //        Serial.print("HOST USB Host @ 0x");//串行打印（“主机USB主机@0x”）；
+                //        Serial.println((uint32_t)this, HEX);//Serial.println（（uint32_t）this，HEX）；
+                //        Serial.print("HOST USB Host Address Pool @ 0x");//串行打印（“主机USB主机地址池@0x”）；
+                //        Serial.println((uint32_t)GetAddressPool(), HEX);//Serial.println（（uint32_t）GetAddressPool（），十六进制）；
 
                 sof_delay(200);
                 p = addrPool.GetUsbDevicePtr(0);
@@ -265,11 +266,11 @@ uint8_t UHS_USB_HOST_BASE::Configuring(uint8_t parent, uint8_t port, uint8_t spe
                 p->speed = speed;
 #if UHS_DEVICE_WINDOWS_USB_SPEC_VIOLATION_DESCRIPTOR_DEVICE
 
-                p->epinfo[0][0].maxPktSize = 0x40; // Windows bug is expected.
-                // poison data
-                // udd->bMaxPacketSize0 = 0U;
+                p->epinfo[0][0].maxPktSize = 0x40; // Windows bug is expected.//预期会出现Windows错误。
+                // poison data//毒药数据
+                // udd->bMaxPacketSize0 = 0U;//udd->bMaxPacketSize0=0U；
 #else
-                p->epinfo[0][0].maxPktSize = 0x08; // USB Spec, start small, work your way up.
+                p->epinfo[0][0].maxPktSize = 0x08; // USB Spec, start small, work your way up.//USB规格，从小处开始，一路向上。
 #endif
 again:
                 memset((void *)buf, 0, biggest);
@@ -282,14 +283,14 @@ again:
 #endif
                 {
                         if(rcode == UHS_HOST_ERROR_JERR && retries < 4) {
-                                //
-                                // Some devices return JERR when plugged in.
-                                // Attempts to reinitialize the device usually works.
-                                //
-                                // I have a hub that will refuse to work and acts like
-                                // this unless external power is supplied.
-                                // So this may not always work, and you may be fooled.
-                                //
+                                ////
+                                // Some devices return JERR when plugged in.//某些设备在插入时返回JERR。
+                                // Attempts to reinitialize the device usually works.//尝试重新初始化设备通常有效。
+                                ////
+                                // I have a hub that will refuse to work and acts like//我有一个中心，会拒绝工作，表现得像
+                                // this unless external power is supplied.//除非提供了外部电源，否则这是正常的。
+                                // So this may not always work, and you may be fooled.//所以这可能并不总是有效的，你可能被愚弄了。
+                                ////
                                 sof_delay(100);
                                 retries++;
                                 goto again;
@@ -320,7 +321,7 @@ again:
                 }
 
                 p = addrPool.GetUsbDevicePtr(ei.address);
-                // set to 1 if you suspect address table corruption.
+                // set to 1 if you suspect address table corruption.//如果怀疑地址表损坏，请设置为1。
 #if 0
                 if(!p) {
                         return UHS_HOST_ERROR_NO_ADDRESS_IN_POOL;
@@ -337,7 +338,7 @@ again:
                         return rcode;
                 }
 
-                { // the { } wrapper saves on stack.
+                { // the { } wrapper saves on stack.//{}包装器保存在堆栈上。
                         HOST_DEBUG("DevDescr 2nd poll, bMaxPacketSize0:%u\r\n", udd->bMaxPacketSize0);
                         UHS_EpInfo dev1ep;
                         dev1ep.maxPktSize = udd->bMaxPacketSize0;
@@ -373,7 +374,7 @@ again:
                 ei.port = port;
                 configs = udd->bNumConfigurations;
 #if UHS_DEVICE_WINDOWS_USB_SPEC_VIOLATION_DESCRIPTOR_DEVICE
-        } // unwrapped, old large buf now invalid and discarded.
+        } // unwrapped, old large buf now invalid and discarded.//未包装的旧大布袋现在已经失效并丢弃。
 
         uint8_t buf[18];
         USB_FD_CONFIGURATION_DESCRIPTOR *ucd = reinterpret_cast<USB_FD_CONFIGURATION_DESCRIPTOR *>(buf);
@@ -386,7 +387,7 @@ again:
         }
 
         p = addrPool.GetUsbDevicePtr(ei.address);
-        // set to 1 if you suspect address table corruption.
+        // set to 1 if you suspect address table corruption.//如果怀疑地址表损坏，请设置为1。
 #if 0
         if(!p) {
                 return UHS_HOST_ERROR_NO_ADDRESS_IN_POOL;
@@ -406,13 +407,13 @@ again:
         if(configs < 1) {
                 HOST_DEBUG("No interfaces?!\r\n");
                 addrPool.FreeAddress(ei.address);
-                // rcode = TestInterface(&ei);
-                // Not implemented (yet)
+                // rcode = TestInterface(&ei);//rcode=测试界面（&ei）；
+                // Not implemented (yet)//尚未实施（尚未实施）
                 rcode = UHS_HOST_ERROR_DEVICE_NOT_SUPPORTED;
         } else {
                 HOST_DEBUG("configs: %i\r\n", configs);
                 for(uint8_t conf = 0; (!rcode) && (conf < configs); conf++) {
-                        // read the config descriptor into a buffer.
+                        // read the config descriptor into a buffer.//将配置描述符读入缓冲区。
                         rcode = getConfDescr(ei.address, sizeof (USB_FD_CONFIGURATION_DESCRIPTOR), conf, buf);
                         if(rcode) {
                                 HOST_DEBUG("Configuring error: %2.2x Can't get USB_FD_INTERFACE_DESCRIPTOR\r\n", rcode);
@@ -420,7 +421,7 @@ again:
                                 continue;
                         }
                         ei.currentconfig = conf;
-                        numinf = ucd->bNumInterfaces; // Does _not_ include alternates!
+                        numinf = ucd->bNumInterfaces; // Does _not_ include alternates!//不包括替补队员！
                         HOST_DEBUG("CONFIGURATION: %i, bNumInterfaces %i, wTotalLength %i\r\n", conf, numinf, ucd->wTotalLength);
                         uint8_t success = 0;
                         uint16_t inf = 0;
@@ -440,7 +441,7 @@ again:
                                 break;
                         }
                         for(; (numinf) && (!rcode); inf++) {
-                                // iterate for each interface on this config
+                                // iterate for each interface on this config//迭代此配置上的每个接口
                                 rcode = getNextInterface(&ei, pep, data, &left, &read, &offset);
                                 if(rcode == UHS_HOST_ERROR_END_OF_STREAM) {
                                         HOST_DEBUG("USB_INTERFACE END OF STREAM\r\n");
@@ -478,7 +479,7 @@ again:
         if(!rcode) {
                 bestconf++;
                 ei.currentconfig = bestconf;
-                numinf = ucd->bNumInterfaces; // Does _not_ include alternates!
+                numinf = ucd->bNumInterfaces; // Does _not_ include alternates!//不包括替补队员！
                 HOST_DEBUG("CONFIGURATION: %i, bNumInterfaces %i, wTotalLength %i\r\n", bestconf, numinf, ucd->wTotalLength);
                 if(!rcode) {
                         HOST_DEBUG("Best configuration is %i, enumerating interfaces.\r\n", bestconf);
@@ -498,7 +499,7 @@ again:
                                         HOST_DEBUG("Configuring error: %2.2x Can't get USB_FD_INTERFACE_DESCRIPTOR stream.\r\n", rcode);
                                 } else {
                                         for(; (numinf) && (!rcode); inf++) {
-                                                // iterate for each interface on this config
+                                                // iterate for each interface on this config//迭代此配置上的每个接口
                                                 rcode = getNextInterface(&ei, pep, data, &left, &read, &offset);
                                                 if(rcode == UHS_HOST_ERROR_END_OF_STREAM) {
                                                         ctrlReqClose(pep, UHS_bmREQ_GET_DESCR, left, ei.bMaxPacketSize0, data);
@@ -533,7 +534,7 @@ again:
                                 HOST_DEBUG("Driver %i ", devConfigIndex);
                                 if(!devConfig[devConfigIndex]) {
                                         HOST_DEBUG("no driver at this index.\r\n");
-                                        continue; // no driver
+                                        continue; // no driver//没有司机
                                 }
                                 HOST_DEBUG("@ %2.2x ", devConfig[devConfigIndex]->bAddress);
                                 if(devConfig[devConfigIndex]->bAddress) {
@@ -548,14 +549,14 @@ again:
                                                 }
                                         } else {
                                                 HOST_DEBUG("Already initialized.\r\n");
-                                                continue; // consumed
+                                                continue; // consumed//消耗
                                         }
                                 } else {
                                         HOST_DEBUG("Skipped\r\n");
                                 }
                         }
-#if 0 // defined(UHS_HID_LOADED)
-                        // Now do HID
+#if 0 // defined(UHS_HID_LOADED)//已定义（UHS\U HID\U加载）
+                        // Now do HID//现在你藏起来了吗
 #endif
                 }
         } else {
@@ -572,8 +573,8 @@ again:
  */
 void UHS_USB_HOST_BASE::ReleaseDevice(uint8_t addr) {
         if(addr) {
-#if 0 // defined(UHS_HID_LOADED)
-                // Release any HID children
+#if 0 // defined(UHS_HID_LOADED)//已定义（UHS\U HID\U加载）
+                // Release any HID children//释放所有隐藏的孩子
                 UHS_HID_Release(this, addr);
 #endif
                 for(uint8_t i = 0; i < UHS_HOST_MAX_INTERFACE_DRIVERS; i++) {
@@ -625,9 +626,9 @@ uint8_t UHS_USB_HOST_BASE::getStrDescr(uint8_t addr, uint16_t ns, uint8_t index,
         return ( ctrlReq(addr, mkSETUP_PKT8(UHS_bmREQ_GET_DESCR, USB_REQUEST_GET_DESCRIPTOR, index, USB_DESCRIPTOR_STRING, langid, ns), ns, dataptr));
 }
 
-//
-//set address
-//
+////
+//set address//设定地址
+////
 
 /**
  * Set the address of a device to a new address via endpoint Zero.
@@ -638,13 +639,13 @@ uint8_t UHS_USB_HOST_BASE::getStrDescr(uint8_t addr, uint16_t ns, uint8_t index,
  */
 uint8_t UHS_USB_HOST_BASE::setAddr(uint8_t oldaddr, uint8_t newaddr) {
         uint8_t rcode = ctrlReq(oldaddr, mkSETUP_PKT8(UHS_bmREQ_SET, USB_REQUEST_SET_ADDRESS, newaddr, 0x00, 0x0000, 0x0000), 0x0000, NULL);
-        sof_delay(300); // Older spec says you should wait at least 200ms
+        sof_delay(300); // Older spec says you should wait at least 200ms//旧的规范要求您至少要等待200毫秒
         return rcode;
 }
 
-//
-//set configuration
-//
+////
+//set configuration//设置配置
+////
 
 /**
  * Set the configuration for the device to use via endpoint Zero.
@@ -695,12 +696,12 @@ uint8_t UHS_USB_HOST_BASE::inTransfer(uint8_t addr, uint8_t ep, uint16_t *nbytes
 
         uint8_t rcode = SetAddress(addr, ep, &pep, nak_limit);
 
-        //        if(rcode) {
-        //                USBTRACE3("(USB::InTransfer) SetAddress Failed ", rcode, 0x81);
-        //                USBTRACE3("(USB::InTransfer) addr requested ", addr, 0x81);
-        //                USBTRACE3("(USB::InTransfer) ep requested ", ep, 0x81);
-        //                return rcode;
-        //        }
+        //        if(rcode) {//if（rcode）{
+        //                USBTRACE3("(USB::InTransfer) SetAddress Failed ", rcode, 0x81);//USBTRACE3（“USB:：InTransfer）设置地址失败”，rcode，0x81）；
+        //                USBTRACE3("(USB::InTransfer) addr requested ", addr, 0x81);//USBTRACE3（“请求的（USB:：Intrasfer）地址”，地址，0x81）；
+        //                USBTRACE3("(USB::InTransfer) ep requested ", ep, 0x81);//USBTRACE3（“请求的（USB:：Intrasfer）ep”，ep，0x81）；
+        //                return rcode;//返回rcode；
+        //        }//        }
         if(!rcode)
                 rcode = InTransfer(pep, nak_limit, nbytesptr, data);
         return rcode;
@@ -742,7 +743,7 @@ uint8_t UHS_USB_HOST_BASE::getNextInterface(ENUMERATION_INFO *ei, UHS_EpInfo *pe
         ei->interface.subklass = 0;
         ei->interface.protocol = 0;
         while(*left + *read) {
-                remain = data[*offset]; // bLength
+                remain = data[*offset]; // bLength//混合
                 while(remain < 2) {
                         rcode = getone(pep, left, read, data, offset);
                         if(rcode)
@@ -752,7 +753,7 @@ uint8_t UHS_USB_HOST_BASE::getNextInterface(ENUMERATION_INFO *ei, UHS_EpInfo *pe
                 rcode = getone(pep, left, read, data, offset);
                 if(rcode)
                         return rcode;
-                ty = data[*offset]; // bDescriptorType
+                ty = data[*offset]; // bDescriptorType//b脚本类型
                 HOST_DEBUG("bLength: %i ", remain);
                 HOST_DEBUG("bDescriptorType: %2.2x\r\n", ty);
                 remain--;
@@ -769,8 +770,8 @@ uint8_t UHS_USB_HOST_BASE::getNextInterface(ENUMERATION_INFO *ei, UHS_EpInfo *pe
                         rcode = getone(pep, left, read, data, offset);
                         if(rcode)
                                 return rcode;
-                        // Now at iInterface
-                        // Get endpoints.
+                        // Now at iInterface//现在面对面
+                        // Get endpoints.//获取端点。
                         HOST_DEBUG("Getting %i endpoints\r\n", ei->interface.numep);
                         while(epc < ei->interface.numep) {
                                 rcode = getone(pep, left, read, data, offset);
@@ -778,7 +779,7 @@ uint8_t UHS_USB_HOST_BASE::getNextInterface(ENUMERATION_INFO *ei, UHS_EpInfo *pe
                                         HOST_DEBUG("ENDPOINT DESCRIPTOR DIED WAY EARLY\r\n");
                                         return rcode;
                                 }
-                                remain = data[*offset]; // bLength
+                                remain = data[*offset]; // bLength//混合
                                 while(remain < 2) {
                                         rcode = getone(pep, left, read, data, offset);
                                         if(rcode)
@@ -790,7 +791,7 @@ uint8_t UHS_USB_HOST_BASE::getNextInterface(ENUMERATION_INFO *ei, UHS_EpInfo *pe
                                         HOST_DEBUG("ENDPOINT DESCRIPTOR DIED EARLY\r\n");
                                         return rcode;
                                 }
-                                ty = data[*offset]; // bDescriptorType
+                                ty = data[*offset]; // bDescriptorType//b脚本类型
                                 HOST_DEBUG("bLength: %i ", remain);
                                 HOST_DEBUG("bDescriptorType: %2.2x\r\n", ty);
                                 remain -= 2;
@@ -818,7 +819,7 @@ uint8_t UHS_USB_HOST_BASE::getNextInterface(ENUMERATION_INFO *ei, UHS_EpInfo *pe
                                 remain = 0;
                         }
                         remain = 1;
-                        // queue ahead, but do not report if error.
+                        // queue ahead, but do not report if error.//请提前排队，但如果出现错误，请不要报告。
                         rcode = eat(pep, left, read, data, offset, &remain);
                         if(!ei->interface.numep && rcode) {
                                 return rcode;
@@ -863,13 +864,13 @@ uint8_t UHS_USB_HOST_BASE::seekInterface(ENUMERATION_INFO *ei, uint16_t inf, USB
         HOST_DEBUG("\r\nGetting interface: %i\r\n", inf);
         inf++;
         while(cinf != inf && (left + read)) {
-                //HOST_DEBUG("getInterface: cinf: %i inf: %i left: %i read: %i offset: %i remain %i\r\n", cinf, inf, left, read, offset, remain);
-                // Go past current descriptor
+                //HOST_DEBUG("getInterface: cinf: %i inf: %i left: %i read: %i offset: %i remain %i\r\n", cinf, inf, left, read, offset, remain);//主机调试（“getInterface:cinf:%i inf:%i left:%i read:%i offset:%i reserve%i\r\n”，cinf，inf，left，read，offset，reserve）；
+                // Go past current descriptor//越过当前描述符
                 HOST_DEBUG("Skip: %i\r\n", remain);
                 rcode = eat(pep, &left, &read, data, &offset, &remain);
                 if(rcode)
                         return rcode;
-                remain = data[offset]; // bLength
+                remain = data[offset]; // bLength//混合
                 while(remain < 2) {
                         rcode = getone(pep, &left, &read, data, &offset);
                         if(rcode)
@@ -879,7 +880,7 @@ uint8_t UHS_USB_HOST_BASE::seekInterface(ENUMERATION_INFO *ei, uint16_t inf, USB
                 rcode = getone(pep, &left, &read, data, &offset);
                 if(rcode)
                         return rcode;
-                ty = data[offset]; // bDescriptorType
+                ty = data[offset]; // bDescriptorType//b脚本类型
                 HOST_DEBUG("bLength: %i ", remain);
                 HOST_DEBUG("bDescriptorType: %2.2x\r\n", ty);
                 remain--;
@@ -887,7 +888,7 @@ uint8_t UHS_USB_HOST_BASE::seekInterface(ENUMERATION_INFO *ei, uint16_t inf, USB
                         HOST_DEBUG("INTERFACE DESCRIPTOR: %i\r\n", cinf);
                         cinf++;
                         if(cinf == inf) {
-                                // Get the interface descriptor information.
+                                // Get the interface descriptor information.//获取接口描述符信息。
                                 ptr = (uint8_t *)(&(ei->interface.bInterfaceNumber));
                                 for(int i = 0; i < 6; i++) {
                                         rcode = getone(pep, &left, &read, data, &offset);
@@ -899,15 +900,15 @@ uint8_t UHS_USB_HOST_BASE::seekInterface(ENUMERATION_INFO *ei, uint16_t inf, USB
                                 rcode = getone(pep, &left, &read, data, &offset);
                                 if(rcode)
                                         return rcode;
-                                // Now at iInterface
+                                // Now at iInterface//现在面对面
                                 remain = 0;
-                                // Get endpoints.
+                                // Get endpoints.//获取端点。
                                 HOST_DEBUG("Getting %i endpoints\r\n", ei->interface.numep);
                                 while(epc < ei->interface.numep) {
                                         rcode = getone(pep, &left, &read, data, &offset);
                                         if(rcode)
                                                 return rcode;
-                                        remain = data[offset]; // bLength
+                                        remain = data[offset]; // bLength//混合
                                         while(remain < 2) {
                                                 rcode = getone(pep, &left, &read, data, &offset);
                                                 if(rcode)
@@ -917,7 +918,7 @@ uint8_t UHS_USB_HOST_BASE::seekInterface(ENUMERATION_INFO *ei, uint16_t inf, USB
                                         rcode = getone(pep, &left, &read, data, &offset);
                                         if(rcode)
                                                 return rcode;
-                                        ty = data[offset]; // bDescriptorType
+                                        ty = data[offset]; // bDescriptorType//b脚本类型
                                         HOST_DEBUG("bLength: %i ", remain);
                                         HOST_DEBUG("bDescriptorType: %2.2x\r\n", ty);
                                         remain--;
@@ -953,7 +954,7 @@ uint8_t UHS_USB_HOST_BASE::getone(UHS_EpInfo *pep, uint16_t *left, uint16_t *rea
         if(*offset < *read) {
                 return 0;
         } else if(*left > 0) {
-                // uint16_t num = *left;
+                // uint16_t num = *left;//uint16_t num=*左；
                 uint16_t num = pep->maxPktSize;
                 if(num > *left) num = *left;
                 *offset = 0;
@@ -981,10 +982,10 @@ uint8_t UHS_USB_HOST_BASE::eat(UHS_EpInfo *pep, uint16_t *left, uint16_t *read, 
 }
 
 uint8_t UHS_USB_HOST_BASE::ctrlReq(uint8_t addr, uint64_t Request, uint16_t nbytes, uint8_t *dataptr) {
-        //bool direction = bmReqType & 0x80; //request direction, IN or OUT
+        //bool direction = bmReqType & 0x80; //request direction, IN or OUT//布尔方向=bmReqType&0x80//请求方向，向内或向外
         uint8_t rcode = 0;
 
-        //Serial.println();
+        //Serial.println();//Serial.println（）；
         UHS_EpInfo *pep = ctrlReqOpen(addr, Request, dataptr);
         if(!pep) {
                 HOST_DEBUG("ctrlReq1: ERROR_NULL_EPINFO addr: %d\r\n", addr);
@@ -992,21 +993,21 @@ uint8_t UHS_USB_HOST_BASE::ctrlReq(uint8_t addr, uint64_t Request, uint16_t nbyt
         }
         uint8_t rt = (uint8_t)(Request & 0xFFU);
 
-        //        Serial.println("Opened");
+        //        Serial.println("Opened");//序列号。打印号（“打开”）；
         uint16_t left = (uint16_t)(Request >> 48) /*total*/;
         if(dataptr != NULL) {
-                //data stage
+                //data stage//数据阶段
                 if((rt & 0x80) == 0x80) {
-                        //IN transfer
+                        //IN transfer//转学
                         while(left) {
-                                // Bytes read into buffer
+                                // Bytes read into buffer//读入缓冲区的字节数
                                 uint16_t read = nbytes;
                                 HOST_DEBUG("ctrlReq2: left: %i, read:%i, nbytes %i\r\n", left, read, nbytes);
                                 rcode = ctrlReqRead(pep, &left, &read, nbytes, dataptr);
 
 #if UHS_DEVICE_WINDOWS_USB_SPEC_VIOLATION_DESCRIPTOR_DEVICE
                                 HOST_DEBUG("RESULT: 0x%2.2x 0x%2.2x 0x%2.2x 0x%8.8lx%8.8lx\r\n", rcode, addr, read, (uint32_t)((Request>>32)&0xFFFFFFFFLU), (uint32_t)(Request&0xFFFFFFFFLU));
-                                // Should only be used for GET_DESCRIPTOR USB_DESCRIPTOR_DEVICE
+                                // Should only be used for GET_DESCRIPTOR USB_DESCRIPTOR_DEVICE//应仅用于获取描述符USB描述符设备
                                 constexpr uint32_t req_match = ((uint32_t)USB_DESCRIPTOR_DEVICE      << 24) |
                                                                ((uint32_t)USB_REQUEST_GET_DESCRIPTOR <<  8);
                                 const     uint32_t req_found = Request & 0xFF00FF00ul;
@@ -1022,20 +1023,20 @@ uint8_t UHS_USB_HOST_BASE::ctrlReq(uint8_t addr, uint64_t Request, uint16_t nbyt
                                 }
                         }
                 } else {
-                        // OUT transfer
+                        // OUT transfer//转出
                         rcode = OutTransfer(pep, 0, nbytes, dataptr);
                 }
                 if(rcode) {
-                        //return error
+                        //return error//返回错误
                         return ( rcode);
                 }
         }
 
-        //        Serial.println("Close Phase");
-        //        Serial.flush();
-        // Status stage
+        //        Serial.println("Close Phase");//序列号。println（“关闭阶段”）；
+        //        Serial.flush();//Serial.flush（）；
+        // Status stage//状态阶段
         rcode = ctrlReqClose(pep, rt, left, nbytes, dataptr);
-        //        Serial.println("Closed");
+        //        Serial.println("Closed");//序列号。打印号（“已关闭”）；
         return rcode;
 }
 
@@ -1053,11 +1054,11 @@ uint8_t UHS_USB_HOST_BASE::TestInterface(ENUMERATION_INFO *ei) {
         for(devConfigIndex = 0; devConfigIndex < UHS_HOST_MAX_INTERFACE_DRIVERS; devConfigIndex++) {
                 if(!devConfig[devConfigIndex]) {
                         HOST_DEBUG("No driver at index %i\r\n", devConfigIndex);
-                        continue; // no driver
+                        continue; // no driver//没有司机
                 }
                 if(devConfig[devConfigIndex]->bAddress) {
                         HOST_DEBUG("Driver %i is already consumed @ %2.2x\r\n", devConfigIndex, devConfig[devConfigIndex]->bAddress);
-                        continue; // consumed
+                        continue; // consumed//消耗
                 }
 
                 if(devConfig[devConfigIndex]->OKtoEnumerate(ei)) {
@@ -1067,10 +1068,10 @@ uint8_t UHS_USB_HOST_BASE::TestInterface(ENUMERATION_INFO *ei) {
         }
         if(devConfigIndex == UHS_HOST_MAX_INTERFACE_DRIVERS) {
                 rcode = UHS_HOST_ERROR_DEVICE_NOT_SUPPORTED;
-#if 0 // defined(UHS_HID_LOADED)
-                // Check HID here, if it is, then lie
+#if 0 // defined(UHS_HID_LOADED)//已定义（UHS\U HID\U加载）
+                // Check HID here, if it is, then lie//检查隐藏在这里，如果是，那么就躺下
                 if(ei->klass == UHS_USB_CLASS_HID) {
-                        devConfigIndex = UHS_HID_INDEX; // for debugging, otherwise this has no use.
+                        devConfigIndex = UHS_HID_INDEX; // for debugging, otherwise this has no use.//对于调试，否则这没有用。
                         rcode = 0;
                 }
 #endif
@@ -1085,8 +1086,8 @@ uint8_t UHS_USB_HOST_BASE::enumerateInterface(ENUMERATION_INFO *ei) {
 
         HOST_DEBUG("AttemptConfig: parent = %i, port = %i\r\n", ei->parent, ei->port);
 
-#if 0 // defined(UHS_HID_LOADED)
-        // Check HID here, if it is, then lie
+#if 0 // defined(UHS_HID_LOADED)//已定义（UHS\U HID\U加载）
+        // Check HID here, if it is, then lie//检查隐藏在这里，如果是，那么就躺下
         if(ei->klass == UHS_USB_CLASS_HID || ei->interface.klass == UHS_USB_CLASS_HID) {
                 UHS_HID_SetUSBInterface(this, ENUMERATION_INFO * ei);
                 devConfigIndex = UHS_HID_INDEX;
@@ -1095,11 +1096,11 @@ uint8_t UHS_USB_HOST_BASE::enumerateInterface(ENUMERATION_INFO *ei) {
                 for(devConfigIndex = 0; devConfigIndex < UHS_HOST_MAX_INTERFACE_DRIVERS; devConfigIndex++) {
                         if(!devConfig[devConfigIndex]) {
                                 HOST_DEBUG("No driver at index %i\r\n", devConfigIndex);
-                                continue; // no driver
+                                continue; // no driver//没有司机
                         }
                         if(devConfig[devConfigIndex]->bAddress) {
                                 HOST_DEBUG("Driver %i is already consumed @ %2.2x\r\n", devConfigIndex, devConfig[devConfigIndex]->bAddress);
-                                continue; // consumed
+                                continue; // consumed//消耗
                         }
 
                         if(devConfig[devConfigIndex]->OKtoEnumerate(ei)) {
@@ -1112,9 +1113,9 @@ uint8_t UHS_USB_HOST_BASE::enumerateInterface(ENUMERATION_INFO *ei) {
 };
 
 
-////////////////////////////////////////////////////////////////////////////////
-// Vendor Specific Interface Class
-////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Vendor Specific Interface Class//特定于供应商的接口类
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #if 0
 /**
@@ -1164,9 +1165,9 @@ uint8_t UHS_NI UHS_VSI::SetInterface(ENUMERATION_INFO *ei) {
 }
 #endif
 
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 #if 0
@@ -1181,7 +1182,7 @@ uint8_t UHS_USB_HOST_BASE::DefaultAddressing(uint8_t parent, uint8_t port, uint8
         uint8_t rcode;
         UHS_Device *p0 = NULL, *p = NULL;
 
-        // Get pointer to pseudo device with address 0 assigned
+        // Get pointer to pseudo device with address 0 assigned//获取指向已分配地址0的伪设备的指针
         p0 = addrPool.GetUsbDevicePtr(0);
 
         if(!p0)
@@ -1192,7 +1193,7 @@ uint8_t UHS_USB_HOST_BASE::DefaultAddressing(uint8_t parent, uint8_t port, uint8
 
         p0->speed = speed;
 
-        // Allocate new address according to device class
+        // Allocate new address according to device class//根据设备类别分配新地址
         uint8_t bAddress = addrPool.AllocAddress(parent, false, port);
 
         if(!bAddress)
@@ -1205,7 +1206,7 @@ uint8_t UHS_USB_HOST_BASE::DefaultAddressing(uint8_t parent, uint8_t port, uint8
 
         p->speed = speed;
 
-        // Assign new address to the device
+        // Assign new address to the device//为设备分配新地址
         rcode = setAddr(0, bAddress);
 
         if(rcode) {

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -36,17 +37,17 @@
 
 #ifndef TEMP_0_PIN
   #if TEMP_SENSOR_0 == -1
-    #define TEMP_0_PIN                        10  // Analog Input (connector *K1* on Tango thermocouple ADD ON is used)
+    #define TEMP_0_PIN                        10  // Analog Input (connector *K1* on Tango thermocouple ADD ON is used)//模拟输入（使用Tango热电偶附加组件上的连接器*K1*）
   #else
-    #define TEMP_0_PIN                        15  // Analog Input (default connector for thermistor *T0* on rumba board is used)
+    #define TEMP_0_PIN                        15  // Analog Input (default connector for thermistor *T0* on rumba board is used)//模拟输入（使用伦巴板上热敏电阻*T0*的默认连接器）
   #endif
 #endif
 
 #ifndef TEMP_1_PIN
   #if TEMP_SENSOR_1 == -1
-    #define TEMP_1_PIN                         9  // Analog Input (connector *K2* on Tango thermocouple ADD ON is used)
+    #define TEMP_1_PIN                         9  // Analog Input (connector *K2* on Tango thermocouple ADD ON is used)//模拟输入（使用Tango热电偶附加组件上的连接器*K2*）
   #else
-    #define TEMP_1_PIN                        14  // Analog Input (default connector for thermistor *T1* on rumba board is used)
+    #define TEMP_1_PIN                        14  // Analog Input (default connector for thermistor *T1* on rumba board is used)//模拟输入（使用伦巴板上热敏电阻*T1*的默认连接器）
   #endif
 #endif
 

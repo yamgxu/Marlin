@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -58,7 +59,7 @@ void GcodeSuite::M150() {
     #if ENABLED(NEOPIXEL2_SEPARATE)
       int8_t brightness, unit = parser.intval('S', -1);
       switch (unit) {
-        case -1: neo2.neoindex = index; // fall-thru
+        case -1: neo2.neoindex = index; // fall-thru//跌破
         case  0:  neo.neoindex = index; brightness =  neo.brightness(); break;
         case  1: neo2.neoindex = index; brightness = neo2.brightness(); break;
       }
@@ -83,9 +84,9 @@ void GcodeSuite::M150() {
     }
   #endif
 
-  // If 'S' is not specified use both
+  // If 'S' is not specified use both//如果未指定“S”，请同时使用这两个选项
   leds.set_color(color);
   TERN_(NEOPIXEL2_SEPARATE, leds2.set_color(color));
 }
 
-#endif // HAS_COLOR_LEDS
+#endif // HAS_COLOR_LEDS//有彩色发光二极管

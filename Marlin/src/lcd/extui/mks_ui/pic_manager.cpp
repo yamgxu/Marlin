@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -42,7 +43,7 @@ extern uint16_t DeviceCode;
 #endif
 
 static const char assets[][LONG_FILENAME_LENGTH] = {
-  // Homing screen
+  // Homing screen//归位屏幕
   "bmp_zeroAll.bin",
   "bmp_zero.bin",
   "bmp_zeroX.bin",
@@ -50,7 +51,7 @@ static const char assets[][LONG_FILENAME_LENGTH] = {
   "bmp_zeroZ.bin",
   "bmp_manual_off.bin",
 
-  // Tool screen
+  // Tool screen//工具屏幕
   "bmp_preHeat.bin",
   "bmp_extruct.bin",
   "bmp_mov.bin",
@@ -58,7 +59,7 @@ static const char assets[][LONG_FILENAME_LENGTH] = {
   "bmp_filamentchange.bin",
   "bmp_more.bin",
 
-  // Fan screen
+  // Fan screen//风扇滤网
   "bmp_Add.bin",
   "bmp_Dec.bin",
   "bmp_speed255.bin",
@@ -70,7 +71,7 @@ static const char assets[][LONG_FILENAME_LENGTH] = {
   "bmp_step5_degree.bin",
   "bmp_step10_degree.bin",
 
-  // Extrusion screen
+  // Extrusion screen//挤压筛
   "bmp_in.bin",
   "bmp_out.bin",
   "bmp_extru1.bin",
@@ -84,15 +85,15 @@ static const char assets[][LONG_FILENAME_LENGTH] = {
   "bmp_step5_mm.bin",
   "bmp_step10_mm.bin",
 
-  // Select file screen
+  // Select file screen//选择文件屏幕
   "bmp_pageUp.bin",
   "bmp_pageDown.bin",
-  "bmp_back.bin", //TODO: why two back buttons? Why not just one? (return / back)
+  "bmp_back.bin", //TODO: why two back buttons? Why not just one? (return / back)//TODO:为什么有两个后退按钮？为什么不一个呢？（返回/返回）
   "bmp_dir.bin",
   "bmp_file.bin",
 
-  // Move motor screen
-  // TODO: 6 equal icons, just in diffenct rotation... it may be optimized too
+  // Move motor screen//移动电机屏幕
+  // TODO: 6 equal icons, just in diffenct rotation... it may be optimized too//待办事项：6个相等的图标，只是在不同的旋转。。。它也可以被优化
   "bmp_xAdd.bin",
   "bmp_xDec.bin",
   "bmp_yAdd.bin",
@@ -103,7 +104,7 @@ static const char assets[][LONG_FILENAME_LENGTH] = {
   "bmp_step_move1.bin",
   "bmp_step_move10.bin",
 
-  // Operation screen
+  // Operation screen//操作屏幕
   "bmp_auto_off.bin",
   "bmp_speed.bin",
   "bmp_fan.bin",
@@ -111,7 +112,7 @@ static const char assets[][LONG_FILENAME_LENGTH] = {
   "bmp_extrude_opr.bin",
   "bmp_move_opr.bin",
 
-  // Change speed screen
+  // Change speed screen//变速屏
   "bmp_step1_percent.bin",
   "bmp_step5_percent.bin",
   "bmp_step10_percent.bin",
@@ -120,7 +121,7 @@ static const char assets[][LONG_FILENAME_LENGTH] = {
   "bmp_mov_sel.bin",
   "bmp_speed_extruct.bin",
 
-  // Printing screen
+  // Printing screen//印刷网
   "bmp_pause.bin",
   "bmp_resume.bin",
   "bmp_stop.bin",
@@ -134,7 +135,7 @@ static const char assets[][LONG_FILENAME_LENGTH] = {
   "bmp_zpos_state.bin",
   "bmp_operate.bin",
 
-  // Manual Level screen (only if auto level is disabled)
+  // Manual Level screen (only if auto level is disabled)//手动水平屏幕（仅当禁用自动水平时）
   #if DISABLED(AUTO_BED_LEVELING_BILINEAR)
     "bmp_leveling1.bin",
     "bmp_leveling2.bin",
@@ -143,7 +144,7 @@ static const char assets[][LONG_FILENAME_LENGTH] = {
     "bmp_leveling5.bin",
   #endif
 
-  // Language Select screen
+  // Language Select screen//语言选择屏幕
   #if HAS_LANG_SELECT_SCREEN
     "bmp_language.bin",
     "bmp_simplified_cn.bin",
@@ -160,9 +161,9 @@ static const char assets[][LONG_FILENAME_LENGTH] = {
     "bmp_french_sel.bin",
     "bmp_italy.bin",
     "bmp_italy_sel.bin",
-  #endif // HAS_LANG_SELECT_SCREEN
+  #endif // HAS_LANG_SELECT_SCREEN//有“语言选择”屏幕吗
 
-  // G-code preview
+  // G-code preview//G代码预览
   #if HAS_GCODE_DEFAULT_VIEW_IN_FLASH
     "bmp_preview.bin",
   #endif
@@ -171,18 +172,18 @@ static const char assets[][LONG_FILENAME_LENGTH] = {
     "bmp_logo.bin",
   #endif
 
-  // Settings screen
+  // Settings screen//设置屏幕
   "bmp_about.bin",
   "bmp_eeprom_settings.bin",
   "bmp_machine_para.bin",
   "bmp_function1.bin",
 
-  // Start screen
+  // Start screen//启动屏幕
   "bmp_printing.bin",
   "bmp_set.bin",
   "bmp_tool.bin",
 
-  // Base icons
+  // Base icons//基本图标
   "bmp_arrow.bin",
   "bmp_back70x40.bin",
   "bmp_value_blank.bin",
@@ -192,24 +193,24 @@ static const char assets[][LONG_FILENAME_LENGTH] = {
   "bmp_return.bin",
 
   #if ENABLED(MKS_WIFI_MODULE)
-    // Wifi screen
+    // Wifi screen//Wifi屏幕
     "bmp_wifi.bin",
     "bmp_cloud.bin",
   #endif
 
   #if ENABLED(MULTI_VOLUME)
     "bmp_usb_disk.bin",
-    // "bmp_usb_disk_sel.bin",
+    // "bmp_usb_disk_sel.bin",//“bmp\U usb\U磁盘\U选择箱”，
     "bmp_sd.bin",
-    // "bmp_sd_sel.bin",
+    // "bmp_sd_sel.bin",//“bmp_sd_sel.bin”，
   #endif
 
-  // Babystep screen
+  // Babystep screen//婴儿步筛
   "bmp_baby_move0_01.bin",
   "bmp_baby_move0_05.bin",
   "bmp_baby_move0_1.bin",
 
-  // More screen
+  // More screen//更多屏幕
   "bmp_custom1.bin",
   "bmp_custom2.bin",
   "bmp_custom3.bin",
@@ -266,12 +267,12 @@ const char *bakPath = "_assets";
 void spiFlashErase_PIC() {
   volatile uint32_t pic_sectorcnt = 0;
   W25QXX.init(SPI_QUARTER_SPEED);
-  //erase 0x001000 -64K
+  //erase 0x001000 -64K//擦除0x001000-64K
   for (pic_sectorcnt = 0; pic_sectorcnt < (64 - 4) / 4; pic_sectorcnt++) {
     watchdog_refresh();
     W25QXX.SPI_FLASH_SectorErase(PICINFOADDR + pic_sectorcnt * 4 * 1024);
   }
-  //erase 64K -- 6M
+  //erase 64K -- 6M//擦除64K--6M
   for (pic_sectorcnt = 0; pic_sectorcnt < (PIC_SIZE_xM * 1024 / 64 - 1); pic_sectorcnt++) {
     watchdog_refresh();
     W25QXX.SPI_FLASH_BlockErase((pic_sectorcnt + 1) * 64 * 1024);
@@ -505,7 +506,7 @@ uint32_t Pic_Info_Write(uint8_t *P_name, uint32_t P_size) {
       disp_assets_update_progress("Reading files...");
       dir_t d;
       while (dir.readDir(&d, card.longFilename) > 0) {
-        // If we dont get a long name, but gets a short one, try it
+        // If we dont get a long name, but gets a short one, try it//如果我们没有一个长名字，但是有一个短名字，试试看
         if (card.longFilename[0] == 0 && d.name[0] != 0)
           dosName2LongName((const char*)d.name, card.longFilename);
         if (card.longFilename[0] == 0) continue;
@@ -548,7 +549,7 @@ uint32_t Pic_Info_Write(uint8_t *P_name, uint32_t P_size) {
     void spi_flash_read_test() { W25QXX.SPI_FLASH_BufferRead(public_buf, UNIGBK_FLASH_ADDR, BMP_WRITE_BUF_LEN); }
   #endif
 
-#endif // SDSUPPORT
+#endif // SDSUPPORT//SDSUPPORT
 
 void Pic_Read(uint8_t *Pname, uint8_t *P_Rbuff) {
   uint8_t i, j;
@@ -566,7 +567,7 @@ void Pic_Read(uint8_t *Pname, uint8_t *P_Rbuff) {
       W25QXX.SPI_FLASH_BufferRead(&PIC.name[j], PIC_NAME_ADDR + tmp_cnt, 1);
       tmp_cnt++;
     } while (PIC.name[j++] != '\0');
-    //pic size
+    //pic size//图片大小
     W25QXX.SPI_FLASH_BufferRead(PIC.size.bytes, PIC_SIZE_ADDR + i * 4, 4);
 
     if ((strcmp((char*)Pname, (char*)PIC.name)) == 0) {
@@ -624,4 +625,4 @@ void default_view_Read(uint8_t *default_view_Rbuff, uint32_t default_view_Readsi
   }
 #endif
 
-#endif // HAS_TFT_LVGL_UI
+#endif // HAS_TFT_LVGL_UI//有TFT\U LVGL\U用户界面

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  *
@@ -31,7 +32,7 @@
 #ifdef ADAFRUIT_GRAND_CENTRAL_M4
   #include "MarlinSerial_AGCM4.h"
 
-  // Serial ports
+  // Serial ports//串行端口
   typedef ForwardSerial1Class< decltype(Serial) > DefaultSerial1;
   typedef ForwardSerial1Class< decltype(Serial1) > DefaultSerial2;
   typedef ForwardSerial1Class< decltype(Serial2) > DefaultSerial3;
@@ -85,72 +86,72 @@
     #endif
   #endif
 
-#endif // ADAFRUIT_GRAND_CENTRAL_M4
+#endif // ADAFRUIT_GRAND_CENTRAL_M4//ADAFRUIT_GRAND_CENTRAL_M4
 
 typedef int8_t pin_t;
 
 #define SHARED_SERVOS HAS_SERVOS
 #define HAL_SERVO_LIB Servo
 
-//
-// Interrupts
-//
+////
+// Interrupts//打断
+////
 #define CRITICAL_SECTION_START()  uint32_t primask = __get_PRIMASK(); __disable_irq()
 #define CRITICAL_SECTION_END()    if (!primask) __enable_irq()
 #define ISRS_ENABLED() (!__get_PRIMASK())
 #define ENABLE_ISRS()  __enable_irq()
 #define DISABLE_ISRS() __disable_irq()
 
-#define cli() __disable_irq()       // Disable interrupts
-#define sei() __enable_irq()        // Enable interrupts
+#define cli() __disable_irq()       // Disable interrupts//禁用中断
+#define sei() __enable_irq()        // Enable interrupts//启用中断
 
-void HAL_clear_reset_source();  // clear reset reason
-uint8_t HAL_get_reset_source(); // get reset reason
+void HAL_clear_reset_source();  // clear reset reason//清除重置原因
+uint8_t HAL_get_reset_source(); // get reset reason//获取重置原因
 
 void HAL_reboot();
 
-//
-// ADC
-//
-extern uint16_t HAL_adc_result;     // Most recent ADC conversion
+////
+// ADC//模数转换器
+////
+extern uint16_t HAL_adc_result;     // Most recent ADC conversion//最近的ADC转换
 
 #define HAL_ANALOG_SELECT(pin)
 
 void HAL_adc_init();
 
-//#define HAL_ADC_FILTERED          // Disable Marlin's oversampling. The HAL filters ADC values.
+//#define HAL_ADC_FILTERED          // Disable Marlin's oversampling. The HAL filters ADC values.//#定义HAL_ADC_FILTERED//禁用Marlin的过采样。HAL过滤ADC值。
 #define HAL_ADC_VREF         3.3
-#define HAL_ADC_RESOLUTION  10      // ... 12
+#define HAL_ADC_RESOLUTION  10      // ... 12// ... 12
 #define HAL_START_ADC(pin)  HAL_adc_start_conversion(pin)
 #define HAL_READ_ADC()      HAL_adc_result
 #define HAL_ADC_READY()     true
 
 void HAL_adc_start_conversion(const uint8_t adc_pin);
 
-//
-// Pin Map
-//
+////
+// Pin Map//针形图
+////
 #define GET_PIN_MAP_PIN(index) index
 #define GET_PIN_MAP_INDEX(pin) pin
 #define PARSED_PIN_INDEX(code, dval) parser.intval(code, dval)
 
-//
-// Tone
-//
+////
+// Tone//语气
+////
 void toneInit();
 void tone(const pin_t _pin, const unsigned int frequency, const unsigned long duration=0);
 void noTone(const pin_t _pin);
 
-// Enable hooks into idle and setup for HAL
+// Enable hooks into idle and setup for HAL//为HAL启用空闲挂钩和设置
 void HAL_init();
 /*
 #define HAL_IDLETASK 1
 void HAL_idletask();
 */
 
-//
-// Utility functions
-//
+////
+// Utility functions//效用函数
+////
 FORCE_INLINE void _delay_ms(const int delay_ms) { delay(delay_ms); }
 
 #if GCC_VERSION <= 50000

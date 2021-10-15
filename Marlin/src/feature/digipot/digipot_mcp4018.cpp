@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -27,9 +28,9 @@
 #include "digipot.h"
 
 #include <Stream.h>
-#include <SlowSoftI2CMaster.h>  // https://github.com/felias-fogg/SlowSoftI2CMaster
+#include <SlowSoftI2CMaster.h>  // https://github.com/felias-fogg/SlowSoftI2CMaster// https://github.com/felias-fogg/SlowSoftI2CMaster
 
-// Settings for the I2C based DIGIPOT (MCP4018) based on WT150
+// Settings for the I2C based DIGIPOT (MCP4018) based on WT150//基于WT150的基于I2C的DIGIPOT（MCP4018）设置
 
 #define DIGIPOT_A4988_Rsx               0.250
 #define DIGIPOT_A4988_Vrefmax           1.666
@@ -78,7 +79,7 @@ static void digipot_i2c_send(const uint8_t channel, const byte v) {
   }
 }
 
-// This is for the MCP4018 I2C based digipot
+// This is for the MCP4018 I2C based digipot//这是针对基于MCP4018 I2C的digipot
 void DigipotI2C::set_current(const uint8_t channel, const float current) {
   const float ival = _MIN(_MAX(current, 0), float(DIGIPOT_MCP4018_MAX_VALUE));
   digipot_i2c_send(channel, current_to_wiper(ival));
@@ -87,7 +88,7 @@ void DigipotI2C::set_current(const uint8_t channel, const float current) {
 void DigipotI2C::init() {
   LOOP_L_N(i, DIGIPOT_I2C_NUM_CHANNELS) pots[i].i2c_init();
 
-  // Init currents according to Configuration_adv.h
+  // Init currents according to Configuration_adv.h//初始电流根据配置_adv.h
   static const float digipot_motor_current[] PROGMEM =
     #if ENABLED(DIGIPOT_USE_RAW_VALUES)
       DIGIPOT_MOTOR_CURRENT
@@ -101,4 +102,4 @@ void DigipotI2C::init() {
 
 DigipotI2C digipot_i2c;
 
-#endif // DIGIPOT_MCP4018
+#endif // DIGIPOT_MCP4018//DIGIPOT_MCP4018

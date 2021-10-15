@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -77,13 +78,13 @@
 
 uint8_t u8g_WriteEscSeqP_2_wire(u8g_t *u8g, u8g_dev_t *dev, const uint8_t *esc_seq);
 
-// The sh1106 is compatible to the ssd1306, but is 132x64. 128x64 display area is centered within
-// the 132x64.
+// The sh1106 is compatible to the ssd1306, but is 132x64. 128x64 display area is centered within//sh1106与ssd1306兼容，但为132x64。128x64显示区域位于
+// the 132x64.//132x64。
 
 static const uint8_t u8g_dev_sh1106_128x64_data_start_2_wire[] PROGMEM = {
-  0x010,          // set upper 4 bit of the col adr to 0
-  0x002,          // set lower 4 bit of the col adr to 2 (centered display with ssd1306)
-  U8G_ESC_END     // end of sequence
+  0x010,          // set upper 4 bit of the col adr to 0//将列adr的上4位设置为0
+  0x002,          // set lower 4 bit of the col adr to 2 (centered display with ssd1306)//将列adr的下4位设置为2（使用ssd1306居中显示）
+  U8G_ESC_END     // end of sequence//序列结束
 };
 
 #define SH1106_PAGE_ADR(N)       (0x20), (N)
@@ -107,27 +108,27 @@ static const uint8_t u8g_dev_sh1106_128x64_data_start_2_wire[] PROGMEM = {
 #define SH1106_NOOP()            (0xE3)
 
 static const uint8_t u8g_dev_sh1106_128x64_init_seq_2_wire[] PROGMEM = {
-  U8G_ESC_ADR(0),               // Initiate command mode
-  SH1106_ON(0),                 // Display off, sleep mode
-  SH1106_MUX_RATIO(0x3F),       // Mux ratio
-  SH1106_DISP_OFFS(0),          // Display offset
-  SH1106_START_LINE(0),         // Start line
-  SH1106_ADC_REVERSE(1),        // Segment remap A0/A1
-  SH1106_OUT_MODE(1),           // C0: scan dir normal, C8: reverse
-  SH1106_COM_CONFIG(1),         // Com pin HW config, sequential com pin config (bit 4), disable left/right remap (bit 5)
-  SH1106_CONTRAST(0xCF),        // [2] set contrast control
-  SH1106_PAGE_ADR(0x02),        // 2012-05-27: page addressing mode
-  SH1106_COLUMN_RANGE(0x281),   // Set column range from 0 through 131
-  SH1106_PAGE_RANGE(0, 7),      // Set page range from 0 through 7
-  SH1106_CHARGE_PER(0x1, 0xF),  // [2] pre-charge period 0x22/F1
-  SH1106_VCOM_DESEL(0x40),      // Vcomh deselect level
-  SH1106_ALL_PIX(0),            // Output ram to display
-  SH1106_INVERTED(0),           // Normal display mode
-  SH1106_OSC_FREQ(0, 8),        // Clock divide ratio (0:1) and oscillator frequency (8)
-  SH1106_CHARGE_PUMP(1),        // [2] charge pump setting (P62): 0x14 enable, 0x10 disable
-  SH1106_SCROLL(0),             // 2012-05-27: Deactivate scroll
-  SH1106_ON(1),                 // Display on
-  U8G_ESC_END                   // End of sequence
+  U8G_ESC_ADR(0),               // Initiate command mode//启动命令模式
+  SH1106_ON(0),                 // Display off, sleep mode//显示关闭，睡眠模式
+  SH1106_MUX_RATIO(0x3F),       // Mux ratio//复用比
+  SH1106_DISP_OFFS(0),          // Display offset//显示偏移量
+  SH1106_START_LINE(0),         // Start line//起跑线
+  SH1106_ADC_REVERSE(1),        // Segment remap A0/A1//段重新映射A0/A1
+  SH1106_OUT_MODE(1),           // C0: scan dir normal, C8: reverse//C0：扫描方向正常，C8：反向
+  SH1106_COM_CONFIG(1),         // Com pin HW config, sequential com pin config (bit 4), disable left/right remap (bit 5)//Com引脚HW配置，顺序Com引脚配置（位4），禁用左/右重新映射（位5）
+  SH1106_CONTRAST(0xCF),        // [2] set contrast control//[2]设置对比度控制
+  SH1106_PAGE_ADR(0x02),        // 2012-05-27: page addressing mode//2012-05-27：页面寻址模式
+  SH1106_COLUMN_RANGE(0x281),   // Set column range from 0 through 131//将列范围设置为0到131
+  SH1106_PAGE_RANGE(0, 7),      // Set page range from 0 through 7//将页面范围设置为0到7
+  SH1106_CHARGE_PER(0x1, 0xF),  // [2] pre-charge period 0x22/F1//[2]预充电期0x22/F1
+  SH1106_VCOM_DESEL(0x40),      // Vcomh deselect level//取消选择电平
+  SH1106_ALL_PIX(0),            // Output ram to display//输出ram到显示器
+  SH1106_INVERTED(0),           // Normal display mode//正常显示模式
+  SH1106_OSC_FREQ(0, 8),        // Clock divide ratio (0:1) and oscillator frequency (8)//时钟分频比（0:1）和振荡器频率（8）
+  SH1106_CHARGE_PUMP(1),        // [2] charge pump setting (P62): 0x14 enable, 0x10 disable//[2]电荷泵设置（P62）：0x14启用，0x10禁用
+  SH1106_SCROLL(0),             // 2012-05-27: Deactivate scroll//2012-05-27：停用滚动条
+  SH1106_ON(1),                 // Display on//展示
+  U8G_ESC_END                   // End of sequence//序列结束
 };
 
 uint8_t u8g_dev_sh1106_128x64_2x_2_wire_fn(u8g_t *u8g, u8g_dev_t *dev, uint8_t msg, void *arg) {
@@ -140,16 +141,16 @@ uint8_t u8g_dev_sh1106_128x64_2x_2_wire_fn(u8g_t *u8g, u8g_dev_t *dev, uint8_t m
       break;
     case U8G_DEV_MSG_PAGE_NEXT: {
         u8g_pb_t *pb = (u8g_pb_t *)(dev->dev_mem);
-        u8g_SetAddress(u8g, dev, 0);           // instruction mode
+        u8g_SetAddress(u8g, dev, 0);           // instruction mode//教学模式
         u8g_WriteEscSeqP_2_wire(u8g, dev, u8g_dev_sh1106_128x64_data_start_2_wire);
-        u8g_WriteByte(u8g, dev, 0x0B0 | (pb->p.page*2)); // select current page
-        u8g_SetAddress(u8g, dev, 1);           // data mode
+        u8g_WriteByte(u8g, dev, 0x0B0 | (pb->p.page*2)); // select current page//选择当前页面
+        u8g_SetAddress(u8g, dev, 1);           // data mode//数据模式
         u8g_WriteSequence(u8g, dev, pb->width, (uint8_t *) pb->buf);
         u8g_SetChipSelect(u8g, dev, 0);
-        u8g_SetAddress(u8g, dev, 0);           // instruction mode
+        u8g_SetAddress(u8g, dev, 0);           // instruction mode//教学模式
         u8g_WriteEscSeqP_2_wire(u8g, dev, u8g_dev_sh1106_128x64_data_start_2_wire);
-        u8g_WriteByte(u8g, dev, 0x0B0 | (pb->p.page*2+1)); // select current page
-        u8g_SetAddress(u8g, dev, 1);           // data mode
+        u8g_WriteByte(u8g, dev, 0x0B0 | (pb->p.page*2+1)); // select current page//选择当前页面
+        u8g_SetAddress(u8g, dev, 1);           // data mode//数据模式
         u8g_WriteSequence(u8g, dev, pb->width, (uint8_t *)(pb->buf)+pb->width);
         u8g_SetChipSelect(u8g, dev, 0);
       }
@@ -166,36 +167,36 @@ uint8_t u8g_dev_sh1106_128x64_2x_i2c_2_wire_buf[WIDTH*2] U8G_NOCOMMON ;
 u8g_pb_t u8g_dev_sh1106_128x64_2x_i2c_2_wire_pb = { {16, HEIGHT, 0, 0, 0},  WIDTH, u8g_dev_sh1106_128x64_2x_i2c_2_wire_buf};
 u8g_dev_t u8g_dev_sh1106_128x64_2x_i2c_2_wire = { u8g_dev_sh1106_128x64_2x_2_wire_fn, &u8g_dev_sh1106_128x64_2x_i2c_2_wire_pb, U8G_COM_SSD_I2C_HAL };
 
-/////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static const uint8_t u8g_dev_ssd1306_128x64_data_start_2_wire[] PROGMEM = {
-  0x010,          // set upper 4 bit of the col adr to 0
-  0x000,          // set lower 4 bit of the col adr to 0
-  U8G_ESC_END     // end of sequence
+  0x010,          // set upper 4 bit of the col adr to 0//将列adr的上4位设置为0
+  0x000,          // set lower 4 bit of the col adr to 0//将列adr的下4位设置为0
+  U8G_ESC_END     // end of sequence//序列结束
 };
 
 static const uint8_t u8g_dev_ssd1306_128x64_init_seq_2_wire[] PROGMEM = {
-  U8G_ESC_ADR(0), // initiate command mode
-  0x0AE,          // display off, sleep mode
-  0x0A8, 0x03F,   // mux ratio
-  0x0D3, 0x00,    // display offset
-  0x040,          // start line
-  0x0A1,          // segment remap a0/a1
-  0x0C8,          // c0: scan dir normal, c8: reverse
-  0x0DA, 0x012,   // com pin HW config, sequential com pin config (bit 4), disable left/right remap (bit 5)
-  0x081, 0x0CF,   // [2] set contrast control
-  0x020, 0x002,   // 2012-05-27: page addressing mode
-  0x21, 0, 0x7F,  // set column range from 0 through 127
-  0x22, 0, 7,     // set page range from 0 through 7
-  0x0D9, 0x0F1,   // [2] pre-charge period 0x022/f1
-  0x0DB, 0x040,   // vcomh deselect level
-  0x0A4,          // output ram to display
-  0x0A6,          // none inverted normal display mode
-  0x0D5, 0x080,   // clock divide ratio (0x00=1) and oscillator frequency (0x8)
-  0x08D, 0x014,   // [2] charge pump setting (p62): 0x014 enable, 0x010 disable
-  0x02E,          // 2012-05-27: Deactivate scroll
-  0x0AF,          // display on
-  U8G_ESC_END     // end of sequence
+  U8G_ESC_ADR(0), // initiate command mode//启动命令模式
+  0x0AE,          // display off, sleep mode//显示关闭，睡眠模式
+  0x0A8, 0x03F,   // mux ratio//复用比
+  0x0D3, 0x00,    // display offset//显示偏移量
+  0x040,          // start line//起跑线
+  0x0A1,          // segment remap a0/a1//段重新映射a0/a1
+  0x0C8,          // c0: scan dir normal, c8: reverse//c0：扫描方向正常，c8：反向
+  0x0DA, 0x012,   // com pin HW config, sequential com pin config (bit 4), disable left/right remap (bit 5)//com引脚HW配置，顺序com引脚配置（位4），禁用左/右重新映射（位5）
+  0x081, 0x0CF,   // [2] set contrast control//[2]设置对比度控制
+  0x020, 0x002,   // 2012-05-27: page addressing mode//2012-05-27：页面寻址模式
+  0x21, 0, 0x7F,  // set column range from 0 through 127//将列范围设置为0到127
+  0x22, 0, 7,     // set page range from 0 through 7//将页面范围设置为0到7
+  0x0D9, 0x0F1,   // [2] pre-charge period 0x022/f1//[2]预充电期0x022/f1
+  0x0DB, 0x040,   // vcomh deselect level//取消选择电平
+  0x0A4,          // output ram to display//输出ram到显示器
+  0x0A6,          // none inverted normal display mode//无反转正常显示模式
+  0x0D5, 0x080,   // clock divide ratio (0x00=1) and oscillator frequency (0x8)//时钟分频比（0x00=1）和振荡器频率（0x8）
+  0x08D, 0x014,   // [2] charge pump setting (p62): 0x014 enable, 0x010 disable//[2]电荷泵设置（p62）：0x014启用，0x010禁用
+  0x02E,          // 2012-05-27: Deactivate scroll//2012-05-27：停用滚动条
+  0x0AF,          // display on//展示
+  U8G_ESC_END     // end of sequence//序列结束
 };
 
 uint8_t u8g_dev_ssd1306_128x64_2x_2_wire_fn(u8g_t *u8g, u8g_dev_t *dev, uint8_t msg, void *arg) {
@@ -208,16 +209,16 @@ uint8_t u8g_dev_ssd1306_128x64_2x_2_wire_fn(u8g_t *u8g, u8g_dev_t *dev, uint8_t 
       break;
     case U8G_DEV_MSG_PAGE_NEXT: {
         u8g_pb_t *pb = (u8g_pb_t *)(dev->dev_mem);
-        u8g_SetAddress(u8g, dev, 0);           // instruction mode
+        u8g_SetAddress(u8g, dev, 0);           // instruction mode//教学模式
         u8g_WriteEscSeqP_2_wire(u8g, dev, u8g_dev_ssd1306_128x64_data_start_2_wire);
-        u8g_WriteByte(u8g, dev, 0x0B0 | (pb->p.page*2)); // select current page
-        u8g_SetAddress(u8g, dev, 1);           // data mode
+        u8g_WriteByte(u8g, dev, 0x0B0 | (pb->p.page*2)); // select current page//选择当前页面
+        u8g_SetAddress(u8g, dev, 1);           // data mode//数据模式
         u8g_WriteSequence(u8g, dev, pb->width, (uint8_t *) pb->buf);
         u8g_SetChipSelect(u8g, dev, 0);
-        u8g_SetAddress(u8g, dev, 0);           // instruction mode
+        u8g_SetAddress(u8g, dev, 0);           // instruction mode//教学模式
         u8g_WriteEscSeqP_2_wire(u8g, dev, u8g_dev_ssd1306_128x64_data_start_2_wire);
-        u8g_WriteByte(u8g, dev, 0x0B0 | (pb->p.page*2+1)); // select current page
-        u8g_SetAddress(u8g, dev, 1);           // data mode
+        u8g_WriteByte(u8g, dev, 0x0B0 | (pb->p.page*2+1)); // select current page//选择当前页面
+        u8g_SetAddress(u8g, dev, 1);           // data mode//数据模式
         u8g_WriteSequence(u8g, dev, pb->width, (uint8_t *)(pb->buf)+pb->width);
         u8g_SetChipSelect(u8g, dev, 0);
       }
@@ -236,10 +237,10 @@ u8g_pb_t u8g_dev_ssd1306_128x64_2x_i2c_2_wire_pb = { {16, HEIGHT, 0, 0, 0},  WID
 u8g_dev_t u8g_dev_ssd1306_128x64_2x_i2c_2_wire = { u8g_dev_ssd1306_128x64_2x_2_wire_fn, &u8g_dev_ssd1306_128x64_2x_i2c_2_wire_pb, U8G_COM_SSD_I2C_HAL };
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// This routine adds the instruction byte in between the command bytes.  This makes the init
-// sequences a lot easier to read.
+// This routine adds the instruction byte in between the command bytes.  This makes the init//此例程在命令字节之间添加指令字节。这使得init
+// sequences a lot easier to read.//序列更容易阅读。
 
 #define I2C_CMD_MODE    0x080
 
@@ -299,4 +300,4 @@ uint8_t u8g_WriteEscSeqP_2_wire(u8g_t *u8g, u8g_dev_t *dev, const uint8_t *esc_s
   return 1;
 }
 
-#endif // HAS_MARLINUI_U8GLIB
+#endif // HAS_MARLINUI_U8GLIB//马林努伊能说会道吗

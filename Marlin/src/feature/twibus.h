@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -25,8 +26,8 @@
 
 #include <Wire.h>
 
-// Print debug messages with M111 S2 (Uses 236 bytes of PROGMEM)
-//#define DEBUG_TWIBUS
+// Print debug messages with M111 S2 (Uses 236 bytes of PROGMEM)//使用M111 S2打印调试消息（使用236字节的PROGMEM）
+//#define DEBUG_TWIBUS//#定义调试总线
 
 typedef void (*twiReceiveFunc_t)(int bytes);
 typedef void (*twiRequestFunc_t)();
@@ -37,8 +38,8 @@ typedef void (*twiRequestFunc_t)();
  */
 #if I2C_SLAVE_ADDRESS > 0
 
-  void i2c_on_receive(int bytes); // Demo i2c onReceive handler
-  void i2c_on_request();          // Demo i2c onRequest handler
+  void i2c_on_receive(int bytes); // Demo i2c onReceive handler//演示i2c接收处理程序
+  void i2c_on_request();          // Demo i2c onRequest handler//演示I2ConRequest处理程序
 
 #endif
 

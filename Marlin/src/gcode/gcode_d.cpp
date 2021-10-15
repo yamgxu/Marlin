@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -30,7 +31,7 @@
   #include "../HAL/shared/eeprom_if.h"
   #include "../HAL/shared/Delay.h"
   #include "../sd/cardreader.h"
-  #include "../MarlinCore.h" // for kill
+  #include "../MarlinCore.h" // for kill//杀人
 
   extern void dump_delay_accuracy_check();
 
@@ -56,7 +57,7 @@
         break;
 
       case 1: {
-        // Zero or pattern-fill the EEPROM data
+        // Zero or pattern-fill the EEPROM data//零位或模式填充EEPROM数据
         #if ENABLED(EEPROM_SETTINGS)
           persistentStore.access_start();
           size_t total = persistentStore.capacity();
@@ -71,7 +72,7 @@
         HAL_reboot();
       } break;
 
-      case 2: { // D2 Read / Write SRAM
+      case 2: { // D2 Read / Write SRAM//D2读/写SRAM
         #define SRAM_SIZE 8192
         uint8_t *pointer = parser.hex_adr_val('A');
         uint16_t len = parser.ushortval('C', 1);
@@ -79,7 +80,7 @@
         NOMORE(addr, size_t(SRAM_SIZE - 1));
         NOMORE(len, SRAM_SIZE - addr);
         if (parser.seenval('X')) {
-          // Write the hex bytes after the X
+          // Write the hex bytes after the X//在X之后写入十六进制字节
           uint16_t val = parser.hex_val('X');
           while (len--) {
             *pointer = val;
@@ -93,7 +94,7 @@
       } break;
 
       #if ENABLED(EEPROM_SETTINGS)
-        case 3: { // D3 Read / Write EEPROM
+        case 3: { // D3 Read / Write EEPROM//D3读/写EEPROM
           uint8_t *pointer = parser.hex_adr_val('A');
           uint16_t len = parser.ushortval('C', 1);
           uintptr_t addr = (uintptr_t)pointer;
@@ -114,7 +115,7 @@
             #endif
           }
           else {
-            // Read bytes from EEPROM
+            // Read bytes from EEPROM//从EEPROM读取字节
             #if ENABLED(EEPROM_SETTINGS)
               persistentStore.access_start();
               int pos = 0;
@@ -131,25 +132,25 @@
         } break;
       #endif
 
-      case 4: { // D4 Read / Write PIN
-        //const bool is_out = parser.boolval('F');
-        //const uint8_t pin = parser.byteval('P'),
-        //              val = parser.byteval('V', LOW);
+      case 4: { // D4 Read / Write PIN//D4读/写引脚
+        //const bool is_out = parser.boolval('F');//const bool is_out=parser.boolval（'F'）；
+        //const uint8_t pin = parser.byteval('P'),//const uint8_t pin=parser.byteval（'P'），
+        //              val = parser.byteval('V', LOW);//val=parser.byteval（'V'，低位）；
         if (parser.seenval('X')) {
-          // TODO: Write the hex bytes after the X
-          //while (len--) {
-          //}
+          // TODO: Write the hex bytes after the X//TODO:在X之后写入十六进制字节
+          //while (len--) {//而(len--){
+          //}//}
         }
         else {
-          //while (len--) {
-          //// TODO: Read bytes from EEPROM
-          //  print_hex_byte(eeprom_read_byte(adr++));
-          //}
+          //while (len--) {//而(len--){
+          //// TODO: Read bytes from EEPROM////TODO：从EEPROM读取字节
+          //  print_hex_byte(eeprom_read_byte(adr++));//打印十六进制字节（eeprom读取字节（adr++）；
+          //}//}
           SERIAL_EOL();
         }
       } break;
 
-      case 5: { // D5 Read / Write onboard Flash
+      case 5: { // D5 Read / Write onboard Flash//D5读/写板载闪存
         #define FLASH_SIZE 1024
         uint8_t *pointer = parser.hex_adr_val('A');
         uint16_t len = parser.ushortval('C', 1);
@@ -157,36 +158,36 @@
         NOMORE(addr, size_t(FLASH_SIZE - 1));
         NOMORE(len, FLASH_SIZE - addr);
         if (parser.seenval('X')) {
-          // TODO: Write the hex bytes after the X
-          //while (len--) {}
+          // TODO: Write the hex bytes after the X//TODO:在X之后写入十六进制字节
+          //while (len--) {}//而（len--）{}
         }
         else {
-          //while (len--) {
-          //// TODO: Read bytes from EEPROM
-          //  print_hex_byte(eeprom_read_byte(adr++));
-          //}
+          //while (len--) {//而(len--){
+          //// TODO: Read bytes from EEPROM////TODO：从EEPROM读取字节
+          //  print_hex_byte(eeprom_read_byte(adr++));//打印十六进制字节（eeprom读取字节（adr++）；
+          //}//}
           SERIAL_EOL();
         }
       } break;
 
-      case 6: // D6 Check delay loop accuracy
+      case 6: // D6 Check delay loop accuracy//D6检查延迟回路精度
         dump_delay_accuracy_check();
         break;
 
-      case 7: // D7 dump the current serial port type (hence configuration)
+      case 7: // D7 dump the current serial port type (hence configuration)//D7转储当前串行端口类型（因此配置）
         SERIAL_ECHOLNPAIR("Current serial configuration RX_BS:", RX_BUFFER_SIZE, ", TX_BS:", TX_BUFFER_SIZE);
         SERIAL_ECHOLN(gtn(&SERIAL_IMPL));
         break;
 
-      case 100: { // D100 Disable heaters and attempt a hard hang (Watchdog Test)
+      case 100: { // D100 Disable heaters and attempt a hard hang (Watchdog Test)//D100禁用加热器并尝试硬挂起（看门狗测试）
         SERIAL_ECHOLNPGM("Disabling heaters and attempting to trigger Watchdog");
         SERIAL_ECHOLNPGM("(USE_WATCHDOG " TERN(USE_WATCHDOG, "ENABLED", "DISABLED") ")");
         thermalManager.disable_all_heaters();
-        delay(1000); // Allow time to print
+        delay(1000); // Allow time to print//留出打印时间
         DISABLE_ISRS();
-        // Use a low-level delay that does not rely on interrupts to function
-        // Do not spin forever, to avoid thermal risks if heaters are enabled and
-        // watchdog does not work.
+        // Use a low-level delay that does not rely on interrupts to function//使用不依赖中断的低电平延迟来工作
+        // Do not spin forever, to avoid thermal risks if heaters are enabled and//不要永远旋转，以避免加热器启用和关闭时的热风险
+        // watchdog does not work.//看门狗不工作。
         for (int i = 10000; i--;) DELAY_US(1000UL);
         ENABLE_ISRS();
         SERIAL_ECHOLNPGM("FAILURE: Watchdog did not trigger board reset.");
@@ -194,7 +195,7 @@
 
       #if ENABLED(SDSUPPORT)
 
-        case 101: { // D101 Test SD Write
+        case 101: { // D101 Test SD Write//D101测试SD写入
           card.openFileWrite("test.gco");
           if (!card.isFileOpen()) {
             SERIAL_ECHOLNPAIR("Failed to open test.gco to write.");
@@ -215,7 +216,7 @@
           card.closefile();
         } break;
 
-        case 102: { // D102 Test SD Read
+        case 102: { // D102 Test SD Read//D102测试SD读取
           char testfile[] = "test.gco";
           card.openFileRead(testfile);
           if (!card.isFileOpen()) {
@@ -243,22 +244,22 @@
           card.closefile();
         } break;
 
-      #endif // SDSUPPORT
+      #endif // SDSUPPORT//SDSUPPORT
 
       #if ENABLED(POSTMORTEM_DEBUGGING)
 
-        case 451: { // Trigger all kind of faults to test exception catcher
+        case 451: { // Trigger all kind of faults to test exception catcher//触发各种故障以测试异常捕获器
           SERIAL_ECHOLNPGM("Disabling heaters");
           thermalManager.disable_all_heaters();
-          delay(1000); // Allow time to print
+          delay(1000); // Allow time to print//留出打印时间
           volatile uint8_t type[5] = { parser.byteval('T', 1) };
 
-          // The code below is obviously wrong and it's full of quirks to fool the compiler from optimizing away the code
+          // The code below is obviously wrong and it's full of quirks to fool the compiler from optimizing away the code//下面的代码显然是错误的，它充满了欺骗编译器优化代码的怪癖
           switch (type[0]) {
-            case 1: default: *(int*)0 = 451; break; // Write at bad address
-            case 2: { volatile int a = 0; volatile int b = 452 / a; *(int*)&a = b; } break; // Divide by zero (some CPUs accept this, like ARM)
-            case 3: { *(uint32_t*)&type[1] = 453; volatile int a = *(int*)&type[1]; type[0] = a / 255; } break; // Unaligned access (some CPUs accept this)
-            case 4: { volatile void (*func)() = (volatile void (*)()) 0xE0000000; func(); } break; // Invalid instruction
+            case 1: default: *(int*)0 = 451; break; // Write at bad address//写错地址
+            case 2: { volatile int a = 0; volatile int b = 452 / a; *(int*)&a = b; } break; // Divide by zero (some CPUs accept this, like ARM)//除以零（有些CPU接受这个，比如ARM）
+            case 3: { *(uint32_t*)&type[1] = 453; volatile int a = *(int*)&type[1]; type[0] = a / 255; } break; // Unaligned access (some CPUs accept this)//未对齐的访问（某些CPU接受此选项）
+            case 4: { volatile void (*func)() = (volatile void (*)()) 0xE0000000; func(); } break; // Invalid instruction//无效指令
           }
           break;
         }

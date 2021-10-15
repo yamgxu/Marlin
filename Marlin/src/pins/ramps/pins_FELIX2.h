@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,33 +32,33 @@
 
 #define BOARD_INFO_NAME "Felix 2.0+"
 
-//
-// Heaters / Fans
-//
-// Power outputs EFBF or EFBE
+////
+// Heaters / Fans//加热器/风扇
+////
+// Power outputs EFBF or EFBE//功率输出EFBF或EFBE
 #define MOSFET_D_PIN                          7
 
 #include "pins_RAMPS.h"
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define SDPOWER_PIN                           1
 
 #define PS_ON_PIN                            12
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 #if IS_ULTRA_LCD && IS_NEWPANEL
 
   #define SD_DETECT_PIN                       6
 
 #endif
 
-//
-// M3/M4/M5 - Spindle/Laser Control
-//
-#undef SPINDLE_LASER_PWM_PIN                      // Definitions in pins_RAMPS.h are not valid with this board
+////
+// M3/M4/M5 - Spindle/Laser Control//M3/M4/M5-主轴/激光控制
+////
+#undef SPINDLE_LASER_PWM_PIN                      // Definitions in pins_RAMPS.h are not valid with this board//引脚_RAMPS.h中的定义对该电路板无效
 #undef SPINDLE_LASER_ENA_PIN
 #undef SPINDLE_DIR_PIN

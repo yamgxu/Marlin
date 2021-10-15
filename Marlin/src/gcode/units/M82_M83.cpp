@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -36,4 +37,4 @@ void GcodeSuite::M82() { set_e_absolute(); }
  */
 void GcodeSuite::M83() { set_e_relative(); }
 
-#endif // HAS_EXTRUDERS
+#endif // HAS_EXTRUDERS//有两台挤出机

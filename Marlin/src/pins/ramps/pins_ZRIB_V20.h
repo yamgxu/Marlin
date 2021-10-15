@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -28,8 +29,8 @@
 
 #include "pins_MKS_GEN_13.h"
 
-#define ZRIB_V20_D6_PIN                        6  // Fan
-#define ZRIB_V20_D9_PIN                        9  // Fan2
+#define ZRIB_V20_D6_PIN                        6  // Fan//扇子
+#define ZRIB_V20_D9_PIN                        9  // Fan2//风扇2
 #define ZRIB_V20_A10_PIN                      10
 #define ZRIB_V20_D16_PIN                      16
 #define ZRIB_V20_D17_PIN                      17
@@ -39,9 +40,9 @@
 #define ZRIB_V20_D29_PIN                      29
 #define ZRIB_V20_D37_PIN                      37
 
-//
-// Auto fans
-//
+////
+// Auto fans//汽车风扇
+////
 #ifndef E0_AUTO_FAN_PIN
   #define E0_AUTO_FAN_PIN        ZRIB_V20_D6_PIN
 #endif
@@ -56,7 +57,7 @@
 #endif
 
 #ifndef FILWIDTH_PIN
-  #define FILWIDTH_PIN                        11  // Analog Input
+  #define FILWIDTH_PIN                        11  // Analog Input//模拟输入
 #endif
 
 #if ENABLED(ZONESTAR_LCD)

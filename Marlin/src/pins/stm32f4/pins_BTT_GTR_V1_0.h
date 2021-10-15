@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,96 +32,96 @@
 
 #define BOARD_INFO_NAME "BTT GTR V1.0"
 
-// Onboard I2C EEPROM
+// Onboard I2C EEPROM//板载I2C EEPROM
 #define I2C_EEPROM
-#define MARLIN_EEPROM_SIZE                0x2000  // 8KB (24C64 ... 64Kb = 8KB)
+#define MARLIN_EEPROM_SIZE                0x2000  // 8KB (24C64 ... 64Kb = 8KB)//8KB（24C64…64Kb=8KB）
 
-// USB Flash Drive support
+// USB Flash Drive support//USB闪存驱动器支持
 #define HAS_OTG_USB_HOST_SUPPORT
 
-#define M5_EXTENDER                               // The M5 extender is attached
+#define M5_EXTENDER                               // The M5 extender is attached//M5扩展器已连接
 
-//
-// Servos
-//
-#define SERVO0_PIN                          PB11  // BLTOUCH
-#define SOL0_PIN                            PC7   // Toolchanger
+////
+// Servos//伺服
+////
+#define SERVO0_PIN                          PB11  // BLTOUCH//BLTOUCH
+#define SOL0_PIN                            PC7   // Toolchanger//换刀器
 
 #if ENABLED(TOOL_SENSOR)
   #define TOOL_SENSOR1_PIN                  PH6
   #define TOOL_SENSOR2_PIN                  PI4
-  //#define TOOL_SENSOR3_PIN                PF4
+  //#define TOOL_SENSOR3_PIN                PF4//#定义刀具传感器3引脚PF4
 #else
   #define PS_ON_PIN                         PH6
 #endif
 
-//
-// Trinamic Stallguard pins
-//
-#define X_DIAG_PIN                          PF2   // X-
-#define Y_DIAG_PIN                          PC13  // Y-
-#define Z_DIAG_PIN                          PE0   // Z-
-#define E0_DIAG_PIN                         PG14  // X+
-#define E1_DIAG_PIN                         PG9   // Y+
-#define E2_DIAG_PIN                         PD3   // Z+
+////
+// Trinamic Stallguard pins//Trinamic保护销
+////
+#define X_DIAG_PIN                          PF2   // X-//X-
+#define Y_DIAG_PIN                          PC13  // Y-//Y-
+#define Z_DIAG_PIN                          PE0   // Z-//Z-
+#define E0_DIAG_PIN                         PG14  // X+//X+
+#define E1_DIAG_PIN                         PG9   // Y+//Y+
+#define E2_DIAG_PIN                         PD3   // Z+//Z+
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #ifdef X_STALL_SENSITIVITY
   #define X_STOP_PIN                  X_DIAG_PIN
   #if X_HOME_TO_MIN
-    #define X_MAX_PIN                E0_DIAG_PIN  // X+
+    #define X_MAX_PIN                E0_DIAG_PIN  // X+//X+
   #else
-    #define X_MIN_PIN                E0_DIAG_PIN  // X+
+    #define X_MIN_PIN                E0_DIAG_PIN  // X+//X+
   #endif
 #else
-  #define X_MIN_PIN                   X_DIAG_PIN  // X-
-  #define X_MAX_PIN                  E0_DIAG_PIN  // X+
+  #define X_MIN_PIN                   X_DIAG_PIN  // X-//X-
+  #define X_MAX_PIN                  E0_DIAG_PIN  // X+//X+
 #endif
 
 #ifdef Y_STALL_SENSITIVITY
   #define Y_STOP_PIN                  Y_DIAG_PIN
   #if Y_HOME_TO_MIN
-    #define Y_MAX_PIN                E1_DIAG_PIN  // Y+
+    #define Y_MAX_PIN                E1_DIAG_PIN  // Y+//Y+
   #else
-    #define Y_MIN_PIN                E1_DIAG_PIN  // Y+
+    #define Y_MIN_PIN                E1_DIAG_PIN  // Y+//Y+
   #endif
 #else
-  #define Y_MIN_PIN                   Y_DIAG_PIN  // Y-
-  #define Y_MAX_PIN                  E1_DIAG_PIN  // Y+
+  #define Y_MIN_PIN                   Y_DIAG_PIN  // Y-//Y-
+  #define Y_MAX_PIN                  E1_DIAG_PIN  // Y+//Y+
 #endif
 
 #ifdef Z_STALL_SENSITIVITY
   #define Z_STOP_PIN                  Z_DIAG_PIN
   #if Z_HOME_TO_MIN
-    #define Z_MAX_PIN                E2_DIAG_PIN  // Z+
+    #define Z_MAX_PIN                E2_DIAG_PIN  // Z+//Z+
   #else
-    #define Z_MIN_PIN                E2_DIAG_PIN  // Z+
+    #define Z_MIN_PIN                E2_DIAG_PIN  // Z+//Z+
   #endif
 #else
-  #define Z_MIN_PIN                   Z_DIAG_PIN  // Z-
-  #define Z_MAX_PIN                  E2_DIAG_PIN  // Z+
+  #define Z_MIN_PIN                   Z_DIAG_PIN  // Z-//Z-
+  #define Z_MAX_PIN                  E2_DIAG_PIN  // Z+//Z+
 #endif
 
-//
-// Pins on the extender
-//
+////
+// Pins on the extender//延长线上的针脚
+////
 #if ENABLED(M5_EXTENDER)
-  #define X2_STOP_PIN                       PI4   // M5 M1_STOP
-  #define Y2_STOP_PIN                       PF12  // M5 M5_STOP
-  #define Z2_STOP_PIN                       PF4   // M5 M2_STOP
-  #define Z3_STOP_PIN                       PI7   // M5 M4_STOP
-  #define Z4_STOP_PIN                       PF6   // M5 M3_STOP
+  #define X2_STOP_PIN                       PI4   // M5 M1_STOP//M5 M1_挡块
+  #define Y2_STOP_PIN                       PF12  // M5 M5_STOP//M5 M5_挡块
+  #define Z2_STOP_PIN                       PF4   // M5 M2_STOP//M5 M2_挡块
+  #define Z3_STOP_PIN                       PI7   // M5 M4_STOP//M5 M4_挡块
+  #define Z4_STOP_PIN                       PF6   // M5 M3_STOP//M5 M3_挡块
 #endif
 
 #ifndef Z_MIN_PROBE_PIN
-  #define Z_MIN_PROBE_PIN                   PH11  // Z Probe must be PH11
+  #define Z_MIN_PROBE_PIN                   PH11  // Z Probe must be PH11//Z探头必须为PH11
 #endif
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                          PC15
 #define X_DIR_PIN                           PF0
 #define X_ENABLE_PIN                        PF1
@@ -136,7 +137,7 @@
 #endif
 
 #define Z_STEP_PIN                          PB8
-#define Z_DIR_PIN                           PB7   // PB7
+#define Z_DIR_PIN                           PB7   // PB7//PB7
 #define Z_ENABLE_PIN                        PB9
 #ifndef Z_CS_PIN
   #define Z_CS_PIN                          PB5
@@ -202,9 +203,9 @@
 
 #endif
 
-//
-// Software SPI pins for TMC2130 stepper drivers
-//
+////
+// Software SPI pins for TMC2130 stepper drivers//TMC2130步进驱动器的软件SPI引脚
+////
 #if ENABLED(TMC_USE_SW_SPI)
   #ifndef TMC_SW_MOSI
     #define TMC_SW_MOSI                     PG15
@@ -224,24 +225,24 @@
    * Hardware serial communication ports.
    * If undefined software serial is used according to the pins below
    */
-  //#define X_HARDWARE_SERIAL  Serial1
-  //#define X2_HARDWARE_SERIAL Serial1
-  //#define Y_HARDWARE_SERIAL  Serial1
-  //#define Y2_HARDWARE_SERIAL Serial1
-  //#define Z_HARDWARE_SERIAL  Serial1
-  //#define Z2_HARDWARE_SERIAL Serial1
-  //#define E0_HARDWARE_SERIAL Serial1
-  //#define E1_HARDWARE_SERIAL Serial1
-  //#define E2_HARDWARE_SERIAL Serial1
-  //#define E3_HARDWARE_SERIAL Serial1  // M5 MOTOR 1
-  //#define E4_HARDWARE_SERIAL Serial1  // M5 MOTOR 2
-  //#define E5_HARDWARE_SERIAL Serial1  // M5 MOTOR 3
-  //#define E6_HARDWARE_SERIAL Serial1  // M5 MOTOR 4
-  //#define E7_HARDWARE_SERIAL Serial1  // M5 MOTOR 5
+  //#define X_HARDWARE_SERIAL  Serial1//#定义X_硬件_串行1
+  //#define X2_HARDWARE_SERIAL Serial1//#定义X2_硬件_串行1
+  //#define Y_HARDWARE_SERIAL  Serial1//#定义Y_硬件_串行1
+  //#define Y2_HARDWARE_SERIAL Serial1//#定义Y2\u硬件\u串行1
+  //#define Z_HARDWARE_SERIAL  Serial1//#定义Z_硬件_串行1
+  //#define Z2_HARDWARE_SERIAL Serial1//#定义Z2_硬件_串行1
+  //#define E0_HARDWARE_SERIAL Serial1//#定义E0_硬件_串行1
+  //#define E1_HARDWARE_SERIAL Serial1//#定义E1_硬件_串行1
+  //#define E2_HARDWARE_SERIAL Serial1//#定义E2_硬件_串行1
+  //#define E3_HARDWARE_SERIAL Serial1  // M5 MOTOR 1//#定义E3_硬件_串行1//M5电机1
+  //#define E4_HARDWARE_SERIAL Serial1  // M5 MOTOR 2//#定义E4_硬件_串行1//M5电机2
+  //#define E5_HARDWARE_SERIAL Serial1  // M5 MOTOR 3//#定义E5_硬件_串行1//M5电机3
+  //#define E6_HARDWARE_SERIAL Serial1  // M5 MOTOR 4//#定义E6_硬件_串行1//M5电机4
+  //#define E7_HARDWARE_SERIAL Serial1  // M5 MOTOR 5//#定义E7_硬件_串行1//M5电机5
 
-  //
-  // Software serial
-  //
+  ////
+  // Software serial//软件系列
+  ////
   #define X_SERIAL_TX_PIN                   PC14
   #define X_SERIAL_RX_PIN                   PC14
 
@@ -277,79 +278,79 @@
     #define E7_SERIAL_RX_PIN                PH14
   #endif
 
-  // Reduce baud rate to improve software serial reliability
+  // Reduce baud rate to improve software serial reliability//降低波特率以提高软件串行可靠性
   #define TMC_BAUD_RATE                    19200
 #endif
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                          PC1   // T1 <-> E0
-#define TEMP_1_PIN                          PC2   // T2 <-> E1
-#define TEMP_2_PIN                          PC3   // T3 <-> E2
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                          PC1   // T1 <-> E0//T1<->E0
+#define TEMP_1_PIN                          PC2   // T2 <-> E1//T2<->E1
+#define TEMP_2_PIN                          PC3   // T3 <-> E2//T3<->E2
 
 #if ENABLED(M5_EXTENDER)
-  #define TEMP_3_PIN                        PA3   // M5 TEMP1
-  #define TEMP_4_PIN                        PF9   // M5 TEMP2
-  #define TEMP_5_PIN                        PF10  // M5 TEMP3
-  #define TEMP_6_PIN                        PF7   // M5 TEMP4
-  #define TEMP_7_PIN                        PF5   // M5 TEMP5
+  #define TEMP_3_PIN                        PA3   // M5 TEMP1//M5 TEMP1
+  #define TEMP_4_PIN                        PF9   // M5 TEMP2//M5 TEMP2
+  #define TEMP_5_PIN                        PF10  // M5 TEMP3//M5 TEMP3
+  #define TEMP_6_PIN                        PF7   // M5 TEMP4//M5 TEMP4
+  #define TEMP_7_PIN                        PF5   // M5 TEMP5//M5 TEMP5
 #endif
 
-#define TEMP_BED_PIN                        PC0   // T0 <-> Bed
+#define TEMP_BED_PIN                        PC0   // T0 <-> Bed//T0<->床
 
-// SPI for Max6675 or Max31855 Thermocouple
-// Uses a separate SPI bus
-// If you have a two-way thermocouple, you can customize two THERMO_CSx_PIN pins (x:1~2)
+// SPI for Max6675 or Max31855 Thermocouple//Max6675或Max31855热电偶的SPI
+// Uses a separate SPI bus//使用单独的SPI总线
+// If you have a two-way thermocouple, you can customize two THERMO_CSx_PIN pins (x:1~2)//如果您有一个双向热电偶，您可以定制两个THERMO_CSx_引脚（x:1~2）
 
-#define THERMO_SCK_PIN                      PI1   // SCK
-#define THERMO_DO_PIN                       PI2   // MISO
-#define THERMO_CS1_PIN                      PH9   // GTR K-TEMP
-#define THERMO_CS2_PIN                      PH2   // M5 K-TEMP
+#define THERMO_SCK_PIN                      PI1   // SCK//SCK
+#define THERMO_DO_PIN                       PI2   // MISO//味噌
+#define THERMO_CS1_PIN                      PH9   // GTR K-TEMP//全球技术法规K-TEMP
+#define THERMO_CS2_PIN                      PH2   // M5 K-TEMP//M5 K温度
 
 #define MAX6675_SS_PIN            THERMO_CS1_PIN
 #define MAX6675_SS2_PIN           THERMO_CS2_PIN
 #define MAX6675_SCK_PIN           THERMO_SCK_PIN
 #define MAX6675_DO_PIN             THERMO_DO_PIN
 
-//
-// Heaters / Fans
-//
-#define HEATER_0_PIN                        PB1   // Heater0
-#define HEATER_1_PIN                        PA1   // Heater1
-#define HEATER_2_PIN                        PB0   // Heater2
+////
+// Heaters / Fans//加热器/风扇
+////
+#define HEATER_0_PIN                        PB1   // Heater0//加热器
+#define HEATER_1_PIN                        PA1   // Heater1//加热器1
+#define HEATER_2_PIN                        PB0   // Heater2//加热器2
 
 #if ENABLED(M5_EXTENDER)
-  #define HEATER_3_PIN                      PD15  // M5 HEAT1
-  #define HEATER_4_PIN                      PD13  // M5 HEAT2
-  #define HEATER_5_PIN                      PD12  // M5 HEAT3
-  #define HEATER_6_PIN                      PE13  // M5 HEAT4
-  #define HEATER_7_PIN                      PI6   // M5 HEAT5
+  #define HEATER_3_PIN                      PD15  // M5 HEAT1//M5加热炉1
+  #define HEATER_4_PIN                      PD13  // M5 HEAT2//M5加热炉2
+  #define HEATER_5_PIN                      PD12  // M5 HEAT3//M5加热炉3
+  #define HEATER_6_PIN                      PE13  // M5 HEAT4//M5加热炉4
+  #define HEATER_7_PIN                      PI6   // M5 HEAT5//M5加热炉5
 #endif
 
-#define HEATER_BED_PIN                      PA2   // Hotbed
+#define HEATER_BED_PIN                      PA2   // Hotbed//温床
 
-#define FAN_PIN                             PE5   // Fan0
-#define FAN1_PIN                            PE6   // Fan1
-#define FAN2_PIN                            PC8   // Fan2
+#define FAN_PIN                             PE5   // Fan0//Fan0
+#define FAN1_PIN                            PE6   // Fan1//Fan1
+#define FAN2_PIN                            PC8   // Fan2//风扇2
 
 #if ENABLED(M5_EXTENDER)
-  #define FAN3_PIN                          PI5   // M5 FAN1
-  #define FAN4_PIN                          PE9   // M5 FAN2
-  #define FAN5_PIN                          PE11  // M5 FAN3
-  //#define FAN6_PIN                        PC9   // M5 FAN4
-  //#define FAN7_PIN                        PE14  // M5 FAN5
+  #define FAN3_PIN                          PI5   // M5 FAN1//M5风扇1
+  #define FAN4_PIN                          PE9   // M5 FAN2//M5风扇2
+  #define FAN5_PIN                          PE11  // M5 FAN3//M5风扇3
+  //#define FAN6_PIN                        PC9   // M5 FAN4//#定义风扇6_引脚PC9//M5风扇4
+  //#define FAN7_PIN                        PE14  // M5 FAN5//#定义风扇7_引脚PE14//M5风扇5
 #endif
 
 #ifndef SDCARD_CONNECTION
   #define SDCARD_CONNECTION              ONBOARD
 #endif
 
-//
-// By default the LCD SD (SPI2) is enabled
-// Onboard SD is on a completely separate SPI bus, and requires
-// overriding pins to access.
-//
+////
+// By default the LCD SD (SPI2) is enabled//默认情况下，LCD SD（SPI2）处于启用状态
+// Onboard SD is on a completely separate SPI bus, and requires//车载SD位于完全独立的SPI总线上，需要
+// overriding pins to access.//覆盖要访问的管脚。
+////
 #if SD_CONNECTION_IS(LCD)
 
   #define SD_DETECT_PIN              EXP2_04_PIN
@@ -395,9 +396,9 @@
 #define EXP2_09_PIN                         PB13
 #define EXP2_10_PIN                         PB14
 
-//
-// LCDs and Controllers
-//
+////
+// LCDs and Controllers//液晶显示器和控制器
+////
 #if ANY(TFT_COLOR_UI, TFT_LVGL_UI, TFT_CLASSIC_UI)
 
   #define TFT_CS_PIN                 EXP2_07_PIN
@@ -428,7 +429,7 @@
     #define LCD_PINS_ENABLE          EXP1_03_PIN
     #define LCD_PINS_D4              EXP1_05_PIN
 
-    // CR10_STOCKDISPLAY default timing is too fast
+    // CR10_STOCKDISPLAY default timing is too fast//CR10\u STOCKDISPLAY默认计时太快
     #undef BOARD_ST7920_DELAY_1
     #undef BOARD_ST7920_DELAY_2
     #undef BOARD_ST7920_DELAY_3
@@ -460,8 +461,8 @@
         #define SOFTWARE_SPI
       #endif
 
-      //#define LCD_BACKLIGHT_PIN           -1
-      #define LCD_RESET_PIN          EXP1_06_PIN  // Must be high or open for LCD to operate normally.
+      //#define LCD_BACKLIGHT_PIN           -1//#定义LCD_背光_引脚-1
+      #define LCD_RESET_PIN          EXP1_06_PIN  // Must be high or open for LCD to operate normally.//必须为高电平或开路，LCD才能正常工作。
       #if EITHER(FYSETC_MINI_12864_1_2, FYSETC_MINI_12864_2_0)
         #ifndef RGB_LED_R_PIN
           #define RGB_LED_R_PIN      EXP1_05_PIN
@@ -475,7 +476,7 @@
       #elif ENABLED(FYSETC_MINI_12864_2_1)
         #define NEOPIXEL_PIN         EXP1_05_PIN
       #endif
-    #endif // !FYSETC_MINI_12864
+    #endif // !FYSETC_MINI_12864// !FYSETC_MINI_12864
 
     #if IS_ULTIPANEL
       #define LCD_PINS_D5            EXP1_05_PIN
@@ -483,14 +484,14 @@
       #define LCD_PINS_D7            EXP1_03_PIN
 
       #if ENABLED(REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER)
-        #define BTN_ENC_EN           LCD_PINS_D7  // Detect the presence of the encoder
+        #define BTN_ENC_EN           LCD_PINS_D7  // Detect the presence of the encoder//检测编码器的存在
       #endif
 
     #endif
 
   #endif
 
-  // Alter timing for graphical display
+  // Alter timing for graphical display//改变图形显示的时间
   #if HAS_MARLINUI_U8GLIB
     #ifndef BOARD_ST7920_DELAY_1
       #define BOARD_ST7920_DELAY_1 DELAY_NS(96)
@@ -503,7 +504,7 @@
     #endif
   #endif
 
-#endif // HAS_WIRED_LCD
+#endif // HAS_WIRED_LCD//有有线液晶显示器吗
 
 #undef TP
 #undef M5_EXTENDER

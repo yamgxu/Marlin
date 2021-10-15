@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -37,9 +38,9 @@
 
 #include "pins_3DRAG.h"
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_STOP_PIN                             3
 #define Y_STOP_PIN                            14
 
@@ -48,21 +49,21 @@
 #undef Y_MIN_PIN
 #undef Y_MAX_PIN
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #undef E1_STEP_PIN
 #define E1_STEP_PIN                           32
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #undef HEATER_1_PIN
 #define HEATER_1_PIN                          11
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #undef PS_ON_PIN
 #undef KILL_PIN
 #undef SD_DETECT_PIN

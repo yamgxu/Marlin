@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -45,7 +46,7 @@ void GcodeSuite::M603() {
   const int8_t target_extruder = get_target_extruder_from_command();
   if (target_extruder < 0) return;
 
-  // Unload length
+  // Unload length//卸载长度
   if (parser.seen('U')) {
     fc_settings[target_extruder].unload_length = ABS(parser.value_axis_units(E_AXIS));
     #if ENABLED(PREVENT_LENGTHY_EXTRUDE)
@@ -53,7 +54,7 @@ void GcodeSuite::M603() {
     #endif
   }
 
-  // Load length
+  // Load length//负载长度
   if (parser.seen('L')) {
     fc_settings[target_extruder].load_length = ABS(parser.value_axis_units(E_AXIS));
     #if ENABLED(PREVENT_LENGTHY_EXTRUDE)
@@ -62,4 +63,4 @@ void GcodeSuite::M603() {
   }
 }
 
-#endif // ADVANCED_PAUSE_FEATURE
+#endif // ADVANCED_PAUSE_FEATURE//高级暂停功能

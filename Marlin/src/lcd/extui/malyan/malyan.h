@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -27,10 +28,10 @@
 
 #include "../../../HAL/shared/Marduino.h"
 
-// Track incoming command bytes from the LCD
+// Track incoming command bytes from the LCD//跟踪来自LCD的传入命令字节
 extern uint16_t inbound_count;
 
-// For sending print completion messages
+// For sending print completion messages//用于发送打印完成消息
 extern bool last_printing_status;
 
 void write_to_lcd_P(PGM_P const message);

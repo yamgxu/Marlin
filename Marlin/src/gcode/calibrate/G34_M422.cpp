@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,7 +32,7 @@
 #include "../../module/stepper.h"
 #include "../../module/planner.h"
 #include "../../module/probe.h"
-#include "../../lcd/marlinui.h" // for LCD_MESSAGEPGM
+#include "../../lcd/marlinui.h" // for LCD_MESSAGEPGM//用于LCD_MESSAGEPGM
 
 #if HAS_LEVELING
   #include "../../feature/bedlevel/bedlevel.h"
@@ -78,7 +79,7 @@ void GcodeSuite::G34() {
   DEBUG_SECTION(log_G34, "G34", DEBUGGING(LEVELING));
   if (DEBUGGING(LEVELING)) log_machine_info();
 
-  planner.synchronize();  // Prevent damage
+  planner.synchronize();  // Prevent damage//防损
 
   const bool seenL = parser.seen('L');
   if (seenL) stepper.set_all_z_lock(false);
@@ -104,7 +105,7 @@ void GcodeSuite::G34() {
   }
 
   #if ENABLED(Z_STEPPER_AUTO_ALIGN)
-    do { // break out on error
+    do { // break out on error//一错再错
 
       const int8_t z_auto_align_iterations = parser.intval('I', Z_STEPPER_ALIGN_ITERATIONS);
       if (!WITHIN(z_auto_align_iterations, 1, 30)) {
@@ -128,7 +129,7 @@ void GcodeSuite::G34() {
 
       const ProbePtRaise raise_after = parser.boolval('E') ? PROBE_PT_STOW : PROBE_PT_RAISE;
 
-      // Disable the leveling matrix before auto-aligning
+      // Disable the leveling matrix before auto-aligning//自动对齐前禁用调平矩阵
       #if HAS_LEVELING
         #if ENABLED(RESTORE_LEVELING_AFTER_G34)
           const bool leveling_was_active = planner.leveling_active;
@@ -138,7 +139,7 @@ void GcodeSuite::G34() {
 
       TERN_(CNC_WORKSPACE_PLANES, workspace_plane = PLANE_XY);
 
-      // Always home with tool 0 active
+      // Always home with tool 0 active//始终在工具0处于活动状态时返回原位
       #if HAS_MULTI_HOTEND
         const uint8_t old_tool_index = active_extruder;
         tool_change(0, true);
@@ -146,13 +147,13 @@ void GcodeSuite::G34() {
 
       TERN_(HAS_DUPLICATION_MODE, set_duplication_enabled(false));
 
-      // In BLTOUCH HS mode, the probe travels in a deployed state.
-      // Users of G34 might have a badly misaligned bed, so raise Z by the
-      // length of the deployed pin (BLTOUCH stroke < 7mm)
+      // In BLTOUCH HS mode, the probe travels in a deployed state.//在BLTOUCH HS模式下，探头以展开状态移动。
+      // Users of G34 might have a badly misaligned bed, so raise Z by the//G34的用户可能有一个严重错位的床，所以将Z调高
+      // length of the deployed pin (BLTOUCH stroke < 7mm)//展开销的长度（BLTOUCH行程<7mm）
       #define Z_BASIC_CLEARANCE (Z_CLEARANCE_BETWEEN_PROBES + 7.0f * BOTH(BLTOUCH, BLTOUCH_HS_MODE))
 
-      // Compute a worst-case clearance height to probe from. After the first
-      // iteration this will be re-calculated based on the actual bed position
+      // Compute a worst-case clearance height to probe from. After the first//计算最坏情况下探头的间隙高度。第一次之后
+      // iteration this will be re-calculated based on the actual bed position//该迭代将根据实际河床位置重新计算
       auto magnitude2 = [&](const uint8_t i, const uint8_t j) {
         const xy_pos_t diff = z_stepper_align.xy[i] - z_stepper_align.xy[j];
         return HYPOT2(diff.x, diff.y);
@@ -166,14 +167,14 @@ void GcodeSuite::G34() {
         #endif
       ));
 
-      // Home before the alignment procedure
+      // Home before the alignment procedure//在校准程序开始之前返回原位
       home_if_needed();
 
-      // Move the Z coordinate realm towards the positive - dirty trick
+      // Move the Z coordinate realm towards the positive - dirty trick//将Z坐标域移向正-脏技巧
       current_position.z += z_probe * 0.5f;
       sync_plan_position();
-      // Now, the Z origin lies below the build plate. That allows to probe deeper, before run_z_probe throws an error.
-      // This hack is un-done at the end of G34 - either by re-homing, or by using the probed heights of the last iteration.
+      // Now, the Z origin lies below the build plate. That allows to probe deeper, before run_z_probe throws an error.//现在，Z原点位于构建板下方。这允许在run_z_probe抛出错误之前进行更深入的探测。
+      // This hack is un-done at the end of G34 - either by re-homing, or by using the probed heights of the last iteration.//这项技术在G34结束时还没有完成——要么重新归位，要么使用上一次迭代的探测高度。
 
       #if DISABLED(Z_STEPPER_ALIGN_KNOWN_STEPPER_POSITIONS)
         float last_z_align_move[NUM_Z_STEPPER_DRIVERS] = ARRAY_N_1(NUM_Z_STEPPER_DRIVERS, 10000.0f);
@@ -193,10 +194,10 @@ void GcodeSuite::G34() {
         const uint8_t iter_str_len = strlen_P(msg_iteration);
       #endif
 
-      // Final z and iteration values will be used after breaking the loop
+      // Final z and iteration values will be used after breaking the loop//最终的z值和迭代值将在中断循环后使用
       float z_measured_min;
       uint8_t iteration = 0;
-      bool err_break = false; // To break out of nested loops
+      bool err_break = false; // To break out of nested loops//打破嵌套循环的步骤
       while (iteration < z_auto_align_iterations) {
         if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPGM("> probing all positions.");
 
@@ -208,24 +209,24 @@ void GcodeSuite::G34() {
           ui.set_status(str);
         #endif
 
-        // Initialize minimum value
+        // Initialize minimum value//初始化最小值
         z_measured_min =  100000.0f;
         float z_measured_max = -100000.0f;
 
-        // Probe all positions (one per Z-Stepper)
+        // Probe all positions (one per Z-Stepper)//探测所有位置（每个Z步进器一个）
         LOOP_L_N(i, NUM_Z_STEPPER_DRIVERS) {
-          // iteration odd/even --> downward / upward stepper sequence
+          // iteration odd/even --> downward / upward stepper sequence//迭代奇偶-->向下/向上步进序列
           const uint8_t iprobe = (iteration & 1) ? NUM_Z_STEPPER_DRIVERS - 1 - i : i;
 
-          // Safe clearance even on an incline
+          // Safe clearance even on an incline//即使在斜坡上的安全净空
           if ((iteration == 0 || i > 0) && z_probe > current_position.z) do_blocking_move_to_z(z_probe);
 
           if (DEBUGGING(LEVELING))
             DEBUG_ECHOLNPAIR_P(PSTR("Probing X"), z_stepper_align.xy[iprobe].x, SP_Y_STR, z_stepper_align.xy[iprobe].y);
 
-          // Probe a Z height for each stepper.
-          // Probing sanity check is disabled, as it would trigger even in normal cases because
-          // current_position.z has been manually altered in the "dirty trick" above.
+          // Probe a Z height for each stepper.//探测每个步进电机的Z高度。
+          // Probing sanity check is disabled, as it would trigger even in normal cases because//探测健全性检查已禁用，因为即使在正常情况下也会触发，因为
+          // current_position.z has been manually altered in the "dirty trick" above.//当前_位置.z已在上面的“肮脏技巧”中手动更改。
           const float z_probed_height = probe.probe_at_point(z_stepper_align.xy[iprobe], raise_after, 0, true, false);
           if (isnan(z_probed_height)) {
             SERIAL_ECHOLNPGM("Probing failed");
@@ -234,36 +235,36 @@ void GcodeSuite::G34() {
             break;
           }
 
-          // Add height to each value, to provide a more useful target height for
-          // the next iteration of probing. This allows adjustments to be made away from the bed.
+          // Add height to each value, to provide a more useful target height for//将“高度”添加到每个值，以便为每个值提供更有用的目标高度
+          // the next iteration of probing. This allows adjustments to be made away from the bed.//探测的下一次迭代。这允许在远离床的地方进行调整。
           z_measured[iprobe] = z_probed_height + Z_CLEARANCE_BETWEEN_PROBES;
 
           if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPAIR("> Z", iprobe + 1, " measured position is ", z_measured[iprobe]);
 
-          // Remember the minimum measurement to calculate the correction later on
+          // Remember the minimum measurement to calculate the correction later on//记住最小测量值，以便稍后计算修正值
           z_measured_min = _MIN(z_measured_min, z_measured[iprobe]);
           z_measured_max = _MAX(z_measured_max, z_measured[iprobe]);
-        } // for (i)
+        } // for (i)//第（i）款
 
         if (err_break) break;
 
-        // Adapt the next probe clearance height based on the new measurements.
-        // Safe_height = lowest distance to bed (= highest measurement) plus highest measured misalignment.
+        // Adapt the next probe clearance height based on the new measurements.//根据新的测量值调整下一个探针间隙高度。
+        // Safe_height = lowest distance to bed (= highest measurement) plus highest measured misalignment.//安全高度=最低离床距离（=最高测量值）加上最高测量偏差。
         z_maxdiff = z_measured_max - z_measured_min;
         z_probe = Z_BASIC_CLEARANCE + z_measured_max + z_maxdiff;
 
         #if ENABLED(Z_STEPPER_ALIGN_KNOWN_STEPPER_POSITIONS)
-          // Replace the initial values in z_measured with calculated heights at
-          // each stepper position. This allows the adjustment algorithm to be
-          // shared between both possible probing mechanisms.
+          // Replace the initial values in z_measured with calculated heights at//将z_中测量的初始值替换为以下位置的计算高度：
+          // each stepper position. This allows the adjustment algorithm to be//每个步进器位置。这允许调整算法
+          // shared between both possible probing mechanisms.//在两种可能的探测机制之间共享。
 
-          // This must be done after the next z_probe height is calculated, so that
-          // the height is calculated from actual print area positions, and not
-          // extrapolated motor movements.
+          // This must be done after the next z_probe height is calculated, so that//这必须在计算下一个z_探头高度后进行，以便
+          // the height is calculated from actual print area positions, and not//高度是根据实际打印区域位置计算的，而不是
+          // extrapolated motor movements.//外推运动。
 
-          // Compute the least-squares fit for all probed points.
-          // Calculate the Z position of each stepper and store it in z_measured.
-          // This allows the actual adjustment logic to be shared by both algorithms.
+          // Compute the least-squares fit for all probed points.//计算所有探测点的最小二乘拟合。
+          // Calculate the Z position of each stepper and store it in z_measured.//计算每个步进电机的Z位置，并将其存储在测量的Z_中。
+          // This allows the actual adjustment logic to be shared by both algorithms.//这允许两种算法共享实际调整逻辑。
           linear_fit_data lfd;
           incremental_LSF_reset(&lfd);
           LOOP_L_N(i, NUM_Z_STEPPER_DRIVERS) {
@@ -333,75 +334,75 @@ void GcodeSuite::G34() {
         };
 
         #if ENABLED(Z_STEPPER_ALIGN_KNOWN_STEPPER_POSITIONS)
-          // Check if the applied corrections go in the correct direction.
-          // Calculate the sum of the absolute deviations from the mean of the probe measurements.
-          // Compare to the last iteration to ensure it's getting better.
+          // Check if the applied corrections go in the correct direction.//检查应用的校正是否朝正确的方向进行。
+          // Calculate the sum of the absolute deviations from the mean of the probe measurements.//计算与探头测量平均值的绝对偏差之和。
+          // Compare to the last iteration to ensure it's getting better.//与上一次迭代进行比较，以确保它变得更好。
 
-          // Calculate mean value as a reference
+          // Calculate mean value as a reference//计算平均值作为参考
           float z_measured_mean = 0.0f;
           LOOP_L_N(zstepper, NUM_Z_STEPPER_DRIVERS) z_measured_mean += z_measured[zstepper];
           z_measured_mean /= NUM_Z_STEPPER_DRIVERS;
 
-          // Calculate the sum of the absolute deviations from the mean value
+          // Calculate the sum of the absolute deviations from the mean value//计算与平均值的绝对偏差之和
           float z_align_level_indicator = 0.0f;
           LOOP_L_N(zstepper, NUM_Z_STEPPER_DRIVERS)
             z_align_level_indicator += ABS(z_measured[zstepper] - z_measured_mean);
 
-          // If it's getting worse, stop and throw an error
+          // If it's getting worse, stop and throw an error//如果情况变得更糟，停下来并抛出一个错误
           err_break = decreasing_accuracy(last_z_align_level_indicator, z_align_level_indicator);
           if (err_break) break;
 
           last_z_align_level_indicator = z_align_level_indicator;
         #endif
 
-        // The following correction actions are to be enabled for select Z-steppers only
+        // The following correction actions are to be enabled for select Z-steppers only//以下校正操作仅适用于选定的Z步进电机
         stepper.set_separate_multi_axis(true);
 
         bool success_break = true;
-        // Correct the individual stepper offsets
+        // Correct the individual stepper offsets//更正单个步进器偏移
         LOOP_L_N(zstepper, NUM_Z_STEPPER_DRIVERS) {
-          // Calculate current stepper move
+          // Calculate current stepper move//计算当前步进移动
           float z_align_move = z_measured[zstepper] - z_measured_min;
           const float z_align_abs = ABS(z_align_move);
 
           #if DISABLED(Z_STEPPER_ALIGN_KNOWN_STEPPER_POSITIONS)
-            // Optimize one iteration's correction based on the first measurements
+            // Optimize one iteration's correction based on the first measurements//基于第一次测量优化一次迭代的校正
             if (z_align_abs) amplification = (iteration == 1) ? _MIN(last_z_align_move[zstepper] / z_align_abs, 2.0f) : z_auto_align_amplification;
 
-            // Check for less accuracy compared to last move
+            // Check for less accuracy compared to last move//与上一步相比，检查精度是否较低
             if (decreasing_accuracy(last_z_align_move[zstepper], z_align_abs)) {
               if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPAIR("> Z", zstepper + 1, " last_z_align_move = ", last_z_align_move[zstepper]);
               if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPAIR("> Z", zstepper + 1, " z_align_abs = ", z_align_abs);
               adjustment_reverse = !adjustment_reverse;
             }
 
-            // Remember the alignment for the next iteration, but only if steppers move,
-            // otherwise it would be just zero (in case this stepper was at z_measured_min already)
+            // Remember the alignment for the next iteration, but only if steppers move,//记住下一次迭代的对齐方式，但仅当步进器移动时，
+            // otherwise it would be just zero (in case this stepper was at z_measured_min already)//否则它将仅为零（如果此步进器已在z_测量_min）
             if (z_align_abs > 0) last_z_align_move[zstepper] = z_align_abs;
           #endif
 
-          // Stop early if all measured points achieve accuracy target
+          // Stop early if all measured points achieve accuracy target//如果所有测量点达到精度目标，则提前停止
           if (z_align_abs > z_auto_align_accuracy) success_break = false;
 
           if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPAIR("> Z", zstepper + 1, " corrected by ", z_align_move);
 
-          // Lock all steppers except one
+          // Lock all steppers except one//锁定除一个外的所有步进器
           stepper.set_all_z_lock(true, zstepper);
 
           #if DISABLED(Z_STEPPER_ALIGN_KNOWN_STEPPER_POSITIONS)
-            // Decreasing accuracy was detected so move was inverted.
-            // Will match reversed Z steppers on dual steppers. Triple will need more work to map.
+            // Decreasing accuracy was detected so move was inverted.//检测到精度下降，因此移动被反转。
+            // Will match reversed Z steppers on dual steppers. Triple will need more work to map.//将匹配双步进器上的反向Z步进器。Triple需要更多的工作来绘制地图。
             if (adjustment_reverse) {
               z_align_move = -z_align_move;
               if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPAIR("> Z", zstepper + 1, " correction reversed to ", z_align_move);
             }
           #endif
 
-          // Do a move to correct part of the misalignment for the current stepper
+          // Do a move to correct part of the misalignment for the current stepper//移动以纠正当前步进电机的部分错位
           do_blocking_move_to_z(amplification * z_align_move + current_position.z);
-        } // for (zstepper)
+        } // for (zstepper)//用于（zstepper）
 
-        // Back to normal stepper operations
+        // Back to normal stepper operations//恢复正常步进操作
         stepper.set_all_z_lock(false);
         stepper.set_separate_multi_axis(false);
 
@@ -414,7 +415,7 @@ void GcodeSuite::G34() {
         }
 
         iteration++;
-      } // while (iteration < z_auto_align_iterations)
+      } // while (iteration < z_auto_align_iterations)//同时（迭代<z_自动对齐\u迭代）
 
       if (err_break)
         SERIAL_ECHOLNPGM("G34 aborted.");
@@ -423,35 +424,35 @@ void GcodeSuite::G34() {
         SERIAL_ECHOLNPAIR_F("Accuracy: ", z_maxdiff);
       }
 
-      // Stow the probe because the last call to probe.probe_at_point(...)
-      // leaves the probe deployed when it's successful.
+      // Stow the probe because the last call to probe.probe_at_point(...)//收起探测器，因为对probe.probe的最后一次调用位于点（…）
+      // leaves the probe deployed when it's successful.//在探测器成功时保持部署状态。
       IF_DISABLED(TOUCH_MI_PROBE, probe.stow());
 
       #if ENABLED(HOME_AFTER_G34)
-        // After this operation the z position needs correction
+        // After this operation the z position needs correction//此操作后，z位置需要校正
         set_axis_never_homed(Z_AXIS);
-        // Home Z after the alignment procedure
+        // Home Z after the alignment procedure//校准程序后的原点Z
         process_subcommands_now_P(PSTR("G28Z"));
       #else
-        // Use the probed height from the last iteration to determine the Z height.
-        // z_measured_min is used, because all steppers are aligned to z_measured_min.
-        // Ideally, this would be equal to the 'z_probe * 0.5f' which was added earlier.
+        // Use the probed height from the last iteration to determine the Z height.//使用上次迭代中的探测高度来确定Z高度。
+        // z_measured_min is used, because all steppers are aligned to z_measured_min.//使用z_测量的最小值，因为所有步进器都与z_测量的最小值对齐。
+        // Ideally, this would be equal to the 'z_probe * 0.5f' which was added earlier.//理想情况下，这将等于先前添加的“z_probe*0.5f”。
         current_position.z -= z_measured_min - (float)Z_CLEARANCE_BETWEEN_PROBES;
         sync_plan_position();
       #endif
 
-      // Restore the active tool after homing
-      TERN_(HAS_MULTI_HOTEND, tool_change(old_tool_index, DISABLED(PARKING_EXTRUDER))); // Fetch previous tool for parking extruder
+      // Restore the active tool after homing//归位后恢复激活的刀具
+      TERN_(HAS_MULTI_HOTEND, tool_change(old_tool_index, DISABLED(PARKING_EXTRUDER))); // Fetch previous tool for parking extruder//取上一个工具，用于停放挤出机
 
       #if BOTH(HAS_LEVELING, RESTORE_LEVELING_AFTER_G34)
         set_bed_leveling_enabled(leveling_was_active);
       #endif
 
     }while(0);
-  #endif // Z_STEPPER_AUTO_ALIGN
+  #endif // Z_STEPPER_AUTO_ALIGN//Z_步进电机自动对齐
 }
 
-#endif // Z_MULTI_ENDSTOPS || Z_STEPPER_AUTO_ALIGN
+#endif // Z_MULTI_ENDSTOPS || Z_STEPPER_AUTO_ALIGN//Z_多个| | | Z|步进器(自动)对齐
 
 #if ENABLED(Z_STEPPER_AUTO_ALIGN)
 
@@ -505,7 +506,7 @@ void GcodeSuite::M422() {
     return;
   }
 
-  // Get the Probe Position Index or Z Stepper Index
+  // Get the Probe Position Index or Z Stepper Index//获取探针位置索引或Z步进器索引
   int8_t position_index;
   if (is_probe_point) {
     position_index = parser.intval('S') - 1;
@@ -543,4 +544,4 @@ void GcodeSuite::M422() {
   pos_dest[position_index] = pos;
 }
 
-#endif // Z_STEPPER_AUTO_ALIGN
+#endif // Z_STEPPER_AUTO_ALIGN//Z_步进电机自动对齐

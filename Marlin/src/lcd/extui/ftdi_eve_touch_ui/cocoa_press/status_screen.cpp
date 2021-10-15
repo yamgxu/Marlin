@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*********************************
  * cocoa_press/status_screen.cpp *
  *********************************/
@@ -41,7 +42,7 @@ float StatusScreen::increment;
 void StatusScreen::loadBitmaps() {
   constexpr uint32_t base = ftdi_memory_map::RAM_G;
 
-  // Load fonts for internationalization
+  // Load fonts for internationalization//加载国际化字体
   #if ENABLED(TOUCH_UI_USE_UTF8)
     load_utf8_data(base + UTF8_FONT_OFFSET);
   #endif
@@ -107,7 +108,7 @@ void StatusScreen::draw_temperature(draw_mode_t what) {
     cmd.text(x, y, h, v, GET_TEXT_F(MSG_CHAMBER));
 
     #if ENABLED(TOUCH_UI_USE_UTF8)
-      load_utf8_bitmaps(cmd); // Restore font bitmap handles
+      load_utf8_bitmaps(cmd); // Restore font bitmap handles//还原字体位图句柄
     #endif
   }
 
@@ -150,7 +151,7 @@ void StatusScreen::draw_syringe(draw_mode_t what) {
   PolyUI ui(cmd, what);
 
   if (what & BACKGROUND) {
-    // Paint the shadow for the syringe
+    // Paint the shadow for the syringe//给注射器涂上阴影
     ui.color(shadow_rgb);
     ui.shadow(POLY(syringe_outline), shadow_depth);
   }
@@ -158,7 +159,7 @@ void StatusScreen::draw_syringe(draw_mode_t what) {
   if (what & FOREGROUND) {
     int16_t x, y, h, v;
 
-    // Paint the syringe icon
+    // Paint the syringe icon//绘制注射器图标
     ui.color(syringe_rgb);
     ui.fill(POLY(syringe_outline));
 
@@ -264,8 +265,8 @@ bool StatusScreen::onTouchEnd(uint8_t tag) {
     case 10: GOTO_SCREEN(TemperatureScreen); break;
     default: return false;
   }
-  // If a passcode is enabled, the LockScreen will prevent the
-  // user from proceeding.
+  // If a passcode is enabled, the LockScreen will prevent the//如果密码已启用，锁屏将阻止
+  // user from proceeding.//用户无法继续。
   LockScreen::check_passcode();
   return true;
 }
@@ -294,4 +295,4 @@ void StatusScreen::onIdle() {
   }
 }
 
-#endif // COCOA_STATUS_SCREEN
+#endif // COCOA_STATUS_SCREEN//COCOA_状态_屏幕

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -37,7 +38,7 @@
 
 #include "../../module/endstops.h"
 
-// One ISR for all EXT-Interrupts
+// One ISR for all EXT-Interrupts//一个ISR用于所有外部中断
 void endstop_ISR() { endstops.update(); }
 
 /**

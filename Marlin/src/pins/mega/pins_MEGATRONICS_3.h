@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -35,34 +36,34 @@
   #define BOARD_INFO_NAME "Megatronics v3.0"
 #endif
 
-//
-// Servos
-//
-#define SERVO0_PIN                            46  // AUX3-6
-#define SERVO1_PIN                            47  // AUX3-5
-#define SERVO2_PIN                            48  // AUX3-4
-#define SERVO3_PIN                            49  // AUX3-3
+////
+// Servos//伺服
+////
+#define SERVO0_PIN                            46  // AUX3-6//AUX3-6
+#define SERVO1_PIN                            47  // AUX3-5//AUX3-5
+#define SERVO2_PIN                            48  // AUX3-4//AUX3-4
+#define SERVO3_PIN                            49  // AUX3-3//AUX3-3
 
-//
-// Limit Switches
-//
-#define X_MIN_PIN                             37  // No INT
-#define X_MAX_PIN                             40  // No INT
-#define Y_MIN_PIN                             41  // No INT
-#define Y_MAX_PIN                             38  // No INT
-#define Z_MIN_PIN                             18  // No INT
-#define Z_MAX_PIN                             19  // No INT
+////
+// Limit Switches//限位开关
+////
+#define X_MIN_PIN                             37  // No INT//无整数
+#define X_MAX_PIN                             40  // No INT//无整数
+#define Y_MIN_PIN                             41  // No INT//无整数
+#define Y_MAX_PIN                             38  // No INT//无整数
+#define Z_MIN_PIN                             18  // No INT//无整数
+#define Z_MAX_PIN                             19  // No INT//无整数
 
-//
-// Z Probe (when not Z_MIN_PIN)
-//
+////
+// Z Probe (when not Z_MIN_PIN)//Z探头（非Z_MIN_引脚时）
+////
 #ifndef Z_MIN_PROBE_PIN
   #define Z_MIN_PROBE_PIN                     19
 #endif
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                            58
 #define X_DIR_PIN                             57
 #define X_ENABLE_PIN                          59
@@ -87,33 +88,33 @@
 #define E2_DIR_PIN                            60
 #define E2_ENABLE_PIN                         23
 
-//
-// Temperature Sensors
-//
+////
+// Temperature Sensors//温度传感器
+////
 #if TEMP_SENSOR_0 == -1
-  #define TEMP_0_PIN                          11  // Analog Input
+  #define TEMP_0_PIN                          11  // Analog Input//模拟输入
 #else
-  #define TEMP_0_PIN                          15  // Analog Input
+  #define TEMP_0_PIN                          15  // Analog Input//模拟输入
 #endif
 #if TEMP_SENSOR_1 == -1
-  #define TEMP_1_PIN                          10  // Analog Input
+  #define TEMP_1_PIN                          10  // Analog Input//模拟输入
 #else
-  #define TEMP_1_PIN                          13  // Analog Input
+  #define TEMP_1_PIN                          13  // Analog Input//模拟输入
 #endif
 #if TEMP_SENSOR_2 == -1
-  #define TEMP_2_PIN                           9  // Analog Input
+  #define TEMP_2_PIN                           9  // Analog Input//模拟输入
 #else
-  #define TEMP_2_PIN                          12  // Analog Input
+  #define TEMP_2_PIN                          12  // Analog Input//模拟输入
 #endif
 #if TEMP_SENSOR_BED == -1
-  #define TEMP_BED_PIN                         8  // Analog Input
+  #define TEMP_BED_PIN                         8  // Analog Input//模拟输入
 #else
-  #define TEMP_BED_PIN                        14  // Analog Input
+  #define TEMP_BED_PIN                        14  // Analog Input//模拟输入
 #endif
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_0_PIN                           2
 #define HEATER_1_PIN                           9
 #define HEATER_2_PIN                           8
@@ -124,20 +125,20 @@
 #endif
 #define FAN1_PIN                               7
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define SDSS                                  53
 #define LED_PIN                               13
 #define PS_ON_PIN                             12
 
 #ifndef CASE_LIGHT_PIN
-  #define CASE_LIGHT_PIN                      45  // Try the keypad connector
+  #define CASE_LIGHT_PIN                      45  // Try the keypad connector//试试键盘接口
 #endif
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 #define BEEPER_PIN                            61
 
 #define BTN_EN1                               44
@@ -146,9 +147,9 @@
 
 #if ENABLED(REPRAPWORLD_GRAPHICAL_LCD)
 
-  #define LCD_PINS_RS                         56  // CS chip select / SS chip slave select
-  #define LCD_PINS_ENABLE                     51  // SID (MOSI)
-  #define LCD_PINS_D4                         52  // SCK (CLK) clock
+  #define LCD_PINS_RS                         56  // CS chip select / SS chip slave select//CS芯片选择/SS芯片从属选择
+  #define LCD_PINS_ENABLE                     51  // SID (MOSI)//SID（MOSI）
+  #define LCD_PINS_D4                         52  // SCK (CLK) clock//时钟
   #define SD_DETECT_PIN                       35
 
 #else
@@ -171,26 +172,26 @@
 
 #endif
 
-//
-// M3/M4/M5 - Spindle/Laser Control
-//
-#if DISABLED(REPRAPWORLD_KEYPAD)                  // try to use the keypad connector first
-  #define SPINDLE_LASER_PWM_PIN               44  // Hardware PWM
-  #define SPINDLE_LASER_ENA_PIN               43  // Pullup!
+////
+// M3/M4/M5 - Spindle/Laser Control//M3/M4/M5-主轴/激光控制
+////
+#if DISABLED(REPRAPWORLD_KEYPAD)                  // try to use the keypad connector first//首先尝试使用键盘接口
+  #define SPINDLE_LASER_PWM_PIN               44  // Hardware PWM//硬件脉宽调制
+  #define SPINDLE_LASER_ENA_PIN               43  // Pullup!//拉起！
   #define SPINDLE_DIR_PIN                     42
 #elif EXTRUDERS <= 2
-  // Hijack the last extruder so that we can get the PWM signal off the Y breakout
-  // Move Y to the E2 plug. This makes dual Y steppers harder
-  #undef Y_ENABLE_PIN                             //  4
-  #undef Y_STEP_PIN                               //  5
-  #undef Y_DIR_PIN                                // 17
-  #undef E2_ENABLE_PIN                            // 23
-  #undef E2_STEP_PIN                              // 22
-  #undef E2_DIR_PIN                               // 60
+  // Hijack the last extruder so that we can get the PWM signal off the Y breakout//劫持最后一台挤出机，以便从Y形叉接线束上获取PWM信号
+  // Move Y to the E2 plug. This makes dual Y steppers harder//将Y移到E2插头上。这使得双Y步进更加困难
+  #undef Y_ENABLE_PIN                             //  4//  4
+  #undef Y_STEP_PIN                               //  5//  5
+  #undef Y_DIR_PIN                                // 17// 17
+  #undef E2_ENABLE_PIN                            // 23// 23
+  #undef E2_STEP_PIN                              // 22// 22
+  #undef E2_DIR_PIN                               // 60// 60
   #define Y_ENABLE_PIN                        23
   #define Y_STEP_PIN                          22
   #define Y_DIR_PIN                           60
-  #define SPINDLE_LASER_PWM_PIN                4  // Hardware PWM
-  #define SPINDLE_LASER_ENA_PIN               17  // Pullup!
+  #define SPINDLE_LASER_PWM_PIN                4  // Hardware PWM//硬件脉宽调制
+  #define SPINDLE_LASER_ENA_PIN               17  // Pullup!//拉起！
   #define SPINDLE_DIR_PIN                      5
 #endif

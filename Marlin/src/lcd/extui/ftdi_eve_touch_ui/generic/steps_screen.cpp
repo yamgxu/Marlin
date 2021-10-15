@@ -1,3 +1,4 @@
+/** translatione by yx */
 /********************
  * steps_screen.cpp *
  ********************/
@@ -82,4 +83,4 @@ bool StepsScreen::onTouchHeld(uint8_t tag) {
   return true;
 }
 
-#endif // FTDI_STEPS_SCREEN
+#endif // FTDI_STEPS_SCREEN//FTDI_步数_屏幕

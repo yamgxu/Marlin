@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -20,8 +21,8 @@
  *
  */
 
-// NOTE - the HAL version of the rrd device uses a generic ST7920 device.  See the
-// file u8g_dev_st7920_128x64_HAL.cpp for the HAL version.
+// NOTE - the HAL version of the rrd device uses a generic ST7920 device.  See the//注意-rrd设备的HAL版本使用通用ST7920设备。见
+// file u8g_dev_st7920_128x64_HAL.cpp for the HAL version.//HAL版本的文件u8g_dev_st7920_128x64_HAL.cpp。
 
 #include "../../inc/MarlinConfigPre.h"
 
@@ -87,7 +88,7 @@
   #endif
 #endif
 
-// Optimize this code with -O3
+// Optimize this code with -O3//使用-O3优化此代码
 #pragma GCC optimize (3)
 
 #ifdef ARDUINO_ARCH_STM32F1
@@ -101,18 +102,18 @@
   WRITE(ST7920_CLK_PIN, HIGH);            ST7920_DELAY_3; \
   val <<= 1; }while(0)
 
-// Optimize this code with -O3
+// Optimize this code with -O3//使用-O3优化此代码
 #pragma GCC optimize (3)
 
 void ST7920_SWSPI_SND_8BIT(uint8_t val) {
-  ST7920_SND_BIT; // 1
-  ST7920_SND_BIT; // 2
-  ST7920_SND_BIT; // 3
-  ST7920_SND_BIT; // 4
-  ST7920_SND_BIT; // 5
-  ST7920_SND_BIT; // 6
-  ST7920_SND_BIT; // 7
-  ST7920_SND_BIT; // 8
+  ST7920_SND_BIT; // 1// 1
+  ST7920_SND_BIT; // 2// 2
+  ST7920_SND_BIT; // 3// 3
+  ST7920_SND_BIT; // 4// 4
+  ST7920_SND_BIT; // 5// 5
+  ST7920_SND_BIT; // 6// 6
+  ST7920_SND_BIT; // 7// 7
+  ST7920_SND_BIT; // 8// 8
 }
 
 uint8_t u8g_dev_rrd_st7920_128x64_fn(u8g_t *u8g, u8g_dev_t *dev, uint8_t msg, void *arg) {
@@ -124,23 +125,23 @@ uint8_t u8g_dev_rrd_st7920_128x64_fn(u8g_t *u8g, u8g_dev_t *dev, uint8_t msg, vo
       OUT_WRITE(ST7920_CLK_PIN, HIGH);
 
       ST7920_CS();
-      u8g_Delay(120);                 // Initial delay for boot up
+      u8g_Delay(120);                 // Initial delay for boot up//启动的初始延迟
       ST7920_SET_CMD();
-      ST7920_WRITE_BYTE(0x20);        // Non-extended mode
-      ST7920_WRITE_BYTE(0x08);        // Display off, cursor+blink off
-      ST7920_WRITE_BYTE(0x01);        // Clear DDRAM ram
-      u8g_Delay(15);                  // Delay for DDRAM clear
-      ST7920_WRITE_BYTE(0x24);        // Extended mode
-      ST7920_WRITE_BYTE(0x26);        // Extended mode + GDRAM active
-      for (y = 0; y < (LCD_PIXEL_HEIGHT) / 2; y++) {  // Clear GDRAM
-        ST7920_WRITE_BYTE(0x80 | y);  // Set y
-        ST7920_WRITE_BYTE(0x80);      // Set x = 0
+      ST7920_WRITE_BYTE(0x20);        // Non-extended mode//非扩展模式
+      ST7920_WRITE_BYTE(0x08);        // Display off, cursor+blink off//显示关闭，光标+闪烁关闭
+      ST7920_WRITE_BYTE(0x01);        // Clear DDRAM ram//清除DDRAM
+      u8g_Delay(15);                  // Delay for DDRAM clear//DDRAM清除延迟
+      ST7920_WRITE_BYTE(0x24);        // Extended mode//扩展模式
+      ST7920_WRITE_BYTE(0x26);        // Extended mode + GDRAM active//扩展模式+GDRAM激活
+      for (y = 0; y < (LCD_PIXEL_HEIGHT) / 2; y++) {  // Clear GDRAM//清除GDRAM
+        ST7920_WRITE_BYTE(0x80 | y);  // Set y//设置y
+        ST7920_WRITE_BYTE(0x80);      // Set x = 0//设置x=0
         ST7920_SET_DAT();
-        for (i = 0; i < 2 * (LCD_PIXEL_WIDTH) / 8; i++) // 2x width clears both segments
+        for (i = 0; i < 2 * (LCD_PIXEL_WIDTH) / 8; i++) // 2x width clears both segments//2x宽度清除两个段
           ST7920_WRITE_BYTE(0);
         ST7920_SET_CMD();
       }
-      ST7920_WRITE_BYTE(0x0C);        // Display on, cursor+blink off
+      ST7920_WRITE_BYTE(0x0C);        // Display on, cursor+blink off//显示打开，光标+闪烁关闭
       ST7920_NCS();
     }
     break;
@@ -157,15 +158,15 @@ uint8_t u8g_dev_rrd_st7920_128x64_fn(u8g_t *u8g, u8g_dev_t *dev, uint8_t msg, vo
       for (i = 0; i < PAGE_HEIGHT; i ++) {
         ST7920_SET_CMD();
         if (y < 32) {
-          ST7920_WRITE_BYTE(0x80 | y);        // y
-          ST7920_WRITE_BYTE(0x80);            // x = 0
+          ST7920_WRITE_BYTE(0x80 | y);        // y//y
+          ST7920_WRITE_BYTE(0x80);            // x = 0//x=0
         }
         else {
-          ST7920_WRITE_BYTE(0x80 | (y - 32)); // y
-          ST7920_WRITE_BYTE(0x80 | 8);        // x = 64
+          ST7920_WRITE_BYTE(0x80 | (y - 32)); // y//y
+          ST7920_WRITE_BYTE(0x80 | 8);        // x = 64//x=64
         }
         ST7920_SET_DAT();
-        ST7920_WRITE_BYTES(ptr, (LCD_PIXEL_WIDTH) / 8); // ptr incremented inside of macro!
+        ST7920_WRITE_BYTES(ptr, (LCD_PIXEL_WIDTH) / 8); // ptr incremented inside of macro!//ptr在宏内部递增！
         y++;
       }
       ST7920_NCS();
@@ -196,5 +197,5 @@ u8g_dev_t u8g_dev_st7920_128x64_rrd_sw_spi = { u8g_dev_rrd_st7920_128x64_fn, &u8
   void ST7920_write_byte(const uint8_t val) { ST7920_WRITE_BYTE(val); }
 #endif
 
-#endif // U8GLIB_ST7920
-#endif // !U8G_HAL_LINKS && (__AVR__ || ARDUINO_ARCH_STM32 || ARDUINO_ARCH_ESP32)
+#endif // U8GLIB_ST7920//U8GLIB_ST7920
+#endif // !U8G_HAL_LINKS && (__AVR__ || ARDUINO_ARCH_STM32 || ARDUINO_ARCH_ESP32)// !U8G|U HAL|U链接和（|U AVR|U|U ARDUINO|U ARCH|STM32|ARDUINO|U ARCH|ESP32）

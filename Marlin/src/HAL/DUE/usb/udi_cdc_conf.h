@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * \file
  *
@@ -41,7 +42,7 @@
  *
  */
 /*
- * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>
+ * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>//www.atmel.com/design support/“>atmel支持</a>
  */
 
 #ifndef _UDI_CDC_CONF_H_
@@ -63,7 +64,7 @@ extern "C" {
  * @{
  */
 
-//! Control endpoint size (Endpoint 0)
+//! Control endpoint size (Endpoint 0)//! 控制端点大小（端点0）
 #define  USB_DEVICE_EP_CTRL_SIZE       64
 
 #if XMEGA
@@ -72,31 +73,31 @@ extern "C" {
  * The XMEGA supports a IN and OUT endpoint with the same number endpoint,
  * thus XMEGA can support up to 7 CDC interfaces.
  */
-//@{
-#define  UDI_CDC_DATA_EP_IN_0          ( 1 | USB_EP_DIR_IN)  // TX
-#define  UDI_CDC_DATA_EP_OUT_0         ( 2 | USB_EP_DIR_OUT) // RX
-#define  UDI_CDC_COMM_EP_0             ( 2 | USB_EP_DIR_IN)  // Notify endpoint
-#define  UDI_CDC_DATA_EP_IN_1          ( 3 | USB_EP_DIR_IN)  // TX
-#define  UDI_CDC_DATA_EP_OUT_1         ( 4 | USB_EP_DIR_OUT) // RX
-#define  UDI_CDC_COMM_EP_1             ( 4 | USB_EP_DIR_IN)  // Notify endpoint
-#define  UDI_CDC_DATA_EP_IN_2          ( 5 | USB_EP_DIR_IN)  // TX
-#define  UDI_CDC_DATA_EP_OUT_2         ( 6 | USB_EP_DIR_OUT) // RX
-#define  UDI_CDC_COMM_EP_2             ( 6 | USB_EP_DIR_IN)  // Notify endpoint
-#define  UDI_CDC_DATA_EP_IN_3          ( 7 | USB_EP_DIR_IN)  // TX
-#define  UDI_CDC_DATA_EP_OUT_3         ( 8 | USB_EP_DIR_OUT) // RX
-#define  UDI_CDC_COMM_EP_3             ( 8 | USB_EP_DIR_IN)  // Notify endpoint
-#define  UDI_CDC_DATA_EP_IN_4          ( 9 | USB_EP_DIR_IN)  // TX
-#define  UDI_CDC_DATA_EP_OUT_4         (10 | USB_EP_DIR_OUT) // RX
-#define  UDI_CDC_COMM_EP_4             (10 | USB_EP_DIR_IN)  // Notify endpoint
-#define  UDI_CDC_DATA_EP_IN_5          (11 | USB_EP_DIR_IN)  // TX
-#define  UDI_CDC_DATA_EP_OUT_5         (12 | USB_EP_DIR_OUT) // RX
-#define  UDI_CDC_COMM_EP_5             (12 | USB_EP_DIR_IN)  // Notify endpoint
-#define  UDI_CDC_DATA_EP_IN_6          (13 | USB_EP_DIR_IN)  // TX
-#define  UDI_CDC_DATA_EP_OUT_6         (14 | USB_EP_DIR_OUT) // RX
-#define  UDI_CDC_COMM_EP_6             (14 | USB_EP_DIR_IN)  // Notify endpoint
-//! 2 endpoints numbers used per CDC interface
+//@{//@{
+#define  UDI_CDC_DATA_EP_IN_0          ( 1 | USB_EP_DIR_IN)  // TX//德克萨斯州
+#define  UDI_CDC_DATA_EP_OUT_0         ( 2 | USB_EP_DIR_OUT) // RX//接收
+#define  UDI_CDC_COMM_EP_0             ( 2 | USB_EP_DIR_IN)  // Notify endpoint//通知端点
+#define  UDI_CDC_DATA_EP_IN_1          ( 3 | USB_EP_DIR_IN)  // TX//德克萨斯州
+#define  UDI_CDC_DATA_EP_OUT_1         ( 4 | USB_EP_DIR_OUT) // RX//接收
+#define  UDI_CDC_COMM_EP_1             ( 4 | USB_EP_DIR_IN)  // Notify endpoint//通知端点
+#define  UDI_CDC_DATA_EP_IN_2          ( 5 | USB_EP_DIR_IN)  // TX//德克萨斯州
+#define  UDI_CDC_DATA_EP_OUT_2         ( 6 | USB_EP_DIR_OUT) // RX//接收
+#define  UDI_CDC_COMM_EP_2             ( 6 | USB_EP_DIR_IN)  // Notify endpoint//通知端点
+#define  UDI_CDC_DATA_EP_IN_3          ( 7 | USB_EP_DIR_IN)  // TX//德克萨斯州
+#define  UDI_CDC_DATA_EP_OUT_3         ( 8 | USB_EP_DIR_OUT) // RX//接收
+#define  UDI_CDC_COMM_EP_3             ( 8 | USB_EP_DIR_IN)  // Notify endpoint//通知端点
+#define  UDI_CDC_DATA_EP_IN_4          ( 9 | USB_EP_DIR_IN)  // TX//德克萨斯州
+#define  UDI_CDC_DATA_EP_OUT_4         (10 | USB_EP_DIR_OUT) // RX//接收
+#define  UDI_CDC_COMM_EP_4             (10 | USB_EP_DIR_IN)  // Notify endpoint//通知端点
+#define  UDI_CDC_DATA_EP_IN_5          (11 | USB_EP_DIR_IN)  // TX//德克萨斯州
+#define  UDI_CDC_DATA_EP_OUT_5         (12 | USB_EP_DIR_OUT) // RX//接收
+#define  UDI_CDC_COMM_EP_5             (12 | USB_EP_DIR_IN)  // Notify endpoint//通知端点
+#define  UDI_CDC_DATA_EP_IN_6          (13 | USB_EP_DIR_IN)  // TX//德克萨斯州
+#define  UDI_CDC_DATA_EP_OUT_6         (14 | USB_EP_DIR_OUT) // RX//接收
+#define  UDI_CDC_COMM_EP_6             (14 | USB_EP_DIR_IN)  // Notify endpoint//通知端点
+//! 2 endpoints numbers used per CDC interface//! 每个CDC接口使用的2个端点编号
 #define  USB_DEVICE_MAX_EP             (2*UDI_CDC_PORT_NB)
-//@}
+//@}//@}
 
 #else
 
@@ -104,34 +105,34 @@ extern "C" {
  * \name Default endpoint configuration
  * The USBB, UDP, UDPHS and UOTGHS interfaces can support up to 2 CDC interfaces.
  */
-//@{
+//@{//@{
 #  if UDI_CDC_PORT_NB > 2
 #    error USBB, UDP, UDPHS and UOTGHS interfaces have not enought endpoints.
 #  endif
-#define  UDI_CDC_DATA_EP_IN_0          (1 | USB_EP_DIR_IN)  // TX
-#define  UDI_CDC_DATA_EP_OUT_0         (2 | USB_EP_DIR_OUT) // RX
-#define  UDI_CDC_COMM_EP_0             (3 | USB_EP_DIR_IN)  // Notify endpoint
+#define  UDI_CDC_DATA_EP_IN_0          (1 | USB_EP_DIR_IN)  // TX//德克萨斯州
+#define  UDI_CDC_DATA_EP_OUT_0         (2 | USB_EP_DIR_OUT) // RX//接收
+#define  UDI_CDC_COMM_EP_0             (3 | USB_EP_DIR_IN)  // Notify endpoint//通知端点
 #  if SAM3U
      /* For 3U max endpoint size of 4 is 64, use 5 and 6 as bulk tx and rx */
-#    define  UDI_CDC_DATA_EP_IN_1          (6 | USB_EP_DIR_IN)  // TX
-#    define  UDI_CDC_DATA_EP_OUT_1         (5 | USB_EP_DIR_OUT) // RX
-#    define  UDI_CDC_COMM_EP_1             (4 | USB_EP_DIR_IN)  // Notify
+#    define  UDI_CDC_DATA_EP_IN_1          (6 | USB_EP_DIR_IN)  // TX//德克萨斯州
+#    define  UDI_CDC_DATA_EP_OUT_1         (5 | USB_EP_DIR_OUT) // RX//接收
+#    define  UDI_CDC_COMM_EP_1             (4 | USB_EP_DIR_IN)  // Notify//通知
 #  else
-#    define  UDI_CDC_DATA_EP_IN_1          (4 | USB_EP_DIR_IN)  // TX
-#    define  UDI_CDC_DATA_EP_OUT_1         (5 | USB_EP_DIR_OUT) // RX
-#    define  UDI_CDC_COMM_EP_1             (6 | USB_EP_DIR_IN)  // Notify
+#    define  UDI_CDC_DATA_EP_IN_1          (4 | USB_EP_DIR_IN)  // TX//德克萨斯州
+#    define  UDI_CDC_DATA_EP_OUT_1         (5 | USB_EP_DIR_OUT) // RX//接收
+#    define  UDI_CDC_COMM_EP_1             (6 | USB_EP_DIR_IN)  // Notify//通知
 #  endif
-//! 3 endpoints used per CDC interface
-#undef USB_DEVICE_MAX_EP   // undefine this definition in header file
+//! 3 endpoints used per CDC interface//！每个CDC接口使用3个端点
+#undef USB_DEVICE_MAX_EP   // undefine this definition in header file//在头文件中取消定义此定义
 #define  USB_DEVICE_MAX_EP             (3*UDI_CDC_PORT_NB)
-//@}
+//@}//@}
 
 #endif
 
 /**
  * \name Default Interface numbers
  */
-//@{
+//@{//@{
 #define  UDI_CDC_COMM_IFACE_NUMBER_0   0
 #define  UDI_CDC_DATA_IFACE_NUMBER_0   1
 #define  UDI_CDC_COMM_IFACE_NUMBER_1   2
@@ -146,11 +147,11 @@ extern "C" {
 #define  UDI_CDC_DATA_IFACE_NUMBER_5   11
 #define  UDI_CDC_COMM_IFACE_NUMBER_6   12
 #define  UDI_CDC_DATA_IFACE_NUMBER_6   13
-//@}
+//@}//@}
 
-//@}
+//@}//@}
 
 #ifdef __cplusplus
 }
 #endif
-#endif // _UDI_CDC_CONF_H_
+#endif // _UDI_CDC_CONF_H_//_UDI_CDC_CONF_H_

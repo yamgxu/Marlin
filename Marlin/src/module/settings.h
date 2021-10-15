@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,9 +22,9 @@
  */
 #pragma once
 
-//
-// settings.cpp - Settings and EEPROM storage
-//
+////
+// settings.cpp - Settings and EEPROM storage//settings.cpp-设置和EEPROM存储
+////
 
 #include "../inc/MarlinConfig.h"
 
@@ -36,7 +37,7 @@ class MarlinSettings {
     static uint16_t datasize();
 
     static void reset();
-    static bool save();    // Return 'true' if data was saved
+    static bool save();    // Return 'true' if data was saved//如果数据已保存，则返回“true”
 
     FORCE_INLINE static bool init_eeprom() {
       reset();
@@ -50,22 +51,22 @@ class MarlinSettings {
     }
 
     #if ENABLED(SD_FIRMWARE_UPDATE)
-      static bool sd_update_status();                       // True if the SD-Firmware-Update EEPROM flag is set
-      static bool set_sd_update_status(const bool enable);  // Return 'true' after EEPROM is set (-> always true)
+      static bool sd_update_status();                       // True if the SD-Firmware-Update EEPROM flag is set//如果设置了SD固件更新EEPROM标志，则为True
+      static bool set_sd_update_status(const bool enable);  // Return 'true' after EEPROM is set (-> always true)//设置EEPROM后返回“真”（->始终为真）
     #endif
 
     #if ENABLED(EEPROM_SETTINGS)
 
-      static bool load();      // Return 'true' if data was loaded ok
-      static bool validate();  // Return 'true' if EEPROM data is ok
+      static bool load();      // Return 'true' if data was loaded ok//如果数据加载正常，则返回“true”
+      static bool validate();  // Return 'true' if EEPROM data is ok//如果EEPROM数据正常，则返回“true”
 
       static inline void first_load() {
         static bool loaded = false;
         if (!loaded && load()) loaded = true;
       }
 
-      #if ENABLED(AUTO_BED_LEVELING_UBL) // Eventually make these available if any leveling system
-                                         // That can store is enabled
+      #if ENABLED(AUTO_BED_LEVELING_UBL) // Eventually make these available if any leveling system//如果有任何调平系统，最终使其可用
+                                         // That can store is enabled//已启用可存储的
         static uint16_t meshes_start_index();
         FORCE_INLINE static uint16_t meshes_end_index() { return meshes_end; }
         static uint16_t calc_num_meshes();
@@ -73,18 +74,18 @@ class MarlinSettings {
         static void store_mesh(const int8_t slot);
         static void load_mesh(const int8_t slot, void * const into=nullptr);
 
-        //static void delete_mesh();    // necessary if we have a MAT
-        //static void defrag_meshes();  // "
+        //static void delete_mesh();    // necessary if we have a MAT//静态void delete_mesh（）；//如果我们有垫子的话，这是必要的
+        //static void defrag_meshes();  // "//静态void defrag_mesh（）；//"
       #endif
 
-    #else // !EEPROM_SETTINGS
+    #else // !EEPROM_SETTINGS//！EEPROM_设置
 
       FORCE_INLINE
       static bool load() { reset(); report(); return true; }
       FORCE_INLINE
       static void first_load() { (void)load(); }
 
-    #endif // !EEPROM_SETTINGS
+    #endif // !EEPROM_SETTINGS//！EEPROM_设置
 
     #if DISABLED(DISABLE_M503)
       static void report(const bool forReplay=false);
@@ -100,10 +101,10 @@ class MarlinSettings {
 
       static bool eeprom_error, validating;
 
-      #if ENABLED(AUTO_BED_LEVELING_UBL)  // Eventually make these available if any leveling system
-                                          // That can store is enabled
-        static const uint16_t meshes_end; // 128 is a placeholder for the size of the MAT; the MAT will always
-                                          // live at the very end of the eeprom
+      #if ENABLED(AUTO_BED_LEVELING_UBL)  // Eventually make these available if any leveling system//如果有任何调平系统，最终使其可用
+                                          // That can store is enabled//已启用可存储的
+        static const uint16_t meshes_end; // 128 is a placeholder for the size of the MAT; the MAT will always//128是垫子大小的占位符；垫子永远不会坏
+                                          // live at the very end of the eeprom//生活在eeprom的最末端
       #endif
 
       static bool _load();
@@ -143,7 +144,7 @@ class MarlinSettings {
         persistentStore.read_data(eeprom_index, (uint8_t *) &VAR, sizeof(VAR), &working_crc);
       }
 
-    #endif // EEPROM_SETTINGS
+    #endif // EEPROM_SETTINGS//EEPROM_设置
 };
 
 extern MarlinSettings settings;

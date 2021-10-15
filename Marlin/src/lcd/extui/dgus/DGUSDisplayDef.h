@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -30,18 +31,18 @@
 
 #include <stdint.h>
 
-// Information on which screen which VP is displayed.
-// As this is a sparse table, two arrays are needed:
-// one to list the VPs of one screen and one to map screens to the lists.
-// (Strictly this would not be necessary, but allows to only send data the display needs and reducing load on Marlin)
+// Information on which screen which VP is displayed.//在哪个屏幕上显示哪个VP的信息。
+// As this is a sparse table, two arrays are needed://由于这是一个稀疏表，因此需要两个数组：
+// one to list the VPs of one screen and one to map screens to the lists.//一个用于列出一个屏幕的VP，另一个用于将屏幕映射到列表。
+// (Strictly this would not be necessary, but allows to only send data the display needs and reducing load on Marlin)//（严格来说，这是不必要的，但只允许发送显示器所需的数据，并减少马林鱼的负载）
 struct VPMapping {
   const uint8_t screen;
-  const uint16_t *VPList;  // The list is null-terminated.
+  const uint16_t *VPList;  // The list is null-terminated.//列表以null结尾。
 };
 
 extern const struct VPMapping VPMap[];
 
-// List of VPs handled by Marlin / The Display.
+// List of VPs handled by Marlin / The Display.//Marlin/显示器处理的VP列表。
 extern const struct DGUS_VP_Variable ListOfVP[];
 
 #include "../../../inc/MarlinConfig.h"

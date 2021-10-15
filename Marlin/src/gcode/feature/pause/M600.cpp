@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -81,8 +82,8 @@ void GcodeSuite::M600() {
 
   #if ENABLED(DUAL_X_CARRIAGE)
     int8_t DXC_ext = target_extruder;
-    if (!parser.seen_test('T')) {  // If no tool index is specified, M600 was (probably) sent in response to filament runout.
-                                   // In this case, for duplicating modes set DXC_ext to the extruder that ran out.
+    if (!parser.seen_test('T')) {  // If no tool index is specified, M600 was (probably) sent in response to filament runout.//如果未指定刀具索引，则（可能）发送M600以响应灯丝跳动。
+                                   // In this case, for duplicating modes set DXC_ext to the extruder that ran out.//在这种情况下，对于复制模式，将DXC_ext设置为挤出机。
       #if MULTI_FILAMENT_SENSOR
         if (idex_is_duplicating())
           DXC_ext = (READ(FIL_RUNOUT2_PIN) == FIL_RUNOUT2_STATE) ? 1 : 0;
@@ -92,32 +93,32 @@ void GcodeSuite::M600() {
     }
   #endif
 
-  // Show initial "wait for start" message
+  // Show initial "wait for start" message//显示初始“等待启动”消息
   #if DISABLED(MMU2_MENUS)
     ui.pause_show_message(PAUSE_MESSAGE_CHANGING, PAUSE_MODE_PAUSE_PRINT, target_extruder);
   #endif
 
   #if ENABLED(HOME_BEFORE_FILAMENT_CHANGE)
-    // If needed, home before parking for filament change
+    // If needed, home before parking for filament change//如有必要，在停车更换灯丝前回家
     home_if_needed(true);
   #endif
 
   #if HAS_MULTI_EXTRUDER
-    // Change toolhead if specified
+    // Change toolhead if specified//如果指定，请更改工具头
     const uint8_t active_extruder_before_filament_change = active_extruder;
     if (active_extruder != target_extruder && TERN1(DUAL_X_CARRIAGE, !idex_is_duplicating()))
       tool_change(target_extruder, false);
   #endif
 
-  // Initial retract before move to filament change position
+  // Initial retract before move to filament change position//移动到灯丝更换位置前的初始缩回
   const float retract = -ABS(parser.axisunitsval('E', E_AXIS, PAUSE_PARK_RETRACT_LENGTH));
 
   xyz_pos_t park_point NOZZLE_PARK_POINT;
 
-  // Lift Z axis
+  // Lift Z axis//提升Z轴
   if (parser.seenval('Z')) park_point.z = parser.linearval('Z');
 
-  // Move XY axes to filament change position or given position
+  // Move XY axes to filament change position or given position//将XY轴移动到灯丝更换位置或给定位置
   if (parser.seenval('X')) park_point.x = parser.linearval('X');
   if (parser.seenval('Y')) park_point.y = parser.linearval('Y');
 
@@ -126,16 +127,16 @@ void GcodeSuite::M600() {
   #endif
 
   #if ENABLED(MMU2_MENUS)
-    // For MMU2 reset retract and load/unload values so they don't mess with MMU filament handling
+    // For MMU2 reset retract and load/unload values so they don't mess with MMU filament handling//对于MMU2，重置回缩和加载/卸载值，以避免干扰MMU灯丝处理
     constexpr float unload_length = 0.5f,
                     slow_load_length = 0.0f,
                     fast_load_length = 0.0f;
   #else
-    // Unload filament
+    // Unload filament//卸载灯丝
     const float unload_length = -ABS(parser.axisunitsval('U', E_AXIS, fc_settings[active_extruder].unload_length));
-    // Slow load filament
+    // Slow load filament//慢负荷灯丝
     constexpr float slow_load_length = FILAMENT_CHANGE_SLOW_LOAD_LENGTH;
-    // Fast load filament
+    // Fast load filament//快速加载灯丝
     const float fast_load_length = ABS(parser.axisunitsval('L', E_AXIS, fc_settings[active_extruder].load_length));
   #endif
 
@@ -157,12 +158,12 @@ void GcodeSuite::M600() {
   }
 
   #if HAS_MULTI_EXTRUDER
-    // Restore toolhead if it was changed
+    // Restore toolhead if it was changed//如果toolhead已更改，则恢复它
     if (active_extruder_before_filament_change != active_extruder)
       tool_change(active_extruder_before_filament_change, false);
   #endif
 
-  TERN_(MIXING_EXTRUDER, mixer.T(old_mixing_tool)); // Restore original mixing tool
+  TERN_(MIXING_EXTRUDER, mixer.T(old_mixing_tool)); // Restore original mixing tool//恢复原始混合工具
 }
 
-#endif // ADVANCED_PAUSE_FEATURE
+#endif // ADVANCED_PAUSE_FEATURE//高级暂停功能

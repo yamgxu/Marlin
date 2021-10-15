@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -26,16 +27,16 @@
 #define BOARD_INFO_NAME "BTT SKR Mini E3 V1.2"
 
 #ifndef NEOPIXEL_PIN
-  #define NEOPIXEL_PIN                      PC7   // LED driving pin
+  #define NEOPIXEL_PIN                      PC7   // LED driving pin//LED驱动引脚
 #endif
 
 /**
  * TMC2208/TMC2209 stepper drivers
  */
 #if HAS_TMC_UART
-  //
-  // Software serial
-  //
+  ////
+  // Software serial//软件系列
+  ////
   #define X_SERIAL_TX_PIN                   PB15
   #define X_SERIAL_RX_PIN                   PB15
 
@@ -48,6 +49,6 @@
   #define E0_SERIAL_TX_PIN                  PC11
   #define E0_SERIAL_RX_PIN                  PC11
 
-  // Reduce baud rate to improve software serial reliability
+  // Reduce baud rate to improve software serial reliability//降低波特率以提高软件串行可靠性
   #define TMC_BAUD_RATE 19200
 #endif

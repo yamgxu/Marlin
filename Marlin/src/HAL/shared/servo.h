@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -84,32 +85,32 @@
   #include <stdint.h>
 
   #if defined(__AVR__) || defined(ARDUINO_ARCH_SAM) || defined(__SAMD51__)
-    // we're good to go
+    // we're good to go//我们可以走了
   #else
     #error "This library only supports boards with an AVR, SAM3X or SAMD51 processor."
   #endif
 
-  #define Servo_VERSION           2     // software version of this library
+  #define Servo_VERSION           2     // software version of this library//此库的软件版本
 
   class Servo {
     public:
       Servo();
-      int8_t attach(const int pin);      // attach the given pin to the next free channel, set pinMode, return channel number (-1 on fail)
-      int8_t attach(const int pin, const int min, const int max); // as above but also sets min and max values for writes.
+      int8_t attach(const int pin);      // attach the given pin to the next free channel, set pinMode, return channel number (-1 on fail)//将给定管脚连接到下一个自由通道，设置管脚模式，返回通道编号（-1，故障时）
+      int8_t attach(const int pin, const int min, const int max); // as above but also sets min and max values for writes.//如上所述，但也设置写入的最小值和最大值。
       void detach();
-      void write(int value);             // if value is < 200 it is treated as an angle, otherwise as pulse width in microseconds
-      void writeMicroseconds(int value); // write pulse width in microseconds
-      void move(const int value);        // attach the servo, then move to value
-                                         // if value is < 200 it is treated as an angle, otherwise as pulse width in microseconds
-                                         // if DEACTIVATE_SERVOS_AFTER_MOVE wait SERVO_DELAY, then detach
-      int read();                        // returns current pulse width as an angle between 0 and 180 degrees
-      int readMicroseconds();            // returns current pulse width in microseconds for this servo (was read_us() in first release)
-      bool attached();                   // return true if this servo is attached, otherwise false
+      void write(int value);             // if value is < 200 it is treated as an angle, otherwise as pulse width in microseconds//如果值小于200，则将其视为角度，否则视为脉冲宽度（以微秒为单位）
+      void writeMicroseconds(int value); // write pulse width in microseconds//以微秒为单位写入脉冲宽度
+      void move(const int value);        // attach the servo, then move to value//连接伺服，然后移动到“值”
+                                         // if value is < 200 it is treated as an angle, otherwise as pulse width in microseconds//如果值小于200，则将其视为角度，否则视为脉冲宽度（以微秒为单位）
+                                         // if DEACTIVATE_SERVOS_AFTER_MOVE wait SERVO_DELAY, then detach//如果在移动等待伺服延迟后停用伺服，则分离
+      int read();                        // returns current pulse width as an angle between 0 and 180 degrees//以0到180度之间的角度返回当前脉冲宽度
+      int readMicroseconds();            // returns current pulse width in microseconds for this servo (was read_us() in first release)//返回此伺服的当前脉冲宽度（以微秒为单位）（在第一个版本中已读取）
+      bool attached();                   // return true if this servo is attached, otherwise false//如果已连接此伺服，则返回true，否则返回false
 
     private:
-      uint8_t servoIndex;               // index into the channel data for this servo
-      int8_t min;                       // minimum is this value times 4 added to MIN_PULSE_WIDTH
-      int8_t max;                       // maximum is this value times 4 added to MAX_PULSE_WIDTH
+      uint8_t servoIndex;               // index into the channel data for this servo//索引到此伺服的通道数据
+      int8_t min;                       // minimum is this value times 4 added to MIN_PULSE_WIDTH//最小值是该值乘以4乘以最小脉冲宽度
+      int8_t max;                       // maximum is this value times 4 added to MAX_PULSE_WIDTH//最大值是该值乘以4加上最大脉冲宽度
   };
 
 #endif

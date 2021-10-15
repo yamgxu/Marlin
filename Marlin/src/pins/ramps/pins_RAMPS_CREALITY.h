@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -27,24 +28,24 @@
 
 #define BOARD_INFO_NAME "Creality3D RAMPS"
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 
-// Power outputs EFBF or EFBE
+// Power outputs EFBF or EFBE//功率输出EFBF或EFBE
 #define MOSFET_D_PIN                           7
 
 #define FIL_RUNOUT_PIN                         2
 #if NUM_RUNOUT_SENSORS >= 2
-  #define FIL_RUNOUT2_PIN                     15  // Creality CR-X can use dual runout sensors
+  #define FIL_RUNOUT2_PIN                     15  // Creality CR-X can use dual runout sensors//Creality CR-X可以使用双跳动传感器
 #endif
 
 #ifndef SD_DETECT_PIN
-  #define SD_DETECT_PIN                       49  // Always define onboard SD detect
+  #define SD_DETECT_PIN                       49  // Always define onboard SD detect//始终定义车载SD检测
 #endif
 
 #ifndef PS_ON_PIN
-  #define PS_ON_PIN                           40  // Used by CR2020 Industrial series
+  #define PS_ON_PIN                           40  // Used by CR2020 Industrial series//用于CR2020工业系列
 #endif
 
 #if ENABLED(CASE_LIGHT_ENABLE) && !defined(CASE_LIGHT_PIN)
@@ -54,15 +55,15 @@
 #include "pins_RAMPS.h"
 
 #ifndef BEEPER_PIN
-  #define BEEPER_PIN                          37  // Always define beeper pin so Play Tone works with ExtUI
+  #define BEEPER_PIN                          37  // Always define beeper pin so Play Tone works with ExtUI//始终定义寻呼机pin，以便播放音调与ExtUI配合使用
 #endif
 
-#define EXP1_PIN                              65  // A11 - Used by CR2020 Industrial series for case
-#define EXP2_PIN                              66  // A12
-#define EXP3_PIN                              11  // SERVO0_PIN
-#define EXP4_PIN                              12  // PS_ON_PIN
+#define EXP1_PIN                              65  // A11 - Used by CR2020 Industrial series for case//A11-用于CR2020工业系列的外壳
+#define EXP2_PIN                              66  // A12//A12
+#define EXP3_PIN                              11  // SERVO0_PIN//伺服0_销
+#define EXP4_PIN                              12  // PS_ON_PIN//PS_ON_PIN
 
-#define SUICIDE_PIN                           12  // Used by CR2020 Industrial series
+#define SUICIDE_PIN                           12  // Used by CR2020 Industrial series//用于CR2020工业系列
 #ifndef SUICIDE_PIN_INVERTING
   #define SUICIDE_PIN_INVERTING             true
 #endif

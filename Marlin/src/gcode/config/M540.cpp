@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -37,4 +38,4 @@ void GcodeSuite::M540() {
 
 }
 
-#endif // SD_ABORT_ON_ENDSTOP_HIT
+#endif // SD_ABORT_ON_ENDSTOP_HIT//SD\u中止\u结束停止\u命中

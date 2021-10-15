@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  *
@@ -51,16 +52,16 @@ size_t PersistentStore::capacity() {
 }
 
 bool PersistentStore::access_start() {
-  NVMCTRL->SEECFG.reg = NVMCTRL_SEECFG_WMODE_BUFFERED;  // Buffered mode and segment reallocation active
+  NVMCTRL->SEECFG.reg = NVMCTRL_SEECFG_WMODE_BUFFERED;  // Buffered mode and segment reallocation active//缓冲模式和段重新分配激活
   if (NVMCTRL->SEESTAT.bit.RLOCK)
-    NVMCTRL_CMD(NVMCTRL_CTRLB_CMD_USEE);    // Unlock E2P data write access
+    NVMCTRL_CMD(NVMCTRL_CTRLB_CMD_USEE);    // Unlock E2P data write access//解锁E2P数据写入访问
   return true;
 }
 
 bool PersistentStore::access_finish() {
   NVMCTRL_FLUSH();
   if (!NVMCTRL->SEESTAT.bit.LOCK)
-    NVMCTRL_CMD(NVMCTRL_CTRLB_CMD_LSEE);    // Lock E2P data write access
+    NVMCTRL_CMD(NVMCTRL_CTRLB_CMD_LSEE);    // Lock E2P data write access//锁定E2P数据写入访问
   return true;
 }
 
@@ -69,7 +70,7 @@ bool PersistentStore::write_data(int &pos, const uint8_t *value, size_t size, ui
     const uint8_t v = *value;
     SYNC(NVMCTRL->SEESTAT.bit.BUSY);
     if (NVMCTRL->INTFLAG.bit.SEESFULL)
-      NVMCTRL_FLUSH();      // Next write will trigger a sector reallocation. I need to flush 'pagebuffer'
+      NVMCTRL_FLUSH();      // Next write will trigger a sector reallocation. I need to flush 'pagebuffer'//下一次写入将触发扇区重新分配。我需要刷新“页面缓冲区”
     ((volatile uint8_t *)SEEPROM_ADDR)[pos] = v;
     SYNC(!NVMCTRL->INTFLAG.bit.SEEWRC);
     crc16(crc, &v, 1);
@@ -91,5 +92,5 @@ bool PersistentStore::read_data(int &pos, uint8_t *value, size_t size, uint16_t 
   return false;
 }
 
-#endif // FLASH_EEPROM_EMULATION
-#endif // __SAMD51__
+#endif // FLASH_EEPROM_EMULATION//闪存EEPROM模拟
+#endif // __SAMD51__//_uusamd51__

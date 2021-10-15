@@ -1,3 +1,4 @@
+/** translatione by yx */
 /***********
  * spi.cpp *
  ***********/
@@ -39,8 +40,8 @@ namespace FTDI {
   #endif
 
   void SPI::spi_init() {
-    SET_OUTPUT(CLCD_MOD_RESET); // Module Reset (a.k.a. PD, not SPI)
-    WRITE(CLCD_MOD_RESET, 0); // start with module in power-down
+    SET_OUTPUT(CLCD_MOD_RESET); // Module Reset (a.k.a. PD, not SPI)//模块复位（也称为PD，非SPI）
+    WRITE(CLCD_MOD_RESET, 0); // start with module in power-down//在模块断电的情况下启动
 
     SET_OUTPUT(CLCD_SPI_CS);
     WRITE(CLCD_SPI_CS, 1);
@@ -75,10 +76,10 @@ namespace FTDI {
       uint8_t k;
 
       noInterrupts();
-      for (k = 0; k < 8; k++) {  // Output and Read each bit of spiOutByte and spiInByte
-        WRITE(CLCD_SOFT_SPI_MOSI, (spiOutByte & spiIndex) ? 1 : 0); // Output MOSI Bit
-        WRITE(CLCD_SOFT_SPI_SCLK, 1);   // Pulse Clock
-        if (READ(CLCD_SOFT_SPI_MISO)) spiInByte |= spiIndex; // MISO changes on the falling edge of clock, so sample it before
+      for (k = 0; k < 8; k++) {  // Output and Read each bit of spiOutByte and spiInByte//输出和读取spiOutByte和spiInByte的每一位
+        WRITE(CLCD_SOFT_SPI_MOSI, (spiOutByte & spiIndex) ? 1 : 0); // Output MOSI Bit//输出MOSI位
+        WRITE(CLCD_SOFT_SPI_SCLK, 1);   // Pulse Clock//脉冲时钟
+        if (READ(CLCD_SOFT_SPI_MISO)) spiInByte |= spiIndex; // MISO changes on the falling edge of clock, so sample it before//MISO在时钟的下降沿发生变化，所以请在开始之前对其进行采样
         WRITE(CLCD_SOFT_SPI_SCLK, 0);
         spiIndex >>= 1;
       }
@@ -92,9 +93,9 @@ namespace FTDI {
       uint8_t k, spiIndex  = 0x80;
 
       noInterrupts();
-      for (k = 0; k < 8; k++) {         // Output each bit of spiOutByte
-        WRITE(CLCD_SOFT_SPI_MOSI, (spiOutByte & spiIndex) ? 1 : 0); // Output MOSI Bit
-        WRITE(CLCD_SOFT_SPI_SCLK, 1);   // Pulse Clock
+      for (k = 0; k < 8; k++) {         // Output each bit of spiOutByte//输出spiOutByte的每一位
+        WRITE(CLCD_SOFT_SPI_MOSI, (spiOutByte & spiIndex) ? 1 : 0); // Output MOSI Bit//输出MOSI位
+        WRITE(CLCD_SOFT_SPI_SCLK, 1);   // Pulse Clock//脉冲时钟
         WRITE(CLCD_SOFT_SPI_SCLK, 0);
         spiIndex >>= 1;
       }
@@ -113,7 +114,7 @@ namespace FTDI {
     return true;
   }
 
-  // CLCD SPI - Chip Select
+  // CLCD SPI - Chip Select//芯片选择
   void SPI::spi_ftdi_select() {
     #ifndef CLCD_USE_SOFT_SPI
       SPI_OBJ.beginTransaction(spi_settings);
@@ -125,7 +126,7 @@ namespace FTDI {
     delayMicroseconds(1);
   }
 
-  // CLCD SPI - Chip Deselect
+  // CLCD SPI - Chip Deselect//CLCD SPI-芯片取消选择
   void SPI::spi_ftdi_deselect() {
     WRITE(CLCD_SPI_CS, 1);
     #ifdef CLCD_SPI_EXTRA_CS
@@ -137,7 +138,7 @@ namespace FTDI {
   }
 
   #ifdef SPI_FLASH_SS
-  // Serial SPI Flash SPI - Chip Select
+  // Serial SPI Flash SPI - Chip Select//串行SPI闪存SPI-芯片选择
   void SPI::spi_flash_select() {
     #ifndef CLCD_USE_SOFT_SPI
       SPI_OBJ.beginTransaction(spi_settings);
@@ -146,7 +147,7 @@ namespace FTDI {
     delayMicroseconds(1);
   }
 
-  // Serial SPI Flash SPI - Chip Deselect
+  // Serial SPI Flash SPI - Chip Deselect//串行SPI闪存SPI-芯片取消选择
   void SPI::spi_flash_deselect() {
     WRITE(SPI_FLASH_SS, 1);
     #ifndef CLCD_USE_SOFT_SPI
@@ -155,7 +156,7 @@ namespace FTDI {
   }
   #endif
 
-  // Not really a SPI signal...
+  // Not really a SPI signal...//不是真正的SPI信号。。。
   void SPI::ftdi_reset() {
     WRITE(CLCD_MOD_RESET, 0);
     delay(6); /* minimum time for power-down is 5ms */
@@ -163,7 +164,7 @@ namespace FTDI {
     delay(21); /* minimum time to allow from rising PD_N to first access is 20ms */
   }
 
-  // Not really a SPI signal...
+  // Not really a SPI signal...//不是真正的SPI信号。。。
   void SPI::test_pulse() {
     #ifdef CLCD_AUX_0
       WRITE(CLCD_AUX_0, 1);
@@ -172,4 +173,4 @@ namespace FTDI {
     #endif
   }
 }
-#endif // FTDI_BASIC
+#endif // FTDI_BASIC//基本的

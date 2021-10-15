@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -57,7 +58,7 @@ PGM_P const tramming_point_name[] PROGMEM = {
 
 #ifdef ASSISTED_TRAMMING_WAIT_POSITION
 
-  // Move to the defined wait position
+  // Move to the defined wait position//移动到定义的等待位置
   void move_to_tramming_wait_pos() {
     constexpr xyz_pos_t wait_pos = ASSISTED_TRAMMING_WAIT_POSITION;
     if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPGM("Moving away");
@@ -66,4 +67,4 @@ PGM_P const tramming_point_name[] PROGMEM = {
 
 #endif
 
-#endif // ASSISTED_TRAMMING
+#endif // ASSISTED_TRAMMING//辅助缆车

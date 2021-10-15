@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*************
  * polygon.h *
  *************/
@@ -64,8 +65,8 @@ namespace FTDI {
         cmd.cmd(COLOR_MASK(0,0,0,0));
         cmd.cmd(STENCIL_OP(STENCIL_OP_KEEP, STENCIL_OP_INVERT));
         cmd.cmd(STENCIL_FUNC(STENCIL_FUNC_ALWAYS, 255, 255));
-        // Drawing the edge strip along scan lines
-        // seems to yield the best performance
+        // Drawing the edge strip along scan lines//沿扫描线绘制边缘条
+        // seems to yield the best performance//似乎产生了最好的表现
         #if ENABLED(TOUCH_UI_PORTRAIT)
           path_initiator = EDGE_STRIP_B;
         #else
@@ -73,7 +74,7 @@ namespace FTDI {
         #endif
       }
 
-      // Specify a clipping rectangle to paint fewer pixels and reduce rendering time, otherwise all pixels will be painted.
+      // Specify a clipping rectangle to paint fewer pixels and reduce rendering time, otherwise all pixels will be painted.//指定剪切矩形以绘制更少的像素并减少渲染时间，否则将绘制所有像素。
       void end_fill(const int16_t x1 = 0, const int16_t y1 = 0, const int16_t x2 = display_width * 16, const int16_t y2 = display_height * 16) {
         using namespace FTDI;
         cmd.cmd(RESTORE_CONTEXT());

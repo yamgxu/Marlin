@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -34,7 +35,7 @@
 #undef RGB_LED_G_PIN
 #undef RGB_LED_B_PIN
 
-#define FAN1_PIN                            PB0   // Fan1
+#define FAN1_PIN                            PB0   // Fan1//Fan1
 
 #if HAS_TMC_UART
 
@@ -42,9 +43,9 @@
    * TMC2208/TMC2209 stepper drivers
    */
 
-  //
-  // Software serial
-  //
+  ////
+  // Software serial//软件系列
+  ////
   #define X_SERIAL_TX_PIN                   PA11
   #define X_SERIAL_RX_PIN                   PA12
 
@@ -57,6 +58,6 @@
   #define E0_SERIAL_TX_PIN                  PA2
   #define E0_SERIAL_RX_PIN                  PA3
 
-  // Reduce baud rate to improve software serial reliability
+  // Reduce baud rate to improve software serial reliability//降低波特率以提高软件串行可靠性
   #define TMC_BAUD_RATE 19200
 #endif

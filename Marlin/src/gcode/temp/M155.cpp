@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -37,4 +38,4 @@ void GcodeSuite::M155() {
 
 }
 
-#endif // AUTO_REPORT_TEMPERATURES && HAS_TEMP_SENSOR
+#endif // AUTO_REPORT_TEMPERATURES && HAS_TEMP_SENSOR//自动报告温度和温度传感器

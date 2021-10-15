@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,8 +30,8 @@
 #define MAX_REPEAT_NESTING 10
 
 typedef struct {
-  uint32_t sdpos;   // The repeat file position
-  int16_t counter;  // The counter for looping
+  uint32_t sdpos;   // The repeat file position//重复文件位置
+  int16_t counter;  // The counter for looping//循环计数器
 } repeat_marker_t;
 
 class Repeat {

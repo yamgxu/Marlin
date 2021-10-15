@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2021 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -28,23 +29,23 @@
   #define DEFAULT_MACHINE_NAME BOARD_INFO_NAME
 #endif
 
-//
-// EEPROM Emulation
-//
+////
+// EEPROM Emulation//EEPROM仿真
+////
 #if NO_EEPROM_SELECTED
   #undef NO_EEPROM_SELECTED
-  //#define FLASH_EEPROM_EMULATION
-  //#define SRAM_EEPROM_EMULATION
+  //#define FLASH_EEPROM_EMULATION//#定义FLASH_EEPROM_仿真
+  //#define SRAM_EEPROM_EMULATION//#定义SRAM_EEPROM_仿真
   #define I2C_EEPROM
 #endif
 
 #if ENABLED(I2C_EEPROM)
-  #define MARLIN_EEPROM_SIZE              0x1000  // 4KB
+  #define MARLIN_EEPROM_SIZE              0x1000  // 4KB//4KB
 #endif
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X2_STEP_PIN                         PD12
 #define X2_DIR_PIN                          PC4
 #define X2_ENABLE_PIN                       PE8
@@ -55,17 +56,17 @@
 #define Z2_ENABLE_PIN                       PC5
 #define Z2_CS_PIN                           PD11
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_0_PIN                        PB15
 #define HEATER_1_PIN                        PC8
 #define HEATER_2_PIN                        PB3
 #define HEATER_BED_PIN                      PB4
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_ENABLE_PIN                        PE9
 
 #if HAS_TMC_UART
@@ -87,9 +88,9 @@
   #define Z2_SERIAL_RX_PIN                  PD11
 #endif
 
-//
-// Software SPI pins for TMC2130 stepper drivers
-//
+////
+// Software SPI pins for TMC2130 stepper drivers//TMC2130步进驱动器的软件SPI引脚
+////
 #define TMC_USE_SW_SPI
 #if ENABLED(TMC_USE_SW_SPI)
   #ifndef TMC_SW_MOSI

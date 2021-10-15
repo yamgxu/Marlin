@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -25,7 +26,7 @@
 
 typedef struct { int8_t x, y; } pos_t;
 
-// Simple 8:8 fixed-point
+// Simple 8:8 fixed-point//简单8:8定点
 typedef int16_t fixed_t;
 #define FTOP(F) fixed_t((F)*256.0f)
 #define PTOF(P) (float(P)*(1.0f/256.0f))

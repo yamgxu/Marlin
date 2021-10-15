@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,52 +30,52 @@
 
 #define BOARD_INFO_NAME "BTT BTT002 V1.0"
 
-// Use one of these or SDCard-based Emulation will be used
+// Use one of these or SDCard-based Emulation will be used//使用其中一个或将使用基于SD卡的仿真
 #if NO_EEPROM_SELECTED
-  //#define SRAM_EEPROM_EMULATION                 // Use BackSRAM-based EEPROM emulation
-  #define FLASH_EEPROM_EMULATION                  // Use Flash-based EEPROM emulation
+  //#define SRAM_EEPROM_EMULATION                 // Use BackSRAM-based EEPROM emulation//#定义SRAM_EEPROM_仿真//使用基于后向RAM的EEPROM仿真
+  #define FLASH_EEPROM_EMULATION                  // Use Flash-based EEPROM emulation//使用基于Flash的EEPROM仿真
 #endif
 
 #if ENABLED(FLASH_EEPROM_EMULATION)
-  // Decrease delays and flash wear by spreading writes across the
-  // 128 kB sector allocated for EEPROM emulation.
+  // Decrease delays and flash wear by spreading writes across the//通过将写操作分散到整个系统来减少延迟和闪存磨损
+  // 128 kB sector allocated for EEPROM emulation.//分配给EEPROM仿真的128 kB扇区。
   #define FLASH_EEPROM_LEVELING
 #endif
 
-// Ignore temp readings during development.
-//#define BOGUS_TEMPERATURE_GRACE_PERIOD    2000
+// Ignore temp readings during development.//在开发过程中忽略温度读数。
+//#define BOGUS_TEMPERATURE_GRACE_PERIOD    2000//#定义2000年的假温度宽限期
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_STOP_PIN                          PD3
 #define Y_STOP_PIN                          PD2
-#define Z_STOP_PIN                          PD1   // Shares J4 connector with PC3
+#define Z_STOP_PIN                          PD1   // Shares J4 connector with PC3//与PC3共享J4连接器
 
-//
-// Z Probe must be this pin
-//
+////
+// Z Probe must be this pin//Z探头必须位于该引脚上
+////
 #ifndef Z_MIN_PROBE_PIN
   #define Z_MIN_PROBE_PIN                   PD1
 #endif
 
-//
-// Filament Runout Sensor
-//
+////
+// Filament Runout Sensor//灯丝偏移传感器
+////
 #ifndef FIL_RUNOUT_PIN
   #define FIL_RUNOUT_PIN                    PA15
 #endif
 
-//
-// Power Loss Detection
-//
+////
+// Power Loss Detection//功率损耗检测
+////
 #ifndef POWER_LOSS_PIN
   #define POWER_LOSS_PIN                    PD4
 #endif
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                          PA9
 #define X_DIR_PIN                           PA10
 #define X_ENABLE_PIN                        PA8
@@ -103,9 +104,9 @@
   #define E0_CS_PIN                         PD7
 #endif
 
-//
-// Software SPI pins for TMC2130 stepper drivers
-//
+////
+// Software SPI pins for TMC2130 stepper drivers//TMC2130步进驱动器的软件SPI引脚
+////
 #if ENABLED(TMC_USE_SW_SPI)
   #ifndef TMC_SW_MOSI
     #define TMC_SW_MOSI                     PB15
@@ -125,21 +126,21 @@
    * Hardware serial communication ports.
    * If undefined software serial is used according to the pins below
    */
-  //#define X_HARDWARE_SERIAL Serial1
-  //#define X2_HARDWARE_SERIAL Serial1
-  //#define Y_HARDWARE_SERIAL  Serial1
-  //#define Y2_HARDWARE_SERIAL Serial1
-  //#define Z_HARDWARE_SERIAL  Serial1
-  //#define Z2_HARDWARE_SERIAL Serial1
-  //#define E0_HARDWARE_SERIAL Serial1
-  //#define E1_HARDWARE_SERIAL Serial1
-  //#define E2_HARDWARE_SERIAL Serial1
-  //#define E3_HARDWARE_SERIAL Serial1
-  //#define E4_HARDWARE_SERIAL Serial1
+  //#define X_HARDWARE_SERIAL Serial1//#定义X_硬件_串行1
+  //#define X2_HARDWARE_SERIAL Serial1//#定义X2_硬件_串行1
+  //#define Y_HARDWARE_SERIAL  Serial1//#定义Y_硬件_串行1
+  //#define Y2_HARDWARE_SERIAL Serial1//#定义Y2\u硬件\u串行1
+  //#define Z_HARDWARE_SERIAL  Serial1//#定义Z_硬件_串行1
+  //#define Z2_HARDWARE_SERIAL Serial1//#定义Z2_硬件_串行1
+  //#define E0_HARDWARE_SERIAL Serial1//#定义E0_硬件_串行1
+  //#define E1_HARDWARE_SERIAL Serial1//#定义E1_硬件_串行1
+  //#define E2_HARDWARE_SERIAL Serial1//#定义E2_硬件_串行1
+  //#define E3_HARDWARE_SERIAL Serial1//#定义E3\u硬件\u串行1
+  //#define E4_HARDWARE_SERIAL Serial1//#定义E4\u硬件\u串行1
 
-  //
-  // Software serial  ##
-  //
+  ////
+  // Software serial  ##//软件系列##
+  ////
   #define X_SERIAL_TX_PIN                   PE2
   #define X_SERIAL_RX_PIN                   PE2
 
@@ -152,25 +153,25 @@
   #define E0_SERIAL_TX_PIN                  PD7
   #define E0_SERIAL_RX_PIN                  PD7
 
-  // Reduce baud rate to improve software serial reliability
+  // Reduce baud rate to improve software serial reliability//降低波特率以提高软件串行可靠性
   #define TMC_BAUD_RATE                    19200
 #endif
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                          PA2   // T0 <-> E0
-#define TEMP_1_PIN                          PA0   // T1 <-> E1
-#define TEMP_BED_PIN                        PA1   // T2 <-> Bed
-#define TEMP_PROBE_PIN                      PC3   // Shares J4 connector with PD1
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                          PA2   // T0 <-> E0//T0<->E0
+#define TEMP_1_PIN                          PA0   // T1 <-> E1//T1<->E1
+#define TEMP_BED_PIN                        PA1   // T2 <-> Bed//T2床
+#define TEMP_PROBE_PIN                      PC3   // Shares J4 connector with PD1//与PD1共享J4连接器
 
-//
-// Heaters / Fans
-//
-#define HEATER_0_PIN                        PE6   // Heater0
-#define HEATER_BED_PIN                      PE5   // Hotbed
-#define FAN_PIN                             PB8   // Fan1
-#define FAN1_PIN                            PB9   // Fan0
+////
+// Heaters / Fans//加热器/风扇
+////
+#define HEATER_0_PIN                        PE6   // Heater0//加热器
+#define HEATER_BED_PIN                      PE5   // Hotbed//温床
+#define FAN_PIN                             PB8   // Fan1//Fan1
+#define FAN1_PIN                            PB9   // Fan0//Fan0
 
 /**
  * -----------------------------------BTT002 V1.0----------------------------------------
@@ -204,17 +205,17 @@
 #define EXP2_09_PIN                         PA5
 #define EXP2_10_PIN                         PA6
 
-// HAL SPI1 pins
-#define SD_SCK_PIN                   EXP2_09_PIN  // SPI1 SCLK
-#define SD_SS_PIN                    EXP2_07_PIN  // SPI1 SSEL
-#define SD_MISO_PIN                  EXP2_10_PIN  // SPI1 MISO
-#define SD_MOSI_PIN                  EXP2_05_PIN  // SPI1 MOSI
+// HAL SPI1 pins//HAL SPI1引脚
+#define SD_SCK_PIN                   EXP2_09_PIN  // SPI1 SCLK//SPI1-SCLK
+#define SD_SS_PIN                    EXP2_07_PIN  // SPI1 SSEL//SPI1 SSEL
+#define SD_MISO_PIN                  EXP2_10_PIN  // SPI1 MISO//味噌
+#define SD_MOSI_PIN                  EXP2_05_PIN  // SPI1 MOSI//SPI1-MOSI
 
 #define SDSS                         EXP2_07_PIN
 
-//
-// LCDs and Controllers
-//
+////
+// LCDs and Controllers//液晶显示器和控制器
+////
 #if HAS_WIRED_LCD
   #define BEEPER_PIN                 EXP1_10_PIN
   #define BTN_ENC                    EXP1_09_PIN
@@ -258,7 +259,7 @@
 
       #define FORCE_SOFT_SPI
 
-      #define LCD_RESET_PIN          EXP1_06_PIN  // Must be high or open for LCD to operate normally.
+      #define LCD_RESET_PIN          EXP1_06_PIN  // Must be high or open for LCD to operate normally.//必须为高电平或开路，LCD才能正常工作。
 
       #if EITHER(FYSETC_MINI_12864_1_2, FYSETC_MINI_12864_2_0)
         #ifndef RGB_LED_R_PIN
@@ -273,7 +274,7 @@
       #elif ENABLED(FYSETC_MINI_12864_2_1)
         #define NEOPIXEL_PIN         EXP1_05_PIN
       #endif
-    #endif // !FYSETC_MINI_12864
+    #endif // !FYSETC_MINI_12864// !FYSETC_MINI_12864
 
     #if IS_ULTIPANEL
       #define LCD_PINS_D5            EXP1_05_PIN
@@ -281,13 +282,13 @@
       #define LCD_PINS_D7            EXP1_03_PIN
 
       #if ENABLED(REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER)
-        #define BTN_ENC_EN           LCD_PINS_D7  // Detect the presence of the encoder
+        #define BTN_ENC_EN           LCD_PINS_D7  // Detect the presence of the encoder//检测编码器的存在
       #endif
 
     #endif
   #endif
 
-  // Alter timing for graphical display
+  // Alter timing for graphical display//改变图形显示的时间
   #if HAS_MARLINUI_U8GLIB
     #ifndef BOARD_ST7920_DELAY_1
       #define BOARD_ST7920_DELAY_1 DELAY_NS(96)
@@ -300,11 +301,11 @@
     #endif
   #endif
 
-#endif // HAS_WIRED_LCD
+#endif // HAS_WIRED_LCD//有有线液晶显示器吗
 
-//
-// RGB LEDs
-//
+////
+// RGB LEDs//RGB发光二极管
+////
 #ifndef RGB_LED_R_PIN
   #define RGB_LED_R_PIN                     PB5
 #endif

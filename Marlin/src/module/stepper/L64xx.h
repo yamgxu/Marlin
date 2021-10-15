@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,7 +30,7 @@
 #include "../../inc/MarlinConfig.h"
 #include "../../libs/L64XX/L64XX_Marlin.h"
 
-// Convert option names to L64XX classes
+// Convert option names to L64XX classes//将选项名称转换为L64XX类
 #define CLASS_L6470       L6470
 #define CLASS_L6474       L6474
 #define CLASS_POWERSTEP01 powerSTEP01
@@ -41,7 +42,7 @@
 #define L6474_DIR_WRITE(A,STATE) do{ L64xxManager.dir_commands[A] = dSPIN_L6474_ENABLE; WRITE(A##_DIR_PIN, STATE); }while(0)
 #define L64XX_DIR_WRITE(A,STATE) do{ L64xxManager.dir_commands[A] = (STATE) ? dSPIN_STEP_CLOCK_REV : dSPIN_STEP_CLOCK_FWD; }while(0)
 
-// X Stepper
+// X Stepper//X步进机
 #if AXIS_IS_L64XX(X)
   extern L64XX_CLASS(X)         stepperX;
   #define X_ENABLE_INIT()       NOOP
@@ -61,7 +62,7 @@
   #endif
 #endif
 
-// Y Stepper
+// Y Stepper//Y步进机
 #if AXIS_IS_L64XX(Y)
   extern L64XX_CLASS(Y)         stepperY;
   #define Y_ENABLE_INIT()       NOOP
@@ -81,7 +82,7 @@
   #endif
 #endif
 
-// Z Stepper
+// Z Stepper//Z步进机
 #if AXIS_IS_L64XX(Z)
   extern L64XX_CLASS(Z)         stepperZ;
   #define Z_ENABLE_INIT()       NOOP
@@ -101,7 +102,7 @@
   #endif
 #endif
 
-// X2 Stepper
+// X2 Stepper//X2步进机
 #if HAS_X2_ENABLE && AXIS_IS_L64XX(X2)
   extern L64XX_CLASS(X2)         stepperX2;
   #define X2_ENABLE_INIT()       NOOP
@@ -122,7 +123,7 @@
   #define DISABLE_STEPPER_X2() stepperX2.free()
 #endif
 
-// Y2 Stepper
+// Y2 Stepper//Y2步进机
 #if HAS_Y2_ENABLE && AXIS_IS_L64XX(Y2)
   extern L64XX_CLASS(Y2)         stepperY2;
   #define Y2_ENABLE_INIT()       NOOP
@@ -143,7 +144,7 @@
   #define DISABLE_STEPPER_Y2() stepperY2.free()
 #endif
 
-// Z2 Stepper
+// Z2 Stepper//Z2步进机
 #if HAS_Z2_ENABLE && AXIS_IS_L64XX(Z2)
   extern L64XX_CLASS(Z2)         stepperZ2;
   #define Z2_ENABLE_INIT()       NOOP
@@ -164,7 +165,7 @@
   #define DISABLE_STEPPER_Z2() stepperZ2.free()
 #endif
 
-// Z3 Stepper
+// Z3 Stepper//Z3步进电机
 #if HAS_Z3_ENABLE && AXIS_IS_L64XX(Z3)
   extern L64XX_CLASS(Z3)         stepperZ3;
   #define Z3_ENABLE_INIT()       NOOP
@@ -185,7 +186,7 @@
   #define DISABLE_STEPPER_Z3() stepperZ3.free()
 #endif
 
-// Z4 Stepper
+// Z4 Stepper//Z4步进机
 #if HAS_Z4_ENABLE && AXIS_IS_L64XX(Z4)
   extern L64XX_CLASS(Z4)         stepperZ4;
   #define Z4_ENABLE_INIT()       NOOP
@@ -206,7 +207,7 @@
   #define DISABLE_STEPPER_Z4() stepperZ4.free()
 #endif
 
-// I Stepper
+// I Stepper//步进电机
 #if AXIS_IS_L64XX(I)
   extern L64XX_CLASS(I)         stepperI;
   #define I_ENABLE_INIT()       NOOP
@@ -226,7 +227,7 @@
   #endif
 #endif
 
-// J Stepper
+// J Stepper//J步进机
 #if AXIS_IS_L64XX(J)
   extern L64XX_CLASS(J)         stepperJ;
   #define J_ENABLE_INIT()       NOOP
@@ -246,7 +247,7 @@
   #endif
 #endif
 
-// K Stepper
+// K Stepper//步进电机
 #if AXIS_IS_L64XX(K)
   extern L64XX_CLASS(K)         stepperK;
   #define K_ENABLE_INIT()       NOOP
@@ -266,7 +267,7 @@
   #endif
 #endif
 
-// E0 Stepper
+// E0 Stepper//E0步进机
 #if AXIS_IS_L64XX(E0)
   extern L64XX_CLASS(E0)         stepperE0;
   #define E0_ENABLE_INIT()       NOOP
@@ -286,7 +287,7 @@
   #endif
 #endif
 
-// E1 Stepper
+// E1 Stepper//E1步进器
 #if AXIS_IS_L64XX(E1)
   extern L64XX_CLASS(E1)         stepperE1;
   #define E1_ENABLE_INIT()       NOOP
@@ -306,7 +307,7 @@
   #endif
 #endif
 
-// E2 Stepper
+// E2 Stepper//E2步进机
 #if AXIS_IS_L64XX(E2)
   extern L64XX_CLASS(E2)         stepperE2;
   #define E2_ENABLE_INIT()       NOOP
@@ -326,7 +327,7 @@
   #endif
 #endif
 
-// E3 Stepper
+// E3 Stepper//E3步进机
 #if AXIS_IS_L64XX(E3)
   extern L64XX_CLASS(E3)         stepperE3;
   #define E3_ENABLE_INIT()       NOOP
@@ -343,7 +344,7 @@
   #endif
 #endif
 
-// E4 Stepper
+// E4 Stepper//E4步进机
 #if AXIS_IS_L64XX(E4)
   extern L64XX_CLASS(E4)         stepperE4;
   #define E4_ENABLE_INIT()       NOOP
@@ -363,7 +364,7 @@
   #endif
 #endif
 
-// E5 Stepper
+// E5 Stepper//E5步进电机
 #if AXIS_IS_L64XX(E5)
   extern L64XX_CLASS(E5)         stepperE5;
   #define E5_ENABLE_INIT()       NOOP
@@ -383,7 +384,7 @@
   #endif
 #endif
 
-// E6 Stepper
+// E6 Stepper//E6步进电机
 #if AXIS_IS_L64XX(E6)
   extern L64XX_CLASS(E6)         stepperE6;
   #define E6_ENABLE_INIT()       NOOP
@@ -403,7 +404,7 @@
   #endif
 #endif
 
-// E7 Stepper
+// E7 Stepper//E7步进机
 #if AXIS_IS_L64XX(E7)
   extern L64XX_CLASS(E7)         stepperE7;
   #define E7_ENABLE_INIT()       NOOP

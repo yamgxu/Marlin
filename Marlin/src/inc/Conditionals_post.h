@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -27,31 +28,31 @@
  */
 
 #ifdef GITHUB_ACTIONS
-  // Extras for CI testing
+  // Extras for CI testing//CI测试的附加功能
 #endif
 
-// ADC
+// ADC//模数转换器
 #ifdef BOARD_ADC_VREF
   #define ADC_VREF BOARD_ADC_VREF
 #else
   #define ADC_VREF HAL_ADC_VREF
 #endif
 
-// Linear advance uses Jerk since E is an isolated axis
+// Linear advance uses Jerk since E is an isolated axis//由于E是一个孤立轴，因此线性推进使用Jerk
 #if BOTH(HAS_JUNCTION_DEVIATION, LIN_ADVANCE)
   #define HAS_LINEAR_E_JERK 1
 #endif
 
-// Determine which type of 'EEPROM' is in use
+// Determine which type of 'EEPROM' is in use//确定正在使用哪种类型的“EEPROM”
 #if ENABLED(EEPROM_SETTINGS)
-  // EEPROM type may be defined by compile flags, configs, HALs, or pins
-  // Set additional flags to let HALs choose in their Conditionals_post.h
+  // EEPROM type may be defined by compile flags, configs, HALs, or pins//EEPROM类型可由编译标志、配置、HALs或引脚定义
+  // Set additional flags to let HALs choose in their Conditionals_post.h//设置附加标志以允许HAL在其条件中选择\u post.h
   #if ANY(FLASH_EEPROM_EMULATION, SRAM_EEPROM_EMULATION, SDCARD_EEPROM_EMULATION, QSPI_EEPROM)
     #define USE_EMULATED_EEPROM 1
   #elif ANY(I2C_EEPROM, SPI_EEPROM)
     #define USE_WIRED_EEPROM    1
   #elif ENABLED(IIC_BL24CXX_EEPROM)
-    // nothing
+    // nothing//没什么
   #else
     #define USE_FALLBACK_EEPROM 1
   #endif
@@ -71,8 +72,8 @@
   #undef min
   #define min(a,b) ((a)<(b)?(a):(b))
 
-  #undef NOT_A_PIN    // Override Teensyduino legacy CapSense define work-around
-  #define NOT_A_PIN 0 // For PINS_DEBUGGING
+  #undef NOT_A_PIN    // Override Teensyduino legacy CapSense define work-around//覆盖Teensyduino遗留CapSense定义解决方案
+  #define NOT_A_PIN 0 // For PINS_DEBUGGING//用于PINS\u调试
 #endif
 
 /**
@@ -105,7 +106,7 @@
   #define K_MAX_LENGTH (K_MAX_POS - (K_MIN_POS))
 #endif
 
-// Defined only if the sanity-check is bypassed
+// Defined only if the sanity-check is bypassed//仅在绕过健全性检查时定义
 #ifndef X_BED_SIZE
   #define X_BED_SIZE X_MAX_LENGTH
 #endif
@@ -122,12 +123,12 @@
   #define K_BED_SIZE K_MAX_LENGTH
 #endif
 
-// Require 0,0 bed center for Delta and SCARA
+// Require 0,0 bed center for Delta and SCARA//Delta和SCARA需要0,0床中心
 #if IS_KINEMATIC
   #define BED_CENTER_AT_0_0
 #endif
 
-// Define center values for future use
+// Define center values for future use//定义中心值以供将来使用
 #define _X_HALF_BED ((X_BED_SIZE) / 2)
 #if HAS_Y_AXIS
   #define _Y_HALF_BED ((Y_BED_SIZE) / 2)
@@ -157,7 +158,7 @@
   #define K_CENTER TERN(BED_CENTER_AT_0_0, 0, _K_HALF_BED)
 #endif
 
-// Get the linear boundaries of the bed
+// Get the linear boundaries of the bed//获取床的线性边界
 #define X_MIN_BED (X_CENTER - _X_HALF_BED)
 #define X_MAX_BED (X_MIN_BED + X_BED_SIZE)
 #if HAS_Y_AXIS
@@ -189,7 +190,7 @@
   #endif
 #endif
 
-// Calibration codes only for non-core axes
+// Calibration codes only for non-core axes//校准代码仅适用于非芯轴
 #if EITHER(BACKLASH_GCODE, CALIBRATION_GCODE)
   #if EITHER(IS_CORE, MARKFORGED_XY)
     #define CAN_CALIBRATE(A,B) (_AXIS(A) == B)
@@ -304,7 +305,7 @@
  */
 #if ENABLED(Z_SAFE_HOMING)
   #if ENABLED(AUTO_BED_LEVELING_UBL)
-    // Home close to center so grid points have z heights very close to 0
+    // Home close to center so grid points have z heights very close to 0//原点靠近中心，因此栅格点的z高度非常接近0
     #define _SAFE_POINT(A) (((GRID_MAX_POINTS_##A) / 2) * (A##_BED_SIZE - 2 * (MESH_INSET)) / (GRID_MAX_POINTS_##A - 1) + MESH_INSET)
   #else
     #define _SAFE_POINT(A) A##_CENTER
@@ -409,7 +410,7 @@
     #elif _LCD_CONTRAST_INIT > 63
       #define LCD_CONTRAST_MAX 255
     #else
-      #define LCD_CONTRAST_MAX 63   // ST7567 6-bits contrast
+      #define LCD_CONTRAST_MAX 63   // ST7567 6-bits contrast//ST7567 6位对比度
     #endif
   #endif
   #ifndef DEFAULT_LCD_CONTRAST
@@ -424,16 +425,16 @@
 #if ENABLED(SDSUPPORT)
 
   #if HAS_SD_HOST_DRIVE && SD_CONNECTION_IS(ONBOARD)
-    //
-    // The external SD card is not used. Hardware SPI is used to access the card.
-    // When sharing the SD card with a PC we want the menu options to
-    // mount/unmount the card and refresh it. So we disable card detect.
-    //
+    ////
+    // The external SD card is not used. Hardware SPI is used to access the card.//未使用外部SD卡。硬件SPI用于访问卡。
+    // When sharing the SD card with a PC we want the menu options to//当与PC共享SD卡时，我们希望菜单选项
+    // mount/unmount the card and refresh it. So we disable card detect.//装载/卸载卡并刷新它。所以我们禁用了卡检测。
+    ////
     #undef SD_DETECT_PIN
     #define HAS_SHARED_MEDIA 1
   #endif
 
-  // Set SD_DETECT_STATE based on hardware if not overridden
+  // Set SD_DETECT_STATE based on hardware if not overridden//如果未覆盖，则根据硬件设置SD_检测_状态
   #if PIN_EXISTS(SD_DETECT) && !defined(SD_DETECT_STATE)
     #if BOTH(HAS_LCD_MENU, ELB_FULL_GRAPHIC_CONTROLLER) && (SD_CONNECTION_IS(LCD) || !defined(SDCARD_CONNECTION))
       #define SD_DETECT_STATE HIGH
@@ -442,7 +443,7 @@
     #endif
   #endif
 
-  // Extender cable doesn't support SD_DETECT_PIN
+  // Extender cable doesn't support SD_DETECT_PIN//扩展器电缆不支持SD_DETECT_引脚
   #if ENABLED(NO_SD_DETECT)
     #undef SD_DETECT_PIN
   #endif
@@ -458,7 +459,7 @@
 #endif
 
 #if ANY(HAS_GRAPHICAL_TFT, LCD_USE_DMA_FSMC, HAS_FSMC_GRAPHICAL_TFT, HAS_SPI_GRAPHICAL_TFT) || !PIN_EXISTS(SD_DETECT)
-  #define NO_LCD_REINIT 1  // Suppress LCD re-initialization
+  #define NO_LCD_REINIT 1  // Suppress LCD re-initialization//抑制LCD重新初始化
 #endif
 
 /**
@@ -491,11 +492,11 @@
  */
 #ifndef PSU_NAME
   #if DISABLED(PSU_CONTROL)
-    #define PSU_NAME "Generic"  // No control
+    #define PSU_NAME "Generic"  // No control//无法控制
   #elif PSU_ACTIVE_STATE
-    #define PSU_NAME "XBox"     // X-Box 360 (203W)
+    #define PSU_NAME "XBox"     // X-Box 360 (203W)//X-Box 360（203W）
   #else
-    #define PSU_NAME "ATX"      // ATX style
+    #define PSU_NAME "ATX"      // ATX style//ATX风格
   #endif
 #endif
 
@@ -525,7 +526,7 @@
 #endif
 #undef ANY_TEMP_SENSOR_IS
 
-// Usurp a sensor to do redundant readings
+// Usurp a sensor to do redundant readings//使用传感器进行冗余读数
 #if TEMP_SENSOR_REDUNDANT
   #ifndef TEMP_SENSOR_REDUNDANT_SOURCE
     #define TEMP_SENSOR_REDUNDANT_SOURCE 1
@@ -753,9 +754,9 @@
   #define HAS_MAX6675 1
 #endif
 
-//
-// Compatibility layer for MAX (SPI) temp boards
-//
+////
+// Compatibility layer for MAX (SPI) temp boards//最高（SPI）温度板的兼容层
+////
 #define TEMP_SENSOR_IS_MAX(n, M) (ENABLED(TEMP_SENSOR_##n##_IS_##M) || (ENABLED(TEMP_SENSOR_REDUNDANT_IS_##M) && TEMP_SENSOR_REDUNDANT_SOURCE == (n)))
 
 #if PIN_EXISTS(MAX6675_SS)
@@ -796,7 +797,7 @@
   #endif
 #endif
 
-// Compatibility Layer for use when HAL manipulates PINS for MAX31855 and MAX6675
+// Compatibility Layer for use when HAL manipulates PINS for MAX31855 and MAX6675//HAL操纵MAX31855和MAX6675引脚时使用的兼容层
 #if PIN_EXISTS(MAX31855_CS) && !PIN_EXISTS(MAX6675_SS)
   #define MAX6675_SS_PIN MAX31855_CS_PIN
 #endif
@@ -819,12 +820,12 @@
   #define MAX6675_SCK_PIN MAX31855_SCK_PIN
 #endif
 
-//
-// User-defined thermocouple libraries
-//
-// Add LIB_MAX6675 / LIB_MAX31855 / LIB_MAX31865 to the build_flags
-// to select a USER library for MAX6675, MAX31855, MAX31865
-//
+////
+// User-defined thermocouple libraries//用户定义热电偶库
+////
+// Add LIB_MAX6675 / LIB_MAX31855 / LIB_MAX31865 to the build_flags//将LIB_max675/LIB_MAX31855/LIB_MAX31865添加到build_标志
+// to select a USER library for MAX6675, MAX31855, MAX31865//为MAX6675、MAX31855、MAX31865选择用户库的步骤
+////
 #if BOTH(HAS_MAX6675, LIB_MAX6675)
   #define LIB_USR_MAX6675 1
 #endif
@@ -1645,7 +1646,7 @@
     #endif
   #endif
 
-#endif // Z_MULTI_ENDSTOPS
+#endif // Z_MULTI_ENDSTOPS//Z_多个端站
 
 /**
  * Set ENDSTOPPULLUPS for active endstop switches
@@ -1717,7 +1718,7 @@
  * Shorthand for pin tests, used wherever needed
  */
 
-// Steppers
+// Steppers//踏步机
 #if PIN_EXISTS(X_ENABLE) || (ENABLED(SOFTWARE_DRIVER_ENABLE) && AXIS_IS_TMC(X))
   #define HAS_X_ENABLE 1
 #endif
@@ -1877,7 +1878,7 @@
   #endif
 #endif
 
-// Extruder steppers and solenoids
+// Extruder steppers and solenoids//挤出机步进电机和螺线管
 #if HAS_EXTRUDERS
 
   #if PIN_EXISTS(E0_ENABLE) || (ENABLED(SOFTWARE_DRIVER_ENABLE) && AXIS_IS_TMC(E0))
@@ -2008,11 +2009,11 @@
     #define HAS_SOLENOID_7 1
   #endif
 
-#endif // HAS_EXTRUDERS
+#endif // HAS_EXTRUDERS//有两台挤出机
 
-//
-// Trinamic Stepper Drivers
-//
+////
+// Trinamic Stepper Drivers//Trinamic步进驱动器
+////
 
 #if HAS_TRINAMIC_CONFIG
   #if ANY(STEALTHCHOP_E, STEALTHCHOP_XY, STEALTHCHOP_Z, STEALTHCHOP_I, STEALTHCHOP_J, STEALTHCHOP_K)
@@ -2021,7 +2022,7 @@
   #if EITHER(SENSORLESS_HOMING, SENSORLESS_PROBING)
     #define USE_SENSORLESS 1
   #endif
-  // Disable Z axis sensorless homing if a probe is used to home the Z axis
+  // Disable Z axis sensorless homing if a probe is used to home the Z axis//如果使用探针使Z轴归零，则禁用Z轴无传感器归零
   #if HOMING_Z_WITH_PROBE
     #undef Z_STALL_SENSITIVITY
     #undef Z2_STALL_SENSITIVITY
@@ -2255,18 +2256,18 @@
   #undef SENSORLESS_BACKOFF_MM
 #endif
 
-//
-// Set USING_HW_SERIALn flags for used Serial Ports
-//
+////
+// Set USING_HW_SERIALn flags for used Serial Ports//使用所用串行端口的\u HW\u SERIALn标志设置
+////
 
-// Flag the indexed hardware serial ports in use
+// Flag the indexed hardware serial ports in use//标记正在使用的索引硬件串行端口
 #define CONF_SERIAL_IS(N) (  (defined(SERIAL_PORT)      && SERIAL_PORT == N) \
                           || (defined(SERIAL_PORT_2)    && SERIAL_PORT_2 == N) \
                           || (defined(SERIAL_PORT_3)    && SERIAL_PORT_3 == N) \
                           || (defined(MMU2_SERIAL_PORT) && MMU2_SERIAL_PORT == N) \
                           || (defined(LCD_SERIAL_PORT)  && LCD_SERIAL_PORT == N) )
 
-// Flag the named hardware serial ports in use
+// Flag the named hardware serial ports in use//标记正在使用的命名硬件串行端口
 #define TMC_UART_IS(A,N) (defined(A##_HARDWARE_SERIAL) && (CAT(HW_,A##_HARDWARE_SERIAL) == HW_Serial##N || CAT(HW_,A##_HARDWARE_SERIAL) == HW_MSerial##N))
 #define ANY_SERIAL_IS(N) (  CONF_SERIAL_IS(N) \
                          || TMC_UART_IS(X,  N) || TMC_UART_IS(Y , N) || TMC_UART_IS(Z , N) \
@@ -2355,11 +2356,11 @@
 #undef TMC_UART_IS
 #undef ANY_SERIAL_IS
 
-//
-// Endstops and bed probe
-//
+////
+// Endstops and bed probe//端部止动器和床探头
+////
 
-// Is an endstop plug used for extra Z endstops or the probe?
+// Is an endstop plug used for extra Z endstops or the probe?//止端塞是用于额外的Z止端还是探针？
 #define IS_PROBE_PIN(A,M) (HAS_CUSTOM_PROBE_PIN && Z_MIN_PROBE_PIN == A##_##M##_PIN)
 #define IS_X2_ENDSTOP(A,M) (ENABLED(X_DUAL_ENDSTOPS) && X2_USE_ENDSTOP == _##A##M##_)
 #define IS_Y2_ENDSTOP(A,M) (ENABLED(Y_DUAL_ENDSTOPS) && Y2_USE_ENDSTOP == _##A##M##_)
@@ -2445,9 +2446,9 @@
 #undef IS_Z3_ENDSTOP
 #undef IS_Z4_ENDSTOP
 
-//
-// ADC Temp Sensors (Thermistor or Thermocouple with amplifier ADC interface)
-//
+////
+// ADC Temp Sensors (Thermistor or Thermocouple with amplifier ADC interface)//ADC温度传感器（带放大器ADC接口的热敏电阻或热电偶）
+////
 #define HAS_ADC_TEST(P) (PIN_EXISTS(TEMP_##P) && TEMP_SENSOR_##P != 0 && NONE(TEMP_SENSOR_##P##_IS_MAX_TC, TEMP_SENSOR_##P##_IS_DUMMY))
 #if HAS_ADC_TEST(0)
   #define HAS_TEMP_ADC_0 1
@@ -2524,7 +2525,7 @@
   #endif
 #endif
 
-// Heaters
+// Heaters//加热器
 #if PIN_EXISTS(HEATER_0)
   #define HAS_HEATER_0 1
 #endif
@@ -2553,7 +2554,7 @@
   #define HAS_HEATER_BED 1
 #endif
 
-// Shorthand for common combinations
+// Shorthand for common combinations//常用组合的简写
 #if HAS_TEMP_BED && HAS_HEATER_BED
   #define HAS_HEATED_BED 1
   #ifndef BED_OVERSHOOT
@@ -2590,12 +2591,12 @@
   #undef PIDTEMPCHAMBER
 #endif
 
-// PID heating
+// PID heating//PID加热
 #if ANY(PIDTEMP, PIDTEMPBED, PIDTEMPCHAMBER)
   #define HAS_PID_HEATING 1
 #endif
 
-// Thermal protection
+// Thermal protection//热防护
 #if BOTH(HAS_HEATED_BED, THERMAL_PROTECTION_BED)
   #define HAS_THERMALLY_PROTECTED_BED 1
 #endif
@@ -2618,7 +2619,7 @@
   #define THERMALLY_SAFE 1
 #endif
 
-// Auto fans
+// Auto fans//汽车风扇
 #if HAS_HOTEND && PIN_EXISTS(E0_AUTO_FAN)
   #define HAS_AUTO_FAN_0 1
 #endif
@@ -2669,11 +2670,11 @@
   #undef AUTO_POWER_CHAMBER_FAN
 #endif
 
-// Print Cooling fans (limit)
+// Print Cooling fans (limit)//打印冷却风扇（限制）
 #ifdef NUM_M106_FANS
   #define MAX_FANS NUM_M106_FANS
 #else
-  #define MAX_FANS 8  // Max supported fans
+  #define MAX_FANS 8  // Max supported fans//最大支持风扇数
 #endif
 
 #define _NOT_E_AUTO(N,F) (E##N##_AUTO_FAN_PIN != FAN##F##_PIN)
@@ -2722,7 +2723,7 @@
   #define BED_OR_CHAMBER_OR_FAN 1
 #endif
 
-// Servos
+// Servos//伺服
 #if PIN_EXISTS(SERVO0) && NUM_SERVOS > 0
   #define HAS_SERVO_0 1
 #endif
@@ -2742,12 +2743,12 @@
   #define HAS_PAUSE_SERVO_OUTPUT 1
 #endif
 
-// Sensors
+// Sensors//传感器
 #if PIN_EXISTS(FILWIDTH)
   #define HAS_FILAMENT_WIDTH_SENSOR 1
 #endif
 
-// User Interface
+// User Interface//用户界面
 #if ENABLED(FREEZE_FEATURE)
   #if !PIN_EXISTS(FREEZE) && PIN_EXISTS(KILL)
     #define FREEZE_PIN KILL_PIN
@@ -2771,7 +2772,7 @@
   #define HAS_PHOTOGRAPH 1
 #endif
 
-// Digital control
+// Digital control//数字控制
 #if PIN_EXISTS(STEPPER_RESET)
   #define HAS_STEPPER_RESET 1
 #endif
@@ -2797,7 +2798,7 @@
 
 #if HAS_MICROSTEPS
 
-  // MS1 MS2 MS3 Stepper Driver Microstepping mode table
+  // MS1 MS2 MS3 Stepper Driver Microstepping mode table//MS1 MS2 MS3步进驱动程序微步模式表
   #ifndef MICROSTEP1
     #define MICROSTEP1 LOW,LOW,LOW
   #endif
@@ -2860,7 +2861,7 @@
     #define HAS_MICROSTEP128 1
   #endif
 
-#endif // HAS_MICROSTEPS
+#endif // HAS_MICROSTEPS//有多少微步
 
 /**
  * Heater signal inversion defaults
@@ -2910,13 +2911,13 @@
             #define WRITE_HEATER_6(v) WRITE(HEATER_6_PIN, (v) ^ HEATER_6_INVERTING)
             #if HOTENDS > 7
               #define WRITE_HEATER_7(v) WRITE(HEATER_7_PIN, (v) ^ HEATER_7_INVERTING)
-            #endif // HOTENDS > 7
-          #endif // HOTENDS > 6
-        #endif // HOTENDS > 5
-      #endif // HOTENDS > 4
-    #endif // HOTENDS > 3
-  #endif // HOTENDS > 2
-#endif // HAS_MULTI_HOTEND || HEATERS_PARALLEL
+            #endif // HOTENDS > 7//热端>7
+          #endif // HOTENDS > 6//热端>6
+        #endif // HOTENDS > 5//热端>5
+      #endif // HOTENDS > 4//热端>4
+    #endif // HOTENDS > 3//热端>3
+  #endif // HOTENDS > 2//热端>2
+#endif // HAS_MULTI_HOTEND || HEATERS_PARALLEL//有多个热端|加热器|并联
 #if ENABLED(HEATERS_PARALLEL)
   #define WRITE_HEATER_0(v) { WRITE_HEATER_0P(v); WRITE_HEATER_1(v); }
 #else
@@ -3064,7 +3065,7 @@
  * FAST PWM FAN Settings
  */
 #if ENABLED(FAST_PWM_FAN) && !defined(FAST_PWM_FAN_FREQUENCY)
-  #define FAST_PWM_FAN_FREQUENCY ((F_CPU) / (2 * 255 * 1)) // Fan frequency default
+  #define FAST_PWM_FAN_FREQUENCY ((F_CPU) / (2 * 255 * 1)) // Fan frequency default//风扇频率默认值
 #endif
 
 /**
@@ -3137,7 +3138,7 @@
       #define YZ_SKEW_FACTOR 0.0
     #endif
   #endif
-#endif // SKEW_CORRECTION
+#endif // SKEW_CORRECTION//倾斜校正
 
 /**
  * Heater, Fan, and Probe interactions
@@ -3252,22 +3253,22 @@
  */
 #if EITHER(MESH_BED_LEVELING, AUTO_BED_LEVELING_UBL)
   #if IS_KINEMATIC
-    // Probing points may be verified at compile time within the radius
-    // using static_assert(HYPOT2(X2-X1,Y2-Y1)<=sq(DELTA_PRINTABLE_RADIUS),"bad probe point!")
-    // so that may be added to SanityCheck.h in the future.
+    // Probing points may be verified at compile time within the radius//可在编译时在半径范围内验证探测点
+    // using static_assert(HYPOT2(X2-X1,Y2-Y1)<=sq(DELTA_PRINTABLE_RADIUS),"bad probe point!")//使用静态断言（HYPOT2（X2-X1，Y2-Y1）<=sq（DELTA可打印半径），“错误探测点！”）
+    // so that may be added to SanityCheck.h in the future.//因此，将来可能会将其添加到SanityCheck.h中。
     #define _MESH_MIN_X (X_MIN_BED + MESH_INSET)
     #define _MESH_MIN_Y (Y_MIN_BED + MESH_INSET)
     #define _MESH_MAX_X (X_MAX_BED - (MESH_INSET))
     #define _MESH_MAX_Y (Y_MAX_BED - (MESH_INSET))
   #else
-    // Boundaries for Cartesian probing based on set limits
-    #define _MESH_MIN_X (_MAX(X_MIN_BED + MESH_INSET, X_MIN_POS))  // UBL is careful not to probe off the bed.  It does not
-    #define _MESH_MIN_Y (_MAX(Y_MIN_BED + MESH_INSET, Y_MIN_POS))  // need NOZZLE_TO_PROBE_OFFSET in the mesh dimensions
+    // Boundaries for Cartesian probing based on set limits//基于集合极限的笛卡尔探测边界
+    #define _MESH_MIN_X (_MAX(X_MIN_BED + MESH_INSET, X_MIN_POS))  // UBL is careful not to probe off the bed.  It does not//UBL小心不要将探头从床上移开。事实并非如此
+    #define _MESH_MIN_Y (_MAX(Y_MIN_BED + MESH_INSET, Y_MIN_POS))  // need NOZZLE_TO_PROBE_OFFSET in the mesh dimensions//需要喷嘴到探头在网格尺寸中的偏移
     #define _MESH_MAX_X (_MIN(X_MAX_BED - (MESH_INSET), X_MAX_POS))
     #define _MESH_MAX_Y (_MIN(Y_MAX_BED - (MESH_INSET), Y_MAX_POS))
   #endif
 
-  // These may be overridden in Configuration.h if a smaller area is desired
+  // These may be overridden in Configuration.h if a smaller area is desired//如果需要较小的区域，则可以在配置.h中覆盖这些
   #ifndef MESH_MIN_X
     #define MESH_MIN_X _MESH_MIN_X
   #endif
@@ -3326,7 +3327,7 @@
     #define HAS_CHIRP 1
   #endif
 #else
-  #undef SOUND_MENU_ITEM   // No buzzer menu item without a buzzer
+  #undef SOUND_MENU_ITEM   // No buzzer menu item without a buzzer//无蜂鸣器菜单项，无蜂鸣器
 #endif
 
 /**
@@ -3369,36 +3370,36 @@
   #endif
 #endif
 
-// Define a starting height for measuring manual probe points
+// Define a starting height for measuring manual probe points//定义测量手动探针点的起始高度
 #ifndef MANUAL_PROBE_START_Z
   #if EITHER(MESH_BED_LEVELING, PROBE_MANUALLY)
-    // Leave MANUAL_PROBE_START_Z undefined so the prior Z height will be used.
-    // Note: If Z_CLEARANCE_BETWEEN_MANUAL_PROBES is 0 there will be no raise between points
+    // Leave MANUAL_PROBE_START_Z undefined so the prior Z height will be used.//未定义手动探头启动，因此将使用先前的Z高度。
+    // Note: If Z_CLEARANCE_BETWEEN_MANUAL_PROBES is 0 there will be no raise between points//注：如果手动探头之间的Z_间隙为0，则各点之间不会上升
   #elif ENABLED(AUTO_BED_LEVELING_UBL) && defined(Z_CLEARANCE_BETWEEN_PROBES)
     #define MANUAL_PROBE_START_Z Z_CLEARANCE_BETWEEN_PROBES
   #endif
 #endif
 
-#ifndef __SAM3X8E__ //todo: hal: broken hal encapsulation
+#ifndef __SAM3X8E__ //todo: hal: broken hal encapsulation//todo:hal:损坏的hal封装
   #undef UI_VOLTAGE_LEVEL
   #undef RADDS_DISPLAY
   #undef MOTOR_CURRENT
 #endif
 
-// Updated G92 behavior shifts the workspace
+// Updated G92 behavior shifts the workspace//更新的G92行为改变了工作空间
 #if DISABLED(NO_WORKSPACE_OFFSETS)
   #define HAS_POSITION_SHIFT 1
   #if IS_CARTESIAN
-    #define HAS_HOME_OFFSET 1       // The home offset also shifts the coordinate space
-    #define HAS_WORKSPACE_OFFSET 1  // Cumulative offset to workspace to save some calculation
-    #define HAS_M206_COMMAND 1      // M206 sets the home offset for Cartesian machines
+    #define HAS_HOME_OFFSET 1       // The home offset also shifts the coordinate space//原点偏移也会移动坐标空间
+    #define HAS_WORKSPACE_OFFSET 1  // Cumulative offset to workspace to save some calculation//到工作空间的累积偏移量以保存某些计算
+    #define HAS_M206_COMMAND 1      // M206 sets the home offset for Cartesian machines//M206设置笛卡尔机器的原点偏移
   #elif IS_SCARA
-    #define HAS_SCARA_OFFSET 1      // The SCARA home offset applies only on G28
+    #define HAS_SCARA_OFFSET 1      // The SCARA home offset applies only on G28//SCARA原点偏移仅适用于G28
   #endif
 #endif
 
 #if HAS_LCD_MENU
-  // LCD timeout to status screen default is 15s
+  // LCD timeout to status screen default is 15s//状态屏幕的LCD超时默认值为15秒
   #ifndef LCD_TIMEOUT_TO_STATUS
     #define LCD_TIMEOUT_TO_STATUS 15000
   #endif
@@ -3407,12 +3408,12 @@
   #endif
 #endif
 
-// Add commands that need sub-codes to this list
+// Add commands that need sub-codes to this list//将需要子代码的命令添加到此列表
 #if ANY(G38_PROBE_TARGET, CNC_COORDINATE_SYSTEMS, POWER_LOSS_RECOVERY)
   #define USE_GCODE_SUBCODES 1
 #endif
 
-// Parking Extruder
+// Parking Extruder//停车挤出机
 #if ENABLED(PARKING_EXTRUDER)
   #ifndef PARKING_EXTRUDER_GRAB_DISTANCE
     #define PARKING_EXTRUDER_GRAB_DISTANCE 0
@@ -3422,25 +3423,25 @@
   #endif
 #endif
 
-// Number of VFAT entries used. Each entry has 13 UTF-16 characters
+// Number of VFAT entries used. Each entry has 13 UTF-16 characters//使用的VFAT条目数。每个条目有13个UTF-16字符
 #if EITHER(SCROLL_LONG_FILENAMES, DWIN_CREALITY_LCD)
   #define MAX_VFAT_ENTRIES (5)
 #else
   #define MAX_VFAT_ENTRIES (2)
 #endif
 
-// Nozzle park for Delta
+// Nozzle park for Delta//三角洲的喷嘴停车场
 #if BOTH(NOZZLE_PARK_FEATURE, DELTA)
   #undef NOZZLE_PARK_Z_FEEDRATE
   #define NOZZLE_PARK_Z_FEEDRATE NOZZLE_PARK_XY_FEEDRATE
 #endif
 
-// Force SDCARD_SORT_ALPHA to be enabled for Graphical LCD on LPC1768
-// on boards where SD card and LCD display share the same SPI bus
-// because of a bug in the shared SPI implementation. (See #8122)
+// Force SDCARD_SORT_ALPHA to be enabled for Graphical LCD on LPC1768//强制为LPC1768上的图形LCD启用SDCARD_SORT_ALPHA
+// on boards where SD card and LCD display share the same SPI bus//在SD卡和LCD显示器共享同一SPI总线的板上
+// because of a bug in the shared SPI implementation. (See #8122)//因为共享SPI实现中存在错误。（见第8122页）
 #if defined(TARGET_LPC1768) && IS_RRD_FG_SC && (SD_SCK_PIN == LCD_PINS_D4)
-  #define SDCARD_SORT_ALPHA         // Keep one directory level in RAM. Changing directory levels
-                                    // may still glitch the screen, but LCD updates clean it up.
+  #define SDCARD_SORT_ALPHA         // Keep one directory level in RAM. Changing directory levels//在RAM中保持一个目录级别。更改目录级别
+                                    // may still glitch the screen, but LCD updates clean it up.//可能仍然会出现屏幕故障，但LCD更新会将其清除。
   #undef SDSORT_LIMIT
   #undef SDSORT_USES_RAM
   #undef SDSORT_USES_STACK
@@ -3463,18 +3464,18 @@
   #endif
 #endif
 
-// Fallback SPI Speed for SD
+// Fallback SPI Speed for SD//SD的后备SPI速度
 #if ENABLED(SDSUPPORT) && !defined(SD_SPI_SPEED)
   #define SD_SPI_SPEED SPI_FULL_SPEED
 #endif
 
-// Defined here to catch the above defines
+// Defined here to catch the above defines//在此处定义以捕获上述定义
 #if ENABLED(SDCARD_SORT_ALPHA) && (FOLDER_SORTING || ENABLED(SDSORT_GCODE))
   #define HAS_FOLDER_SORTING 1
 #endif
 
 #if HAS_WIRED_LCD
-  // Get LCD character width/height, which may be overridden by pins, configs, etc.
+  // Get LCD character width/height, which may be overridden by pins, configs, etc.//获取LCD字符宽度/高度，可由管脚、配置等覆盖。
   #ifndef LCD_WIDTH
     #if HAS_MARLINUI_U8GLIB
       #define LCD_WIDTH 21

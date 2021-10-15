@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2021 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -27,7 +28,7 @@
 #include "ammeter.h"
 
 #ifndef I2C_AMMETER_IMAX
-  #define I2C_AMMETER_IMAX     0.500  // Calibration range 500 Milliamps
+  #define I2C_AMMETER_IMAX     0.500  // Calibration range 500 Milliamps//校准范围500毫安
 #endif
 
 INA226 ina;
@@ -46,9 +47,9 @@ void Ammeter::init() {
 float Ammeter::read() {
   scale = 1;
   current = ina.readShuntCurrent();
-  if (current <= 0.0001f) current = 0;  // Clean up least-significant-bit amplification errors
+  if (current <= 0.0001f) current = 0;  // Clean up least-significant-bit amplification errors//清除最低有效位放大错误
   if (current < 0.1f) scale = 1000;
   return current * scale;
 }
 
-#endif // I2C_AMMETER
+#endif // I2C_AMMETER//I2C_安培计

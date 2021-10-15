@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -27,7 +28,7 @@
 
 #define BOARD_INFO_NAME "Melzi (Malyan)"
 
-// Alter timing for graphical display
+// Alter timing for graphical display//改变图形显示的时间
 #if HAS_MARLINUI_U8GLIB
   #ifndef BOARD_ST7920_DELAY_1
     #define BOARD_ST7920_DELAY_1 DELAY_NS(125)
@@ -50,9 +51,9 @@
 #undef BTN_EN2
 #undef BTN_ENC
 
-#define LCD_PINS_RS                           17  // ST9720 CS
-#define LCD_PINS_ENABLE                       16  // ST9720 DAT
-#define LCD_PINS_D4                           11  // ST9720 CLK
+#define LCD_PINS_RS                           17  // ST9720 CS//ST9720 CS
+#define LCD_PINS_ENABLE                       16  // ST9720 DAT//ST9720 DAT
+#define LCD_PINS_D4                           11  // ST9720 CLK//ST9720时钟
 #define BTN_EN1                               30
 #define BTN_EN2                               29
 #define BTN_ENC                               28

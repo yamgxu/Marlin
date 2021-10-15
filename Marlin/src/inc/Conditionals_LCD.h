@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -26,7 +27,7 @@
  * Conditionals that need to be set before Configuration_adv.h or pins.h
  */
 
-// MKS_LCD12864A/B is a variant of MKS_MINI_12864
+// MKS_LCD12864A/B is a variant of MKS_MINI_12864//MKS_LCD12864A/B是MKS_MINI_12864的一个变体
 #if EITHER(MKS_LCD12864A, MKS_LCD12864B)
   #define MKS_MINI_12864
 #endif
@@ -71,7 +72,7 @@
   #define ADC_KEY_NUM 8
   #define IS_ULTIPANEL 1
 
-  // This helps to implement HAS_ADC_BUTTONS menus
+  // This helps to implement HAS_ADC_BUTTONS menus//这有助于实现HAS_ADC_按钮菜单
   #define REVERSE_MENU_DIRECTION
   #define ENCODER_PULSES_PER_STEP 1
   #define ENCODER_STEPS_PER_MENU_ITEM 1
@@ -117,7 +118,7 @@
 #elif ENABLED(RA_CONTROL_PANEL)
 
   #define LCD_I2C_TYPE_PCA8574
-  #define LCD_I2C_ADDRESS 0x27   // I2C Address of the port expander
+  #define LCD_I2C_ADDRESS 0x27   // I2C Address of the port expander//端口扩展器的I2C地址
   #define IS_ULTIPANEL 1
 
 #elif ENABLED(REPRAPWORLD_GRAPHICAL_LCD)
@@ -167,7 +168,7 @@
     #define LED_BACKLIGHT_TIMEOUT 10000
   #endif
 
-  // Require LED backlighting enabled
+  // Require LED backlighting enabled//需要启用LED背光
   #if EITHER(FYSETC_MINI_12864_1_2, FYSETC_MINI_12864_2_0)
     #define RGB_LED
   #elif ENABLED(FYSETC_MINI_12864_2_1)
@@ -182,14 +183,14 @@
     #ifndef NEOPIXEL_BRIGHTNESS
       #define NEOPIXEL_BRIGHTNESS 127
     #endif
-    //#define NEOPIXEL_STARTUP_TEST
+    //#define NEOPIXEL_STARTUP_TEST//#定义Neopix_启动测试
   #endif
 
 #elif ENABLED(ULTI_CONTROLLER)
 
   #define IS_ULTIPANEL 1
   #define U8GLIB_SSD1309
-  #define LCD_RESET_PIN LCD_PINS_D6 //  This controller need a reset pin
+  #define LCD_RESET_PIN LCD_PINS_D6 //  This controller need a reset pin//此控制器需要一个复位引脚
   #define ENCODER_PULSES_PER_STEP 2
   #define ENCODER_STEPS_PER_MENU_ITEM 2
 
@@ -202,25 +203,25 @@
 #elif EITHER(TFTGLCD_PANEL_SPI, TFTGLCD_PANEL_I2C)
 
   #define IS_TFTGLCD_PANEL 1
-  #define IS_ULTIPANEL 1                    // Note that IS_ULTIPANEL leads to HAS_WIRED_LCD
+  #define IS_ULTIPANEL 1                    // Note that IS_ULTIPANEL leads to HAS_WIRED_LCD//请注意，是多面板导线连接到有线液晶显示器
 
   #if ENABLED(SDSUPPORT) && DISABLED(LCD_PROGRESS_BAR)
     #define LCD_PROGRESS_BAR
   #endif
   #if ENABLED(TFTGLCD_PANEL_I2C)
-    #define LCD_I2C_ADDRESS           0x27  // Must be equal to panel's I2C slave addres
+    #define LCD_I2C_ADDRESS           0x27  // Must be equal to panel's I2C slave addres//必须等于面板的I2C从属地址
   #endif
-  #define LCD_USE_I2C_BUZZER                // Enable buzzer on LCD, used for both I2C and SPI buses (LiquidTWI2 not required)
+  #define LCD_USE_I2C_BUZZER                // Enable buzzer on LCD, used for both I2C and SPI buses (LiquidTWI2 not required)//在LCD上启用蜂鸣器，用于I2C和SPI总线（不需要LiquidTWI2）
   #define STD_ENCODER_PULSES_PER_STEP 2
   #define STD_ENCODER_STEPS_PER_MENU_ITEM 1
-  #define LCD_WIDTH                   20    // 20 or 24 chars in line
-  #define LCD_HEIGHT                  10    // Character lines
+  #define LCD_WIDTH                   20    // 20 or 24 chars in line//20或24个字符排成一行
+  #define LCD_HEIGHT                  10    // Character lines//字符行
   #define LCD_CONTRAST_MIN            127
   #define LCD_CONTRAST_MAX            255
   #define DEFAULT_LCD_CONTRAST        250
-  #define CONVERT_TO_EXT_ASCII        // Use extended 128-255 symbols from ASCII table.
-                                      // At this time present conversion only for cyrillic - bg, ru and uk languages.
-                                      // First 7 ASCII symbols in panel font must be replaced with Marlin's special symbols.
+  #define CONVERT_TO_EXT_ASCII        // Use extended 128-255 symbols from ASCII table.//使用ASCII表中的扩展128-255符号。
+                                      // At this time present conversion only for cyrillic - bg, ru and uk languages.//目前，转换仅适用于西里尔文-保加利亚语、罗马尼亚语和英国语。
+                                      // First 7 ASCII symbols in panel font must be replaced with Marlin's special symbols.//面板字体中的前7个ASCII符号必须替换为Marlin的特殊符号。
 
 #elif ENABLED(CR10_STOCKDISPLAY)
 
@@ -235,7 +236,7 @@
 
 #elif ENABLED(REPRAP_DISCOUNT_SMART_CONTROLLER)
 
-  #define IS_RRD_SC 1   // RepRapDiscount LCD or Graphical LCD with rotary click encoder
+  #define IS_RRD_SC 1   // RepRapDiscount LCD or Graphical LCD with rotary click encoder//带旋转点击编码器的重复计数LCD或图形LCD
 
 #elif ENABLED(K3D_242_OLED_CONTROLLER)
 
@@ -244,14 +245,14 @@
 
 #endif
 
-// ST7920-based graphical displays
+// ST7920-based graphical displays//基于ST7920的图形显示
 #if ANY(IS_RRD_FG_SC, LCD_FOR_MELZI, SILVER_GATE_GLCD_CONTROLLER)
   #define DOGLCD
   #define U8GLIB_ST7920
   #define IS_RRD_SC 1
 #endif
 
-// ST7565 / 64128N graphical displays
+// ST7565 / 64128N graphical displays//ST7565/64128N图形显示器
 #if EITHER(MAKRPANEL, MINIPANEL)
   #define IS_ULTIPANEL 1
   #define DOGLCD
@@ -278,11 +279,11 @@
   #define PCA9632_BUZZER
   #define PCA9632_BUZZER_DATA { 0x09, 0x02 }
 
-  #define ENCODER_PULSES_PER_STEP     1 // Overlord uses buttons
+  #define ENCODER_PULSES_PER_STEP     1 // Overlord uses buttons//霸王使用按钮
   #define ENCODER_STEPS_PER_MENU_ITEM 1
 #endif
 
-// 128x64 I2C OLED LCDs - SSD1306/SSD1309/SH1106
+// 128x64 I2C OLED LCDs - SSD1306/SSD1309/SH1106//128x64 I2C OLED液晶显示器-SSD1306/SSD1309/SH1106
 #if ANY(U8GLIB_SSD1306, U8GLIB_SSD1309, U8GLIB_SH1106)
   #define HAS_U8GLIB_I2C_OLED 1
   #define IS_ULTRA_LCD 1
@@ -293,18 +294,18 @@
  * SPI Ultipanels
  */
 
-// Basic Ultipanel-like displays
+// Basic Ultipanel-like displays//基本面板式显示器
 #if ANY(ULTIMAKERCONTROLLER, IS_RRD_SC, G3D_PANEL, RIGIDBOT_PANEL, PANEL_ONE, U8GLIB_SH1106)
   #define IS_ULTIPANEL 1
 #endif
 
-// Einstart OLED has Cardinal nav via pins defined in pins_EINSTART-S.h
+// Einstart OLED has Cardinal nav via pins defined in pins_EINSTART-S.h//Einstart OLED通过PinsEinstart-S.h中定义的管脚具有基本导航
 #if ENABLED(U8GLIB_SH1106_EINSTART)
   #define DOGLCD
   #define IS_ULTIPANEL 1
 #endif
 
-// TFT Compatibility
+// TFT Compatibility//TFT兼容性
 #if ANY(FSMC_GRAPHICAL_TFT, SPI_GRAPHICAL_TFT, TFT_320x240, TFT_480x320, TFT_320x240_SPI, TFT_480x320_SPI, TFT_LVGL_UI_FSMC, TFT_LVGL_UI_SPI)
   #define IS_LEGACY_TFT 1
   #define TFT_GENERIC
@@ -325,13 +326,13 @@
   #define TFT_LVGL_UI
 #endif
 
-// FSMC/SPI TFT Panels (LVGL)
+// FSMC/SPI TFT Panels (LVGL)//FSMC/SPI TFT面板（LVGL）
 #if ENABLED(TFT_LVGL_UI)
   #define HAS_TFT_LVGL_UI 1
   #define SERIAL_RUNTIME_HOOK 1
 #endif
 
-// FSMC/SPI TFT Panels
+// FSMC/SPI TFT Panels//FSMC/SPI TFT面板
 #if ENABLED(TFT_CLASSIC_UI)
   #define TFT_SCALED_DOGLCD 1
 #endif
@@ -344,7 +345,7 @@
   #define DELAYED_BACKLIGHT_INIT
 #endif
 
-// Color UI
+// Color UI//彩色用户界面
 #if ENABLED(TFT_COLOR_UI)
   #define HAS_GRAPHICAL_TFT 1
   #define IS_ULTIPANEL 1
@@ -357,7 +358,7 @@
 #if EITHER(LCD_SAINSMART_I2C_1602, LCD_SAINSMART_I2C_2004)
 
   #define LCD_I2C_TYPE_PCF8575
-  #define LCD_I2C_ADDRESS 0x27   // I2C Address of the port expander
+  #define LCD_I2C_ADDRESS 0x27   // I2C Address of the port expander//端口扩展器的I2C地址
 
   #if ENABLED(LCD_SAINSMART_I2C_2004)
     #define LCD_WIDTH 20
@@ -366,11 +367,11 @@
 
 #elif ENABLED(LCD_I2C_PANELOLU2)
 
-  // PANELOLU2 LCD with status LEDs, separate encoder and click inputs
+  // PANELOLU2 LCD with status LEDs, separate encoder and click inputs//PANELOLU2 LCD，带状态指示灯、独立编码器和点击输入
 
   #define LCD_I2C_TYPE_MCP23017
-  #define LCD_I2C_ADDRESS 0x20 // I2C Address of the port expander
-  #define LCD_USE_I2C_BUZZER   // Enable buzzer on LCD (optional)
+  #define LCD_I2C_ADDRESS 0x20 // I2C Address of the port expander//端口扩展器的I2C地址
+  #define LCD_USE_I2C_BUZZER   // Enable buzzer on LCD (optional)//启用LCD上的蜂鸣器（可选）
   #define IS_ULTIPANEL 1
 
 #elif ENABLED(LCD_I2C_VIKI)
@@ -384,8 +385,8 @@
    *       BTN_ENC pin (or set BTN_ENC to -1 if not used)
    */
   #define LCD_I2C_TYPE_MCP23017
-  #define LCD_I2C_ADDRESS 0x20 // I2C Address of the port expander
-  #define LCD_USE_I2C_BUZZER   // Enable buzzer on LCD (requires LiquidTWI2 v1.2.3 or later)
+  #define LCD_I2C_ADDRESS 0x20 // I2C Address of the port expander//端口扩展器的I2C地址
+  #define LCD_USE_I2C_BUZZER   // Enable buzzer on LCD (requires LiquidTWI2 v1.2.3 or later)//在LCD上启用蜂鸣器（需要LiquidTWI2 v1.2.3或更高版本）
   #define IS_ULTIPANEL 1
 
   #define ENCODER_FEEDRATE_DEADZONE 4
@@ -429,15 +430,15 @@
   #define ENCODER_FEEDRATE_DEADZONE 6
 #endif
 
-// Shift register panels
-// ---------------------
-// 2 wire Non-latching LCD SR from:
-// https://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/schematics#!shiftregister-connection
+// Shift register panels//移位寄存器面板
+// ---------------------// ---------------------
+// 2 wire Non-latching LCD SR from://2线非闭锁式LCD SR来自：
+// https://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/schematics#!shiftregister-connection// https://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/schematics#!移位寄存器连接
 #if ENABLED(FF_INTERFACEBOARD)
-  #define SR_LCD_3W_NL    // Non latching 3 wire shift register
+  #define SR_LCD_3W_NL    // Non latching 3 wire shift register//非锁存三线移位寄存器
   #define IS_ULTIPANEL 1
 #elif ENABLED(SAV_3DLCD)
-  #define SR_LCD_2W_NL    // Non latching 2 wire shift register
+  #define SR_LCD_2W_NL    // Non latching 2 wire shift register//非锁存2线移位寄存器
   #define IS_ULTIPANEL 1
 #elif ENABLED(ULTIPANEL)
   #define IS_ULTIPANEL 1
@@ -458,18 +459,18 @@
   #endif
 #endif
 
-// Aliases for LCD features
+// Aliases for LCD features//LCD功能的别名
 #if ANY(DGUS_LCD_UI_ORIGIN, DGUS_LCD_UI_FYSETC, DGUS_LCD_UI_HIPRECY,DGUS_LCD_UI_MKS)
   #define HAS_DGUS_LCD 1
 #endif
 
-// Extensible UI serial touch screens. (See src/lcd/extui)
+// Extensible UI serial touch screens. (See src/lcd/extui)//可扩展UI串行触摸屏。（参见src/lcd/extui）
 #if ANY(HAS_DGUS_LCD, MALYAN_LCD, TOUCH_UI_FTDI_EVE, ANYCUBIC_LCD_I3MEGA, ANYCUBIC_LCD_CHIRON, NEXTION_TFT)
   #define IS_EXTUI 1
   #define EXTENSIBLE_UI
 #endif
 
-// Aliases for LCD features
+// Aliases for LCD features//LCD功能的别名
 #if EITHER(IS_ULTRA_LCD, EXTENSIBLE_UI)
   #define HAS_DISPLAY 1
 #endif
@@ -479,7 +480,7 @@
   #if ENABLED(DOGLCD)
     #define HAS_MARLINUI_U8GLIB 1
   #elif IS_TFTGLCD_PANEL
-    // Neither DOGM nor HD44780. Fully customized interface.
+    // Neither DOGM nor HD44780. Fully customized interface.//既不是DOGM也不是HD44780。完全定制的界面。
   #elif DISABLED(HAS_GRAPHICAL_TFT)
     #define HAS_MARLINUI_HD44780 1
   #endif
@@ -558,11 +559,11 @@
   #undef DISABLE_E
 #endif
 
-#if ENABLED(E_DUAL_STEPPER_DRIVERS) // E0/E1 steppers act in tandem as E0
+#if ENABLED(E_DUAL_STEPPER_DRIVERS) // E0/E1 steppers act in tandem as E0//E0/E1步进器与E0串联工作
 
   #define E_STEPPERS      2
 
-#elif ENABLED(SWITCHING_EXTRUDER)   // One stepper for every two EXTRUDERS
+#elif ENABLED(SWITCHING_EXTRUDER)   // One stepper for every two EXTRUDERS//每两台挤出机配备一台步进机
 
   #if EXTRUDERS > 4
     #define E_STEPPERS    3
@@ -575,7 +576,7 @@
     #define HOTENDS       E_STEPPERS
   #endif
 
-#elif ENABLED(MIXING_EXTRUDER)      // Multiple feeds are mixed proportionally
+#elif ENABLED(MIXING_EXTRUDER)      // Multiple feeds are mixed proportionally//多个饲料按比例混合
 
   #define E_STEPPERS      MIXING_STEPPERS
   #define E_MANUAL        1
@@ -583,28 +584,28 @@
     #define HAS_DUAL_MIXING 1
   #endif
 
-#elif ENABLED(SWITCHING_TOOLHEAD)   // Toolchanger
+#elif ENABLED(SWITCHING_TOOLHEAD)   // Toolchanger//换刀器
 
   #define E_STEPPERS      EXTRUDERS
   #define E_MANUAL        EXTRUDERS
 
-#elif HAS_PRUSA_MMU2                // Průša Multi-Material Unit v2
+#elif HAS_PRUSA_MMU2                // Průša Multi-Material Unit v2//Průša多材料单元v2
 
   #define E_STEPPERS 1
 
 #endif
 
-// No inactive extruders with SWITCHING_NOZZLE or Průša MMU1
+// No inactive extruders with SWITCHING_NOZZLE or Průša MMU1//无带切换喷嘴或Průša MMU1的非活动挤出机
 #if ENABLED(SWITCHING_NOZZLE) || HAS_PRUSA_MMU1
   #undef DISABLE_INACTIVE_EXTRUDER
 #endif
 
-// Průša MMU1, MMU(S) 2.0 and EXTENDABLE_EMU_MMU2(S) force SINGLENOZZLE
+// Průša MMU1, MMU(S) 2.0 and EXTENDABLE_EMU_MMU2(S) force SINGLENOZZLE//Průša MMU1、MMU（S）2.0和可扩展的EMU（S）MMU2力单喷嘴
 #if HAS_MMU
   #define SINGLENOZZLE
 #endif
 
-#if EITHER(SINGLENOZZLE, MIXING_EXTRUDER)         // One hotend, one thermistor, no XY offset
+#if EITHER(SINGLENOZZLE, MIXING_EXTRUDER)         // One hotend, one thermistor, no XY offset//一个热端，一个热敏电阻，无XY偏移
   #undef HOTENDS
   #define HOTENDS       1
   #undef HOTEND_OFFSET_X
@@ -684,7 +685,7 @@
   #undef PID_PARAMS_PER_HOTEND
 #endif
 
-// Helper macros for extruder and hotend arrays
+// Helper macros for extruder and hotend arrays//挤出机和热端阵列的辅助宏
 #define HOTEND_LOOP() for (int8_t e = 0; e < HOTENDS; e++)
 #define ARRAY_BY_EXTRUDERS(V...) ARRAY_N(EXTRUDERS, V)
 #define ARRAY_BY_EXTRUDERS1(v1) ARRAY_N_1(EXTRUDERS, v1)
@@ -696,13 +697,13 @@
  */
 #if HAS_HOTEND_OFFSET
   #ifndef HOTEND_OFFSET_X
-    #define HOTEND_OFFSET_X { 0 } // X offsets for each extruder
+    #define HOTEND_OFFSET_X { 0 } // X offsets for each extruder//每个挤出机的X偏移量
   #endif
   #ifndef HOTEND_OFFSET_Y
-    #define HOTEND_OFFSET_Y { 0 } // Y offsets for each extruder
+    #define HOTEND_OFFSET_Y { 0 } // Y offsets for each extruder//每个挤出机的Y偏移量
   #endif
   #ifndef HOTEND_OFFSET_Z
-    #define HOTEND_OFFSET_Z { 0 } // Z offsets for each extruder
+    #define HOTEND_OFFSET_Z { 0 } // Z offsets for each extruder//每个挤出机的Z偏移量
   #endif
 #endif
 
@@ -716,7 +717,7 @@
   #undef SINGLENOZZLE_STANDBY_FAN
 #endif
 
-// Switching extruder has its own servo?
+// Switching extruder has its own servo?//切换挤出机是否有自己的伺服？
 #if ENABLED(SWITCHING_EXTRUDER) && (DISABLED(SWITCHING_NOZZLE) || SWITCHING_EXTRUDER_SERVO_NR != SWITCHING_NOZZLE_SERVO_NR)
   #define DO_SWITCH_EXTRUDER 1
 #endif
@@ -733,7 +734,7 @@
     #error "BLTOUCH requires DEACTIVATE_SERVOS_AFTER_MOVE to be to disabled. Please update your Configuration.h file."
   #endif
 
-  // Always disable probe pin inverting for BLTouch
+  // Always disable probe pin inverting for BLTouch//始终禁用BLTouch的探针针反转
   #if Z_MIN_PROBE_ENDSTOP_INVERTING
     #error "BLTOUCH requires Z_MIN_PROBE_ENDSTOP_INVERTING set to false. Please update your Configuration.h file."
   #endif
@@ -857,9 +858,9 @@
       #define FIL_RUNOUT8_PULLDOWN FIL_RUNOUT_PULLDOWN
     #endif
   #endif
-#endif // FILAMENT_RUNOUT_SENSOR
+#endif // FILAMENT_RUNOUT_SENSOR//灯丝跳动传感器
 
-// Homing to Min or Max
+// Homing to Min or Max//归零至最小值或最大值
 #if X_HOME_DIR > 0
   #define X_HOME_TO_MAX 1
 #elif X_HOME_DIR < 0
@@ -908,7 +909,7 @@
     #define Z_PROBE_LOW_POINT -5
   #endif
   #if ENABLED(Z_PROBE_ALLEN_KEY)
-    #define PROBE_TRIGGERED_WHEN_STOWED_TEST 1 // Extra test for Allen Key Probe
+    #define PROBE_TRIGGERED_WHEN_STOWED_TEST 1 // Extra test for Allen Key Probe//内六角扳手探头的额外测试
   #endif
   #if MULTIPLE_PROBING > 1
     #if EXTRA_PROBING > 0
@@ -918,13 +919,13 @@
     #endif
   #endif
 #else
-  // Clear probe pin settings when no probe is selected
+  // Clear probe pin settings when no probe is selected//未选择探头时，清除探头引脚设置
   #undef Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN
   #undef USE_PROBE_FOR_Z_HOMING
 #endif
 
 #if Z_HOME_TO_MAX
-  #define HOME_Z_FIRST // If homing away from BED do Z first
+  #define HOME_Z_FIRST // If homing away from BED do Z first//如果从床上归巢，先做Z
 #endif
 
 /**
@@ -980,7 +981,7 @@
   #define GRID_LOOP(A,B) LOOP_L_N(A, GRID_MAX_POINTS_X) LOOP_L_N(B, GRID_MAX_POINTS_Y)
 #endif
 
-// Slim menu optimizations
+// Slim menu optimizations//精简菜单优化
 #if ENABLED(SLIM_LCD_MENUS)
   #define BOOT_MARLIN_LOGO_SMALL
 #endif
@@ -1016,7 +1017,7 @@
   #endif
   #define CORESIGN(n) (ANY(COREYX, COREZX, COREZY) ? (-(n)) : (n))
 #elif ENABLED(MARKFORGED_XY)
-  // Markforged kinematics
+  // Markforged kinematics//标记运动学
   #define CORE_AXIS_1 A_AXIS
   #define CORE_AXIS_2 B_AXIS
   #define NORMAL_AXIS Z_AXIS
@@ -1038,7 +1039,7 @@
   #undef DELTA_HOME_TO_SAFE_ZONE
 #endif
 
-// This flag indicates some kind of jerk storage is needed
+// This flag indicates some kind of jerk storage is needed//此标志表示需要某种急动存储
 #if EITHER(CLASSIC_JERK, IS_KINEMATIC)
   #define HAS_CLASSIC_JERK 1
 #endif
@@ -1047,14 +1048,14 @@
   #define HAS_JUNCTION_DEVIATION 1
 #endif
 
-// E jerk exists with JD disabled (of course) but also when Linear Advance is disabled on Delta/SCARA
+// E jerk exists with JD disabled (of course) but also when Linear Advance is disabled on Delta/SCARA//当JD被禁用（当然）时存在急动，但在Delta/SCARA上线性推进被禁用时也存在急动
 #if ENABLED(CLASSIC_JERK) || (IS_KINEMATIC && DISABLED(LIN_ADVANCE))
   #define HAS_CLASSIC_E_JERK 1
 #endif
 
-//
-// Serial Port Info
-//
+////
+// Serial Port Info//串口信息
+////
 #ifdef SERIAL_PORT_2
   #define HAS_MULTI_SERIAL 1
   #ifdef SERIAL_PORT_3
@@ -1078,11 +1079,11 @@
 #if ENABLED(DWIN_CREALITY_LCD)
   #define SERIAL_CATCHALL 0
   #ifndef LCD_SERIAL_PORT
-    #define LCD_SERIAL_PORT 3 // Creality 4.x board
+    #define LCD_SERIAL_PORT 3 // Creality 4.x board//Creacity 4.x董事会
   #endif
 #endif
 
-// Fallback Stepper Driver types that don't depend on Configuration_adv.h
+// Fallback Stepper Driver types that don't depend on Configuration_adv.h//不依赖于配置的后备步进驱动程序类型
 #ifndef X_DRIVER_TYPE
   #define X_DRIVER_TYPE  A4988
 #endif
@@ -1148,7 +1149,7 @@
   #define E7_DRIVER_TYPE A4988
 #endif
 
-// Fallback axis inverting
+// Fallback axis inverting//回退轴反转
 #ifndef INVERT_X_DIR
   #define INVERT_X_DIR false
 #endif
@@ -1191,32 +1192,32 @@
  *  - TFT_COLOR
  *  - GRAPHICAL_TFT_UPSCALE
  */
-#if ENABLED(MKS_TS35_V2_0)          // ST7796
+#if ENABLED(MKS_TS35_V2_0)          // ST7796//ST7796
   #define TFT_DEFAULT_DRIVER ST7796
   #define TFT_DEFAULT_ORIENTATION (TFT_EXCHANGE_XY)
   #define TFT_RES_480x320
   #define TFT_INTERFACE_SPI
-#elif ENABLED(ANET_ET5_TFT35)       // ST7796
+#elif ENABLED(ANET_ET5_TFT35)       // ST7796//ST7796
   #define TFT_DEFAULT_ORIENTATION (TFT_EXCHANGE_XY)
   #define TFT_RES_480x320
   #define TFT_INTERFACE_FSMC
-#elif ENABLED(ANET_ET4_TFT28)       // ST7789
+#elif ENABLED(ANET_ET4_TFT28)       // ST7789//ST7789
   #define TFT_DEFAULT_ORIENTATION (TFT_EXCHANGE_XY | TFT_INVERT_Y)
   #define TFT_RES_320x240
   #define TFT_INTERFACE_FSMC
-#elif ENABLED(MKS_ROBIN_TFT24)      // ST7789
+#elif ENABLED(MKS_ROBIN_TFT24)      // ST7789//ST7789
   #define TFT_DEFAULT_ORIENTATION (TFT_EXCHANGE_XY | TFT_INVERT_Y)
   #define TFT_RES_320x240
   #define TFT_INTERFACE_FSMC
-#elif ENABLED(MKS_ROBIN_TFT28)      // ST7789
+#elif ENABLED(MKS_ROBIN_TFT28)      // ST7789//ST7789
   #define TFT_DEFAULT_ORIENTATION (TFT_EXCHANGE_XY | TFT_INVERT_Y)
   #define TFT_RES_320x240
   #define TFT_INTERFACE_FSMC
-#elif ENABLED(MKS_ROBIN_TFT32)      // ST7789
+#elif ENABLED(MKS_ROBIN_TFT32)      // ST7789//ST7789
   #define TFT_DEFAULT_ORIENTATION (TFT_EXCHANGE_XY | TFT_INVERT_Y)
   #define TFT_RES_320x240
   #define TFT_INTERFACE_FSMC
-#elif ENABLED(MKS_ROBIN_TFT35)      // ILI9488
+#elif ENABLED(MKS_ROBIN_TFT35)      // ILI9488//伊利9488
   #define TFT_DEFAULT_ORIENTATION (TFT_EXCHANGE_XY | TFT_INVERT_X | TFT_INVERT_Y)
   #define TFT_RES_480x320
   #define TFT_INTERFACE_FSMC
@@ -1225,11 +1226,11 @@
   #define TFT_DEFAULT_ORIENTATION 0
   #define TFT_RES_480x272
   #define TFT_INTERFACE_FSMC
-#elif ENABLED(MKS_ROBIN_TFT_V1_1R)  // ILI9328 or R61505
+#elif ENABLED(MKS_ROBIN_TFT_V1_1R)  // ILI9328 or R61505//ILI9328或R61505
   #define TFT_DEFAULT_ORIENTATION (TFT_EXCHANGE_XY | TFT_INVERT_X | TFT_INVERT_Y)
   #define TFT_RES_320x240
   #define TFT_INTERFACE_FSMC
-#elif EITHER(TFT_TRONXY_X5SA, ANYCUBIC_TFT35) // ILI9488
+#elif EITHER(TFT_TRONXY_X5SA, ANYCUBIC_TFT35) // ILI9488//伊利9488
   #define TFT_DRIVER ILI9488
   #define TFT_DEFAULT_ORIENTATION (TFT_EXCHANGE_XY | TFT_INVERT_X | TFT_INVERT_Y)
   #define TFT_RES_480x320
@@ -1238,7 +1239,7 @@
   #define TFT_DEFAULT_ORIENTATION (TFT_EXCHANGE_XY | TFT_INVERT_X | TFT_INVERT_Y)
   #define TFT_RES_320x240
   #define TFT_INTERFACE_FSMC
-#elif ENABLED(BIQU_BX_TFT70)        // RGB
+#elif ENABLED(BIQU_BX_TFT70)        // RGB//RGB
   #define TFT_DEFAULT_ORIENTATION (TFT_EXCHANGE_XY)
   #define TFT_RES_1024x600
   #define TFT_INTERFACE_LTDC
@@ -1273,7 +1274,7 @@
   #define GRAPHICAL_TFT_UPSCALE 4
 #endif
 
-// FSMC/SPI TFT Panels using standard HAL/tft/tft_(fsmc|spi|ltdc).h
+// FSMC/SPI TFT Panels using standard HAL/tft/tft_(fsmc|spi|ltdc).h//使用标准HAL/TFT/TFT的FSMC/SPI TFT面板（FSMC | SPI | ltdc）.h
 #if ENABLED(TFT_INTERFACE_FSMC)
   #define HAS_FSMC_TFT 1
   #if TFT_SCALED_DOGLCD
@@ -1333,17 +1334,17 @@
   #define HAS_UI_1024x600 1
 #endif
 #if ANY(HAS_UI_320x240, HAS_UI_480x320, HAS_UI_480x272)
-  #define LCD_HEIGHT TERN(TOUCH_SCREEN, 6, 7)   // Fewer lines with touch buttons onscreen
+  #define LCD_HEIGHT TERN(TOUCH_SCREEN, 6, 7)   // Fewer lines with touch buttons onscreen//屏幕上带有触摸按钮的线路更少
 #elif HAS_UI_1024x600
-  #define LCD_HEIGHT TERN(TOUCH_SCREEN, 12, 13) // Fewer lines with touch buttons onscreen
+  #define LCD_HEIGHT TERN(TOUCH_SCREEN, 12, 13) // Fewer lines with touch buttons onscreen//屏幕上带有触摸按钮的线路更少
 #endif
 
-// This emulated DOGM has 'touch/xpt2046', not 'tft/xpt2046'
+// This emulated DOGM has 'touch/xpt2046', not 'tft/xpt2046'//此仿真DOGM具有“touch/xpt2046”，而不是“tft/xpt2046”
 #if ENABLED(TOUCH_SCREEN)
   #if NONE(TFT_TOUCH_DEVICE_GT911, TFT_TOUCH_DEVICE_XPT2046)
-    #define TFT_TOUCH_DEVICE_XPT2046          // ADS7843/XPT2046 ADC Touchscreen such as ILI9341 2.8
+    #define TFT_TOUCH_DEVICE_XPT2046          // ADS7843/XPT2046 ADC Touchscreen such as ILI9341 2.8//ADS7843/XPT2046 ADC触摸屏，如ILI9341 2.8
   #endif
-  #if ENABLED(TFT_TOUCH_DEVICE_GT911)         // GT911 Capacitive touch screen such as BIQU_BX_TFT70
+  #if ENABLED(TFT_TOUCH_DEVICE_GT911)         // GT911 Capacitive touch screen such as BIQU_BX_TFT70//GT911电容式触摸屏，如BIQU_BX_TFT70
     #undef TOUCH_SCREEN_CALIBRATION
     #undef TOUCH_CALIBRATION_AUTO_SAVE
   #endif
@@ -1360,7 +1361,7 @@
   #endif
 #endif
 
-// XPT2046_** Compatibility
+// XPT2046_** Compatibility//XPT2046_**兼容性
 #if !(defined(TOUCH_CALIBRATION_X) || defined(TOUCH_CALIBRATION_Y) || defined(TOUCH_OFFSET_X) || defined(TOUCH_OFFSET_Y) || defined(TOUCH_ORIENTATION))
   #if defined(XPT2046_X_CALIBRATION) && defined(XPT2046_Y_CALIBRATION) && defined(XPT2046_X_OFFSET) && defined(XPT2046_Y_OFFSET)
     #define TOUCH_CALIBRATION_X  XPT2046_X_CALIBRATION

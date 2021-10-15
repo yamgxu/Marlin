@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -67,6 +68,6 @@ void lv_clear_encoder_settings() {
   lv_obj_del(scr);
 }
 
-#endif // BUTTONS_EXIST(EN1, EN2)
+#endif // BUTTONS_EXIST(EN1, EN2)//按钮存在（EN1、EN2）
 
-#endif // HAS_TFT_LVGL_UI
+#endif // HAS_TFT_LVGL_UI//有TFT\U LVGL\U用户界面

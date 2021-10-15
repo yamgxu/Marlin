@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Copyright (C) 2011 Circuits At Home, LTD. All rights reserved.
  *
@@ -29,67 +30,67 @@
 
 #pragma once
 
-// Not used anymore? If anyone uses this, please let us know so that this may be
-// moved to the proper place, settings.h.
-//#define USB_METHODS_INLINE
+// Not used anymore? If anyone uses this, please let us know so that this may be//不再使用了？如果有人使用，请让我们知道，以便
+// moved to the proper place, settings.h.//移动到正确的位置，设置。
+//#define USB_METHODS_INLINE//#定义USB\u方法\u内联
 
 /* shield pins. First parameter - SS pin, second parameter - INT pin */
 
 #ifdef __MARLIN_FIRMWARE__
-typedef MAX3421e MAX3421E; // Marlin redefines this class in "../usb_host.h"
+typedef MAX3421e MAX3421E; // Marlin redefines this class in "../usb_host.h"//Marlin在“./usb\u host.h”中重新定义了此类
 #elif defined(BOARD_BLACK_WIDDOW)
-typedef MAX3421e<P6, P3> MAX3421E; // Black Widow
+typedef MAX3421e<P6, P3> MAX3421E; // Black Widow//黑寡妇
 #elif defined(CORE_TEENSY) && (defined(__AVR_AT90USB646__) || defined(__AVR_AT90USB1286__))
 #if EXT_RAM
-typedef MAX3421e<P20, P7> MAX3421E; // Teensy++ 2.0 with XMEM2
+typedef MAX3421e<P20, P7> MAX3421E; // Teensy++ 2.0 with XMEM2//Teensy++2.0与XMEM2
 #else
-typedef MAX3421e<P9, P8> MAX3421E; // Teensy++ 1.0 and 2.0
+typedef MAX3421e<P9, P8> MAX3421E; // Teensy++ 1.0 and 2.0//Teensy++1.0和2.0
 #endif
 #elif defined(BOARD_MEGA_ADK)
-typedef MAX3421e<P53, P54> MAX3421E; // Arduino Mega ADK
+typedef MAX3421e<P53, P54> MAX3421E; // Arduino Mega ADK//Arduino Mega ADK
 #elif defined(ARDUINO_AVR_BALANDUINO)
-typedef MAX3421e<P20, P19> MAX3421E; // Balanduino
+typedef MAX3421e<P20, P19> MAX3421E; // Balanduino//巴兰迪诺
 #elif defined(__ARDUINO_X86__) && PLATFORM_ID == 0x06
-typedef MAX3421e<P3, P2> MAX3421E; // The Intel Galileo supports much faster read and write speed at pin 2 and 3
+typedef MAX3421e<P3, P2> MAX3421E; // The Intel Galileo supports much faster read and write speed at pin 2 and 3//Intel Galileo在引脚2和引脚3上支持更快的读写速度
 #elif defined(ESP8266)
-typedef MAX3421e<P15, P5> MAX3421E; // ESP8266 boards
+typedef MAX3421e<P15, P5> MAX3421E; // ESP8266 boards//ESP8266板
 #elif defined(ESP32)
-typedef MAX3421e<P5, P17> MAX3421E; // ESP32 boards
+typedef MAX3421e<P5, P17> MAX3421E; // ESP32 boards//ESP32板
 #else
-typedef MAX3421e<P10, P9> MAX3421E; // Official Arduinos (UNO, Duemilanove, Mega, 2560, Leonardo, Due etc.), Intel Edison, Intel Galileo 2 or Teensy 2.0 and 3.x
+typedef MAX3421e<P10, P9> MAX3421E; // Official Arduinos (UNO, Duemilanove, Mega, 2560, Leonardo, Due etc.), Intel Edison, Intel Galileo 2 or Teensy 2.0 and 3.x//官方Arduinos（UNO、Duemilanove、Mega、2560、Leonardo、Due等）、Intel Edison、Intel Galileo 2或Teensy 2.0和3.x
 #endif
 
 /* Common setup data constant combinations  */
-#define bmREQ_GET_DESCR     USB_SETUP_DEVICE_TO_HOST|USB_SETUP_TYPE_STANDARD|USB_SETUP_RECIPIENT_DEVICE     //get descriptor request type
-#define bmREQ_SET           USB_SETUP_HOST_TO_DEVICE|USB_SETUP_TYPE_STANDARD|USB_SETUP_RECIPIENT_DEVICE     //set request type for all but 'set feature' and 'set interface'
-#define bmREQ_CL_GET_INTF   USB_SETUP_DEVICE_TO_HOST|USB_SETUP_TYPE_CLASS|USB_SETUP_RECIPIENT_INTERFACE     //get interface request type
+#define bmREQ_GET_DESCR     USB_SETUP_DEVICE_TO_HOST|USB_SETUP_TYPE_STANDARD|USB_SETUP_RECIPIENT_DEVICE     //get descriptor request type//获取描述符请求类型
+#define bmREQ_SET           USB_SETUP_HOST_TO_DEVICE|USB_SETUP_TYPE_STANDARD|USB_SETUP_RECIPIENT_DEVICE     //set request type for all but 'set feature' and 'set interface'//设置除“设置功能”和“设置接口”之外的所有请求类型
+#define bmREQ_CL_GET_INTF   USB_SETUP_DEVICE_TO_HOST|USB_SETUP_TYPE_CLASS|USB_SETUP_RECIPIENT_INTERFACE     //get interface request type//获取接口请求类型
 
-// D7           data transfer direction (0 - host-to-device, 1 - device-to-host)
-// D6-5         Type (0- standard, 1 - class, 2 - vendor, 3 - reserved)
-// D4-0         Recipient (0 - device, 1 - interface, 2 - endpoint, 3 - other, 4..31 - reserved)
+// D7           data transfer direction (0 - host-to-device, 1 - device-to-host)//D7数据传输方向（0-主机到设备，1-设备到主机）
+// D6-5         Type (0- standard, 1 - class, 2 - vendor, 3 - reserved)//D6-5型（0-标准，1-等级，2-供应商，3-保留）
+// D4-0         Recipient (0 - device, 1 - interface, 2 - endpoint, 3 - other, 4..31 - reserved)//D4-0收件人（0-设备，1-接口，2-端点，3-其他，4..31-保留）
 
-// USB Device Classes
-#define USB_CLASS_USE_CLASS_INFO        0x00    // Use Class Info in the Interface Descriptors
-#define USB_CLASS_AUDIO                 0x01    // Audio
-#define USB_CLASS_COM_AND_CDC_CTRL      0x02    // Communications and CDC Control
-#define USB_CLASS_HID                   0x03    // HID
-#define USB_CLASS_PHYSICAL              0x05    // Physical
-#define USB_CLASS_IMAGE                 0x06    // Image
-#define USB_CLASS_PRINTER               0x07    // Printer
-#define USB_CLASS_MASS_STORAGE          0x08    // Mass Storage
-#define USB_CLASS_HUB                   0x09    // Hub
-#define USB_CLASS_CDC_DATA              0x0A    // CDC-Data
-#define USB_CLASS_SMART_CARD            0x0B    // Smart-Card
-#define USB_CLASS_CONTENT_SECURITY      0x0D    // Content Security
-#define USB_CLASS_VIDEO                 0x0E    // Video
-#define USB_CLASS_PERSONAL_HEALTH       0x0F    // Personal Healthcare
-#define USB_CLASS_DIAGNOSTIC_DEVICE     0xDC    // Diagnostic Device
-#define USB_CLASS_WIRELESS_CTRL         0xE0    // Wireless Controller
-#define USB_CLASS_MISC                  0xEF    // Miscellaneous
-#define USB_CLASS_APP_SPECIFIC          0xFE    // Application Specific
-#define USB_CLASS_VENDOR_SPECIFIC       0xFF    // Vendor Specific
+// USB Device Classes//USB设备类
+#define USB_CLASS_USE_CLASS_INFO        0x00    // Use Class Info in the Interface Descriptors//在接口描述符中使用类信息
+#define USB_CLASS_AUDIO                 0x01    // Audio//音频
+#define USB_CLASS_COM_AND_CDC_CTRL      0x02    // Communications and CDC Control//通信和疾病控制中心控制
+#define USB_CLASS_HID                   0x03    // HID//隐藏
+#define USB_CLASS_PHYSICAL              0x05    // Physical//物理的
+#define USB_CLASS_IMAGE                 0x06    // Image//形象
+#define USB_CLASS_PRINTER               0x07    // Printer//印刷机
+#define USB_CLASS_MASS_STORAGE          0x08    // Mass Storage//大容量存储
+#define USB_CLASS_HUB                   0x09    // Hub//枢纽
+#define USB_CLASS_CDC_DATA              0x0A    // CDC-Data//CDC数据
+#define USB_CLASS_SMART_CARD            0x0B    // Smart-Card//智能卡
+#define USB_CLASS_CONTENT_SECURITY      0x0D    // Content Security//内容安全
+#define USB_CLASS_VIDEO                 0x0E    // Video//录像带
+#define USB_CLASS_PERSONAL_HEALTH       0x0F    // Personal Healthcare//个人保健
+#define USB_CLASS_DIAGNOSTIC_DEVICE     0xDC    // Diagnostic Device//诊断装置
+#define USB_CLASS_WIRELESS_CTRL         0xE0    // Wireless Controller//无线控制器
+#define USB_CLASS_MISC                  0xEF    // Miscellaneous//杂
+#define USB_CLASS_APP_SPECIFIC          0xFE    // Application Specific//特定于应用程序
+#define USB_CLASS_VENDOR_SPECIFIC       0xFF    // Vendor Specific//特定于供应商
 
-// Additional Error Codes
+// Additional Error Codes//附加错误代码
 #define USB_DEV_CONFIG_ERROR_DEVICE_NOT_SUPPORTED       0xD1
 #define USB_DEV_CONFIG_ERROR_DEVICE_INIT_INCOMPLETE     0xD2
 #define USB_ERROR_UNABLE_TO_REGISTER_DEVICE_CLASS       0xD3
@@ -107,14 +108,14 @@ typedef MAX3421e<P10, P9> MAX3421E; // Official Arduinos (UNO, Duemilanove, Mega
 #define USB_ERROR_FailGetConfDescr                      0xE3
 #define USB_ERROR_TRANSFER_TIMEOUT                      0xFF
 
-#define USB_XFER_TIMEOUT        5000    // (5000) USB transfer timeout in milliseconds, per section 9.2.6.1 of USB 2.0 spec
-//#define USB_NAK_LIMIT         32000   // NAK limit for a transfer. 0 means NAKs are not counted
-#define USB_RETRY_LIMIT         3       // 3 retry limit for a transfer
-#define USB_SETTLE_DELAY        200     // settle delay in milliseconds
+#define USB_XFER_TIMEOUT        5000    // (5000) USB transfer timeout in milliseconds, per section 9.2.6.1 of USB 2.0 spec//（5000）USB传输超时，以毫秒为单位，符合USB 2.0规范第9.2.6.1节
+//#define USB_NAK_LIMIT         32000   // NAK limit for a transfer. 0 means NAKs are not counted//#为传输定义USB_NAK_LIMIT 32000//NAK LIMIT。0表示不计算NAK
+#define USB_RETRY_LIMIT         3       // 3 retry limit for a transfer//3传输的重试限制
+#define USB_SETTLE_DELAY        200     // settle delay in milliseconds//以毫秒为单位结算延迟
 
-#define USB_NUMDEVICES          16      //number of USB devices
-//#define HUB_MAX_HUBS          7       // maximum number of hubs that can be attached to the host controller
-#define HUB_PORT_RESET_DELAY    20      // hub port reset delay 10 ms recomended, can be up to 20 ms
+#define USB_NUMDEVICES          16      //number of USB devices//USB设备的数量
+//#define HUB_MAX_HUBS          7       // maximum number of hubs that can be attached to the host controller//#定义集线器\u MAX\u集线器7//可以连接到主机控制器的最大集线器数
+#define HUB_PORT_RESET_DELAY    20      // hub port reset delay 10 ms recomended, can be up to 20 ms//集线器端口重置延迟建议为10毫秒，最长可达20毫秒
 
 /* USB state machine states */
 #define USB_STATE_MASK                                      0xF0
@@ -159,7 +160,7 @@ public:
 
   virtual void ResetHubPort(uint8_t port __attribute__((unused))) {
     return;
-  } // Note used for hubs only!
+  } // Note used for hubs only!//注意：仅用于集线器！
 
   virtual bool VIDPIDOK(uint16_t vid __attribute__((unused)), uint16_t pid __attribute__((unused))) {
     return false;
@@ -178,32 +179,32 @@ public:
 /* USB Setup Packet Structure   */
 typedef struct {
 
-  union { // offset   description
-    uint8_t bmRequestType; //   0      Bit-map of request type
+  union { // offset   description//偏移量说明
+    uint8_t bmRequestType; //   0      Bit-map of request type//请求类型的0位映射
 
     struct {
-      uint8_t recipient : 5; //          Recipient of the request
-      uint8_t type : 2; //          Type of request
-      uint8_t direction : 1; //          Direction of data X-fer
+      uint8_t recipient : 5; //          Recipient of the request//请求接收人
+      uint8_t type : 2; //          Type of request//请求类型
+      uint8_t direction : 1; //          Direction of data X-fer//数据传输方向
     } __attribute__((packed));
   } ReqType_u;
-  uint8_t bRequest; //   1      Request
+  uint8_t bRequest; //   1      Request//1请求
 
   union {
-    uint16_t wValue; //   2      Depends on bRequest
+    uint16_t wValue; //   2      Depends on bRequest//2取决于酿造
 
     struct {
       uint8_t wValueLo;
       uint8_t wValueHi;
     } __attribute__((packed));
   } wVal_u;
-  uint16_t wIndex; //   4      Depends on bRequest
-  uint16_t wLength; //   6      Depends on bRequest
+  uint16_t wIndex; //   4      Depends on bRequest//4靠酿造
+  uint16_t wLength; //   6      Depends on bRequest//6靠酿造
 } __attribute__((packed)) SETUP_PKT, *PSETUP_PKT;
 
 
 
-// Base class for incoming data parser
+// Base class for incoming data parser//传入数据解析器的基类
 
 class USBReadParser {
 public:
@@ -282,31 +283,31 @@ private:
   uint8_t AttemptConfig(uint8_t driver, uint8_t parent, uint8_t port, bool lowspeed);
 };
 
-#if 0 //defined(USB_METHODS_INLINE)
-//get device descriptor
+#if 0 //defined(USB_METHODS_INLINE)//已定义（USB_方法_内联）
+//get device descriptor//获取设备描述符
 
 inline uint8_t USB::getDevDescr(uint8_t addr, uint8_t ep, uint16_t nbytes, uint8_t *dataptr) {
   return ( ctrlReq(addr, ep, bmREQ_GET_DESCR, USB_REQUEST_GET_DESCRIPTOR, 0x00, USB_DESCRIPTOR_DEVICE, 0x0000, nbytes, dataptr));
 }
-//get configuration descriptor
+//get configuration descriptor//获取配置描述符
 
 inline uint8_t USB::getConfDescr(uint8_t addr, uint8_t ep, uint16_t nbytes, uint8_t conf, uint8_t *dataptr) {
   return ( ctrlReq(addr, ep, bmREQ_GET_DESCR, USB_REQUEST_GET_DESCRIPTOR, conf, USB_DESCRIPTOR_CONFIGURATION, 0x0000, nbytes, dataptr));
 }
-//get string descriptor
+//get string descriptor//获取字符串描述符
 
 inline uint8_t USB::getStrDescr(uint8_t addr, uint8_t ep, uint16_t nuint8_ts, uint8_t index, uint16_t langid, uint8_t *dataptr) {
   return ( ctrlReq(addr, ep, bmREQ_GET_DESCR, USB_REQUEST_GET_DESCRIPTOR, index, USB_DESCRIPTOR_STRING, langid, nuint8_ts, dataptr));
 }
-//set address
+//set address//设定地址
 
 inline uint8_t USB::setAddr(uint8_t oldaddr, uint8_t ep, uint8_t newaddr) {
   return ( ctrlReq(oldaddr, ep, bmREQ_SET, USB_REQUEST_SET_ADDRESS, newaddr, 0x00, 0x0000, 0x0000, nullptr));
 }
-//set configuration
+//set configuration//设置配置
 
 inline uint8_t USB::setConf(uint8_t addr, uint8_t ep, uint8_t conf_value) {
   return ( ctrlReq(addr, ep, bmREQ_SET, USB_REQUEST_SET_CONFIGURATION, conf_value, 0x00, 0x0000, 0x0000, nullptr));
 }
 
-#endif // defined(USB_METHODS_INLINE)
+#endif // defined(USB_METHODS_INLINE)//已定义（USB_方法_内联）

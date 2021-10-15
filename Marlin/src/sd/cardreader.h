@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -37,9 +38,9 @@ extern const char M23_STR[], M24_STR[];
   #define SD_ORDER(N,C) N
 #endif
 
-#define MAX_DIR_DEPTH     10       // Maximum folder depth
-#define MAXDIRNAMELENGTH   8       // DOS folder name size
-#define MAXPATHNAMELENGTH  (1 + (MAXDIRNAMELENGTH + 1) * (MAX_DIR_DEPTH) + 1 + FILENAME_LENGTH) // "/" + N * ("ADIRNAME/") + "filename.ext"
+#define MAX_DIR_DEPTH     10       // Maximum folder depth//最大文件夹深度
+#define MAXDIRNAMELENGTH   8       // DOS folder name size//DOS文件夹名称大小
+#define MAXPATHNAMELENGTH  (1 + (MAXDIRNAMELENGTH + 1) * (MAX_DIR_DEPTH) + 1 + FILENAME_LENGTH) // "/" + N * ("ADIRNAME/") + "filename.ext"//“/”+N*（“ADIRNAME/”）+“filename.ext”
 
 #include "SdFile.h"
 #include "disk_io_driver.h"
@@ -87,11 +88,11 @@ typedef struct {
 
 class CardReader {
 public:
-  static card_flags_t flag;                         // Flags (above)
-  static char filename[FILENAME_LENGTH],            // DOS 8.3 filename of the selected item
-              longFilename[LONG_FILENAME_LENGTH];   // Long name of the selected item
+  static card_flags_t flag;                         // Flags (above)//旗帜（上图）
+  static char filename[FILENAME_LENGTH],            // DOS 8.3 filename of the selected item//DOS 8.3所选项目的文件名
+              longFilename[LONG_FILENAME_LENGTH];   // Long name of the selected item//所选项目的长名称
 
-  // Fast! binary file transfer
+  // Fast! binary file transfer//快！二进制文件传输
   #if ENABLED(BINARY_FILE_TRANSFER)
     #if HAS_MULTI_SERIAL
       static serial_index_t transfer_port_index;
@@ -100,7 +101,7 @@ public:
     #endif
   #endif
 
-  // // // Methods // // //
+  // // // Methods // // ///////方法/////
 
   CardReader();
 
@@ -112,21 +113,21 @@ public:
   static void release();
   static inline bool isMounted() { return flag.mounted; }
 
-  // Handle media insert/remove
+  // Handle media insert/remove//处理介质插入/取出
   static void manage_media();
 
-  // SD Card Logging
+  // SD Card Logging//SD卡记录
   static void openLogFile(const char * const path);
   static void write_command(char * const buf);
 
-  #if DISABLED(NO_SD_AUTOSTART)     // Auto-Start auto#.g file handling
-    static uint8_t autofile_index;  // Next auto#.g index to run, plus one. Ignored by autofile_check when zero.
-    static void autofile_begin();   // Begin check. Called automatically after boot-up.
-    static bool autofile_check();   // Check for the next auto-start file and run it.
+  #if DISABLED(NO_SD_AUTOSTART)     // Auto-Start auto#.g file handling//自动启动自动#.g文件处理
+    static uint8_t autofile_index;  // Next auto#.g index to run, plus one. Ignored by autofile_check when zero.//下一个要运行的自动#.g索引，加上一个。当为零时，自动文件检查忽略。
+    static void autofile_begin();   // Begin check. Called automatically after boot-up.//开始检查。启动后自动调用。
+    static bool autofile_check();   // Check for the next auto-start file and run it.//检查下一个自动启动文件并运行它。
     static inline void autofile_cancel() { autofile_index = 0; }
   #endif
 
-  // Basic file ops
+  // Basic file ops//基本文件操作
   static void openFileRead(const char * const path, const uint8_t subcall=0);
   static void openFileWrite(const char * const path);
   static void closefile(const bool store_location=false);
@@ -135,25 +136,25 @@ public:
 
   static inline char* longest_filename() { return longFilename[0] ? longFilename : filename; }
   #if ENABLED(LONG_FILENAME_HOST_SUPPORT)
-    static void printLongPath(char * const path);   // Used by M33
+    static void printLongPath(char * const path);   // Used by M33//由M33使用
   #endif
 
-  // Working Directory for SD card menu
+  // Working Directory for SD card menu//SD卡菜单的工作目录
   static void cdroot();
   static void cd(const char *relpath);
   static int8_t cdup();
   static uint16_t countFilesInWorkDir();
   static uint16_t get_num_Files();
 
-  // Select a file
+  // Select a file//选择一个文件
   static void selectFileByIndex(const uint16_t nr);
-  static void selectFileByName(const char * const match);  // (working directory only)
+  static void selectFileByName(const char * const match);  // (working directory only)//（仅适用于工作目录）
 
-  // Print job
+  // Print job//打印作业
   static void report_status();
   static void getAbsFilenameInCWD(char *dst);
   static void printSelectedFilename();
-  static void openAndPrintFile(const char *name);   // (working directory or full path)
+  static void openAndPrintFile(const char *name);   // (working directory or full path)//（工作目录或完整路径）
   static void startOrResumeFilePrinting();
   static void endFilePrintNow(TERN_(SD_RESORT, const bool re_sort=false));
   static void abortFilePrintNow(TERN_(SD_RESORT, const bool re_sort=false));
@@ -193,7 +194,7 @@ public:
     #if ENABLED(SDSORT_GCODE)
       FORCE_INLINE static void setSortOn(bool b)        { sort_alpha   = b; presort(); }
       FORCE_INLINE static void setSortFolders(int i)    { sort_folders = i; presort(); }
-      //FORCE_INLINE static void setSortReverse(bool b) { sort_reverse = b; }
+      //FORCE_INLINE static void setSortReverse(bool b) { sort_reverse = b; }//FORCE_INLINE static void setSortReverse（bool b）{sort_reverse=b；}
     #endif
   #else
     FORCE_INLINE static void getfilename_sorted(const uint16_t nr) { selectFileByIndex(nr); }
@@ -207,29 +208,29 @@ public:
     static void removeJobRecoveryFile();
   #endif
 
-  // Current Working Dir - Set by cd, cdup, cdroot, and diveToFile(true, ...)
+  // Current Working Dir - Set by cd, cdup, cdroot, and diveToFile(true, ...)//当前工作目录-由cd、cdup、cdroot和diveToFile设置（true，…）
   static inline char* getWorkDirName()  { workDir.getDosName(filename); return filename; }
   static inline SdFile& getWorkDir()    { return workDir.isOpen() ? workDir : root; }
 
-  // Print File stats
+  // Print File stats//打印文件统计信息
   static inline uint32_t getFileSize()  { return filesize; }
   static inline uint32_t getIndex()     { return sdpos; }
   static inline bool isFileOpen()       { return isMounted() && file.isOpen(); }
   static inline bool eof()              { return getIndex() >= getFileSize(); }
 
-  // File data operations
+  // File data operations//文件数据操作
   static inline int16_t get()                            { int16_t out = (int16_t)file.read(); sdpos = file.curPosition(); return out; }
   static inline int16_t read(void *buf, uint16_t nbyte)  { return file.isOpen() ? file.read(buf, nbyte) : -1; }
   static inline int16_t write(void *buf, uint16_t nbyte) { return file.isOpen() ? file.write(buf, nbyte) : -1; }
   static inline void setIndex(const uint32_t index)      { file.seekSet((sdpos = index)); }
 
-  // TODO: rename to diskIODriver()
+  // TODO: rename to diskIODriver()//TODO:重命名为diskIODriver（）
   static DiskIODriver* diskIODriver() { return driver; }
 
   #if ENABLED(AUTO_REPORT_SD_STATUS)
-    //
-    // SD Auto Reporting
-    //
+    ////
+    // SD Auto Reporting//SD自动报告
+    ////
     struct AutoReportSD { static void report() { report_status(); } };
     static AutoReporter<AutoReportSD> auto_reporter;
   #endif
@@ -245,24 +246,24 @@ public:
   #endif
 
 private:
-  //
-  // Working directory and parents
-  //
+  ////
+  // Working directory and parents//工作目录和父目录
+  ////
   static SdFile root, workDir, workDirParents[MAX_DIR_DEPTH];
   static uint8_t workDirDepth;
 
-  //
-  // Alphabetical file and folder sorting
-  //
+  ////
+  // Alphabetical file and folder sorting//按字母顺序排列的文件和文件夹排序
+  ////
   #if ENABLED(SDCARD_SORT_ALPHA)
-    static uint16_t sort_count;   // Count of sorted items in the current directory
+    static uint16_t sort_count;   // Count of sorted items in the current directory//当前目录中已排序项目的计数
     #if ENABLED(SDSORT_GCODE)
-      static bool sort_alpha;     // Flag to enable / disable the feature
-      static int sort_folders;    // Folder sorting before/none/after
-      //static bool sort_reverse; // Flag to enable / disable reverse sorting
+      static bool sort_alpha;     // Flag to enable / disable the feature//启用/禁用功能的标志
+      static int sort_folders;    // Folder sorting before/none/after//文件夹排序前/无/后
+      //static bool sort_reverse; // Flag to enable / disable reverse sorting//静态布尔排序_反向；//启用/禁用反向排序的标志
     #endif
 
-    // By default the sort index is static
+    // By default the sort index is static//默认情况下，排序索引是静态的
     #if ENABLED(SDSORT_DYNAMIC_RAM)
       static uint8_t *sort_order;
     #else
@@ -277,12 +278,12 @@ private:
       #define SORTED_LONGNAME_STORAGE SORTED_LONGNAME_MAXLEN
     #endif
 
-    // Cache filenames to speed up SD menus.
+    // Cache filenames to speed up SD menus.//缓存文件名以加速SD菜单。
     #if ENABLED(SDSORT_USES_RAM)
 
-      // If using dynamic ram for names, allocate on the heap.
+      // If using dynamic ram for names, allocate on the heap.//如果使用动态ram作为名称，请在堆上进行分配。
       #if ENABLED(SDSORT_CACHE_NAMES)
-        static uint16_t nrFiles; // Cache the total count
+        static uint16_t nrFiles; // Cache the total count//缓存总计数
         #if ENABLED(SDSORT_DYNAMIC_RAM)
           static char **sortshort, **sortnames;
         #else
@@ -294,7 +295,7 @@ private:
         static char sortnames[SDSORT_LIMIT][SORTED_LONGNAME_STORAGE];
       #endif
 
-      // Folder sorting uses an isDir array when caching items.
+      // Folder sorting uses an isDir array when caching items.//文件夹排序在缓存项目时使用isDir数组。
       #if HAS_FOLDER_SORTING
         #if ENABLED(SDSORT_DYNAMIC_RAM)
           static uint8_t *isDir;
@@ -303,29 +304,29 @@ private:
         #endif
       #endif
 
-    #endif // SDSORT_USES_RAM
+    #endif // SDSORT_USES_RAM//SDSORT_使用_RAM
 
-  #endif // SDCARD_SORT_ALPHA
+  #endif // SDCARD_SORT_ALPHA//SDCARD_SORT_ALPHA
 
   static DiskIODriver *driver;
   static SdVolume volume;
   static SdFile file;
 
-  static uint32_t filesize, // Total size of the current file, in bytes
-                  sdpos;    // Index most recently read (one behind file.getPos)
+  static uint32_t filesize, // Total size of the current file, in bytes//当前文件的总大小（字节）
+                  sdpos;    // Index most recently read (one behind file.getPos)//最近读取的索引（文件.getPos后面的一个）
 
-  //
-  // Procedure calls to other files
-  //
+  ////
+  // Procedure calls to other files//对其他文件的过程调用
+  ////
   #if HAS_MEDIA_SUBCALLS
     static uint8_t file_subcall_ctr;
     static uint32_t filespos[SD_PROCEDURE_DEPTH];
     static char proc_filenames[SD_PROCEDURE_DEPTH][MAXPATHNAMELENGTH];
   #endif
 
-  //
-  // Directory items
-  //
+  ////
+  // Directory items//目录项
+  ////
   static bool is_dir_or_gcode(const dir_t &p);
   static int countItems(SdFile dir);
   static void selectByIndex(SdFile dir, const uint8_t index);
@@ -342,7 +343,7 @@ private:
 #elif PIN_EXISTS(SD_DETECT)
   #define IS_SD_INSERTED() (READ(SD_DETECT_PIN) == SD_DETECT_STATE)
 #else
-  // No card detect line? Assume the card is inserted.
+  // No card detect line? Assume the card is inserted.//没有卡检测线？假设卡已插入。
   #define IS_SD_INSERTED() true
 #endif
 
@@ -353,7 +354,7 @@ private:
 
 extern CardReader card;
 
-#else // !SDSUPPORT
+#else // !SDSUPPORT// !SDSUPPORT
 
 #define IS_SD_PRINTING()  false
 #define IS_SD_FETCHING()  false
@@ -362,4 +363,4 @@ extern CardReader card;
 
 #define LONG_FILENAME_LENGTH 0
 
-#endif // !SDSUPPORT
+#endif // !SDSUPPORT// !SDSUPPORT

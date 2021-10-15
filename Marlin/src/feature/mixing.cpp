@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -24,7 +25,7 @@
 
 #if ENABLED(MIXING_EXTRUDER)
 
-//#define MIXER_NORMALIZER_DEBUG
+//#define MIXER_NORMALIZER_DEBUG//#定义混频器\规格化器\调试
 
 #include "mixing.h"
 
@@ -34,12 +35,12 @@ Mixer mixer;
   #include "../core/serial.h"
 #endif
 
-// Used up to Planner level
+// Used up to Planner level//用于计划员级别
 uint_fast8_t  Mixer::selected_vtool = 0;
-float         Mixer::collector[MIXING_STEPPERS]; // mix proportion. 0.0 = off, otherwise <= COLOR_A_MASK.
+float         Mixer::collector[MIXING_STEPPERS]; // mix proportion. 0.0 = off, otherwise <= COLOR_A_MASK.//配合比。0.0=关闭，否则<=彩色遮罩。
 mixer_comp_t  Mixer::color[NR_MIXING_VIRTUAL_TOOLS][MIXING_STEPPERS];
 
-// Used in Stepper
+// Used in Stepper//用于步进电机
 int_fast8_t   Mixer::runner = 0;
 mixer_comp_t  Mixer::s_color[MIXING_STEPPERS];
 mixer_accu_t  Mixer::accu[MIXING_STEPPERS] = { 0 };
@@ -69,7 +70,7 @@ void Mixer::normalize(const uint8_t tool_index) {
     SERIAL_ECHOLNPGM("]");
   #endif
 
-  // Scale all values so their maximum is COLOR_A_MASK
+  // Scale all values so their maximum is COLOR_A_MASK//缩放所有值，使其最大值为颜色遮罩
   const float scale = float(COLOR_A_MASK) / cmax;
   MIXER_STEPPER_LOOP(i) color[tool_index][i] = collector[i] * scale;
 
@@ -94,13 +95,13 @@ void Mixer::normalize(const uint8_t tool_index) {
 }
 
 void Mixer::reset_vtools() {
-  // Virtual Tools 0, 1, 2, 3 = Filament 1, 2, 3, 4, etc.
-  // Every virtual tool gets a pure filament
+  // Virtual Tools 0, 1, 2, 3 = Filament 1, 2, 3, 4, etc.//虚拟工具0、1、2、3=灯丝1、2、3、4等。
+  // Every virtual tool gets a pure filament//每一个虚拟工具都有一根纯净的细丝
   LOOP_L_N(t, _MIN(MIXING_VIRTUAL_TOOLS, MIXING_STEPPERS))
     MIXER_STEPPER_LOOP(i)
       color[t][i] = (t == i) ? COLOR_A_MASK : 0;
 
-  // Remaining virtual tools are 100% filament 1
+  // Remaining virtual tools are 100% filament 1//其余虚拟工具为100%灯丝1
   #if MIXING_VIRTUAL_TOOLS > MIXING_STEPPERS
     LOOP_S_L_N(t, MIXING_STEPPERS, MIXING_VIRTUAL_TOOLS)
       MIXER_STEPPER_LOOP(i)
@@ -108,13 +109,13 @@ void Mixer::reset_vtools() {
   #endif
 }
 
-// called at boot
+// called at boot//开机时呼叫
 void Mixer::init() {
 
   reset_vtools();
 
   #if HAS_MIXER_SYNC_CHANNEL
-    // AUTORETRACT_TOOL gets the same amount of all filaments
+    // AUTORETRACT_TOOL gets the same amount of all filaments//AUTORETRACT_工具获得相同数量的所有细丝
     MIXER_STEPPER_LOOP(i)
       color[MIXER_AUTORETRACT_TOOL][i] = COLOR_A_MASK;
   #endif
@@ -135,13 +136,13 @@ void Mixer::refresh_collector(const float proportion/*=1.0*/, const uint8_t t/*=
     cmax = _MAX(cmax, v);
     csum += v;
   }
-  //SERIAL_ECHOPAIR("Mixer::refresh_collector(", proportion, ", ", t, ") cmax=", cmax, "  csum=", csum, "  color");
+  //SERIAL_ECHOPAIR("Mixer::refresh_collector(", proportion, ", ", t, ") cmax=", cmax, "  csum=", csum, "  color");//串行回波对（“混频器：：刷新回波采集器（“，比例，”，“，t，”）cmax=“，cmax”，“csum=”，csum，“颜色”）；
   const float inv_prop = proportion / csum;
   MIXER_STEPPER_LOOP(i) {
     c[i] = color[t][i] * inv_prop;
-    //SERIAL_ECHOPAIR(" [", t, "][", i, "] = ", color[t][i], " (", c[i], ")  ");
+    //SERIAL_ECHOPAIR(" [", t, "][", i, "] = ", color[t][i], " (", c[i], ")  ");//序列回波对（“[”，t，“][”，i，“][=”，颜色[t][i]，“（”，c[i]，”）；
   }
-  //SERIAL_EOL();
+  //SERIAL_EOL();//串行_EOL（）；
 }
 
 #if ENABLED(GRADIENT_MIX)
@@ -150,17 +151,17 @@ void Mixer::refresh_collector(const float proportion/*=1.0*/, const uint8_t t/*=
   #include "../module/planner.h"
 
   gradient_t Mixer::gradient = {
-    false,    // enabled
-    {0},      // color (array)
-    0, 0,     // start_z, end_z
-    0, 1,     // start_vtool, end_vtool
-    {0}, {0}  // start_mix[], end_mix[]
+    false,    // enabled//启用
+    {0},      // color (array)//颜色（数组）
+    0, 0,     // start_z, end_z//开始，结束
+    0, 1,     // start_vtool, end_vtool//开始工具，结束工具
+    {0}, {0}  // start_mix[], end_mix[]//开始混合[]，结束混合[]
     #if ENABLED(GRADIENT_VTOOL)
-      , -1    // vtool_index
+      , -1    // vtool_index//vtool_索引
     #endif
   };
 
-  float Mixer::prev_z; // = 0
+  float Mixer::prev_z; // = 0// = 0
 
   void Mixer::update_gradient_for_z(const_float_t z) {
     if (z == prev_z) return;
@@ -188,6 +189,6 @@ void Mixer::refresh_collector(const float proportion/*=1.0*/, const uint8_t t/*=
     #endif
   }
 
-#endif // GRADIENT_MIX
+#endif // GRADIENT_MIX//梯度混合
 
-#endif // MIXING_EXTRUDER
+#endif // MIXING_EXTRUDER//混炼机

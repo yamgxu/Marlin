@@ -1,3 +1,4 @@
+/** translatione by yx */
 /* Copyright (C) 2015-2016 Andrew J. Kroll
    and
 Copyright (C) 2011 Circuits At Home, LTD. All rights reserved.
@@ -20,7 +21,7 @@ Contact information
 -------------------
 
 Circuits At Home, LTD
-Web      :  https://www.circuitsathome.com
+Web      :  https://www.circuitsathome.com//www.circuitsathome.com
 e-mail   :  support@circuitsathome.com
  */
 
@@ -28,7 +29,7 @@ e-mail   :  support@circuitsathome.com
 #define UHS_SCSI_H
 
 /*
- * Reference documents from T10 (https://www.t10.org)
+ * Reference documents from T10 (https://www.t10.org)//（www.t10.org）
  * SCSI Primary Commands - 3 (SPC-3)
  * SCSI Block Commands - 2 (SBC-2)
  * Multi-Media Commands - 5 (MMC-5)
@@ -117,8 +118,8 @@ e-mail   :  support@circuitsathome.com
 
 struct SCSI_Capacity {
         uint8_t data[8];
-        //uint32_t dwBlockAddress;
-        //uint32_t dwBlockLength;
+        //uint32_t dwBlockAddress;//uint32_t数据块地址；
+        //uint32_t dwBlockLength;//uint32_t数据块长度；
 } __attribute__((packed));
 
 struct SCSI_CDB_BASE {

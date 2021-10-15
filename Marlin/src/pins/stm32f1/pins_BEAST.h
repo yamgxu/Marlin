@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -30,22 +31,22 @@
 #define BOARD_INFO_NAME      "Beast STM32"
 #define DEFAULT_MACHINE_NAME "STM32F103RET6"
 
-// Enable I2C_EEPROM for testing
+// Enable I2C_EEPROM for testing//启用I2C_EEPROM进行测试
 #define I2C_EEPROM
 
-// Ignore temp readings during development.
-//#define BOGUS_TEMPERATURE_GRACE_PERIOD    2000
+// Ignore temp readings during development.//在开发过程中忽略温度读数。
+//#define BOGUS_TEMPERATURE_GRACE_PERIOD    2000//#定义2000年的假温度宽限期
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_STOP_PIN                          PD5
 #define Y_STOP_PIN                          PD6
 #define Z_STOP_PIN                          PD7
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                          PE0
 #define X_DIR_PIN                           PE1
 #define X_ENABLE_PIN                        PC0
@@ -74,20 +75,20 @@
 #define E2_DIR_PIN                          PE11
 #define E2_ENABLE_PIN                       PC5
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define SDSS                                PA15
 #define LED_PIN                             PB2
 
-//
-// Heaters / Fans
-//
-#define HEATER_0_PIN                        PD12  // EXTRUDER 1
+////
+// Heaters / Fans//加热器/风扇
+////
+#define HEATER_0_PIN                        PD12  // EXTRUDER 1//挤出机1
 #define HEATER_1_PIN                        PD13
 #define HEATER_2_PIN                        PD14
 
-#define HEATER_BED_PIN                      PB9   // BED
+#define HEATER_BED_PIN                      PB9   // BED//床
 
 #ifndef FAN_PIN
   #define FAN_PIN                           PB10
@@ -95,17 +96,17 @@
 
 #define FAN_SOFT_PWM
 
-//
-// Temperature Sensors
-//
-#define TEMP_BED_PIN                        PA0   // Analog Input
-#define TEMP_0_PIN                          PA1   // Analog Input
-#define TEMP_1_PIN                          PA2   // Analog Input
-#define TEMP_2_PIN                          PA3   // Analog Input
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_BED_PIN                        PA0   // Analog Input//模拟输入
+#define TEMP_0_PIN                          PA1   // Analog Input//模拟输入
+#define TEMP_1_PIN                          PA2   // Analog Input//模拟输入
+#define TEMP_2_PIN                          PA3   // Analog Input//模拟输入
 
-//
-// LCD Pins
-//
+////
+// LCD Pins//LCD引脚
+////
 #if HAS_WIRED_LCD
 
   #if ENABLED(REPRAPWORLD_GRAPHICAL_LCD)
@@ -140,6 +141,6 @@
     #else
       #error "Other generic NEWPANEL LCD is not supported."
     #endif
-  #endif // IS_NEWPANEL
+  #endif // IS_NEWPANEL//这是新小组吗
 
-#endif // HAS_WIRED_LCD
+#endif // HAS_WIRED_LCD//有有线液晶显示器吗

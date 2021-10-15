@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -28,7 +29,7 @@
 #define FIL_RUNOUT_PIN                        15
 #define SD_DETECT_PIN                         66
 
-//
-// Import RAMPS 1.4 pins
-//
+////
+// Import RAMPS 1.4 pins//导入坡道1.4引脚
+////
 #include "pins_RAMPS.h"

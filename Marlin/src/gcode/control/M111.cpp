@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -71,7 +72,7 @@ void GcodeSuite::M111() {
       #if ENABLED(SERIAL_STATS_MAX_RX_QUEUED)
         SERIAL_ECHOPAIR("\nMax RX Queue Size: ", MYSERIAL1.rxMaxEnqueued());
       #endif
-    #endif // !__AVR__ || !USBCON
+    #endif // !__AVR__ || !USBCON// !__AVR||||！美国广播公司
   }
   SERIAL_EOL();
 }

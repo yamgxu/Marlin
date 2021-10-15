@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -58,4 +59,4 @@ void GcodeSuite::M122() {
   test_tmc_connection(LOGICAL_AXIS_ELEM(print_axis));
 }
 
-#endif // HAS_TRINAMIC_CONFIG
+#endif // HAS_TRINAMIC_CONFIG//有_TRINAMIC _CONFIG

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*************************
  * standard_char_set.cpp *
  *************************/
@@ -91,17 +92,17 @@
     uint8_t width = std_char_width(which);
 
     if (c == '\t') {
-      // Special handling for the tab character
+      // Special handling for the tab character//制表符的特殊处理
       which = ' ';
       width = std_char_width(' ');
     }
 
-    // Draw the character
+    // Draw the character//画人物
     if (cmd) ext_vertex2ii(*cmd, x, y, std_font, which);
 
-    // Increment X to the next character position
+    // Increment X to the next character position//将X增加到下一个字符位置
     x += fs.scale(width);
     return true;
   }
 
-#endif // FTDI_EXTENDED && TOUCH_UI_USE_UTF8
+#endif // FTDI_EXTENDED && TOUCH_UI_USE_UTF8//FTDI扩展和触摸屏用户界面使用UTF8

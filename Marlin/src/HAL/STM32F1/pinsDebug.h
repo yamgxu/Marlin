@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -26,7 +27,7 @@
  * Translation of routines & variables used by pinsDebug.h
  */
 
-#ifndef BOARD_NR_GPIO_PINS  // Only in STM32GENERIC (Maple)
+#ifndef BOARD_NR_GPIO_PINS  // Only in STM32GENERIC (Maple)//仅适用于STM32GENERIC（枫树）
    #error "Expected BOARD_NR_GPIO_PINS not found"
 #endif
 
@@ -43,11 +44,11 @@ extern const stm32_pin_info PIN_MAP[BOARD_NR_GPIO_PINS];
 #define PRINT_PIN(p) do{ sprintf_P(buffer, PSTR("%3hd "), int16_t(p)); SERIAL_ECHO(buffer); }while(0)
 #define PRINT_PORT(p) print_port(p)
 #define PRINT_ARRAY_NAME(x) do{ sprintf_P(buffer, PSTR("%-" STRINGIFY(MAX_NAME_LENGTH) "s"), pin_array[x].name); SERIAL_ECHO(buffer); }while(0)
-#define MULTI_NAME_PAD 21 // space needed to be pretty if not first name assigned to a pin
+#define MULTI_NAME_PAD 21 // space needed to be pretty if not first name assigned to a pin//如果没有为pin指定名字，则空间必须美观
 
-// pins that will cause hang/reset/disconnect in M43 Toggle and Watch utilities
+// pins that will cause hang/reset/disconnect in M43 Toggle and Watch utilities//导致M43切换和监视实用程序中挂起/复位/断开的针脚
 #ifndef M43_NEVER_TOUCH
-  #define M43_NEVER_TOUCH(Q) (Q >= 9 && Q <= 12) // SERIAL/USB pins PA9(TX) PA10(RX)
+  #define M43_NEVER_TOUCH(Q) (Q >= 9 && Q <= 12) // SERIAL/USB pins PA9(TX) PA10(RX)//串行/USB插脚PA9（TX）PA10（RX）
 #endif
 
 static inline int8_t get_pin_mode(pin_t pin) {
@@ -87,7 +88,7 @@ static inline bool GET_ARRAY_IS_DIGITAL(const int16_t array_pin) {
   );
 }
 
-#include "../../inc/MarlinConfig.h" // Allow pins/pins.h to set density
+#include "../../inc/MarlinConfig.h" // Allow pins/pins.h to set density//允许pins/pins.h设置密度
 
 static inline void pwm_details(const pin_t pin) {
   if (PWM_PIN(pin)) {
@@ -110,7 +111,7 @@ static inline void pwm_details(const pin_t pin) {
 }
 
 static inline void print_port(pin_t pin) {
-  const char port = 'A' + char(pin >> 4); // pin div 16
+  const char port = 'A' + char(pin >> 4); // pin div 16//销部16
   const int16_t gbit = PIN_MAP[pin].gpio_bit;
   char buffer[8];
   sprintf_P(buffer, PSTR("P%c%hd "), port, gbit);

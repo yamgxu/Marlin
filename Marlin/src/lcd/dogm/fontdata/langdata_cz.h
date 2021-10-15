@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Generated automatically by buildroot/share/fonts/uxggenpages.sh
  * Contents will be REPLACED by future processing!
@@ -42,13 +43,13 @@ const u8g_fntpgm_uint8_t fontpage_2_253_254[47] U8G_FONT_SECTION("fontpage_2_253
 
 #define FONTDATA_ITEM(page, begin, end, data) { page, begin, end, COUNT(data), data }
 static const uxg_fontinfo_t g_fontinfo[] PROGMEM = {
-    FONTDATA_ITEM(2, 140, 141, fontpage_2_140_141), // 'Č' -- 'č'
-    FONTDATA_ITEM(2, 143, 143, fontpage_2_143_143), // 'ď' -- 'ď'
-    FONTDATA_ITEM(2, 154, 155, fontpage_2_154_155), // 'Ě' -- 'ě'
-    FONTDATA_ITEM(2, 200, 200, fontpage_2_200_200), // 'ň' -- 'ň'
-    FONTDATA_ITEM(2, 216, 217, fontpage_2_216_217), // 'Ř' -- 'ř'
-    FONTDATA_ITEM(2, 224, 225, fontpage_2_224_225), // 'Š' -- 'š'
-    FONTDATA_ITEM(2, 229, 229, fontpage_2_229_229), // 'ť' -- 'ť'
-    FONTDATA_ITEM(2, 239, 239, fontpage_2_239_239), // 'ů' -- 'ů'
-    FONTDATA_ITEM(2, 253, 254, fontpage_2_253_254), // 'Ž' -- 'ž'
+    FONTDATA_ITEM(2, 140, 141, fontpage_2_140_141), // 'Č' -- 'č'// 'Č' -- 'č'
+    FONTDATA_ITEM(2, 143, 143, fontpage_2_143_143), // 'ď' -- 'ď'// 'ď' -- 'ď'
+    FONTDATA_ITEM(2, 154, 155, fontpage_2_154_155), // 'Ě' -- 'ě'// 'Ě' -- 'ě'
+    FONTDATA_ITEM(2, 200, 200, fontpage_2_200_200), // 'ň' -- 'ň'// 'ň' -- 'ň'
+    FONTDATA_ITEM(2, 216, 217, fontpage_2_216_217), // 'Ř' -- 'ř'// 'Ř' -- 'ř'
+    FONTDATA_ITEM(2, 224, 225, fontpage_2_224_225), // 'Š' -- 'š'// 'Š' -- 'š'
+    FONTDATA_ITEM(2, 229, 229, fontpage_2_229_229), // 'ť' -- 'ť'// 'ť' -- 'ť'
+    FONTDATA_ITEM(2, 239, 239, fontpage_2_239_239), // 'ů' -- 'ů'// 'ů' -- 'ů'
+    FONTDATA_ITEM(2, 253, 254, fontpage_2_253_254), // 'Ž' -- 'ž'// 'Ž' -- 'ž'
 };

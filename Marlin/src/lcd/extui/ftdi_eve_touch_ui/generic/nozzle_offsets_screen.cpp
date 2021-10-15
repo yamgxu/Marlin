@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*****************************
  * nozzle_offsets_screen.cpp *
  *****************************/
@@ -29,8 +30,8 @@ using namespace FTDI;
 using namespace ExtUI;
 
 void NozzleOffsetScreen::onEntry() {
-  // Since we don't allow the user to edit the offsets for E0,
-  // make sure they are all zero.
+  // Since we don't allow the user to edit the offsets for E0,//因为我们不允许用户编辑E0的偏移，
+  // make sure they are all zero.//确保它们都是零。
   normalizeNozzleOffset(X);
   normalizeNozzleOffset(Y);
   normalizeNozzleOffset(Z);
@@ -69,4 +70,4 @@ bool NozzleOffsetScreen::onTouchHeld(uint8_t tag) {
   return true;
 }
 
-#endif // FTDI_NOZZLE_OFFSETS_SCREEN
+#endif // FTDI_NOZZLE_OFFSETS_SCREEN//FTDI喷嘴偏移屏幕

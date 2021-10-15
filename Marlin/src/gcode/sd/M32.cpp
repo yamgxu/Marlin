@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -26,9 +27,9 @@
 
 #include "../gcode.h"
 #include "../../sd/cardreader.h"
-#include "../../module/planner.h" // for synchronize()
+#include "../../module/planner.h" // for synchronize()//用于同步（）
 
-#include "../../MarlinCore.h" // for startOrResumeJob
+#include "../../MarlinCore.h" // for startOrResumeJob//对于startOrResumeJob
 
 /**
  * M32: Select file and start SD Print
@@ -51,9 +52,9 @@ void GcodeSuite::M32() {
 
     card.startOrResumeFilePrinting();
 
-    // Procedure calls count as normal print time.
+    // Procedure calls count as normal print time.//过程调用计数为正常打印时间。
     if (!call_procedure) startOrResumeJob();
   }
 }
 
-#endif // HAS_MEDIA_SUBCALLS
+#endif // HAS_MEDIA_SUBCALLS//有\u媒体\u子载波

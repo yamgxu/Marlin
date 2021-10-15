@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -25,19 +26,19 @@
 #include "../../inc/MarlinConfigPre.h"
 
 #if BOTH(HAS_MARLINUI_U8GLIB, SDSUPPORT) && (LCD_PINS_D4 == SD_SCK_PIN || LCD_PINS_ENABLE == SD_MOSI_PIN || DOGLCD_SCK == SD_SCK_PIN || DOGLCD_MOSI == SD_MOSI_PIN)
-  #define LPC_SOFTWARE_SPI  // If the SD card and LCD adapter share the same SPI pins, then software SPI is currently
-                            // needed due to the speed and mode required for communicating with each device being different.
-                            // This requirement can be removed if the SPI access to these devices is updated to use
-                            // spiBeginTransaction.
+  #define LPC_SOFTWARE_SPI  // If the SD card and LCD adapter share the same SPI pins, then software SPI is currently//如果SD卡和LCD适配器共享相同的SPI引脚，则当前正在使用软件SPI
+                            // needed due to the speed and mode required for communicating with each device being different.//由于与每个设备通信所需的速度和模式不同，因此需要。
+                            // This requirement can be removed if the SPI access to these devices is updated to use//如果对这些设备的SPI访问更新为使用，则可以删除此要求
+                            // spiBeginTransaction.//spibeginsaction。
 #endif
 
-// Onboard SD
-//#define SD_SCK_PIN     P0_07
-//#define SD_MISO_PIN    P0_08
-//#define SD_MOSI_PIN    P0_09
-//#define SD_SS_PIN      P0_06
+// Onboard SD//车载SD
+//#define SD_SCK_PIN     P0_07//#定义SD_SCK_引脚P0_07
+//#define SD_MISO_PIN    P0_08//#定义SD_MISO_引脚P0_08
+//#define SD_MOSI_PIN    P0_09//#定义SD_MOSI_引脚P0_09
+//#define SD_SS_PIN      P0_06//#定义SD_不锈钢_引脚P0_06
 
-// External SD
+// External SD//外部SD
 #ifndef SD_SCK_PIN
   #define SD_SCK_PIN        50
 #endif

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -56,4 +57,4 @@ void GcodeSuite::M421() {
     mbl.set_z(ix, iy, parser.value_linear_units() + (hasQ ? mbl.z_values[ix][iy] : 0));
 }
 
-#endif // MESH_BED_LEVELING
+#endif // MESH_BED_LEVELING//网床找平

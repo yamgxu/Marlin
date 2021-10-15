@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -42,11 +43,11 @@
 #define ALLOW_SAM3X8E
 #define BOARD_INFO_NAME "RAMPS4DUE"
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN          9   // Analog Input
-#define TEMP_1_PIN         -1   // Analog Input
-#define TEMP_BED_PIN       10   // Analog Input
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN          9   // Analog Input//模拟输入
+#define TEMP_1_PIN         -1   // Analog Input//模拟输入
+#define TEMP_BED_PIN       10   // Analog Input//模拟输入
 
 #include "../ramps/pins_RAMPS.h"

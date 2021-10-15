@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -56,9 +57,9 @@ void GcodeSuite::M360() {
   PGMSTR(Z_STR,    "Z");
   PGMSTR(JERK_STR, "Jerk");
 
-  //
-  // Basics and Enabled items
-  //
+  ////
+  // Basics and Enabled items//基本和启用的项目
+  ////
   config_line(PSTR("Baudrate"),                   BAUDRATE);
   config_line(PSTR("InputBuffer"),                MAX_CMD_SIZE);
   config_line(PSTR("PrintlineCache"),             BUFSIZE);
@@ -73,17 +74,17 @@ void GcodeSuite::M360() {
   config_line(PSTR("Autolevel"),                  ENABLED(HAS_LEVELING));
   config_line(PSTR("EEPROM"),                     ENABLED(EEPROM_SETTINGS));
 
-  //
-  // Homing Directions
-  //
+  ////
+  // Homing Directions//归航方向
+  ////
   PGMSTR(H_DIR_STR, "HomeDir");
   config_line(H_DIR_STR, X_HOME_DIR, X_STR);
   config_line(H_DIR_STR, Y_HOME_DIR, Y_STR);
   config_line(H_DIR_STR, Z_HOME_DIR, Z_STR);
 
-  //
-  // XYZ Axis Jerk
-  //
+  ////
+  // XYZ Axis Jerk//XYZ轴冲击
+  ////
   #if HAS_CLASSIC_JERK
     if (planner.max_jerk.x == planner.max_jerk.y)
       config_line(PSTR("XY"), planner.max_jerk.x, JERK_STR);
@@ -94,29 +95,29 @@ void GcodeSuite::M360() {
     config_line(Z_STR, planner.max_jerk.z, JERK_STR);
   #endif
 
-  //
-  // Firmware Retraction
-  //
+  ////
+  // Firmware Retraction//固件收回
+  ////
   config_line(PSTR("SupportG10G11"), ENABLED(FWRETRACT));
   #if ENABLED(FWRETRACT)
     PGMSTR(RET_STR, "Retraction");
     PGMSTR(UNRET_STR, "RetractionUndo");
     PGMSTR(SPEED_STR, "Speed");
-    // M10 Retract with swap (long) moves
+    // M10 Retract with swap (long) moves//M10使用交换（长）移动收回
     config_line(PSTR("Length"),     fwretract.settings.retract_length, RET_STR);
     config_line(SPEED_STR,          fwretract.settings.retract_feedrate_mm_s, RET_STR);
     config_line(PSTR("ZLift"),      fwretract.settings.retract_zraise, RET_STR);
     config_line(PSTR("LongLength"), fwretract.settings.swap_retract_length, RET_STR);
-    // M11 Recover (undo) with swap (long) moves
+    // M11 Recover (undo) with swap (long) moves//M11使用交换（长）移动恢复（撤消）
     config_line(SPEED_STR,               fwretract.settings.retract_recover_feedrate_mm_s, UNRET_STR);
     config_line(PSTR("ExtraLength"),     fwretract.settings.retract_recover_extra, UNRET_STR);
     config_line(PSTR("ExtraLongLength"), fwretract.settings.swap_retract_recover_extra, UNRET_STR);
     config_line(PSTR("LongSpeed"),       fwretract.settings.swap_retract_recover_feedrate_mm_s, UNRET_STR);
   #endif
 
-  //
-  // Workspace boundaries
-  //
+  ////
+  // Workspace boundaries//工作空间边界
+  ////
   const xyz_pos_t dmin = { X_MIN_POS, Y_MIN_POS, Z_MIN_POS },
                   dmax = { X_MAX_POS, Y_MAX_POS, Z_MAX_POS };
   xyz_pos_t cmin = dmin, cmax = dmax;
@@ -137,9 +138,9 @@ void GcodeSuite::M360() {
   config_line(SIZE_STR, wmax.y - wmin.y, Y_STR);
   config_line(SIZE_STR, wmax.z - wmin.z, Z_STR);
 
-  //
-  // Print and Travel Acceleration
-  //
+  ////
+  // Print and Travel Acceleration//打印和行程加速
+  ////
   #define _ACCEL(A,B) _MIN(planner.settings.max_acceleration_mm_per_s2[A##_AXIS], planner.settings.B)
   PGMSTR(P_ACC_STR, "PrintAccel");
   PGMSTR(T_ACC_STR, "TravelAccel");
@@ -159,17 +160,17 @@ void GcodeSuite::M360() {
     TERN_(IS_CARTESIAN,  "Cartesian")
   );
 
-  //
-  // Heated Bed
-  //
+  ////
+  // Heated Bed//加热床
+  ////
   config_line(PSTR("HeatedBed"), ENABLED(HAS_HEATED_BED));
   #if HAS_HEATED_BED
     config_line(PSTR("MaxBedTemp"), BED_MAX_TARGET);
   #endif
 
-  //
-  // Per-Extruder settings
-  //
+  ////
+  // Per-Extruder settings//每挤出机设置
+  ////
   config_line(PSTR("NumExtruder"), EXTRUDERS);
   #if HAS_EXTRUDERS
     LOOP_L_N(e, EXTRUDERS) {

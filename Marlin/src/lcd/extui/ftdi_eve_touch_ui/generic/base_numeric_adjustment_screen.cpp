@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**************************************
  * base_numeric_adjustment_screen.cpp *
  **************************************/
@@ -160,7 +161,7 @@ void BaseNumericAdjustmentScreen::widgets_t::_draw_increment_btn(CommandProcesso
   uint8_t &          increment = mydata.increment;
 
   if (increment == 0) {
-    increment = tag; // Set the default value to be the first.
+    increment = tag; // Set the default value to be the first.//将默认值设置为第一个。
   }
 
   switch (tag) {
@@ -361,7 +362,7 @@ void BaseNumericAdjustmentScreen::widgets_t::home_buttons(uint8_t tag) {
 }
 
 void BaseNumericAdjustmentScreen::onEntry() {
-  mydata.increment = 0; // This will force the increment to be picked while drawing.
+  mydata.increment = 0; // This will force the increment to be picked while drawing.//这将强制在绘制时拾取增量。
   BaseScreen::onEntry();
   CommandProcessor cmd;
   cmd.set_button_style_callback(nullptr);
@@ -388,4 +389,4 @@ float BaseNumericAdjustmentScreen::getIncrement() {
   }
 }
 
-#endif // FTDI_BASE_NUMERIC_ADJ_SCREEN
+#endif // FTDI_BASE_NUMERIC_ADJ_SCREEN//FTDI基础数字调整屏幕

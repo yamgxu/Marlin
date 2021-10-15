@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -32,7 +33,7 @@ void GcodeSuite::M12() {
   planner.synchronize();
 
   if (parser.seenval('S'))
-    closedloop.set(parser.value_int()); // Force a CLC set
+    closedloop.set(parser.value_int()); // Force a CLC set//强制CLC集合
 
 }
 

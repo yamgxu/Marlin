@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -45,7 +46,7 @@
  *  X, Y, Z          : Specify axes to move during cleaning. Default: ALL.
  */
 void GcodeSuite::G12() {
-  // Don't allow nozzle cleaning without homing first
+  // Don't allow nozzle cleaning without homing first//不允许在未先归位的情况下清洁喷嘴
   if (homing_needed_error()) return;
 
   #ifdef WIPE_SEQUENCE_COMMANDS
@@ -67,7 +68,7 @@ void GcodeSuite::G12() {
                       ;
 
   #if HAS_LEVELING
-    // Disable bed leveling if cleaning Z
+    // Disable bed leveling if cleaning Z//如果清洁Z，则禁用床层平整
     TEMPORARY_BED_LEVELING_STATE(!TEST(cleans, Z_AXIS) && planner.leveling_active);
   #endif
 
@@ -78,4 +79,4 @@ void GcodeSuite::G12() {
   SET_SOFT_ENDSTOP_LOOSE(false);
 }
 
-#endif // NOZZLE_CLEAN_FEATURE
+#endif // NOZZLE_CLEAN_FEATURE//喷嘴清洁功能

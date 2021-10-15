@@ -6,7 +6,7 @@ import os,re,sys
 Import("env")
 
 def get_envs_for_board(board):
-	with open(os.path.join("Marlin", "src", "pins", "pins.h"), "r") as file:
+	with open(os.path.join("Marlin", "src", "pins", "pins.h"), "r",encoding='UTF-8') as file:
 
 		if sys.platform == 'win32':
 			envregex = r"(?:env|win):"

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /************************
  * western_char_set.cpp *
  ************************/
@@ -139,9 +140,9 @@
 
   PROGMEM constexpr struct {
     uint16_t unicode;
-    uint8_t  std_char; // Glyph from standard ROMFONT (zero if none)
-    uint8_t  alt_char; // Glyph from Western Char Set bitmap
-    uint8_t  alt_data; // For accented characters, the centerline; else char width
+    uint8_t  std_char; // Glyph from standard ROMFONT (zero if none)//来自标准ROMFONT的字形（如果没有，则为零）
+    uint8_t  alt_char; // Glyph from Western Char Set bitmap//西部字符集位图中的字形
+    uint8_t  alt_data; // For accented characters, the centerline; else char width//对于重音字符，中心线；else字符宽度
   } char_recipe[] = {
     {0,          0,  NO_DOT_I,           10   },
     #if ENABLED(TOUCH_UI_UTF8_PUNCTUATION)
@@ -335,7 +336,7 @@
     if (addr % 4 != 0)
       addr += 4 - (addr % 4);
 
-    // Load the alternative font metrics
+    // Load the alternative font metrics//加载替代字体度量
     CLCD::FontMetrics alt_fm;
     alt_fm.ptr    = addr + 148;
     alt_fm.format = L4;
@@ -345,7 +346,7 @@
     LOOP_L_N(i, 127)
       alt_fm.char_widths[i] = 0;
 
-    // For special characters, copy the character widths from the char tables
+    // For special characters, copy the character widths from the char tables//对于特殊字符，请从字符表复制字符宽度
     LOOP_L_N(i, NUM_ELEMENTS(char_recipe)) {
       uint8_t std_char, alt_char, alt_data;
       get_char_data(i, std_char, alt_char, alt_data);
@@ -354,7 +355,7 @@
     }
     CLCD::mem_write_bulk(addr, &alt_fm,  148);
 
-    // Decode the RLE data and load it into RAMG as a bitmap
+    // Decode the RLE data and load it into RAMG as a bitmap//解码RLE数据并将其作为位图加载到RAMG中
     uint32_t lastaddr = write_rle_data(addr + 148, font, sizeof(font));
 
     bitmap_addr = addr;
@@ -405,13 +406,13 @@
 
   bool FTDI::WesternCharSet::render_glyph(CommandProcessor* cmd, int &x, int &y, font_size_t fs, utf8_char_t c) {
 
-    // A supported character?
+    // A supported character?//支持的字符？
     if (c < UTF8('¡') || c > UTF8('ÿ')) return false;
 
     int8_t index = find_char_data(c);
     if (index == -1) return false;
 
-    // Determine character characteristics
+    // Determine character characteristics//确定字符特征
     uint8_t std_char, alt_char, alt_data;
     get_char_data(index, std_char, alt_char, alt_data);
 
@@ -422,7 +423,7 @@
     int8_t  accent_dx, accent_dy;
 
     if (std_char == 0) {
-      // Special character, non-accented
+      // Special character, non-accented//特殊字符，不带重音
       base_width   = alt_data;
       base_special = true;
       base_char    = alt_char;
@@ -431,7 +432,7 @@
         x -= fs.scale(deg_sign_leading);
     }
     else {
-      // Regular character with accent:
+      // Regular character with accent://带重音的常规字符：
       accent_dx   = alt_data - mid_accent;
       accent_dy   = isupper(std_char) ? -7 : 0;
       accent_char = alt_char;
@@ -440,16 +441,16 @@
       base_char   = base_special ? NO_DOT_I : std_char;
     }
 
-    // If cmd != nullptr, draw the glyph to the screen
+    // If cmd != nullptr, draw the glyph to the screen//如果cmd！=nullptr，将图示符绘制到屏幕上
     if (cmd) {
       ext_vertex2ii(*cmd, x, y, base_special ? alt_font : std_font, base_char);
       if (accent_char)
         ext_vertex2ii(*cmd, x + fs.scale(accent_dx), y + fs.scale(accent_dy), alt_font, accent_char);
     }
 
-    // Increment X to the next character position
+    // Increment X to the next character position//将X增加到下一个字符位置
     x += fs.scale(base_width);
     return true;
   }
 
-#endif // FTDI_EXTENDED && TOUCH_UI_USE_UTF8 && TOUCH_UI_UTF8_WESTERN_CHARSET
+#endif // FTDI_EXTENDED && TOUCH_UI_USE_UTF8 && TOUCH_UI_UTF8_WESTERN_CHARSET//FTDI扩展和触摸用户界面使用UTF8和触摸用户界面使用UTF8西部字符集

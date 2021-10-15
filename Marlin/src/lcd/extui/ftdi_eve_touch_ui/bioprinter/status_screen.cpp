@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*************************
  * bio_status_screen.cpp *
  *************************/
@@ -67,11 +68,11 @@ void StatusScreen::draw_temperature(draw_mode_t what) {
   if (what & BACKGROUND) {
     cmd.cmd(COLOR_RGB(bg_color));
 
-    // The LulzBot Bio shows the temperature for
-    // the bed.
+    // The LulzBot Bio shows the temperature for//LulzBot Bio显示了
+    // the bed.//这张床。
 
     #if ENABLED(TOUCH_UI_PORTRAIT)
-      // Draw touch surfaces
+      // Draw touch surfaces//绘制触摸表面
       ui.bounds(POLY(target_temp), x, y, h, v);
       cmd.rectangle(x, y, h, v);
       ui.bounds(POLY(actual_temp), x, y, h, v);
@@ -83,7 +84,7 @@ void StatusScreen::draw_temperature(draw_mode_t what) {
     ui.bounds(POLY(bed_icon), x, y, h, v);
     cmd.rectangle(x, y, h, v);
 
-    // Draw bed icon
+    // Draw bed icon//绘制床图标
     cmd.cmd(BITMAP_SOURCE(Bed_Heat_Icon_Info))
        .cmd(BITMAP_LAYOUT(Bed_Heat_Icon_Info))
        .cmd(BITMAP_SIZE  (Bed_Heat_Icon_Info))
@@ -93,7 +94,7 @@ void StatusScreen::draw_temperature(draw_mode_t what) {
        .icon (x, y, h, v, Bed_Heat_Icon_Info, icon_scale * 2);
 
     #if ENABLED(TOUCH_UI_USE_UTF8)
-      load_utf8_bitmaps(cmd); // Restore font bitmap handles
+      load_utf8_bitmaps(cmd); // Restore font bitmap handles//还原字体位图句柄
     #endif
   }
 
@@ -141,13 +142,13 @@ void StatusScreen::draw_syringe(draw_mode_t what) {
   PolyUI ui(cmd, what);
 
   if (what & BACKGROUND) {
-    // Paint the shadow for the syringe
+    // Paint the shadow for the syringe//给注射器涂上阴影
     ui.color(shadow_rgb);
     ui.shadow(POLY(syringe_outline), shadow_depth);
   }
 
   if (what & FOREGROUND && e_homed) {
-    // Paint the syringe icon
+    // Paint the syringe icon//绘制注射器图标
     ui.color(syringe_rgb);
     ui.fill(POLY(syringe_outline));
 
@@ -265,11 +266,11 @@ void StatusScreen::draw_buttons(draw_mode_t what) {
 }
 
 void StatusScreen::loadBitmaps() {
-  // Load the bitmaps for the status screen
+  // Load the bitmaps for the status screen//加载状态屏幕的位图
   constexpr uint32_t base = ftdi_memory_map::RAM_G;
   CLCD::mem_write_pgm(base + Bed_Heat_Icon_Info.RAMG_offset, Bed_Heat_Icon, sizeof(Bed_Heat_Icon));
 
-  // Load fonts for internationalization
+  // Load fonts for internationalization//加载国际化字体
   #if ENABLED(TOUCH_UI_USE_UTF8)
     load_utf8_data(base + UTF8_FONT_OFFSET);
   #endif
@@ -321,8 +322,8 @@ bool StatusScreen::onTouchEnd(uint8_t tag) {
     case 16: fine_motion = !fine_motion; break;
     default: return false;
   }
-  // If a passcode is enabled, the LockScreen will prevent the
-  // user from proceeding.
+  // If a passcode is enabled, the LockScreen will prevent the//如果密码已启用，锁屏将阻止
+  // user from proceeding.//用户无法继续。
   LockScreen::check_passcode();
   return true;
 }
@@ -333,7 +334,7 @@ bool StatusScreen::onTouchHeld(uint8_t tag) {
   switch (tag) {
     case 1: jog({-s,  0,  0}); break;
     case 2: jog({ s,  0,  0}); break;
-    case 4: jog({ 0, -s,  0}); break; // NOTE: Y directions inverted because bed rather than needle moves
+    case 4: jog({ 0, -s,  0}); break; // NOTE: Y directions inverted because bed rather than needle moves//注意：Y方向颠倒，因为床而不是针移动
     case 3: jog({ 0,  s,  0}); break;
     case 5: jog({ 0,  0, -s}); break;
     case 6: jog({ 0,  0,  s}); break;
@@ -373,4 +374,4 @@ void StatusScreen::onIdle() {
   }
 }
 
-#endif // FTDI_BIO_STATUS_SCREEN
+#endif // FTDI_BIO_STATUS_SCREEN//FTDI_生物_状态_屏幕

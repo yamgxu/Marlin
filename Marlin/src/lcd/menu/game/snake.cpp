@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -67,18 +68,18 @@ constexpr fixed_t snakev = FTOP(0.20);
 
 snake_data_t &sdat = marlin_game_data.snake;
 
-// Remove the first pixel from the tail.
-// If needed, shift out the first segment.
+// Remove the first pixel from the tail.//从尾部移除第一个像素。
+// If needed, shift out the first segment.//如果需要，移出第一段。
 void shorten_tail() {
   pos_t &p = sdat.snake_tail[0], &q = sdat.snake_tail[1];
   bool shift = false;
   if (p.x == q.x) {
-    // Vertical line
+    // Vertical line//垂直线
     p.y += (q.y > p.y) ? 1 : -1;
     shift = p.y == q.y;
   }
   else {
-    // Horizontal line
+    // Horizontal line//水平线
     p.x += (q.x > p.x) ? 1 : -1;
     shift = p.x == q.x;
   }
@@ -89,7 +90,7 @@ void shorten_tail() {
   }
 }
 
-// The food is on a line
+// The food is on a line//食物在排队
 inline bool food_on_line() {
   LOOP_L_N(n, sdat.head_ind) {
     pos_t &p = sdat.snake_tail[n], &q = sdat.snake_tail[n + 1];
@@ -103,7 +104,7 @@ inline bool food_on_line() {
   return false;
 }
 
-// Add a new food blob
+// Add a new food blob//添加一个新的食物团
 void food_reset() {
   do {
     sdat.foodx = random(0, GAME_W);
@@ -111,7 +112,7 @@ void food_reset() {
   } while (food_on_line());
 }
 
-// Turn the snake cw or ccw
+// Turn the snake cw or ccw//将蛇顺时针或逆时针转动
 inline void turn_snake(const bool cw) {
   sdat.snake_dir += cw ? 1 : -1;
   sdat.snake_dir &= 0x03;
@@ -120,56 +121,56 @@ inline void turn_snake(const bool cw) {
   sdat.snake_tail[sdat.head_ind].y = FTOB(sdat.snakey);
 }
 
-// Reset the snake for a new game
+// Reset the snake for a new game//为新游戏重置蛇
 void snake_reset() {
-  // Init the head and velocity
+  // Init the head and velocity//初始头部和速度
   sdat.snakex = BTOF(1);
   sdat.snakey = BTOF(GAME_H / 2);
-  //snakev = FTOP(0.25);
+  //snakev = FTOP(0.25);//蛇毒=FTOP（0.25）；
 
-  // Init the tail with a cw turn
+  // Init the tail with a cw turn//以顺时针旋转的方式初始化尾部
   sdat.snake_dir = 0;
   sdat.head_ind = 0;
   sdat.snake_tail[0].x = 0;
   sdat.snake_tail[0].y = GAME_H / 2;
   turn_snake(true);
 
-  // Clear food flag
+  // Clear food flag//清粮旗
   sdat.food_cnt = 5;
 
-  // Clear the controls
+  // Clear the controls//清除控件
   ui.encoderPosition = 0;
   sdat.old_encoder = 0;
 }
 
-// Check if head segment overlaps another
+// Check if head segment overlaps another//检查头部节段是否与另一个重叠
 bool snake_overlap() {
-  // 4 lines must exist before a collision is possible
+  // 4 lines must exist before a collision is possible//在可能发生碰撞之前，必须存在4条线
   if (sdat.head_ind < 4) return false;
-  // Is the last segment crossing any others?
+  // Is the last segment crossing any others?//最后一段是否与其他段交叉？
   const pos_t &h1 = sdat.snake_tail[sdat.head_ind - 1], &h2 = sdat.snake_tail[sdat.head_ind];
-  // VERTICAL head segment?
+  // VERTICAL head segment?//垂直头段？
   if (h1.x == h2.x) {
-    // Loop from oldest to segment two away from head
+    // Loop from oldest to segment two away from head//从最老的环到离头部第二段
     LOOP_L_N(n, sdat.head_ind - 2) {
-      // Segment p to q
+      // Segment p to q//p至q段
       const pos_t &p = sdat.snake_tail[n], &q = sdat.snake_tail[n + 1];
       if (p.x != q.x) {
-        // Crossing horizontal segment
+        // Crossing horizontal segment//交叉水平段
         if (WITHIN(h1.x, _MIN(p.x, q.x), _MAX(p.x, q.x)) && (h1.y <= p.y) == (h2.y >= p.y)) return true;
-      } // Overlapping vertical segment
+      } // Overlapping vertical segment//重叠垂直段
       else if (h1.x == p.x && _MIN(h1.y, h2.y) <= _MAX(p.y, q.y) && _MAX(h1.y, h2.y) >= _MIN(p.y, q.y)) return true;
     }
   }
   else {
-    // Loop from oldest to segment two away from head
+    // Loop from oldest to segment two away from head//从最老的环到离头部第二段
     LOOP_L_N(n, sdat.head_ind - 2) {
-      // Segment p to q
+      // Segment p to q//p至q段
       const pos_t &p = sdat.snake_tail[n], &q = sdat.snake_tail[n + 1];
       if (p.y != q.y) {
-        // Crossing vertical segment
+        // Crossing vertical segment//交叉垂直段
         if (WITHIN(h1.y, _MIN(p.y, q.y), _MAX(p.y, q.y)) && (h1.x <= p.x) == (h2.x >= p.x)) return true;
-      } // Overlapping horizontal segment
+      } // Overlapping horizontal segment//重叠水平段
       else if (h1.y == p.y && _MIN(h1.x, h2.x) <= _MAX(p.x, q.x) && _MAX(h1.x, h2.x) >= _MIN(p.x, q.x)) return true;
     }
   }
@@ -177,10 +178,10 @@ bool snake_overlap() {
 }
 
 void SnakeGame::game_screen() {
-  // Run the snake logic
-  if (game_frame()) do {    // Run logic twice for finer resolution
+  // Run the snake logic//按部就班
+  if (game_frame()) do {    // Run logic twice for finer resolution//运行逻辑两次以获得更高的分辨率
 
-    // Move the snake's head one unit in the current direction
+    // Move the snake's head one unit in the current direction//将蛇头沿当前方向移动一个单位
     const int8_t oldx = FTOB(sdat.snakex), oldy = FTOB(sdat.snakey);
     switch (sdat.snake_dir) {
       case 0: sdat.snakey -= snakev; break;
@@ -190,19 +191,19 @@ void SnakeGame::game_screen() {
     }
     const int8_t x = FTOB(sdat.snakex), y = FTOB(sdat.snakey);
 
-    // If movement took place...
+    // If movement took place...//如果运动发生了。。。
     if (oldx != x || oldy != y) {
 
       if (!WITHIN(x, 0, GAME_W - 1) || !WITHIN(y, 0, GAME_H - 1)) {
-        game_state = 0; // Game Over
-        _BUZZ(400, 40); // Bzzzt!
-        break;          // ...out of do-while
+        game_state = 0; // Game Over//游戏结束
+        _BUZZ(400, 40); // Bzzzt!//Bzzzt！
+        break;          // ...out of do-while//…暂时不行
       }
 
       sdat.snake_tail[sdat.head_ind].x = x;
       sdat.snake_tail[sdat.head_ind].y = y;
 
-      // Change snake direction if set
+      // Change snake direction if set//更改蛇行方向（如果已设置）
       const int8_t enc = int8_t(ui.encoderPosition), diff = enc - sdat.old_encoder;
       if (diff) {
         sdat.old_encoder = enc;
@@ -211,12 +212,12 @@ void SnakeGame::game_screen() {
 
       if (sdat.food_cnt) --sdat.food_cnt; else shorten_tail();
 
-      // Did the snake collide with itself or go out of bounds?
+      // Did the snake collide with itself or go out of bounds?//那条蛇是与自己相撞还是越界了？
       if (snake_overlap()) {
-        game_state = 0; // Game Over
-        _BUZZ(400, 40); // Bzzzt!
+        game_state = 0; // Game Over//游戏结束
+        _BUZZ(400, 40); // Bzzzt!//Bzzzt！
       }
-      // Is the snake at the food?
+      // Is the snake at the food?//蛇在吃东西吗？
       else if (x == sdat.foodx && y == sdat.foody) {
         _BUZZ(5, 220);
         _BUZZ(5, 280);
@@ -230,16 +231,16 @@ void SnakeGame::game_screen() {
 
   u8g.setColorIndex(1);
 
-  // Draw Score
+  // Draw Score//平局
   if (PAGE_UNDER(HEADER_H)) lcd_put_int(0, HEADER_H - 1, score);
 
-  // DRAW THE PLAYFIELD BORDER
+  // DRAW THE PLAYFIELD BORDER//绘制运动场边界
   u8g.drawFrame(BOARD_L - 2, BOARD_T - 2, BOARD_R - BOARD_L + 4, BOARD_B - BOARD_T + 4);
 
-  // Draw the snake (tail)
+  // Draw the snake (tail)//画蛇（尾巴）
   #if SNAKE_WH < 2
 
-    // At this scale just draw a line
+    // At this scale just draw a line//按这个比例画一条线
     LOOP_L_N(n, sdat.head_ind) {
       const pos_t &p = sdat.snake_tail[n], &q = sdat.snake_tail[n + 1];
       if (p.x == q.x) {
@@ -255,7 +256,7 @@ void SnakeGame::game_screen() {
 
   #elif SNAKE_WH == 2
 
-    // At this scale draw two lines
+    // At this scale draw two lines//按这个比例画两条线
     LOOP_L_N(n, sdat.head_ind) {
       const pos_t &p = sdat.snake_tail[n], &q = sdat.snake_tail[n + 1];
       if (p.x == q.x) {
@@ -274,7 +275,7 @@ void SnakeGame::game_screen() {
 
   #else
 
-    // Draw a series of boxes
+    // Draw a series of boxes//画一系列的方框
     LOOP_L_N(n, sdat.head_ind) {
       const pos_t &p = sdat.snake_tail[n], &q = sdat.snake_tail[n + 1];
       if (p.x == q.x) {
@@ -299,7 +300,7 @@ void SnakeGame::game_screen() {
 
   #endif
 
-  // Draw food
+  // Draw food//吸取食物
   const int8_t fy = GAMEY(sdat.foody);
   if (PAGE_CONTAINS(fy, fy + FOOD_WH - 1)) {
     const int8_t fx = GAMEX(sdat.foodx);
@@ -307,17 +308,17 @@ void SnakeGame::game_screen() {
     if (FOOD_WH == 5) u8g.drawPixel(fx + 2, fy + 2);
   }
 
-  // Draw GAME OVER
+  // Draw GAME OVER//平局
   if (!game_state) draw_game_over();
 
-  // A click always exits this game
+  // A click always exits this game//单击始终退出此游戏
   if (ui.use_click()) exit_game();
 }
 
 void SnakeGame::enter_game() {
-  init_game(1, game_screen); // 1 = Game running
+  init_game(1, game_screen); // 1 = Game running//1=比赛跑步
   snake_reset();
   food_reset();
 }
 
-#endif // MARLIN_SNAKE
+#endif // MARLIN_SNAKE//马林蛇

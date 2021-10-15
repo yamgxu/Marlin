@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -23,7 +24,7 @@
 
 #include "../DGUSDisplayDef.h"
 
-//#define DGUS_MKS_RUNOUT_SENSOR
+//#define DGUS_MKS_RUNOUT_SENSOR//#定义DGUS_MKS_跳动传感器
 
 #define LOGO_TIME_DELAY TERN(USE_MKS_GREEN_UI, 8000, 1500)
 
@@ -42,13 +43,13 @@ extern float    ZOffset_distance;
 extern float    mesh_adj_distance;
 extern float    Z_distance;
 
-//extern struct { uint16_t h, m, s; } dgus_time;
+//extern struct { uint16_t h, m, s; } dgus_time;//外部结构{uint16_t h，m，s；}dgus_时间；
 
 extern xy_int_t mks_corner_offsets[5];
 extern xyz_int_t mks_park_pos;
 extern celsius_t mks_min_extrusion_temp;
 
-void MKS_reset_settings(); // Restore persistent settings to defaults
+void MKS_reset_settings(); // Restore persistent settings to defaults//将永久设置恢复为默认值
 
 void MKS_pause_print_move();
 void MKS_resume_print_move();
@@ -84,9 +85,9 @@ typedef enum {
 } EX_STATUS_DEF;
 
 typedef struct {
-  //uint8_t ex_change_flag:1;
-  //uint8_t ex_heat_flag:1;
-  uint8_t ex_load_unload_flag:1;  //0:unload  1:load
+  //uint8_t ex_change_flag:1;//uint8 EXU change标志：1；
+  //uint8_t ex_heat_flag:1;//uint8外部加热标志：1；
+  uint8_t ex_load_unload_flag:1;  //0:unload  1:load//0:卸载1:加载
   EX_STATUS_DEF ex_status;
   uint32_t ex_tick_start;
   uint32_t ex_tick_end;
@@ -141,9 +142,9 @@ enum DGUSLCD_Screens : uint8_t {
     DGUSLCD_SCREEN_SDPRINTTUNE          =  17,
 
     MKSLCD_SCREEN_BOOT                  =  33,
-    MKSLCD_SCREEN_HOME                  =  60,   // MKS main page
-    MKSLCD_SCREEN_SETTING               =  62,   // MKS Setting page / no wifi whit
-    MKSLCD_SCREEM_TOOL                  =  64,   // MKS Tool page
+    MKSLCD_SCREEN_HOME                  =  60,   // MKS main page//MKS主页
+    MKSLCD_SCREEN_SETTING               =  62,   // MKS Setting page / no wifi whit//MKS设置页面/无wifi whit
+    MKSLCD_SCREEM_TOOL                  =  64,   // MKS Tool page//MKS工具页
     MKSLCD_SCREEN_EXTRUDE_P1            =  75,
     MKSLCD_SCREEN_EXTRUDE_P2            =  77,
     MKSLCD_SCREEN_LEVEL                 =  73,
@@ -193,9 +194,9 @@ enum DGUSLCD_Screens : uint8_t {
     DGUSLCD_SCREEN_SDPRINTTUNE          =  17,
 
     MKSLCD_SCREEN_BOOT                  =   0,
-    MKSLCD_SCREEN_HOME                  =   1,   // MKS main page
-    MKSLCD_SCREEN_SETTING               =   2,   // MKS Setting page / no wifi whit
-    MKSLCD_SCREEM_TOOL                  =   3,   // MKS Tool page
+    MKSLCD_SCREEN_HOME                  =   1,   // MKS main page//MKS主页
+    MKSLCD_SCREEN_SETTING               =   2,   // MKS Setting page / no wifi whit//MKS设置页面/无wifi whit
+    MKSLCD_SCREEM_TOOL                  =   3,   // MKS Tool page//MKS工具页
     MKSLCD_SCREEN_EXTRUDE_P1            =   4,
     MKSLCD_SCREEN_EXTRUDE_P2            =  11,
     MKSLCD_SCREEN_LEVEL                 =   5,
@@ -235,44 +236,44 @@ enum DGUSLCD_Screens : uint8_t {
   #endif
 
   DGUSLCD_SCREEN_CONFIRM                = 240,
-  DGUSLCD_SCREEN_KILL                   = 250, ///< Kill Screen. Must always be 250 (to be able to display "Error wrong LCD Version")
+  DGUSLCD_SCREEN_KILL                   = 250, ///< Kill Screen. Must always be 250 (to be able to display "Error wrong LCD Version")///<Kill屏幕。必须始终为250（才能显示“错误LCD版本”）
   DGUSLCD_SCREEN_WAITING                = 251,
-  DGUSLCD_SCREEN_POPUP                  = 252, ///< special target, popup screen will also return this code to say "return to previous screen"
+  DGUSLCD_SCREEN_POPUP                  = 252, ///< special target, popup screen will also return this code to say "return to previous screen"///<特殊目标，弹出屏幕也将返回此代码，显示“返回上一屏幕”
   DGUSLCD_SCREEN_UNUSED                 = 255
 };
 
 
-// Place for status messages.
+// Place for status messages.//放置状态消息。
 constexpr uint16_t VP_M117 = 0x7020;
 constexpr uint8_t VP_M117_LEN = 0x20;
 
-// Heater status
+// Heater status//加热器状态
 constexpr uint16_t VP_E0_STATUS = 0x3410;
 constexpr uint16_t VP_E1_STATUS = 0x3412;
-//constexpr uint16_t VP_E2_STATUS = 0x3414;
-//constexpr uint16_t VP_E3_STATUS = 0x3416;
-//constexpr uint16_t VP_E4_STATUS = 0x3418;
-//constexpr uint16_t VP_E5_STATUS = 0x341A;
+//constexpr uint16_t VP_E2_STATUS = 0x3414;//constexpr uint16\u t VP\u E2\u STATUS=0x3414；
+//constexpr uint16_t VP_E3_STATUS = 0x3416;//constexpr uint16\u t VP\u E3\u STATUS=0x3416；
+//constexpr uint16_t VP_E4_STATUS = 0x3418;//constexpr uint16\u t VP\u E4\u STATUS=0x3418；
+//constexpr uint16_t VP_E5_STATUS = 0x341A;//constexpr uint16\u t VP\u E5\u状态=0x341A；
 constexpr uint16_t VP_MOVE_OPTION = 0x3500;
 
-// // PIDs
-// constexpr uint16_t VP_E0_PID_P = 0x3700; // at the moment , 2 byte unsigned int , 0~1638.4
-// constexpr uint16_t VP_E0_PID_I = 0x3702;
-// constexpr uint16_t VP_E0_PID_D = 0x3704;
-// constexpr uint16_t VP_E1_PID_P = 0x3706; // at the moment , 2 byte unsigned int , 0~1638.4
-// constexpr uint16_t VP_E1_PID_I = 0x3708;
-// constexpr uint16_t VP_E1_PID_D = 0x370A;
-// constexpr uint16_t VP_BED_PID_P = 0x3710;
-// constexpr uint16_t VP_BED_PID_I = 0x3712;
-// constexpr uint16_t VP_BED_PID_D = 0x3714;
+// // PIDs////PIDs
+// constexpr uint16_t VP_E0_PID_P = 0x3700; // at the moment , 2 byte unsigned int , 0~1638.4//constexpr uint16\u t VP\u E0\u PID\u P=0x3700；//目前，2字节无符号整数，0~1638.4
+// constexpr uint16_t VP_E0_PID_I = 0x3702;//constexpr uint16\u t VP\u E0\u PID\u I=0x3702；
+// constexpr uint16_t VP_E0_PID_D = 0x3704;//constexpr uint16\u t VP\u E0\u PID\u D=0x3704；
+// constexpr uint16_t VP_E1_PID_P = 0x3706; // at the moment , 2 byte unsigned int , 0~1638.4//constexpr uint16\u t VP\u E1\u PID\u P=0x3706；//目前，2字节无符号整数，0~1638.4
+// constexpr uint16_t VP_E1_PID_I = 0x3708;//constexpr uint16\u t VP\u E1\u PID\u I=0x3708；
+// constexpr uint16_t VP_E1_PID_D = 0x370A;//constexpr uint16\u t VP\u E1\u PID\u D=0x370A；
+// constexpr uint16_t VP_BED_PID_P = 0x3710;//constexpr uint16\u t VP\u BED\u PID\u P=0x3710；
+// constexpr uint16_t VP_BED_PID_I = 0x3712;//constexpr uint16\u t VP\u BED\u PID\u I=0x3712；
+// constexpr uint16_t VP_BED_PID_D = 0x3714;//constexpr uint16\u t VP\u BED\u PID\u D=0x3714；
 
-// Wating screen status
+// Wating screen status//等待屏幕状态
 constexpr uint16_t VP_WAITING_STATUS = 0x3800;
 
-// SPs for certain variables...
-// located at 0x5000 and up
-// Not used yet!
-// This can be used e.g to make controls / data display invisible
+// SPs for certain variables...//某些变量的SPs。。。
+// located at 0x5000 and up//位于0x5000及以上
+// Not used yet!//还没用！
+// This can be used e.g to make controls / data display invisible//这可用于例如使控件/数据显示不可见
 constexpr uint16_t SP_T_E0_Is     = 0x5000;
 constexpr uint16_t SP_T_E0_Set    = 0x5010;
 constexpr uint16_t SP_T_E1_Is     = 0x5020;
@@ -288,7 +289,7 @@ constexpr uint16_t SP_T_Bed_Set   = 0x5040;
 #if ENABLED(MKS_FINSH)
   /* -------------------------------0x1000-0x1FFF------------------------------- */
   constexpr uint16_t VP_MSGSTR1                       = 0x1100;
-  constexpr uint8_t  VP_MSGSTR1_LEN                   = 0x20;  // might be more place for it...
+  constexpr uint8_t  VP_MSGSTR1_LEN                   = 0x20;  // might be more place for it...//可能是更适合它的地方。。。
   constexpr uint16_t VP_MSGSTR2                       = 0x1140;
   constexpr uint8_t  VP_MSGSTR2_LEN                   = 0x20;
   constexpr uint16_t VP_MSGSTR3                       = 0x1180;
@@ -297,45 +298,45 @@ constexpr uint16_t SP_T_Bed_Set   = 0x5040;
   constexpr uint8_t  VP_MSGSTR4_LEN                   = 0x20;
 
   constexpr uint16_t VP_MARLIN_VERSION                = 0x1A00;
-  constexpr uint8_t VP_MARLIN_VERSION_LEN             = 16;       // there is more space on the display, if needed.
+  constexpr uint8_t VP_MARLIN_VERSION_LEN             = 16;       // there is more space on the display, if needed.//如果需要，显示屏上有更多空间。
 
 
   constexpr uint16_t VP_SCREENCHANGE_ASK              = 0x1500;
-  constexpr uint16_t VP_SCREENCHANGE                  = 0x1501;   // Key-Return button to new menu pressed. Data contains target screen in low byte and info in high byte.
-  constexpr uint16_t VP_TEMP_ALL_OFF                  = 0x1502;   // Turn all heaters off. Value arbitrary ;)=
-  constexpr uint16_t VP_SCREENCHANGE_WHENSD           = 0x1503;   // "Print" Button touched -- go only there if there is an SD Card.
-  constexpr uint16_t VP_CONFIRMED                     = 0x1510;   // OK on confirm screen.
+  constexpr uint16_t VP_SCREENCHANGE                  = 0x1501;   // Key-Return button to new menu pressed. Data contains target screen in low byte and info in high byte.//按下返回新菜单的按键。数据包含低字节的目标屏幕和高字节的信息。
+  constexpr uint16_t VP_TEMP_ALL_OFF                  = 0x1502;   // Turn all heaters off. Value arbitrary ;)=//关掉所有加热器。任意值；）=
+  constexpr uint16_t VP_SCREENCHANGE_WHENSD           = 0x1503;   // "Print" Button touched -- go only there if there is an SD Card.//点击“打印”按钮——只有在有SD卡的情况下才去那里。
+  constexpr uint16_t VP_CONFIRMED                     = 0x1510;   // OK on confirm screen.//确认屏幕上的OK。
 
   constexpr uint16_t VP_BACK_PAGE                     = 0x1600;
   constexpr uint16_t VP_SETTINGS                      = 0x1620;
-  // Power loss recovery
+  // Power loss recovery//功率损耗恢复
   constexpr uint16_t VP_POWER_LOSS_RECOVERY           = 0x1680;
   /* -------------------------------0x2000-0x2FFF------------------------------- */
-  // Temperatures.
-  constexpr uint16_t VP_T_E0_Is                       = 0x2000;   // 4 Byte Integer
-  constexpr uint16_t VP_T_E0_Set                      = 0x2004;   // 2 Byte Integer
-  constexpr uint16_t VP_T_E1_Is                       = 0x2008;   // 4 Byte Integer
-  constexpr uint16_t VP_T_E1_Set                      = 0x200B;   // 2 Byte Integer
-  constexpr uint16_t VP_T_E2_Is                       = 0x2010;   // 4 Byte Integer
-  constexpr uint16_t VP_T_E2_Set                      = 0x2014;   // 2 Byte Integer
-  constexpr uint16_t VP_T_E3_Is                       = 0x2018;   // 4 Byte Integer
-  constexpr uint16_t VP_T_E3_Set                      = 0x201B;   // 2 Byte Integer
-  constexpr uint16_t VP_T_E4_Is                       = 0x2020;   // 4 Byte Integer
-  constexpr uint16_t VP_T_E4_Set                      = 0x2024;   // 2 Byte Integer
-  constexpr uint16_t VP_T_E5_Is                       = 0x2028;   // 4 Byte Integer
-  constexpr uint16_t VP_T_E5_Set                      = 0x202B;   // 2 Byte Integer
-  constexpr uint16_t VP_T_E6_Is                       = 0x2030;   // 4 Byte Integer
-  constexpr uint16_t VP_T_E6_Set                      = 0x2034;   // 2 Byte Integer
-  constexpr uint16_t VP_T_E7_Is                       = 0x2038;   // 4 Byte Integer
-  constexpr uint16_t VP_T_E7_Set                      = 0x203B;   // 2 Byte Integer
+  // Temperatures.//温度。
+  constexpr uint16_t VP_T_E0_Is                       = 0x2000;   // 4 Byte Integer//4字节整数
+  constexpr uint16_t VP_T_E0_Set                      = 0x2004;   // 2 Byte Integer//2字节整数
+  constexpr uint16_t VP_T_E1_Is                       = 0x2008;   // 4 Byte Integer//4字节整数
+  constexpr uint16_t VP_T_E1_Set                      = 0x200B;   // 2 Byte Integer//2字节整数
+  constexpr uint16_t VP_T_E2_Is                       = 0x2010;   // 4 Byte Integer//4字节整数
+  constexpr uint16_t VP_T_E2_Set                      = 0x2014;   // 2 Byte Integer//2字节整数
+  constexpr uint16_t VP_T_E3_Is                       = 0x2018;   // 4 Byte Integer//4字节整数
+  constexpr uint16_t VP_T_E3_Set                      = 0x201B;   // 2 Byte Integer//2字节整数
+  constexpr uint16_t VP_T_E4_Is                       = 0x2020;   // 4 Byte Integer//4字节整数
+  constexpr uint16_t VP_T_E4_Set                      = 0x2024;   // 2 Byte Integer//2字节整数
+  constexpr uint16_t VP_T_E5_Is                       = 0x2028;   // 4 Byte Integer//4字节整数
+  constexpr uint16_t VP_T_E5_Set                      = 0x202B;   // 2 Byte Integer//2字节整数
+  constexpr uint16_t VP_T_E6_Is                       = 0x2030;   // 4 Byte Integer//4字节整数
+  constexpr uint16_t VP_T_E6_Set                      = 0x2034;   // 2 Byte Integer//2字节整数
+  constexpr uint16_t VP_T_E7_Is                       = 0x2038;   // 4 Byte Integer//4字节整数
+  constexpr uint16_t VP_T_E7_Set                      = 0x203B;   // 2 Byte Integer//2字节整数
 
-  constexpr uint16_t VP_T_Bed_Is                      = 0x2040;   // 4 Byte Integer
-  constexpr uint16_t VP_T_Bed_Set                     = 0x2044;   // 2 Byte Integer
+  constexpr uint16_t VP_T_Bed_Is                      = 0x2040;   // 4 Byte Integer//4字节整数
+  constexpr uint16_t VP_T_Bed_Set                     = 0x2044;   // 2 Byte Integer//2字节整数
 
   constexpr uint16_t VP_Min_EX_T_E                    = 0x2100;
 
-  constexpr uint16_t VP_Flowrate_E0                   = 0x2200;   // 2 Byte Integer
-  constexpr uint16_t VP_Flowrate_E1                   = 0x2202;   // 2 Byte Integer
+  constexpr uint16_t VP_Flowrate_E0                   = 0x2200;   // 2 Byte Integer//2字节整数
+  constexpr uint16_t VP_Flowrate_E1                   = 0x2202;   // 2 Byte Integer//2字节整数
   constexpr uint16_t VP_Flowrate_E2                   = 0x2204;
   constexpr uint16_t VP_Flowrate_E3                   = 0x2206;
   constexpr uint16_t VP_Flowrate_E4                   = 0x2208;
@@ -343,7 +344,7 @@ constexpr uint16_t SP_T_Bed_Set   = 0x5040;
   constexpr uint16_t VP_Flowrate_E6                   = 0x220C;
   constexpr uint16_t VP_Flowrate_E7                   = 0x220E;
 
-  // Move
+  // Move//移动
   constexpr uint16_t VP_MOVE_X                        = 0x2300;
   constexpr uint16_t VP_MOVE_Y                        = 0x2302;
   constexpr uint16_t VP_MOVE_Z                        = 0x2304;
@@ -362,7 +363,7 @@ constexpr uint16_t SP_T_Bed_Set   = 0x5040;
   constexpr uint16_t VP_Y_HOME                        = 0x2338;
   constexpr uint16_t VP_Z_HOME                        = 0x233A;
 
-  // Fan Control Buttons , switch between "off" and "on"
+  // Fan Control Buttons , switch between "off" and "on"//风扇控制按钮，在“关闭”和“打开”之间切换
   constexpr uint16_t VP_FAN0_CONTROL                  = 0x2350;
   constexpr uint16_t VP_FAN1_CONTROL                  = 0x2352;
   constexpr uint16_t VP_FAN2_CONTROL                  = 0x2354;
@@ -377,7 +378,7 @@ constexpr uint16_t SP_T_Bed_Set   = 0x5040;
   constexpr uint16_t VP_LANGUAGE_CHANGE4              = 0x2388;
   constexpr uint16_t VP_LANGUAGE_CHANGE5              = 0x238A;
 
-  // LEVEL
+  // LEVEL//水平仪
   constexpr uint16_t VP_LEVEL_POINT                   = 0x2400;
   constexpr uint16_t VP_MESH_LEVEL_POINT              = 0x2410;
   constexpr uint16_t VP_MESH_LEVEL_ADJUST             = 0x2412;
@@ -391,7 +392,7 @@ constexpr uint16_t SP_T_Bed_Set   = 0x5040;
   constexpr uint16_t VP_E0_FILAMENT_LOAD_UNLOAD       = 0x2500;
   constexpr uint16_t VP_E1_FILAMENT_LOAD_UNLOAD       = 0x2504;
   constexpr uint16_t VP_LOAD_Filament                 = 0x2508;
-  // constexpr uint16_t VP_LOAD_UNLOAD_Cancle            = 0x250A;
+  // constexpr uint16_t VP_LOAD_UNLOAD_Cancle            = 0x250A;//constexpr uint16\u t VP\u LOAD\u UNLOAD\u Cancle=0x250A；
   constexpr uint16_t VP_UNLOAD_Filament               = 0x250B;
   constexpr uint16_t VP_Filament_distance             = 0x2600;
   constexpr uint16_t VP_Filament_speed                = 0x2604;
@@ -401,20 +402,20 @@ constexpr uint16_t SP_T_Bed_Set   = 0x5040;
   constexpr uint16_t VP_E1_Filament_speed             = 0x2616;
   constexpr uint16_t VP_E1_MIN_EX_T                   = 0x2618;
 
-  constexpr uint16_t VP_Fan0_Percentage               = 0x2700;   // 2 Byte Integer (0..100)
-  constexpr uint16_t VP_Fan1_Percentage               = 0x2702;   // 2 Byte Integer (0..100)
-  constexpr uint16_t VP_Fan2_Percentage               = 0x2704;   // 2 Byte Integer (0..100)
-  constexpr uint16_t VP_Fan3_Percentage               = 0x2706;   // 2 Byte Integer (0..100)
-  constexpr uint16_t VP_Feedrate_Percentage           = 0x2708;   // 2 Byte Integer (0..100)
+  constexpr uint16_t VP_Fan0_Percentage               = 0x2700;   // 2 Byte Integer (0..100)//2字节整数（0..100）
+  constexpr uint16_t VP_Fan1_Percentage               = 0x2702;   // 2 Byte Integer (0..100)//2字节整数（0..100）
+  constexpr uint16_t VP_Fan2_Percentage               = 0x2704;   // 2 Byte Integer (0..100)//2字节整数（0..100）
+  constexpr uint16_t VP_Fan3_Percentage               = 0x2706;   // 2 Byte Integer (0..100)//2字节整数（0..100）
+  constexpr uint16_t VP_Feedrate_Percentage           = 0x2708;   // 2 Byte Integer (0..100)//2字节整数（0..100）
 
-  // Fan status
+  // Fan status//风扇状态
   constexpr uint16_t VP_FAN0_STATUS                   = 0x2710;
   constexpr uint16_t VP_FAN1_STATUS                   = 0x2712;
   constexpr uint16_t VP_FAN2_STATUS                   = 0x2714;
   constexpr uint16_t VP_FAN3_STATUS                   = 0x2716;
 
-  // Step per mm
-  constexpr uint16_t VP_X_STEP_PER_MM                 = 0x2900;   // at the moment , 2 byte unsigned int , 0~1638.4
+  // Step per mm//每毫米步数
+  constexpr uint16_t VP_X_STEP_PER_MM                 = 0x2900;   // at the moment , 2 byte unsigned int , 0~1638.4//目前，2字节无符号整数，0~1638.4
   constexpr uint16_t VP_Y_STEP_PER_MM                 = 0x2904;
   constexpr uint16_t VP_Z_STEP_PER_MM                 = 0x2908;
   constexpr uint16_t VP_E0_STEP_PER_MM                = 0x2910;
@@ -444,21 +445,21 @@ constexpr uint16_t SP_T_Bed_Set   = 0x5040;
   constexpr uint16_t VP_ACC_SPEED                     = 0x2A48;
 
   /* -------------------------------0x3000-0x3FFF------------------------------- */
-  // Buttons on the SD-Card File listing.
-  constexpr uint16_t VP_SD_ScrollEvent                = 0x3020; // Data: 0 for "up a directory", numbers are the amount to scroll, e.g -1 one up, 1 one down
-  constexpr uint16_t VP_SD_FileSelected               = 0x3022; // Number of file field selected.
-  constexpr uint16_t VP_SD_FileSelectConfirm          = 0x3024; // (This is a virtual VP and emulated by the Confirm Screen when a file has been confirmed)
-  constexpr uint16_t VP_SD_ResumePauseAbort           = 0x3026; // Resume(Data=0), Pause(Data=1), Abort(Data=2) SD Card prints
-  constexpr uint16_t VP_SD_AbortPrintConfirmed        = 0x3028; // Abort print confirmation (virtual, will be injected by the confirm dialog)
+  // Buttons on the SD-Card File listing.//SD卡文件列表上的按钮。
+  constexpr uint16_t VP_SD_ScrollEvent                = 0x3020; // Data: 0 for "up a directory", numbers are the amount to scroll, e.g -1 one up, 1 one down//数据：0表示“向上移动目录”，数字是要滚动的数量，例如-1向上移动，1向下移动
+  constexpr uint16_t VP_SD_FileSelected               = 0x3022; // Number of file field selected.//所选文件字段的数目。
+  constexpr uint16_t VP_SD_FileSelectConfirm          = 0x3024; // (This is a virtual VP and emulated by the Confirm Screen when a file has been confirmed)//（这是一个虚拟VP，在确认文件后由确认屏幕模拟）
+  constexpr uint16_t VP_SD_ResumePauseAbort           = 0x3026; // Resume(Data=0), Pause(Data=1), Abort(Data=2) SD Card prints//恢复（数据=0）、暂停（数据=1）、中止（数据=2）SD卡打印
+  constexpr uint16_t VP_SD_AbortPrintConfirmed        = 0x3028; // Abort print confirmation (virtual, will be injected by the confirm dialog)//中止打印确认（虚拟，将由确认对话框注入）
   constexpr uint16_t VP_SD_Print_Setting              = 0x3040;
-  constexpr uint16_t VP_SD_Print_LiveAdjustZ          = 0x3050; // Data: 0 down, 1 up
+  constexpr uint16_t VP_SD_Print_LiveAdjustZ          = 0x3050; // Data: 0 down, 1 up//数据：0向下，1向上
   constexpr uint16_t VP_SD_Print_LiveAdjustZ_Confirm  = 0x3060;
   constexpr uint16_t VP_ZOffset_Distance              = 0x3070;
   constexpr uint16_t VP_ZOffset_DE_DIS                = 0x3080;
   constexpr uint16_t VP_SD_FileSelect_Back            = 0x3082;
-  // SDCard File Listing
-  constexpr uint16_t VP_SD_FileName_LEN = 32;                   // LEN is shared for all entries.
-  constexpr uint16_t DGUS_SD_FILESPERSCREEN = 10;               // FIXME move that info to the display and read it from there.
+  // SDCard File Listing//SD卡文件列表
+  constexpr uint16_t VP_SD_FileName_LEN = 32;                   // LEN is shared for all entries.//所有条目都共享LEN。
+  constexpr uint16_t DGUS_SD_FILESPERSCREEN = 10;               // FIXME move that info to the display and read it from there.//FIXME将该信息移动到显示屏上并从那里读取。
   constexpr uint16_t VP_SD_FileName0                  = 0x3100;
   constexpr uint16_t VP_SD_FileName1                  = 0x3120;
   constexpr uint16_t VP_SD_FileName2                  = 0x3140;
@@ -474,14 +475,14 @@ constexpr uint16_t SP_T_Bed_Set   = 0x5040;
   constexpr uint16_t VP_SD_Print_Baby                 = 0x32B0;
   constexpr uint16_t VP_SD_Print_Filename             = 0x32C0;
 
-  // X Y Z Point
-  constexpr uint16_t VP_XPos = 0x3300;  // 4 Byte Fixed point number; format xxx.yy
-  constexpr uint16_t VP_YPos = 0x3302;  // 4 Byte Fixed point number; format xxx.yy
-  constexpr uint16_t VP_ZPos = 0x3304;  // 4 Byte Fixed point number; format xxx.yy
-  constexpr uint16_t VP_EPos = 0x3306;  // 4 Byte Fixed point number; format xxx.yy
+  // X Y Z Point//X Y Z点
+  constexpr uint16_t VP_XPos = 0x3300;  // 4 Byte Fixed point number; format xxx.yy//4字节固定点号；格式xxx.yy
+  constexpr uint16_t VP_YPos = 0x3302;  // 4 Byte Fixed point number; format xxx.yy//4字节固定点号；格式xxx.yy
+  constexpr uint16_t VP_ZPos = 0x3304;  // 4 Byte Fixed point number; format xxx.yy//4字节固定点号；格式xxx.yy
+  constexpr uint16_t VP_EPos = 0x3306;  // 4 Byte Fixed point number; format xxx.yy//4字节固定点号；格式xxx.yy
 
-  // Print
-  constexpr uint16_t VP_PrintProgress_Percentage      = 0x3330; // 2 Byte Integer (0..100)
+  // Print//印刷品
+  constexpr uint16_t VP_PrintProgress_Percentage      = 0x3330; // 2 Byte Integer (0..100)//2字节整数（0..100）
   constexpr uint16_t VP_PrintTime                     = 0x3340;
   constexpr uint16_t VP_PrintTime_LEN                 = 32;
   constexpr uint16_t VP_PrintAccTime                  = 0x3360;
@@ -520,11 +521,11 @@ constexpr uint16_t SP_T_Bed_Set   = 0x5040;
   constexpr uint16_t VP_PrintTime_M                   = 0x3502;
   constexpr uint16_t VP_PrintTime_S                   = 0x3504;
 
-  // PIDs
-  constexpr uint16_t VP_E0_PID_P = 0x3700; // at the moment , 2 byte unsigned int , 0~1638.4
+  // PIDs//皮德斯
+  constexpr uint16_t VP_E0_PID_P = 0x3700; // at the moment , 2 byte unsigned int , 0~1638.4//目前，2字节无符号整数，0~1638.4
   constexpr uint16_t VP_E0_PID_I = 0x3702;
   constexpr uint16_t VP_E0_PID_D = 0x3704;
-  constexpr uint16_t VP_E1_PID_P = 0x3706; // at the moment , 2 byte unsigned int , 0~1638.4
+  constexpr uint16_t VP_E1_PID_P = 0x3706; // at the moment , 2 byte unsigned int , 0~1638.4//目前，2字节无符号整数，0~1638.4
   constexpr uint16_t VP_E1_PID_I = 0x3708;
   constexpr uint16_t VP_E1_PID_D = 0x370A;
   constexpr uint16_t VP_BED_PID_P = 0x3710;
@@ -537,7 +538,7 @@ constexpr uint16_t SP_T_Bed_Set   = 0x5040;
   constexpr uint16_t VP_OFFSET_Y = 0x3728;
   constexpr uint16_t VP_OFFSET_Z = 0x372B;
 
-  // PID autotune
+  // PID autotune//PID自动调谐
   constexpr uint16_t VP_PID_AUTOTUNE_E0 = 0x3800;
   constexpr uint16_t VP_PID_AUTOTUNE_E1 = 0x3802;
   constexpr uint16_t VP_PID_AUTOTUNE_E2 = 0x3804;
@@ -545,7 +546,7 @@ constexpr uint16_t SP_T_Bed_Set   = 0x5040;
   constexpr uint16_t VP_PID_AUTOTUNE_E4 = 0x3808;
   constexpr uint16_t VP_PID_AUTOTUNE_E5 = 0x380A;
   constexpr uint16_t VP_PID_AUTOTUNE_BED = 0x380C;
-  // Calibrate Z
+  // Calibrate Z//校准Z
   constexpr uint16_t VP_Z_CALIBRATE = 0x3810;
 
   constexpr uint16_t VP_AutoTurnOffSw = 0x3812;
@@ -556,30 +557,30 @@ constexpr uint16_t SP_T_Bed_Set   = 0x5040;
   constexpr uint16_t VP_Z_PARK_POS = 0x3904;
 
   /* -------------------------------0x4000-0x4FFF------------------------------- */
-  // Heater Control Buttons , triged between "cool down" and "heat PLA" state
+  // Heater Control Buttons , triged between "cool down" and "heat PLA" state//加热器控制按钮，在“冷却”和“加热”状态之间触发
   constexpr uint16_t VP_E0_CONTROL = 0x4010;
   constexpr uint16_t VP_E1_CONTROL = 0x4012;
-  //constexpr uint16_t VP_E2_CONTROL = 0x2214;
-  //constexpr uint16_t VP_E3_CONTROL = 0x2216;
-  //constexpr uint16_t VP_E4_CONTROL = 0x2218;
-  //constexpr uint16_t VP_E5_CONTROL = 0x221A;
+  //constexpr uint16_t VP_E2_CONTROL = 0x2214;//constexpr uint16\u t VP\u E2\u CONTROL=0x2214；
+  //constexpr uint16_t VP_E3_CONTROL = 0x2216;//constexpr uint16\u t VP\u E3\u CONTROL=0x2216；
+  //constexpr uint16_t VP_E4_CONTROL = 0x2218;//constexpr uint16\u t VP\u E4\u CONTROL=0x2218；
+  //constexpr uint16_t VP_E5_CONTROL = 0x221A;//constexpr uint16_t VP_E5_CONTROL=0x221A；
   constexpr uint16_t VP_BED_CONTROL = 0x401C;
 
-  // Preheat
+  // Preheat//预热
   constexpr uint16_t VP_E0_BED_PREHEAT = 0x4020;
   constexpr uint16_t VP_E1_BED_PREHEAT = 0x4022;
-  //constexpr uint16_t VP_E2_BED_PREHEAT = 0x4024;
-  //constexpr uint16_t VP_E3_BED_PREHEAT = 0x4026;
-  //constexpr uint16_t VP_E4_BED_PREHEAT = 0x4028;
-  //constexpr uint16_t VP_E5_BED_PREHEAT = 0x402A;
+  //constexpr uint16_t VP_E2_BED_PREHEAT = 0x4024;//constexpr uint16\u t VP\u E2\u床层预热=0x4024；
+  //constexpr uint16_t VP_E3_BED_PREHEAT = 0x4026;//constexpr uint16\u t VP\u E3\u床层预热=0x4026；
+  //constexpr uint16_t VP_E4_BED_PREHEAT = 0x4028;//constexpr uint16\u t VP\u E4\u床层预热=0x4028；
+  //constexpr uint16_t VP_E5_BED_PREHEAT = 0x402A;//constexpr uint16\u t VP\u E5\u床层预热=0x402A；
 
-  // Filament load and unload
-  // constexpr uint16_t VP_E0_FILAMENT_LOAD_UNLOAD = 0x4030;
-  // constexpr uint16_t VP_E1_FILAMENT_LOAD_UNLOAD = 0x4032;
+  // Filament load and unload//灯丝装卸
+  // constexpr uint16_t VP_E0_FILAMENT_LOAD_UNLOAD = 0x4030;//constexpr uint16\u t VP\u E0\u灯丝加载和卸载=0x4030；
+  // constexpr uint16_t VP_E1_FILAMENT_LOAD_UNLOAD = 0x4032;//constexpr uint16\u t VP\u E1\u灯丝加载卸载=0x4032；
 
-  // Settings store , reset
+  // Settings store , reset//设置存储，重置
 
-  // Level data
+  // Level data//水平数据
   constexpr uint16_t VP_Level_Point_One_X              = 0x4100;
   constexpr uint16_t VP_Level_Point_One_Y              = 0x4102;
   constexpr uint16_t VP_Level_Point_Two_X              = 0x4104;
@@ -593,9 +594,9 @@ constexpr uint16_t SP_T_Bed_Set   = 0x5040;
 
 
   /* H43 Version */
-  constexpr uint16_t VP_MKS_H43_VERSION                = 0x4A00;   // MKS H43 V1.0.0
+  constexpr uint16_t VP_MKS_H43_VERSION                = 0x4A00;   // MKS H43 V1.0.0//MKS H43 V1.0.0
   constexpr uint16_t VP_MKS_H43_VERSION_LEN            = 16;
-  constexpr uint16_t VP_MKS_H43_UpdataVERSION          = 0x4A10;   // MKS H43 V1.0.0
+  constexpr uint16_t VP_MKS_H43_UpdataVERSION          = 0x4A10;   // MKS H43 V1.0.0//MKS H43 V1.0.0
   constexpr uint16_t VP_MKS_H43_UpdataVERSION_LEN      = 16;
 
   /* -------------------------------0x5000-0xFFFF------------------------------- */
@@ -709,4 +710,4 @@ constexpr uint16_t SP_T_Bed_Set   = 0x5040;
   constexpr uint16_t VP_Advance_Dis                   = 0x5130;
   constexpr uint16_t VP_TemperatureConfig_Dis         = 0x5390;
 
-#endif // MKS_FINSH
+#endif // MKS_FINSH//MKS_FINSH

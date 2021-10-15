@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -37,23 +38,23 @@
 #endif
 
 /*
-// Note that these are the "pins" that correspond to the analog inputs on the arduino mega.
-// These are not the same as the physical pin numbers
+// Note that these are the "pins" that correspond to the analog inputs on the arduino mega.//请注意，这些是与arduino mega上的模拟输入相对应的“引脚”。
+// These are not the same as the physical pin numbers//这些与物理pin码不同
   AD0 = 54;   AD1 = 55;   AD2 = 56;   AD3 = 57;
   AD4 = 58;   AD5 = 59;   AD6 = 60;   AD7 = 61;
   AD8 = 62;   AD9 = 63;   AD10 = 64;  AD11 = 65;
   AD12 = 66;  AD13 = 67;  AD14 = 68;  AD15 = 69;
 */
 
-//
-// Servos
-//
+////
+// Servos//伺服
+////
 #define SERVO0_PIN                             3
 #define SERVO1_PIN                             4
 #define SERVO2_PIN                             5
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_MIN_PIN                             14
 #define X_MAX_PIN                             15
 #define Y_MIN_PIN                             16
@@ -61,9 +62,9 @@
 #define Z_MIN_PIN                             23
 #define Z_MAX_PIN                             22
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                            55
 #define X_DIR_PIN                             54
 #define X_ENABLE_PIN                          60
@@ -84,25 +85,25 @@
 #define E1_DIR_PIN                            28
 #define E1_ENABLE_PIN                         27
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                             9  // Analog Input
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                             9  // Analog Input//模拟输入
 #define TEMP_1_PIN                            10
 #define TEMP_BED_PIN                          10
 #define TEMP_2_PIN                            11
 #define TEMP_3_PIN                            12
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #ifndef HEATER_0_PIN
-  #define HEATER_0_PIN                        10  // E0
+  #define HEATER_0_PIN                        10  // E0//E0
 #endif
 #ifndef HEATER_1_PIN
-  #define HEATER_1_PIN                         2  // E1
+  #define HEATER_1_PIN                         2  // E1//E1
 #endif
-#define HEATER_BED_PIN                         8  // HEAT-BED
+#define HEATER_BED_PIN                         8  // HEAT-BED//热床
 
 #ifndef FAN_PIN
   #define FAN_PIN                              9
@@ -118,22 +119,22 @@
 
 #define SSR_PIN                                6
 
-// SPI for Max6675 or Max31855 Thermocouple
+// SPI for Max6675 or Max31855 Thermocouple//Max6675或Max31855热电偶的SPI
 #if DISABLED(SDSUPPORT)
-  #define MAX6675_SS_PIN                      66  // Don't use 53 if using Display/SD card
+  #define MAX6675_SS_PIN                      66  // Don't use 53 if using Display/SD card//如果使用显示卡/SD卡，请不要使用53
 #else
-  #define MAX6675_SS_PIN                      66  // Don't use 49 (SD_DETECT_PIN)
+  #define MAX6675_SS_PIN                      66  // Don't use 49 (SD_DETECT_PIN)//不要使用49（SD_DETECT_引脚）
 #endif
 
-//
-// SD Support
-//
+////
+// SD Support//SD支持
+////
 #define SD_DETECT_PIN                         49
 #define SDSS                                  53
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 #define BEEPER_PIN                            29
 
 #if HAS_WIRED_LCD

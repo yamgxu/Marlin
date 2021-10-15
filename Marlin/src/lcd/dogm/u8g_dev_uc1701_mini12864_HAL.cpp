@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -83,59 +84,59 @@
 #define UC1701_BOOST_RATIO(N)    (0xF8), (N)
 
 static const uint8_t u8g_dev_uc1701_mini12864_HAL_init_seq[] PROGMEM = {
-  U8G_ESC_CS(0),              // disable chip
-  U8G_ESC_ADR(0),             // instruction mode
-  U8G_ESC_RST(1),             // do reset low pulse with (1*16)+2 milliseconds
-  U8G_ESC_CS(1),              // enable chip
+  U8G_ESC_CS(0),              // disable chip//禁用芯片
+  U8G_ESC_ADR(0),             // instruction mode//教学模式
+  U8G_ESC_RST(1),             // do reset low pulse with (1*16)+2 milliseconds//用（1*16）+2毫秒重置低脉冲
+  U8G_ESC_CS(1),              // enable chip//使能芯片
 
-  UC1701_RESET(),             // soft reset
-  UC1701_START_LINE(0),       // set display start line to 0
-  UC1701_ADC_REVERSE(0),      // ADC set to reverse
-  UC1701_OUT_MODE(1),         // common output mode
-  UC1701_INVERTED(0),         // display normal, bit val 0: LCD pixel off
-  UC1701_BIAS_MODE(0),        // LCD bias 1/9
-  UC1701_POWER_CONTROL(0x7),  // all power control circuits on
-  UC1701_BOOST_RATIO(0x0),    // set booster ratio to 4x
-  UC1701_V5_RATIO(3),         // set V0 voltage resistor ratio to large
-  UC1701_CONTRAST(0x27),      // set contrast
-  UC1701_INDICATOR(0),        // indicator disable
-  UC1701_ON(1),               // display on
+  UC1701_RESET(),             // soft reset//软复位
+  UC1701_START_LINE(0),       // set display start line to 0//将显示起始行设置为0
+  UC1701_ADC_REVERSE(0),      // ADC set to reverse//ADC设置为反向
+  UC1701_OUT_MODE(1),         // common output mode//公共输出模式
+  UC1701_INVERTED(0),         // display normal, bit val 0: LCD pixel off//显示正常，位val 0：LCD像素关闭
+  UC1701_BIAS_MODE(0),        // LCD bias 1/9//液晶偏压1/9
+  UC1701_POWER_CONTROL(0x7),  // all power control circuits on//所有电源控制电路接通
+  UC1701_BOOST_RATIO(0x0),    // set booster ratio to 4x//将增压比设置为4x
+  UC1701_V5_RATIO(3),         // set V0 voltage resistor ratio to large//将V0电压电阻比设置为大
+  UC1701_CONTRAST(0x27),      // set contrast//设置对比度
+  UC1701_INDICATOR(0),        // indicator disable//指示器禁用
+  UC1701_ON(1),               // display on//展示
 
-  U8G_ESC_CS(0),              // disable chip
-  U8G_ESC_DLY(100),           // delay 100 ms
-  U8G_ESC_CS(1),              // enable chip
+  U8G_ESC_CS(0),              // disable chip//禁用芯片
+  U8G_ESC_DLY(100),           // delay 100 ms//延迟100毫秒
+  U8G_ESC_CS(1),              // enable chip//使能芯片
 
-  UC1701_ALL_PIX(1),          // display all points, ST7565
-  U8G_ESC_CS(0),              // disable chip
-  U8G_ESC_DLY(100),           // delay 100 ms
-  U8G_ESC_DLY(100),           // delay 100 ms
-  U8G_ESC_CS(1),              // enable chip
-  UC1701_ALL_PIX(0),          // normal display
-  U8G_ESC_CS(0),              // disable chip
-  U8G_ESC_DLY(150),           // delay 150 ms before sending any data
-  U8G_ESC_END                 // end of sequence
+  UC1701_ALL_PIX(1),          // display all points, ST7565//显示所有点，ST7565
+  U8G_ESC_CS(0),              // disable chip//禁用芯片
+  U8G_ESC_DLY(100),           // delay 100 ms//延迟100毫秒
+  U8G_ESC_DLY(100),           // delay 100 ms//延迟100毫秒
+  U8G_ESC_CS(1),              // enable chip//使能芯片
+  UC1701_ALL_PIX(0),          // normal display//正常显示
+  U8G_ESC_CS(0),              // disable chip//禁用芯片
+  U8G_ESC_DLY(150),           // delay 150 ms before sending any data//发送任何数据前延迟150毫秒
+  U8G_ESC_END                 // end of sequence//序列结束
 };
 
 static const uint8_t u8g_dev_uc1701_mini12864_HAL_data_start[] PROGMEM = {
-  U8G_ESC_ADR(0),             // instruction mode
-  U8G_ESC_CS(1),              // enable chip
+  U8G_ESC_ADR(0),             // instruction mode//教学模式
+  U8G_ESC_CS(1),              // enable chip//使能芯片
   #if ANY(MKS_MINI_12864, ENDER2_STOCKDISPLAY, FYSETC_MINI_12864)
-    UC1701_START_LINE(0),     // set display start line to 0
-    UC1701_ADC_REVERSE(0),    // ADC set to reverse
-    UC1701_OUT_MODE(1),       // common output mode
-    UC1701_INVERTED(0),       // display normal, bit val 0: LCD pixel off
-    UC1701_BIAS_MODE(0),      // LCD bias 1/9
-    UC1701_POWER_CONTROL(0x7),// all power control circuits on
-    UC1701_BOOST_RATIO(0x0),  // set booster ratio to 4x
-    UC1701_V5_RATIO(3),       // set V0 voltage resistor ratio to large
-    UC1701_INDICATOR(0),      // indicator disable
-    UC1701_ON(1),             // display on
-    UC1701_COLUMN_HI(0),      // set upper 4 bit of the col adr to 0
-    U8G_ESC_END,              // end of sequence
-    U8G_ESC_DLY(5)            // delay 5 ms
+    UC1701_START_LINE(0),     // set display start line to 0//将显示起始行设置为0
+    UC1701_ADC_REVERSE(0),    // ADC set to reverse//ADC设置为反向
+    UC1701_OUT_MODE(1),       // common output mode//公共输出模式
+    UC1701_INVERTED(0),       // display normal, bit val 0: LCD pixel off//显示正常，位val 0：LCD像素关闭
+    UC1701_BIAS_MODE(0),      // LCD bias 1/9//液晶偏压1/9
+    UC1701_POWER_CONTROL(0x7),// all power control circuits on//所有电源控制电路接通
+    UC1701_BOOST_RATIO(0x0),  // set booster ratio to 4x//将增压比设置为4x
+    UC1701_V5_RATIO(3),       // set V0 voltage resistor ratio to large//将V0电压电阻比设置为大
+    UC1701_INDICATOR(0),      // indicator disable//指示器禁用
+    UC1701_ON(1),             // display on//展示
+    UC1701_COLUMN_HI(0),      // set upper 4 bit of the col adr to 0//将列adr的上4位设置为0
+    U8G_ESC_END,              // end of sequence//序列结束
+    U8G_ESC_DLY(5)            // delay 5 ms//延迟5毫秒
   #else
-    UC1701_COLUMN_ADR(0),     // address 0
-    U8G_ESC_END               // end of sequence
+    UC1701_COLUMN_ADR(0),     // address 0//地址0
+    U8G_ESC_END               // end of sequence//序列结束
   #endif
 };
 
@@ -210,4 +211,4 @@ u8g_pb_t u8g_dev_uc1701_mini12864_HAL_2x_pb = { {16, HEIGHT, 0, 0, 0},  WIDTH, u
 u8g_dev_t u8g_dev_uc1701_mini12864_HAL_2x_sw_spi = { u8g_dev_uc1701_mini12864_HAL_2x_fn, &u8g_dev_uc1701_mini12864_HAL_2x_pb, U8G_COM_HAL_SW_SPI_FN };
 u8g_dev_t u8g_dev_uc1701_mini12864_HAL_2x_hw_spi = { u8g_dev_uc1701_mini12864_HAL_2x_fn, &u8g_dev_uc1701_mini12864_HAL_2x_pb, U8G_COM_HAL_HW_SPI_FN };
 
-#endif // HAS_MARLINUI_U8GLIB
+#endif // HAS_MARLINUI_U8GLIB//马林努伊能说会道吗

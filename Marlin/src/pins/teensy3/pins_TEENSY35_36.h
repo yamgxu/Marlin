@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -76,16 +77,16 @@
  *                                                   GND * * 3.3V
  */
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_STOP_PIN                            24
 #define Y_STOP_PIN                            26
 #define Z_STOP_PIN                            28
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                            22
 #define X_DIR_PIN                             21
 #define X_ENABLE_PIN                          39
@@ -113,22 +114,22 @@
   #define FAN_PIN                              2
 #endif
 
-#define TEMP_0_PIN                             2  // Extruder / Analog pin numbering: 2 => A2
+#define TEMP_0_PIN                             2  // Extruder / Analog pin numbering: 2 => A2//挤出机/模拟管脚编号：2=>A2
 #define TEMP_1_PIN                             0
-#define TEMP_BED_PIN                           1  // Bed / Analog pin numbering
+#define TEMP_BED_PIN                           1  // Bed / Analog pin numbering//床/模拟管脚编号
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define LED_PIN                               13
 #define PS_ON_PIN                              1
 #define FILWIDTH_PIN                           6
 #define SOL1_PIN                              28
 
-//
-// SD Card
-//
-#define SDSS                                  39  // 8
+////
+// SD Card//SD卡
+////
+#define SDSS                                  39  // 8// 8
 
 #if HAS_WIRED_LCD
   #define LCD_PINS_RS                         40

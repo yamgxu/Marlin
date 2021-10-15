@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  *
@@ -32,13 +33,13 @@
 #define DIGITAL_PIN_TO_ANALOG_PIN(p) digitalPinToAnalogInput(p)
 #define IS_ANALOG(P) (DIGITAL_PIN_TO_ANALOG_PIN(P)!=-1)
 #define pwm_status(pin) digitalPinHasPWM(pin)
-#define MULTI_NAME_PAD 27 // space needed to be pretty if not first name assigned to a pin
+#define MULTI_NAME_PAD 27 // space needed to be pretty if not first name assigned to a pin//如果没有为pin指定名字，则空间必须美观
 
-// pins that will cause hang/reset/disconnect in M43 Toggle and Watch utilities
-// uses pin index
+// pins that will cause hang/reset/disconnect in M43 Toggle and Watch utilities//导致M43切换和监视实用程序中挂起/复位/断开的针脚
+// uses pin index//使用pin索引
 #define M43_NEVER_TOUCH(Q) ((Q) >= 75)
 
-bool GET_PINMODE(int8_t pin) {  // 1: output, 0: input
+bool GET_PINMODE(int8_t pin) {  // 1: output, 0: input//1:输出，0:输入
   const EPortType samdport = g_APinDescription[pin].ulPort;
   const uint32_t samdpin = g_APinDescription[pin].ulPin;
   return PORT->Group[samdport].DIR.reg & MASK(samdpin) || (PORT->Group[samdport].PINCFG[samdpin].reg & (PORT_PINCFG_INEN | PORT_PINCFG_PULLEN)) == PORT_PINCFG_PULLEN;
@@ -46,8 +47,8 @@ bool GET_PINMODE(int8_t pin) {  // 1: output, 0: input
 
 void pwm_details(int32_t pin) {
   if (pwm_status(pin)) {
-    //uint32_t chan = g_APinDescription[pin].ulPWMChannel TODO when fast pwm is operative;
-    //SERIAL_ECHOPAIR("PWM = ", duty);
+    //uint32_t chan = g_APinDescription[pin].ulPWMChannel TODO when fast pwm is operative;//uint32_t chan=g_APinDescription[pin]。快速pwm工作时ULPWM通道TODO；
+    //SERIAL_ECHOPAIR("PWM = ", duty);//串行回波对（“PWM=”，占空比）；
   }
 }
 

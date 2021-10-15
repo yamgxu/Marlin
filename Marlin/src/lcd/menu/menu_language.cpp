@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -20,9 +21,9 @@
  *
  */
 
-//
-// Language Selection Menu
-//
+////
+// Language Selection Menu//语言选择菜单
+////
 
 #include "../../inc/MarlinConfig.h"
 
@@ -56,4 +57,4 @@ void menu_language() {
   END_MENU();
 }
 
-#endif // HAS_MULTI_LANGUAGE
+#endif // HAS_MULTI_LANGUAGE//有多种语言

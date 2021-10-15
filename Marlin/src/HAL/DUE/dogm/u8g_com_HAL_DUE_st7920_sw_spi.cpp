@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -71,10 +72,10 @@
 static uint8_t rs_last_state = 255;
 
 static void u8g_com_DUE_st7920_write_byte_sw_spi(uint8_t rs, uint8_t val) {
-  if (rs != rs_last_state) {  // time to send a command/data byte
+  if (rs != rs_last_state) {  // time to send a command/data byte//发送命令/数据字节的时间
     rs_last_state = rs;
-    SPISEND_SW_DUE(rs ? 0x0FA : 0x0F8); // Command or Data
-    DELAY_US(40); // give the controller some time to process the data: 20 is bad, 30 is OK, 40 is safe
+    SPISEND_SW_DUE(rs ? 0x0FA : 0x0F8); // Command or Data//命令或数据
+    DELAY_US(40); // give the controller some time to process the data: 20 is bad, 30 is OK, 40 is safe//给控制器一些时间来处理数据：20是坏的，30是正常的，40是安全的
   }
   SPISEND_SW_DUE(val & 0xF0);
   SPISEND_SW_DUE(val << 4);
@@ -95,8 +96,8 @@ uint8_t u8g_com_HAL_DUE_ST7920_sw_spi_fn(u8g_t *u8g, uint8_t msg, uint8_t arg_va
       u8g_SetPILevel_DUE(u8g, U8G_PI_MOSI, 0);
       u8g_SetPIOutput_DUE(u8g, U8G_PI_MOSI);
 
-      SCK_pPio->PIO_CODR = SCK_dwMask;   //SCK low - needed at power up but not after reset
-      MOSI_pPio->PIO_CODR = MOSI_dwMask; //MOSI low - needed at power up but not after reset
+      SCK_pPio->PIO_CODR = SCK_dwMask;   //SCK low - needed at power up but not after reset//SCK低-通电时需要，但重置后不需要
+      MOSI_pPio->PIO_CODR = MOSI_dwMask; //MOSI low - needed at power up but not after reset//MOSI低-通电时需要，但重置后不需要
 
       u8g_Delay(5);
 
@@ -116,7 +117,7 @@ uint8_t u8g_com_HAL_DUE_ST7920_sw_spi_fn(u8g_t *u8g, uint8_t msg, uint8_t arg_va
 
     case U8G_COM_MSG_CHIP_SELECT:
       if (U8G_PIN_NONE != u8g->pin_list[U8G_PI_CS])
-        u8g_SetPILevel_DUE(u8g, U8G_PI_CS, arg_val);  //note: the st7920 has an active high chip select
+        u8g_SetPILevel_DUE(u8g, U8G_PI_CS, arg_val);  //note: the st7920 has an active high chip select//注：st7920有一个有源高电平芯片选择
       break;
 
     case U8G_COM_MSG_WRITE_BYTE:
@@ -180,7 +181,7 @@ uint8_t u8g_com_HAL_DUE_ST7920_sw_spi_fn(u8g_t *u8g, uint8_t msg, uint8_t arg_va
     SPISEND_SW_DUE(val & 0xF0);
     SPISEND_SW_DUE(val << 4);
   }
-#endif // LIGHTWEIGHT_UI
+#endif // LIGHTWEIGHT_UI//轻量级用户界面
 
-#endif // U8GLIB_ST7920
-#endif // ARDUINO_ARCH_SAM
+#endif // U8GLIB_ST7920//U8GLIB_ST7920
+#endif // ARDUINO_ARCH_SAM//阿杜伊诺·阿丘·萨姆

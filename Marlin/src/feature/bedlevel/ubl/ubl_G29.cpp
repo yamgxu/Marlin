@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -303,7 +304,7 @@ G29_parameters_t unified_bed_leveling::param;
 void unified_bed_leveling::G29() {
 
   bool probe_deployed = false;
-  if (G29_parse_parameters()) return; // Abort on parameter error
+  if (G29_parse_parameters()) return; // Abort on parameter error//参数错误时中止
 
   const uint8_t p_val = parser.byteval('P');
   const bool may_move = p_val == 1 || p_val == 2 || p_val == 4 || parser.seen_test('J');
@@ -311,15 +312,15 @@ void unified_bed_leveling::G29() {
     const uint8_t old_tool_index = active_extruder;
   #endif
 
-  // Check for commands that require the printer to be homed
+  // Check for commands that require the printer to be homed//检查是否有需要将打印机置于主位置的命令
   if (may_move) {
     planner.synchronize();
-    // Send 'N' to force homing before G29 (internal only)
+    // Send 'N' to force homing before G29 (internal only)//在G29之前发送“N”强制归位（仅限内部）
     if (axes_should_home() || parser.seen_test('N')) gcode.home_all_axes();
     TERN_(HAS_MULTI_HOTEND, if (active_extruder) tool_change(0));
   }
 
-  // Invalidate one or more nearby mesh points, possibly all.
+  // Invalidate one or more nearby mesh points, possibly all.//使附近的一个或多个网格点（可能是全部）无效。
   if (parser.seen('I')) {
     uint8_t count = parser.has_value() ? parser.value_byte() : 1;
     bool invalidate_all = count >= GRID_MAX_POINTS;
@@ -327,9 +328,9 @@ void unified_bed_leveling::G29() {
       while (count--) {
         if ((count & 0x0F) == 0x0F) idle();
         const mesh_index_pair closest = find_closest_mesh_point_of_type(REAL, param.XY_pos);
-        // No more REAL mesh points to invalidate? Assume the user meant
-        // to invalidate the ENTIRE mesh, which can't be done with
-        // find_closest_mesh_point (which only returns REAL points).
+        // No more REAL mesh points to invalidate? Assume the user meant//没有更多的真实网格点要失效？假设用户的意思是
+        // to invalidate the ENTIRE mesh, which can't be done with//使整个网格无效，这不能用
+        // find_closest_mesh_point (which only returns REAL points).//查找最近的网格点（仅返回实际点）。
         if (closest.pos.x < 0) { invalidate_all = true; break; }
         z_values[closest.pos.x][closest.pos.y] = NAN;
         TERN_(EXTENSIBLE_UI, ExtUI::onMeshUpdate(closest.pos, 0.0f));
@@ -356,7 +357,7 @@ void unified_bed_leveling::G29() {
       case -1: TERN_(UBL_DEVEL_DEBUGGING, g29_eeprom_dump()); break;
 
       case 0:
-        GRID_LOOP(x, y) {                                     // Create a bowl shape similar to a poorly-calibrated Delta
+        GRID_LOOP(x, y) {                                     // Create a bowl shape similar to a poorly-calibrated Delta//创建一个类似于校准不良的三角形的碗形状
           const float p1 = 0.5f * (GRID_MAX_POINTS_X) - x,
                       p2 = 0.5f * (GRID_MAX_POINTS_Y) - y;
           z_values[x][y] += 2.0f * HYPOT(p1, p2);
@@ -365,9 +366,9 @@ void unified_bed_leveling::G29() {
         break;
 
       case 1:
-        LOOP_L_N(x, GRID_MAX_POINTS_X) {                     // Create a diagonal line several Mesh cells thick that is raised
+        LOOP_L_N(x, GRID_MAX_POINTS_X) {                     // Create a diagonal line several Mesh cells thick that is raised//创建一条对角线，使多个网格单元的厚度升高
           z_values[x][x] += 9.999f;
-          z_values[x][x + (x < (GRID_MAX_POINTS_Y) - 1) ? 1 : -1] += 9.999f; // We want the altered line several mesh points thick
+          z_values[x][x + (x < (GRID_MAX_POINTS_Y) - 1) ? 1 : -1] += 9.999f; // We want the altered line several mesh points thick//我们希望修改后的线有几个网格点厚
           #if ENABLED(EXTENSIBLE_UI)
             ExtUI::onMeshUpdate(x, x, z_values[x][x]);
             ExtUI::onMeshUpdate(x, (x + (x < (GRID_MAX_POINTS_Y) - 1) ? 1 : -1), z_values[x][x + (x < (GRID_MAX_POINTS_Y) - 1) ? 1 : -1]);
@@ -377,9 +378,9 @@ void unified_bed_leveling::G29() {
         break;
 
       case 2:
-        // Allow the user to specify the height because 10mm is a little extreme in some cases.
-        for (uint8_t x = (GRID_MAX_POINTS_X) / 3; x < 2 * (GRID_MAX_POINTS_X) / 3; x++)     // Create a rectangular raised area in
-          for (uint8_t y = (GRID_MAX_POINTS_Y) / 3; y < 2 * (GRID_MAX_POINTS_Y) / 3; y++) { // the center of the bed
+        // Allow the user to specify the height because 10mm is a little extreme in some cases.//允许用户指定高度，因为在某些情况下10mm有点极端。
+        for (uint8_t x = (GRID_MAX_POINTS_X) / 3; x < 2 * (GRID_MAX_POINTS_X) / 3; x++)     // Create a rectangular raised area in//在中创建矩形凸起区域
+          for (uint8_t y = (GRID_MAX_POINTS_Y) / 3; y < 2 * (GRID_MAX_POINTS_Y) / 3; y++) { // the center of the bed//床的中央
             z_values[x][y] += parser.seen_test('C') ? param.C_constant : 9.99f;
             TERN_(EXTENSIBLE_UI, ExtUI::onMeshUpdate(x, y, z_values[x][y]));
           }
@@ -391,7 +392,7 @@ void unified_bed_leveling::G29() {
 
     if (parser.seen_test('J')) {
       save_ubl_active_state_and_disable();
-      tilt_mesh_based_on_probed_grid(param.J_grid_size == 0); // Zero size does 3-Point
+      tilt_mesh_based_on_probed_grid(param.J_grid_size == 0); // Zero size does 3-Point//零尺寸不等于3点
       restore_ubl_active_state_and_leave();
       #if ENABLED(UBL_G29_J_RECENTER)
         do_blocking_move_to_xy(0.5f * ((MESH_MIN_X) + (MESH_MAX_X)), 0.5f * ((MESH_MIN_Y) + (MESH_MAX_Y)));
@@ -400,7 +401,7 @@ void unified_bed_leveling::G29() {
       probe_deployed = true;
     }
 
-  #endif // HAS_BED_PROBE
+  #endif // HAS_BED_PROBE//你有床吗
 
   if (parser.seen_test('P')) {
     if (WITHIN(param.P_phase, 0, 1) && storage_slot == -1) {
@@ -410,9 +411,9 @@ void unified_bed_leveling::G29() {
 
     switch (param.P_phase) {
       case 0:
-        //
-        // Zero Mesh Data
-        //
+        ////
+        // Zero Mesh Data//零网格数据
+        ////
         reset();
         SERIAL_ECHOLNPGM("Mesh zeroed.");
         break;
@@ -420,9 +421,9 @@ void unified_bed_leveling::G29() {
       #if HAS_BED_PROBE
 
         case 1: {
-          //
-          // Invalidate Entire Mesh and Automatically Probe Mesh in areas that can be reached by the probe
-          //
+          ////
+          // Invalidate Entire Mesh and Automatically Probe Mesh in areas that can be reached by the probe//使整个网格无效，并在探测器可以到达的区域中自动探测网格
+          ////
           if (!parser.seen_test('C')) {
             invalidate();
             SERIAL_ECHOLNPGM("Mesh invalidated. Probing mesh.");
@@ -439,13 +440,13 @@ void unified_bed_leveling::G29() {
           probe_deployed = true;
         } break;
 
-      #endif // HAS_BED_PROBE
+      #endif // HAS_BED_PROBE//你有床吗
 
       case 2: {
         #if HAS_LCD_MENU
-          //
-          // Manually Probe Mesh in areas that can't be reached by the probe
-          //
+          ////
+          // Manually Probe Mesh in areas that can't be reached by the probe//在探测器无法到达的区域手动探测网格
+          ////
           SERIAL_ECHOLNPGM("Manually probing unreachable points.");
           do_z_clearance(Z_CLEARANCE_BETWEEN_PROBES);
 
@@ -510,14 +511,14 @@ void unified_bed_leveling::G29() {
             set_all_mesh_points_to_value(param.C_constant);
           }
           else {
-            while (param.R_repetition--) {  // this only populates reachable mesh points near
+            while (param.R_repetition--) {  // this only populates reachable mesh points near//这仅填充附近的可达网格点
               const mesh_index_pair closest = find_closest_mesh_point_of_type(INVALID, param.XY_pos);
               const xy_int8_t &cpos = closest.pos;
               if (cpos.x < 0) {
-                // No more REAL INVALID mesh points to populate, so we ASSUME
-                // user meant to populate ALL INVALID mesh points to value
+                // No more REAL INVALID mesh points to populate, so we ASSUME//不再需要填充真正的无效网格点，因此我们假设
+                // user meant to populate ALL INVALID mesh points to value//用户要将所有无效网格点填充为值
                 GRID_LOOP(x, y) if (isnan(z_values[x][y])) z_values[x][y] = param.C_constant;
-                break; // No more invalid Mesh Points to populate
+                break; // No more invalid Mesh Points to populate//不再需要填充无效的网格点
               }
               else {
                 z_values[cpos.x][cpos.y] = param.C_constant;
@@ -528,32 +529,32 @@ void unified_bed_leveling::G29() {
         }
         else {
           const float cvf = parser.value_float();
-          switch ((int)TRUNC(cvf * 10.0f) - 30) {   // 3.1 -> 1
+          switch ((int)TRUNC(cvf * 10.0f) - 30) {   // 3.1 -> 1// 3.1 -> 1
             #if ENABLED(UBL_G29_P31)
               case 1: {
 
-                // P3.1  use least squares fit to fill missing mesh values
-                // P3.10 zero weighting for distance, all grid points equal, best fit tilted plane
-                // P3.11 10X weighting for nearest grid points versus farthest grid points
-                // P3.12 100X distance weighting
-                // P3.13 1000X distance weighting, approaches simple average of nearest points
+                // P3.1  use least squares fit to fill missing mesh values//P3.1使用最小二乘拟合来填充缺失的网格值
+                // P3.10 zero weighting for distance, all grid points equal, best fit tilted plane//P3.10距离的零加权，所有网格点相等，最佳拟合倾斜平面
+                // P3.11 10X weighting for nearest grid points versus farthest grid points//P3.11最近网格点与最远网格点的10倍加权
+                // P3.12 100X distance weighting//P3.12 100倍距离加权
+                // P3.13 1000X distance weighting, approaches simple average of nearest points//P3.13 1000倍距离加权，接近最近点的简单平均值
 
-                const float weight_power  = (cvf - 3.10f) * 100.0f,  // 3.12345 -> 2.345
+                const float weight_power  = (cvf - 3.10f) * 100.0f,  // 3.12345 -> 2.345// 3.12345 -> 2.345
                             weight_factor = weight_power ? POW(10.0f, weight_power) : 0;
                 smart_fill_wlsf(weight_factor);
               }
               break;
             #endif
-            case 0:   // P3 or P3.0
-            default:  // and anything P3.x that's not P3.1
-              smart_fill_mesh();  // Do a 'Smart' fill using nearby known values
+            case 0:   // P3 or P3.0//P3或P3.0
+            default:  // and anything P3.x that's not P3.1//还有任何不是P3.1的P3.x
+              smart_fill_mesh();  // Do a 'Smart' fill using nearby known values//使用附近的已知值进行“智能”填充
               break;
           }
         }
         break;
       }
 
-      case 4: // Fine Tune (i.e., Edit) the Mesh
+      case 4: // Fine Tune (i.e., Edit) the Mesh//微调（即编辑）网格
         #if HAS_LCD_MENU
           fine_tune_mesh(param.XY_pos, parser.seen_test('T'));
         #else
@@ -570,28 +571,28 @@ void unified_bed_leveling::G29() {
 
   #if ENABLED(UBL_DEVEL_DEBUGGING)
 
-    //
-    // Much of the 'What?' command can be eliminated. But until we are fully debugged, it is
-    // good to have the extra information. Soon... we prune this to just a few items
-    //
+    ////
+    // Much of the 'What?' command can be eliminated. But until we are fully debugged, it is//大部分“What”命令都可以取消。但在我们完全调试之前，它是
+    // good to have the extra information. Soon... we prune this to just a few items//很高兴有额外的信息。很快我们将其删减为几个项目
+    ////
     if (parser.seen_test('W')) g29_what_command();
 
-    //
-    // When we are fully debugged, this may go away. But there are some valid
-    // use cases for the users. So we can wait and see what to do with it.
-    //
+    ////
+    // When we are fully debugged, this may go away. But there are some valid//当我们完全调试完毕后，这种情况可能会消失。但也有一些有效的建议
+    // use cases for the users. So we can wait and see what to do with it.//用户的用例。所以我们可以等着看怎么处理它。
+    ////
 
-    if (parser.seen('K')) // Kompare Current Mesh Data to Specified Stored Mesh
+    if (parser.seen('K')) // Kompare Current Mesh Data to Specified Stored Mesh//将当前网格数据复制到指定的存储网格
       g29_compare_current_mesh_to_stored_mesh();
 
-  #endif // UBL_DEVEL_DEBUGGING
+  #endif // UBL_DEVEL_DEBUGGING//UBL_-DEVEL_调试
 
 
-  //
-  // Load a Mesh from the EEPROM
-  //
+  ////
+  // Load a Mesh from the EEPROM//从EEPROM加载网格
+  ////
 
-  if (parser.seen('L')) {     // Load Current Mesh Data
+  if (parser.seen('L')) {     // Load Current Mesh Data//加载当前网格数据
     param.KLS_storage_slot = parser.has_value() ? (int8_t)parser.value_int() : storage_slot;
 
     int16_t a = settings.calc_num_meshes();
@@ -612,15 +613,15 @@ void unified_bed_leveling::G29() {
     SERIAL_ECHOLNPGM("Done.");
   }
 
-  //
-  // Store a Mesh in the EEPROM
-  //
+  ////
+  // Store a Mesh in the EEPROM//在EEPROM中存储网格
+  ////
 
-  if (parser.seen('S')) {     // Store (or Save) Current Mesh Data
+  if (parser.seen('S')) {     // Store (or Save) Current Mesh Data//存储（或保存）当前网格数据
     param.KLS_storage_slot = parser.has_value() ? (int8_t)parser.value_int() : storage_slot;
 
-    if (param.KLS_storage_slot == -1)               // Special case: 'Export' the mesh to the
-      return report_current_mesh();                 // host so it can be saved in a file.
+    if (param.KLS_storage_slot == -1)               // Special case: 'Export' the mesh to the//特殊情况：“导出”网格到
+      return report_current_mesh();                 // host so it can be saved in a file.//主机，以便将其保存在文件中。
 
     int16_t a = settings.calc_num_meshes();
 
@@ -682,9 +683,9 @@ void unified_bed_leveling::adjust_mesh_to_mean(const bool cflag, const_float_t o
 
   const float mean = sum / n;
 
-  //
-  // Sum the squares of difference from mean
-  //
+  ////
+  // Sum the squares of difference from mean//求平均值的差平方和
+  ////
   float sum_of_diff_squared = 0;
   GRID_LOOP(x, y)
     if (!isnan(z_values[x][y]))
@@ -722,11 +723,11 @@ void unified_bed_leveling::shift_mesh_height() {
    *   This attempts to fill in locations closest to the nozzle's start location first.
    */
   void unified_bed_leveling::probe_entire_mesh(const xy_pos_t &nearby, const bool do_ubl_mesh_map, const bool stow_probe, const bool do_furthest) {
-    probe.deploy(); // Deploy before ui.capture() to allow for PAUSE_BEFORE_DEPLOY_STOW
+    probe.deploy(); // Deploy before ui.capture() to allow for PAUSE_BEFORE_DEPLOY_STOW//在ui.capture（）之前部署以允许在部署之前暂停
 
     TERN_(HAS_LCD_MENU, ui.capture());
 
-    save_ubl_active_state_and_disable();  // No bed level correction so only raw data is obtained
+    save_ubl_active_state_and_disable();  // No bed level correction so only raw data is obtained//无河床水位校正，因此仅获得原始数据
     uint8_t count = GRID_MAX_POINTS;
 
     mesh_index_pair best;
@@ -740,12 +741,12 @@ void unified_bed_leveling::shift_mesh_height() {
 
       #if HAS_LCD_MENU
         if (ui.button_pressed()) {
-          ui.quick_feedback(false); // Preserve button state for click-and-hold
+          ui.quick_feedback(false); // Preserve button state for click-and-hold//保留单击并按住按钮的状态
           SERIAL_ECHOLNPGM("\nMesh only partially populated.\n");
           ui.wait_for_release();
           ui.quick_feedback();
           ui.release();
-          probe.stow(); // Release UI before stow to allow for PAUSE_BEFORE_DEPLOY_STOW
+          probe.stow(); // Release UI before stow to allow for PAUSE_BEFORE_DEPLOY_STOW//收起前释放UI，以便在部署收起前暂停
           return restore_ubl_active_state_and_leave();
         }
       #endif
@@ -754,7 +755,7 @@ void unified_bed_leveling::shift_mesh_height() {
         ? find_furthest_invalid_mesh_point()
         : find_closest_mesh_point_of_type(INVALID, nearby, true);
 
-      if (best.pos.x >= 0) {    // mesh point found and is reachable by probe
+      if (best.pos.x >= 0) {    // mesh point found and is reachable by probe//已找到网格点，且可通过探针到达
         TERN_(EXTENSIBLE_UI, ExtUI::onMeshUpdate(best.pos, ExtUI::G29_POINT_START));
         const float measured_z = probe.probe_at_point(
                       best.meshpos(),
@@ -766,13 +767,13 @@ void unified_bed_leveling::shift_mesh_height() {
           ExtUI::onMeshUpdate(best.pos, measured_z);
         #endif
       }
-      SERIAL_FLUSH(); // Prevent host M105 buffer overrun.
+      SERIAL_FLUSH(); // Prevent host M105 buffer overrun.//防止主机M105缓冲区溢出。
 
     } while (best.pos.x >= 0 && --count);
 
     TERN_(EXTENSIBLE_UI, ExtUI::onMeshUpdate(best.pos, ExtUI::G29_FINISH));
 
-    // Release UI during stow to allow for PAUSE_BEFORE_DEPLOY_STOW
+    // Release UI during stow to allow for PAUSE_BEFORE_DEPLOY_STOW//在装载期间释放UI，以便在部署装载前暂停
     TERN_(HAS_LCD_MENU, ui.release());
     probe.stow();
     TERN_(HAS_LCD_MENU, ui.capture());
@@ -787,7 +788,7 @@ void unified_bed_leveling::shift_mesh_height() {
     );
   }
 
-#endif // HAS_BED_PROBE
+#endif // HAS_BED_PROBE//你有床吗
 
 void set_message_with_feedback(PGM_P const msg_P) {
   #if HAS_LCD_MENU
@@ -804,11 +805,11 @@ void set_message_with_feedback(PGM_P const msg_P) {
 
   bool _click_and_hold(const clickFunc_t func=nullptr) {
     if (ui.button_pressed()) {
-      ui.quick_feedback(false);         // Preserve button state for click-and-hold
+      ui.quick_feedback(false);         // Preserve button state for click-and-hold//保留单击并按住按钮的状态
       const millis_t nxt = millis() + 1500UL;
-      while (ui.button_pressed()) {     // Loop while the encoder is pressed. Uses hardware flag!
-        idle();                         // idle, of course
-        if (ELAPSED(millis(), nxt)) {   // After 1.5 seconds
+      while (ui.button_pressed()) {     // Loop while the encoder is pressed. Uses hardware flag!//按下编码器时循环。使用硬件标志！
+        idle();                         // idle, of course//当然是闲着
+        if (ELAPSED(millis(), nxt)) {   // After 1.5 seconds//1.5秒后
           ui.quick_feedback();
           if (func) (*func)();
           ui.wait_for_release();
@@ -824,7 +825,7 @@ void set_message_with_feedback(PGM_P const msg_P) {
     ui.wait_for_release();
     while (!ui.button_pressed()) {
       idle();
-      gcode.reset_stepper_timeout(); // Keep steppers powered
+      gcode.reset_stepper_timeout(); // Keep steppers powered//保持步进电机通电
       if (encoder_diff) {
         do_blocking_move_to_z(current_position.z + float(encoder_diff) * multiplier);
         encoder_diff = 0;
@@ -843,10 +844,10 @@ void set_message_with_feedback(PGM_P const msg_P) {
 
   float unified_bed_leveling::measure_business_card_thickness() {
     ui.capture();
-    save_ubl_active_state_and_disable();   // Disable bed level correction for probing
+    save_ubl_active_state_and_disable();   // Disable bed level correction for probing//禁用用于探测的床面校正
 
     do_blocking_move_to(0.5f * (MESH_MAX_X - (MESH_MIN_X)), 0.5f * (MESH_MAX_Y - (MESH_MIN_Y)), MANUAL_PROBE_START_Z);
-      //, _MIN(planner.settings.max_feedrate_mm_s[X_AXIS], planner.settings.max_feedrate_mm_s[Y_AXIS]) * 0.5f);
+      //, _MIN(planner.settings.max_feedrate_mm_s[X_AXIS], planner.settings.max_feedrate_mm_s[Y_AXIS]) * 0.5f);//，_MIN（规划器设置。最大进给速度_mm_s[X_轴]、规划器设置。最大进给速度_mm_s[Y_轴]）*0.5f；
     planner.synchronize();
 
     SERIAL_ECHOPGM("Place shim under nozzle");
@@ -885,7 +886,7 @@ void set_message_with_feedback(PGM_P const msg_P) {
   void unified_bed_leveling::manually_probe_remaining_mesh(const xy_pos_t &pos, const_float_t z_clearance, const_float_t thick, const bool do_ubl_mesh_map) {
     ui.capture();
 
-    save_ubl_active_state_and_disable();  // No bed level correction so only raw data is obtained
+    save_ubl_active_state_and_disable();  // No bed level correction so only raw data is obtained//无河床水位校正，因此仅获得原始数据
     do_blocking_move_to_xy_z(current_position, z_clearance);
 
     ui.return_to_status();
@@ -894,7 +895,7 @@ void set_message_with_feedback(PGM_P const msg_P) {
     const xy_int8_t &lpos = location.pos;
     do {
       location = find_closest_mesh_point_of_type(INVALID, pos);
-      // It doesn't matter if the probe can't reach the NAN location. This is a manual probe.
+      // It doesn't matter if the probe can't reach the NAN location. This is a manual probe.//如果探测器无法到达NAN位置，这无关紧要。这是一个手动探针。
       if (!location.valid()) continue;
 
       const xyz_pos_t ppos = {
@@ -903,7 +904,7 @@ void set_message_with_feedback(PGM_P const msg_P) {
         z_clearance
       };
 
-      if (!position_is_reachable(ppos)) break; // SHOULD NOT OCCUR (find_closest_mesh_point only returns reachable points)
+      if (!position_is_reachable(ppos)) break; // SHOULD NOT OCCUR (find_closest_mesh_point only returns reachable points)//不应发生（查找最近的网格点仅返回可达点）
 
       LCD_MESSAGEPGM(MSG_UBL_MOVING_TO_NEXT);
 
@@ -913,7 +914,7 @@ void set_message_with_feedback(PGM_P const msg_P) {
       KEEPALIVE_STATE(PAUSED_FOR_USER);
       ui.capture();
 
-      if (do_ubl_mesh_map) display_map(param.T_map_type);   // Show user where we're probing
+      if (do_ubl_mesh_map) display_map(param.T_map_type);   // Show user where we're probing//向用户显示我们正在探测的位置
 
       if (parser.seen_test('B')) {
         SERIAL_ECHOPGM_P(GET_TEXT(MSG_UBL_BC_INSERT));
@@ -924,7 +925,7 @@ void set_message_with_feedback(PGM_P const msg_P) {
         LCD_MESSAGEPGM(MSG_UBL_BC_INSERT2);
       }
 
-      const float z_step = 0.01f;                         // 0.01mm per encoder tick, occasionally step
+      const float z_step = 0.01f;                         // 0.01mm per encoder tick, occasionally step//每个编码器刻度0.01mm，偶尔步进
       move_z_with_encoder(z_step);
 
       if (_click_and_hold([]{
@@ -932,18 +933,18 @@ void set_message_with_feedback(PGM_P const msg_P) {
         do_z_clearance(Z_CLEARANCE_DEPLOY_PROBE);
       })) return restore_ubl_active_state_and_leave();
 
-      // Store the Z position minus the shim height
+      // Store the Z position minus the shim height//存储Z位置减去垫片高度
       z_values[lpos.x][lpos.y] = current_position.z - thick;
 
-      // Tell the external UI to update
+      // Tell the external UI to update//告诉外部用户界面进行更新
       TERN_(EXTENSIBLE_UI, ExtUI::onMeshUpdate(location, z_values[lpos.x][lpos.y]));
 
       if (param.V_verbosity > 2)
         SERIAL_ECHOLNPAIR_F("Mesh Point Measured at: ", z_values[lpos.x][lpos.y], 6);
-      SERIAL_FLUSH(); // Prevent host M105 buffer overrun.
+      SERIAL_FLUSH(); // Prevent host M105 buffer overrun.//防止主机M105缓冲区溢出。
     } while (location.valid());
 
-    if (do_ubl_mesh_map) display_map(param.T_map_type);  // show user where we're probing
+    if (do_ubl_mesh_map) display_map(param.T_map_type);  // show user where we're probing//向用户显示我们正在探测的位置
 
     restore_ubl_active_state_and_leave();
     do_blocking_move_to_xy_z(pos, Z_CLEARANCE_DEPLOY_PROBE);
@@ -954,8 +955,8 @@ void set_message_with_feedback(PGM_P const msg_P) {
    *          NOTE: Blocks the G-code queue and captures Marlin UI during use.
    */
   void unified_bed_leveling::fine_tune_mesh(const xy_pos_t &pos, const bool do_ubl_mesh_map) {
-    if (!parser.seen_test('R')) // fine_tune_mesh() is special. If no repetition count flag is specified
-      param.R_repetition = 1;   // do exactly one mesh location. Otherwise use what the parser decided.
+    if (!parser.seen_test('R')) // fine_tune_mesh() is special. If no repetition count flag is specified//fine_tune_mesh（）很特别。如果未指定重复计数标志
+      param.R_repetition = 1;   // do exactly one mesh location. Otherwise use what the parser decided.//只执行一个网格位置。否则，使用解析器决定的方法。
 
     #if ENABLED(UBL_MESH_EDIT_MOVES_Z)
       const float h_offset = parser.seenval('H') ? parser.value_linear_units() : MANUAL_PROBE_START_Z;
@@ -975,50 +976,50 @@ void set_message_with_feedback(PGM_P const msg_P) {
     save_ubl_active_state_and_disable();
 
     LCD_MESSAGEPGM(MSG_UBL_FINE_TUNE_MESH);
-    ui.capture();                                               // Take over control of the LCD encoder
+    ui.capture();                                               // Take over control of the LCD encoder//LCD编码器的接管控制
 
-    do_blocking_move_to_xy_z(pos, Z_CLEARANCE_BETWEEN_PROBES);  // Move to the given XY with probe clearance
+    do_blocking_move_to_xy_z(pos, Z_CLEARANCE_BETWEEN_PROBES);  // Move to the given XY with probe clearance//使用探针间隙移动到给定XY
 
     MeshFlags done_flags{0};
     const xy_int8_t &lpos = location.pos;
 
     #if IS_TFTGLCD_PANEL
-      ui.ubl_mesh_edit_start(0);                          // Change current screen before calling ui.ubl_plot
+      ui.ubl_mesh_edit_start(0);                          // Change current screen before calling ui.ubl_plot//在调用ui.ubl\u绘图之前更改当前屏幕
       safe_delay(50);
     #endif
 
     do {
       location = find_closest_mesh_point_of_type(SET_IN_BITMAP, pos, false, &done_flags);
 
-      if (lpos.x < 0) break;                              // Stop when there are no more reachable points
+      if (lpos.x < 0) break;                              // Stop when there are no more reachable points//当没有更多可到达点时停止
 
-      done_flags.mark(lpos);                              // Mark this location as 'adjusted' so a new
-                                                          // location is used on the next loop
+      done_flags.mark(lpos);                              // Mark this location as 'adjusted' so a new//将此位置标记为“已调整”，以便创建新的
+                                                          // location is used on the next loop//位置用于下一个循环
       const xyz_pos_t raw = {
         mesh_index_to_xpos(lpos.x),
         mesh_index_to_ypos(lpos.y),
         Z_CLEARANCE_BETWEEN_PROBES
       };
 
-      if (!position_is_reachable(raw)) break;             // SHOULD NOT OCCUR (find_closest_mesh_point_of_type only returns reachable)
+      if (!position_is_reachable(raw)) break;             // SHOULD NOT OCCUR (find_closest_mesh_point_of_type only returns reachable)//不应发生（查找\u最近的\u网格\u点\u类型仅返回可达）
 
-      do_blocking_move_to(raw);                           // Move the nozzle to the edit point with probe clearance
+      do_blocking_move_to(raw);                           // Move the nozzle to the edit point with probe clearance//将喷嘴移动到带有探针间隙的编辑点
 
-      TERN_(UBL_MESH_EDIT_MOVES_Z, do_blocking_move_to_z(h_offset)); // Move Z to the given 'H' offset before editing
+      TERN_(UBL_MESH_EDIT_MOVES_Z, do_blocking_move_to_z(h_offset)); // Move Z to the given 'H' offset before editing//编辑之前，将Z移动到给定的“H”偏移
 
       KEEPALIVE_STATE(PAUSED_FOR_USER);
 
-      if (do_ubl_mesh_map) display_map(param.T_map_type);     // Display the current point
+      if (do_ubl_mesh_map) display_map(param.T_map_type);     // Display the current point//显示当前点
 
       #if IS_TFTGLCD_PANEL
-        ui.ubl_plot(lpos.x, lpos.y);   // update plot screen
+        ui.ubl_plot(lpos.x, lpos.y);   // update plot screen//更新绘图屏幕
       #endif
 
       ui.refresh();
 
       float new_z = z_values[lpos.x][lpos.y];
-      if (isnan(new_z)) new_z = 0;                        // Invalid points begin at 0
-      new_z = FLOOR(new_z * 1000) * 0.001f;               // Chop off digits after the 1000ths place
+      if (isnan(new_z)) new_z = 0;                        // Invalid points begin at 0//无效点从0开始
+      new_z = FLOOR(new_z * 1000) * 0.001f;               // Chop off digits after the 1000ths place//切掉第1000位之后的数字
 
       ui.ubl_mesh_edit_start(new_z);
 
@@ -1027,30 +1028,30 @@ void set_message_with_feedback(PGM_P const msg_P) {
       do {
         idle_no_sleep();
         new_z = ui.ubl_mesh_value();
-        TERN_(UBL_MESH_EDIT_MOVES_Z, do_blocking_move_to_z(h_offset + new_z)); // Move the nozzle as the point is edited
-        SERIAL_FLUSH();                                   // Prevent host M105 buffer overrun.
+        TERN_(UBL_MESH_EDIT_MOVES_Z, do_blocking_move_to_z(h_offset + new_z)); // Move the nozzle as the point is edited//编辑点时移动喷嘴
+        SERIAL_FLUSH();                                   // Prevent host M105 buffer overrun.//防止主机M105缓冲区溢出。
       } while (!ui.button_pressed());
 
       SET_SOFT_ENDSTOP_LOOSE(false);
 
-      if (!lcd_map_control) ui.return_to_status();        // Just editing a single point? Return to status
+      if (!lcd_map_control) ui.return_to_status();        // Just editing a single point? Return to status//只是编辑一个点？恢复原状
 
-      // Button held down? Abort editing
+      // Button held down? Abort editing//按钮按下了吗？中止编辑
       if (_click_and_hold([]{
         ui.return_to_status();
         do_z_clearance(Z_CLEARANCE_BETWEEN_PROBES);
         set_message_with_feedback(GET_TEXT(MSG_EDITING_STOPPED));
       })) break;
 
-      // TODO: Disable leveling here so the Z value becomes the 'native' Z value.
+      // TODO: Disable leveling here so the Z value becomes the 'native' Z value.//TODO:在此禁用调平，以便Z值成为“本机”Z值。
 
-      z_values[lpos.x][lpos.y] = new_z;                   // Save the updated Z value
+      z_values[lpos.x][lpos.y] = new_z;                   // Save the updated Z value//保存更新的Z值
 
-      // TODO: Re-enable leveling here so Z is correctly based on the updated mesh.
+      // TODO: Re-enable leveling here so Z is correctly based on the updated mesh.//TODO:在此处重新启用调平，以便Z正确基于更新的网格。
 
       TERN_(EXTENSIBLE_UI, ExtUI::onMeshUpdate(location, new_z));
 
-      serial_delay(20);                                   // No switch noise
+      serial_delay(20);                                   // No switch noise//无开关噪声
       ui.refresh();
 
     } while (lpos.x >= 0 && --param.R_repetition > 0);
@@ -1069,7 +1070,7 @@ void set_message_with_feedback(PGM_P const msg_P) {
       ui.return_to_status();
   }
 
-#endif // HAS_LCD_MENU
+#endif // HAS_LCD_MENU//有LCD菜单吗
 
 /**
  * Parse and validate most G29 parameters, store for use by G29 functions.
@@ -1138,8 +1139,8 @@ bool unified_bed_leveling::G29_parse_parameters() {
     err_flag = true;
   }
 
-  // If X or Y are not valid, use center of the bed values
-  // (for UBL_HILBERT_CURVE default to lower-left corner instead)
+  // If X or Y are not valid, use center of the bed values//若X或Y无效，则使用床的中心值
+  // (for UBL_HILBERT_CURVE default to lower-left corner instead)//（对于UBL_HILBERT_曲线，默认设置为左下角）
   if (!COORDINATE_OKAY(sx, X_MIN_BED, X_MAX_BED)) sx = TERN(UBL_HILBERT_CURVE, 0, X_CENTER);
   if (!COORDINATE_OKAY(sy, Y_MIN_BED, Y_MAX_BED)) sy = TERN(UBL_HILBERT_CURVE, 0, Y_CENTER);
 
@@ -1166,7 +1167,7 @@ bool unified_bed_leveling::G29_parse_parameters() {
     report_state();
   }
 
-  // Set global 'C' flag and its value
+  // Set global 'C' flag and its value//设置全局“C”标志及其值
   if ((param.C_seen = parser.seen('C')))
     param.C_constant = parser.value_float();
 
@@ -1227,9 +1228,9 @@ mesh_index_pair unified_bed_leveling::find_furthest_invalid_mesh_point() {
   mesh_index_pair farthest { -1, -1, -99999.99 };
 
   GRID_LOOP(i, j) {
-    if (!isnan(z_values[i][j])) continue;  // Skip valid mesh points
+    if (!isnan(z_values[i][j])) continue;  // Skip valid mesh points//跳过有效网格点
 
-    // Skip unreachable points
+    // Skip unreachable points//跳过无法到达的点
     if (!probe.can_reach(mesh_index_to_xpos(i), mesh_index_to_ypos(j)))
       continue;
 
@@ -1242,29 +1243,29 @@ mesh_index_pair unified_bed_leveling::find_furthest_invalid_mesh_point() {
 
       found_a_real = true;
 
-      // Add in a random weighting factor that scrambles the probing of the
-      // last half of the mesh (when every unprobed mesh point is one index
-      // from a probed location).
+      // Add in a random weighting factor that scrambles the probing of the//添加一个随机权重因子，该因子会扰乱
+      // last half of the mesh (when every unprobed mesh point is one index//网格的后半部分（当每个未固定的网格点都是一个索引时）
+      // from a probed location).//从探测的位置）。
 
       d1 = HYPOT(i - k, j - l) + (1.0f / ((millis() % 47) + 13));
 
-      if (d1 < d2) {    // Invalid mesh point (i,j) is closer to the defined point (k,l)
+      if (d1 < d2) {    // Invalid mesh point (i,j) is closer to the defined point (k,l)//无效网格点（i，j）更接近定义点（k，l）
         d2 = d1;
         nearby.set(i, j);
       }
     }
 
-    //
-    // At this point d2 should have the near defined mesh point to invalid mesh point (i,j)
-    //
+    ////
+    // At this point d2 should have the near defined mesh point to invalid mesh point (i,j)//此时d2应具有接近定义的网格点到无效网格点（i，j）
+    ////
 
     if (found_a_real && nearby.x >= 0 && d2 > farthest.distance) {
-      farthest.pos = nearby; // Found an invalid location farther from the defined mesh point
+      farthest.pos = nearby; // Found an invalid location farther from the defined mesh point//在离定义的网格点较远的位置发现无效位置
       farthest.distance = d2;
     }
-  } // GRID_LOOP
+  } // GRID_LOOP//网格环
 
-  if (!found_a_real && found_a_NAN) {        // if the mesh is totally unpopulated, start the probing
+  if (!found_a_real && found_a_NAN) {        // if the mesh is totally unpopulated, start the probing//如果网格完全未填充，则开始探测
     farthest.pos.set((GRID_MAX_POINTS_X) / 2, (GRID_MAX_POINTS_Y) / 2);
     farthest.distance = 1;
   }
@@ -1285,12 +1286,12 @@ mesh_index_pair unified_bed_leveling::find_furthest_invalid_mesh_point() {
     if (  d->type == CLOSEST || d->type == (isnan(ubl.z_values[i][j]) ? INVALID : REAL)
       || (d->type == SET_IN_BITMAP && !d->done_flags->marked(i, j))
     ) {
-      // Found a Mesh Point of the specified type!
+      // Found a Mesh Point of the specified type!//找到指定类型的网格点！
       const xy_pos_t mpos = { ubl.mesh_index_to_xpos(i), ubl.mesh_index_to_ypos(j) };
 
-      // If using the probe as the reference there are some unreachable locations.
-      // Also for round beds, there are grid points outside the bed the nozzle can't reach.
-      // Prune them from the list and ignore them till the next Phase (manual nozzle probing).
+      // If using the probe as the reference there are some unreachable locations.//如果使用探针作为参考，则存在一些无法到达的位置。
+      // Also for round beds, there are grid points outside the bed the nozzle can't reach.//同样对于圆形床层，在床层外有喷嘴无法触及的网格点。
+      // Prune them from the list and ignore them till the next Phase (manual nozzle probing).//将它们从列表中删除并忽略，直到下一阶段（手动喷嘴探测）。
 
       if (!(d->probe_relative ? probe.can_reach(mpos) : position_is_reachable(mpos)))
         return false;
@@ -1320,7 +1321,7 @@ mesh_index_pair unified_bed_leveling::find_closest_mesh_point_of_type(const Mesh
     closest.invalidate();
     closest.distance = -99999.9f;
 
-    // Get the reference position, either nozzle or probe
+    // Get the reference position, either nozzle or probe//获取参考位置，喷嘴或探头
     const xy_pos_t ref = probe_relative ? pos + probe.offset_xy : pos;
 
     float best_so_far = 99999.99f;
@@ -1329,30 +1330,30 @@ mesh_index_pair unified_bed_leveling::find_closest_mesh_point_of_type(const Mesh
       if (  type == CLOSEST || type == (isnan(z_values[i][j]) ? INVALID : REAL)
         || (type == SET_IN_BITMAP && !done_flags->marked(i, j))
       ) {
-        // Found a Mesh Point of the specified type!
+        // Found a Mesh Point of the specified type!//找到指定类型的网格点！
         const xy_pos_t mpos = { mesh_index_to_xpos(i), mesh_index_to_ypos(j) };
 
-        // If using the probe as the reference there are some unreachable locations.
-        // Also for round beds, there are grid points outside the bed the nozzle can't reach.
-        // Prune them from the list and ignore them till the next Phase (manual nozzle probing).
+        // If using the probe as the reference there are some unreachable locations.//如果使用探针作为参考，则存在一些无法到达的位置。
+        // Also for round beds, there are grid points outside the bed the nozzle can't reach.//同样对于圆形床层，在床层外有喷嘴无法触及的网格点。
+        // Prune them from the list and ignore them till the next Phase (manual nozzle probing).//将它们从列表中删除并忽略，直到下一阶段（手动喷嘴探测）。
 
         if (!(probe_relative ? probe.can_reach(mpos) : position_is_reachable(mpos)))
           continue;
 
-        // Reachable. Check if it's the best_so_far location to the nozzle.
+        // Reachable. Check if it's the best_so_far location to the nozzle.//可达的。检查是否是目前为止喷嘴的最佳位置。
 
         const xy_pos_t diff = current_position - mpos;
         const float distance = (ref - mpos).magnitude() + diff.magnitude() * 0.1f;
 
-        // factor in the distance from the current location for the normal case
-        // so the nozzle isn't running all over the bed.
+        // factor in the distance from the current location for the normal case//正常情况下与当前位置的距离系数
+        // so the nozzle isn't running all over the bed.//所以喷嘴没有在床上到处跑。
         if (distance < best_so_far) {
-          best_so_far = distance;   // Found a closer location with the desired value type.
+          best_so_far = distance;   // Found a closer location with the desired value type.//找到具有所需值类型的较近位置。
           closest.pos.set(i, j);
           closest.distance = best_so_far;
         }
       }
-    } // GRID_LOOP
+    } // GRID_LOOP//网格环
 
     return closest;
 
@@ -1367,10 +1368,10 @@ mesh_index_pair unified_bed_leveling::find_closest_mesh_point_of_type(const Mesh
 
 bool unified_bed_leveling::smart_fill_one(const uint8_t x, const uint8_t y, const int8_t xdir, const int8_t ydir) {
   const float v = z_values[x][y];
-  if (isnan(v)) {                           // A NAN...
+  if (isnan(v)) {                           // A NAN...//阿南。。。
     const int8_t dx = x + xdir, dy = y + ydir;
     const float v1 = z_values[dx][dy];
-    if (!isnan(v1)) {                       // ...next to a pair of real values?
+    if (!isnan(v1)) {                       // ...next to a pair of real values?//…在一对真实值旁边？
       const float v2 = z_values[dx + xdir][dy + ydir];
       if (!isnan(v2)) {
         z_values[x][y] = v1 < v2 ? v1 : v1 + v1 - v2;
@@ -1386,10 +1387,10 @@ typedef struct { uint8_t sx, ex, sy, ey; bool yfirst; } smart_fill_info;
 
 void unified_bed_leveling::smart_fill_mesh() {
   static const smart_fill_info
-    info0 PROGMEM = { 0, GRID_MAX_POINTS_X,      0, GRID_MAX_POINTS_Y - 2,  false },  // Bottom of the mesh looking up
-    info1 PROGMEM = { 0, GRID_MAX_POINTS_X,      GRID_MAX_POINTS_Y - 1, 0,  false },  // Top of the mesh looking down
-    info2 PROGMEM = { 0, GRID_MAX_POINTS_X - 2,  0, GRID_MAX_POINTS_Y,      true  },  // Left side of the mesh looking right
-    info3 PROGMEM = { GRID_MAX_POINTS_X - 1, 0,  0, GRID_MAX_POINTS_Y,      true  };  // Right side of the mesh looking left
+    info0 PROGMEM = { 0, GRID_MAX_POINTS_X,      0, GRID_MAX_POINTS_Y - 2,  false },  // Bottom of the mesh looking up//网格底部向上看
+    info1 PROGMEM = { 0, GRID_MAX_POINTS_X,      GRID_MAX_POINTS_Y - 1, 0,  false },  // Top of the mesh looking down//网格顶部向下看
+    info2 PROGMEM = { 0, GRID_MAX_POINTS_X - 2,  0, GRID_MAX_POINTS_Y,      true  },  // Left side of the mesh looking right//网格的左侧向右看
+    info3 PROGMEM = { GRID_MAX_POINTS_X - 1, 0,  0, GRID_MAX_POINTS_Y,      true  };  // Right side of the mesh looking left//网格的右侧向左看
   static const smart_fill_info * const info[] PROGMEM = { &info0, &info1, &info2, &info3 };
 
   LOOP_L_N(i, COUNT(info)) {
@@ -1413,7 +1414,7 @@ void unified_bed_leveling::smart_fill_mesh() {
 
 #if HAS_BED_PROBE
 
-  //#define VALIDATE_MESH_TILT
+  //#define VALIDATE_MESH_TILT//#定义验证网格倾斜
 
   #include "../../../libs/vector_3.h"
 
@@ -1430,7 +1431,7 @@ void unified_bed_leveling::smart_fill_mesh() {
     bool abort_flag = false;
 
     #ifdef VALIDATE_MESH_TILT
-      float z1, z2, z3;  // Needed for algorithm validation below
+      float z1, z2, z3;  // Needed for algorithm validation below//需要在下面进行算法验证
     #endif
 
     struct linear_fit_data lsf_results;
@@ -1503,7 +1504,7 @@ void unified_bed_leveling::smart_fill_mesh() {
         return;
       }
     }
-    else { // !do_3_pt_leveling
+    else { // !do_3_pt_leveling// !进行3点水平测量
 
       bool zig_zag = false;
 
@@ -1520,7 +1521,7 @@ void unified_bed_leveling::smart_fill_mesh() {
             SERIAL_ECHOLNPAIR("Tilting mesh point ", point_num, "/", total_points, "\n");
             TERN_(HAS_STATUS_MESSAGE, ui.status_printf_P(0, PSTR(S_FMT " %i/%i"), GET_TEXT(MSG_LCD_TILTING_MESH), point_num, total_points));
 
-            measured_z = probe.probe_at_point(rpos, parser.seen_test('E') ? PROBE_PT_STOW : PROBE_PT_RAISE, param.V_verbosity); // TODO: Needs error handling
+            measured_z = probe.probe_at_point(rpos, parser.seen_test('E') ? PROBE_PT_STOW : PROBE_PT_RAISE, param.V_verbosity); // TODO: Needs error handling//TODO:需要错误处理
 
             abort_flag = isnan(measured_z);
 
@@ -1651,19 +1652,19 @@ void unified_bed_leveling::smart_fill_mesh() {
         DEBUG_ECHOPAIR("   Z error = (", Z_SAFE_HOMING_X_POINT, ",", Z_SAFE_HOMING_Y_POINT);
         DEBUG_ECHOLNPAIR_F(") = ", get_z_correction(safe_homing_xy), 6);
       #endif
-    } // DEBUGGING(LEVELING)
+    } // DEBUGGING(LEVELING)//调试（调平）
 
   }
 
-#endif // HAS_BED_PROBE
+#endif // HAS_BED_PROBE//你有床吗
 
 #if ENABLED(UBL_G29_P31)
   void unified_bed_leveling::smart_fill_wlsf(const_float_t weight_factor) {
 
-    // For each undefined mesh point, compute a distance-weighted least squares fit
-    // from all the originally populated mesh points, weighted toward the point
-    // being extrapolated so that nearby points will have greater influence on
-    // the point being extrapolated.  Then extrapolate the mesh point from WLSF.
+    // For each undefined mesh point, compute a distance-weighted least squares fit//对于每个未定义的网格点，计算距离加权最小二乘拟合
+    // from all the originally populated mesh points, weighted toward the point//从所有原始填充的网格点开始，向该点加权
+    // being extrapolated so that nearby points will have greater influence on//进行外推，以便附近的点对
+    // the point being extrapolated.  Then extrapolate the mesh point from WLSF.//正在推断的要点。然后从WLSF推断网格点。
 
     static_assert((GRID_MAX_POINTS_Y) <= 16, "GRID_MAX_POINTS_Y too big");
     uint16_t bitmap[GRID_MAX_POINTS_X] = { 0 };
@@ -1681,7 +1682,7 @@ void unified_bed_leveling::smart_fill_mesh() {
       LOOP_L_N(iy, GRID_MAX_POINTS_Y) {
         ppos.y = mesh_index_to_ypos(iy);
         if (isnan(z_values[ix][iy])) {
-          // undefined mesh point at (ppos.x,ppos.y), compute weighted LSF from original valid mesh points.
+          // undefined mesh point at (ppos.x,ppos.y), compute weighted LSF from original valid mesh points.//未定义的网格点位于（ppos.x，ppos.y），从原始有效网格点计算加权LSF。
           incremental_LSF_reset(&lsf_results);
           xy_pos_t rpos;
           LOOP_L_N(jx, GRID_MAX_POINTS_X) {
@@ -1702,14 +1703,14 @@ void unified_bed_leveling::smart_fill_mesh() {
           const float ez = -lsf_results.D - lsf_results.A * ppos.x - lsf_results.B * ppos.y;
           z_values[ix][iy] = ez;
           TERN_(EXTENSIBLE_UI, ExtUI::onMeshUpdate(ix, iy, z_values[ix][iy]));
-          idle(); // housekeeping
+          idle(); // housekeeping//内务管理
         }
       }
     }
 
     SERIAL_ECHOLNPGM("done");
   }
-#endif // UBL_G29_P31
+#endif // UBL_G29_P31//UBL_G29_P31
 
 #if ENABLED(UBL_DEVEL_DEBUGGING)
   /**
@@ -1784,7 +1785,7 @@ void unified_bed_leveling::smart_fill_mesh() {
 
       SERIAL_ECHOLNPAIR("EEPROM can hold ", settings.calc_num_meshes(), " meshes.\n");
       serial_delay(25);
-    #endif // UBL_DEVEL_DEBUGGING
+    #endif // UBL_DEVEL_DEBUGGING//UBL_-DEVEL_调试
 
     if (!sanity_check()) {
       echo_name();
@@ -1846,6 +1847,6 @@ void unified_bed_leveling::smart_fill_mesh() {
     }
   }
 
-#endif // UBL_DEVEL_DEBUGGING
+#endif // UBL_DEVEL_DEBUGGING//UBL_-DEVEL_调试
 
-#endif // AUTO_BED_LEVELING_UBL
+#endif // AUTO_BED_LEVELING_UBL//自动调平床

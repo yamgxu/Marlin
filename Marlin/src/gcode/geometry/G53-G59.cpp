@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -27,7 +28,7 @@
 
 #include "../../module/stepper.h"
 
-//#define DEBUG_M53
+//#define DEBUG_M53//#定义DEBUG_M53
 
 /**
  * Select a coordinate system and update the workspace offset.
@@ -59,14 +60,14 @@ bool GcodeSuite::select_coordinate_system(const int8_t _new) {
  */
 void GcodeSuite::G53() {
   const int8_t old_system = active_coordinate_system;
-  select_coordinate_system(-1);   // Always remove workspace offsets
+  select_coordinate_system(-1);   // Always remove workspace offsets//始终删除工作空间偏移
   #ifdef DEBUG_M53
     SERIAL_ECHOLNPGM("Go to native space");
     report_current_position();
   #endif
 
-  if (parser.chain()) {       // Command to chain?
-    process_parsed_command(); // ...process the chained command
+  if (parser.chain()) {       // Command to chain?//指挥链？
+    process_parsed_command(); // ...process the chained command//…处理链接命令
     select_coordinate_system(old_system);
     #ifdef DEBUG_M53
       SERIAL_ECHOLNPAIR("Go back to workspace ", old_system);
@@ -98,4 +99,4 @@ void GcodeSuite::G57() { G54_59(); }
 void GcodeSuite::G58() { G54_59(); }
 void GcodeSuite::G59() { G54_59(parser.subcode); }
 
-#endif // CNC_COORDINATE_SYSTEMS
+#endif // CNC_COORDINATE_SYSTEMS//CNC坐标系

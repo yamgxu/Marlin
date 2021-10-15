@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -23,9 +24,9 @@
 
 #define BOARD_INFO_NAME "MAKEboard Mini"
 
-//
-// Only 3 Limit Switch plugs on Micromake C1
-//
+////
+// Only 3 Limit Switch plugs on Micromake C1//Micromake C1上只有3个限位开关插头
+////
 #define X_STOP_PIN          2
 #define Y_STOP_PIN         15
 #define Z_STOP_PIN         19

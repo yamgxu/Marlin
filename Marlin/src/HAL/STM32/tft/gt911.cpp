@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2021 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -33,55 +34,55 @@ SW_IIC::SW_IIC(uint16_t sda, uint16_t scl) {
   sda_pin = sda;
 }
 
-// Software I2C hardware io init
+// Software I2C hardware io init//软件I2C硬件io初始化
 void SW_IIC::init() {
   OUT_WRITE(scl_pin, HIGH);
   OUT_WRITE(sda_pin, HIGH);
 }
 
-// Software I2C start signal
+// Software I2C start signal//软件I2C启动信号
 void SW_IIC::start() {
-  write_sda(HIGH); // SDA = 1
-  write_scl(HIGH); // SCL = 1
+  write_sda(HIGH); // SDA = 1//SDA=1
+  write_scl(HIGH); // SCL = 1//症状自评量表=1
   iic_delay(2);
-  write_sda(LOW); // SDA = 0
+  write_sda(LOW); // SDA = 0//SDA=0
   iic_delay(1);
-  write_scl(LOW); // SCL = 0  // keep SCL low, avoid false stop caused by level jump caused by SDA switching IN/OUT
+  write_scl(LOW); // SCL = 0  // keep SCL low, avoid false stop caused by level jump caused by SDA switching IN/OUT//SCL=0//将SCL保持在较低水平，避免SDA开关入/出导致的电平跳变导致的错误停止
 }
 
-// Software I2C stop signal
+// Software I2C stop signal//软件I2C停止信号
 void SW_IIC::stop() {
-  write_scl(LOW); // SCL = 0
+  write_scl(LOW); // SCL = 0//症状自评量表=0
   iic_delay(2);
-  write_sda(LOW); // SDA = 0
+  write_sda(LOW); // SDA = 0//SDA=0
   iic_delay(2);
-  write_scl(HIGH); // SCL = 1
+  write_scl(HIGH); // SCL = 1//症状自评量表=1
   iic_delay(2);
-  write_sda(HIGH); // SDA = 1
+  write_sda(HIGH); // SDA = 1//SDA=1
 }
 
-// Software I2C sends ACK or NACK signal
+// Software I2C sends ACK or NACK signal//软件I2C发送ACK或NACK信号
 void SW_IIC::send_ack(bool ack) {
-  write_sda(ack ? LOW : HIGH); // SDA = !ack
+  write_sda(ack ? LOW : HIGH); // SDA = !ack//SDA=！阿克
   iic_delay(2);
-  write_scl(HIGH); // SCL = 1
+  write_scl(HIGH); // SCL = 1//症状自评量表=1
   iic_delay(2);
-  write_scl(LOW); // SCL = 0
+  write_scl(LOW); // SCL = 0//症状自评量表=0
 }
 
-// Software I2C read ACK or NACK signal
+// Software I2C read ACK or NACK signal//软件I2C读取ACK或NACK信号
 bool SW_IIC::read_ack() {
   bool error = 0;
   set_sda_in();
 
   iic_delay(2);
 
-  write_scl(HIGH); // SCL = 1
+  write_scl(HIGH); // SCL = 1//症状自评量表=1
   error = read_sda();
 
   iic_delay(2);
 
-  write_scl(LOW);  // SCL = 0
+  write_scl(LOW);  // SCL = 0//症状自评量表=0
 
   set_sda_out();
   return error;
@@ -89,16 +90,16 @@ bool SW_IIC::read_ack() {
 
 void SW_IIC::send_byte(uint8_t txd) {
   LOOP_L_N(i, 8) {
-    write_sda(txd & 0x80); // write data bit
+    write_sda(txd & 0x80); // write data bit//写入数据位
     txd <<= 1;
     iic_delay(1);
-    write_scl(HIGH); // SCL = 1
+    write_scl(HIGH); // SCL = 1//症状自评量表=1
     iic_delay(2);
-    write_scl(LOW); // SCL = 0
+    write_scl(LOW); // SCL = 0//症状自评量表=0
     iic_delay(1);
   }
 
-  read_ack();  // wait ack
+  read_ack();  // wait ack//等待确认
 }
 
 uint8_t SW_IIC::read_byte(bool ack) {
@@ -106,11 +107,11 @@ uint8_t SW_IIC::read_byte(bool ack) {
 
   set_sda_in();
   LOOP_L_N(i, 8) {
-    write_scl(HIGH); // SCL = 1
+    write_scl(HIGH); // SCL = 1//症状自评量表=1
     iic_delay(1);
     data <<= 1;
     if (read_sda()) data++;
-    write_scl(LOW); // SCL = 0
+    write_scl(LOW); // SCL = 0//症状自评量表=0
     iic_delay(2);
   }
   set_sda_out();
@@ -125,13 +126,13 @@ SW_IIC GT911::sw_iic = SW_IIC(GT911_SW_I2C_SDA_PIN, GT911_SW_I2C_SCL_PIN);
 
 void GT911::write_reg(uint16_t reg, uint8_t reg_len, uint8_t* w_data, uint8_t w_len) {
   sw_iic.start();
-  sw_iic.send_byte(gt911_slave_address);  // Set IIC Slave address
-  LOOP_L_N(i, reg_len) {  // Set reg address
+  sw_iic.send_byte(gt911_slave_address);  // Set IIC Slave address//设置IIC从机地址
+  LOOP_L_N(i, reg_len) {  // Set reg address//设置注册地址
     uint8_t r = (reg >> (8 * (reg_len - 1 - i))) & 0xFF;
     sw_iic.send_byte(r);
   }
 
-  LOOP_L_N(i, w_len) {  // Write data to reg
+  LOOP_L_N(i, w_len) {  // Write data to reg//将数据写入注册表
     sw_iic.send_byte(w_data[i]);
   }
   sw_iic.stop();
@@ -139,17 +140,17 @@ void GT911::write_reg(uint16_t reg, uint8_t reg_len, uint8_t* w_data, uint8_t w_
 
 void GT911::read_reg(uint16_t reg, uint8_t reg_len, uint8_t* r_data, uint8_t r_len) {
   sw_iic.start();
-  sw_iic.send_byte(gt911_slave_address);  // Set IIC Slave address
-  LOOP_L_N(i, reg_len) {  // Set reg address
+  sw_iic.send_byte(gt911_slave_address);  // Set IIC Slave address//设置IIC从机地址
+  LOOP_L_N(i, reg_len) {  // Set reg address//设置注册地址
     uint8_t r = (reg >> (8 * (reg_len - 1 - i))) & 0xFF;
     sw_iic.send_byte(r);
   }
 
   sw_iic.start();
-  sw_iic.send_byte(gt911_slave_address + 1);  // Set read mode
+  sw_iic.send_byte(gt911_slave_address + 1);  // Set read mode//设置读取模式
 
   LOOP_L_N(i, r_len) {
-    r_data[i] = sw_iic.read_byte(1);  // Read data from reg
+    r_data[i] = sw_iic.read_byte(1);  // Read data from reg//从注册表读取数据
   }
   sw_iic.stop();
 }
@@ -164,7 +165,7 @@ void GT911::Init() {
   sw_iic.init();
 
   uint8_t clear_reg = 0x0000;
-  write_reg(0x814E, 2, &clear_reg, 2); // Reset to 0 for start
+  write_reg(0x814E, 2, &clear_reg, 2); // Reset to 0 for start//重置为0以启动
 }
 
 bool GT911::getFirstTouchPoint(int16_t *x, int16_t *y) {
@@ -172,10 +173,10 @@ bool GT911::getFirstTouchPoint(int16_t *x, int16_t *y) {
 
   if (reg.REG.status & 0x80) {
     uint8_t clear_reg = 0x00;
-    write_reg(0x814E, 2, &clear_reg, 1); // Reset to 0 for start
+    write_reg(0x814E, 2, &clear_reg, 1); // Reset to 0 for start//重置为0以启动
     read_reg(0x8150, 2, reg.map + 2, 8 * (reg.REG.status & 0x0F));
 
-    // First touch point
+    // First touch point//第一接触点
     *x = ((reg.REG.point[0].xh & 0x0F) << 8) | reg.REG.point[0].xl;
     *y = ((reg.REG.point[0].yh & 0x0F) << 8) | reg.REG.point[0].yl;
     return true;
@@ -198,5 +199,5 @@ bool GT911::getPoint(int16_t *x, int16_t *y) {
   return touched;
 }
 
-#endif // TFT_TOUCH_DEVICE_GT911
-#endif // ARDUINO_ARCH_STM32 && !STM32GENERIC
+#endif // TFT_TOUCH_DEVICE_GT911//TFT_触摸式_装置GT911
+#endif // ARDUINO_ARCH_STM32 && !STM32GENERIC//ARDUINO_ARCH_STM32&&！STM32通用

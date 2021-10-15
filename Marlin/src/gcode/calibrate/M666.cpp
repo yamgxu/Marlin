@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -98,6 +99,6 @@
     }
   }
 
-#endif // HAS_EXTRA_ENDSTOPS
+#endif // HAS_EXTRA_ENDSTOPS//有额外的终点站吗
 
-#endif // DELTA || HAS_EXTRA_ENDSTOPS
+#endif // DELTA || HAS_EXTRA_ENDSTOPS//DELTA | |有_额外的|端点

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -48,29 +49,29 @@
 #define ALLOW_SAM3X8E
 #include "../ramps/pins_RAMPS.h"
 
-//
-// Temperature Sensors
-//
+////
+// Temperature Sensors//温度传感器
+////
 #undef TEMP_0_PIN
-#define TEMP_0_PIN                             9  // Analog Input
+#define TEMP_0_PIN                             9  // Analog Input//模拟输入
 
 #undef TEMP_1_PIN
-#define TEMP_1_PIN                            11  // Analog Input
+#define TEMP_1_PIN                            11  // Analog Input//模拟输入
 
 #undef TEMP_BED_PIN
-#define TEMP_BED_PIN                          10  // Analog Input
+#define TEMP_BED_PIN                          10  // Analog Input//模拟输入
 
-// SPI for Max6675 or Max31855 Thermocouple
+// SPI for Max6675 or Max31855 Thermocouple//Max6675或Max31855热电偶的SPI
 #undef MAX6675_SS_PIN
 #if DISABLED(SDSUPPORT)
-  #define MAX6675_SS_PIN                      69  // Don't use 53 if using Display/SD card
+  #define MAX6675_SS_PIN                      69  // Don't use 53 if using Display/SD card//如果使用显示卡/SD卡，请不要使用53
 #else
-  #define MAX6675_SS_PIN                      69  // Don't use 49 (SD_DETECT_PIN)
+  #define MAX6675_SS_PIN                      69  // Don't use 49 (SD_DETECT_PIN)//不要使用49（SD_DETECT_引脚）
 #endif
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 #if HAS_WIRED_LCD
 
   #if BOTH(IS_NEWPANEL, PANEL_ONE)
@@ -100,7 +101,7 @@
       #define DOGLCD_CS                       69
 
       #undef LCD_BACKLIGHT_PIN
-      #define LCD_BACKLIGHT_PIN               68  // backlight LED on A14/D68
+      #define LCD_BACKLIGHT_PIN               68  // backlight LED on A14/D68//A14/D68上的背光LED
 
       #undef KILL_PIN
       #define KILL_PIN                        67
@@ -112,20 +113,20 @@
 
       #if IS_RRW_KEYPAD
         #undef BTN_EN1
-        #define BTN_EN1                       67  // encoder
+        #define BTN_EN1                       67  // encoder//编码器
 
         #undef BTN_ENC
-        #define BTN_ENC                       66  // enter button
+        #define BTN_ENC                       66  // enter button//输入按钮
       #elif ENABLED(PANEL_ONE)
         #undef BTN_EN2
-        #define BTN_EN2                       66  // AUX2 PIN 4
+        #define BTN_EN2                       66  // AUX2 PIN 4//AUX2引脚4
       #endif
     #endif
 
     #if ENABLED(REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER)
-      #define BTN_ENC_EN             LCD_PINS_D7  // Detect the presence of the encoder
+      #define BTN_ENC_EN             LCD_PINS_D7  // Detect the presence of the encoder//检测编码器的存在
     #endif
 
-  #endif // IS_NEWPANEL
+  #endif // IS_NEWPANEL//这是新小组吗
 
-#endif // HAS_WIRED_LCD
+#endif // HAS_WIRED_LCD//有有线液晶显示器吗

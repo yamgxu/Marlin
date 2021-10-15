@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -32,9 +33,9 @@ TWIBus i2c;
 
 TWIBus::TWIBus() {
   #if I2C_SLAVE_ADDRESS == 0
-    Wire.begin();                  // No address joins the BUS as the master
+    Wire.begin();                  // No address joins the BUS as the master//没有地址作为主地址加入总线
   #else
-    Wire.begin(I2C_SLAVE_ADDRESS); // Join the bus as a slave
+    Wire.begin(I2C_SLAVE_ADDRESS); // Join the bus as a slave//作为奴隶加入公共汽车
   #endif
   reset();
 }
@@ -80,14 +81,14 @@ void TWIBus::send() {
   reset();
 }
 
-// static
+// static//静止的
 void TWIBus::echoprefix(uint8_t bytes, const char pref[], uint8_t adr) {
   SERIAL_ECHO_START();
   SERIAL_ECHOPGM_P(pref);
   SERIAL_ECHOPAIR(": from:", adr, " bytes:", bytes, " data:");
 }
 
-// static
+// static//静止的
 void TWIBus::echodata(uint8_t bytes, const char pref[], uint8_t adr) {
   echoprefix(bytes, pref, adr);
   while (bytes-- && Wire.available()) SERIAL_CHAR(Wire.read());
@@ -105,7 +106,7 @@ bool TWIBus::request(const uint8_t bytes) {
 
   debug(PSTR("request"), bytes);
 
-  // requestFrom() is a blocking function
+  // requestFrom() is a blocking function//requestFrom（）是一个阻塞函数
   if (Wire.requestFrom(I2C_ADDRESS(addr), bytes) == 0) {
     debug("request fail", I2C_ADDRESS(addr));
     return false;
@@ -132,7 +133,7 @@ uint8_t TWIBus::capture(char *dst, const uint8_t bytes) {
   return count;
 }
 
-// static
+// static//静止的
 void TWIBus::flush() {
   while (Wire.available()) Wire.read();
 }
@@ -157,11 +158,11 @@ void TWIBus::flush() {
     reset();
   }
 
-  void i2c_on_receive(int bytes) { // just echo all bytes received to serial
+  void i2c_on_receive(int bytes) { // just echo all bytes received to serial//只需将接收到的所有字节回显到串行
     i2c.receive(bytes);
   }
 
-  void i2c_on_request() {          // just send dummy data for now
+  void i2c_on_request() {          // just send dummy data for now//现在只发送虚拟数据
     i2c.reply("Hello World!\n");
   }
 
@@ -169,7 +170,7 @@ void TWIBus::flush() {
 
 #if ENABLED(DEBUG_TWIBUS)
 
-  // static
+  // static//静止的
   void TWIBus::prefix(const char func[]) {
     SERIAL_ECHOPGM("TWIBus::");
     SERIAL_ECHOPGM_P(func);
@@ -187,4 +188,4 @@ void TWIBus::flush() {
 
 #endif
 
-#endif // EXPERIMENTAL_I2CBUS
+#endif // EXPERIMENTAL_I2CBUS//实验性I2CBUS

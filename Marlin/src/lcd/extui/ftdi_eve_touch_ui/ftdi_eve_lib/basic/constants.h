@@ -1,3 +1,4 @@
+/** translatione by yx */
 /***************
  * constants.h *
  ***************/
@@ -27,7 +28,7 @@
 
 #pragma once
 
-// OPTIONS
+// OPTIONS//选择权
 
 namespace FTDI {
   constexpr uint16_t OPT_3D           = 0x0000;
@@ -55,7 +56,7 @@ namespace FTDI_FT810 {
   constexpr uint16_t OPT_SOUND       = 0x0020;
 }
 
-// GPIO Bits
+// GPIO Bits//GPIO位
 
 namespace FTDI {
   constexpr uint8_t GPIO_GP0         = 1 << 0;
@@ -69,7 +70,7 @@ namespace FTDI_FT810 {
   constexpr uint16_t GPIOX_DISP      = 1 << 15;
 }
 
-// HOST COMMANDS
+// HOST COMMANDS//主机命令
 
 namespace FTDI {
   constexpr uint8_t ACTIVE  = 0x00;
@@ -90,7 +91,7 @@ namespace FTDI_FT810 {
     constexpr uint8_t CLKSEL  = 0x61;
 }
 
-// DISPLAY LIST COMMANDS
+// DISPLAY LIST COMMANDS//显示列表命令
 
 namespace FTDI {
   constexpr uint8_t ARGB1555                           = 0;
@@ -218,7 +219,7 @@ namespace FTDI_FT810_DL {
   constexpr uint32_t VERTEX_TRANSLATE_Y                 = 0x2C000000;
 }
 
-// CO-PROCESSOR ENGINE COMMANDS
+// CO-PROCESSOR ENGINE COMMANDS//协处理器引擎命令
 namespace FTDI {
   constexpr uint32_t CMD_DLSTART                        = 0xFFFFFF00;
   constexpr uint32_t CMD_SWAP                           = 0xFFFFFF01;
@@ -347,7 +348,7 @@ namespace FTDI {
     END_SONG                                        = 0xFF,
     REST                                            = 0x00,
 
-    NOTE_C1                                         = 0x18, // 24
+    NOTE_C1                                         = 0x18, // 24// 24
     NOTE_C1S                                        = 0x19,
     NOTE_D1                                         = 0x1A,
     NOTE_D1S                                        = 0x1B,
@@ -360,7 +361,7 @@ namespace FTDI {
     NOTE_A1S                                        = 0x22,
     NOTE_B1                                         = 0x23,
 
-    NOTE_C2                                         = 0x24,  //36
+    NOTE_C2                                         = 0x24,  //36//36
     NOTE_C2S                                        = 0x25,
     NOTE_D2                                         = 0x26,
     NOTE_D2S                                        = 0x27,

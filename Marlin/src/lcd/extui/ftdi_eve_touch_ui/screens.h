@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*************
  * screens.h *
  *************/
@@ -47,4 +48,4 @@ extern tiny_timer_t refresh_timer;
   #include "generic/screens.h"
 #endif
 
-#endif // TOUCH_UI_FTDI_EVE
+#endif // TOUCH_UI_FTDI_EVE//触摸屏

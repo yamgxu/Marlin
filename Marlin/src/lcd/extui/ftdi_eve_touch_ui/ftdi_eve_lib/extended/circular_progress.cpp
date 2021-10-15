@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*************************
  * circular_progress.cpp *
  *************************/
@@ -38,7 +39,7 @@ namespace FTDI {
     const int cx = x * 16 + w * 8;
     const int cy = y * 16 + h * 8;
 
-    // Load a rim shape into stencil buffer
+    // Load a rim shape into stencil buffer//将轮辋形状加载到模具缓冲区中
     cmd.cmd(SAVE_CONTEXT());
     cmd.cmd(TAG_MASK(0));
     cmd.cmd(CLEAR(0,1,0));
@@ -52,37 +53,37 @@ namespace FTDI {
     cmd.cmd(VERTEX2F(cx, cy));
     cmd.cmd(RESTORE_CONTEXT());
 
-    // Mask further drawing by stencil buffer
+    // Mask further drawing by stencil buffer//通过模具缓冲区屏蔽进一步绘图
     cmd.cmd(SAVE_CONTEXT());
     cmd.cmd(STENCIL_FUNC(STENCIL_FUNC_NOTEQUAL, 0, 255));
 
-    // Fill the background
+    // Fill the background//填充背景
     cmd.cmd(COLOR_RGB(bgcolor));
     cmd.cmd(BEGIN(POINTS));
     cmd.cmd(POINT_SIZE(ro));
     cmd.cmd(VERTEX2F(cx, cy));
     cmd.cmd(COLOR_RGB(fgcolor));
 
-    // Paint upper-right quadrant
+    // Paint upper-right quadrant//绘制右上象限
     cmd.cmd(BEGIN(EDGE_STRIP_A));
     cmd.cmd(VERTEX2F(cx, cy));
     cmd.cmd(VERTEX2F(cx + ro*sin(a1) + 16,cy - ro*cos(a1) + 8));
 
-    // Paint lower-right quadrant
+    // Paint lower-right quadrant//绘制右下象限
     if (a > PI/2) {
       cmd.cmd(BEGIN(EDGE_STRIP_R));
       cmd.cmd(VERTEX2F(cx, cy));
       cmd.cmd(VERTEX2F(cx + ro*cos(a2),cy + ro*sin(a2) + 16));
     }
 
-    // Paint lower-left quadrant
+    // Paint lower-left quadrant//绘制左下象限
     if (a > PI) {
       cmd.cmd(BEGIN(EDGE_STRIP_B));
       cmd.cmd(VERTEX2F(cx, cy));
       cmd.cmd(VERTEX2F(cx - ro*sin(a3) - 8,cy + ro*cos(a3)));
     }
 
-    // Paint upper-left quadrant
+    // Paint upper-left quadrant//绘制左上象限
     if (a > 1.5*PI) {
       cmd.cmd(BEGIN(EDGE_STRIP_L));
       cmd.cmd(VERTEX2F(cx, cy));
@@ -90,7 +91,7 @@ namespace FTDI {
     }
     cmd.cmd(RESTORE_CONTEXT());
 
-    // Draw the text
+    // Draw the text//画课文
 
     cmd.cmd(SAVE_CONTEXT());
     cmd.cmd(COLOR_RGB(fgcolor));
@@ -103,6 +104,6 @@ namespace FTDI {
     sprintf(str,"%d\%%",int(percent));
     draw_circular_progress(cmd, x, y, w, h, percent, str, bgcolor, fgcolor);
   }
-} // namespace FTDI
+} // namespace FTDI//名称空间FTDI
 
-#endif // FTDI_EXTENDED
+#endif // FTDI_EXTENDED//FTDI_扩展

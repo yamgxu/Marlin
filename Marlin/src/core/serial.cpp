@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,7 +30,7 @@
 
 uint8_t marlin_debug_flags = MARLIN_DEBUG_NONE;
 
-// Commonly-used strings in serial output
+// Commonly-used strings in serial output//串行输出中常用的字符串
 PGMSTR(NUL_STR,   "");   PGMSTR(SP_P_STR, " P");  PGMSTR(SP_T_STR, " T");
 PGMSTR(X_STR,     "X");  PGMSTR(Y_STR,     "Y");  PGMSTR(Z_STR,     "Z");  PGMSTR(E_STR,     "E");
 PGMSTR(X_LBL,     "X:"); PGMSTR(Y_LBL,     "Y:"); PGMSTR(Z_LBL,     "Z:"); PGMSTR(E_LBL,     "E:");
@@ -41,7 +42,7 @@ PGMSTR(I_LBL, AXIS4_STR ":"); PGMSTR(J_LBL, AXIS5_STR ":"); PGMSTR(K_LBL, AXIS6_
 PGMSTR(SP_I_STR, " " AXIS4_STR);     PGMSTR(SP_J_STR, " " AXIS5_STR);     PGMSTR(SP_K_STR, " " AXIS6_STR);
 PGMSTR(SP_I_LBL, " " AXIS4_STR ":"); PGMSTR(SP_J_LBL, " " AXIS5_STR ":"); PGMSTR(SP_K_LBL, " " AXIS6_STR ":");
 
-// Hook Meatpack if it's enabled on the first leaf
+// Hook Meatpack if it's enabled on the first leaf//如果在第一片叶子上启用，则勾选Meatpack
 #if ENABLED(MEATPACK_ON_SERIAL_PORT_1)
   SerialLeafT1 mpSerial1(false, _SERIAL_LEAF_1);
 #endif
@@ -52,10 +53,10 @@ PGMSTR(SP_I_LBL, " " AXIS4_STR ":"); PGMSTR(SP_J_LBL, " " AXIS5_STR ":"); PGMSTR
   SerialLeafT3 mpSerial3(false, _SERIAL_LEAF_3);
 #endif
 
-// Step 2: For multiserial, handle the second serial port as well
+// Step 2: For multiserial, handle the second serial port as well//步骤2：对于多串口，还要处理第二个串口
 #if HAS_MULTI_SERIAL
   #if HAS_ETHERNET
-    // We need a definition here
+    // We need a definition here//我们需要一个定义
     SerialLeafT2 msSerial2(ethernet.have_telnet_client, MYSERIAL2, false);
   #endif
 

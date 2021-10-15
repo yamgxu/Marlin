@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -23,7 +24,7 @@
 
 #define REVERSE_TEMP_SENSOR_RANGE_201 1
 
-// Pt100 with LMV324 amp on Overlord v1.1 electronics
+// Pt100 with LMV324 amp on Overlord v1.1 electronics//霸王v1.1电子设备上配备LMV324放大器的Pt100
 constexpr temp_entry_t temptable_201[] PROGMEM = {
   { OV(   0),   0 },
   { OV(   8),   1 },

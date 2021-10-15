@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -52,11 +53,11 @@ void lv_update_touch_calibration_screen() {
 
   calibrationState calibration_stage = touch_calibration.get_calibration_state();
   if (calibration_stage == CALIBRATION_NONE) {
-    // start and clear screen
+    // start and clear screen//启动并清除屏幕
     calibration_stage = touch_calibration.calibration_start();
   }
   else {
-    // clear last cross
+    // clear last cross//清除最后一个十字架
     x = touch_calibration.calibration_points[_MIN(calibration_stage - 1, CALIBRATION_BOTTOM_RIGHT)].x;
     y = touch_calibration.calibration_points[_MIN(calibration_stage - 1, CALIBRATION_BOTTOM_RIGHT)].y;
     drawCross(x, y, LV_COLOR_BACKGROUND.full);
@@ -64,7 +65,7 @@ void lv_update_touch_calibration_screen() {
 
   const char *str = nullptr;
   if (calibration_stage < CALIBRATION_SUCCESS) {
-    // handle current state
+    // handle current state//处理当前状态
     switch (calibration_stage) {
       case CALIBRATION_TOP_LEFT: str = GET_TEXT(MSG_TOP_LEFT); break;
       case CALIBRATION_BOTTOM_LEFT: str = GET_TEXT(MSG_BOTTOM_LEFT); break;
@@ -78,13 +79,13 @@ void lv_update_touch_calibration_screen() {
     drawCross(x, y, LV_COLOR_WHITE.full);
   }
   else {
-    // end calibration
+    // end calibration//末端校准
     str = calibration_stage == CALIBRATION_SUCCESS ? GET_TEXT(MSG_CALIBRATION_COMPLETED) : GET_TEXT(MSG_CALIBRATION_FAILED);
     touch_calibration.calibration_end();
     lv_big_button_create(scr, "F:/bmp_return.bin", common_menu.text_back, BTN_X_PIXEL * 3 + INTERVAL_V * 4, BTN_Y_PIXEL + INTERVAL_H + titleHeight, event_handler, ID_TC_RETURN);
   }
 
-  // draw current message
+  // draw current message//绘制当前消息
   lv_label_set_text(status_label, str);
   lv_obj_align(status_label, nullptr, LV_ALIGN_CENTER, 0, 0);
 }
@@ -115,4 +116,4 @@ void lv_clear_touch_calibration_screen() {
   lv_obj_del(scr);
 }
 
-#endif // HAS_TFT_LVGL_UI && TOUCH_SCREEN_CALIBRATION
+#endif // HAS_TFT_LVGL_UI && TOUCH_SCREEN_CALIBRATION//具有TFT LVGL UI和触摸屏校准功能

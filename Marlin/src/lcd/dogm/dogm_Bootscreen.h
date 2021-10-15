@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -40,7 +41,7 @@
   #include "../../../_Bootscreen.h"
 
   #if ENABLED(CUSTOM_BOOTSCREEN_ANIMATED) && DISABLED(CUSTOM_BOOTSCREEN_ANIMATED_FRAME_TIME) && !defined(CUSTOM_BOOTSCREEN_FRAME_TIME)
-    #define CUSTOM_BOOTSCREEN_FRAME_TIME 500 // (ms)
+    #define CUSTOM_BOOTSCREEN_FRAME_TIME 500 // (ms)//（ms）
   #endif
 
   #ifndef CUSTOM_BOOTSCREEN_BMPWIDTH
@@ -523,7 +524,7 @@
 
 #if ENABLED(BOOT_MARLIN_LOGO_ANIMATED)
   #ifndef MARLIN_BOOTSCREEN_FRAME_TIME
-    #define MARLIN_BOOTSCREEN_FRAME_TIME 100 // (ms)
+    #define MARLIN_BOOTSCREEN_FRAME_TIME 100 // (ms)//（ms）
   #endif
   const unsigned char * const marlin_bootscreen_animation[] PROGMEM = {
     start_bmp1, start_bmp2, start_bmp3, start_bmp4, start_bmp5, start_bmp6, start_bmp

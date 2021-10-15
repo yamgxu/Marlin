@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,9 +30,9 @@
 #include "menu_mmu2.h"
 #include "menu_item.h"
 
-//
-// Load Filament
-//
+////
+// Load Filament//负荷灯丝
+////
 
 inline void action_mmu2_load_filament_to_nozzle(const uint8_t tool) {
   ui.reset_status();
@@ -67,9 +68,9 @@ void menu_mmu2_load_to_nozzle() {
   END_MENU();
 }
 
-//
-// Eject Filament
-//
+////
+// Eject Filament//喷射灯丝
+////
 
 void _mmu2_eject_filament(uint8_t index) {
   ui.reset_status();
@@ -93,9 +94,9 @@ void menu_mmu2_eject_filament() {
   END_MENU();
 }
 
-//
-// MMU2 Menu
-//
+////
+// MMU2 Menu//MMU2菜单
+////
 
 void action_mmu2_reset() {
   mmu2.init();
@@ -113,9 +114,9 @@ void menu_mmu2() {
   END_MENU();
 }
 
-//
-// T* Choose Filament
-//
+////
+// T* Choose Filament//选择灯丝
+////
 
 uint8_t feeder_index;
 bool wait_for_mmu_menu;
@@ -134,9 +135,9 @@ void menu_mmu2_choose_filament() {
   END_MENU();
 }
 
-//
-// MMU2 Filament Runout
-//
+////
+// MMU2 Filament Runout//MMU2灯丝跳动
+////
 
 void menu_mmu2_pause() {
   feeder_index = mmu2.get_current_tool();
@@ -167,4 +168,4 @@ uint8_t mmu2_choose_filament() {
   return feeder_index;
 }
 
-#endif // HAS_LCD_MENU && MMU2_MENUS
+#endif // HAS_LCD_MENU && MMU2_MENUS//具有LCD菜单和MMU2菜单

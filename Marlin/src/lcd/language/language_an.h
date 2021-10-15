@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -32,7 +33,7 @@
 #define NOT_EXTENDED_ISO10646_1_5X7
 
 namespace Language_an {
-  using namespace Language_en; // Inherit undefined strings from English
+  using namespace Language_en; // Inherit undefined strings from English//从英语中继承未定义的字符串
 
   constexpr uint8_t    CHARSIZE                            = 1;
   PROGMEM Language_Str LANGUAGE                            = _UxGT("Aragonese");
@@ -40,7 +41,7 @@ namespace Language_an {
   PROGMEM Language_Str WELCOME_MSG                         = MACHINE_NAME _UxGT(" parada.");
   PROGMEM Language_Str MSG_MEDIA_INSERTED                  = _UxGT("Tarcheta mesa");
   PROGMEM Language_Str MSG_MEDIA_REMOVED                   = _UxGT("Tarcheta sacada");
-  PROGMEM Language_Str MSG_LCD_ENDSTOPS                    = _UxGT("Endstops"); // Max length 8 characters
+  PROGMEM Language_Str MSG_LCD_ENDSTOPS                    = _UxGT("Endstops"); // Max length 8 characters//最大长度为8个字符
   PROGMEM Language_Str MSG_MAIN                            = _UxGT("Menu prencipal");
   PROGMEM Language_Str MSG_RUN_AUTO_FILES                  = _UxGT("Inicio automatico");
   PROGMEM Language_Str MSG_DISABLE_STEPPERS                = _UxGT("Amortar motors");
@@ -213,20 +214,20 @@ namespace Language_an {
   PROGMEM Language_Str MSG_DAC_EEPROM_WRITE                = _UxGT("Escri. DAC EEPROM");
   PROGMEM Language_Str MSG_FILAMENT_CHANGE_OPTION_RESUME   = _UxGT("Resumir imp.");
 
-  //
-  // Filament Change screens show up to 3 lines on a 4-line display
-  //                        ...or up to 2 lines on a 3-line display
-  //
+  ////
+  // Filament Change screens show up to 3 lines on a 4-line display//灯丝更换屏幕在4行显示屏上最多显示3行
+  //                        ...or up to 2 lines on a 3-line display//…或在3行显示器上最多显示2行
+  ////
 
   #if LCD_HEIGHT >= 4
-    // Up to 3 lines allowed
+    // Up to 3 lines allowed//最多允许3行
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_INIT          = _UxGT(MSG_3_LINE("Aguardand iniciar", "d'o filamento", "cambear"));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_INSERT        = _UxGT(MSG_3_LINE("Meta o filamento", "y prete lo boton", "pa continar..."));
-  #else // LCD_HEIGHT < 4
-    // Up to 2 lines allowed
+  #else // LCD_HEIGHT < 4//LCD_高度<4
+    // Up to 2 lines allowed//最多允许2行
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_INIT          = _UxGT(MSG_2_LINE("Aguardand iniciar", "d'o fil. cambear"));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_INSERT        = _UxGT(MSG_2_LINE("Meta o filamento", "y prete lo boton"));
-  #endif // LCD_HEIGHT < 4
+  #endif // LCD_HEIGHT < 4//LCD_高度<4
 
   PROGMEM Language_Str MSG_FILAMENT_CHANGE_UNLOAD          = _UxGT(MSG_2_LINE("Aguardando a", "expulsar filament"));
   PROGMEM Language_Str MSG_FILAMENT_CHANGE_LOAD            = _UxGT(MSG_2_LINE("Aguardando a", "cargar filamento"));

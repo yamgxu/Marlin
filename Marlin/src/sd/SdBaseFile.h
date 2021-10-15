@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -41,45 +42,45 @@
  * do not use in user apps
  */
 struct filepos_t {
-  uint32_t position;  // stream byte position
-  uint32_t cluster;   // cluster of position
+  uint32_t position;  // stream byte position//流字节位置
+  uint32_t cluster;   // cluster of position//职位组合
   filepos_t() : position(0), cluster(0) {}
 };
 
-// use the gnu style oflag in open()
-uint8_t const O_READ = 0x01,                    // open() oflag for reading
-              O_RDONLY = O_READ,                // open() oflag - same as O_IN
-              O_WRITE = 0x02,                   // open() oflag for write
-              O_WRONLY = O_WRITE,               // open() oflag - same as O_WRITE
-              O_RDWR = (O_READ | O_WRITE),      // open() oflag for reading and writing
-              O_ACCMODE = (O_READ | O_WRITE),   // open() oflag mask for access modes
-              O_APPEND = 0x04,                  // The file offset shall be set to the end of the file prior to each write.
-              O_SYNC = 0x08,                    // Synchronous writes - call sync() after each write
-              O_TRUNC = 0x10,                   // Truncate the file to zero length
-              O_AT_END = 0x20,                  // Set the initial position at the end of the file
-              O_CREAT = 0x40,                   // Create the file if nonexistent
-              O_EXCL = 0x80;                    // If O_CREAT and O_EXCL are set, open() shall fail if the file exists
+// use the gnu style oflag in open()//在open（）中使用标签的gnu样式
+uint8_t const O_READ = 0x01,                    // open() oflag for reading//打开标签以便阅读
+              O_RDONLY = O_READ,                // open() oflag - same as O_IN//打开（）标签-与中的O_相同
+              O_WRITE = 0x02,                   // open() oflag for write//用于写入的标签的open（）
+              O_WRONLY = O_WRITE,               // open() oflag - same as O_WRITE//打开（）标签-与O_WRITE相同
+              O_RDWR = (O_READ | O_WRITE),      // open() oflag for reading and writing//用于读写的标签的open（）
+              O_ACCMODE = (O_READ | O_WRITE),   // open() oflag mask for access modes//访问模式的标签掩码的open（）
+              O_APPEND = 0x04,                  // The file offset shall be set to the end of the file prior to each write.//每次写入之前，应将文件偏移量设置为文件末尾。
+              O_SYNC = 0x08,                    // Synchronous writes - call sync() after each write//同步写入-每次写入后调用sync（）
+              O_TRUNC = 0x10,                   // Truncate the file to zero length//将文件截断为零长度
+              O_AT_END = 0x20,                  // Set the initial position at the end of the file//在文件末尾设置初始位置
+              O_CREAT = 0x40,                   // Create the file if nonexistent//如果不存在，则创建该文件
+              O_EXCL = 0x80;                    // If O_CREAT and O_EXCL are set, open() shall fail if the file exists//如果设置了O_CREAT和O_EXCL，则如果文件存在，open（）将失败
 
-// SdBaseFile class static and const definitions
+// SdBaseFile class static and const definitions//SdBaseFile类静态和常量定义
 
-// flags for ls()
-uint8_t const LS_DATE = 1,    // ls() flag to print modify date
-              LS_SIZE = 2,    // ls() flag to print file size
-              LS_R = 4;       // ls() flag for recursive list of subdirectories
+// flags for ls()//ls（）的标志
+uint8_t const LS_DATE = 1,    // ls() flag to print modify date//打印修改日期的ls（）标志
+              LS_SIZE = 2,    // ls() flag to print file size//打印文件大小的ls（）标志
+              LS_R = 4;       // ls() flag for recursive list of subdirectories//子目录递归列表的ls（）标志
 
 
-// flags for timestamp
-uint8_t const T_ACCESS = 1,   // Set the file's last access date
-              T_CREATE = 2,   // Set the file's creation date and time
-              T_WRITE = 4;    // Set the file's write date and time
+// flags for timestamp//时间戳标志
+uint8_t const T_ACCESS = 1,   // Set the file's last access date//设置文件的最后访问日期
+              T_CREATE = 2,   // Set the file's creation date and time//设置文件的创建日期和时间
+              T_WRITE = 4;    // Set the file's write date and time//设置文件的写入日期和时间
 
-// values for type_
-uint8_t const FAT_FILE_TYPE_CLOSED = 0,                           // This file has not been opened.
-              FAT_FILE_TYPE_NORMAL = 1,                           // A normal file
-              FAT_FILE_TYPE_ROOT_FIXED = 2,                       // A FAT12 or FAT16 root directory
-              FAT_FILE_TYPE_ROOT32 = 3,                           // A FAT32 root directory
-              FAT_FILE_TYPE_SUBDIR = 4,                           // A subdirectory file
-              FAT_FILE_TYPE_MIN_DIR = FAT_FILE_TYPE_ROOT_FIXED;   // Test value for directory type
+// values for type_//类型的值_
+uint8_t const FAT_FILE_TYPE_CLOSED = 0,                           // This file has not been opened.//此文件尚未打开。
+              FAT_FILE_TYPE_NORMAL = 1,                           // A normal file//普通文件
+              FAT_FILE_TYPE_ROOT_FIXED = 2,                       // A FAT12 or FAT16 root directory//FAT12或FAT16根目录
+              FAT_FILE_TYPE_ROOT32 = 3,                           // A FAT32 root directory//FAT32根目录
+              FAT_FILE_TYPE_SUBDIR = 4,                           // A subdirectory file//子目录文件
+              FAT_FILE_TYPE_MIN_DIR = FAT_FILE_TYPE_ROOT_FIXED;   // Test value for directory type//目录类型的测试值
 
 /**
  * date field for FAT directory entry
@@ -151,9 +152,9 @@ static inline uint8_t FAT_MINUTE(uint16_t fatTime) { return (fatTime >> 5) & 0x3
  */
 static inline uint8_t FAT_SECOND(uint16_t fatTime) { return 2 * (fatTime & 0x1F); }
 
-// Default date for file timestamps is 1 Jan 2000
+// Default date for file timestamps is 1 Jan 2000//文件时间戳的默认日期为2000年1月1日
 uint16_t const FAT_DEFAULT_DATE = ((2000 - 1980) << 9) | (1 << 5) | 1;
-// Default time for file timestamp is 1 am
+// Default time for file timestamp is 1 am//文件时间戳的默认时间为凌晨1点
 uint16_t const FAT_DEFAULT_TIME = (1 << 11);
 
 /**
@@ -173,7 +174,7 @@ class SdBaseFile {
    */
   bool writeError;
 
-  // helpers for stream classes
+  // helpers for stream classes//流课程助手
 
   /**
    * get position for streams
@@ -344,34 +345,34 @@ class SdBaseFile {
   int16_t write(const void *buf, uint16_t nbyte);
 
  private:
-  friend class SdFat;           // allow SdFat to set cwd_
-  static SdBaseFile *cwd_;      // global pointer to cwd dir
+  friend class SdFat;           // allow SdFat to set cwd_//允许SdFat设置cwd_
+  static SdBaseFile *cwd_;      // global pointer to cwd dir//指向cwd目录的全局指针
 
-  // data time callback function
+  // data time callback function//数据时间回调函数
   static void (*dateTime_)(uint16_t *date, uint16_t *time);
 
-  // bits defined in flags_
-  static uint8_t const F_OFLAG = (O_ACCMODE | O_APPEND | O_SYNC),   // should be 0x0F
-                       F_FILE_DIR_DIRTY = 0x80;                     // sync of directory entry required
+  // bits defined in flags_//标志中定义的位_
+  static uint8_t const F_OFLAG = (O_ACCMODE | O_APPEND | O_SYNC),   // should be 0x0F//应为0x0F
+                       F_FILE_DIR_DIRTY = 0x80;                     // sync of directory entry required//需要同步目录项
 
-  // private data
-  uint8_t   flags_;         // See above for definition of flags_ bits
-  uint8_t   fstate_;        // error and eof indicator
-  uint8_t   type_;          // type of file see above for values
-  uint32_t  curCluster_;    // cluster for current file position
-  uint32_t  curPosition_;   // current file position in bytes from beginning
-  uint32_t  dirBlock_;      // block for this files directory entry
-  uint8_t   dirIndex_;      // index of directory entry in dirBlock
-  uint32_t  fileSize_;      // file size in bytes
-  uint32_t  firstCluster_;  // first cluster of file
-  SdVolume  *vol_;          // volume where file is located
+  // private data//私有数据
+  uint8_t   flags_;         // See above for definition of flags_ bits//有关标志位的定义，请参见上文
+  uint8_t   fstate_;        // error and eof indicator//误差和eof指示器
+  uint8_t   type_;          // type of file see above for values//文件类型请参见上面的值
+  uint32_t  curCluster_;    // cluster for current file position//当前文件位置的群集
+  uint32_t  curPosition_;   // current file position in bytes from beginning//以字节为单位的当前文件位置（从开始）
+  uint32_t  dirBlock_;      // block for this files directory entry//此文件目录项的块
+  uint8_t   dirIndex_;      // index of directory entry in dirBlock//dirBlock中目录项的索引
+  uint32_t  fileSize_;      // file size in bytes//文件大小（字节）
+  uint32_t  firstCluster_;  // first cluster of file//第一组文件
+  SdVolume  *vol_;          // volume where file is located//文件所在的卷
 
   /**
    * EXPERIMENTAL - Don't use!
    */
-  //bool openParent(SdBaseFile *dir);
+  //bool openParent(SdBaseFile *dir);//bool openParent（SdBaseFile*dir）；
 
-  // private functions
+  // private functions//私人职能
   bool addCluster();
   bool addDirCluster();
   dir_t* cacheDirEntry(uint8_t action);

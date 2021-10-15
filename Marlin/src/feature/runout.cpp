@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -33,10 +34,10 @@
 FilamentMonitor runout;
 
 bool FilamentMonitorBase::enabled = true,
-     FilamentMonitorBase::filament_ran_out;  // = false
+     FilamentMonitorBase::filament_ran_out;  // = false//=错误
 
 #if ENABLED(HOST_ACTION_COMMANDS)
-  bool FilamentMonitorBase::host_handling; // = false
+  bool FilamentMonitorBase::host_handling; // = false//=错误
 #endif
 
 #if ENABLED(TOOLCHANGE_MIGRATION_FEATURE)
@@ -52,12 +53,12 @@ bool FilamentMonitorBase::enabled = true,
     uint8_t FilamentSensorEncoder::motion_detected;
   #endif
 #else
-  int8_t RunoutResponseDebounced::runout_count[NUM_RUNOUT_SENSORS]; // = 0
+  int8_t RunoutResponseDebounced::runout_count[NUM_RUNOUT_SENSORS]; // = 0// = 0
 #endif
 
-//
-// Filament Runout event handler
-//
+////
+// Filament Runout event handler//灯丝跳动事件处理程序
+////
 #include "../MarlinCore.h"
 #include "../feature/pause.h"
 #include "../gcode/queue.h"
@@ -72,12 +73,12 @@ bool FilamentMonitorBase::enabled = true,
 
 void event_filament_runout(const uint8_t extruder) {
 
-  if (did_pause_print) return;  // Action already in progress. Purge triggered repeated runout.
+  if (did_pause_print) return;  // Action already in progress. Purge triggered repeated runout.//行动已经在进行中。吹扫触发重复跳动。
 
   #if ENABLED(TOOLCHANGE_MIGRATION_FEATURE)
     if (migration.in_progress) {
       DEBUG_ECHOLNPGM("Migration Already In Progress");
-      return;  // Action already in progress. Purge triggered repeated runout.
+      return;  // Action already in progress. Purge triggered repeated runout.//行动已经在进行中。吹扫触发重复跳动。
     }
     if (migration.automode) {
       DEBUG_ECHOLNPGM("Migration Starting");
@@ -91,7 +92,7 @@ void event_filament_runout(const uint8_t extruder) {
     const char tool = '0' + TERN0(MULTI_FILAMENT_SENSOR, extruder);
   #endif
 
-  //action:out_of_filament
+  //action:out_of_filament//措施：断开灯丝
   #if ENABLED(HOST_PROMPT_SUPPORT)
     host_action_prompt_begin(PROMPT_FILAMENT_RUNOUT, PSTR("FilamentRunout T"), tool);
     host_action_prompt_show();
@@ -109,8 +110,8 @@ void event_filament_runout(const uint8_t extruder) {
       host_action_paused(false);
     }
     else {
-      // Legacy Repetier command for use until newer version supports standard dialog
-      // To be removed later when pause command also triggers dialog
+      // Legacy Repetier command for use until newer version supports standard dialog//旧版Repetier命令，在新版本支持标准对话框之前使用
+      // To be removed later when pause command also triggers dialog//待稍后当“暂停”命令也触发对话框时删除
       #ifdef ACTION_ON_FILAMENT_RUNOUT
         host_action(PSTR(ACTION_ON_FILAMENT_RUNOUT " T"), false);
         SERIAL_CHAR(tool);
@@ -122,7 +123,7 @@ void event_filament_runout(const uint8_t extruder) {
     SERIAL_ECHOPGM(" " ACTION_REASON_ON_FILAMENT_RUNOUT " ");
     SERIAL_CHAR(tool);
     SERIAL_EOL();
-  #endif // HOST_ACTION_COMMANDS
+  #endif // HOST_ACTION_COMMANDS//主机\u操作\u命令
 
   if (run_runout_script) {
     #if MULTI_FILAMENT_SENSOR
@@ -142,4 +143,4 @@ void event_filament_runout(const uint8_t extruder) {
   }
 }
 
-#endif // HAS_FILAMENT_SENSOR
+#endif // HAS_FILAMENT_SENSOR//有灯丝传感器吗

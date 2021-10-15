@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -387,7 +388,7 @@ public:
   static void process_parsed_command(const bool no_ok=false);
   static void process_next_command();
 
-  // Execute G-code in-place, preserving current G-code parameters
+  // Execute G-code in-place, preserving current G-code parameters//就地执行G代码，保留当前G代码参数
   static void process_subcommands_now_P(PGM_P pgcode);
   static void process_subcommands_now(char * gcode);
 
@@ -413,11 +414,11 @@ public:
      * Marlin sends messages if blocked or busy
      */
     enum MarlinBusyState : char {
-      NOT_BUSY,           // Not in a handler
-      IN_HANDLER,         // Processing a GCode
-      IN_PROCESS,         // Known to be blocking command input (as in G29)
-      PAUSED_FOR_USER,    // Blocking pending any input
-      PAUSED_FOR_INPUT    // Blocking pending text input (concept)
+      NOT_BUSY,           // Not in a handler//不是在处理程序中
+      IN_HANDLER,         // Processing a GCode//处理GCode
+      IN_PROCESS,         // Known to be blocking command input (as in G29)//已知为阻塞命令输入（如G29所示）
+      PAUSED_FOR_USER,    // Blocking pending any input//阻止挂起的任何输入
+      PAUSED_FOR_INPUT    // Blocking pending text input (concept)//阻止挂起的文本输入（概念）
     };
 
     static MarlinBusyState busy_state;
@@ -770,7 +771,7 @@ private:
   static void M201();
 
   #if 0
-    static void M202(); // Not used for Sprinter/grbl gen6
+    static void M202(); // Not used for Sprinter/grbl gen6//不用于Sprinter/grbl gen6
   #endif
 
   static void M203();

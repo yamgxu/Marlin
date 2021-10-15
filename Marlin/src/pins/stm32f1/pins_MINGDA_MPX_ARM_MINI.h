@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -36,33 +37,33 @@
 #define BOARD_NO_NATIVE_USB
 #define DISABLE_DEBUG
 
-//
-// EEPROM
-//
+////
+// EEPROM//电可擦可编程只读存储器
+////
 
 /*
-//Mingda used an unknown EEPROM chip ATMLH753, so I turned on the emulation below.
-//It is connected to EEPROM PB6 PB7
+//Mingda used an unknown EEPROM chip ATMLH753, so I turned on the emulation below.//明达使用了一个未知的EEPROM芯片ATMLH753，所以我打开了下面的模拟。
+//It is connected to EEPROM PB6 PB7//它连接到EEPROM PB6 PB7
 
 #define I2C_EEPROM
 #undef NO_EEPROM_SELECTED
-#define MARLIN_EEPROM_SIZE                0x1000  // 4KB
-#define USE_SHARED_EEPROM                      1  // Use Platform-independent Arduino functions for I2C EEPROM
-#define E2END                             0xFFFF  // EEPROM end address AT24C256 (32kB)
+#define MARLIN_EEPROM_SIZE                0x1000  // 4KB//4KB
+#define USE_SHARED_EEPROM                      1  // Use Platform-independent Arduino functions for I2C EEPROM//对I2C EEPROM使用独立于平台的Arduino功能
+#define E2END                             0xFFFF  // EEPROM end address AT24C256 (32kB)//EEPROM端地址为24C256（32kB）
 */
 
 #if EITHER(NO_EEPROM_SELECTED, FLASH_EEPROM_EMULATION)
   #define FLASH_EEPROM_EMULATION
-  #define EEPROM_PAGE_SIZE                0x800U  // 2KB
+  #define EEPROM_PAGE_SIZE                0x800U  // 2KB//2KB
   #define EEPROM_START_ADDRESS  (0x8000000UL + (STM32_FLASH_SIZE) * 1024UL - (EEPROM_PAGE_SIZE) * 2UL)
-  #define MARLIN_EEPROM_SIZE    EEPROM_PAGE_SIZE  // 2KB
+  #define MARLIN_EEPROM_SIZE    EEPROM_PAGE_SIZE  // 2KB//2KB
 #endif
 
 #define SPI_DEVICE                             2
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_MIN_PIN                           PD6
 #define X_MAX_PIN                           PG15
 #define Y_MIN_PIN                           PG9
@@ -74,9 +75,9 @@
   #define FIL_RUNOUT_PIN                    PG11
 #endif
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_ENABLE_PIN                        PD13
 #define X_STEP_PIN                          PD12
 #define X_DIR_PIN                           PD11
@@ -93,44 +94,44 @@
 #define E0_STEP_PIN                         PC6
 #define E0_DIR_PIN                          PG8
 
-//
-// Temperature Sensors
-//
-//#define TEMP_0_PIN                        PF6   // THERM_E0
-//#define TEMP_0_PIN                        PB3   // E0 K+
-#define TEMP_BED_PIN                        PF7   // THERM_BED
+////
+// Temperature Sensors//温度传感器
+////
+//#define TEMP_0_PIN                        PF6   // THERM_E0//#定义温度0引脚PF6//THERM\u E0
+//#define TEMP_0_PIN                        PB3   // E0 K+//#定义温度0引脚PB3//E0 K+
+#define TEMP_BED_PIN                        PF7   // THERM_BED//热床
 
 #define MAX6675_SS_PIN                      PB5
 #define MAX6675_SCK_PIN                     PB3
 #define MAX6675_DO_PIN                      PB4
 #define MAX6675_MOSI_PIN                    PA14
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_0_PIN                        PB0
 #define HEATER_BED_PIN                      PB1
 
-#define FAN_PIN                             PA0   // FAN
+#define FAN_PIN                             PA0   // FAN//扇子
 
-//
-// SD Card
-//
+////
+// SD Card//SD卡
+////
 #ifndef SDCARD_CONNECTION
   #define SDCARD_CONNECTION              ONBOARD
 #endif
 
 #define SDIO_SUPPORT
-#define SDIO_CLOCK                       4500000  // 4.5 MHz
+#define SDIO_CLOCK                       4500000  // 4.5 MHz//4.5兆赫
 #define SDIO_READ_RETRIES                     16
 
 #define SD_DETECT_PIN                       PC5
-#define ONBOARD_SPI_DEVICE                     1  // SPI1
+#define ONBOARD_SPI_DEVICE                     1  // SPI1//SPI1
 #define ONBOARD_SD_CS_PIN                   PC10
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 #define BEEPER_PIN                          PE4
 
 /**
@@ -151,13 +152,13 @@
    * Setting an 'TFT_RESET_PIN' may cause a flicker when entering the LCD menu
    * because Marlin uses the reset as a failsafe to revive a glitchy LCD.
    */
-  #define TFT_CS_PIN                        PD7   // NE4
-  #define TFT_RS_PIN                        PG0   // A0
+  #define TFT_CS_PIN                        PD7   // NE4//NE4
+  #define TFT_RS_PIN                        PG0   // A0//A0
 
   #define FSMC_CS_PIN                 TFT_CS_PIN
   #define FSMC_RS_PIN                 TFT_RS_PIN
 
-  #define LCD_USE_DMA_FSMC                        // Use DMA transfers to send data to the TFT
+  #define LCD_USE_DMA_FSMC                        // Use DMA transfers to send data to the TFT//使用DMA传输将数据发送到TFT
   #define FSMC_DMA_DEV                      DMA2
   #define FSMC_DMA_CHANNEL               DMA_CH5
 
@@ -169,8 +170,8 @@
 #endif
 
 #if NEED_TOUCH_PINS
-  #define TOUCH_CS_PIN                      PA4   // SPI2_NSS
-  #define TOUCH_SCK_PIN                     PA5   // SPI2_SCK
-  #define TOUCH_MISO_PIN                    PA6   // SPI2_MISO
-  #define TOUCH_MOSI_PIN                    PA7   // SPI2_MOSI
+  #define TOUCH_CS_PIN                      PA4   // SPI2_NSS//SPI2\U NSS
+  #define TOUCH_SCK_PIN                     PA5   // SPI2_SCK//SPI2_SCK
+  #define TOUCH_MISO_PIN                    PA6   // SPI2_MISO//味噌
+  #define TOUCH_MOSI_PIN                    PA7   // SPI2_MOSI//SPI2_MOSI
 #endif

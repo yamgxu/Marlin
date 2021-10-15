@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*****************
  * screen_data.h *
  *****************/
@@ -24,8 +25,8 @@
 
 #include "ftdi_eve_lib/ftdi_eve_lib.h"
 
-// To save RAM, store state information related to a particular screen
-// in a union. The values should be initialized in the onEntry method.
+// To save RAM, store state information related to a particular screen//要保存RAM，请存储与特定屏幕相关的状态信息
+// in a union. The values should be initialized in the onEntry method.//在一个联盟中。这些值应该在onEntry方法中初始化。
 
 /**
  * The DECL_DATA_IF_INCLUDED macro:

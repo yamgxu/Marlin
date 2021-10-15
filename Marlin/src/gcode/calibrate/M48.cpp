@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -72,10 +73,10 @@ void GcodeSuite::M48() {
 
   const ProbePtRaise raise_after = parser.boolval('E') ? PROBE_PT_STOW : PROBE_PT_RAISE;
 
-  // Test at the current position by default, overridden by X and Y
+  // Test at the current position by default, overridden by X and Y//默认情况下，在当前位置进行测试，由X和Y替代
   const xy_pos_t test_position = {
-    parser.linearval('X', current_position.x + probe.offset_xy.x),  // If no X use the probe's current X position
-    parser.linearval('Y', current_position.y + probe.offset_xy.y)   // If no Y, ditto
+    parser.linearval('X', current_position.x + probe.offset_xy.x),  // If no X use the probe's current X position//如果没有X，则使用探针的当前X位置
+    parser.linearval('Y', current_position.y + probe.offset_xy.y)   // If no Y, ditto//如果没有，同上
   };
 
   if (!probe.can_reach(test_position)) {
@@ -84,7 +85,7 @@ void GcodeSuite::M48() {
     return;
   }
 
-  // Get the number of leg moves per test-point
+  // Get the number of leg moves per test-point//获取每个测试点的腿部移动次数
   bool seen_L = parser.seen('L');
   uint8_t n_legs = seen_L ? parser.value_byte() : 0;
   if (n_legs > 15) {
@@ -93,29 +94,29 @@ void GcodeSuite::M48() {
   }
   if (n_legs == 1) n_legs = 2;
 
-  // Schizoid motion as an optional stress-test
+  // Schizoid motion as an optional stress-test//作为可选压力测试的分裂样运动
   const bool schizoid_flag = parser.boolval('S');
   if (schizoid_flag && !seen_L) n_legs = 7;
 
   if (verbose_level > 2)
     SERIAL_ECHOLNPGM("Positioning the probe...");
 
-  // Always disable Bed Level correction before probing...
+  // Always disable Bed Level correction before probing...//在探测前始终禁用床面校正。。。
 
   #if HAS_LEVELING
     const bool was_enabled = planner.leveling_active;
     set_bed_leveling_enabled(false);
   #endif
 
-  // Work with reasonable feedrates
+  // Work with reasonable feedrates//以合理的进给速度工作
   remember_feedrate_scaling_off();
 
-  // Working variables
-  float mean = 0.0,     // The average of all points so far, used to calculate deviation
-        sigma = 0.0,    // Standard deviation of all points so far
-        min = 99999.9,  // Smallest value sampled so far
-        max = -99999.9, // Largest value sampled so far
-        sample_set[n_samples];  // Storage for sampled values
+  // Working variables//工作变量
+  float mean = 0.0,     // The average of all points so far, used to calculate deviation//迄今为止所有点的平均值，用于计算偏差
+        sigma = 0.0,    // Standard deviation of all points so far//迄今为止所有点的标准偏差
+        min = 99999.9,  // Smallest value sampled so far//迄今为止采样的最小值
+        max = -99999.9, // Largest value sampled so far//迄今为止采样的最大值
+        sample_set[n_samples];  // Storage for sampled values//采样值的存储
 
   auto dev_report = [](const bool verbose, const_float_t mean, const_float_t sigma, const_float_t min, const_float_t max, const bool final=false) {
     if (verbose) {
@@ -132,7 +133,7 @@ void GcodeSuite::M48() {
     }
   };
 
-  // Move to the first point, deploy, and probe
+  // Move to the first point, deploy, and probe//移动到第一个点，展开并探测
   const float t = probe.probe_at_point(test_position, raise_after, verbose_level);
   bool probing_good = !isnan(t);
 
@@ -143,15 +144,15 @@ void GcodeSuite::M48() {
 
     LOOP_L_N(n, n_samples) {
       #if HAS_STATUS_MESSAGE
-        // Display M48 progress in the status bar
+        // Display M48 progress in the status bar//在状态栏中显示M48进度
         ui.status_printf_P(0, PSTR(S_FMT ": %d/%d"), GET_TEXT(MSG_M48_POINT), int(n + 1), int(n_samples));
       #endif
 
-      // When there are "legs" of movement move around the point before probing
+      // When there are "legs" of movement move around the point before probing//当有运动的“腿”时，在探测之前围绕点移动
       if (n_legs) {
 
-        // Pick a random direction, starting angle, and radius
-        const int dir = (random(0, 10) > 5.0) ? -1 : 1;  // clockwise or counter clockwise
+        // Pick a random direction, starting angle, and radius//拾取随机方向、起始角度和半径
+        const int dir = (random(0, 10) > 5.0) ? -1 : 1;  // clockwise or counter clockwise//顺时针还是逆时针
         float angle = random(0, 360);
         const float radius = random(
           #if ENABLED(DELTA)
@@ -167,27 +168,27 @@ void GcodeSuite::M48() {
           SERIAL_ECHOLNPGM("CW");
         }
 
-        // Move from leg to leg in rapid succession
+        // Move from leg to leg in rapid succession//快速连续地从一条腿移动到另一条腿
         LOOP_L_N(l, n_legs - 1) {
 
-          // Move some distance around the perimeter
+          // Move some distance around the perimeter//在周围移动一段距离
           float delta_angle;
           if (schizoid_flag) {
-            // The points of a 5 point star are 72 degrees apart.
-            // Skip a point and go to the next one on the star.
+            // The points of a 5 point star are 72 degrees apart.//五点星的各点相距72度。
+            // Skip a point and go to the next one on the star.//跳过一个点，转到星上的下一个点。
             delta_angle = dir * 2.0 * 72.0;
           }
           else {
-            // Just move further along the perimeter.
+            // Just move further along the perimeter.//沿着边界再往前走。
             delta_angle = dir * (float)random(25, 45);
           }
           angle += delta_angle;
 
-          // Trig functions work without clamping, but just to be safe...
+          // Trig functions work without clamping, but just to be safe...//触发功能无需夹紧即可工作，但为了安全起见。。。
           while (angle > 360.0) angle -= 360.0;
           while (angle < 0.0) angle += 360.0;
 
-          // Choose the next position as an offset to chosen test position
+          // Choose the next position as an offset to chosen test position//选择下一个位置作为到所选测试位置的偏移
           const xy_pos_t noz_pos = test_position - probe.offset_xy;
           xy_pos_t next_pos = {
             noz_pos.x + float(cos(RADIANS(angle))) * radius,
@@ -195,15 +196,15 @@ void GcodeSuite::M48() {
           };
 
           #if ENABLED(DELTA)
-            // If the probe can't reach the point on a round bed...
-            // Simply scale the numbers to bring them closer to origin.
+            // If the probe can't reach the point on a round bed...//如果探针不能到达圆床上的点。。。
+            // Simply scale the numbers to bring them closer to origin.//只需缩放数字，使其更接近原点。
             while (!probe.can_reach(next_pos)) {
               next_pos *= 0.8f;
               if (verbose_level > 3)
                 SERIAL_ECHOLNPAIR_P(PSTR("Moving inward: X"), next_pos.x, SP_Y_STR, next_pos.y);
             }
           #elif HAS_ENDSTOPS
-            // For a rectangular bed just keep the probe in bounds
+            // For a rectangular bed just keep the probe in bounds//对于矩形床，只需将探头保持在边界内即可
             LIMIT(next_pos.x, X_MIN_POS, X_MAX_POS);
             LIMIT(next_pos.y, Y_MIN_POS, Y_MAX_POS);
           #endif
@@ -212,29 +213,29 @@ void GcodeSuite::M48() {
             SERIAL_ECHOLNPAIR_P(PSTR("Going to: X"), next_pos.x, SP_Y_STR, next_pos.y);
 
           do_blocking_move_to_xy(next_pos);
-        } // n_legs loop
-      } // n_legs
+        } // n_legs loop//n_腿环
+      } // n_legs//n_腿
 
-      // Probe a single point
+      // Probe a single point//探测一个点
       const float pz = probe.probe_at_point(test_position, raise_after, 0);
 
-      // Break the loop if the probe fails
+      // Break the loop if the probe fails//如果探测失败，则断开回路
       probing_good = !isnan(pz);
       if (!probing_good) break;
 
-      // Store the new sample
+      // Store the new sample//储存新样品
       sample_set[n] = pz;
 
-      // Keep track of the largest and smallest samples
+      // Keep track of the largest and smallest samples//跟踪最大和最小的样本
       NOMORE(min, pz);
       NOLESS(max, pz);
 
-      // Get the mean value of all samples thus far
+      // Get the mean value of all samples thus far//获取迄今为止所有样本的平均值
       sample_sum += pz;
       mean = sample_sum / (n + 1);
 
-      // Calculate the standard deviation so far.
-      // The value after the last sample will be the final output.
+      // Calculate the standard deviation so far.//计算到目前为止的标准偏差。
+      // The value after the last sample will be the final output.//最后一次采样后的值将是最终输出。
       float dev_sum = 0.0;
       LOOP_LE_N(j, n) dev_sum += sq(sample_set[j] - mean);
       sigma = SQRT(dev_sum / (n + 1));
@@ -248,7 +249,7 @@ void GcodeSuite::M48() {
         SERIAL_EOL();
       }
 
-    } // n_samples loop
+    } // n_samples loop//n_样本循环
   }
 
   probe.stow();
@@ -258,7 +259,7 @@ void GcodeSuite::M48() {
     dev_report(verbose_level > 0, mean, sigma, min, max, true);
 
     #if HAS_STATUS_MESSAGE
-      // Display M48 results in the status bar
+      // Display M48 results in the status bar//在状态栏中显示M48结果
       char sigma_str[8];
       ui.status_printf_P(0, PSTR(S_FMT ": %s"), GET_TEXT(MSG_M48_DEVIATION), dtostrf(sigma, 2, 6, sigma_str));
     #endif
@@ -266,10 +267,10 @@ void GcodeSuite::M48() {
 
   restore_feedrate_and_scaling();
 
-  // Re-enable bed level correction if it had been on
+  // Re-enable bed level correction if it had been on//如果已打开，则重新启用床面校正
   TERN_(HAS_LEVELING, set_bed_leveling_enabled(was_enabled));
 
   report_current_position();
 }
 
-#endif // Z_MIN_PROBE_REPEATABILITY_TEST
+#endif // Z_MIN_PROBE_REPEATABILITY_TEST//Z_MIN_探头_重复性_测试

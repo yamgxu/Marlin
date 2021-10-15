@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -51,5 +52,5 @@
 #endif
 
 #ifndef TFT_PIXEL_OFFSET_Y
-  #define TFT_PIXEL_OFFSET_Y 32 // 32 is best for both 320x240 and 480x320
+  #define TFT_PIXEL_OFFSET_Y 32 // 32 is best for both 320x240 and 480x320//32适用于320x240和480x320
 #endif

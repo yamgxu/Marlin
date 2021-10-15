@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -76,9 +77,9 @@ void GcodeSuite::M164() {
    *   I[factor] Mix factor for extruder stepper 6
    */
   void GcodeSuite::M165() {
-    // Get mixing parameters from the GCode
-    // The total "must" be 1.0 (but it will be normalized)
-    // If no mix factors are given, the old mix is preserved
+    // Get mixing parameters from the GCode//从GCode获取混合参数
+    // The total "must" be 1.0 (but it will be normalized)//总“必须”为1.0（但将标准化）
+    // If no mix factors are given, the old mix is preserved//如果未给出混合系数，则保留旧混合
     const char mixing_codes[] = { LIST_N(MIXING_STEPPERS, 'A', 'B', 'C', 'D', 'H', 'I') };
     uint8_t mix_bits = 0;
     MIXER_STEPPER_LOOP(i) {
@@ -87,8 +88,8 @@ void GcodeSuite::M164() {
         mixer.set_collector(i, parser.value_float());
       }
     }
-    // If any mixing factors were included, clear the rest
-    // If none were included, preserve the last mix
+    // If any mixing factors were included, clear the rest//如果包括任何混合因素，则清除其余因素
+    // If none were included, preserve the last mix//如果不包括任何混合物，则保留最后的混合物
     if (mix_bits) {
       MIXER_STEPPER_LOOP(i)
         if (!TEST(mix_bits, i)) mixer.set_collector(i, 0.0f);
@@ -96,6 +97,6 @@ void GcodeSuite::M164() {
     }
   }
 
-#endif // DIRECT_MIXING_IN_G1
+#endif // DIRECT_MIXING_IN_G1//G1中的直接混合
 
-#endif // MIXING_EXTRUDER
+#endif // MIXING_EXTRUDER//混炼机

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -26,8 +27,8 @@
 #undef OV_SCALE
 #define OV_SCALE(N) (float((N) * 5) / 3.3f)
 
-// Pt100 with INA826 amplifier board with 5v supply based on Thermistor 20, with 3v3 ADC reference on the mainboard.
-// If the ADC reference and INA826 board supply voltage are identical, Thermistor 20 instead.
+// Pt100 with INA826 amplifier board with 5v supply based on Thermistor 20, with 3v3 ADC reference on the mainboard.//Pt100带有INA826放大器板，带有基于热敏电阻20的5v电源，主板上带有3v3 ADC基准。
+// If the ADC reference and INA826 board supply voltage are identical, Thermistor 20 instead.//如果ADC参考和INA826板电源电压相同，则更换热敏电阻20。
 constexpr temp_entry_t temptable_21[] PROGMEM = {
   { OV(  0),    0 },
   { OV(227),    1 },

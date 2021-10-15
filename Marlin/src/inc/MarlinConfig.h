@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,9 +22,9 @@
  */
 #pragma once
 
-//
-// Prefix header for all Marlin sources
-//
+////
+// Prefix header for all Marlin sources//所有Marlin源的前缀标头
+////
 
 #include "MarlinConfigPre.h"
 
@@ -44,12 +45,12 @@
 
   #include HAL_PATH(../HAL, inc/Conditionals_post.h)
 
-  #include "../core/types.h"  // Ahead of sanity-checks
+  #include "../core/types.h"  // Ahead of sanity-checks//在精神检查之前
 
   #include "SanityCheck.h"
   #include HAL_PATH(../HAL, inc/SanityCheck.h)
 
-  // Include all core headers
+  // Include all core headers//包括所有核心标题
   #include "../core/language.h"
   #include "../core/utility.h"
   #include "../core/serial.h"

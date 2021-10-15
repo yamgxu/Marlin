@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  *
@@ -32,9 +33,9 @@
 
 #include <STM32ADC.h>
 
-// ------------------------
-// Types
-// ------------------------
+// ------------------------// ------------------------
+// Types//类型
+// ------------------------// ------------------------
 
 #define __I
 #define __IO volatile
@@ -62,9 +63,9 @@
    __IO uint32_t CPACR;                   /*!< Offset: 0x088 (R/W)  Coprocessor Access Control Register                   */
  } SCB_Type;
 
-// ------------------------
-// Local defines
-// ------------------------
+// ------------------------// ------------------------
+// Local defines//局部定义
+// ------------------------// ------------------------
 
 #define SCS_BASE            (0xE000E000UL)                            /*!< System Control Space Base Address  */
 #define SCB_BASE            (SCS_BASE +  0x0D00UL)                    /*!< System Control Block Base Address  */
@@ -78,9 +79,9 @@
 #define SCB_AIRCR_PRIGROUP_Pos              8                                             /*!< SCB AIRCR: PRIGROUP Position */
 #define SCB_AIRCR_PRIGROUP_Msk             (7UL << SCB_AIRCR_PRIGROUP_Pos)                /*!< SCB AIRCR: PRIGROUP Mask */
 
-// ------------------------
-// Public Variables
-// ------------------------
+// ------------------------// ------------------------
+// Public Variables//公共变量
+// ------------------------// ------------------------
 
 #if defined(SERIAL_USB) && !HAS_SD_HOST_DRIVE
   USBSerial SerialUSB;
@@ -89,21 +90,21 @@
   #if ENABLED(EMERGENCY_PARSER)
     #include "../libmaple/usb/stm32f1/usb_reg_map.h"
     #include "libmaple/usb_cdcacm.h"
-    // The original callback is not called (no way to retrieve address).
-    // That callback detects a special STM32 reset sequence: this functionality is not essential
-    // as M997 achieves the same.
+    // The original callback is not called (no way to retrieve address).//未调用原始回调（无法检索地址）。
+    // That callback detects a special STM32 reset sequence: this functionality is not essential//该回调检测到一个特殊的STM32重置序列：此功能不是必需的
+    // as M997 achieves the same.//正如M997实现的一样。
     void my_rx_callback(unsigned int, void*) {
-      // max length of 16 is enough to contain all emergency commands
+      // max length of 16 is enough to contain all emergency commands//最大长度16足以容纳所有紧急命令
       uint8 buf[16];
 
-      //rx is usbSerialPart.endpoints[2]
+      //rx is usbSerialPart.endpoints[2]//rx是usbSerialPart.endpoints[2]
       uint16 len = usb_get_ep_rx_count(USB_CDCACM_RX_ENDP);
       uint32 total = usb_cdcacm_data_available();
 
       if (len == 0 || total == 0 || !WITHIN(total, len, COUNT(buf)))
         return;
 
-      // cannot get character by character due to bug in composite_cdcacm_peek_ex
+      // cannot get character by character due to bug in composite_cdcacm_peek_ex//由于复合_cdcacm_peek_ex中存在错误，无法逐个字符获取
       len = usb_cdcacm_peek(buf, total);
 
       for (uint32 i = 0; i < len; i++)
@@ -114,9 +115,9 @@
 
 uint16_t HAL_adc_result;
 
-// ------------------------
-// Private Variables
-// ------------------------
+// ------------------------// ------------------------
+// Private Variables//私有变量
+// ------------------------// ------------------------
 STM32ADC adc(ADC1);
 
 const uint8_t adc_pins[] = {
@@ -242,9 +243,9 @@ enum TempPinIndex : char {
 
 uint16_t HAL_adc_results[ADC_PIN_COUNT];
 
-// ------------------------
-// Private functions
-// ------------------------
+// ------------------------// ------------------------
+// Private functions//私人职能
+// ------------------------// ------------------------
 static void NVIC_SetPriorityGrouping(uint32_t PriorityGroup) {
   uint32_t reg_value;
   uint32_t PriorityGroupTmp = (PriorityGroup & (uint32_t)0x07);               /* only values 0..7 are used          */
@@ -257,13 +258,13 @@ static void NVIC_SetPriorityGrouping(uint32_t PriorityGroup) {
   SCB->AIRCR =  reg_value;
 }
 
-// ------------------------
-// Public functions
-// ------------------------
+// ------------------------// ------------------------
+// Public functions//公共职能
+// ------------------------// ------------------------
 
-//
-// Leave PA11/PA12 intact if USBSerial is not used
-//
+////
+// Leave PA11/PA12 intact if USBSerial is not used//如果未使用USBSerial，则保持PA11/PA12完整
+////
 #if SERIAL_USB
   namespace wirish { namespace priv {
     #if SERIAL_PORT > 0
@@ -291,25 +292,25 @@ void HAL_init() {
     usb_cdcacm_set_hooks(USB_CDCACM_HOOK_RX, my_rx_callback);
   #endif
   #if PIN_EXISTS(USB_CONNECT)
-    OUT_WRITE(USB_CONNECT_PIN, !USB_CONNECT_INVERTING);  // USB clear connection
-    delay(1000);                                         // Give OS time to notice
+    OUT_WRITE(USB_CONNECT_PIN, !USB_CONNECT_INVERTING);  // USB clear connection//USB清除连接
+    delay(1000);                                         // Give OS time to notice//给操作系统时间通知
     WRITE(USB_CONNECT_PIN, USB_CONNECT_INVERTING);
   #endif
-  TERN_(POSTMORTEM_DEBUGGING, install_min_serial());    // Install the minimal serial handler
+  TERN_(POSTMORTEM_DEBUGGING, install_min_serial());    // Install the minimal serial handler//安装最小串行处理程序
 }
 
-// HAL idle task
+// HAL idle task//HAL空闲任务
 void HAL_idletask() {
   #if HAS_SHARED_MEDIA
-    // If Marlin is using the SD card we need to lock it to prevent access from
-    // a PC via USB.
-    // Other HALs use IS_SD_PRINTING() and IS_SD_FILE_OPEN() to check for access but
-    // this will not reliably detect delete operations. To be safe we will lock
-    // the disk if Marlin has it mounted. Unfortunately there is currently no way
-    // to unmount the disk from the LCD menu.
-    // if (IS_SD_PRINTING() || IS_SD_FILE_OPEN())
+    // If Marlin is using the SD card we need to lock it to prevent access from//如果Marlin正在使用SD卡，我们需要将其锁定，以防止
+    // a PC via USB.//通过USB连接的个人电脑。
+    // Other HALs use IS_SD_PRINTING() and IS_SD_FILE_OPEN() to check for access but//HALs的另一个用途是打印（）和打开（）以检查访问，但
+    // this will not reliably detect delete operations. To be safe we will lock//这将无法可靠地检测删除操作。为了安全起见，我们将把门锁上
+    // the disk if Marlin has it mounted. Unfortunately there is currently no way//如果Marlin安装了磁盘，请将其删除。不幸的是，目前没有办法
+    // to unmount the disk from the LCD menu.//从LCD菜单中卸载磁盘。
+    // if (IS_SD_PRINTING() || IS_SD_FILE_OPEN())//if（IS_SD_PRINTING（）| | IS_SD_FILE_OPEN（））
     /* copy from lpc1768 framework, should be fixed later for process HAS_SD_HOST_DRIVE*/
-    // process USB mass storage device class loop
+    // process USB mass storage device class loop//处理USB大容量存储设备类循环
     MarlinMSC.loop();
   #endif
 }
@@ -324,18 +325,18 @@ uint8_t HAL_get_reset_source() { return RST_POWER_ON; }
 void _delay_ms(const int delay_ms) { delay(delay_ms); }
 
 extern "C" {
-  extern unsigned int _ebss; // end of bss section
+  extern unsigned int _ebss; // end of bss section//bss部分结束
 }
 
 /**
  * TODO: Change this to correct it for libmaple
  */
 
-// return free memory between end of heap (or end bss) and whatever is current
+// return free memory between end of heap (or end bss) and whatever is current//返回堆端（或bss端）和任何当前值之间的可用内存
 
 /*
 #include <wirish/syscalls.c>
-//extern caddr_t _sbrk(int incr);
+//extern caddr_t _sbrk(int incr);//外部caddr_t_sbrk（内部增量）；
 #ifndef CONFIG_HEAP_END
 extern char _lm_heap_end;
 #define CONFIG_HEAP_END ((caddr_t)&_lm_heap_end)
@@ -355,17 +356,17 @@ extern "C" {
 }
 */
 
-// ------------------------
-// ADC
-// ------------------------
-// Init the AD in continuous capture mode
+// ------------------------// ------------------------
+// ADC//模数转换器
+// ------------------------// ------------------------
+// Init the AD in continuous capture mode//在连续捕获模式下初始化AD
 void HAL_adc_init() {
-  // configure the ADC
+  // configure the ADC//配置ADC
   adc.calibrate();
   #if F_CPU > 72000000
-    adc.setSampleRate(ADC_SMPR_71_5); // 71.5 ADC cycles
+    adc.setSampleRate(ADC_SMPR_71_5); // 71.5 ADC cycles//71.5 ADC周期
   #else
-    adc.setSampleRate(ADC_SMPR_41_5); // 41.5 ADC cycles
+    adc.setSampleRate(ADC_SMPR_41_5); // 41.5 ADC cycles//41.5 ADC周期
   #endif
   adc.setPins((uint8_t *)adc_pins, ADC_PIN_COUNT);
   adc.setDMA(HAL_adc_results, (uint16_t)ADC_PIN_COUNT, (uint32_t)(DMA_MINC_MODE | DMA_CIRC_MODE), nullptr);
@@ -375,7 +376,7 @@ void HAL_adc_init() {
 }
 
 void HAL_adc_start_conversion(const uint8_t adc_pin) {
-  //TEMP_PINS pin_index;
+  //TEMP_PINS pin_index;//温度引脚引脚引脚索引；
   TempPinIndex pin_index;
   switch (adc_pin) {
     default: return;
@@ -437,7 +438,7 @@ void HAL_adc_start_conversion(const uint8_t adc_pin) {
       case POWER_MONITOR_VOLTAGE_PIN: pin_index = POWERMON_VOLTS; break;
     #endif
   }
-  HAL_adc_result = (HAL_adc_results[(int)pin_index] >> 2) & 0x3FF; // shift to get 10 bits only.
+  HAL_adc_result = (HAL_adc_results[(int)pin_index] >> 2) & 0x3FF; // shift to get 10 bits only.//移位以仅获取10位。
 }
 
 uint16_t HAL_adc_get_result() { return HAL_adc_result; }
@@ -447,7 +448,7 @@ uint16_t analogRead(pin_t pin) {
   return is_analog ? analogRead(uint8_t(pin)) : 0;
 }
 
-// Wrapper to maple unprotected analogWrite
+// Wrapper to maple unprotected analogWrite//maple无保护模拟写入的包装器
 void analogWrite(pin_t pin, int pwm_val8) {
   if (PWM_PIN(pin))
     analogWrite(uint8_t(pin), pwm_val8);
@@ -457,4 +458,4 @@ void HAL_reboot() { nvic_sys_reset(); }
 
 void flashFirmware(const int16_t) { HAL_reboot(); }
 
-#endif // __STM32F1__
+#endif // __STM32F1__//_uustm32f1__

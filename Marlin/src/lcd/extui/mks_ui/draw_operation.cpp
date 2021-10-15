@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -125,7 +126,7 @@ void lv_draw_operation() {
 
   scr = lv_screen_create(OPERATE_UI);
 
-  // Create image buttons
+  // Create image buttons//创建图像按钮
   lv_obj_t *buttonPreHeat  = lv_imgbtn_create(scr, "F:/bmp_temp.bin", INTERVAL_V, titleHeight, event_handler, ID_O_PRE_HEAT);
   lv_obj_t *buttonFilament = lv_imgbtn_create(scr, "F:/bmp_filamentchange.bin", BTN_X_PIXEL + INTERVAL_V * 2, titleHeight, event_handler, ID_O_FILAMENT);
   lv_obj_t *buttonFan      = lv_imgbtn_create(scr, "F:/bmp_fan.bin", BTN_X_PIXEL * 2 + INTERVAL_V * 3, titleHeight, event_handler, ID_O_FAN);
@@ -167,7 +168,7 @@ void lv_draw_operation() {
     if (gCfgItems.encoder_enable) lv_group_add_obj(g, buttonBack);
   #endif
 
-  // Create labels on the image buttons
+  // Create labels on the image buttons//在图像按钮上创建标签
   labelPreHeat   = lv_label_create_empty(buttonPreHeat);
   label_Filament = lv_label_create_empty(buttonFilament);
   label_Fan      = lv_label_create_empty(buttonFan);
@@ -226,4 +227,4 @@ void lv_clear_operation() {
   lv_obj_del(scr);
 }
 
-#endif // HAS_TFT_LVGL_UI
+#endif // HAS_TFT_LVGL_UI//有TFT\U LVGL\U用户界面

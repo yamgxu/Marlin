@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -23,7 +24,7 @@
 
 #include "../../inc/MarlinConfig.h"
 
-// use this file to create the public interface for device drivers that are NOT in the U8G library
+// use this file to create the public interface for device drivers that are NOT in the U8G library//使用此文件为不在U8G库中的设备驱动程序创建公共接口
 
 extern u8g_dev_t u8g_dev_st7565_64128n_HAL_2x_sw_spi;
 extern u8g_dev_t u8g_dev_st7565_64128n_HAL_2x_hw_spi;
@@ -50,17 +51,17 @@ public:
   U8GLIB_ST7920_128X64_4X_HAL(pin_t sck, pin_t mosi, pin_t cs, pin_t reset = U8G_PIN_NONE) { init(sck, mosi, cs, reset); }
   U8GLIB_ST7920_128X64_4X_HAL(pin_t cs, pin_t reset = U8G_PIN_NONE) { init(cs, reset); }
   void init(pin_t sck, pin_t mosi, pin_t cs, pin_t reset = U8G_PIN_NONE) {
-    U8GLIB::init(&u8g_dev_st7920_128x64_HAL_4x_sw_spi, (uint8_t)sck, (uint8_t)mosi, (uint8_t)cs, U8G_PIN_NONE, (uint8_t)reset); // a0 = U8G_PIN_NONE
+    U8GLIB::init(&u8g_dev_st7920_128x64_HAL_4x_sw_spi, (uint8_t)sck, (uint8_t)mosi, (uint8_t)cs, U8G_PIN_NONE, (uint8_t)reset); // a0 = U8G_PIN_NONE//a0=U8G\U引脚\U无
   }
   void init(pin_t cs, pin_t reset = U8G_PIN_NONE) {
-    U8GLIB::init(&u8g_dev_st7920_128x64_HAL_4x_hw_spi, (uint8_t)cs, U8G_PIN_NONE, (uint8_t)reset); // a0 = U8G_PIN_NONE
+    U8GLIB::init(&u8g_dev_st7920_128x64_HAL_4x_hw_spi, (uint8_t)cs, U8G_PIN_NONE, (uint8_t)reset); // a0 = U8G_PIN_NONE//a0=U8G\U引脚\U无
   }
 };
 
-//
-// AVR version uses ultralcd_st7920_u8glib_rrd_AVR.cpp
-// HAL version uses u8g_dev_st7920_128x64_HAL.cpp
-//
+////
+// AVR version uses ultralcd_st7920_u8glib_rrd_AVR.cpp//AVR版本使用ultralcd_st7920_u8glib_rrd_AVR.cpp
+// HAL version uses u8g_dev_st7920_128x64_HAL.cpp//HAL版本使用u8g_dev_st7920_128x64_HAL.cpp
+////
 extern u8g_dev_t u8g_dev_st7920_128x64_rrd_sw_spi;
 
 class U8GLIB_ST7920_128X64_RRD : public U8GLIB {
@@ -68,7 +69,7 @@ public:
   U8GLIB_ST7920_128X64_RRD() : U8GLIB() { }
   U8GLIB_ST7920_128X64_RRD(pin_t sck, pin_t mosi, pin_t cs, pin_t reset = U8G_PIN_NONE) { init(sck, mosi, cs, reset); }
   void init(pin_t sck, pin_t mosi, pin_t cs, pin_t reset = U8G_PIN_NONE) {
-    U8GLIB::init(&u8g_dev_st7920_128x64_rrd_sw_spi, (uint8_t)sck, (uint8_t)mosi, (uint8_t)cs, U8G_PIN_NONE, (uint8_t)reset);   // a0 = U8G_PIN_NONE
+    U8GLIB::init(&u8g_dev_st7920_128x64_rrd_sw_spi, (uint8_t)sck, (uint8_t)mosi, (uint8_t)cs, U8G_PIN_NONE, (uint8_t)reset);   // a0 = U8G_PIN_NONE//a0=U8G\U引脚\U无
   }
 };
 
@@ -90,10 +91,10 @@ public:
   void init(uint8_t options = U8G_I2C_OPT_NONE) { U8GLIB::init(&u8g_dev_ssd1306_128x64_2x_i2c_2_wire, options); }
 };
 
-//
-// Very basic support for 320x240 TFT screen
-// Tested on MKS Robin TFT_V2.0 with ST7789V controller
-//
+////
+// Very basic support for 320x240 TFT screen//对320x240 TFT屏幕的非常基本的支持
+// Tested on MKS Robin TFT_V2.0 with ST7789V controller//在带有ST7789V控制器的MKS Robin TFT_V2.0上测试
+////
 extern u8g_dev_t u8g_dev_tft_320x240_upscale_from_128x64;
 
 class U8GLIB_TFT_320X240_UPSCALE_FROM_128X64 : public U8GLIB {

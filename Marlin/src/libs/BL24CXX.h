@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -30,18 +31,18 @@
 
 class BL24CXX;
 
-// All operation functions of IIC
+// All operation functions of IIC//IIC的所有操作功能
 class IIC {
 friend class BL24CXX;
 protected:
-  static void init();                // Initialize the IO port of IIC
-  static void start();               // Send IIC start signal
-  static void stop();                // Send IIC stop signal
-  static void send_byte(uint8_t txd); // IIC sends a byte
-  static uint8_t read_byte(unsigned char ack); // IIC reads a byte
-  static uint8_t wait_ack();         // IIC waits for ACK signal
-  static void ack();                 // IIC sends ACK signal
-  static void nAck();                // IIC does not send ACK signal
+  static void init();                // Initialize the IO port of IIC//初始化IIC的IO端口
+  static void start();               // Send IIC start signal//发送IIC启动信号
+  static void stop();                // Send IIC stop signal//发送IIC停止信号
+  static void send_byte(uint8_t txd); // IIC sends a byte//IIC发送一个字节
+  static uint8_t read_byte(unsigned char ack); // IIC reads a byte//IIC读取一个字节
+  static uint8_t wait_ack();         // IIC waits for ACK signal//IIC等待ACK信号
+  static void ack();                 // IIC sends ACK signal//IIC发送ACK信号
+  static void nAck();                // IIC does not send ACK signal//IIC不发送ACK信号
 };
 
 /******************** EEPROM ********************/
@@ -59,14 +60,14 @@ protected:
 
 class BL24CXX {
 private:
-  static bool _check();                                                             // Check the device
+  static bool _check();                                                             // Check the device//检查设备
 public:
-  static void init();                                                               // Initialize IIC
-  static bool check();                                                              // Check / recheck the device
-  static uint8_t readOneByte(uint16_t ReadAddr);                                    // Read a byte at the specified address
-  static void writeOneByte(uint16_t WriteAddr, uint8_t DataToWrite);                // Write a byte at the specified address
-  static void writeLenByte(uint16_t WriteAddr, uint32_t DataToWrite, uint8_t Len);  // The specified address begins to write the data of the specified length
-  static uint32_t readLenByte(uint16_t ReadAddr, uint8_t Len);                      // The specified address starts to read the data of the specified length
-  static void write(uint16_t WriteAddr, uint8_t *pBuffer, uint16_t NumToWrite);     // Write the specified length of data from the specified address
-  static void read(uint16_t ReadAddr, uint8_t *pBuffer, uint16_t NumToRead);        // Read the data of the specified length from the specified address
+  static void init();                                                               // Initialize IIC//初始化IIC
+  static bool check();                                                              // Check / recheck the device//检查/重新检查设备
+  static uint8_t readOneByte(uint16_t ReadAddr);                                    // Read a byte at the specified address//在指定的地址读取一个字节
+  static void writeOneByte(uint16_t WriteAddr, uint8_t DataToWrite);                // Write a byte at the specified address//在指定的地址写入一个字节
+  static void writeLenByte(uint16_t WriteAddr, uint32_t DataToWrite, uint8_t Len);  // The specified address begins to write the data of the specified length//指定的地址开始写入指定长度的数据
+  static uint32_t readLenByte(uint16_t ReadAddr, uint8_t Len);                      // The specified address starts to read the data of the specified length//指定的地址开始读取指定长度的数据
+  static void write(uint16_t WriteAddr, uint8_t *pBuffer, uint16_t NumToWrite);     // Write the specified length of data from the specified address//从指定地址写入指定长度的数据
+  static void read(uint16_t ReadAddr, uint8_t *pBuffer, uint16_t NumToRead);        // Read the data of the specified length from the specified address//从指定地址读取指定长度的数据
 };

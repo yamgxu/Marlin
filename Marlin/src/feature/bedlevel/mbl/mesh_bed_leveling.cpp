@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -62,14 +63,14 @@
      * splitting the move where it crosses mesh borders.
      */
     void mesh_bed_leveling::line_to_destination(const_feedRate_t scaled_fr_mm_s, uint8_t x_splits, uint8_t y_splits) {
-      // Get current and destination cells for this line
+      // Get current and destination cells for this line//获取此行的当前单元格和目标单元格
       xy_int8_t scel = cell_indexes(current_position), ecel = cell_indexes(destination);
       NOMORE(scel.x, GRID_MAX_CELLS_X - 1);
       NOMORE(scel.y, GRID_MAX_CELLS_Y - 1);
       NOMORE(ecel.x, GRID_MAX_CELLS_X - 1);
       NOMORE(ecel.y, GRID_MAX_CELLS_Y - 1);
 
-      // Start and end in the same cell? No split needed.
+      // Start and end in the same cell? No split needed.//在同一单元格中开始和结束？不需要拆分。
       if (scel == ecel) {
         current_position = destination;
         line_to_current_position(scaled_fr_mm_s);
@@ -82,19 +83,19 @@
       xyze_pos_t dest;
       const int8_t gcx = _MAX(scel.x, ecel.x), gcy = _MAX(scel.y, ecel.y);
 
-      // Crosses on the X and not already split on this X?
-      // The x_splits flags are insurance against rounding errors.
+      // Crosses on the X and not already split on this X?//在X上交叉，但尚未在此X上拆分？
+      // The x_splits flags are insurance against rounding errors.//x_分割标志是防止舍入错误的保险。
       if (ecel.x != scel.x && TEST(x_splits, gcx)) {
-        // Split on the X grid line
+        // Split on the X grid line//在X轴网线上拆分
         CBI(x_splits, gcx);
         dest = destination;
         destination.x = index_to_xpos[gcx];
         normalized_dist = (destination.x - current_position.x) / (dest.x - current_position.x);
         destination.y = MBL_SEGMENT_END(y);
       }
-      // Crosses on the Y and not already split on this Y?
+      // Crosses on the Y and not already split on this Y?//在Y轴上交叉，但在Y轴上尚未拆分？
       else if (ecel.y != scel.y && TEST(y_splits, gcy)) {
-        // Split on the Y grid line
+        // Split on the Y grid line//在Y轴网线上拆分
         CBI(y_splits, gcy);
         dest = destination;
         destination.y = index_to_ypos[gcy];
@@ -102,8 +103,8 @@
         destination.x = MBL_SEGMENT_END(x);
       }
       else {
-        // Must already have been split on these border(s)
-        // This should be a rare case.
+        // Must already have been split on these border(s)//必须已在这些边界上拆分
+        // This should be a rare case.//这应该是一个罕见的案例。
         current_position = destination;
         line_to_current_position(scaled_fr_mm_s);
         return;
@@ -112,15 +113,15 @@
       destination.z = MBL_SEGMENT_END(z);
       destination.e = MBL_SEGMENT_END(e);
 
-      // Do the split and look for more borders
+      // Do the split and look for more borders//进行拆分并查找更多边框
       line_to_destination(scaled_fr_mm_s, x_splits, y_splits);
 
-      // Restore destination from stack
+      // Restore destination from stack//从堆栈还原目标
       destination = dest;
       line_to_destination(scaled_fr_mm_s, x_splits, y_splits);
     }
 
-  #endif // IS_CARTESIAN && !SEGMENT_LEVELED_MOVES
+  #endif // IS_CARTESIAN && !SEGMENT_LEVELED_MOVES//是笛卡尔的&！段\水平\移动
 
   void mesh_bed_leveling::report_mesh() {
     SERIAL_ECHOPAIR_F(STRINGIFY(GRID_MAX_POINTS_X) "x" STRINGIFY(GRID_MAX_POINTS_Y) " mesh. Z offset: ", z_offset, 5);
@@ -130,4 +131,4 @@
     );
   }
 
-#endif // MESH_BED_LEVELING
+#endif // MESH_BED_LEVELING//网床找平

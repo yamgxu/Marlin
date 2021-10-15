@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  *
@@ -24,24 +25,24 @@
                       asm("");    \
                     }
 
-// Get SAMD port/pin from specified arduino pin
+// Get SAMD port/pin from specified arduino pin//从指定的arduino引脚获取SAMD端口/引脚
 #define GET_SAMD_PORT(P)    _GET_SAMD_PORT(PIN_TO_SAMD_PIN(P))
 #define GET_SAMD_PIN(P)     _GET_SAMD_PIN(PIN_TO_SAMD_PIN(P))
 
-// Get external interrupt line associated to specified arduino pin
+// Get external interrupt line associated to specified arduino pin//获取与指定arduino引脚关联的外部中断线
 #define PIN_TO_EILINE(P)    _SAMDPORTPIN_TO_EILINE(GET_SAMD_PORT(P), GET_SAMD_PIN(P))
 
-// Get adc/ain associated to specified arduino pin
+// Get adc/ain associated to specified arduino pin//获取与指定arduino引脚关联的adc/ain
 #define PIN_TO_ADC(P)       (ANAPIN_TO_ADCAIN(P) >> 8)
 #define PIN_TO_AIN(P)       (ANAPIN_TO_ADCAIN(P) & 0xFF)
 
-// Private defines
+// Private defines//私有定义
 #define PIN_TO_SAMD_PIN(P)    DIO##P##_PIN
 
 #define _GET_SAMD_PORT(P)     ((P) >> 5)
 #define _GET_SAMD_PIN(P)      ((P) & 0x1F)
 
-// Get external interrupt line
+// Get external interrupt line//获取外部中断线
 #define _SAMDPORTPIN_TO_EILINE(P,B)   ((P == 0 && WITHIN(B, 0, 31) && B != 8 && B != 26 && B != 28 && B != 29) ? (B) & 0xF    \
                                        : (P == 1 && (WITHIN(B, 0, 25) || WITHIN(B, 30, 31))) ? (B) & 0xF                      \
                                        : (P == 1 && WITHIN(B, 26, 29)) ? 12 + (B) - 26                                        \
@@ -52,7 +53,7 @@
                                        : (P == 3 && WITHIN(B, 20, 21)) ? 10 + (B) - 20                                        \
                                        : -1)
 
-// Get adc/ain
+// Get adc/ain//获取adc/ain
 #define ANAPIN_TO_ADCAIN(P)     _PIN_TO_ADCAIN(ANAPIN_TO_SAMDPIN(P))
 #define _PIN_TO_ADCAIN(P)       _SAMDPORTPIN_TO_ADCAIN(_GET_SAMD_PORT(P), _GET_SAMD_PIN(P))
 

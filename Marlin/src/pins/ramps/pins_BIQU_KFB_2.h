@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,10 +32,10 @@
 
 #define BOARD_INFO_NAME "KFB 2.0"
 
-//
-// Heaters / Fans
-//
-// Power outputs BEEF or BEFF
+////
+// Heaters / Fans//加热器/风扇
+////
+// Power outputs BEEF or BEFF//功率输出BEFF或BEFF
 #define MOSFET_D_PIN        7
 
 #include "pins_RAMPS.h"

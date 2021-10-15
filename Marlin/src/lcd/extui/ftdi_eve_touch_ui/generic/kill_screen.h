@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*****************
  * kill_screen.h *
  *****************/
@@ -26,8 +27,8 @@
 #define FTDI_KILL_SCREEN_CLASS KillScreen
 
 class KillScreen {
-  // The KillScreen is behaves differently than the
-  // others, so we do not bother extending UIScreen.
+  // The KillScreen is behaves differently than the//KillScreen的行为与
+  // others, so we do not bother extending UIScreen.//其他，所以我们不必费心扩展UI屏幕。
   public:
     static void show(const char*);
 };

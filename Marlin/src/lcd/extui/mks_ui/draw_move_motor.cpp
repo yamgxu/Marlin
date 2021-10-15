@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -109,7 +110,7 @@ void lv_draw_move_motor() {
   lv_big_button_create(scr, "F:/bmp_zAdd.bin", move_menu.z_add, BTN_X_PIXEL * 2 + INTERVAL_V * 3, titleHeight, event_handler, ID_M_Z_P);
   lv_big_button_create(scr, "F:/bmp_zDec.bin", move_menu.z_dec, BTN_X_PIXEL * 2 + INTERVAL_V * 3, BTN_Y_PIXEL + INTERVAL_H + titleHeight, event_handler, ID_M_Z_N);
 
-  // button with image and label changed dynamically by disp_move_dist
+  // button with image and label changed dynamically by disp_move_dist//显示移动区动态更改图像和标签的按钮
   buttonV = lv_imgbtn_create(scr, nullptr, BTN_X_PIXEL * 3 + INTERVAL_V * 4, titleHeight, event_handler, ID_M_STEP);
   labelV = lv_label_create_empty(buttonV);
   #if HAS_ROTARY_ENCODER
@@ -118,7 +119,7 @@ void lv_draw_move_motor() {
 
   lv_big_button_create(scr, "F:/bmp_return.bin", common_menu.text_back, BTN_X_PIXEL * 3 + INTERVAL_V * 4, BTN_Y_PIXEL + INTERVAL_H + titleHeight, event_handler, ID_M_RETURN);
 
-  // We need to patch the title to leave some space on the right for displaying the status
+  // We need to patch the title to leave some space on the right for displaying the status//我们需要对标题进行修补，以便在右侧留出一些空间来显示状态
   lv_obj_t * title = lv_obj_get_child_back(scr, NULL);
   if (title != NULL) lv_obj_set_width(title, TFT_WIDTH - 101);
   labelP = lv_label_create(scr, TFT_WIDTH - 100, TITLE_YPOS, "Z:0.0mm");
@@ -161,4 +162,4 @@ void lv_clear_move_motor() {
   lv_obj_del(scr);
 }
 
-#endif // HAS_TFT_LVGL_UI
+#endif // HAS_TFT_LVGL_UI//有TFT\U LVGL\U用户界面

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -28,39 +29,39 @@
  * See also https://marlinfw.org/docs/development/lcd_language.html
  */
 
-// Select ONE of the following Mappers.
-// They decide what to do with a symbol in the area of [0x80:0xFF]. They take a symbol of this language file and make them point
-// into an array with 128 cells, where they'll find the place of the symbol of the font in use.
-//
-// a.)For ASCII coded Language_xx.h files like (en) there are no occurrences of symbols above 0x7F so no mapper is needed.
-//   If such a symbol appears it is mapped directly into the font. This is the case for the language files we used until now, with all the STR_XX or
-//   "\xxx" symbols. All Symbols are only one byte long.
-// b.) For Unicoded Language_xx.h files (currently ru, de and kana_utf8 ) the non ASCII [0x00-0x7F] symbols are represented by more than one byte.
-//   In the case of two bytes the first is pointing to a 'codepage' and the second to a place in the codepage. These codepages contain 64 symbols.
-//   So two of them can be mapped. For most of the European languages the necessary symbols are contained in the pages C2 and C3. Cyrillic uses D0
-//   and D1.
-// c.) For katakana (one of the Japanese symbol sets) Unicode uses 3 bytes. Here the second byte also points to a codepage and byte 3 to the symbol.
-//   I hope the pages E282 and E283 are sufficient to write katakana.
-//   Kanji (an other Japanese symbol set) uses far more than two codepages. So currently I don't see a chance to map the Unicodes. Its not
-//   impossible to have a close to direct mapping but will need giant conversion tables and fonts (we don't want to have in a embedded system).
+// Select ONE of the following Mappers.//选择以下映射器之一。
+// They decide what to do with a symbol in the area of [0x80:0xFF]. They take a symbol of this language file and make them point//它们决定如何处理[0x80:0xFF]区域中的符号。他们取了这个语言文件的一个符号并指出它们的意义
+// into an array with 128 cells, where they'll find the place of the symbol of the font in use.//在一个包含128个单元格的数组中，它们将找到正在使用的字体符号的位置。
+////
+// a.)For ASCII coded Language_xx.h files like (en) there are no occurrences of symbols above 0x7F so no mapper is needed.//a.）对于ASCII编码语言_xx.h文件，如（en），0x7F以上没有出现符号，因此不需要映射器。
+//   If such a symbol appears it is mapped directly into the font. This is the case for the language files we used until now, with all the STR_XX or//如果出现这样的符号，它将直接映射到字体中。到目前为止，我们使用的语言文件都是这种情况，所有STR_XX或
+//   "\xxx" symbols. All Symbols are only one byte long.//“\xxx”符号。所有符号只有一个字节长。
+// b.) For Unicoded Language_xx.h files (currently ru, de and kana_utf8 ) the non ASCII [0x00-0x7F] symbols are represented by more than one byte.//b.）对于Unicoded Language_xx.h文件（当前为ru、de和kana_utf8），非ASCII[0x00-0x7F]符号由多个字节表示。
+//   In the case of two bytes the first is pointing to a 'codepage' and the second to a place in the codepage. These codepages contain 64 symbols.//对于两个字节，第一个字节指向“代码页”，第二个字节指向代码页中的某个位置。这些代码页包含64个符号。
+//   So two of them can be mapped. For most of the European languages the necessary symbols are contained in the pages C2 and C3. Cyrillic uses D0//所以其中两个可以被映射。对于大多数欧洲语言，C2和C3页中包含了必要的符号。西里尔语使用D0
+//   and D1.//及首被告。
+// c.) For katakana (one of the Japanese symbol sets) Unicode uses 3 bytes. Here the second byte also points to a codepage and byte 3 to the symbol.//c.）对于片假名（日本符号集之一），Unicode使用3个字节。这里，第二个字节也指向代码页，第3个字节指向符号。
+//   I hope the pages E282 and E283 are sufficient to write katakana.//我希望E282和E283页足以书写片假名。
+//   Kanji (an other Japanese symbol set) uses far more than two codepages. So currently I don't see a chance to map the Unicodes. Its not//汉字（另一种日语符号集）使用的代码页远远不止两个。所以目前我看不到绘制独角兽地图的机会。不是
+//   impossible to have a close to direct mapping but will need giant conversion tables and fonts (we don't want to have in a embedded system).//不可能有一个接近直接的映射，但需要巨大的转换表和字体（我们不希望在嵌入式系统中有）。
 
 
-// Select the better font for full graphic displays.
-//#define DISPLAY_CHARSET_ISO10646_1
-//#define DISPLAY_CHARSET_ISO10646_5
-//#define DISPLAY_CHARSET_ISO10646_GREEK
-//#define DISPLAY_CHARSET_ISO10646_KANA
+// Select the better font for full graphic displays.//为完整图形显示选择更好的字体。
+//#define DISPLAY_CHARSET_ISO10646_1//#定义显示字符集ISO10646 1
+//#define DISPLAY_CHARSET_ISO10646_5//#定义显示字符集ISO10646 5
+//#define DISPLAY_CHARSET_ISO10646_GREEK//#定义显示字符集ISO10646希腊语
+//#define DISPLAY_CHARSET_ISO10646_KANA//#定义显示字符集ISO10646假名
 
 
 
-// next 5 lines select variants in this file only
+// next 5 lines select variants in this file only//接下来的5行仅在此文件中选择变体
 #define DISPLAYTEST
-//#define WEST
-//#define CYRIL
-//#define KANA
+//#define WEST//#定义西方
+//#define CYRIL//#定义西里尔
+//#define KANA//#定义假名
 
 
-// TESTSTRINGS
+// TESTSTRINGS//测试字符串
 
 #define STRG_ASCII_2 _UxGT(" !\"#$%&'()*+,-./")
 #define STRG_ASCII_3 _UxGT("0123456789:;<=>?")
@@ -114,7 +115,7 @@
 #define STRG_OKTAL_f "\360\361\362\363\364\365\366\367\370\371\372\373\374\375\376\377"
 
 namespace Language_test {
-  using namespace Language_en; // Inherit undefined strings from English
+  using namespace Language_en; // Inherit undefined strings from English//从英语中继承未定义的字符串
 
   constexpr uint8_t    CHARSIZE                              = 1;
 

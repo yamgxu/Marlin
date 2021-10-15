@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -74,53 +75,53 @@
 
 #define BOARD_INFO_NAME "Brainwave"
 
-//
-// Limit Switches
-//
-#define X_STOP_PIN                            35  // A7
-#define Y_STOP_PIN                            34  // A6
-#define Z_STOP_PIN                            33  // A5
+////
+// Limit Switches//限位开关
+////
+#define X_STOP_PIN                            35  // A7//A7
+#define Y_STOP_PIN                            34  // A6//A6
+#define Z_STOP_PIN                            33  // A5//A5
 
-//
-// Steppers
-//
-#define X_STEP_PIN                             3  // D3
-#define X_DIR_PIN                              5  // D5
-#define X_ENABLE_PIN                           4  // D4
-#define X_ATT_PIN                              2  // D2
+////
+// Steppers//踏步机
+////
+#define X_STEP_PIN                             3  // D3//D3
+#define X_DIR_PIN                              5  // D5//D5
+#define X_ENABLE_PIN                           4  // D4//D4
+#define X_ATT_PIN                              2  // D2//D2
 
-#define Y_STEP_PIN                             7  // D7
-#define Y_DIR_PIN                              9  // E1
-#define Y_ENABLE_PIN                           8  // E0
-#define Y_ATT_PIN                              6  // D6
+#define Y_STEP_PIN                             7  // D7//D7
+#define Y_DIR_PIN                              9  // E1//E1
+#define Y_ENABLE_PIN                           8  // E0//E0
+#define Y_ATT_PIN                              6  // D6//D6
 
-#define Z_STEP_PIN                            11  // C1
-#define Z_DIR_PIN                             13  // C3
-#define Z_ENABLE_PIN                          12  // C2
-#define Z_ATT_PIN                             10  // C0
+#define Z_STEP_PIN                            11  // C1//C1
+#define Z_DIR_PIN                             13  // C3//C3
+#define Z_ENABLE_PIN                          12  // C2//C2
+#define Z_ATT_PIN                             10  // C0//C0
 
-#define E0_STEP_PIN                           15  // C5
-#define E0_DIR_PIN                            17  // C7
-#define E0_ENABLE_PIN                         16  // C6
-#define E0_ATT_PIN                            14  // C4
+#define E0_STEP_PIN                           15  // C5//碳五
+#define E0_DIR_PIN                            17  // C7//C7
+#define E0_ENABLE_PIN                         16  // C6//C6
+#define E0_ATT_PIN                            14  // C4//C4
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                             7  // F7  Analog Input
-#define TEMP_BED_PIN                           6  // F6  Analog Input
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                             7  // F7  Analog Input//F7模拟输入
+#define TEMP_BED_PIN                           6  // F6  Analog Input//F6模拟输入
 
-//
-// Heaters / Fans
-//
-#define HEATER_0_PIN                          32  // A4 Extruder
-#define HEATER_BED_PIN                        18  // E6 Bed
+////
+// Heaters / Fans//加热器/风扇
+////
+#define HEATER_0_PIN                          32  // A4 Extruder//A4挤出机
+#define HEATER_BED_PIN                        18  // E6 Bed//E6床
 
 #ifndef FAN_PIN
-  #define FAN_PIN                             31  // A3 Fan
+  #define FAN_PIN                             31  // A3 Fan//A3风扇
 #endif
 
-//
-// Misc. Functions
-//
-#define LED_PIN                               19  // E7
+////
+// Misc. Functions//杂项。功能
+////
+#define LED_PIN                               19  // E7//E7

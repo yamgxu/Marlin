@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*********************
  * bio_main_menu.cpp *
  *********************/
@@ -84,4 +85,4 @@ bool MainMenu::onTouchEnd(uint8_t tag) {
   return true;
 }
 
-#endif // FTDI_BIO_MAIN_MENU
+#endif // FTDI_BIO_MAIN_MENU//FTDI_生物_主菜单

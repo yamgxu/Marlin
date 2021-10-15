@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*********************
  * leveling_menu.cpp *
  *********************/
@@ -131,4 +132,4 @@ bool LevelingMenu::onTouchEnd(uint8_t tag) {
   return true;
 }
 
-#endif // FTDI_LEVELING_MENU
+#endif // FTDI_LEVELING_MENU//FTDI_调平_菜单

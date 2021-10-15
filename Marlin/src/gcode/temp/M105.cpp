@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -41,7 +42,7 @@ void GcodeSuite::M105() {
 
   #else
 
-    SERIAL_ECHOLNPGM(" T:0"); // Some hosts send M105 to test the serial connection
+    SERIAL_ECHOLNPGM(" T:0"); // Some hosts send M105 to test the serial connection//一些主机发送M105来测试串行连接
 
   #endif
 }

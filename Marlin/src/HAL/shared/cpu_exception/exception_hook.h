@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2021 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -36,19 +37,19 @@
          user to capture by taking a picture
      2.7 The CPU is reset and/or halted by triggering a debug breakpoint if a debugger is attached */
 
-// Hook into CPU exception interrupt table to call the backtracing code upon an exception
-// Most platform will simply do nothing here, but those who can will install/overwrite the default exception handler
-// with a more performant exception handler
+// Hook into CPU exception interrupt table to call the backtracing code upon an exception//钩住CPU异常中断表，在异常发生时调用回溯代码
+// Most platform will simply do nothing here, but those who can will install/overwrite the default exception handler//大多数平台在这里什么也不做，但是那些可以安装/覆盖默认异常处理程序的平台
+// with a more performant exception handler//使用性能更高的异常处理程序
 void hook_cpu_exceptions();
 
-// Some platform might deal without a hard fault handler, in that case, return 0 in your platform here or skip implementing it
+// Some platform might deal without a hard fault handler, in that case, return 0 in your platform here or skip implementing it//某些平台可能在没有硬故障处理程序的情况下进行处理，在这种情况下，在您的平台中返回0或跳过实现它
 void * __attribute__((weak)) hook_get_hardfault_vector_address(unsigned base_address);
-// Some platform might deal without a memory management fault handler, in that case, return 0 in your platform here or skip implementing it
+// Some platform might deal without a memory management fault handler, in that case, return 0 in your platform here or skip implementing it//某些平台可能在没有内存管理错误处理程序的情况下进行处理，在这种情况下，在您的平台中返回0或跳过实现它
 void * __attribute__((weak)) hook_get_memfault_vector_address(unsigned base_address);
-// Some platform might deal without a bus fault handler, in that case, return 0 in your platform here or skip implementing it
+// Some platform might deal without a bus fault handler, in that case, return 0 in your platform here or skip implementing it//某些平台可能在没有总线故障处理程序的情况下进行处理，在这种情况下，在您的平台中返回0或跳过实现它
 void * __attribute__((weak)) hook_get_busfault_vector_address(unsigned base_address);
-// Some platform might deal without a usage fault handler, in that case, return 0 in your platform here or skip implementing it
+// Some platform might deal without a usage fault handler, in that case, return 0 in your platform here or skip implementing it//某些平台可能在没有使用错误处理程序的情况下进行处理，在这种情况下，在您的平台中返回0或跳过实现它
 void * __attribute__((weak)) hook_get_usagefault_vector_address(unsigned base_address);
 
-// Last resort function that can be called after the exception handler was called.
+// Last resort function that can be called after the exception handler was called.//调用异常处理程序后可以调用的最后一个函数。
 void __attribute__((weak)) hook_last_resort_func();

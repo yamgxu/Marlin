@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -23,17 +24,17 @@
 
 #include "menu.h"
 #include "../marlinui.h"
-#include "../../gcode/queue.h" // for inject_P
+#include "../../gcode/queue.h" // for inject_P//注射用
 
 #include "../../inc/MarlinConfigPre.h"
 
 void lcd_move_z();
 
-////////////////////////////////////////////
-///////////// Base Menu Items //////////////
-////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+///////////// Base Menu Items ///////////////////////////基本菜单项//////////////
+////////////////////////////////////////////////////////////////////////////////////////
 
-// SUBMENU(LABEL, screen_handler)
+// SUBMENU(LABEL, screen_handler)//子菜单（标签、屏幕处理程序）
 class MenuItem_submenu : public MenuItemBase {
   public:
     FORCE_INLINE static void draw(const bool sel, const uint8_t row, PGM_P const pstr, ...) {
@@ -42,23 +43,23 @@ class MenuItem_submenu : public MenuItemBase {
     static inline void action(PGM_P const, const screenFunc_t func) { ui.push_current_screen(); ui.goto_screen(func); }
 };
 
-// Any menu item that invokes an immediate action
+// Any menu item that invokes an immediate action//调用即时操作的任何菜单项
 class MenuItem_button : public MenuItemBase {
   public:
-    // Button-y Items are selectable lines with no other indicator
+    // Button-y Items are selectable lines with no other indicator//按钮y项目是不带其他指示器的可选行
     static inline void draw(const bool sel, const uint8_t row, PGM_P const pstr, ...) {
       _draw(sel, row, pstr, '>', ' ');
     }
 };
 
-// ACTION_ITEM(LABEL, FUNC)
+// ACTION_ITEM(LABEL, FUNC)//行动项目（标签，功能）
 class MenuItem_function : public MenuItem_button {
   public:
-    //static inline void action(PGM_P const, const uint8_t, const menuAction_t func) { (*func)(); };
+    //static inline void action(PGM_P const, const uint8_t, const menuAction_t func) { (*func)(); };//静态内联无效操作（PGM_P const，const uint8_t，const menuAction_t func）{（*func）（；}；
     static inline void action(PGM_P const, const menuAction_t func) { (*func)(); };
 };
 
-// GCODES_ITEM(LABEL, GCODES)
+// GCODES_ITEM(LABEL, GCODES)//GCODES_项（标签，GCODES）
 class MenuItem_gcode : public MenuItem_button {
   public:
     FORCE_INLINE static void draw(const bool sel, const uint8_t row, PGM_P const pstr, ...) {
@@ -68,11 +69,11 @@ class MenuItem_gcode : public MenuItem_button {
     static inline void action(PGM_P const pstr, const uint8_t, const char * const pgcode) { action(pstr, pgcode); }
 };
 
-////////////////////////////////////////////
-///////////// Edit Menu Items //////////////
-////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+///////////// Edit Menu Items ///////////////////////////编辑菜单项//////////////
+////////////////////////////////////////////////////////////////////////////////////////
 
-// Template for specific Menu Edit Item Types
+// Template for specific Menu Edit Item Types//特定菜单编辑项类型的模板
 template<typename NAME>
 class TMenuEditItem : MenuEditItemBase {
   private:
@@ -88,17 +89,17 @@ class TMenuEditItem : MenuEditItemBase {
     FORCE_INLINE static void draw(const bool sel, const uint8_t row, PGM_P const pstr, type_t (*pget)(), ...) {
       MenuEditItemBase::draw(sel, row, pstr, NAME::strfunc(pget()));
     }
-    // Edit screen for this type of item
+    // Edit screen for this type of item//此类型项目的编辑屏幕
     static void edit_screen() { MenuEditItemBase::edit_screen(to_string, load); }
     static void action(
-      PGM_P const pstr,                     // Edit label
-      type_t * const ptr,                   // Value pointer
-      const type_t minValue,                // Value range
+      PGM_P const pstr,                     // Edit label//编辑标签
+      type_t * const ptr,                   // Value pointer//值指针
+      const type_t minValue,                // Value range//值范围
       const type_t maxValue,
-      const screenFunc_t callback=nullptr,  // Value update callback
-      const bool live=false                 // Callback during editing
+      const screenFunc_t callback=nullptr,  // Value update callback//值更新回调
+      const bool live=false                 // Callback during editing//编辑期间的回调
     ) {
-      // Make sure minv and maxv fit within int32_t
+      // Make sure minv and maxv fit within int32_t//确保minv和maxv在int32_t内
       const int32_t minv = _MAX(scale(minValue), INT32_MIN),
                     maxv = _MIN(scale(maxValue), INT32_MAX);
       goto_edit_screen(pstr, ptr, minv, maxv - minv, scale(*ptr) - minv,
@@ -106,9 +107,9 @@ class TMenuEditItem : MenuEditItemBase {
     }
 };
 
-// Provide a set of Edit Item Types which encompass a primitive
-// type, a string function, and a scale factor for edit and display.
-// These items call the Edit Item draw method passing the prepared string.
+// Provide a set of Edit Item Types which encompass a primitive//提供一组包含基元的编辑项类型
+// type, a string function, and a scale factor for edit and display.//类型、字符串函数和用于编辑和显示的比例因子。
+// These items call the Edit Item draw method passing the prepared string.//这些项调用编辑项绘制方法，并传递准备好的字符串。
 #define __DOFIXfloat PROBE()
 #define _DOFIX(TYPE,V) TYPE(TERN(IS_PROBE(__DOFIX##TYPE),FIXFLOAT(V),(V)))
 #define DEFINE_MENU_EDIT_ITEM_TYPE(NAME, TYPE, STRFUNC, SCALE, ETC...) \
@@ -120,35 +121,35 @@ class TMenuEditItem : MenuEditItemBase {
   }; \
   typedef TMenuEditItem<MenuEditItemInfo_##NAME> MenuItem_##NAME
 
-//                         NAME         TYPE      STRFUNC          SCALE         ROUND
-DEFINE_MENU_EDIT_ITEM_TYPE(percent     ,uint8_t  ,ui8tostr4pctrj  , 100.f/255.f, +0.5f);  // 100%   right-justified
-DEFINE_MENU_EDIT_ITEM_TYPE(percent_3   ,uint8_t  ,pcttostrpctrj   ,   1     );   // 100%   right-justified
-DEFINE_MENU_EDIT_ITEM_TYPE(int3        ,int16_t  ,i16tostr3rj     ,   1     );   // 123, -12   right-justified
-DEFINE_MENU_EDIT_ITEM_TYPE(int4        ,int16_t  ,i16tostr4signrj ,   1     );   // 1234, -123 right-justified
-DEFINE_MENU_EDIT_ITEM_TYPE(int8        ,int8_t   ,i8tostr3rj      ,   1     );   // 123, -12   right-justified
-DEFINE_MENU_EDIT_ITEM_TYPE(uint8       ,uint8_t  ,ui8tostr3rj     ,   1     );   // 123        right-justified
-DEFINE_MENU_EDIT_ITEM_TYPE(uint16_3    ,uint16_t ,ui16tostr3rj    ,   1     );   // 123        right-justified
-DEFINE_MENU_EDIT_ITEM_TYPE(uint16_4    ,uint16_t ,ui16tostr4rj    ,   0.1f  );   // 1234       right-justified
-DEFINE_MENU_EDIT_ITEM_TYPE(uint16_5    ,uint16_t ,ui16tostr5rj    ,   0.01f );   // 12345      right-justified
-DEFINE_MENU_EDIT_ITEM_TYPE(float3      ,float    ,ftostr3         ,   1     );   // 123        right-justified
-DEFINE_MENU_EDIT_ITEM_TYPE(float42_52  ,float    ,ftostr42_52     , 100     );   // _2.34, 12.34, -2.34 or 123.45, -23.45
-DEFINE_MENU_EDIT_ITEM_TYPE(float43     ,float    ,ftostr43sign    ,1000     );   // -1.234, _1.234, +1.234
-DEFINE_MENU_EDIT_ITEM_TYPE(float4      ,float    ,ftostr4sign     ,   1     );   // 1234       right-justified
-DEFINE_MENU_EDIT_ITEM_TYPE(float5      ,float    ,ftostr5rj       ,   1     );   // 12345      right-justified
-DEFINE_MENU_EDIT_ITEM_TYPE(float5_25   ,float    ,ftostr5rj       ,   0.04f );   // 12345      right-justified (25 increment)
-DEFINE_MENU_EDIT_ITEM_TYPE(float51     ,float    ,ftostr51rj      ,  10     );   // 1234.5     right-justified
-DEFINE_MENU_EDIT_ITEM_TYPE(float31sign ,float    ,ftostr31sign    ,  10     );   // +12.3
-DEFINE_MENU_EDIT_ITEM_TYPE(float41sign ,float    ,ftostr41sign    ,  10     );   // +123.4
-DEFINE_MENU_EDIT_ITEM_TYPE(float51sign ,float    ,ftostr51sign    ,  10     );   // +1234.5
-DEFINE_MENU_EDIT_ITEM_TYPE(float52sign ,float    ,ftostr52sign    , 100     );   // +123.45
-DEFINE_MENU_EDIT_ITEM_TYPE(long5       ,uint32_t ,ftostr5rj       ,   0.01f );   // 12345      right-justified
-DEFINE_MENU_EDIT_ITEM_TYPE(long5_25    ,uint32_t ,ftostr5rj       ,   0.04f );   // 12345      right-justified (25 increment)
+//                         NAME         TYPE      STRFUNC          SCALE         ROUND//名称类型STRFUNC刻度圆
+DEFINE_MENU_EDIT_ITEM_TYPE(percent     ,uint8_t  ,ui8tostr4pctrj  , 100.f/255.f, +0.5f);  // 100%   right-justified//100%右对齐
+DEFINE_MENU_EDIT_ITEM_TYPE(percent_3   ,uint8_t  ,pcttostrpctrj   ,   1     );   // 100%   right-justified//100%右对齐
+DEFINE_MENU_EDIT_ITEM_TYPE(int3        ,int16_t  ,i16tostr3rj     ,   1     );   // 123, -12   right-justified//123，-12右对齐
+DEFINE_MENU_EDIT_ITEM_TYPE(int4        ,int16_t  ,i16tostr4signrj ,   1     );   // 1234, -123 right-justified//1234，-123右对齐
+DEFINE_MENU_EDIT_ITEM_TYPE(int8        ,int8_t   ,i8tostr3rj      ,   1     );   // 123, -12   right-justified//123，-12右对齐
+DEFINE_MENU_EDIT_ITEM_TYPE(uint8       ,uint8_t  ,ui8tostr3rj     ,   1     );   // 123        right-justified//123右对齐
+DEFINE_MENU_EDIT_ITEM_TYPE(uint16_3    ,uint16_t ,ui16tostr3rj    ,   1     );   // 123        right-justified//123右对齐
+DEFINE_MENU_EDIT_ITEM_TYPE(uint16_4    ,uint16_t ,ui16tostr4rj    ,   0.1f  );   // 1234       right-justified//1234右对齐
+DEFINE_MENU_EDIT_ITEM_TYPE(uint16_5    ,uint16_t ,ui16tostr5rj    ,   0.01f );   // 12345      right-justified//12345右对齐
+DEFINE_MENU_EDIT_ITEM_TYPE(float3      ,float    ,ftostr3         ,   1     );   // 123        right-justified//123右对齐
+DEFINE_MENU_EDIT_ITEM_TYPE(float42_52  ,float    ,ftostr42_52     , 100     );   // _2.34, 12.34, -2.34 or 123.45, -23.45//_2.34、12.34、-2.34或123.45、-23.45
+DEFINE_MENU_EDIT_ITEM_TYPE(float43     ,float    ,ftostr43sign    ,1000     );   // -1.234, _1.234, +1.234// -1.234, _1.234, +1.234
+DEFINE_MENU_EDIT_ITEM_TYPE(float4      ,float    ,ftostr4sign     ,   1     );   // 1234       right-justified//1234右对齐
+DEFINE_MENU_EDIT_ITEM_TYPE(float5      ,float    ,ftostr5rj       ,   1     );   // 12345      right-justified//12345右对齐
+DEFINE_MENU_EDIT_ITEM_TYPE(float5_25   ,float    ,ftostr5rj       ,   0.04f );   // 12345      right-justified (25 increment)//12345右对齐（25增量）
+DEFINE_MENU_EDIT_ITEM_TYPE(float51     ,float    ,ftostr51rj      ,  10     );   // 1234.5     right-justified//1234.5右对齐
+DEFINE_MENU_EDIT_ITEM_TYPE(float31sign ,float    ,ftostr31sign    ,  10     );   // +12.3// +12.3
+DEFINE_MENU_EDIT_ITEM_TYPE(float41sign ,float    ,ftostr41sign    ,  10     );   // +123.4// +123.4
+DEFINE_MENU_EDIT_ITEM_TYPE(float51sign ,float    ,ftostr51sign    ,  10     );   // +1234.5// +1234.5
+DEFINE_MENU_EDIT_ITEM_TYPE(float52sign ,float    ,ftostr52sign    , 100     );   // +123.45// +123.45
+DEFINE_MENU_EDIT_ITEM_TYPE(long5       ,uint32_t ,ftostr5rj       ,   0.01f );   // 12345      right-justified//12345右对齐
+DEFINE_MENU_EDIT_ITEM_TYPE(long5_25    ,uint32_t ,ftostr5rj       ,   0.04f );   // 12345      right-justified (25 increment)//12345右对齐（25增量）
 
 #if HAS_BED_PROBE
   #if Z_PROBE_OFFSET_RANGE_MIN >= -9 && Z_PROBE_OFFSET_RANGE_MAX <= 9
-    #define LCD_Z_OFFSET_TYPE float43    // Values from -9.000 to +9.000
+    #define LCD_Z_OFFSET_TYPE float43    // Values from -9.000 to +9.000//从-9.000到+9.000的值
   #else
-    #define LCD_Z_OFFSET_TYPE float42_52 // Values from -99.99 to 99.99
+    #define LCD_Z_OFFSET_TYPE float42_52 // Values from -99.99 to 99.99//值介于-99.99到99.99之间
   #endif
 #endif
 
@@ -274,7 +275,7 @@ class MenuItem_bool : public MenuEditItemBase {
   NEXT_ITEM();                        \
 }while(0)
 
-// Indexed items set a global index value and optional data
+// Indexed items set a global index value and optional data//索引项设置全局索引值和可选数据
 #define _MENU_ITEM_N_S_P(TYPE, N, S, V...) do{ \
   if (_menuLineNr == _thisItemNr) {            \
     _skipStatic = false;                       \
@@ -284,7 +285,7 @@ class MenuItem_bool : public MenuEditItemBase {
   NEXT_ITEM();                                 \
 }while(0)
 
-// Indexed items set a global index value
+// Indexed items set a global index value//索引项设置全局索引值
 #define _MENU_ITEM_N_P(TYPE, N, V...) do{ \
   if (_menuLineNr == _thisItemNr) {       \
     _skipStatic = false;                  \
@@ -294,7 +295,7 @@ class MenuItem_bool : public MenuEditItemBase {
   NEXT_ITEM();                            \
 }while(0)
 
-// Items with a unique string
+// Items with a unique string//具有唯一字符串的项目
 #define _MENU_ITEM_S_P(TYPE, S, V...) do{ \
   if (_menuLineNr == _thisItemNr) {       \
     _skipStatic = false;                  \
@@ -304,8 +305,8 @@ class MenuItem_bool : public MenuEditItemBase {
   NEXT_ITEM();                            \
 }while(0)
 
-// STATIC_ITEM draws a styled string with no highlight.
-// Parameters: label [, style [, char *value] ]
+// STATIC_ITEM draws a styled string with no highlight.//静态_项绘制没有突出显示的样式化字符串。
+// Parameters: label [, style [, char *value] ]//参数：标签[，样式[，字符*值]]
 
 #define STATIC_ITEM_INNER_P(PLABEL, V...) do{           \
   if (_skipStatic && encoderLine <= _thisItemNr) {      \
@@ -330,8 +331,8 @@ class MenuItem_bool : public MenuEditItemBase {
   NEXT_ITEM();                               \
 }while(0)
 
-// PSTRING_ITEM is like STATIC_ITEM but it takes
-// two PSTRs with the style as the last parameter.
+// PSTRING_ITEM is like STATIC_ITEM but it takes//PSTRING_项类似于静态_项，但需要
+// two PSTRs with the style as the last parameter.//将样式作为最后一个参数的两个PSTR。
 
 #define PSTRING_ITEM_P(PLABEL, PVAL, STYL) do{ \
   constexpr int m = 20;                        \
@@ -414,7 +415,7 @@ class MenuItem_bool : public MenuEditItemBase {
     (encoderLine == _thisItemNr, _lcdLineNr, PLABEL, ##V);   \
 }while(0)
 
-// Indexed items set a global index value and optional data
+// Indexed items set a global index value and optional data//索引项设置全局索引值和可选数据
 #define _CONFIRM_ITEM_P(PLABEL, V...) do { \
   if (_menuLineNr == _thisItemNr) {        \
     _skipStatic = false;                   \
@@ -423,7 +424,7 @@ class MenuItem_bool : public MenuEditItemBase {
   NEXT_ITEM();                             \
 }while(0)
 
-// Indexed items set a global index value
+// Indexed items set a global index value//索引项设置全局索引值
 #define _CONFIRM_ITEM_N_S_P(N, S, V...) do{ \
   if (_menuLineNr == _thisItemNr) {         \
     _skipStatic = false;                    \
@@ -433,7 +434,7 @@ class MenuItem_bool : public MenuEditItemBase {
   NEXT_ITEM();                              \
 }while(0)
 
-// Indexed items set a global index value
+// Indexed items set a global index value//索引项设置全局索引值
 #define _CONFIRM_ITEM_N_P(N, V...) _CONFIRM_ITEM_N_S_P(N, nullptr, V)
 
 #define CONFIRM_ITEM_P(PLABEL,A,B,V...) _CONFIRM_ITEM_P(PLABEL, GET_TEXT(A), GET_TEXT(B), ##V)
@@ -492,4 +493,4 @@ class MenuItem_bool : public MenuEditItemBase {
     #define DEFINE_SINGLENOZZLE_ITEM() NOOP
   #endif
 
-#endif // HAS_FAN
+#endif // HAS_FAN//范先生

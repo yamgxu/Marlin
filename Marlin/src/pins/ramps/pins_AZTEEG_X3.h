@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -33,21 +34,21 @@
 #endif
 
 #if ENABLED(CASE_LIGHT_ENABLE) && !PIN_EXISTS(CASE_LIGHT)
-  #define CASE_LIGHT_PIN                       6  // Define before RAMPS pins include
+  #define CASE_LIGHT_PIN                       6  // Define before RAMPS pins include//在坡道引脚包括之前定义
 #endif
 #define BOARD_INFO_NAME "Azteeg X3"
 
-//
-// Servos
-//
-#define SERVO0_PIN                            44  // SERVO1 port
-#define SERVO1_PIN                            55  // SERVO2 port
+////
+// Servos//伺服
+////
+#define SERVO0_PIN                            44  // SERVO1 port//伺服1端口
+#define SERVO1_PIN                            55  // SERVO2 port//伺服2端口
 
 #include "pins_RAMPS_13.h"
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 #undef STAT_LED_RED_PIN
 #undef STAT_LED_BLUE_PIN
 
@@ -70,28 +71,28 @@
 
 #endif
 
-//
-// Misc
-//
+////
+// Misc//杂项
+////
 #if ENABLED(CASE_LIGHT_ENABLE) && PINS_EXIST(CASE_LIGHT, STAT_LED_RED) && STAT_LED_RED_PIN == CASE_LIGHT_PIN
   #undef STAT_LED_RED_PIN
 #endif
 
-//
-// M3/M4/M5 - Spindle/Laser Control
-//
-#undef SPINDLE_LASER_PWM_PIN                      // Definitions in pins_RAMPS.h are no good with the AzteegX3 board
+////
+// M3/M4/M5 - Spindle/Laser Control//M3/M4/M5-主轴/激光控制
+////
+#undef SPINDLE_LASER_PWM_PIN                      // Definitions in pins_RAMPS.h are no good with the AzteegX3 board//引脚_RAMPS.h中的定义与AzteegX3板不符
 #undef SPINDLE_LASER_ENA_PIN
 #undef SPINDLE_DIR_PIN
 
 #if HAS_CUTTER
-  #undef SDA                                      // use EXP3 header
+  #undef SDA                                      // use EXP3 header//使用EXP3头
   #undef SCL
   #if SERVO0_PIN == 7
     #undef SERVO0_PIN
     #define SERVO0_PIN                        11
   #endif
-  #define SPINDLE_LASER_PWM_PIN                7  // Hardware PWM
-  #define SPINDLE_LASER_ENA_PIN               20  // Pullup!
+  #define SPINDLE_LASER_PWM_PIN                7  // Hardware PWM//硬件脉宽调制
+  #define SPINDLE_LASER_ENA_PIN               20  // Pullup!//拉起！
   #define SPINDLE_DIR_PIN                     21
 #endif

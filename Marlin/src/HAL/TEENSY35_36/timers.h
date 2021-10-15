@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -26,9 +27,9 @@
 
 #include <stdint.h>
 
-// ------------------------
-// Defines
-// ------------------------
+// ------------------------// ------------------------
+// Defines//定义
+// ------------------------// ------------------------
 
 #define FORCE_INLINE __attribute__((always_inline)) inline
 
@@ -40,19 +41,19 @@ typedef uint32_t hal_timer_t;
 #define FTM0_TIMER_PRESCALE_BITS 0b011
 #define FTM1_TIMER_PRESCALE_BITS 0b010
 
-#define FTM0_TIMER_RATE (F_BUS / FTM0_TIMER_PRESCALE) // 60MHz / 8 = 7500kHz
-#define FTM1_TIMER_RATE (F_BUS / FTM1_TIMER_PRESCALE) // 60MHz / 4 = 15MHz
+#define FTM0_TIMER_RATE (F_BUS / FTM0_TIMER_PRESCALE) // 60MHz / 8 = 7500kHz//60MHz/8=7500kHz
+#define FTM1_TIMER_RATE (F_BUS / FTM1_TIMER_PRESCALE) // 60MHz / 4 = 15MHz//60MHz/4=15MHz
 
 #define HAL_TIMER_RATE         (FTM0_TIMER_RATE)
 
 #ifndef STEP_TIMER_NUM
-  #define STEP_TIMER_NUM        0  // Timer Index for Stepper
+  #define STEP_TIMER_NUM        0  // Timer Index for Stepper//步进电机的定时器索引
 #endif
 #ifndef PULSE_TIMER_NUM
   #define PULSE_TIMER_NUM       STEP_TIMER_NUM
 #endif
 #ifndef TEMP_TIMER_NUM
-  #define TEMP_TIMER_NUM        1  // Timer Index for Temperature
+  #define TEMP_TIMER_NUM        1  // Timer Index for Temperature//温度计时器索引
 #endif
 
 #define TEMP_TIMER_FREQUENCY    1000
@@ -61,7 +62,7 @@ typedef uint32_t hal_timer_t;
 #define STEPPER_TIMER_TICKS_PER_US ((STEPPER_TIMER_RATE) / 1000000)
 #define STEPPER_TIMER_PRESCALE (CYCLES_PER_MICROSECOND / STEPPER_TIMER_TICKS_PER_US)
 
-#define PULSE_TIMER_RATE       STEPPER_TIMER_RATE   // frequency of pulse timer
+#define PULSE_TIMER_RATE       STEPPER_TIMER_RATE   // frequency of pulse timer//脉冲定时器频率
 #define PULSE_TIMER_PRESCALE   STEPPER_TIMER_PRESCALE
 #define PULSE_TIMER_TICKS_PER_US STEPPER_TIMER_TICKS_PER_US
 
@@ -73,10 +74,10 @@ typedef uint32_t hal_timer_t;
 #define DISABLE_TEMPERATURE_INTERRUPT() HAL_timer_disable_interrupt(TEMP_TIMER_NUM)
 
 #ifndef HAL_STEP_TIMER_ISR
-  #define HAL_STEP_TIMER_ISR() extern "C" void ftm0_isr() //void TC3_Handler()
+  #define HAL_STEP_TIMER_ISR() extern "C" void ftm0_isr() //void TC3_Handler()//无效TC3_处理程序（）
 #endif
 #ifndef HAL_TEMP_TIMER_ISR
-  #define HAL_TEMP_TIMER_ISR() extern "C" void ftm1_isr() //void TC4_Handler()
+  #define HAL_TEMP_TIMER_ISR() extern "C" void ftm1_isr() //void TC4_Handler()//无效TC4_处理程序（）
 #endif
 
 void HAL_timer_start(const uint8_t timer_num, const uint32_t frequency);

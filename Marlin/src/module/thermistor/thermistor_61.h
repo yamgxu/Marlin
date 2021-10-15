@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,17 +22,17 @@
  */
 #pragma once
 
-// R25 = 100 kOhm, beta25 = 3950 K, 4.7 kOhm pull-up,
-// Formbot / Vivedino high temp 100k thermistor
-// 100KR13950181203
-// Generated with modified version of https://www.thingiverse.com/thing:103668
-// Using table 1 with datasheet values
-// Resistance         100k Ohms at 25deg. C
-// Resistance Tolerance     + / -1%
-// B Value             3950K at 25/50 deg. C
-// B Value Tolerance         + / - 1%
+// R25 = 100 kOhm, beta25 = 3950 K, 4.7 kOhm pull-up,//R25=100千欧，beta25=3950千欧，上拉4.7千欧，
+// Formbot / Vivedino high temp 100k thermistor//Formbot/Vivedino高温100k热敏电阻器
+// 100KR13950181203//100KR13950181203
+// Generated with modified version of https://www.thingiverse.com/thing:103668//使用的修改版本生成https://www.thingiverse.com/thing:103668
+// Using table 1 with datasheet values//使用表1和数据表值
+// Resistance         100k Ohms at 25deg. C//25度时的电阻为100k欧姆。C
+// Resistance Tolerance     + / -1%//电阻公差+/-1%
+// B Value             3950K at 25/50 deg. C//25/50摄氏度时的B值3950K
+// B Value Tolerance         + / - 1%//B值公差+/-1%
 constexpr temp_entry_t temptable_61[] PROGMEM = {
-  { OV(   2.00), 420 }, // Guestimate to ensure we dont lose a reading and drop temps to -50 when over
+  { OV(   2.00), 420 }, // Guestimate to ensure we dont lose a reading and drop temps to -50 when over//客户评估以确保我们不会丢失读数，并在结束时将温度降至-50
   { OV(  12.07), 350 },
   { OV(  12.79), 345 },
   { OV(  13.59), 340 },

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /* Copyright (C) 2015-2016 Andrew J. Kroll
    and
 Copyright (C) 2011 Circuits At Home, LTD. All rights reserved.
@@ -20,7 +21,7 @@ Contact information
 -------------------
 
 Circuits At Home, LTD
-Web      :  https://www.circuitsathome.com
+Web      :  https://www.circuitsathome.com//www.circuitsathome.com
 e-mail   :  support@circuitsathome.com
  */
 
@@ -30,7 +31,7 @@ e-mail   :  support@circuitsathome.com
 #ifndef _USBHOST_H_
 #define _USBHOST_H_
 
-// Very early prototypes
+// Very early prototypes//非常早期的原型
 #ifdef UHS_LOAD_BT
 void UHS_BT_SetUSBInterface(UHS_USB_HOST_BASE *host, ENUMERATION_INFO *ei);
 void UHS_BT_ScanUninitialized(UHS_USB_HOST_BASE *host);
@@ -42,22 +43,22 @@ void UHS_HID_ScanUninitialized(UHS_USB_HOST_BASE *host);
 void UHS_HID_Poll(UHS_USB_HOST_BASE *host);
 #endif
 
-//#if defined(LOAD_UHS_CDC_ACM) || defined(LOAD_UHS_CDC_ACM_FTDI) || defined(LOAD_UHS_CDC_ACM_PROLIFIC) || defined(LOAD_UHS_CDC_ACM_XR21B1411)
-//void UHS_CDC_ACM_SetUSBInterface(UHS_USB_HOST_BASE *host, ENUMERATION_INFO *ei);
-//void UHS_CDC_ACM_ScanUninitialized(UHS_USB_HOST_BASE *host);
-//void UHS_CDC_ACM_Poll(UHS_USB_HOST_BASE *host);
-//#endif
+//#if defined(LOAD_UHS_CDC_ACM) || defined(LOAD_UHS_CDC_ACM_FTDI) || defined(LOAD_UHS_CDC_ACM_PROLIFIC) || defined(LOAD_UHS_CDC_ACM_XR21B1411)//#如果已定义（负载UHS CDC ACM）|已定义（负载UHS CDC ACM FTDI）|已定义（负载UHS CDC ACM ACM高产）|已定义（负载UHS CDC ACM XR21B1411）
+//void UHS_CDC_ACM_SetUSBInterface(UHS_USB_HOST_BASE *host, ENUMERATION_INFO *ei);//无效UHS_CDC_ACM_SetUSBInterface（UHS_USB_HOST_BASE*HOST，枚举信息*ei）；
+//void UHS_CDC_ACM_ScanUninitialized(UHS_USB_HOST_BASE *host);//无效UHS\U CDC\U ACM\U扫描未初始化（UHS\U USB\U主机\U基*主机）；
+//void UHS_CDC_ACM_Poll(UHS_USB_HOST_BASE *host);//作废UHS\U CDC\U ACM\U轮询（UHS\U USB\U主机\U基*主机）；
+//#endif//#恩迪夫
 
-class UHS_USBInterface; // forward class declaration
+class UHS_USBInterface; // forward class declaration//转发类声明
 
-// enumerator to turn the VBUS on/off
+// enumerator to turn the VBUS on/off//用于打开/关闭VBU的枚举器
 
 typedef enum {
         vbus_on = 0,
         vbus_off = 1
 } VBUS_t;
 
-// All host SEI use this base class
+// All host SEI use this base class//所有主机SEI都使用此基类
 
 class UHS_USB_HOST_BASE {
 public:
@@ -74,17 +75,17 @@ public:
                         devConfig[i] = NULL;
                 }
                 usb_task_polling_disabled = 0;
-                usb_task_state = UHS_USB_HOST_STATE_INITIALIZE; //set up state machine
+                usb_task_state = UHS_USB_HOST_STATE_INITIALIZE; //set up state machine//设置状态机
                 usb_host_speed = 0;
                 usb_error = 0;
         };
 
-        /////////////////////////////////////////////
-        //
-        // Virtual methods that interface to the SIE
-        // Overriding each is mandatory.
-        //
-        /////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////
+        ////
+        // Virtual methods that interface to the SIE//与SIE接口的虚拟方法
+        // Overriding each is mandatory.//必须覆盖每一项。
+        ////
+        //////////////////////////////////////////////////////////////////////////////////////////
 
         /**
          * Delay for x milliseconds
@@ -167,23 +168,23 @@ public:
         };
 
         virtual void UHS_NI suspend_host() {
-                // Used on MCU that lack control of IRQ priority (AVR).
-                // Suspends ISRs, for critical code. IRQ will be serviced after it is resumed.
-                // NOTE: you must track the state yourself!
+                // Used on MCU that lack control of IRQ priority (AVR).//用于缺少IRQ优先级（AVR）控制的MCU。
+                // Suspends ISRs, for critical code. IRQ will be serviced after it is resumed.//暂停关键代码的ISR。IRQ将在恢复后进行维修。
+                // NOTE: you must track the state yourself!//注意：您必须自己跟踪状态！
         };
 
         virtual void UHS_NI resume_host() {
-                // Used on MCU that lack control of IRQ priority (AVR).
-                // Resumes ISRs.
-                // NOTE: you must track the state yourself!
+                // Used on MCU that lack control of IRQ priority (AVR).//用于缺少IRQ优先级（AVR）控制的MCU。
+                // Resumes ISRs.//恢复ISRs。
+                // NOTE: you must track the state yourself!//注意：您必须自己跟踪状态！
         };
 
-        /////////////////////////////////////////////
-        //
-        // Built-ins, No need to override
-        //
-        /////////////////////////////////////////////
-        // these two probably will go away, and won't be used, TBD
+        //////////////////////////////////////////////////////////////////////////////////////////
+        ////
+        // Built-ins, No need to override//内置，无需覆盖
+        ////
+        //////////////////////////////////////////////////////////////////////////////////////////
+        // these two probably will go away, and won't be used, TBD//这两个可能会消失，不会被使用，待定
         inline void Poll_Others() {
 #ifdef UHS_LOAD_BT
                 UHS_BT_Poll(this);
@@ -248,7 +249,7 @@ public:
                                 return i;
                         }
                 }
-                //return UHS_HOST_ERROR_CANT_REGISTER_DEVICE_CLASS;
+                //return UHS_HOST_ERROR_CANT_REGISTER_DEVICE_CLASS;//返回UHS\u主机\u错误\u无法\u寄存器\u设备\u类；
                 return -1;
         };
 #if 0
@@ -270,20 +271,20 @@ public:
 
 };
 
-// All device interface drivers use this subclass
+// All device interface drivers use this subclass//所有设备接口驱动程序都使用此子类
 
 class UHS_USBInterface {
 public:
 
-        UHS_USB_HOST_BASE *pUsb; // Parent USB host
-        volatile uint8_t bNumEP; // total number of EP in this interface
-        volatile UHS_EpInfo epInfo[16]; // This is a stub, override in the driver.
+        UHS_USB_HOST_BASE *pUsb; // Parent USB host//父USB主机
+        volatile uint8_t bNumEP; // total number of EP in this interface//此接口中的EP总数
+        volatile UHS_EpInfo epInfo[16]; // This is a stub, override in the driver.//这是一个存根，在驱动程序中覆盖。
 
-        volatile uint8_t bAddress; // address of the device
-        volatile uint8_t bConfNum; // configuration number
-        volatile uint8_t bIface; // interface value
-        volatile bool bPollEnable; // poll enable flag, operating status
-        volatile uint32_t qNextPollTime; // next poll time
+        volatile uint8_t bAddress; // address of the device//设备的地址
+        volatile uint8_t bConfNum; // configuration number//配置号
+        volatile uint8_t bIface; // interface value//接口值
+        volatile bool bPollEnable; // poll enable flag, operating status//轮询启用标志，运行状态
+        volatile uint32_t qNextPollTime; // next poll time//下次投票时间
 
         /**
          * Resets interface driver to unused state. You should override this in
@@ -445,5 +446,5 @@ public:
 };
 #endif
 
-#endif //_USBHOST_H_
+#endif //_USBHOST_H_//_USBHOST_H_
 #endif

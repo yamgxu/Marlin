@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2021 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,14 +32,14 @@
  * M10: Vacuum or Blower On
  */
 void GcodeSuite::M10() {
-  cutter.air_evac_enable();   // Turn on Vacuum or Blower motor
+  cutter.air_evac_enable();   // Turn on Vacuum or Blower motor//打开真空或鼓风机电机
 }
 
 /**
  * M11: Vacuum or Blower OFF
  */
 void GcodeSuite::M11() {
-  cutter.air_evac_disable();  // Turn off Vacuum or Blower motor
+  cutter.air_evac_disable();  // Turn off Vacuum or Blower motor//关闭真空或鼓风机电机
 }
 
-#endif // AIR_EVACUATION
+#endif // AIR_EVACUATION//空中疏散

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -33,7 +34,7 @@
 
 #include "MarlinSerialUSB.h"
 
-// Imports from Atmel USB Stack/CDC implementation
+// Imports from Atmel USB Stack/CDC implementation//从Atmel USB堆栈/CDC实现导入
 extern "C" {
   bool usb_task_cdc_isenabled();
   bool usb_task_cdc_dtr_active();
@@ -43,10 +44,10 @@ extern "C" {
   int udi_cdc_putc(int value);
 };
 
-// Pending character
+// Pending character//挂起字符
 static int pending_char = -1;
 
-// Public Methods
+// Public Methods//公共方法
 void MarlinSerialUSB::begin(const long) {}
 
 void MarlinSerialUSB::end() {}
@@ -55,11 +56,11 @@ int MarlinSerialUSB::peek() {
   if (pending_char >= 0)
     return pending_char;
 
-  // If USB CDC not enumerated or not configured on the PC side
+  // If USB CDC not enumerated or not configured on the PC side//如果USB CDC未枚举或未在PC端配置
   if (!usb_task_cdc_isenabled())
     return -1;
 
-  // If no bytes sent from the PC
+  // If no bytes sent from the PC//如果没有从电脑发送字节
   if (!udi_cdc_is_rx_ready())
     return -1;
 
@@ -77,11 +78,11 @@ int MarlinSerialUSB::read() {
     return ret;
   }
 
-  // If USB CDC not enumerated or not configured on the PC side
+  // If USB CDC not enumerated or not configured on the PC side//如果USB CDC未枚举或未在PC端配置
   if (!usb_task_cdc_isenabled())
     return -1;
 
-  // If no bytes sent from the PC
+  // If no bytes sent from the PC//如果没有从电脑发送字节
   if (!udi_cdc_is_rx_ready())
     return -1;
 
@@ -95,7 +96,7 @@ int MarlinSerialUSB::read() {
 int MarlinSerialUSB::available() {
   if (pending_char > 0) return pending_char;
   return pending_char == 0 ||
-    // or USB CDC enumerated and configured on the PC side and some bytes where sent to us */
+    // or USB CDC enumerated and configured on the PC side and some bytes where sent to us *///或USB CDC枚举和配置在PC端和一些字节发送给我们*/
     (usb_task_cdc_isenabled() && udi_cdc_is_rx_ready());
 }
 
@@ -121,13 +122,13 @@ size_t MarlinSerialUSB::write(const uint8_t c) {
   if (!usb_task_cdc_isenabled() || !usb_task_cdc_dtr_active())
     return 0;
 
-  // Fifo full
-  //  udi_cdc_signal_overrun();
+  // Fifo full//先进先出全
+  //  udi_cdc_signal_overrun();//udi_cdc_信号_溢出（）；
   udi_cdc_putc(c);
   return 1;
 }
 
-// Preinstantiate
+// Preinstantiate//预实例化
 #if SERIAL_PORT == -1
   MSerialT1 customizedSerial1(TERN0(EMERGENCY_PARSER, true));
 #endif
@@ -138,5 +139,5 @@ size_t MarlinSerialUSB::write(const uint8_t c) {
   MSerialT3 customizedSerial3(TERN0(EMERGENCY_PARSER, true));
 #endif
 
-#endif // HAS_USB_SERIAL
-#endif // ARDUINO_ARCH_SAM
+#endif // HAS_USB_SERIAL//有USB串行接口吗
+#endif // ARDUINO_ARCH_SAM//阿杜伊诺·阿丘·萨姆

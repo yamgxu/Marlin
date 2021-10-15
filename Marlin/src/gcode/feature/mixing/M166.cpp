@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -100,4 +101,4 @@ void GcodeSuite::M166() {
   SERIAL_EOL();
 }
 
-#endif // GRADIENT_MIX
+#endif // GRADIENT_MIX//梯度混合

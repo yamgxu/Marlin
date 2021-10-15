@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  *
@@ -21,9 +22,9 @@
  */
 #pragma once
 
-//
-// EEPROM
-//
+////
+// EEPROM//电可擦可编程只读存储器
+////
 void eeprom_init();
 void eeprom_write_byte(uint8_t *pos, uint8_t value);
 uint8_t eeprom_read_byte(uint8_t *pos);

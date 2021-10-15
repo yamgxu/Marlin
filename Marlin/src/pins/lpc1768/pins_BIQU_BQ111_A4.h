@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -33,19 +34,19 @@
 
 #define BOARD_INFO_NAME "BIQU BQ111-A4"
 
-//
-// Limit Switches
-//
-#define X_MIN_PIN                          P1_24  // 10k pullup to 3.3V, 1K series
-#define X_MAX_PIN                          P1_25  // 10k pullup to 3.3V, 1K series
-#define Y_MIN_PIN                          P1_26  // 10k pullup to 3.3V, 1K series
-#define Y_MAX_PIN                          P1_27  // 10k pullup to 3.3V, 1K series
-#define Z_MIN_PIN                          P1_28  // 10k pullup to 3.3V, 1K series
-#define Z_MAX_PIN                          P1_29  // 10k pullup to 3.3V, 1K series
+////
+// Limit Switches//限位开关
+////
+#define X_MIN_PIN                          P1_24  // 10k pullup to 3.3V, 1K series//10k上拉至3.3V，1K系列
+#define X_MAX_PIN                          P1_25  // 10k pullup to 3.3V, 1K series//10k上拉至3.3V，1K系列
+#define Y_MIN_PIN                          P1_26  // 10k pullup to 3.3V, 1K series//10k上拉至3.3V，1K系列
+#define Y_MAX_PIN                          P1_27  // 10k pullup to 3.3V, 1K series//10k上拉至3.3V，1K系列
+#define Z_MIN_PIN                          P1_28  // 10k pullup to 3.3V, 1K series//10k上拉至3.3V，1K系列
+#define Z_MAX_PIN                          P1_29  // 10k pullup to 3.3V, 1K series//10k上拉至3.3V，1K系列
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                         P2_00
 #define X_DIR_PIN                          P0_05
 #define X_ENABLE_PIN                       P0_04
@@ -62,27 +63,27 @@
 #define E0_DIR_PIN                         P0_22
 #define E0_ENABLE_PIN                      P0_21
 
-//
-// Temperature Sensors
-//  3.3V max when defined as an analog input
-//
-#define TEMP_0_PIN                      P0_23_A0  // A0 (T0)
-#define TEMP_BED_PIN                    P0_24_A1  // A1 (T1)
+////
+// Temperature Sensors//温度传感器
+//  3.3V max when defined as an analog input//当定义为模拟输入时，最大电压为3.3V
+////
+#define TEMP_0_PIN                      P0_23_A0  // A0 (T0)//A0（T0）
+#define TEMP_BED_PIN                    P0_24_A1  // A1 (T1)//A1（T1）
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_0_PIN                       P2_07
 #define HEATER_BED_PIN                     P2_05
 #ifndef FAN_PIN
   #define FAN_PIN                          P2_04
 #endif
 
-//
-// Unused
-//
-//#define PIN_P2_10                        P2_10  // IBOOT-1
-//#define PIN_P0_27                        P0_27  // Onboard SD Detect
+////
+// Unused//未使用
+////
+//#define PIN_P2_10                        P2_10  // IBOOT-1//#定义引脚P2\U 10 P2\U 10//IBOOT-1
+//#define PIN_P0_27                        P0_27  // Onboard SD Detect//#定义引脚P027 P027//车载SD检测
 
 /**
  * LCD / Controller
@@ -96,16 +97,16 @@
  */
 #if HAS_WIRED_LCD
 
-  #define BEEPER_PIN                       P1_31  // EXP1-1
+  #define BEEPER_PIN                       P1_31  // EXP1-1//表1-1
 
-  #define BTN_EN1                          P3_26  // EXP2-3
-  #define BTN_EN2                          P3_25  // EXP2-5
-  #define BTN_ENC                          P1_30  // EXP1-2
+  #define BTN_EN1                          P3_26  // EXP2-3//表2-3
+  #define BTN_EN2                          P3_25  // EXP2-5//表2-5
+  #define BTN_ENC                          P1_30  // EXP1-2//表1-2
 
-  #define SD_DETECT_PIN                    P0_27  // EXP2-7
-  #define LCD_PINS_RS                      P0_16  // EXP1-4
-  #define LCD_PINS_ENABLE                  P0_18  // (MOSI) EXP1-3
-  #define LCD_PINS_D4                      P0_15  // (SCK)  EXP1-5
+  #define SD_DETECT_PIN                    P0_27  // EXP2-7//表2-7
+  #define LCD_PINS_RS                      P0_16  // EXP1-4//表1-4
+  #define LCD_PINS_ENABLE                  P0_18  // (MOSI) EXP1-3//（MOSI）EXP1-3
+  #define LCD_PINS_D4                      P0_15  // (SCK)  EXP1-5//（SCK）EXP1-5
 
   #if BOTH(HAS_MARLINUI_HD44780, IS_RRD_SC)
     #error "REPRAP_DISCOUNT_SMART_CONTROLLER displays aren't supported by the BIQU BQ111-A4"
@@ -115,7 +116,7 @@
     #error "SDSUPPORT is not supported by the BIQU BQ111-A4 when an LCD controller is used"
   #endif
 
-#endif // HAS_WIRED_LCD
+#endif // HAS_WIRED_LCD//有有线液晶显示器吗
 
 /**
  * SD Card Reader
@@ -125,13 +126,13 @@
  */
 #if ENABLED(SDSUPPORT)
 
-  #define SD_SCK_PIN                       P0_15  // EXP1-5
-  #define SD_MISO_PIN                      P0_16  // EXP1-4
-  #define SD_MOSI_PIN                      P0_18  // EXP1-3
-  #define SD_SS_PIN                        P1_30  // EXP1-2
+  #define SD_SCK_PIN                       P0_15  // EXP1-5//表1-5
+  #define SD_MISO_PIN                      P0_16  // EXP1-4//表1-4
+  #define SD_MOSI_PIN                      P0_18  // EXP1-3//表1-3
+  #define SD_SS_PIN                        P1_30  // EXP1-2//表1-2
   #define SDSS                         SD_SS_PIN
 
-#endif // SDSUPPORT
+#endif // SDSUPPORT//SDSUPPORT
 
 /**
  *  PWMS

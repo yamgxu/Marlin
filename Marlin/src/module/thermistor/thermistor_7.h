@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,11 +22,11 @@
  */
 #pragma once
 
-// R25 = 100 kOhm, beta25 = 3974 K, 4.7 kOhm pull-up, Honeywell 135-104LAG-J01
+// R25 = 100 kOhm, beta25 = 3974 K, 4.7 kOhm pull-up, Honeywell 135-104LAG-J01//R25=100千欧，beta25=3974千欧，4.7千欧上拉，霍尼韦尔135-104LAG-J01
 constexpr temp_entry_t temptable_7[] PROGMEM = {
   { OV(   1), 941 },
   { OV(  19), 362 },
-  { OV(  37), 299 }, // top rating 300C
+  { OV(  37), 299 }, // top rating 300C//最高额定值300C
   { OV(  55), 266 },
   { OV(  73), 245 },
   { OV(  91), 229 },
@@ -80,5 +81,5 @@ constexpr temp_entry_t temptable_7[] PROGMEM = {
   { OV( 973),  27 },
   { OV( 991),  17 },
   { OV(1009),   1 },
-  { OV(1023),   0 } // to allow internal 0 degrees C
+  { OV(1023),   0 } // to allow internal 0 degrees C//允许内部温度为0摄氏度
 };

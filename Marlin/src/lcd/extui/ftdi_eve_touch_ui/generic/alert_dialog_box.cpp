@@ -1,3 +1,4 @@
+/** translatione by yx */
 /************************
  * alert_dialog_box.cpp *
  ************************/
@@ -68,4 +69,4 @@ template void AlertDialogBox::show(const progmem_str);
 template void AlertDialogBox::showError(const char *);
 template void AlertDialogBox::showError(const progmem_str);
 
-#endif // FTDI_ALERT_DIALOG_BOX
+#endif // FTDI_ALERT_DIALOG_BOX//FTDI警报对话框

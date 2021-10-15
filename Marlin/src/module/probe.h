@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,10 +32,10 @@
 
 #if HAS_BED_PROBE
   enum ProbePtRaise : uint8_t {
-    PROBE_PT_NONE,      // No raise or stow after run_z_probe
-    PROBE_PT_STOW,      // Do a complete stow after run_z_probe
-    PROBE_PT_RAISE,     // Raise to "between" clearance after run_z_probe
-    PROBE_PT_BIG_RAISE  // Raise to big clearance after run_z_probe
+    PROBE_PT_NONE,      // No raise or stow after run_z_probe//run_z_探头后无上升或收起
+    PROBE_PT_STOW,      // Do a complete stow after run_z_probe//在运行探头后进行完全装载
+    PROBE_PT_RAISE,     // Raise to "between" clearance after run_z_probe//运行z_探头后，提升至“中间”间隙
+    PROBE_PT_BIG_RAISE  // Raise to big clearance after run_z_probe//运行_z_探头后提升至大间隙
   };
 #endif
 
@@ -69,11 +70,11 @@ public:
     #if IS_KINEMATIC
 
       #if HAS_PROBE_XY_OFFSET
-        // Return true if the both nozzle and the probe can reach the given point.
-        // Note: This won't work on SCARA since the probe offset rotates with the arm.
+        // Return true if the both nozzle and the probe can reach the given point.//如果喷嘴和探头都能到达给定点，则返回true。
+        // Note: This won't work on SCARA since the probe offset rotates with the arm.//注意：这在SCARA上不起作用，因为探针偏移量随臂旋转。
         static bool can_reach(const_float_t rx, const_float_t ry) {
-          return position_is_reachable(rx - offset_xy.x, ry - offset_xy.y) // The nozzle can go where it needs to go?
-              && position_is_reachable(rx, ry, ABS(PROBING_MARGIN));       // Can the nozzle also go near there?
+          return position_is_reachable(rx - offset_xy.x, ry - offset_xy.y) // The nozzle can go where it needs to go?//喷嘴可以到它需要去的地方吗？
+              && position_is_reachable(rx, ry, ABS(PROBING_MARGIN));       // Can the nozzle also go near there?//喷嘴也能靠近那里吗？
         }
       #else
         static bool can_reach(const_float_t rx, const_float_t ry) {
@@ -100,7 +101,7 @@ public:
 
     static void move_z_after_probing() {
       #ifdef Z_AFTER_PROBING
-        do_z_clearance(Z_AFTER_PROBING, true); // Move down still permitted
+        do_z_clearance(Z_AFTER_PROBING, true); // Move down still permitted//允许向下移动
       #endif
     }
     static float probe_at_point(const_float_t rx, const_float_t ry, const ProbePtRaise raise_after=PROBE_PT_NONE, const uint8_t verbose_level=0, const bool probe_relative=true, const bool sanity_check=true);
@@ -110,7 +111,7 @@ public:
 
   #else
 
-    static constexpr xyz_pos_t offset = xyz_pos_t(LINEAR_AXIS_ARRAY(0, 0, 0, 0, 0, 0)); // See #16767
+    static constexpr xyz_pos_t offset = xyz_pos_t(LINEAR_AXIS_ARRAY(0, 0, 0, 0, 0, 0)); // See #16767//见#16767
 
     static bool set_deployed(const bool) { return false; }
 
@@ -138,12 +139,12 @@ public:
     );
   }
 
-  // Use offset_xy for read only access
-  // More optimal the XY offset is known to always be zero.
+  // Use offset_xy for read only access//使用偏移量_xy进行只读访问
+  // More optimal the XY offset is known to always be zero.//已知XY偏移始终为零，这一点更为理想。
   #if HAS_PROBE_XY_OFFSET
     static const xy_pos_t &offset_xy;
   #else
-    static constexpr xy_pos_t offset_xy = xy_pos_t({ 0, 0 });   // See #16767
+    static constexpr xy_pos_t offset_xy = xy_pos_t({ 0, 0 });   // See #16767//见#16767
   #endif
 
   static bool deploy() { return set_deployed(true); }
@@ -190,7 +191,7 @@ public:
     static float min_y() { return _min_y() TERN_(NOZZLE_AS_PROBE, TERN_(HAS_HOME_OFFSET, - home_offset.y)); }
     static float max_y() { return _max_y() TERN_(NOZZLE_AS_PROBE, TERN_(HAS_HOME_OFFSET, - home_offset.y)); }
 
-    // constexpr helpers used in build-time static_asserts, relying on default probe offsets.
+    // constexpr helpers used in build-time static_asserts, relying on default probe offsets.//构建时静态_断言中使用的constexpr helpers依赖于默认探测偏移量。
     class build_time {
       static constexpr xyz_pos_t default_probe_xyz_offset =
         #if HAS_BED_PROBE
@@ -215,7 +216,7 @@ public:
     };
 
     #if NEEDS_THREE_PROBE_POINTS
-      // Retrieve three points to probe the bed. Any type exposing set(X,Y) may be used.
+      // Retrieve three points to probe the bed. Any type exposing set(X,Y) may be used.//检索三个点以探测床。可以使用任何类型的曝光集（X，Y）。
       template <typename T>
       static void get_three_points(T points[3]) {
         #if HAS_FIXED_3POINT
@@ -241,7 +242,7 @@ public:
       }
     #endif
 
-  #endif // HAS_BED_PROBE
+  #endif // HAS_BED_PROBE//你有床吗
 
   #if HAS_Z_SERVO_PROBE
     static void servo_probe_init();

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*********
  * spi.h *
  *********/
@@ -111,8 +112,8 @@ namespace FTDI {
 
     typedef uint8_t (*bulk_write_op)(const uint8_t*);
 
-    // Generic template for function for writing multiple bytes, plus padding bytes.
-    // The template parameter op is an inlineable function which is applied to each byte.
+    // Generic template for function for writing multiple bytes, plus padding bytes.//用于写入多个字节和填充字节的函数的通用模板。
+    // The template parameter op is an inlineable function which is applied to each byte.//模板参数op是一个应用于每个字节的内联函数。
 
     template<bulk_write_op byte_op>
     void spi_write_bulk(const void *data, uint16_t len, uint8_t padding) {

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -20,9 +21,9 @@
  *
  */
 
-//
-// Unified Bed Leveling Menus
-//
+////
+// Unified Bed Leveling Menus//统一床位调整菜单
+////
 
 #include "../../inc/MarlinConfigPre.h"
 
@@ -43,13 +44,13 @@ static int16_t ubl_storage_slot = 0,
                ubl_height_amount = 1;
 
 static uint8_t n_edit_pts = 1;
-static int8_t x_plot = 0, y_plot = 0; // May be negative during move
+static int8_t x_plot = 0, y_plot = 0; // May be negative during move//在移动过程中可能是负数
 
 #if HAS_HEATED_BED
   static int16_t custom_bed_temp = 50;
 #endif
 
-float mesh_edit_accumulator;  // Rounded to 2.5 decimal places on use
+float mesh_edit_accumulator;  // Rounded to 2.5 decimal places on use//使用时四舍五入至小数点后2.5位
 
 inline float rounded_mesh_value() {
   const int32_t rounded = int32_t(mesh_edit_accumulator * 1000);
@@ -88,19 +89,19 @@ void _lcd_mesh_fine_tune(PGM_P const msg) {
   }
 }
 
-//
-// Init mesh editing and go to the fine tuning screen (ubl.fine_tune_mesh)
-// To capture encoder events UBL will also call ui.capture and ui.release.
-//
+////
+// Init mesh editing and go to the fine tuning screen (ubl.fine_tune_mesh)//初始化网格编辑并转到微调屏幕（ubl.fine_tune_mesh）
+// To capture encoder events UBL will also call ui.capture and ui.release.//为了捕获编码器事件，UBL还将调用ui.capture和ui.release。
+////
 void MarlinUI::ubl_mesh_edit_start(const_float_t initial) {
   TERN_(HAS_GRAPHICAL_TFT, clear_lcd());
   mesh_edit_accumulator = initial;
   goto_screen([]{ _lcd_mesh_fine_tune(GET_TEXT(MSG_MESH_EDIT_Z)); });
 }
 
-//
-// Get the mesh value within a Z adjustment loop (ubl.fine_tune_mesh)
-//
+////
+// Get the mesh value within a Z adjustment loop (ubl.fine_tune_mesh)//在Z调整循环内获取网格值（ubl.fine_tune_mesh）
+////
 float MarlinUI::ubl_mesh_value() { return rounded_mesh_value(); }
 
 /**
@@ -232,7 +233,7 @@ void _lcd_ubl_edit_mesh() {
           #endif
         #endif
       #endif
-    #endif // PREHEAT_COUNT
+    #endif // PREHEAT_COUNT//预热计数
     ACTION_ITEM(MSG_UBL_VALIDATE_CUSTOM_MESH, _lcd_ubl_validate_custom_mesh);
     ACTION_ITEM(MSG_INFO_SCREEN, ui.return_to_status);
     END_MENU();
@@ -354,7 +355,7 @@ void _lcd_ubl_build_mesh() {
         #endif
       #endif
     #endif
-  #endif // PREHEAT_COUNT
+  #endif // PREHEAT_COUNT//预热计数
 
   SUBMENU(MSG_UBL_BUILD_CUSTOM_MESH, _lcd_ubl_custom_mesh);
   GCODES_ITEM(MSG_UBL_BUILD_COLD_MESH, PSTR("G29NP1"));
@@ -417,18 +418,18 @@ void _lcd_ubl_map_edit_cmd() {
 void ubl_map_move_to_xy() {
   const xy_pos_t xy = { ubl.mesh_index_to_xpos(x_plot), ubl.mesh_index_to_ypos(y_plot) };
 
-  // Some printers have unreachable areas in the mesh. Skip the move if unreachable.
+  // Some printers have unreachable areas in the mesh. Skip the move if unreachable.//某些打印机在网格中有无法访问的区域。如果无法到达，请跳过移动。
   if (!position_is_reachable(xy)) return;
 
   #if ENABLED(DELTA)
-    if (current_position.z > delta_clip_start_height) { // Make sure the delta has fully free motion
+    if (current_position.z > delta_clip_start_height) { // Make sure the delta has fully free motion//确保三角洲完全自由运动
       destination = current_position;
       destination.z = delta_clip_start_height;
-      prepare_internal_fast_move_to_destination(homing_feedrate(Z_AXIS)); // Set current_position from destination
+      prepare_internal_fast_move_to_destination(homing_feedrate(Z_AXIS)); // Set current_position from destination//从目的地设置当前位置
     }
   #endif
 
-  // Use the built-in manual move handler to move to the mesh point.
+  // Use the built-in manual move handler to move to the mesh point.//使用内置的手动移动处理程序移动到网格点。
   ui.manual_move.set_destination(xy);
   ui.manual_move.soon(ALL_AXES_ENUM);
 }
@@ -441,14 +442,14 @@ inline int32_t grid_index(const uint8_t x, const uint8_t y) {
  * UBL LCD "radar" map
  */
 void ubl_map_screen() {
-  // static millis_t next_move = 0;
-  // const millis_t ms = millis();
+  // static millis_t next_move = 0;//静态毫秒下一步移动=0；
+  // const millis_t ms = millis();//常量毫秒=毫秒（）；
 
   uint8_t x, y;
 
   if (ui.first_page) {
 
-    // On click send "G29 P4 ..." to edit the Z value
+    // On click send "G29 P4 ..." to edit the Z value//单击发送“G29 P4…”编辑Z值
     if (ui.use_click()) {
       _lcd_ubl_map_edit_cmd();
       return;
@@ -457,54 +458,54 @@ void ubl_map_screen() {
     ui.defer_status_screen();
 
     #if IS_KINEMATIC
-      // Index of the mesh point upon entry
+      // Index of the mesh point upon entry//输入时网格点的索引
       const int32_t old_pos_index = grid_index(x_plot, y_plot);
-      // Direction from new (unconstrained) encoder value
+      // Direction from new (unconstrained) encoder value//来自新（无约束）编码器值的方向
       const int8_t step_dir = int32_t(ui.encoderPosition) < old_pos_index ? -1 : 1;
     #endif
 
     do {
-      // Now, keep the encoder position within range
+      // Now, keep the encoder position within range//现在，将编码器位置保持在范围内
       if (int32_t(ui.encoderPosition) < 0) ui.encoderPosition = GRID_MAX_POINTS + TERN(TOUCH_SCREEN, ui.encoderPosition, -1);
       if (int32_t(ui.encoderPosition) > GRID_MAX_POINTS - 1) ui.encoderPosition = TERN(TOUCH_SCREEN, ui.encoderPosition - GRID_MAX_POINTS, 0);
 
-      // Draw the grid point based on the encoder
+      // Draw the grid point based on the encoder//基于编码器绘制网格点
       x = ui.encoderPosition % (GRID_MAX_POINTS_X);
       y = ui.encoderPosition / (GRID_MAX_POINTS_X);
 
-      // Validate if needed
+      // Validate if needed//如果需要，请验证
       #if IS_KINEMATIC
         const xy_pos_t xy = { ubl.mesh_index_to_xpos(x), ubl.mesh_index_to_ypos(y) };
-        if (position_is_reachable(xy)) break; // Found a valid point
-        ui.encoderPosition += step_dir;       // Test the next point
+        if (position_is_reachable(xy)) break; // Found a valid point//找到了一个有效点
+        ui.encoderPosition += step_dir;       // Test the next point//测试下一点
       #endif
     } while (ENABLED(IS_KINEMATIC));
 
-    // Determine number of points to edit
+    // Determine number of points to edit//确定要编辑的点数
     #if IS_KINEMATIC
-      n_edit_pts = 9; // TODO: Delta accessible edit points
+      n_edit_pts = 9; // TODO: Delta accessible edit points//TODO:增量可访问编辑点
     #else
       const bool xc = WITHIN(x, 1, (GRID_MAX_POINTS_X) - 2),
                  yc = WITHIN(y, 1, (GRID_MAX_POINTS_Y) - 2);
-      n_edit_pts = yc ? (xc ? 9 : 6) : (xc ? 6 : 4); // Corners
+      n_edit_pts = yc ? (xc ? 9 : 6) : (xc ? 6 : 4); // Corners//角落
     #endif
 
-    // Refresh is also set by encoder movement
-    //if (int32_t(ui.encoderPosition) != grid_index(x, y))
-    //  ui.refresh(LCDVIEW_CALL_REDRAW_NEXT);
+    // Refresh is also set by encoder movement//刷新也由编码器移动设置
+    //if (int32_t(ui.encoderPosition) != grid_index(x, y))//if（int32_t（ui.encoderPosition）！=网格索引（x，y））
+    //  ui.refresh(LCDVIEW_CALL_REDRAW_NEXT);//刷新（LCDVIEW\u CALL\u REDRAW\u NEXT）；
   }
 
-  // Draw the grid point based on the encoder
+  // Draw the grid point based on the encoder//基于编码器绘制网格点
   x = ui.encoderPosition % (GRID_MAX_POINTS_X);
   y = ui.encoderPosition / (GRID_MAX_POINTS_X);
 
   if (ui.should_draw()) ui.ubl_plot(x, y);
 
-  // Add a move if needed to match the grid point
+  // Add a move if needed to match the grid point//如果需要匹配网格点，请添加移动
   if (x != x_plot || y != y_plot) {
-    x_plot = x; y_plot = y;   // The move is always posted, so update the grid point now
-    ubl_map_move_to_xy();     // Sets up a "manual move"
-    ui.refresh(LCDVIEW_CALL_REDRAW_NEXT); // Clean up a half drawn box
+    x_plot = x; y_plot = y;   // The move is always posted, so update the grid point now//移动始终是过账的，因此现在更新网格点
+    ubl_map_move_to_xy();     // Sets up a "manual move"//设置“手动移动”
+    ui.refresh(LCDVIEW_CALL_REDRAW_NEXT); // Clean up a half drawn box//清理一个半开的盒子
   }
 }
 
@@ -515,11 +516,11 @@ void _ubl_map_screen_homing() {
   ui.defer_status_screen();
   _lcd_draw_homing();
   if (all_axes_homed()) {
-    ubl.lcd_map_control = true;     // Return to the map screen after editing Z
-    ui.goto_screen(ubl_map_screen, grid_index(x_plot, y_plot)); // Pre-set the encoder value
-    ui.manual_move.menu_scale = 0;  // Immediate move
-    ubl_map_move_to_xy();           // Move to current mesh point
-    ui.manual_move.menu_scale = 1;  // Delayed moves
+    ubl.lcd_map_control = true;     // Return to the map screen after editing Z//编辑Z后返回地图屏幕
+    ui.goto_screen(ubl_map_screen, grid_index(x_plot, y_plot)); // Pre-set the encoder value//预先设置编码器值
+    ui.manual_move.menu_scale = 0;  // Immediate move//立即行动
+    ubl_map_move_to_xy();           // Move to current mesh point//移动到当前网格点
+    ui.manual_move.menu_scale = 1;  // Delayed moves//延迟动作
   }
 }
 
@@ -527,12 +528,12 @@ void _ubl_map_screen_homing() {
  * UBL Homing before LCD map
  */
 void _ubl_goto_map_screen() {
-  if (planner.movesplanned()) return;     // The ACTION_ITEM will do nothing
+  if (planner.movesplanned()) return;     // The ACTION_ITEM will do nothing//ACTION\u项将不起任何作用
   if (!all_axes_trusted()) {
     set_all_unhomed();
     queue.inject_P(G28_STR);
   }
-  ui.goto_screen(_ubl_map_screen_homing); // Go to the "Homing" screen
+  ui.goto_screen(_ubl_map_screen_homing); // Go to the "Homing" screen//转到“归位”屏幕
 }
 
 /**
@@ -686,4 +687,4 @@ void _lcd_ubl_level_bed() {
   END_MENU();
 }
 
-#endif // HAS_LCD_MENU && AUTO_BED_LEVELING_UBL
+#endif // HAS_LCD_MENU && AUTO_BED_LEVELING_UBL//具有LCD菜单和自动床身调平功能

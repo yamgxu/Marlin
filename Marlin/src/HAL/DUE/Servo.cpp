@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -47,11 +48,11 @@
 #include "../shared/servo.h"
 #include "../shared/servo_private.h"
 
-static volatile int8_t Channel[_Nbr_16timers];              // counter for the servo being pulsed for each timer (or -1 if refresh interval)
+static volatile int8_t Channel[_Nbr_16timers];              // counter for the servo being pulsed for each timer (or -1 if refresh interval)//每个定时器的伺服脉冲计数器（如果刷新间隔为-1）
 
-// ------------------------
-/// Interrupt handler for the TC0 channel 1.
-// ------------------------
+// ------------------------// ------------------------
+/// Interrupt handler for the TC0 channel 1.///TC0通道1的中断处理程序。
+// ------------------------// ------------------------
 void Servo_Handler(timer16_Sequence_t timer, Tc *pTc, uint8_t channel);
 
 #ifdef _useTimer1
@@ -71,45 +72,45 @@ void Servo_Handler(timer16_Sequence_t timer, Tc *pTc, uint8_t channel);
 #endif
 
 void Servo_Handler(timer16_Sequence_t timer, Tc *tc, uint8_t channel) {
-  // clear interrupt
+  // clear interrupt//清除中断
   tc->TC_CHANNEL[channel].TC_SR;
   if (Channel[timer] < 0)
-    tc->TC_CHANNEL[channel].TC_CCR |= TC_CCR_SWTRG; // channel set to -1 indicated that refresh interval completed so reset the timer
+    tc->TC_CHANNEL[channel].TC_CCR |= TC_CCR_SWTRG; // channel set to -1 indicated that refresh interval completed so reset the timer//通道设置为-1表示刷新间隔已完成，因此请重置计时器
   else if (SERVO_INDEX(timer, Channel[timer]) < ServoCount && SERVO(timer, Channel[timer]).Pin.isActive)
-    extDigitalWrite(SERVO(timer, Channel[timer]).Pin.nbr, LOW); // pulse this channel low if activated
+    extDigitalWrite(SERVO(timer, Channel[timer]).Pin.nbr, LOW); // pulse this channel low if activated//如果激活，则将该通道脉冲调低
 
-  Channel[timer]++;    // increment to the next channel
+  Channel[timer]++;    // increment to the next channel//增量到下一个通道
   if (SERVO_INDEX(timer, Channel[timer]) < ServoCount && Channel[timer] < SERVOS_PER_TIMER) {
     tc->TC_CHANNEL[channel].TC_RA = tc->TC_CHANNEL[channel].TC_CV + SERVO(timer,Channel[timer]).ticks;
-    if (SERVO(timer,Channel[timer]).Pin.isActive)    // check if activated
-      extDigitalWrite(SERVO(timer, Channel[timer]).Pin.nbr, HIGH); // its an active channel so pulse it high
+    if (SERVO(timer,Channel[timer]).Pin.isActive)    // check if activated//检查是否激活
+      extDigitalWrite(SERVO(timer, Channel[timer]).Pin.nbr, HIGH); // its an active channel so pulse it high//这是一个活跃的通道，所以脉冲高
   }
   else {
-    // finished all channels so wait for the refresh period to expire before starting over
+    // finished all channels so wait for the refresh period to expire before starting over//已完成所有通道，请等待刷新周期到期后再重新开始
     tc->TC_CHANNEL[channel].TC_RA =
       tc->TC_CHANNEL[channel].TC_CV < usToTicks(REFRESH_INTERVAL) - 4
-        ? (unsigned int)usToTicks(REFRESH_INTERVAL) // allow a few ticks to ensure the next OCR1A not missed
-        : tc->TC_CHANNEL[channel].TC_CV + 4;        // at least REFRESH_INTERVAL has elapsed
-    Channel[timer] = -1; // this will get incremented at the end of the refresh period to start again at the first channel
+        ? (unsigned int)usToTicks(REFRESH_INTERVAL) // allow a few ticks to ensure the next OCR1A not missed//允许几次勾选，以确保不会错过下一个OCR1A
+        : tc->TC_CHANNEL[channel].TC_CV + 4;        // at least REFRESH_INTERVAL has elapsed//至少已过刷新间隔
+    Channel[timer] = -1; // this will get incremented at the end of the refresh period to start again at the first channel//这将在刷新周期结束时递增，以在第一个通道重新开始
   }
 }
 
 static void _initISR(Tc *tc, uint32_t channel, uint32_t id, IRQn_Type irqn) {
   pmc_enable_periph_clk(id);
   TC_Configure(tc, channel,
-    TC_CMR_TCCLKS_TIMER_CLOCK3 | // MCK/32
-    TC_CMR_WAVE |                // Waveform mode
-    TC_CMR_WAVSEL_UP_RC );       // Counter running up and reset when equals to RC
+    TC_CMR_TCCLKS_TIMER_CLOCK3 | // MCK/32//MCK/32
+    TC_CMR_WAVE |                // Waveform mode//波形模式
+    TC_CMR_WAVSEL_UP_RC );       // Counter running up and reset when equals to RC//计数器运行并在等于RC时复位
 
   /* 84MHz, MCK/32, for 1.5ms: 3937 */
-  TC_SetRA(tc, channel, 2625); // 1ms
+  TC_SetRA(tc, channel, 2625); // 1ms//1ms
 
   /* Configure and enable interrupt */
   NVIC_EnableIRQ(irqn);
-  // TC_IER_CPAS: RA Compare
+  // TC_IER_CPAS: RA Compare//TC_IER_注册会计师：RA比较
   tc->TC_CHANNEL[channel].TC_IER = TC_IER_CPAS;
 
-  // Enables the timer clock and performs a software reset to start the counting
+  // Enables the timer clock and performs a software reset to start the counting//启用计时器时钟并执行软件重置以开始计数
   TC_Start(tc, channel);
 }
 
@@ -154,6 +155,6 @@ void finISR(timer16_Sequence_t) {
   #endif
 }
 
-#endif // HAS_SERVOS
+#endif // HAS_SERVOS//有伺服系统吗
 
-#endif // ARDUINO_ARCH_SAM
+#endif // ARDUINO_ARCH_SAM//阿杜伊诺·阿丘·萨姆

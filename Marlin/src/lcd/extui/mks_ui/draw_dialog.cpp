@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -65,7 +66,7 @@ extern uint32_t upload_time;
 extern uint32_t upload_size;
 extern bool temps_update_flag;
 
-//#define CANCEL_ON_RIGHT   // Put 'Cancel' on the right (as it was before)
+//#define CANCEL_ON_RIGHT   // Put 'Cancel' on the right (as it was before)//#定义右侧的取消//将“取消”放在右侧（与以前一样）
 
 #define BTN_OK_X      TERN(CANCEL_ON_RIGHT, 100, 280)
 #define BTN_CANCEL_X  TERN(CANCEL_ON_RIGHT, 280, 100)
@@ -158,7 +159,7 @@ static void btn_ok_event_cb(lv_obj_t *btn, lv_event_t event) {
     #if ENABLED(TOUCH_SCREEN_CALIBRATION)
       const bool do_draw_cal = touch_calibration.need_calibration();
       if (do_draw_cal) {
-        disp_state_stack._disp_index--; // We are asynchronous from the dialog, so let's remove the dialog from the stack
+        disp_state_stack._disp_index--; // We are asynchronous from the dialog, so let's remove the dialog from the stack//我们与对话框是异步的，所以让我们从堆栈中删除对话框
         lv_draw_touch_calibration_screen();
       }
     #else
@@ -230,16 +231,16 @@ void lv_draw_dialog(uint8_t type) {
 
   if (DIALOG_IS(TYPE_FINISH_PRINT, PAUSE_MESSAGE_RESUME)) {
       btnOk = lv_button_btn_create(scr, BTN_OK_X + 90, BTN_OK_Y, 100, 50, btn_ok_event_cb);
-      lv_obj_t *labelOk = lv_label_create_empty(btnOk);             // Add a label to the button
-      lv_label_set_text(labelOk, print_file_dialog_menu.confirm);    // Set the labels text
+      lv_obj_t *labelOk = lv_label_create_empty(btnOk);             // Add a label to the button//将标签添加到按钮
+      lv_label_set_text(labelOk, print_file_dialog_menu.confirm);    // Set the labels text//设置标签文本
   }
   else if (DIALOG_IS(PAUSE_MESSAGE_WAITING, PAUSE_MESSAGE_INSERT, PAUSE_MESSAGE_HEAT)) {
     btnOk = lv_button_btn_create(scr, BTN_OK_X + 90, BTN_OK_Y, 100, 50, btn_ok_event_cb);
-    lv_obj_t *labelOk = lv_label_create_empty(btnOk);             // Add a label to the button
-    lv_label_set_text(labelOk, print_file_dialog_menu.confirm);    // Set the labels text
+    lv_obj_t *labelOk = lv_label_create_empty(btnOk);             // Add a label to the button//将标签添加到按钮
+    lv_label_set_text(labelOk, print_file_dialog_menu.confirm);    // Set the labels text//设置标签文本
   }
   else if (DIALOG_IS(PAUSE_MESSAGE_PAUSING, PAUSE_MESSAGE_CHANGING, PAUSE_MESSAGE_UNLOAD, PAUSE_MESSAGE_LOAD, PAUSE_MESSAGE_PURGE, PAUSE_MESSAGE_RESUME, PAUSE_MESSAGE_HEATING)) {
-    // nothing to do
+    // nothing to do//无事可做
   }
   else if (DIALOG_IS(WIFI_ENABLE_TIPS)) {
     btnCancel = lv_button_btn_create(scr, BTN_OK_X + 90, BTN_OK_Y, 100, 50, btn_cancel_event_cb);
@@ -265,7 +266,7 @@ void lv_draw_dialog(uint8_t type) {
       }
     }
     else if (DIALOG_IS(TYPE_UPDATE_ESP_FIRMWARE)) {
-      // nothing to do
+      // nothing to do//无事可做
     }
   #endif
   else if (DIALOG_IS(TYPE_FILAMENT_LOAD_HEAT, TYPE_FILAMENT_UNLOAD_HEAT)) {
@@ -295,17 +296,17 @@ void lv_draw_dialog(uint8_t type) {
   }
   else {
     btnOk = lv_button_btn_create(scr, BTN_OK_X, BTN_OK_Y, 100, 50, btn_ok_event_cb);
-    lv_obj_t *labelOk = lv_label_create_empty(btnOk);             // Add a label to the button
+    lv_obj_t *labelOk = lv_label_create_empty(btnOk);             // Add a label to the button//将标签添加到按钮
 
     btnCancel = lv_button_btn_create(scr, BTN_CANCEL_X, BTN_CANCEL_Y, 100, 50, btn_cancel_event_cb);
-    lv_obj_t *labelCancel = lv_label_create_empty(btnCancel);     // Add a label to the button
+    lv_obj_t *labelCancel = lv_label_create_empty(btnCancel);     // Add a label to the button//将标签添加到按钮
 
     if (DIALOG_IS(PAUSE_MESSAGE_OPTION)) {
-      lv_label_set_text(labelOk, pause_msg_menu.purgeMore);        // Set the labels text
+      lv_label_set_text(labelOk, pause_msg_menu.purgeMore);        // Set the labels text//设置标签文本
       lv_label_set_text(labelCancel, pause_msg_menu.continuePrint);
     }
     else {
-      lv_label_set_text(labelOk, print_file_dialog_menu.confirm);  // Set the labels text
+      lv_label_set_text(labelOk, print_file_dialog_menu.confirm);  // Set the labels text//设置标签文本
       lv_label_set_text(labelCancel, print_file_dialog_menu.cancel);
     }
   }
@@ -437,7 +438,7 @@ void lv_draw_dialog(uint8_t type) {
       lv_label_set_text(labelDialog, DIALOG_UPDATE_WIFI_FIRMWARE_EN);
       lv_obj_align(labelDialog, NULL, LV_ALIGN_CENTER, 0, -20);
     }
-  #endif // MKS_WIFI_MODULE
+  #endif // MKS_WIFI_MODULE//MKS_无线模块
   else if (DIALOG_IS(TYPE_FILAMENT_LOAD_HEAT)) {
     lv_label_set_text(labelDialog, filament_menu.filament_dialog_load_heat);
     lv_obj_align(labelDialog, nullptr, LV_ALIGN_CENTER, 0, -20);
@@ -568,4 +569,4 @@ void lv_clear_dialog() {
   lv_obj_del(scr);
 }
 
-#endif // HAS_TFT_LVGL_UI
+#endif // HAS_TFT_LVGL_UI//有TFT\U LVGL\U用户界面

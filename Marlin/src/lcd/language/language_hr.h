@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -28,10 +29,10 @@
  * See also https://marlinfw.org/docs/development/lcd_language.html
  */
 
-#define DISPLAY_CHARSET_ISO10646_1 // use the better font on full graphic displays.
+#define DISPLAY_CHARSET_ISO10646_1 // use the better font on full graphic displays.//在全图形显示上使用更好的字体。
 
 namespace Language_hr {
-  using namespace Language_en; // Inherit undefined strings from English
+  using namespace Language_en; // Inherit undefined strings from English//从英语中继承未定义的字符串
 
   constexpr uint8_t    CHARSIZE                            = 2;
   PROGMEM Language_Str LANGUAGE                            = _UxGT("Croatian");
@@ -39,7 +40,7 @@ namespace Language_hr {
   PROGMEM Language_Str WELCOME_MSG                         = MACHINE_NAME _UxGT(" spreman.");
   PROGMEM Language_Str MSG_MEDIA_INSERTED                  = _UxGT("SD kartica umetnuta");
   PROGMEM Language_Str MSG_MEDIA_REMOVED                   = _UxGT("SD kartica uklonjena");
-  PROGMEM Language_Str MSG_LCD_ENDSTOPS                    = _UxGT("Endstops"); // Max length 8 characters
+  PROGMEM Language_Str MSG_LCD_ENDSTOPS                    = _UxGT("Endstops"); // Max length 8 characters//最大长度为8个字符
   PROGMEM Language_Str MSG_MAIN                            = _UxGT("Main");
   PROGMEM Language_Str MSG_RUN_AUTO_FILES                  = _UxGT("Auto pokretanje");
   PROGMEM Language_Str MSG_DISABLE_STEPPERS                = _UxGT("Ugasi steppere");
@@ -160,12 +161,12 @@ namespace Language_hr {
   PROGMEM Language_Str MSG_FILAMENT_CHANGE_RESUME          = _UxGT(MSG_1_LINE("Nastavljam..."));
 
   #if LCD_HEIGHT >= 4
-    // Up to 3 lines allowed
+    // Up to 3 lines allowed//最多允许3行
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_INIT          = _UxGT(MSG_3_LINE("Čekaj početak", "filamenta", "promijeni"));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_INSERT        = _UxGT(MSG_3_LINE("Umetni filament", "i pritisni tipku", "za nastavak..."));
   #else
-    // Up to 2 lines allowed
+    // Up to 2 lines allowed//最多允许2行
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_INIT          = _UxGT("Pričekaj...");
-    //PROGMEM Language_Str MSG_FILAMENT_CHANGE_INSERT      = _UxGT(MSG_2_LINE("?", "?"));
+    //PROGMEM Language_Str MSG_FILAMENT_CHANGE_INSERT      = _UxGT(MSG_2_LINE("?", "?"));//PROGMEM语言\u Str MSG\u灯丝\u变更\u插入=\u UxGT（MSG\u 2\u行（“？”，“？”）；
   #endif
 }

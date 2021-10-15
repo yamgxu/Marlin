@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -26,7 +27,7 @@
 
 #include "tft_spi.h"
 
-// TFT_SPI tft;
+// TFT_SPI tft;//TFT_-SPI-TFT；
 
 SPIClass TFT_SPI::SPIx(1);
 
@@ -44,13 +45,13 @@ SPIClass TFT_SPI::SPIx(1);
 
 void TFT_SPI::Init() {
   #if PIN_EXISTS(TFT_RESET)
-    // OUT_WRITE(TFT_RESET_PIN, HIGH);
+    // OUT_WRITE(TFT_RESET_PIN, HIGH);//OUT_写入（TFT_复位_引脚，高）；
     TFT_RST_H;
     delay(100);
   #endif
 
   #if PIN_EXISTS(TFT_BACKLIGHT)
-    // OUT_WRITE(TFT_BACKLIGHT_PIN, HIGH);
+    // OUT_WRITE(TFT_BACKLIGHT_PIN, HIGH);//OUT_写入（TFT_背光_引脚，高）；
     TFT_BLK_H;
   #endif
 
@@ -76,7 +77,7 @@ void TFT_SPI::Init() {
     case SPI_EIGHTH_SPEED:  clock = SPI_CLOCK_DIV16; break;
     case SPI_SPEED_5:       clock = SPI_CLOCK_DIV32; break;
     case SPI_SPEED_6:       clock = SPI_CLOCK_DIV64; break;
-    default:                clock = SPI_CLOCK_DIV2;  // Default from the SPI library
+    default:                clock = SPI_CLOCK_DIV2;  // Default from the SPI library//SPI库中的默认值
   }
   SPIx.setModule(1);
   SPIx.setClockDivider(clock);
@@ -154,4 +155,4 @@ void TFT_SPI::TransmitDMA(uint32_t MemoryIncrease, uint16_t *Data, uint16_t Coun
   DataTransferEnd();
 }
 
-#endif // HAS_SPI_TFT
+#endif // HAS_SPI_TFT//有SPI和TFT吗

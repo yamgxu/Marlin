@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -74,12 +75,12 @@
  */
 class SPIFlashStorage {
 public:
-  // Write operation
+  // Write operation//写操作
   static void beginWrite(uint32_t startAddress);
   static void endWrite();
   static void writeData(uint8_t *data, uint16_t size);
 
-  // Read operation
+  // Read operation//读操作
   static void beginRead(uint32_t startAddress);
   static void readData(uint8_t *data, uint16_t size);
 

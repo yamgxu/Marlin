@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*****************
  * grid_layout.h *
  *****************/
@@ -30,8 +31,8 @@
  * hard-coded coordinates.
  */
 
-// Margin defines the margin (in pixels) on each side of a button in
-// the layout
+// Margin defines the margin (in pixels) on each side of a button in//边距定义中按钮两侧的边距（以像素为单位）
+// the layout//布局
 
 #ifdef TOUCH_UI_800x480
   #define MARGIN_L         5
@@ -47,32 +48,32 @@
   #define MARGIN_DEFAULT   3
 #endif
 
-// The EDGE variables adds some space on the edges of the display
+// The EDGE variables adds some space on the edges of the display//边缘变量在显示的边缘上添加了一些空间
 
 #define EDGE_T           0
 #define EDGE_B           0
 #define EDGE_L           0
 #define EDGE_R           0
 
-// GRID_X and GRID_Y computes the positions of the divisions on
-// the layout grid.
+// GRID_X and GRID_Y computes the positions of the divisions on//GRID_X和GRID_Y计算网格上分区的位置
+// the layout grid.//布局网格。
 #define GRID_X(x)        ((x)*(FTDI::display_width-EDGE_R-EDGE_L)/GRID_COLS+EDGE_L)
 #define GRID_Y(y)        ((y)*(FTDI::display_height-EDGE_B-EDGE_T)/GRID_ROWS+EDGE_T)
 
-// BTN_X, BTN_Y, BTN_W and BTN_X returns the top-left and width
-// and height of a button, taking into account the button margins.
+// BTN_X, BTN_Y, BTN_W and BTN_X returns the top-left and width//BTN_X、BTN_Y、BTN_W和BTN_X返回左上角和宽度
+// and height of a button, taking into account the button margins.//和按钮的高度，考虑到按钮的边距。
 
 #define BTN_X(x)         (GRID_X((x)-1) + MARGIN_L)
 #define BTN_Y(y)         (GRID_Y((y)-1) + MARGIN_T)
 #define BTN_W(w)         (GRID_X(w) - GRID_X(0) - MARGIN_L - MARGIN_R)
 #define BTN_H(h)         (GRID_Y(h) - GRID_Y(0) - MARGIN_T - MARGIN_B)
 
-// Abbreviations for common phrases, to allow a button to be
-// defined in one line of source.
+// Abbreviations for common phrases, to allow a button to be//常用短语的缩写，允许使用按钮
+// defined in one line of source.//在源代码的一行中定义。
 #define BTN_POS(x,y)     BTN_X(x), BTN_Y(y)
 #define BTN_SIZE(w,h)    BTN_W(w), BTN_H(h)
 
-// Draw a reference grid for ease of spacing out widgets.
+// Draw a reference grid for ease of spacing out widgets.//绘制一个参考网格，以便于分隔小部件。
 #define DRAW_LAYOUT_GRID \
   { \
     cmd.cmd(LINE_WIDTH(4)); \
@@ -89,7 +90,7 @@
     cmd.cmd(LINE_WIDTH(16)); \
   }
 
-// Routines for subdividing a grid within a box (x,y,w,h)
+// Routines for subdividing a grid within a box (x,y,w,h)//用于在长方体（x、y、w、h）内细分栅格的例程
 
 #define SUB_GRID_W(W)     ((W)*w/SUB_COLS)
 #define SUB_GRID_H(H)     ((H)*h/SUB_ROWS)

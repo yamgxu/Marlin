@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -30,7 +31,7 @@
 #define LCD_PINS_D4                           21
 #define LCD_PINS_D7                            6
 
-#define SPEAKER                                  // The speaker can produce tones
+#define SPEAKER                                  // The speaker can produce tones//演讲者能发出音调
 
 #if IS_NEWPANEL
   #define BTN_EN1                             16

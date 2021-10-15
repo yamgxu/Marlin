@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -27,9 +28,9 @@
 
 #include <libmaple/iwdg.h>
 
-// Initialize watchdog with a 4 or 8 second countdown time
+// Initialize watchdog with a 4 or 8 second countdown time//用4秒或8秒倒计时初始化看门狗
 void watchdog_init();
 
-// Reset watchdog. MUST be called every 4 or 8 seconds after the
-// first watchdog_init or the STM32F1 will reset.
+// Reset watchdog. MUST be called every 4 or 8 seconds after the//重置看门狗。必须在事件发生后每4或8秒调用一次
+// first watchdog_init or the STM32F1 will reset.//第一个看门狗_init或STM32F1将复位。
 void HAL_watchdog_refresh();

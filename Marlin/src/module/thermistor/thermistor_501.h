@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,10 +22,10 @@
  */
 #pragma once
 
-// 100k Zonestar thermistor. Adjusted By Hally
+// 100k Zonestar thermistor. Adjusted By Hally//100k Zonestar热敏电阻。由Hally调整
 constexpr temp_entry_t temptable_501[] PROGMEM = {
    { OV(   1), 713 },
-   { OV(  14), 300 }, // Top rating 300C
+   { OV(  14), 300 }, // Top rating 300C//最高额定值300C
    { OV(  16), 290 },
    { OV(  19), 280 },
    { OV(  23), 270 },

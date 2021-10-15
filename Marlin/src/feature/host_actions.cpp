@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -26,7 +27,7 @@
 
 #include "host_actions.h"
 
-//#define DEBUG_HOST_ACTIONS
+//#define DEBUG_HOST_ACTIONS//#定义调试\u主机\u操作
 
 #if ENABLED(ADVANCED_PAUSE_FEATURE)
   #include "pause.h"
@@ -39,7 +40,7 @@
 
 void host_action(PGM_P const pstr, const bool eol) {
   PORT_REDIRECT(SerialMask::All);
-  SERIAL_ECHOPGM("//action:");
+  SERIAL_ECHOPGM("//action:");//行动：”；
   SERIAL_ECHOPGM_P(pstr);
   if (eol) SERIAL_EOL();
 }
@@ -134,32 +135,32 @@ void host_action(PGM_P const pstr, const bool eol) {
     );
   }
 
-  //
-  // Handle responses from the host, such as:
-  //  - Filament runout responses: Purge More, Continue
-  //  - General "Continue" response
-  //  - Resume Print response
-  //  - Dismissal of info
-  //
+  ////
+  // Handle responses from the host, such as://处理来自主机的响应，例如：
+  //  - Filament runout responses: Purge More, Continue//-灯丝跳动响应：进一步吹扫，继续
+  //  - General "Continue" response//-一般“继续”答复
+  //  - Resume Print response//-恢复打印响应
+  //  - Dismissal of info//-拒绝提供信息
+  ////
   void host_response_handler(const uint8_t response) {
     const PromptReason hpr = host_prompt_reason;
-    host_prompt_reason = PROMPT_NOT_DEFINED;  // Reset now ahead of logic
+    host_prompt_reason = PROMPT_NOT_DEFINED;  // Reset now ahead of logic//现在在逻辑之前重置
     switch (hpr) {
       case PROMPT_FILAMENT_RUNOUT:
         switch (response) {
 
-          case 0: // "Purge More" button
+          case 0: // "Purge More" button//“清除更多”按钮
             #if BOTH(M600_PURGE_MORE_RESUMABLE, ADVANCED_PAUSE_FEATURE)
-              pause_menu_response = PAUSE_RESPONSE_EXTRUDE_MORE;  // Simulate menu selection (menu exits, doesn't extrude more)
+              pause_menu_response = PAUSE_RESPONSE_EXTRUDE_MORE;  // Simulate menu selection (menu exits, doesn't extrude more)//模拟菜单选择（菜单退出，不拉伸更多）
             #endif
             break;
 
-          case 1: // "Continue" / "Disable Runout" button
+          case 1: // "Continue" / "Disable Runout" button//“继续”/“禁用跳动”按钮
             #if BOTH(M600_PURGE_MORE_RESUMABLE, ADVANCED_PAUSE_FEATURE)
-              pause_menu_response = PAUSE_RESPONSE_RESUME_PRINT;  // Simulate menu selection
+              pause_menu_response = PAUSE_RESPONSE_RESUME_PRINT;  // Simulate menu selection//模拟菜单选择
             #endif
             #if HAS_FILAMENT_SENSOR
-              if (runout.filament_ran_out) {                      // Disable a triggered sensor
+              if (runout.filament_ran_out) {                      // Disable a triggered sensor//禁用触发的传感器
                 runout.enabled = false;
                 runout.reset();
               }
@@ -182,6 +183,6 @@ void host_action(PGM_P const pstr, const bool eol) {
     }
   }
 
-#endif // HOST_PROMPT_SUPPORT
+#endif // HOST_PROMPT_SUPPORT//主机提示支持
 
-#endif // HOST_ACTION_COMMANDS
+#endif // HOST_ACTION_COMMANDS//主机\u操作\u命令

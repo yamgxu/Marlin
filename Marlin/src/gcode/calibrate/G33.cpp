@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -43,10 +44,10 @@
   #include "../../feature/bedlevel/bedlevel.h"
 #endif
 
-constexpr uint8_t _7P_STEP = 1,              // 7-point step - to change number of calibration points
-                  _4P_STEP = _7P_STEP * 2,   // 4-point step
-                  NPP      = _7P_STEP * 6;   // number of calibration points on the radius
-enum CalEnum : char {                        // the 7 main calibration points - add definitions if needed
+constexpr uint8_t _7P_STEP = 1,              // 7-point step - to change number of calibration points//7点步骤-更改校准点的数量
+                  _4P_STEP = _7P_STEP * 2,   // 4-point step//四点步
+                  NPP      = _7P_STEP * 6;   // number of calibration points on the radius//半径上的校准点数量
+enum CalEnum : char {                        // the 7 main calibration points - add definitions if needed//7个主要校准点-必要时添加定义
   CEN      = 0,
   __A      = 1,
   _AB      = __A + _7P_STEP,
@@ -82,7 +83,7 @@ void ac_setup(const bool reset_bed) {
   remember_feedrate_scaling_off();
 
   #if HAS_LEVELING
-    if (reset_bed) reset_bed_level(); // After full calibration bed-level data is no longer valid
+    if (reset_bed) reset_bed_level(); // After full calibration bed-level data is no longer valid//完全校准后，床层液位数据不再有效
   #endif
 }
 
@@ -122,7 +123,7 @@ static void print_calibration_settings(const bool end_stops, const bool tower_an
     print_signed_float(PSTR("Ty"), delta_tower_angle_trim.b);
     print_signed_float(PSTR("Tz"), delta_tower_angle_trim.c);
   }
-  if ((!end_stops && tower_angles) || (end_stops && !tower_angles)) { // XOR
+  if ((!end_stops && tower_angles) || (end_stops && !tower_angles)) { // XOR//异或
     SERIAL_ECHOPAIR("  Radius:", delta_radius);
   }
   SERIAL_EOL();
@@ -159,7 +160,7 @@ static float std_dev_points(float z_pt[NPP + 1], const bool _0p_cal, const bool 
   if (!_0p_cal) {
     float S2 = sq(z_pt[CEN]);
     int16_t N = 1;
-    if (!_1p_cal) { // std dev from zero plane
+    if (!_1p_cal) { // std dev from zero plane//零平面标准偏差
       LOOP_CAL_ACT(rad, _4p_cal, _4p_opp) {
         S2 += sq(z_pt[rad]);
         N++;
@@ -209,13 +210,13 @@ static bool probe_calibration_points(float z_pt[NPP + 1], const int8_t probe_poi
 
     const float dcr = delta_calibration_radius();
 
-    if (!_7p_no_intermediates && !_7p_4_intermediates && !_7p_11_intermediates) { // probe the center
+    if (!_7p_no_intermediates && !_7p_4_intermediates && !_7p_11_intermediates) { // probe the center//探测中心
       const xy_pos_t center{0};
       z_pt[CEN] += calibration_probe(center, stow_after_each);
       if (isnan(z_pt[CEN])) return false;
     }
 
-    if (_7p_calibration) { // probe extra center points
+    if (_7p_calibration) { // probe extra center points//探测额外的中心点
       const float start  = _7p_9_center ? float(_CA) + _7P_STEP / 3.0f : _7p_6_center ? float(_CA) : float(__C),
                   steps  = _7p_9_center ? _4P_STEP / 3.0f : _7p_6_center ? _7P_STEP : _4P_STEP;
       I_LOOP_CAL_PT(rad, start, steps) {
@@ -228,17 +229,17 @@ static bool probe_calibration_points(float z_pt[NPP + 1], const int8_t probe_poi
       z_pt[CEN] /= float(_7p_2_intermediates ? 7 : probe_points);
     }
 
-    if (!_1p_calibration) {  // probe the radius
+    if (!_1p_calibration) {  // probe the radius//探测半径
       const CalEnum start  = _4p_opposite_points ? _AB : __A;
-      const float   steps  = _7p_14_intermediates ? _7P_STEP / 15.0f : // 15r * 6 + 10c = 100
-                             _7p_11_intermediates ? _7P_STEP / 12.0f : // 12r * 6 +  9c = 81
-                             _7p_8_intermediates  ? _7P_STEP /  9.0f : //  9r * 6 + 10c = 64
-                             _7p_6_intermediates  ? _7P_STEP /  7.0f : //  7r * 6 +  7c = 49
-                             _7p_4_intermediates  ? _7P_STEP /  5.0f : //  5r * 6 +  6c = 36
-                             _7p_2_intermediates  ? _7P_STEP /  3.0f : //  3r * 6 +  7c = 25
-                             _7p_1_intermediates  ? _7P_STEP /  2.0f : //  2r * 6 +  4c = 16
-                             _7p_no_intermediates ? _7P_STEP :        //  1r * 6 +  3c = 9
-                             _4P_STEP;                                // .5r * 6 +  1c = 4
+      const float   steps  = _7p_14_intermediates ? _7P_STEP / 15.0f : // 15r * 6 + 10c = 100//15r*6+10c=100
+                             _7p_11_intermediates ? _7P_STEP / 12.0f : // 12r * 6 +  9c = 81//12r*6+9c=81
+                             _7p_8_intermediates  ? _7P_STEP /  9.0f : //  9r * 6 + 10c = 64//9r*6+10c=64
+                             _7p_6_intermediates  ? _7P_STEP /  7.0f : //  7r * 6 +  7c = 49//7r*6+7c=49
+                             _7p_4_intermediates  ? _7P_STEP /  5.0f : //  5r * 6 +  6c = 36//5r*6+6c=36
+                             _7p_2_intermediates  ? _7P_STEP /  3.0f : //  3r * 6 +  7c = 25//3r*6+7c=25
+                             _7p_1_intermediates  ? _7P_STEP /  2.0f : //  2r * 6 +  4c = 16//2r*6+4c=16
+                             _7p_no_intermediates ? _7P_STEP :        //  1r * 6 +  3c = 9//1r*6+3c=9
+                             _4P_STEP;                                // .5r * 6 +  1c = 4//.5r*6+1c=4
       bool zig_zag = true;
       F_LOOP_CAL_PT(rad, start, _7p_9_center ? steps * 3 : steps) {
         const int8_t offset = _7p_9_center ? 2 : 0;
@@ -249,7 +250,7 @@ static bool probe_calibration_points(float z_pt[NPP + 1], const int8_t probe_poi
           const xy_pos_t vec = { cos(a), sin(a) };
           const float z_temp = calibration_probe(vec * r, stow_after_each);
           if (isnan(z_temp)) return false;
-          // split probe point to neighbouring calibration points
+          // split probe point to neighbouring calibration points//将探头点拆分到相邻校准点
           z_pt[uint8_t(LROUND(rad - interpol + NPP - 1)) % NPP + 1] += z_temp * sq(cos(RADIANS(interpol * 90)));
           z_pt[uint8_t(LROUND(rad - interpol))           % NPP + 1] += z_temp * sq(sin(RADIANS(interpol * 90)));
         }
@@ -327,7 +328,7 @@ static void calc_kinematics_diff_probe_points(float z_pt[NPP + 1], abc_float_t d
 
 static float auto_tune_h() {
   const float r_quot = delta_calibration_radius() / delta_radius;
-  return RECIPROCAL(r_quot / (2.0f / 3.0f));  // (2/3)/CR
+  return RECIPROCAL(r_quot / (2.0f / 3.0f));  // (2/3)/CR//（2/3）/CR
 }
 
 static float auto_tune_r() {
@@ -337,7 +338,7 @@ static float auto_tune_r() {
 
   calc_kinematics_diff_probe_points(z_pt, delta_e, delta_r, delta_t);
   r_fac = -(z_pt[__A] + z_pt[__B] + z_pt[__C] + z_pt[_BC] + z_pt[_CA] + z_pt[_AB]) / 6.0f;
-  r_fac = diff / r_fac / 3.0f; // 1/(3*delta_Z)
+  r_fac = diff / r_fac / 3.0f; // 1/(3*delta_Z)//1/（3*delta_Z）
   return r_fac;
 }
 
@@ -354,7 +355,7 @@ static float auto_tune_a() {
     a_fac += z_pt[uint8_t((axis * _4P_STEP) - _7P_STEP + NPP) % NPP + 1] / 6.0f;
     a_fac -= z_pt[uint8_t((axis * _4P_STEP) + 1 + _7P_STEP)] / 6.0f;
   }
-  a_fac = diff / a_fac / 3.0f; // 1/(3*delta_Z)
+  a_fac = diff / a_fac / 3.0f; // 1/(3*delta_Z)//1/（3*delta_Z）
   return a_fac;
 }
 
@@ -428,7 +429,7 @@ void GcodeSuite::G33() {
              _angle_results       = probe_points >= 3 && towers_set;
   int8_t iterations = 0;
   float test_precision,
-        zero_std_dev = (verbose_level ? 999.0f : 0.0f), // 0.0 in dry-run mode : forced end
+        zero_std_dev = (verbose_level ? 999.0f : 0.0f), // 0.0 in dry-run mode : forced end//0.0在干运行模式下：强制结束
         zero_std_dev_min = zero_std_dev,
         zero_std_dev_old = zero_std_dev,
         h_factor, r_factor, a_factor,
@@ -441,7 +442,7 @@ void GcodeSuite::G33() {
 
   const float dcr = delta_calibration_radius();
 
-  if (!_1p_calibration && !_0p_calibration) { // test if the outer radius is reachable
+  if (!_1p_calibration && !_0p_calibration) { // test if the outer radius is reachable//测试是否可以到达外半径
     LOOP_CAL_RAD(axis) {
       const float a = RADIANS(210 + (360 / NPP) *  (axis - 1));
       if (!position_is_reachable(cos(a) * dcr, sin(a) * dcr)) {
@@ -451,7 +452,7 @@ void GcodeSuite::G33() {
     }
   }
 
-  // Report settings
+  // Report settings//报告设置
   PGM_P const checkingac = PSTR("Checking... AC");
   SERIAL_ECHOPGM_P(checkingac);
   if (verbose_level == 0) SERIAL_ECHOPGM(" (DRY-RUN)");
@@ -464,14 +465,14 @@ void GcodeSuite::G33() {
 
   if (!_0p_calibration) ac_home();
 
-  do { // start iterations
+  do { // start iterations//开始迭代
 
     float z_at_pt[NPP + 1] = { 0.0f };
 
     test_precision = zero_std_dev_old != 999.0f ? (zero_std_dev + zero_std_dev_old) / 2.0f : zero_std_dev;
     iterations++;
 
-    // Probe the points
+    // Probe the points//探点
     zero_std_dev_old = zero_std_dev;
     if (!probe_calibration_points(z_at_pt, probe_points, towers_set, stow_after_each)) {
       SERIAL_ECHOLNPGM("Correct delta settings with M665 and M666");
@@ -479,16 +480,16 @@ void GcodeSuite::G33() {
     }
     zero_std_dev = std_dev_points(z_at_pt, _0p_calibration, _1p_calibration, _4p_calibration, _4p_opposite_points);
 
-    // Solve matrices
+    // Solve matrices//解矩阵
 
     if ((zero_std_dev < test_precision || iterations <= force_iterations) && zero_std_dev > calibration_precision) {
 
       #if !HAS_BED_PROBE
-        test_precision = 0.0f; // forced end
+        test_precision = 0.0f; // forced end//强制端
       #endif
 
       if (zero_std_dev < zero_std_dev_min) {
-        // set roll-back point
+        // set roll-back point//设置回滚点
         e_old = delta_endstop_adj;
         r_old = delta_radius;
         h_old = delta_height;
@@ -504,14 +505,14 @@ void GcodeSuite::G33() {
        *  - definition of the matrix scaling parameters
        *  - matrices for 4 and 7 point calibration
        */
-      #define ZP(N,I) ((N) * z_at_pt[I] / 4.0f) // 4.0 = divider to normalize to integers
+      #define ZP(N,I) ((N) * z_at_pt[I] / 4.0f) // 4.0 = divider to normalize to integers//4.0=标准化为整数的除法器
       #define Z12(I) ZP(12, I)
       #define Z4(I) ZP(4, I)
       #define Z2(I) ZP(2, I)
       #define Z1(I) ZP(1, I)
       #define Z0(I) ZP(0, I)
 
-      // calculate factors
+      // calculate factors//计算因素
       if (_7p_9_center) calibration_radius_factor = 0.9f;
       h_factor = auto_tune_h();
       r_factor = auto_tune_r();
@@ -520,22 +521,22 @@ void GcodeSuite::G33() {
 
       switch (probe_points) {
         case 0:
-          test_precision = 0.0f; // forced end
+          test_precision = 0.0f; // forced end//强制端
           break;
 
         case 1:
-          test_precision = 0.0f; // forced end
+          test_precision = 0.0f; // forced end//强制端
           LOOP_LINEAR_AXES(axis) e_delta[axis] = +Z4(CEN);
           break;
 
         case 2:
-          if (towers_set) { // see 4 point calibration (towers) matrix
+          if (towers_set) { // see 4 point calibration (towers) matrix//参见4点校准（塔）矩阵
             e_delta.set((+Z4(__A) -Z2(__B) -Z2(__C)) * h_factor  +Z4(CEN),
                         (-Z2(__A) +Z4(__B) -Z2(__C)) * h_factor  +Z4(CEN),
                         (-Z2(__A) -Z2(__B) +Z4(__C)) * h_factor  +Z4(CEN));
             r_delta   = (+Z4(__A) +Z4(__B) +Z4(__C) -Z12(CEN)) * r_factor;
           }
-          else { // see 4 point calibration (opposites) matrix
+          else { // see 4 point calibration (opposites) matrix//参见4点校准（对立面）矩阵
             e_delta.set((-Z4(_BC) +Z2(_CA) +Z2(_AB)) * h_factor  +Z4(CEN),
                         (+Z2(_BC) -Z4(_CA) +Z2(_AB)) * h_factor  +Z4(CEN),
                         (+Z2(_BC) +Z2(_CA) -Z4(_AB)) * h_factor  +Z4(CEN));
@@ -543,13 +544,13 @@ void GcodeSuite::G33() {
           }
           break;
 
-        default: // see 7 point calibration (towers & opposites) matrix
+        default: // see 7 point calibration (towers & opposites) matrix//参见7点校准（塔和对立面）矩阵
           e_delta.set((+Z2(__A) -Z1(__B) -Z1(__C) -Z2(_BC) +Z1(_CA) +Z1(_AB)) * h_factor  +Z4(CEN),
                       (-Z1(__A) +Z2(__B) -Z1(__C) +Z1(_BC) -Z2(_CA) +Z1(_AB)) * h_factor  +Z4(CEN),
                       (-Z1(__A) -Z1(__B) +Z2(__C) +Z1(_BC) +Z1(_CA) -Z2(_AB)) * h_factor  +Z4(CEN));
           r_delta   = (+Z2(__A) +Z2(__B) +Z2(__C) +Z2(_BC) +Z2(_CA) +Z2(_AB) -Z12(CEN)) * r_factor;
 
-          if (towers_set) { // see 7 point tower angle calibration (towers & opposites) matrix
+          if (towers_set) { // see 7 point tower angle calibration (towers & opposites) matrix//参见7点塔角校准（塔和对立面）矩阵
             t_delta.set((+Z0(__A) -Z4(__B) +Z4(__C) +Z0(_BC) -Z4(_CA) +Z4(_AB) +Z0(CEN)) * a_factor,
                         (+Z4(__A) +Z0(__B) -Z4(__C) +Z4(_BC) +Z0(_CA) -Z4(_AB) +Z0(CEN)) * a_factor,
                         (-Z4(__A) +Z4(__B) +Z0(__C) -Z4(_BC) +Z4(_CA) +Z0(_AB) +Z0(CEN)) * a_factor);
@@ -561,23 +562,23 @@ void GcodeSuite::G33() {
       delta_tower_angle_trim += t_delta;
     }
     else if (zero_std_dev >= test_precision) {
-      // roll back
+      // roll back//回退
       delta_endstop_adj = e_old;
       delta_radius = r_old;
       delta_height = h_old;
       delta_tower_angle_trim = a_old;
     }
 
-    if (verbose_level != 0) {                                    // !dry run
+    if (verbose_level != 0) {                                    // !dry run// !排练
 
-      // Normalize angles to least-squares
+      // Normalize angles to least-squares//将角度规格化为最小二乘法
       if (_angle_results) {
         float a_sum = 0.0f;
         LOOP_LINEAR_AXES(axis) a_sum += delta_tower_angle_trim[axis];
         LOOP_LINEAR_AXES(axis) delta_tower_angle_trim[axis] -= a_sum / 3.0f;
       }
 
-      // adjust delta_height and endstops by the max amount
+      // adjust delta_height and endstops by the max amount//调整delta_高度和末端止动块的最大值
       const float z_temp = _MAX(delta_endstop_adj.a, delta_endstop_adj.b, delta_endstop_adj.c);
       delta_height -= z_temp;
       LOOP_LINEAR_AXES(axis) delta_endstop_adj[axis] -= z_temp;
@@ -585,13 +586,13 @@ void GcodeSuite::G33() {
     recalc_delta_settings();
     NOMORE(zero_std_dev_min, zero_std_dev);
 
-    // print report
+    // print report//打印报告
 
     if (verbose_level == 3)
       print_calibration_results(z_at_pt, _tower_results, _opposite_results);
 
-    if (verbose_level != 0) { // !dry run
-      if ((zero_std_dev >= test_precision && iterations > force_iterations) || zero_std_dev <= calibration_precision) { // end iterations
+    if (verbose_level != 0) { // !dry run// !排练
+      if ((zero_std_dev >= test_precision && iterations > force_iterations) || zero_std_dev <= calibration_precision) { // end iterations//结束迭代
         SERIAL_ECHOPGM("Calibration OK");
         SERIAL_ECHO_SP(32);
         #if HAS_BED_PROBE
@@ -613,7 +614,7 @@ void GcodeSuite::G33() {
         print_calibration_settings(_endstop_results, _angle_results);
         SERIAL_ECHOLNPGM("Save with M500 and/or copy to Configuration.h");
       }
-      else { // !end iterations
+      else { // !end iterations// !结束迭代
         char mess[15];
         if (iterations < 31)
           sprintf_P(mess, PSTR("Iteration : %02i"), (unsigned int)iterations);
@@ -627,7 +628,7 @@ void GcodeSuite::G33() {
           print_calibration_settings(_endstop_results, _angle_results);
       }
     }
-    else { // dry run
+    else { // dry run//试运行
       PGM_P const enddryrun = PSTR("End DRY-RUN");
       SERIAL_ECHOPGM_P(enddryrun);
       SERIAL_ECHO_SP(35);
@@ -651,4 +652,4 @@ void GcodeSuite::G33() {
   TERN_(FULL_REPORT_TO_HOST_FEATURE, set_and_report_grblstate(M_IDLE));
 }
 
-#endif // DELTA_AUTO_CALIBRATION
+#endif // DELTA_AUTO_CALIBRATION//DELTA_自动校准

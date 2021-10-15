@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,7 +32,7 @@
 #include "delta.h"
 #include "motion.h"
 
-// For homing:
+// For homing://对于归航：
 #include "planner.h"
 #include "endstops.h"
 #include "../lcd/marlinui.h"
@@ -49,7 +50,7 @@
 #define DEBUG_OUT ENABLED(DEBUG_LEVELING_FEATURE)
 #include "../core/debug_out.h"
 
-// Initialized by settings.load()
+// Initialized by settings.load()//由settings.load（）初始化
 float delta_height;
 abc_float_t delta_endstop_adj{0};
 float delta_radius,
@@ -69,11 +70,11 @@ float delta_safe_distance_from_top();
  */
 void recalc_delta_settings() {
   constexpr abc_float_t trt = DELTA_RADIUS_TRIM_TOWER;
-  delta_tower[A_AXIS].set(cos(RADIANS(210 + delta_tower_angle_trim.a)) * (delta_radius + trt.a), // front left tower
+  delta_tower[A_AXIS].set(cos(RADIANS(210 + delta_tower_angle_trim.a)) * (delta_radius + trt.a), // front left tower//左前塔
                           sin(RADIANS(210 + delta_tower_angle_trim.a)) * (delta_radius + trt.a));
-  delta_tower[B_AXIS].set(cos(RADIANS(330 + delta_tower_angle_trim.b)) * (delta_radius + trt.b), // front right tower
+  delta_tower[B_AXIS].set(cos(RADIANS(330 + delta_tower_angle_trim.b)) * (delta_radius + trt.b), // front right tower//右前塔
                           sin(RADIANS(330 + delta_tower_angle_trim.b)) * (delta_radius + trt.b));
-  delta_tower[C_AXIS].set(cos(RADIANS( 90 + delta_tower_angle_trim.c)) * (delta_radius + trt.c), // back middle tower
+  delta_tower[C_AXIS].set(cos(RADIANS( 90 + delta_tower_angle_trim.c)) * (delta_radius + trt.c), // back middle tower//后中塔
                           sin(RADIANS( 90 + delta_tower_angle_trim.c)) * (delta_radius + trt.c));
   delta_diagonal_rod_2_tower.set(sq(delta_diagonal_rod + delta_diagonal_rod_trim.a),
                                  sq(delta_diagonal_rod + delta_diagonal_rod_trim.b),
@@ -127,15 +128,15 @@ void recalc_delta_settings() {
 
 void inverse_kinematics(const xyz_pos_t &raw) {
   #if HAS_HOTEND_OFFSET
-    // Delta hotend offsets must be applied in Cartesian space with no "spoofing"
+    // Delta hotend offsets must be applied in Cartesian space with no "spoofing"//增量热端偏移必须在笛卡尔空间中应用，且无“欺骗”
     xyz_pos_t pos = { raw.x - hotend_offset[active_extruder].x,
                       raw.y - hotend_offset[active_extruder].y,
                       raw.z };
     DELTA_IK(pos);
-    //DELTA_DEBUG(pos);
+    //DELTA_DEBUG(pos);//DELTA_调试（pos）；
   #else
     DELTA_IK(raw);
-    //DELTA_DEBUG(raw);
+    //DELTA_DEBUG(raw);//DELTA_调试（原始）；
   #endif
 }
 
@@ -178,51 +179,51 @@ float delta_safe_distance_from_top() {
  * The result is stored in the cartes[] array.
  */
 void forward_kinematics(const_float_t z1, const_float_t z2, const_float_t z3) {
-  // Create a vector in old coordinates along x axis of new coordinate
+  // Create a vector in old coordinates along x axis of new coordinate//沿新坐标的x轴在旧坐标中创建向量
   const float p12[3] = { delta_tower[B_AXIS].x - delta_tower[A_AXIS].x, delta_tower[B_AXIS].y - delta_tower[A_AXIS].y, z2 - z1 },
 
-  // Get the reciprocal of Magnitude of vector.
+  // Get the reciprocal of Magnitude of vector.//得到向量大小的倒数。
   d2 = sq(p12[0]) + sq(p12[1]) + sq(p12[2]), inv_d = RSQRT(d2),
 
-  // Create unit vector by multiplying by the inverse of the magnitude.
+  // Create unit vector by multiplying by the inverse of the magnitude.//通过乘以幅值的倒数来创建单位向量。
   ex[3] = { p12[0] * inv_d, p12[1] * inv_d, p12[2] * inv_d },
 
-  // Get the vector from the origin of the new system to the third point.
+  // Get the vector from the origin of the new system to the third point.//获取从新系统原点到第三个点的向量。
   p13[3] = { delta_tower[C_AXIS].x - delta_tower[A_AXIS].x, delta_tower[C_AXIS].y - delta_tower[A_AXIS].y, z3 - z1 },
 
-  // Use the dot product to find the component of this vector on the X axis.
+  // Use the dot product to find the component of this vector on the X axis.//使用点积查找此向量在X轴上的分量。
   i = ex[0] * p13[0] + ex[1] * p13[1] + ex[2] * p13[2],
 
-  // Create a vector along the x axis that represents the x component of p13.
+  // Create a vector along the x axis that represents the x component of p13.//沿x轴创建一个矢量，表示p13的x分量。
   iex[3] = { ex[0] * i, ex[1] * i, ex[2] * i };
 
-  // Subtract the X component from the original vector leaving only Y. We use the
-  // variable that will be the unit vector after we scale it.
+  // Subtract the X component from the original vector leaving only Y. We use the//从原始向量中减去X分量，只留下Y。我们使用
+  // variable that will be the unit vector after we scale it.//变量，在我们缩放它之后，它将成为单位向量。
   float ey[3] = { p13[0] - iex[0], p13[1] - iex[1], p13[2] - iex[2] };
 
-  // The magnitude and the inverse of the magnitude of Y component
+  // The magnitude and the inverse of the magnitude of Y component//Y分量的幅值及其倒数
   const float j2 = sq(ey[0]) + sq(ey[1]) + sq(ey[2]), inv_j = RSQRT(j2);
 
-  // Convert to a unit vector
+  // Convert to a unit vector//转换为单位向量
   ey[0] *= inv_j; ey[1] *= inv_j; ey[2] *= inv_j;
 
-  // The cross product of the unit x and y is the unit z
-  // float[] ez = vectorCrossProd(ex, ey);
+  // The cross product of the unit x and y is the unit z//单位x和y的叉积是单位z
+  // float[] ez = vectorCrossProd(ex, ey);//float[]ez=矢量交叉点（ex，ey）；
   const float ez[3] = {
     ex[1] * ey[2] - ex[2] * ey[1],
     ex[2] * ey[0] - ex[0] * ey[2],
     ex[0] * ey[1] - ex[1] * ey[0]
   },
 
-  // We now have the d, i and j values defined in Wikipedia.
-  // Plug them into the equations defined in Wikipedia for Xnew, Ynew and Znew
+  // We now have the d, i and j values defined in Wikipedia.//我们现在在维基百科中定义了d、i和j值。
+  // Plug them into the equations defined in Wikipedia for Xnew, Ynew and Znew//将它们插入维基百科中定义的Xnew、Ynew和Znew公式中
   Xnew = (delta_diagonal_rod_2_tower.a - delta_diagonal_rod_2_tower.b + d2) * inv_d * 0.5,
   Ynew = ((delta_diagonal_rod_2_tower.a - delta_diagonal_rod_2_tower.c + sq(i) + j2) * 0.5 - i * Xnew) * inv_j,
   Znew = SQRT(delta_diagonal_rod_2_tower.a - HYPOT2(Xnew, Ynew));
 
-  // Start from the origin of the old coordinates and add vectors in the
-  // old coords that represent the Xnew, Ynew and Znew to find the point
-  // in the old system.
+  // Start from the origin of the old coordinates and add vectors in the//从旧坐标的原点开始，在
+  // old coords that represent the Xnew, Ynew and Znew to find the point//代表Xnew、Ynew和Znew的旧坐标，以找到点
+  // in the old system.//在旧系统中。
   cartes.set(delta_tower[A_AXIS].x + ex[0] * Xnew + ey[0] * Ynew - ez[0] * Znew,
              delta_tower[A_AXIS].y + ex[1] * Xnew + ey[1] * Ynew - ez[1] * Znew,
                                 z1 + ex[2] * Xnew + ey[2] * Ynew - ez[2] * Znew);
@@ -235,12 +236,12 @@ void forward_kinematics(const_float_t z1, const_float_t z2, const_float_t z3) {
 void home_delta() {
   DEBUG_SECTION(log_home_delta, "home_delta", DEBUGGING(LEVELING));
 
-  // Init the current position of all carriages to 0,0,0
+  // Init the current position of all carriages to 0,0,0//将所有车厢的当前位置初始化为0,0,0
   current_position.reset();
   destination.reset();
   sync_plan_position();
 
-  // Disable stealthChop if used. Enable diag1 pin on driver.
+  // Disable stealthChop if used. Enable diag1 pin on driver.//禁用隐形斩波（如果使用）。启用驱动器上的diag1引脚。
   #if ENABLED(SENSORLESS_HOMING)
     TERN_(X_SENSORLESS, sensorless_t stealth_states_x = start_sensorless_homing_per_axis(X_AXIS));
     TERN_(Y_SENSORLESS, sensorless_t stealth_states_y = start_sensorless_homing_per_axis(Y_AXIS));
@@ -250,12 +251,12 @@ void home_delta() {
     TERN_(K_SENSORLESS, sensorless_t stealth_states_k = start_sensorless_homing_per_axis(K_AXIS));
   #endif
 
-  // Move all carriages together linearly until an endstop is hit.
+  // Move all carriages together linearly until an endstop is hit.//将所有车厢一起线性移动，直到碰到终点止动块。
   current_position.z = DIFF_TERN(HAS_BED_PROBE, delta_height + 10, probe.offset.z);
   line_to_current_position(homing_feedrate(Z_AXIS));
   planner.synchronize();
 
-  // Re-enable stealthChop if used. Disable diag1 pin on driver.
+  // Re-enable stealthChop if used. Disable diag1 pin on driver.//重新启用隐身斩波（如果使用）。禁用驱动器上的diag1引脚。
   #if ENABLED(SENSORLESS_HOMING) && DISABLED(ENDSTOPS_ALWAYS_ON_DEFAULT)
     TERN_(X_SENSORLESS, end_sensorless_homing_per_axis(X_AXIS, stealth_states_x));
     TERN_(Y_SENSORLESS, end_sensorless_homing_per_axis(Y_AXIS, stealth_states_y));
@@ -267,16 +268,16 @@ void home_delta() {
 
   endstops.validate_homing_move();
 
-  // At least one carriage has reached the top.
-  // Now re-home each carriage separately.
+  // At least one carriage has reached the top.//至少有一节车厢已到达顶部。
+  // Now re-home each carriage separately.//现在我们分别回到每节车厢。
   homeaxis(A_AXIS);
   homeaxis(B_AXIS);
   homeaxis(C_AXIS);
 
-  // Set all carriages to their home positions
-  // Do this here all at once for Delta, because
-  // XYZ isn't ABC. Applying this per-tower would
-  // give the impression that they are the same.
+  // Set all carriages to their home positions//将所有车厢设置到其原始位置
+  // Do this here all at once for Delta, because//为Delta一次完成这一切，因为
+  // XYZ isn't ABC. Applying this per-tower would//XYZ不是ABC。在每座塔上应用这一点
+  // give the impression that they are the same.//给人的印象是他们是一样的。
   LOOP_ABC(i) set_axis_is_at_home((AxisEnum)i);
 
   sync_plan_position();
@@ -290,4 +291,4 @@ void home_delta() {
   #endif
 }
 
-#endif // DELTA
+#endif // DELTA//三角洲

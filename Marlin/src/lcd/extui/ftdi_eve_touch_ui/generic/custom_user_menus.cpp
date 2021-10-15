@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -208,4 +209,4 @@ bool CustomUserMenus::onTouchEnd(uint8_t tag) {
   return true;
 }
 
-#endif // FTDI_CUSTOM_USER_MENUS
+#endif // FTDI_CUSTOM_USER_MENUS//FTDI_自定义_用户_菜单

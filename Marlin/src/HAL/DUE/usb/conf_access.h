@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * \file
  *
@@ -41,7 +42,7 @@
  *
  */
 /*
- * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>
+ * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>//www.atmel.com/design support/“>atmel支持</a>
  */
 
 #ifndef _CONF_ACCESS_H_
@@ -52,9 +53,9 @@
 
 /*! \name Activation of Logical Unit Numbers
  */
-//! @{
+//! @{//! @{
 
-#define LUN_0                ENABLE    //!< SD/MMC Card over MCI Slot 0.
+#define LUN_0                ENABLE    //!< SD/MMC Card over MCI Slot 0.//！<MCI插槽0上的SD/MMC卡。
 #define LUN_1                DISABLE
 #define LUN_2                DISABLE
 #define LUN_3                DISABLE
@@ -63,11 +64,11 @@
 #define LUN_6                DISABLE
 #define LUN_7                DISABLE
 #define LUN_USB              DISABLE
-//! @}
+//! @}//! @}
 
 /*! \name LUN 0 Definitions
  */
-//! @{
+//! @{//! @{
 #define SD_MMC_SPI_MEM                          LUN_0
 #define LUN_ID_SD_MMC_SPI_MEM                   LUN_ID_0
 #define LUN_0_INCLUDE                           "sd_mmc_spi_mem.h"
@@ -79,7 +80,7 @@
 #define Lun_0_usb_read_10                       sd_mmc_spi_usb_read_10
 #define Lun_0_usb_write_10                      sd_mmc_spi_usb_write_10
 #define LUN_0_NAME                              "\"SD/MMC Card\""
-//! @}
+//! @}//! @}
 
 
 /*! \name Actions Associated with Memory Accesses
@@ -88,29 +89,29 @@
  *
  * \warning Be careful not to waste time in order not to disturb the functions.
  */
-//! @{
+//! @{//! @{
 #define memory_start_read_action(nb_sectors)
 #define memory_stop_read_action()
 #define memory_start_write_action(nb_sectors)
 #define memory_stop_write_action()
-//! @}
+//! @}//! @}
 
 /*! \name Activation of Interface Features
  */
-//! @{
-#define ACCESS_USB           true    //!< MEM <-> USB interface.
-#define ACCESS_MEM_TO_RAM    false   //!< MEM <-> RAM interface.
-#define ACCESS_STREAM        false   //!< Streaming MEM <-> MEM interface.
-#define ACCESS_STREAM_RECORD false   //!< Streaming MEM <-> MEM interface in record mode.
-#define ACCESS_MEM_TO_MEM    false   //!< MEM <-> MEM interface.
-#define ACCESS_CODEC         false   //!< Codec interface.
-//! @}
+//! @{//! @{
+#define ACCESS_USB           true    //!< MEM <-> USB interface.//！<MEM<->USB接口。
+#define ACCESS_MEM_TO_RAM    false   //!< MEM <-> RAM interface.//！<MEM<->RAM接口。
+#define ACCESS_STREAM        false   //!< Streaming MEM <-> MEM interface.//！<Streaming MEM<->MEM接口。
+#define ACCESS_STREAM_RECORD false   //!< Streaming MEM <-> MEM interface in record mode.//！<Streaming MEM<->记录模式下的MEM接口。
+#define ACCESS_MEM_TO_MEM    false   //!< MEM <-> MEM interface.//！<MEM<->MEM接口。
+#define ACCESS_CODEC         false   //!< Codec interface.//！<编解码器接口。
+//! @}//! @}
 
 /*! \name Specific Options for Access Control
  */
-//! @{
-#define GLOBAL_WR_PROTECT    false   //!< Management of a global write protection.
-//! @}
+//! @{//! @{
+#define GLOBAL_WR_PROTECT    false   //!< Management of a global write protection.//！<管理全局写保护。
+//! @}//! @}
 
 
-#endif // _CONF_ACCESS_H_
+#endif // _CONF_ACCESS_H_//_CONF_ACCESS_H_

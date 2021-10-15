@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -26,25 +27,25 @@
 #define BOARD_INFO_NAME   "FLY-CDY"
 #define BOARD_WEBSITE_URL "github.com/FLYmaker/FLY-CDY"
 
-//
-// Servos
-//
+////
+// Servos//伺服
+////
 #define SERVO0_PIN                         P1_26
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 
-#define X_MIN_PIN                          P1_29  // X-
-#define X_MAX_PIN                          P1_28  // X+
-#define Y_MIN_PIN                          P1_27  // Y-
-#define Y_MAX_PIN                          P1_25  // Y+
-#define Z_MIN_PIN                          P1_22  // Z-
-#define Z_MAX_PIN                          P0_27  // Z+
+#define X_MIN_PIN                          P1_29  // X-//X-
+#define X_MAX_PIN                          P1_28  // X+//X+
+#define Y_MIN_PIN                          P1_27  // Y-//Y-
+#define Y_MAX_PIN                          P1_25  // Y+//Y+
+#define Z_MIN_PIN                          P1_22  // Z-//Z-
+#define Z_MAX_PIN                          P0_27  // Z+//Z+
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                         P2_00
 #define X_DIR_PIN                          P1_01
 #define X_ENABLE_PIN                       P1_00
@@ -87,9 +88,9 @@
   #define E2_CS_PIN                        P0_10
 #endif
 
-//
-// Software SPI pins for TMC2130 stepper drivers
-//
+////
+// Software SPI pins for TMC2130 stepper drivers//TMC2130步进驱动器的软件SPI引脚
+////
 #if ENABLED(TMC_USE_SW_SPI)
   #ifndef TMC_SW_MOSI
     #define TMC_SW_MOSI                    P0_20
@@ -121,21 +122,21 @@
   #define E2_SERIAL_TX_PIN                 P0_10
   #define E2_SERIAL_RX_PIN                 P0_10
 
-  // Reduce baud rate to improve software serial reliability
+  // Reduce baud rate to improve software serial reliability//降低波特率以提高软件串行可靠性
   #define TMC_BAUD_RATE                    19200
 #endif
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                      P0_26_A3  // (T4)
-#define TEMP_1_PIN                      P0_25_A2  // (T3)
-#define TEMP_2_PIN                      P0_24_A1  // (T2)
-#define TEMP_BED_PIN                    P0_23_A0  // (T1)
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                      P0_26_A3  // (T4)//（T4）
+#define TEMP_1_PIN                      P0_25_A2  // (T3)//（T3）
+#define TEMP_2_PIN                      P0_24_A1  // (T2)//（T2）
+#define TEMP_BED_PIN                    P0_23_A0  // (T1)//（T1）
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_BED_PIN                     P3_26
 #define HEATER_0_PIN                       P3_25
 #define HEATER_1_PIN                       P1_20
@@ -146,9 +147,9 @@
 #define FAN1_PIN                           P1_21
 #define FAN2_PIN                           P1_24
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 #define BEEPER_PIN                         P2_07
 #define LCD_PINS_RS                        P2_10
 #define LCD_PINS_ENABLE                    P0_22

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -23,18 +24,18 @@
 
 #define BOARD_INFO_NAME "FYSETC S6 2.0"
 
-//
-// EEPROM Emulation
-//
+////
+// EEPROM Emulation//EEPROM仿真
+////
 #if NO_EEPROM_SELECTED
   #undef NO_EEPROM_SELECTED
-  //#define FLASH_EEPROM_EMULATION
+  //#define FLASH_EEPROM_EMULATION//#定义FLASH_EEPROM_仿真
   #define I2C_EEPROM
 #endif
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_ENABLE_PIN                        PE9
 
 #if HAS_TMC_UART
@@ -47,9 +48,9 @@
   #define E2_SERIAL_TX_PIN                  PE0
 #endif
 
-//
-// Software SPI pins for TMC2130 stepper drivers
-//
+////
+// Software SPI pins for TMC2130 stepper drivers//TMC2130步进驱动器的软件SPI引脚
+////
 #define TMC_USE_SW_SPI
 #if ENABLED(TMC_USE_SW_SPI)
   #ifndef TMC_SW_MOSI

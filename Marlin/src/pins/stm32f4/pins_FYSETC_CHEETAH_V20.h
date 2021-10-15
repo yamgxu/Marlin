@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -28,24 +29,24 @@
 #define BOARD_INFO_NAME   "FYSETC Cheetah V2.0"
 #define BOARD_WEBSITE_URL "fysetc.com"
 
-// USB Flash Drive support
-//#define HAS_OTG_USB_HOST_SUPPORT
+// USB Flash Drive support//USB闪存驱动器支持
+//#define HAS_OTG_USB_HOST_SUPPORT//#define具有\u OTG\u USB\u主机\u支持
 
-// Ignore temp readings during development.
-//#define BOGUS_TEMPERATURE_GRACE_PERIOD    2000
+// Ignore temp readings during development.//在开发过程中忽略温度读数。
+//#define BOGUS_TEMPERATURE_GRACE_PERIOD    2000//#定义2000年的假温度宽限期
 
 #if EITHER(NO_EEPROM_SELECTED, FLASH_EEPROM_EMULATION)
   #define FLASH_EEPROM_EMULATION
   #define FLASH_EEPROM_LEVELING
 
   #define FLASH_SECTOR          2
-  #define FLASH_UNIT_SIZE       0x4000      // 16k
+  #define FLASH_UNIT_SIZE       0x4000      // 16k//16k
   #define FLASH_ADDRESS_START   0x8008000
 #endif
 
-//
-// Z Probe
-//
+////
+// Z Probe//Z探头
+////
 #if ENABLED(BLTOUCH)
   #error "You need to set jumper to 5v for Bltouch, then comment out this line to proceed."
   #define SERVO0_PIN                        PA0
@@ -53,21 +54,21 @@
   #define Z_MIN_PROBE_PIN                   PA0
 #endif
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_STOP_PIN                          PB4
 #define Y_STOP_PIN                          PB3
 #define Z_STOP_PIN                          PB1
 
-//
-// Filament runout
-//
+////
+// Filament runout//灯丝跳动
+////
 #define FIL_RUNOUT_PIN                      PB5
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                          PC0
 #define X_DIR_PIN                           PC1
 #define X_ENABLE_PIN                        PA8
@@ -90,7 +91,7 @@
   #define Z_HARDWARE_SERIAL  Serial2
   #define E0_HARDWARE_SERIAL Serial2
 
-  // Default TMC slave addresses
+  // Default TMC slave addresses//默认TMC从机地址
   #ifndef X_SLAVE_ADDRESS
     #define X_SLAVE_ADDRESS  0
   #endif
@@ -105,9 +106,9 @@
   #endif
 #endif
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_0_PIN                        PC6
 #define HEATER_BED_PIN                      PC7
 #ifndef FAN_PIN
@@ -115,15 +116,15 @@
 #endif
 #define FAN1_PIN                            PC8
 
-//
-// Temperature Sensors
-//
-#define TEMP_BED_PIN                        PC5   // Analog Input
-#define TEMP_0_PIN                          PC4   // Analog Input
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_BED_PIN                        PC5   // Analog Input//模拟输入
+#define TEMP_0_PIN                          PC4   // Analog Input//模拟输入
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define SDSS                                PA4
 #define SD_DETECT_PIN                       PC3
 
@@ -192,7 +193,7 @@
     #define LCD_PINS_ENABLE          EXP1_08_PIN
     #define LCD_PINS_D4              EXP1_06_PIN
 
-    // CR10_STOCKDISPLAY default timing is too fast
+    // CR10_STOCKDISPLAY default timing is too fast//CR10\u STOCKDISPLAY默认计时太快
     #undef BOARD_ST7920_DELAY_1
     #undef BOARD_ST7920_DELAY_2
     #undef BOARD_ST7920_DELAY_3
@@ -217,8 +218,8 @@
     #if ENABLED(FYSETC_MINI_12864)
       #define DOGLCD_CS              EXP1_08_PIN
       #define DOGLCD_A0              EXP1_07_PIN
-      //#define LCD_BACKLIGHT_PIN           -1
-      #define LCD_RESET_PIN          EXP1_06_PIN  // Must be high or open for LCD to operate normally.
+      //#define LCD_BACKLIGHT_PIN           -1//#定义LCD_背光_引脚-1
+      #define LCD_RESET_PIN          EXP1_06_PIN  // Must be high or open for LCD to operate normally.//必须为高电平或开路，LCD才能正常工作。
       #if EITHER(FYSETC_MINI_12864_1_2, FYSETC_MINI_12864_2_0)
         #ifndef RGB_LED_R_PIN
           #define RGB_LED_R_PIN      EXP1_05_PIN
@@ -232,7 +233,7 @@
       #elif ENABLED(FYSETC_MINI_12864_2_1)
         #define NEOPIXEL_PIN         EXP1_05_PIN
       #endif
-    #endif // !FYSETC_MINI_12864
+    #endif // !FYSETC_MINI_12864// !FYSETC_MINI_12864
 
     #if IS_ULTIPANEL
       #define LCD_PINS_D5            EXP1_05_PIN
@@ -240,16 +241,16 @@
       #define LCD_PINS_D7            EXP1_03_PIN
 
       #if ENABLED(REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER)
-        #define BTN_ENC_EN           LCD_PINS_D7  // Detect the presence of the encoder
+        #define BTN_ENC_EN           LCD_PINS_D7  // Detect the presence of the encoder//检测编码器的存在
       #endif
 
     #endif
 
   #endif
 
-#endif // HAS_WIRED_LCD
+#endif // HAS_WIRED_LCD//有有线液晶显示器吗
 
-// Alter timing for graphical display
+// Alter timing for graphical display//改变图形显示的时间
 #if HAS_MARLINUI_U8GLIB
   #ifndef BOARD_ST7920_DELAY_1
     #define BOARD_ST7920_DELAY_1    DELAY_NS(96)

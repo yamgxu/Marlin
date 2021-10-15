@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -113,4 +114,4 @@ void GcodeSuite::M425() {
   }
 }
 
-#endif // BACKLASH_GCODE
+#endif // BACKLASH_GCODE//齿隙代码

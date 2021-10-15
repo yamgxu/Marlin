@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -33,13 +34,13 @@
 #include "../MarlinCore.h"
 
 #if ENABLED(JD_HANDLE_SMALL_SEGMENTS)
-  // Enable this option for perfect accuracy but maximum
-  // computation. Should be fine on ARM processors.
-  //#define JD_USE_MATH_ACOS
+  // Enable this option for perfect accuracy but maximum//启用此选项可获得最佳精度，但最大
+  // computation. Should be fine on ARM processors.//计算。在ARM处理器上应该可以。
+  //#define JD_USE_MATH_ACOS//#定义JD\u使用\u数学\u ACOS
 
-  // Disable this option to save 120 bytes of PROGMEM,
-  // but incur increased computation and a reduction
-  // in accuracy.
+  // Disable this option to save 120 bytes of PROGMEM,//禁用此选项可保存120字节的程序，
+  // but incur increased computation and a reduction//但会导致计算量增加和减少
+  // in accuracy.//准确地说。
   #define JD_USE_LOOKUP_TABLE
 #endif
 
@@ -51,7 +52,7 @@
 #endif
 
 #if ABL_PLANAR
-  #include "../libs/vector_3.h" // for matrix_3x3
+  #include "../libs/vector_3.h" // for matrix_3x3//对于矩阵_3x3
 #endif
 
 #if ENABLED(FWRETRACT)
@@ -73,7 +74,7 @@
   #define IS_PAGE(B) false
 #endif
 
-// Feedrate for manual moves
+// Feedrate for manual moves//手动移动的进给速度
 #ifdef MANUAL_FEEDRATE
   constexpr xyze_feedrate_t _mf = MANUAL_FEEDRATE,
            manual_feedrate_mm_s = LOGICAL_AXIS_ARRAY(_mf.e / 60.0f,
@@ -86,26 +87,26 @@
 #endif
 
 enum BlockFlagBit : char {
-  // Recalculate trapezoids on entry junction. For optimization.
+  // Recalculate trapezoids on entry junction. For optimization.//重新计算入口连接处的梯形。用于优化。
   BLOCK_BIT_RECALCULATE,
 
-  // Nominal speed always reached.
-  // i.e., The segment is long enough, so the nominal speed is reachable if accelerating
-  // from a safe speed (in consideration of jerking from zero speed).
+  // Nominal speed always reached.//始终达到标称速度。
+  // i.e., The segment is long enough, so the nominal speed is reachable if accelerating//也就是说，该段足够长，因此如果加速，可以达到标称速度
+  // from a safe speed (in consideration of jerking from zero speed).//从安全速度（考虑从零速度猛拉）。
   BLOCK_BIT_NOMINAL_LENGTH,
 
-  // The block is segment 2+ of a longer move
+  // The block is segment 2+ of a longer move//该块是较长移动的第2+段
   BLOCK_BIT_CONTINUED,
 
-  // Sync the stepper counts from the block
+  // Sync the stepper counts from the block//从块同步步进器计数
   BLOCK_BIT_SYNC_POSITION
 
-  // Direct stepping page
+  // Direct stepping page//直接步进页面
   #if ENABLED(DIRECT_STEPPING)
     , BLOCK_BIT_IS_PAGE
   #endif
 
-  // Sync the fan speeds from the block
+  // Sync the fan speeds from the block//从块同步风扇速度
   #if ENABLED(LASER_SYNCHRONOUS_M106_M107)
     , BLOCK_BIT_SYNC_FANS
   #endif
@@ -136,14 +137,14 @@ enum BlockFlag : char {
   } power_status_t;
 
   typedef struct {
-    power_status_t status;    // See planner settings for meaning
-    uint8_t power;            // Ditto; When in trapezoid mode this is nominal power
+    power_status_t status;    // See planner settings for meaning//请参见规划器设置以了解其含义
+    uint8_t power;            // Ditto; When in trapezoid mode this is nominal power//同上；在梯形模式下，这是标称功率
     #if ENABLED(LASER_POWER_INLINE_TRAPEZOID)
-      uint8_t   power_entry;  // Entry power for the laser
+      uint8_t   power_entry;  // Entry power for the laser//激光器的进入功率
       #if DISABLED(LASER_POWER_INLINE_TRAPEZOID_CONT)
-        uint8_t   power_exit; // Exit power for the laser
-        uint32_t  entry_per,  // Steps per power increment (to avoid floats in stepper calcs)
-                  exit_per;   // Steps per power decrement
+        uint8_t   power_exit; // Exit power for the laser//激光器的输出功率
+        uint32_t  entry_per,  // Steps per power increment (to avoid floats in stepper calcs)//每功率增量步数（避免步进计算中出现浮动）
+                  exit_per;   // Steps per power decrement//每功率递减步数
       #endif
     #endif
   } block_laser_t;
@@ -161,67 +162,67 @@ enum BlockFlag : char {
  */
 typedef struct block_t {
 
-  volatile uint8_t flag;                    // Block flags (See BlockFlag enum above) - Modified by ISR and main thread!
+  volatile uint8_t flag;                    // Block flags (See BlockFlag enum above) - Modified by ISR and main thread!//块标志（请参阅上面的块标志枚举）-由ISR和主线程修改！
 
-  //运动规划器用于管理加速度的字段
-  float nominal_speed_sqr,                  // 该块的标称速度 (mm/sec)^2
-        entry_speed_sqr,                    // 前一个当前结的进入速度（mm/sec）^2
-        max_entry_speed_sqr,                // 最大允许的结入口速度(mm/sec)^2
-        millimeters,                        // 这个块的总行程，单位为毫米
-        acceleration;                       // 加速度mm/sec ^ 2
+  //运动规划器用于管理加速度的字段//运动规划器用于管理加速度的字段
+  float nominal_speed_sqr,                  // 该块的标称速度 (mm/sec)^2// 该块的标称速度 （毫米/秒）^2
+        entry_speed_sqr,                    // 前一个当前结的进入速度（mm/sec）^2// 前一个当前结的进入速度（毫米/秒）^2
+        max_entry_speed_sqr,                // 最大允许的结入口速度(mm/sec)^2// 最大允许的结入口速度（毫米/秒）^2
+        millimeters,                        // 这个块的总行程，单位为毫米// 这个块的总行程，单位为毫米
+        acceleration;                       // 加速度mm/sec ^ 2// 加速度毫米/秒^2
 
   union {
-    abce_ulong_t steps;                     // 沿每个轴进行步长计数
-    abce_long_t position;                   //执行同步块时要强制执行的新位置
+    abce_ulong_t steps;                     // 沿每个轴进行步长计数// 沿每个轴进行步长计数
+    abce_long_t position;                   //执行同步块时要强制执行的新位置//执行同步块时要强制执行的新位置
   };
-  uint32_t step_event_count;                // 完成此块所需的步骤事件数
+  uint32_t step_event_count;                // 完成此块所需的步骤事件数// 完成此块所需的步骤事件数
 
-  #if HAS_MULTI_EXTRUDER //有多个挤出机
-    uint8_t extruder;                       // The extruder to move (if E move)
+  #if HAS_MULTI_EXTRUDER //有多个挤出机//有多个挤出机
+    uint8_t extruder;                       // The extruder to move (if E move)//要移动的挤出机（如果E移动）
   #else
     static constexpr uint8_t extruder = 0;
   #endif
 
-  #if ENABLED(MIXING_EXTRUDER)//混合挤出机
-    mixer_comp_t b_color[MIXING_STEPPERS];  // Normalized color for the mixing steppers
+  #if ENABLED(MIXING_EXTRUDER)//混合挤出机//混合挤出机
+    mixer_comp_t b_color[MIXING_STEPPERS];  // Normalized color for the mixing steppers//混合步进器的标准化颜色
   #endif
 
-  // 梯形发生器的设置
-  uint32_t accelerate_until,                //停止加速的步骤事件的索引
-           decelerate_after;                //开始减速的步骤事件的索引
+  // 梯形发生器的设置// 梯形发生器的设置
+  uint32_t accelerate_until,                //停止加速的步骤事件的索引//停止加速的步骤事件的索引
+           decelerate_after;                //开始减速的步骤事件的索引//开始减速的步骤事件的索引
 
   #if ENABLED(S_CURVE_ACCELERATION)
-    uint32_t cruise_rate,                   // The actual cruise rate to use, between end of the acceleration phase and start of deceleration phase
-             acceleration_time,             // Acceleration time and deceleration time in STEP timer counts
+    uint32_t cruise_rate,                   // The actual cruise rate to use, between end of the acceleration phase and start of deceleration phase//在加速阶段结束和减速阶段开始之间使用的实际巡航速度
+             acceleration_time,             // Acceleration time and deceleration time in STEP timer counts//步进计时器计数中的加速时间和减速时间
              deceleration_time,
-             acceleration_time_inverse,     // Inverse of acceleration and deceleration periods, expressed as integer. Scale depends on CPU being used
+             acceleration_time_inverse,     // Inverse of acceleration and deceleration periods, expressed as integer. Scale depends on CPU being used//加速和减速周期的倒数，表示为整数。规模取决于所使用的CPU
              deceleration_time_inverse;
   #else
-    uint32_t acceleration_rate;             // 用于加速度计算的加速度
+    uint32_t acceleration_rate;             // 用于加速度计算的加速度// 用于加速度计算的加速度
   #endif
 
-  uint8_t direction_bits;                   //为该块设置的方向位（参考 config.h 中的 _DIRECTION_BIT）
+  uint8_t direction_bits;                   //为该块设置的方向位（参考 config.h 中的 _DIRECTION_BIT）//为该块设置的方向位（参考 配置.h中的 _方向（U位）
 
-  // 超前挤压
+  // 超前挤压// 超前挤压
   #if ENABLED(LIN_ADVANCE)
     bool use_advance_lead;
-    uint16_t advance_speed,                 // STEP timer value for extruder speed offset ISR
-             max_adv_steps,                 // max. advance steps to get cruising speed pressure (not always nominal_speed!)
-             final_adv_steps;               // advance steps due to exit speed
+    uint16_t advance_speed,                 // STEP timer value for extruder speed offset ISR//挤出机速度偏移ISR的步进定时器值
+             max_adv_steps,                 // max. advance steps to get cruising speed pressure (not always nominal_speed!)//获得巡航速度压力的最大前进步数（不总是标称速度！）
+             final_adv_steps;               // advance steps due to exit speed//因退出速度而前进的步骤
     float e_D_ratio;
   #endif
 
-  uint32_t nominal_rate,                    // The nominal step rate for this block in step_events/sec
-           initial_rate,                    // The jerk-adjusted step rate at start of block
-           final_rate,                      // The minimal rate at exit
-           acceleration_steps_per_s2;       // acceleration steps/sec^2
+  uint32_t nominal_rate,                    // The nominal step rate for this block in step_events/sec//此块的标称步进速率，单位为步进事件/秒
+           initial_rate,                    // The jerk-adjusted step rate at start of block//试块开始时的挺举调整步进率
+           final_rate,                      // The minimal rate at exit//退出时的最小速率
+           acceleration_steps_per_s2;       // acceleration steps/sec^2//加速步数/秒^2
 
   #if ENABLED(DIRECT_STEPPING)
-    page_idx_t page_idx;                    // Page index used for direct stepping
+    page_idx_t page_idx;                    // Page index used for direct stepping//用于直接步进的页面索引
   #endif
 
   #if HAS_CUTTER
-    cutter_power_t cutter_power;            // Power level for Spindle, Laser, etc.
+    cutter_power_t cutter_power;            // Power level for Spindle, Laser, etc.//主轴、激光器等的功率水平。
   #endif
 
   #if HAS_FAN
@@ -270,15 +271,15 @@ typedef struct block_t {
 #endif
 
 typedef struct {
-   uint32_t max_acceleration_mm_per_s2[DISTINCT_AXES], // (mm/s^2) M201 XYZE
-            min_segment_time_us;                // (µs) M205 B
-      float axis_steps_per_mm[DISTINCT_AXES];   // (steps) M92 XYZE - Steps per millimeter
- feedRate_t max_feedrate_mm_s[DISTINCT_AXES];   // (mm/s) M203 XYZE - Max speeds
-      float acceleration,                       // (mm/s^2) M204 S - Normal acceleration. DEFAULT ACCELERATION for all printing moves.
-            retract_acceleration,               // (mm/s^2) M204 R - Retract acceleration. Filament pull-back and push-forward while standing still in the other axes
-            travel_acceleration;                // (mm/s^2) M204 T - Travel acceleration. DEFAULT ACCELERATION for all NON printing moves.
- feedRate_t min_feedrate_mm_s,                  // (mm/s) M205 S - Minimum linear feedrate
-            min_travel_feedrate_mm_s;           // (mm/s) M205 T - Minimum travel feedrate
+   uint32_t max_acceleration_mm_per_s2[DISTINCT_AXES], // (mm/s^2) M201 XYZE//（毫米/秒^2）M201 XYZE
+            min_segment_time_us;                // (µs) M205 B//（µs）M205 B
+      float axis_steps_per_mm[DISTINCT_AXES];   // (steps) M92 XYZE - Steps per millimeter//（步数）M92 XYZE-每毫米步数
+ feedRate_t max_feedrate_mm_s[DISTINCT_AXES];   // (mm/s) M203 XYZE - Max speeds//（毫米/秒）M203 XYZE-最大速度
+      float acceleration,                       // (mm/s^2) M204 S - Normal acceleration. DEFAULT ACCELERATION for all printing moves.//（毫米/秒^2）M204秒-正常加速度。所有打印移动的默认加速。
+            retract_acceleration,               // (mm/s^2) M204 R - Retract acceleration. Filament pull-back and push-forward while standing still in the other axes//（毫米/秒^2）M204 R-缩回加速度。灯丝向后拉并向前推，同时在其他轴上静止不动
+            travel_acceleration;                // (mm/s^2) M204 T - Travel acceleration. DEFAULT ACCELERATION for all NON printing moves.//（毫米/秒^2）M204 T-行驶加速度。所有非打印移动的默认加速度。
+ feedRate_t min_feedrate_mm_s,                  // (mm/s) M205 S - Minimum linear feedrate//（mm/s）M205 s-最小线性进给速度
+            min_travel_feedrate_mm_s;           // (mm/s) M205 T - Minimum travel feedrate//（mm/s）M205 T-最小行程进给率
 } planner_settings_t;
 
 #if DISABLED(SKEW_CORRECTION)
@@ -322,38 +323,38 @@ class Planner {
      *  Reader of tail is Stepper::isr(). Always consider tail busy / read-only
      */
     static block_t block_buffer[BLOCK_BUFFER_SIZE];
-    static volatile uint8_t block_buffer_head,      // Index of the next block to be pushed
-                            block_buffer_nonbusy,   // Index of the first non busy block
-                            block_buffer_planned,   // Index of the optimally planned block
-                            block_buffer_tail;      // Index of the busy block, if any
-    static uint16_t cleaning_buffer_counter;        // A counter to disable queuing of blocks
-    static uint8_t delay_before_delivering;         // This counter delays delivery of blocks when queue becomes empty to allow the opportunity of merging blocks
+    static volatile uint8_t block_buffer_head,      // Index of the next block to be pushed//要推送的下一个块的索引
+                            block_buffer_nonbusy,   // Index of the first non busy block//第一个非忙块的索引
+                            block_buffer_planned,   // Index of the optimally planned block//最优规划块的索引
+                            block_buffer_tail;      // Index of the busy block, if any//忙块的索引（如果有）
+    static uint16_t cleaning_buffer_counter;        // A counter to disable queuing of blocks//用于禁用块排队的计数器
+    static uint8_t delay_before_delivering;         // This counter delays delivery of blocks when queue becomes empty to allow the opportunity of merging blocks//当队列变空时，此计数器延迟块的传递，以便有机会合并块
 
 
     #if ENABLED(DISTINCT_E_FACTORS)
-      static uint8_t last_extruder;                 // Respond to extruder change
+      static uint8_t last_extruder;                 // Respond to extruder change//对挤出机变化的响应
     #endif
 
     #if ENABLED(DIRECT_STEPPING)
-      static uint32_t last_page_step_rate;          // Last page step rate given
-      static xyze_bool_t last_page_dir;             // Last page direction given
+      static uint32_t last_page_step_rate;          // Last page step rate given//最后一页步进率给定
+      static xyze_bool_t last_page_dir;             // Last page direction given//最后一页给出了方向
     #endif
 
     #if HAS_EXTRUDERS
-      static int16_t flow_percentage[EXTRUDERS];    // Extrusion factor for each extruder
-      static float e_factor[EXTRUDERS];             // The flow percentage and volumetric multiplier combine to scale E movement
+      static int16_t flow_percentage[EXTRUDERS];    // Extrusion factor for each extruder//每台挤出机的挤出系数
+      static float e_factor[EXTRUDERS];             // The flow percentage and volumetric multiplier combine to scale E movement//流量百分比和体积倍增器结合起来可缩放E移动
     #endif
 
     #if DISABLED(NO_VOLUMETRICS)
-      static float filament_size[EXTRUDERS],          // diameter of filament (in millimeters), typically around 1.75 or 2.85, 0 disables the volumetric calculations for the extruder
-                   volumetric_area_nominal,           // Nominal cross-sectional area
-                   volumetric_multiplier[EXTRUDERS];  // Reciprocal of cross-sectional area of filament (in mm^2). Pre-calculated to reduce computation in the planner
-                                                      // May be auto-adjusted by a filament width sensor
+      static float filament_size[EXTRUDERS],          // diameter of filament (in millimeters), typically around 1.75 or 2.85, 0 disables the volumetric calculations for the extruder//灯丝直径（以毫米为单位），通常约为1.75或2.85，0禁用挤出机的体积计算
+                   volumetric_area_nominal,           // Nominal cross-sectional area//标称横截面积
+                   volumetric_multiplier[EXTRUDERS];  // Reciprocal of cross-sectional area of filament (in mm^2). Pre-calculated to reduce computation in the planner//灯丝横截面积的倒数（单位：mm^2）。预先计算以减少计划器中的计算
+                                                      // May be auto-adjusted by a filament width sensor//可通过灯丝宽度传感器自动调整
     #endif
 
     #if ENABLED(VOLUMETRIC_EXTRUDER_LIMIT)
-      static float volumetric_extruder_limit[EXTRUDERS],          // Maximum mm^3/sec the extruder can handle
-                   volumetric_extruder_feedrate_limit[EXTRUDERS]; // Feedrate limit (mm/s) calculated from volume limit
+      static float volumetric_extruder_limit[EXTRUDERS],          // Maximum mm^3/sec the extruder can handle//挤出机可处理的最大速度为mm^3/秒
+                   volumetric_extruder_feedrate_limit[EXTRUDERS]; // Feedrate limit (mm/s) calculated from volume limit//根据体积限制计算的进给速度限制（mm/s）
     #endif
 
     static planner_settings_t settings;
@@ -362,25 +363,25 @@ class Planner {
       static laser_state_t laser_inline;
     #endif
 
-    static uint32_t max_acceleration_steps_per_s2[DISTINCT_AXES]; // (steps/s^2) Derived from mm_per_s2
-    static float steps_to_mm[DISTINCT_AXES];          // Millimeters per step
+    static uint32_t max_acceleration_steps_per_s2[DISTINCT_AXES]; // (steps/s^2) Derived from mm_per_s2//（步数/s^2）从mm_/秒2派生
+    static float steps_to_mm[DISTINCT_AXES];          // Millimeters per step//每步毫米数
 
     #if HAS_JUNCTION_DEVIATION
-      static float junction_deviation_mm;             // (mm) M205 J
+      static float junction_deviation_mm;             // (mm) M205 J//（毫米）M205 J
       #if HAS_LINEAR_E_JERK
-        static float max_e_jerk[DISTINCT_E];          // Calculated from junction_deviation_mm
+        static float max_e_jerk[DISTINCT_E];          // Calculated from junction_deviation_mm//根据连接处偏差计算
       #endif
     #endif
 
     #if HAS_CLASSIC_JERK
-      // (mm/s^2) M205 XYZ(E) - The largest speed change requiring no acceleration.
+      // (mm/s^2) M205 XYZ(E) - The largest speed change requiring no acceleration.//（mm/s^2）M205 XYZ（E）-无需加速的最大速度变化。
       static TERN(HAS_LINEAR_E_JERK, xyz_pos_t, xyze_pos_t) max_jerk;
     #endif
 
     #if HAS_LEVELING
-      static bool leveling_active;          // Flag that bed leveling is enabled
+      static bool leveling_active;          // Flag that bed leveling is enabled//启用河床平整的标志
       #if ABL_PLANAR
-        static matrix_3x3 bed_level_matrix; // Transform to compensate for bed level
+        static matrix_3x3 bed_level_matrix; // Transform to compensate for bed level//变换以补偿床面高度
       #endif
       #if ENABLED(ENABLE_LEVELING_FADE_HEIGHT)
         static float z_fade_height, inverse_z_fade_height;
@@ -413,11 +414,11 @@ class Planner {
       static bool abort_on_endstop_hit;
     #endif
     #ifdef XY_FREQUENCY_LIMIT
-      static int8_t xy_freq_limit_hz;         // Minimum XY frequency setting
-      static float xy_freq_min_speed_factor;  // Minimum speed factor setting
-      static int32_t xy_freq_min_interval_us; // Minimum segment time based on xy_freq_limit_hz
+      static int8_t xy_freq_limit_hz;         // Minimum XY frequency setting//最小XY频率设置
+      static float xy_freq_min_speed_factor;  // Minimum speed factor setting//最小速度系数设置
+      static int32_t xy_freq_min_interval_us; // Minimum segment time based on xy_freq_limit_hz//基于xy\u频率\u限制\u hz的最小分段时间
       static inline void refresh_frequency_limit() {
-        //xy_freq_min_interval_us = xy_freq_limit_hz ?: LROUND(1000000.0f / xy_freq_limit_hz);
+        //xy_freq_min_interval_us = xy_freq_limit_hz ?: LROUND(1000000.0f / xy_freq_limit_hz);//xy\u频率\u最小间隔\u us=xy\u频率限制\u hz？：LROUND（1000000.0f/xy\u频率限制\u hz）；
         if (xy_freq_limit_hz)
           xy_freq_min_interval_us = LROUND(1000000.0f / xy_freq_limit_hz);
       }
@@ -452,12 +453,12 @@ class Planner {
     #endif
 
     #if ENABLED(DISABLE_INACTIVE_EXTRUDER)
-      // Counters to manage disabling inactive extruder steppers
+      // Counters to manage disabling inactive extruder steppers//用于管理禁用非活动挤出机步进机的计数器
       static last_move_t g_uc_extruder_last_move[E_STEPPERS];
     #endif
 
     #if HAS_WIRED_LCD
-      volatile static uint32_t block_buffer_runtime_us; // Theoretical block buffer runtime in µs
+      volatile static uint32_t block_buffer_runtime_us; // Theoretical block buffer runtime in µs//以µs为单位的理论块缓冲运行时间
     #endif
 
   public:
@@ -474,7 +475,7 @@ class Planner {
      * Static (class) Methods
      */
 
-    // Recalculate steps/s^2 accelerations based on mm/s^2 settings
+    // Recalculate steps/s^2 accelerations based on mm/s^2 settings//根据mm/s^2设置重新计算步长/s^2加速度
     static void reset_acceleration_rates();
 
     /**
@@ -483,13 +484,13 @@ class Planner {
      */
     static void refresh_positioning();
 
-    // For an axis set the Maximum Acceleration in mm/s^2
+    // For an axis set the Maximum Acceleration in mm/s^2//对于轴，设置最大加速度，单位为mm/s^2
     static void set_max_acceleration(const uint8_t axis, float inMaxAccelMMS2);
 
-    // For an axis set the Maximum Feedrate in mm/s
+    // For an axis set the Maximum Feedrate in mm/s//对于轴，以毫米/秒为单位设置最大进给速度
     static void set_max_feedrate(const uint8_t axis, float inMaxFeedrateMMS);
 
-    // For an axis set the Maximum Jerk (instant change) in mm/s
+    // For an axis set the Maximum Jerk (instant change) in mm/s//对于轴，以毫米/秒为单位设置最大脉动（瞬时变化）
     #if HAS_CLASSIC_JERK
       static void set_max_jerk(const AxisEnum axis, float inMaxJerkMMS);
     #else
@@ -508,10 +509,10 @@ class Planner {
 
     #endif
 
-    // Manage fans, paste pressure, etc.
+    // Manage fans, paste pressure, etc.//管理风扇、粘贴压力等。
     static void check_axes_activity();
 
-    // Apply fan speeds
+    // Apply fan speeds//应用风扇转速
     #if HAS_FAN
       static void sync_fan_speeds(uint8_t (&fan_speed)[FAN_COUNT]);
       #if FAN_KICKSTART_TIME
@@ -534,19 +535,19 @@ class Planner {
 
     #if DISABLED(NO_VOLUMETRICS)
 
-      // Update multipliers based on new diameter measurements
+      // Update multipliers based on new diameter measurements//根据新的直径测量值更新乘数
       static void calculate_volumetric_multipliers();
 
       #if ENABLED(VOLUMETRIC_EXTRUDER_LIMIT)
-        // Update pre calculated extruder feedrate limits based on volumetric values
+        // Update pre calculated extruder feedrate limits based on volumetric values//根据体积值更新预先计算的挤出机进给速度限制
         static void calculate_volumetric_extruder_limit(const uint8_t e);
         static void calculate_volumetric_extruder_limits();
       #endif
 
       FORCE_INLINE static void set_filament_size(const uint8_t e, const_float_t v) {
         filament_size[e] = v;
-        if (v > 0) volumetric_area_nominal = CIRCLE_AREA(v * 0.5); //TODO: should it be per extruder
-        // make sure all extruders have some sane value for the filament size
+        if (v > 0) volumetric_area_nominal = CIRCLE_AREA(v * 0.5); //TODO: should it be per extruder//TODO:应该是每个挤出机吗
+        // make sure all extruders have some sane value for the filament size//确保所有挤出机的长丝尺寸都有合理的值
         LOOP_L_N(i, COUNT(filament_size))
           if (!filament_size[i]) filament_size[i] = DEFAULT_NOMINAL_FILAMENT_DIA;
       }
@@ -624,7 +625,7 @@ class Planner {
       }
       FORCE_INLINE static void unskew(xyz_pos_t &raw) { unskew(raw.x, raw.y, raw.z); }
 
-    #endif // SKEW_CORRECTION
+    #endif // SKEW_CORRECTION//倾斜校正
 
     #if HAS_LEVELING
       /**
@@ -662,21 +663,21 @@ class Planner {
         if (leveling) unapply_leveling(pos);
         TERN_(SKEW_CORRECTION, unskew(pos));
       }
-    #endif // HAS_POSITION_MODIFIERS
+    #endif // HAS_POSITION_MODIFIERS//有位置修改器
 
-    // Number of moves currently in the planner including the busy block, if any
+    // Number of moves currently in the planner including the busy block, if any//当前在计划器中的移动数，包括忙区（如果有）
     FORCE_INLINE static uint8_t movesplanned() { return BLOCK_MOD(block_buffer_head - block_buffer_tail); }
 
-    // Number of nonbusy moves currently in the planner
+    // Number of nonbusy moves currently in the planner//当前在计划器中的非繁忙移动数
     FORCE_INLINE static uint8_t nonbusy_movesplanned() { return BLOCK_MOD(block_buffer_head - block_buffer_nonbusy); }
 
-    // Remove all blocks from the buffer
+    // Remove all blocks from the buffer//从缓冲区中删除所有块
     FORCE_INLINE static void clear_block_buffer() { block_buffer_nonbusy = block_buffer_planned = block_buffer_head = block_buffer_tail = 0; }
 
-    // Check if movement queue is full
+    // Check if movement queue is full//检查移动队列是否已满
     FORCE_INLINE static bool is_full() { return block_buffer_tail == next_block_index(block_buffer_head); }
 
-    // Get count of movement slots free
+    // Get count of movement slots free//获得可用的移动槽数
     FORCE_INLINE static uint8_t moves_free() { return BLOCK_BUFFER_SIZE - 1 - movesplanned(); }
 
     /**
@@ -688,10 +689,10 @@ class Planner {
      */
     FORCE_INLINE static block_t* get_next_free_block(uint8_t &next_buffer_head, const uint8_t count=1) {
 
-      // Wait until there are enough slots free
+      // Wait until there are enough slots free//等待，直到有足够的空闲插槽
       while (moves_free() < count) { idle(); }
 
-      // Return the first available block
+      // Return the first available block//返回第一个可用的块
       next_buffer_head = next_block_index(block_buffer_head);
       return &block_buffer[block_buffer_head];
     }
@@ -744,7 +745,7 @@ class Planner {
   #if IS_KINEMATIC
     private:
 
-      // Allow do_homing_move to access internal functions, such as buffer_segment.
+      // Allow do_homing_move to access internal functions, such as buffer_segment.//允许do_homing_move访问内部功能，如缓冲段。
       friend void do_homing_move(const AxisEnum, const float, const feedRate_t, const bool);
   #endif
 
@@ -828,36 +829,36 @@ class Planner {
       return out;
     }
 
-    // SCARA AB axes are in degrees, not mm
+    // SCARA AB axes are in degrees, not mm//圣甲虫AB轴的单位是度，而不是毫米
     #if IS_SCARA
       FORCE_INLINE static float get_axis_position_degrees(const AxisEnum axis) { return get_axis_position_mm(axis); }
     #endif
 
-    // Called to force a quick stop of the machine (for example, when
-    // a Full Shutdown is required, or when endstops are hit)
+    // Called to force a quick stop of the machine (for example, when//调用以强制快速停止机器（例如，当
+    // a Full Shutdown is required, or when endstops are hit)//（需要完全关闭，或当碰到止动块时）
     static void quick_stop();
 
     #if ENABLED(REALTIME_REPORTING_COMMANDS)
-      // Force a quick pause of the machine (e.g., when a pause is required in the middle of move).
-      // NOTE: Hard-stops will lose steps so encoders are highly recommended if using these!
+      // Force a quick pause of the machine (e.g., when a pause is required in the middle of move)./强迫机器的快速停顿（例如，在移动中间需要暂停）。
+      // NOTE: Hard-stops will lose steps so encoders are highly recommended if using these!//注意：硬停止将丢失步数，因此强烈建议使用编码器！
       static void quick_pause();
       static void quick_resume();
     #endif
 
-    // Called when an endstop is triggered. Causes the machine to stop inmediately
+    // Called when an endstop is triggered. Causes the machine to stop inmediately//触发结束停止时调用。使机器立即停止
     static void endstop_triggered(const AxisEnum axis);
 
-    // Triggered position of an axis in mm (not core-savvy)
+    // Triggered position of an axis in mm (not core-savvy)//轴的触发位置，单位为mm（非核心能力）
     static float triggered_position_mm(const AxisEnum axis);
 
-    // Block until all buffered steps are executed / cleaned
+    // Block until all buffered steps are executed / cleaned//阻塞，直到执行/清除所有缓冲步骤
     static void synchronize();
 
-    // Wait for moves to finish and disable all steppers
+    // Wait for moves to finish and disable all steppers//等待移动完成并禁用所有步进器
     static void finish_and_disable();
 
-    // Periodic handler to manage the cleaning buffer counter
-    // Called from the Temperature ISR at ~1kHz
+    // Periodic handler to manage the cleaning buffer counter//用于管理清理缓冲区计数器的定期处理程序
+    // Called from the Temperature ISR at ~1kHz//从~1kHz的温度ISR调用
     static void isr() { if (cleaning_buffer_counter) --cleaning_buffer_counter; }
 
     /**
@@ -927,7 +928,7 @@ class Planner {
      * from initial_rate to target_rate using the given acceleration:
      */
     static float estimate_acceleration_distance(const_float_t initial_rate, const_float_t target_rate, const_float_t accel) {
-      if (accel == 0) return 0; // accel was 0, set acceleration distance to 0
+      if (accel == 0) return 0; // accel was 0, set acceleration distance to 0//加速度为0，将加速度距离设置为0
       return (sq(target_rate) - sq(initial_rate)) / (accel * 2);
     }
 
@@ -940,7 +941,7 @@ class Planner {
      * in cases where the "trapezoid" has no plateau (i.e., never reaches maximum speed)
      */
     static float intersection_distance(const_float_t initial_rate, const_float_t final_rate, const_float_t accel, const_float_t distance) {
-      if (accel == 0) return 0; // accel was 0, set intersection distance to 0
+      if (accel == 0) return 0; // accel was 0, set intersection distance to 0//加速度为0，将交点距离设置为0
       return (accel * 2 * distance - sq(initial_rate) + sq(final_rate)) / (accel * 4);
     }
 
@@ -993,7 +994,7 @@ class Planner {
         return limit_value;
       }
 
-    #endif // !CLASSIC_JERK
+    #endif // !CLASSIC_JERK// !经典挺举
 };
 
 #define PLANNER_XY_FEEDRATE() _MIN(planner.settings.max_feedrate_mm_s[X_AXIS], planner.settings.max_feedrate_mm_s[Y_AXIS])

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -63,10 +64,10 @@ void GcodeSuite::M907() {
   #endif
 
   #if HAS_MOTOR_CURRENT_I2C
-    // this one uses actual amps in floating point
+    // this one uses actual amps in floating point//这个使用浮点的实际安培数
     LOOP_LOGICAL_AXES(i) if (parser.seenval(axis_codes[i])) digipot_i2c.set_current(i, parser.value_float());
-    // Additional extruders use B,C,D for channels 4,5,6.
-    // TODO: Change these parameters because 'E' is used. B<index>?
+    // Additional extruders use B,C,D for channels 4,5,6.//其他挤出机对通道4、5、6使用B、C、D。
+    // TODO: Change these parameters because 'E' is used. B<index>?//TODO:更改这些参数，因为使用了“E”。B<index>？
     #if HAS_EXTRUDERS
       for (uint8_t i = E_AXIS + 1; i < DIGIPOT_I2C_NUM_CHANNELS; i++)
         if (parser.seenval('B' + i - (E_AXIS + 1))) digipot_i2c.set_current(i, parser.value_float());
@@ -97,8 +98,8 @@ void GcodeSuite::M907() {
     void GcodeSuite::M909() { stepper_dac.print_values(); }
     void GcodeSuite::M910() { stepper_dac.commit_eeprom(); }
 
-  #endif // HAS_MOTOR_CURRENT_DAC
+  #endif // HAS_MOTOR_CURRENT_DAC//有电机电流DAC
 
-#endif // HAS_MOTOR_CURRENT_SPI || HAS_MOTOR_CURRENT_DAC
+#endif // HAS_MOTOR_CURRENT_SPI || HAS_MOTOR_CURRENT_DAC//有电机电流SPI有电机电流DAC
 
-#endif // HAS_MOTOR_CURRENT_SPI || HAS_MOTOR_CURRENT_PWM || HAS_MOTOR_CURRENT_I2C || HAS_MOTOR_CURRENT_DAC
+#endif // HAS_MOTOR_CURRENT_SPI || HAS_MOTOR_CURRENT_PWM || HAS_MOTOR_CURRENT_I2C || HAS_MOTOR_CURRENT_DAC//有电机电流SPI有电机电流PWM有电机电流I2C有电机电流DAC

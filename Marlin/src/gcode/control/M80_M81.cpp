@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -23,9 +24,9 @@
 #include "../gcode.h"
 
 #include "../../module/temperature.h"
-#include "../../module/planner.h"       // for planner.finish_and_disable
-#include "../../module/printcounter.h"  // for print_job_timer.stop
-#include "../../lcd/marlinui.h"         // for LCD_MESSAGEPGM_P
+#include "../../module/planner.h"       // for planner.finish_and_disable//对于planner.finish和disable
+#include "../../module/printcounter.h"  // for print_job_timer.stop//用于打印作业计时器。停止
+#include "../../lcd/marlinui.h"         // for LCD_MESSAGEPGM_P//对于LCD_MESSAGEPGM_P
 
 #include "../../inc/MarlinConfig.h"
 
@@ -41,7 +42,7 @@
     void restore_stepper_drivers();
   #endif
 
-  // Could be moved to a feature, but this is all the data
+  // Could be moved to a feature, but this is all the data//可以移动到功能，但这是所有数据
   bool powersupply_on;
 
   #if HAS_TRINAMIC_CONFIG
@@ -54,7 +55,7 @@
    */
   void GcodeSuite::M80() {
 
-    // S: Report the current power supply state and exit
+    // S: Report the current power supply state and exit//S：报告当前电源状态并退出
     if (parser.seen('S')) {
       SERIAL_ECHOPGM_P(powersupply_on ? PSTR("PS:1\n") : PSTR("PS:0\n"));
       return;
@@ -80,7 +81,7 @@
     TERN_(HAS_LCD_MENU, ui.reset_status());
   }
 
-#endif // PSU_CONTROL
+#endif // PSU_CONTROL//PSU控制
 
 /**
  * M81: Turn off Power, including Power Supply, if there is one.
@@ -101,7 +102,7 @@ void GcodeSuite::M81() {
     #endif
   #endif
 
-  safe_delay(1000); // Wait 1 second before switching off
+  safe_delay(1000); // Wait 1 second before switching off//在关闭前等待1秒钟
 
   #if HAS_SUICIDE
     suicide();

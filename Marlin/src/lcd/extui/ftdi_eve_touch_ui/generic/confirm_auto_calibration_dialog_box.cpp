@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*******************************************
  * confirm_auto_calibration_dialog_box.cpp *
  *******************************************/
@@ -44,4 +45,4 @@ bool ConfirmAutoCalibrationDialogBox::onTouchEnd(uint8_t tag) {
   }
 }
 
-#endif // FTDI_CONFIRM_AUTO_CALIBRATION_DIALOG_BOX
+#endif // FTDI_CONFIRM_AUTO_CALIBRATION_DIALOG_BOX//FTDI确认自动校准对话框

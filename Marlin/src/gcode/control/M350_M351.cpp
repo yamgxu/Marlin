@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -61,4 +62,4 @@ void GcodeSuite::M351() {
   stepper.microstep_readings();
 }
 
-#endif // HAS_MICROSTEPS
+#endif // HAS_MICROSTEPS//有多少微步

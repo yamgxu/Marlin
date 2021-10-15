@@ -1,3 +1,4 @@
+/** translatione by yx */
 /****************************
  * bed_mesh_view_screen.cpp *
  ****************************/
@@ -169,4 +170,4 @@ void BedMeshViewScreen::show() {
   GOTO_SCREEN(BedMeshViewScreen);
 }
 
-#endif // FTDI_BED_MESH_VIEW_SCREEN
+#endif // FTDI_BED_MESH_VIEW_SCREEN//FTDI\床\网\视图\屏幕

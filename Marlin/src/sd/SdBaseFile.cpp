@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -40,18 +41,18 @@
 #include "SdBaseFile.h"
 
 #include "../MarlinCore.h"
-SdBaseFile *SdBaseFile::cwd_ = 0;   // Pointer to Current Working Directory
+SdBaseFile *SdBaseFile::cwd_ = 0;   // Pointer to Current Working Directory//指向当前工作目录的指针
 
-// callback function for date/time
+// callback function for date/time//日期/时间的回调函数
 void (*SdBaseFile::dateTime_)(uint16_t *date, uint16_t *time) = 0;
 
-// add a cluster to a file
+// add a cluster to a file//将群集添加到文件
 bool SdBaseFile::addCluster() {
   if (ENABLED(SDCARD_READONLY)) return false;
 
   if (!vol_->allocContiguous(1, &curCluster_)) return false;
 
-  // if first cluster of file link to directory entry
+  // if first cluster of file link to directory entry//如果第一个文件集群链接到目录条目
   if (firstCluster_ == 0) {
     firstCluster_ = curCluster_;
     flags_ |= F_FILE_DIR_DIRTY;
@@ -59,13 +60,13 @@ bool SdBaseFile::addCluster() {
   return true;
 }
 
-// Add a cluster to a directory file and zero the cluster.
-// return with first block of cluster in the cache
+// Add a cluster to a directory file and zero the cluster.//将群集添加到目录文件并将群集归零。
+// return with first block of cluster in the cache//返回缓存中群集的第一个块
 bool SdBaseFile::addDirCluster() {
   if (ENABLED(SDCARD_READONLY)) return false;
 
   uint32_t block;
-  // max folder size
+  // max folder size//最大文件夹大小
   if (fileSize_ / sizeof(dir_t) >= 0xFFFF) return false;
 
   if (!addCluster()) return false;
@@ -73,23 +74,23 @@ bool SdBaseFile::addDirCluster() {
 
   block = vol_->clusterStartBlock(curCluster_);
 
-  // set cache to first block of cluster
+  // set cache to first block of cluster//将缓存设置为群集的第一个块
   vol_->cacheSetBlockNumber(block, true);
 
-  // zero first block of cluster
+  // zero first block of cluster//簇的零第一块
   memset(vol_->cacheBuffer_.data, 0, 512);
 
-  // zero rest of cluster
+  // zero rest of cluster//集群的零剩余
   for (uint8_t i = 1; i < vol_->blocksPerCluster_; i++) {
     if (!vol_->writeBlock(block + i, vol_->cacheBuffer_.data)) return false;
   }
-  // Increase directory file size by cluster size
+  // Increase directory file size by cluster size//按群集大小增加目录文件大小
   fileSize_ += 512UL << vol_->clusterSizeShift_;
   return true;
 }
 
-// cache a file's directory entry
-// return pointer to cached entry or null for failure
+// cache a file's directory entry//缓存文件的目录项
+// return pointer to cached entry or null for failure//返回指向缓存项的指针，如果失败，则返回null
 dir_t* SdBaseFile::cacheDirEntry(uint8_t action) {
   if (!vol_->cacheRawBlock(dirBlock_, action)) return nullptr;
   return vol_->cache()->dir + dirIndex_;
@@ -119,16 +120,16 @@ bool SdBaseFile::close() {
  * or an I/O error occurred.
  */
 bool SdBaseFile::contiguousRange(uint32_t *bgnBlock, uint32_t *endBlock) {
-  // error if no blocks
+  // error if no blocks//如果没有块，则出错
   if (firstCluster_ == 0) return false;
 
   for (uint32_t c = firstCluster_; ; c++) {
     uint32_t next;
     if (!vol_->fatGet(c, &next)) return false;
 
-    // check for contiguous
+    // check for contiguous//检查相邻的
     if (next != (c + 1)) {
-      // error if not end of chain
+      // error if not end of chain//如果不是链的末端，则出错
       if (!vol_->isEOC(next)) return false;
       *bgnBlock = vol_->clusterStartBlock(firstCluster_);
       *endBlock = vol_->clusterStartBlock(c)
@@ -159,21 +160,21 @@ bool SdBaseFile::createContiguous(SdBaseFile *dirFile, const char *path, uint32_
   if (ENABLED(SDCARD_READONLY)) return false;
 
   uint32_t count;
-  // don't allow zero length file
+  // don't allow zero length file//不允许文件长度为零
   if (size == 0) return false;
   if (!open(dirFile, path, O_CREAT | O_EXCL | O_RDWR)) return false;
 
-  // calculate number of clusters needed
+  // calculate number of clusters needed//计算所需的群集数
   count = ((size - 1) >> (vol_->clusterSizeShift_ + 9)) + 1;
 
-  // allocate clusters
+  // allocate clusters//分配群集
   if (!vol_->allocContiguous(count, &firstCluster_)) {
     remove();
     return false;
   }
   fileSize_ = size;
 
-  // insure sync() will update dir entry
+  // insure sync() will update dir entry//确保同步（）将更新目录项
   flags_ |= F_FILE_DIR_DIRTY;
 
   return sync();
@@ -187,14 +188,14 @@ bool SdBaseFile::createContiguous(SdBaseFile *dirFile, const char *path, uint32_
  * \return true for success, false for failure.
  */
 bool SdBaseFile::dirEntry(dir_t *dir) {
-  // make sure fields on SD are correct
+  // make sure fields on SD are correct//确保SD上的字段正确
   if (!sync()) return false;
 
-  // read entry
+  // read entry//读条目
   dir_t *p = cacheDirEntry(SdVolume::CACHE_FOR_READ);
   if (!p) return false;
 
-  // copy to caller's struct
+  // copy to caller's struct//复制到调用方的结构
   memcpy(dir, p, sizeof(dir_t));
   return true;
 }
@@ -258,7 +259,7 @@ int16_t SdBaseFile::fgets(char *str, int16_t num, char *delim) {
   int16_t n = 0;
   int16_t r = -1;
   while ((n + 1) < num && (r = read(&ch, 1)) == 1) {
-    // delete CR
+    // delete CR//删除CR
     if (ch == '\r') continue;
     str[n++] = ch;
     if (!delim) {
@@ -269,7 +270,7 @@ int16_t SdBaseFile::fgets(char *str, int16_t num, char *delim) {
     }
   }
   if (r < 0) {
-    // read error
+    // read error//读取错误
     return -1;
   }
   str[n] = '\0';
@@ -291,11 +292,11 @@ bool SdBaseFile::getDosName(char * const name) {
     name[1] = '\0';
     return true;
   }
-  // cache entry
+  // cache entry//缓存项
   dir_t *p = cacheDirEntry(SdVolume::CACHE_FOR_READ);
   if (!p) return false;
 
-  // format name
+  // format name//格式名
   dirName(*p, name);
   return true;
 }
@@ -334,8 +335,8 @@ void SdBaseFile::ls(uint8_t flags, uint8_t indent) {
   }
 }
 
-// saves 32 bytes on stack for ls recursion
-// return 0 - EOF, 1 - normal file, or 2 - directory
+// saves 32 bytes on stack for ls recursion//在堆栈上为ls递归保存32个字节
+// return 0 - EOF, 1 - normal file, or 2 - directory//返回0-EOF、1-normal文件或2-directory
 int8_t SdBaseFile::lsPrintNext(uint8_t flags, uint8_t indent) {
   dir_t dir;
   uint8_t w = 0;
@@ -344,14 +345,14 @@ int8_t SdBaseFile::lsPrintNext(uint8_t flags, uint8_t indent) {
     if (read(&dir, sizeof(dir)) != sizeof(dir)) return 0;
     if (dir.name[0] == DIR_NAME_FREE) return 0;
 
-    // skip deleted entry and entries for . and  ..
+    // skip deleted entry and entries for . and  ..//跳过已删除的条目和的条目。和
     if (dir.name[0] != DIR_NAME_DELETED && dir.name[0] != '.'
         && DIR_IS_FILE_OR_SUBDIR(&dir)) break;
   }
-  // indent for dir level
+  // indent for dir level//目录级缩进
   LOOP_L_N(i, indent) SERIAL_CHAR(' ');
 
-  // print name
+  // print name//印刷品名称
   LOOP_L_N(i, 11) {
     if (dir.name[i] == ' ')continue;
     if (i == 8) {
@@ -368,14 +369,14 @@ int8_t SdBaseFile::lsPrintNext(uint8_t flags, uint8_t indent) {
   if (flags & (LS_DATE | LS_SIZE)) {
     while (w++ < 14) SERIAL_CHAR(' ');
   }
-  // print modify date/time if requested
+  // print modify date/time if requested//如果需要，打印修改日期/时间
   if (flags & LS_DATE) {
     SERIAL_CHAR(' ');
     printFatDate(dir.lastWriteDate);
     SERIAL_CHAR(' ');
     printFatTime(dir.lastWriteTime);
   }
-  // print size if requested
+  // print size if requested//如有要求，请打印尺寸
   if (!DIR_IS_SUBDIR(&dir) && (flags & LS_SIZE)) {
     SERIAL_CHAR(' ');
     SERIAL_ECHO(dir.fileSize);
@@ -384,28 +385,28 @@ int8_t SdBaseFile::lsPrintNext(uint8_t flags, uint8_t indent) {
   return DIR_IS_FILE(&dir) ? 1 : 2;
 }
 
-// Format directory name field from a 8.3 name string
+// Format directory name field from a 8.3 name string//从8.3名称字符串格式化目录名称字段
 bool SdBaseFile::make83Name(const char *str, uint8_t *name, const char **ptr) {
-  uint8_t n = 7,                      // Max index until a dot is found
+  uint8_t n = 7,                      // Max index until a dot is found//找到点之前的最大索引
           i = 11;
-  while (i) name[--i] = ' ';          // Set whole FILENAME.EXT to spaces
-  while (*str && *str != '/') {       // For each character, until nul or '/'
-    uint8_t c = *str++;               // Get char and advance
-    if (c == '.') {                   // For a dot...
-      if (n == 10) return false;      // Already moved the max index? fail!
-      n = 10;                         // Move the max index for full 8.3 name
-      i = 8;                          // Move up to the extension place
+  while (i) name[--i] = ' ';          // Set whole FILENAME.EXT to spaces//将整个FILENAME.EXT设置为空格
+  while (*str && *str != '/') {       // For each character, until nul or '/'//对于每个字符，直到nul或“/”为止
+    uint8_t c = *str++;               // Get char and advance//获取char和advance
+    if (c == '.') {                   // For a dot...//为了一个点。。。
+      if (n == 10) return false;      // Already moved the max index? fail!//已经移动了最大索引？失败
+      n = 10;                         // Move the max index for full 8.3 name//移动完整8.3名称的最大索引
+      i = 8;                          // Move up to the extension place//向上移动到扩展位置
     }
     else {
-      // Fail for illegal characters
+      // Fail for illegal characters//无法识别非法字符
       PGM_P p = PSTR("|<>^+=?/[];,*\"\\");
       while (uint8_t b = pgm_read_byte(p++)) if (b == c) return false;
-      if (i > n || c < 0x21 || c == 0x7F) return false;       // Check size, non-printable characters
-      name[i++] = c + (WITHIN(c, 'a', 'z') ? 'A' - 'a' : 0);  // Uppercase required for 8.3 name
+      if (i > n || c < 0x21 || c == 0x7F) return false;       // Check size, non-printable characters//检查大小，不可打印字符
+      name[i++] = c + (WITHIN(c, 'a', 'z') ? 'A' - 'a' : 0);  // Uppercase required for 8.3 name//8.3名称需要大写字母
     }
   }
-  *ptr = str;                         // Set passed pointer to the end
-  return name[0] != ' ';              // Return true if any name was set
+  *ptr = str;                         // Set passed pointer to the end//将传递的指针设置为结束
+  return name[0] != ' ';              // Return true if any name was set//如果设置了任何名称，则返回true
 }
 
 /**
@@ -459,40 +460,40 @@ bool SdBaseFile::mkdir(SdBaseFile *parent, const uint8_t dname[11]) {
 
   if (!parent->isDir()) return false;
 
-  // create a normal file
+  // create a normal file//创建一个普通文件
   if (!open(parent, dname, O_CREAT | O_EXCL | O_RDWR)) return false;
 
-  // convert file to directory
+  // convert file to directory//将文件转换为目录
   flags_ = O_READ;
   type_ = FAT_FILE_TYPE_SUBDIR;
 
-  // allocate and zero first cluster
+  // allocate and zero first cluster//第一个集群的分配和归零
   if (!addDirCluster()) return false;
 
-  // force entry to SD
+  // force entry to SD//强行进入SD
   if (!sync()) return false;
 
-  // cache entry - should already be in cache due to sync() call
+  // cache entry - should already be in cache due to sync() call//缓存项-由于sync（）调用，应该已经在缓存中
   dir_t *p = cacheDirEntry(SdVolume::CACHE_FOR_WRITE);
   if (!p) return false;
 
-  // change directory entry  attribute
+  // change directory entry  attribute//更改目录项属性
   p->attributes = DIR_ATT_DIRECTORY;
 
-  // make entry for '.'
+  // make entry for '.'//记下“.”
   dir_t d;
   memcpy(&d, p, sizeof(d));
   d.name[0] = '.';
   LOOP_S_L_N(i, 1, 11) d.name[i] = ' ';
 
-  // cache block for '.'  and '..'
+  // cache block for '.'  and '..'//“.”和“…”的缓存块
   uint32_t block = vol_->clusterStartBlock(firstCluster_);
   if (!vol_->cacheRawBlock(block, SdVolume::CACHE_FOR_WRITE)) return false;
 
-  // copy '.' to block
+  // copy '.' to block//将“.”复制到块
   memcpy(&vol_->cache()->dir[0], &d, sizeof(d));
 
-  // make entry for '..'
+  // make entry for '..'//输入“…”
   d.name[1] = '.';
   if (parent->isRoot()) {
     d.firstClusterLow = 0;
@@ -502,10 +503,10 @@ bool SdBaseFile::mkdir(SdBaseFile *parent, const uint8_t dname[11]) {
     d.firstClusterLow = parent->firstCluster_ & 0xFFFF;
     d.firstClusterHigh = parent->firstCluster_ >> 16;
   }
-  // copy '..' to block
+  // copy '..' to block//将“..”复制到块
   memcpy(&vol_->cache()->dir[1], &d, sizeof(d));
 
-  // write first block
+  // write first block//写入第一个块
   return vol_->cacheFlush();
 }
 
@@ -580,12 +581,12 @@ bool SdBaseFile::open(SdBaseFile *dirFile, const char *path, uint8_t oflag) {
 
   if (!dirFile || isOpen()) return false;
 
-  if (*path == '/') {                                         // Path starts with '/'
-    if (!dirFile->isRoot()) {                                 // Is the passed dirFile the root?
-      if (!dir2.openRoot(dirFile->vol_)) return false;        // Get the root in dir2, if possible
-      parent = &dir2;                                         // Change 'parent' to point at the root dir
+  if (*path == '/') {                                         // Path starts with '/'//路径以“/”开头
+    if (!dirFile->isRoot()) {                                 // Is the passed dirFile the root?//传递的dirFile是根目录吗？
+      if (!dir2.openRoot(dirFile->vol_)) return false;        // Get the root in dir2, if possible//如果可能，在dir2中获取根
+      parent = &dir2;                                         // Change 'parent' to point at the root dir//将“parent”更改为指向根目录
     }
-    while (*path == '/') path++;                              // Skip all leading slashes
+    while (*path == '/') path++;                              // Skip all leading slashes//跳过所有前导斜杠
   }
 
   for (;;) {
@@ -600,7 +601,7 @@ bool SdBaseFile::open(SdBaseFile *dirFile, const char *path, uint8_t oflag) {
   return open(parent, dname, oflag);
 }
 
-// open with filename in dname
+// open with filename in dname//以dname中的文件名打开
 bool SdBaseFile::open(SdBaseFile *dirFile, const uint8_t dname[11], uint8_t oflag) {
   bool emptyFound = false, fileFound = false;
   uint8_t index;
@@ -609,7 +610,7 @@ bool SdBaseFile::open(SdBaseFile *dirFile, const uint8_t dname[11], uint8_t ofla
   vol_ = dirFile->vol_;
 
   dirFile->rewind();
-  // search for file
+  // search for file//搜索文件
 
   while (dirFile->curPosition_ < dirFile->fileSize_) {
     index = 0xF & (dirFile->curPosition_ >> 5);
@@ -617,13 +618,13 @@ bool SdBaseFile::open(SdBaseFile *dirFile, const uint8_t dname[11], uint8_t ofla
     if (!p) return false;
 
     if (p->name[0] == DIR_NAME_FREE || p->name[0] == DIR_NAME_DELETED) {
-      // remember first empty slot
+      // remember first empty slot//还记得第一个空槽吗
       if (!emptyFound) {
         dirBlock_ = dirFile->vol_->cacheBlockNumber();
         dirIndex_ = index;
         emptyFound = true;
       }
-      // done if no entries follow
+      // done if no entries follow//如果后面没有条目，则完成
       if (p->name[0] == DIR_NAME_FREE) break;
     }
     else if (!memcmp(dname, p->name, 11)) {
@@ -632,11 +633,11 @@ bool SdBaseFile::open(SdBaseFile *dirFile, const uint8_t dname[11], uint8_t ofla
     }
   }
   if (fileFound) {
-    // don't open existing file if O_EXCL
+    // don't open existing file if O_EXCL//如果O_EXCL，则不打开现有文件
     if (oflag & O_EXCL) return false;
   }
   else {
-    // don't create unless O_CREAT and O_WRITE
+    // don't create unless O_CREAT and O_WRITE//除非你创造和写作，否则不要创造
     if ((oflag & (O_CREAT | O_WRITE)) != (O_CREAT | O_WRITE)) return false;
     if (emptyFound) {
       index = dirIndex_;
@@ -646,24 +647,24 @@ bool SdBaseFile::open(SdBaseFile *dirFile, const uint8_t dname[11], uint8_t ofla
     else {
       if (dirFile->type_ == FAT_FILE_TYPE_ROOT_FIXED) return false;
 
-      // add and zero cluster for dirFile - first cluster is in cache for write
+      // add and zero cluster for dirFile - first cluster is in cache for write//为dirFile添加零集群-第一个集群在缓存中进行写入
       if (!dirFile->addDirCluster()) return false;
 
-      // use first entry in cluster
+      // use first entry in cluster//使用集群中的第一个条目
       p = dirFile->vol_->cache()->dir;
       index = 0;
     }
-    // initialize as empty file
+    // initialize as empty file//初始化为空文件
     memset(p, 0, sizeof(*p));
     memcpy(p->name, dname, 11);
 
-    // set timestamps
+    // set timestamps//设置时间戳
     if (dateTime_) {
-      // call user date/time function
+      // call user date/time function//调用用户日期/时间函数
       dateTime_(&p->creationDate, &p->creationTime);
     }
     else {
-      // use default date/time
+      // use default date/time//使用默认日期/时间
       p->creationDate = FAT_DEFAULT_DATE;
       p->creationTime = FAT_DEFAULT_TIME;
     }
@@ -671,10 +672,10 @@ bool SdBaseFile::open(SdBaseFile *dirFile, const uint8_t dname[11], uint8_t ofla
     p->lastWriteDate = p->creationDate;
     p->lastWriteTime = p->creationTime;
 
-    // write entry to SD
+    // write entry to SD//将条目写入SD
     if (!dirFile->vol_->cacheFlush()) return false;
   }
-  // open entry in cache
+  // open entry in cache//在缓存中打开项
   return openCachedEntry(index, oflag);
 }
 
@@ -695,29 +696,29 @@ bool SdBaseFile::open(SdBaseFile *dirFile, const uint8_t dname[11], uint8_t ofla
 bool SdBaseFile::open(SdBaseFile *dirFile, uint16_t index, uint8_t oflag) {
   vol_ = dirFile->vol_;
 
-  // error if already open
+  // error if already open//如果已打开，则出错
   if (isOpen() || !dirFile) return false;
 
-  // don't open existing file if O_EXCL - user call error
+  // don't open existing file if O_EXCL - user call error//如果O_exc-用户调用错误，则不打开现有文件
   if (oflag & O_EXCL) return false;
 
-  // seek to location of entry
+  // seek to location of entry//寻找入境地点
   if (!dirFile->seekSet(32 * index)) return false;
 
-  // read entry into cache
+  // read entry into cache//将条目读入缓存
   dir_t *p = dirFile->readDirCache();
   if (!p) return false;
 
-  // error if empty slot or '.' or '..'
+  // error if empty slot or '.' or '..'//如果插槽或“.”或“..”为空，则出错
   if (p->name[0] == DIR_NAME_FREE ||
       p->name[0] == DIR_NAME_DELETED || p->name[0] == '.') {
     return false;
   }
-  // open cached entry
+  // open cached entry//打开缓存项
   return openCachedEntry(index & 0xF, oflag);
 }
 
-// open a cached directory entry. Assumes vol_ is initialized
+// open a cached directory entry. Assumes vol_ is initialized//打开缓存的目录项。假设卷已初始化
 bool SdBaseFile::openCachedEntry(uint8_t dirIndex, uint8_t oflag) {
   dir_t *p;
 
@@ -725,22 +726,22 @@ bool SdBaseFile::openCachedEntry(uint8_t dirIndex, uint8_t oflag) {
     if (oflag & (O_WRITE | O_CREAT | O_TRUNC)) goto FAIL;
   #endif
 
-  // location of entry in cache
+  // location of entry in cache//缓存中条目的位置
   p = &vol_->cache()->dir[dirIndex];
 
-  // write or truncate is an error for a directory or read-only file
+  // write or truncate is an error for a directory or read-only file//写入或截断是目录或只读文件的错误
   if (p->attributes & (DIR_ATT_READ_ONLY | DIR_ATT_DIRECTORY)) {
     if (oflag & (O_WRITE | O_TRUNC)) goto FAIL;
   }
-  // remember location of directory entry on SD
+  // remember location of directory entry on SD//记住SD上目录项的位置
   dirBlock_ = vol_->cacheBlockNumber();
   dirIndex_ = dirIndex;
 
-  // copy first cluster number for directory fields
+  // copy first cluster number for directory fields//复制目录字段的第一个群集号
   firstCluster_ = (uint32_t)p->firstClusterHigh << 16;
   firstCluster_ |= p->firstClusterLow;
 
-  // make sure it is a normal file or subdirectory
+  // make sure it is a normal file or subdirectory//确保它是普通文件或子目录
   if (DIR_IS_FILE(p)) {
     fileSize_ = p->fileSize;
     type_ = FAT_FILE_TYPE_NORMAL;
@@ -752,10 +753,10 @@ bool SdBaseFile::openCachedEntry(uint8_t dirIndex, uint8_t oflag) {
   else
     goto FAIL;
 
-  // save open flags for read/write
+  // save open flags for read/write//为读/写保存打开标志
   flags_ = oflag & F_OFLAG;
 
-  // set to start of file
+  // set to start of file//设置为文件的开头
   curCluster_ = 0;
   curPosition_ = 0;
   if ((oflag & O_TRUNC) && !truncate(0)) return false;
@@ -781,7 +782,7 @@ bool SdBaseFile::openCachedEntry(uint8_t dirIndex, uint8_t oflag) {
 bool SdBaseFile::openNext(SdBaseFile *dirFile, uint8_t oflag) {
   if (!dirFile) return false;
 
-  // error if already open
+  // error if already open//如果已打开，则出错
   if (isOpen()) return false;
 
   vol_ = dirFile->vol_;
@@ -789,18 +790,18 @@ bool SdBaseFile::openNext(SdBaseFile *dirFile, uint8_t oflag) {
   while (1) {
     uint8_t index = 0xF & (dirFile->curPosition_ >> 5);
 
-    // read entry into cache
+    // read entry into cache//将条目读入缓存
     dir_t *p = dirFile->readDirCache();
     if (!p) return false;
 
-    // done if last entry
+    // done if last entry//如果最后一个条目已完成
     if (p->name[0] == DIR_NAME_FREE) return false;
 
-    // skip empty slot or '.' or '..'
+    // skip empty slot or '.' or '..'//跳过空插槽或“.”或“…”
     if (p->name[0] == DIR_NAME_DELETED || p->name[0] == '.') {
       continue;
     }
-    // must be file or dir
+    // must be file or dir//必须是文件或目录
     if (DIR_IS_FILE_OR_SUBDIR(p)) {
       return openCachedEntry(index, oflag);
     }
@@ -822,42 +823,42 @@ bool SdBaseFile::openParent(SdBaseFile *dir) {
   uint32_t c;
   uint32_t cluster;
   uint32_t lbn;
-  // error if already open or dir is root or dir is not a directory
+  // error if already open or dir is root or dir is not a directory//如果已打开或目录为根目录或目录不是目录，则出错
   if (isOpen() || !dir || dir->isRoot() || !dir->isDir()) return false;
   vol_ = dir->vol_;
-  // position to '..'
+  // position to '..'//位置到“…”
   if (!dir->seekSet(32)) return false;
-  // read '..' entry
+  // read '..' entry//读取“…”条目
   if (dir->read(&entry, sizeof(entry)) != 32) return false;
-  // verify it is '..'
+  // verify it is '..'//验证它是否为“…”
   if (entry.name[0] != '.' || entry.name[1] != '.') return false;
-  // start cluster for '..'
+  // start cluster for '..'//为“..”启动群集
   cluster = entry.firstClusterLow;
   cluster |= (uint32_t)entry.firstClusterHigh << 16;
   if (cluster == 0) return openRoot(vol_);
-  // start block for '..'
+  // start block for '..'//“..”的起始块
   lbn = vol_->clusterStartBlock(cluster);
-  // first block of parent dir
+  // first block of parent dir//父目录的第一块
   if (!vol_->cacheRawBlock(lbn, SdVolume::CACHE_FOR_READ)) return false;
 
   dir_t *p = &vol_->cacheBuffer_.dir[1];
-  // verify name for '../..'
+  // verify name for '../..'//验证“....”的名称
   if (p->name[0] != '.' || p->name[1] != '.') return false;
-  // '..' is pointer to first cluster of parent. open '../..' to find parent
+  // '..' is pointer to first cluster of parent. open '../..' to find parent//“..”是指向第一个父集群的指针。打开“....”以查找父级
   if (p->firstClusterHigh == 0 && p->firstClusterLow == 0) {
     if (!file.openRoot(dir->volume())) return false;
   }
   else if (!file.openCachedEntry(1, O_READ))
     return false;
 
-  // search for parent in '../..'
+  // search for parent in '../..'//在“....”中搜索父级
   do {
     if (file.readDir(&entry, nullptr) != 32) return false;
     c = entry.firstClusterLow;
     c |= (uint32_t)entry.firstClusterHigh << 16;
   } while (c != cluster);
 
-  // open parent
+  // open parent//开放式父级
   return open(&file, file.curPosition() / 32 - 1, O_READ);
 }
 #endif
@@ -872,7 +873,7 @@ bool SdBaseFile::openParent(SdBaseFile *dir) {
  * not been initialized or it a FAT12 volume.
  */
 bool SdBaseFile::openRoot(SdVolume *vol) {
-  // error if file is already open
+  // error if file is already open//如果文件已打开，则出错
   if (isOpen()) return false;
 
   if (vol->fatType() == 16 || (FAT12_SUPPORT && vol->fatType() == 12)) {
@@ -885,17 +886,17 @@ bool SdBaseFile::openRoot(SdVolume *vol) {
     firstCluster_ = vol->rootDirStart();
     if (!vol->chainSize(firstCluster_, &fileSize_)) return false;
   }
-  else // volume is not initialized, invalid, or FAT12 without support
+  else // volume is not initialized, invalid, or FAT12 without support//卷未初始化、无效或FAT12不支持
     return false;
 
   vol_ = vol;
-  // read only
+  // read only//只读
   flags_ = O_READ;
 
-  // set to start of file
+  // set to start of file//设置为文件的开头
   curCluster_ = curPosition_ = 0;
 
-  // root has no directory entry
+  // root has no directory entry//根目录没有目录项
   dirBlock_ = dirIndex_ = 0;
   return true;
 }
@@ -913,7 +914,7 @@ int SdBaseFile::peek() {
   return c;
 }
 
-// print uint8_t with width 2
+// print uint8_t with width 2//宽度为2的打印单元8
 static void print2u(const uint8_t v) {
   if (v < 10) SERIAL_CHAR('0');
   SERIAL_ECHO(v);
@@ -1001,43 +1002,43 @@ int16_t SdBaseFile::read() {
 int16_t SdBaseFile::read(void *buf, uint16_t nbyte) {
   uint8_t *dst = reinterpret_cast<uint8_t*>(buf);
   uint16_t offset, toRead;
-  uint32_t block;  // raw device block number
+  uint32_t block;  // raw device block number//原始设备块号
 
-  // error if not open or write only
+  // error if not open or write only//如果未打开或仅写，则出错
   if (!isOpen() || !(flags_ & O_READ)) return -1;
 
-  // max bytes left in file
+  // max bytes left in file//文件中剩余的最大字节数
   NOMORE(nbyte, fileSize_ - curPosition_);
 
-  // amount left to read
+  // amount left to read//剩余阅读量
   toRead = nbyte;
   while (toRead > 0) {
-    offset = curPosition_ & 0x1FF;  // offset in block
+    offset = curPosition_ & 0x1FF;  // offset in block//块内偏移
     if (type_ == FAT_FILE_TYPE_ROOT_FIXED) {
       block = vol_->rootDirStart() + (curPosition_ >> 9);
     }
     else {
       uint8_t blockOfCluster = vol_->blockOfCluster(curPosition_);
       if (offset == 0 && blockOfCluster == 0) {
-        // start of new cluster
+        // start of new cluster//新集群的启动
         if (curPosition_ == 0)
-          curCluster_ = firstCluster_;                      // use first cluster in file
-        else if (!vol_->fatGet(curCluster_, &curCluster_))  // get next cluster from FAT
+          curCluster_ = firstCluster_;                      // use first cluster in file//使用文件中的第一个集群
+        else if (!vol_->fatGet(curCluster_, &curCluster_))  // get next cluster from FAT//从FAT获取下一个集群
           return -1;
       }
       block = vol_->clusterStartBlock(curCluster_) + blockOfCluster;
     }
     uint16_t n = toRead;
 
-    // amount to be read from current block
+    // amount to be read from current block//要从当前块读取的量
     NOMORE(n, 512 - offset);
 
-    // no buffering needed if n == 512
+    // no buffering needed if n == 512//如果n==512，则不需要缓冲
     if (n == 512 && block != vol_->cacheBlockNumber()) {
       if (!vol_->readBlock(block, dst)) return -1;
     }
     else {
-      // read block to cache and copy data to caller
+      // read block to cache and copy data to caller//读取块以缓存数据并将数据复制到调用方
       if (!vol_->cacheRawBlock(block, SdVolume::CACHE_FOR_READ)) return -1;
       uint8_t *src = vol_->cache()->data + offset;
       memcpy(dst, src, n);
@@ -1076,13 +1077,13 @@ uint8_t lfn_checksum(const uint8_t *name) {
  */
 int8_t SdBaseFile::readDir(dir_t *dir, char *longFilename) {
   int16_t n;
-  // if not a directory file or miss-positioned return an error
+  // if not a directory file or miss-positioned return an error//如果不是目录文件或未定位，则返回错误
   if (!isDir() || (0x1F & curPosition_)) return -1;
 
   #define INVALIDATE_LONGNAME() (longFilename[0] = longFilename[1] = '\0')
 
-  // If we have a longFilename buffer, mark it as invalid.
-  // If a long filename is found it will be filled automatically.
+  // If we have a longFilename buffer, mark it as invalid.//如果有长文件名缓冲区，请将其标记为无效。
+  // If a long filename is found it will be filled automatically.//如果找到一个长文件名，它将自动填充。
   if (longFilename) INVALIDATE_LONGNAME();
 
   uint8_t checksum_error = 0xFF, checksum = 0;
@@ -1092,21 +1093,21 @@ int8_t SdBaseFile::readDir(dir_t *dir, char *longFilename) {
     n = read(dir, sizeof(dir_t));
     if (n != sizeof(dir_t)) return n ? -1 : 0;
 
-    // Last entry if DIR_NAME_FREE
+    // Last entry if DIR_NAME_FREE//如果目录名为FREE，则为最后一项
     if (dir->name[0] == DIR_NAME_FREE) return 0;
 
-    // Skip deleted entry and entry for . and ..
+    // Skip deleted entry and entry for . and ..//跳过已删除的条目和的条目。和
     if (dir->name[0] == DIR_NAME_DELETED || dir->name[0] == '.') {
-      if (longFilename) INVALIDATE_LONGNAME();   // Invalidate erased file long name, if any
+      if (longFilename) INVALIDATE_LONGNAME();   // Invalidate erased file long name, if any//使已擦除的文件长名称（如果有）无效
       continue;
     }
 
     if (longFilename) {
-      // Fill the long filename if we have a long filename entry.
-      // Long filename entries are stored before the short filename.
+      // Fill the long filename if we have a long filename entry.//如果有长文件名条目，请填写长文件名。
+      // Long filename entries are stored before the short filename.//长文件名条目存储在短文件名之前。
       if (DIR_IS_LONG_NAME(dir)) {
         vfat_t *VFAT = (vfat_t*)dir;
-        // Sanity-check the VFAT entry. The first cluster is always set to zero. And the sequence number should be higher than 0
+        // Sanity-check the VFAT entry. The first cluster is always set to zero. And the sequence number should be higher than 0//检查VFAT条目是否正常。第一个群集始终设置为零。并且序列号应该大于0
         if (VFAT->firstClusterLow == 0) {
           const uint8_t seq = VFAT->sequenceNumber & 0x1F;
           if (WITHIN(seq, 1, MAX_VFAT_ENTRIES)) {
@@ -1115,92 +1116,92 @@ int8_t SdBaseFile::readDir(dir_t *dir, char *longFilename) {
               checksum = VFAT->checksum;
               checksum_error = 0;
             }
-            else if (checksum != VFAT->checksum) // orphan detected
+            else if (checksum != VFAT->checksum) // orphan detected//检测到孤儿
               checksum_error = 1;
 
             LOOP_L_N(i, FILENAME_LENGTH) {
               const uint16_t utf16_ch = (i >= 11) ? VFAT->name3[i - 11] : (i >= 5) ? VFAT->name2[i - 5] : VFAT->name1[i];
               #if ENABLED(UTF_FILENAME_SUPPORT)
-                // We can't reconvert to UTF-8 here as UTF-8 is variable-size encoding, but joining LFN blocks
-                // needs static bytes addressing. So here just store full UTF-16LE words to re-convert later.
-                uint16_t idx = (n + i) * 2; // This is fixed as FAT LFN always contain UTF-16LE encoding
+                // We can't reconvert to UTF-8 here as UTF-8 is variable-size encoding, but joining LFN blocks//我们不能在这里重新转换为UTF-8，因为UTF-8是可变大小编码，但是连接LFN块
+                // needs static bytes addressing. So here just store full UTF-16LE words to re-convert later.//需要静态字节寻址。所以这里只需存储完整的UTF-16LE字，以便以后重新转换。
+                uint16_t idx = (n + i) * 2; // This is fixed as FAT LFN always contain UTF-16LE encoding//这是固定的，因为FAT LFN始终包含UTF-16LE编码
                 longFilename[idx] = utf16_ch & 0xFF;
                 longFilename[idx + 1] = (utf16_ch >> 8) & 0xFF;
               #else
-                // Replace all multibyte characters to '_'
+                // Replace all multibyte characters to '_'//将所有多字节字符替换为“\u1”
                 longFilename[n + i] = (utf16_ch > 0xFF) ? '_' : (utf16_ch & 0xFF);
               #endif
             }
-            // If this VFAT entry is the last one, add a NUL terminator at the end of the string
+            // If this VFAT entry is the last one, add a NUL terminator at the end of the string//如果此VFAT条目是最后一个条目，请在字符串末尾添加NUL终止符
             if (VFAT->sequenceNumber & 0x40)
                 longFilename[(n + FILENAME_LENGTH) * LONG_FILENAME_CHARSIZE] = '\0';
           }
         }
       }
       else {
-        if (!checksum_error && lfn_checksum(dir->name) != checksum) checksum_error = 1; // orphan detected
+        if (!checksum_error && lfn_checksum(dir->name) != checksum) checksum_error = 1; // orphan detected//检测到孤儿
         if (checksum_error) INVALIDATE_LONGNAME();
       }
     }
 
-    // Post-process normal file or subdirectory longname, if any
+    // Post-process normal file or subdirectory longname, if any//后期处理普通文件或子目录longname（如果有）
     if (DIR_IS_FILE_OR_SUBDIR(dir)) {
       #if ENABLED(UTF_FILENAME_SUPPORT)
         #if LONG_FILENAME_CHARSIZE > 2
-          // Add warning for developers for currently not supported 3-byte cases (Conversion series of 2-byte
-          // codepoints to 3-byte in-place will break the rest of filename)
+          // Add warning for developers for currently not supported 3-byte cases (Conversion series of 2-byte//为当前不支持的3字节情况（2字节的转换系列）的开发人员添加警告
+          // codepoints to 3-byte in-place will break the rest of filename)//将代码点设置为3字节到位将中断文件名的其余部分）
           #error "Currently filename re-encoding is done in-place. It may break the remaining chars to use 3-byte codepoints."
         #endif
 
-        // Is there a long filename to decode?
+        // Is there a long filename to decode?//有很长的文件名要解码吗？
         if (longFilename) {
-          // Reset n to the start of the long name
+          // Reset n to the start of the long name//将n重置为长名称的开头
           n = 0;
-          for (uint16_t idx = 0; idx < (LONG_FILENAME_LENGTH) / 2; idx += 2) {    // idx is fixed since FAT LFN always contains UTF-16LE encoding
+          for (uint16_t idx = 0; idx < (LONG_FILENAME_LENGTH) / 2; idx += 2) {    // idx is fixed since FAT LFN always contains UTF-16LE encoding//idx是固定的，因为FAT LFN始终包含UTF-16LE编码
             const uint16_t utf16_ch = longFilename[idx] | (longFilename[idx + 1] << 8);
-            if (0xD800 == (utf16_ch & 0xF800))                                    // Surrogate pair - encode as '_'
+            if (0xD800 == (utf16_ch & 0xF800))                                    // Surrogate pair - encode as '_'//代理项对-编码为“\u1”
               longFilename[n++] = '_';
-            else if (0 == (utf16_ch & 0xFF80))                                    // Encode as 1-byte UTF-8 char
+            else if (0 == (utf16_ch & 0xFF80))                                    // Encode as 1-byte UTF-8 char//编码为1字节UTF-8字符
               longFilename[n++] = utf16_ch & 0x007F;
-            else if (0 == (utf16_ch & 0xF800)) {                                  // Encode as 2-byte UTF-8 char
+            else if (0 == (utf16_ch & 0xF800)) {                                  // Encode as 2-byte UTF-8 char//编码为2字节UTF-8字符
               longFilename[n++] = 0xC0 | ((utf16_ch >> 6) & 0x1F);
               longFilename[n++] = 0x80 | ( utf16_ch       & 0x3F);
             }
             else {
-              #if LONG_FILENAME_CHARSIZE > 2                                      // Encode as 3-byte UTF-8 char
+              #if LONG_FILENAME_CHARSIZE > 2                                      // Encode as 3-byte UTF-8 char//编码为3字节UTF-8字符
                 longFilename[n++] = 0xE0 | ((utf16_ch >> 12) & 0x0F);
                 longFilename[n++] = 0xC0 | ((utf16_ch >>  6) & 0x3F);
                 longFilename[n++] = 0xC0 | ( utf16_ch        & 0x3F);
-              #else                                                               // Encode as '_'
+              #else                                                               // Encode as '_'//编码为‘’
                 longFilename[n++] = '_';
               #endif
             }
-            if (0 == utf16_ch) break; // End of filename
-          } // idx
-        } // longFilename
+            if (0 == utf16_ch) break; // End of filename//文件名结尾
+          } // idx//idx
+        } // longFilename//长文件名
       #endif
       return n;
-    } // DIR_IS_FILE_OR_SUBDIR
+    } // DIR_IS_FILE_OR_SUBDIR//目录是文件或子目录
   }
 }
 
-// Read next directory entry into the cache
-// Assumes file is correctly positioned
+// Read next directory entry into the cache//将下一个目录条目读入缓存
+// Assumes file is correctly positioned//假设文件位置正确
 dir_t* SdBaseFile::readDirCache() {
   uint8_t i;
-  // error if not directory
+  // error if not directory//如果不是目录，则出错
   if (!isDir()) return 0;
 
-  // index of entry in cache
+  // index of entry in cache//缓存中条目的索引
   i = (curPosition_ >> 5) & 0xF;
 
-  // use read to locate and cache block
+  // use read to locate and cache block//使用读取来定位和缓存块
   if (read() < 0) return 0;
 
-  // advance to next entry
+  // advance to next entry//进入下一个条目
   curPosition_ += 31;
 
-  // return pointer to entry
+  // return pointer to entry//返回指向条目的指针
   return vol_->cache()->dir + i;
 }
 
@@ -1220,20 +1221,20 @@ dir_t* SdBaseFile::readDirCache() {
 bool SdBaseFile::remove() {
   if (ENABLED(SDCARD_READONLY)) return false;
 
-  // free any clusters - will fail if read-only or directory
+  // free any clusters - will fail if read-only or directory//释放任何群集-如果为只读或目录，则将失败
   if (!truncate(0)) return false;
 
-  // cache directory entry
+  // cache directory entry//缓存目录项
   dir_t *d = cacheDirEntry(SdVolume::CACHE_FOR_WRITE);
   if (!d) return false;
 
-  // mark entry deleted
+  // mark entry deleted//删除标记条目
   d->name[0] = DIR_NAME_DELETED;
 
-  // set this file closed
+  // set this file closed//将此文件设置为关闭
   type_ = FAT_FILE_TYPE_CLOSED;
 
-  // write entry to SD
+  // write entry to SD//将条目写入SD
   return vol_->cacheFlush();
   return true;
 }
@@ -1277,25 +1278,25 @@ bool SdBaseFile::rename(SdBaseFile *dirFile, const char *newPath) {
 
   uint32_t dirCluster = 0;
 
-  // must be an open file or subdirectory
+  // must be an open file or subdirectory//必须是打开的文件或子目录
   if (!(isFile() || isSubDir())) return false;
 
-  // can't move file
+  // can't move file//无法移动文件
   if (vol_ != dirFile->vol_) return false;
 
-  // sync() and cache directory entry
+  // sync() and cache directory entry//sync（）和缓存目录项
   sync();
   dir_t *d = cacheDirEntry(SdVolume::CACHE_FOR_WRITE);
   if (!d) return false;
 
-  // save directory entry
+  // save directory entry//保存目录项
   dir_t entry;
   memcpy(&entry, d, sizeof(entry));
 
-  // mark entry deleted
+  // mark entry deleted//删除标记条目
   d->name[0] = DIR_NAME_DELETED;
 
-  // make directory entry for new path
+  // make directory entry for new path//为新路径创建目录项
   SdBaseFile file;
   if (isFile()) {
     if (!file.open(dirFile, newPath, O_CREAT | O_EXCL | O_WRITE)) {
@@ -1303,38 +1304,38 @@ bool SdBaseFile::rename(SdBaseFile *dirFile, const char *newPath) {
     }
   }
   else {
-    // don't create missing path prefix components
+    // don't create missing path prefix components//不要创建丢失的路径前缀组件
     if (!file.mkdir(dirFile, newPath, false)) {
       goto restore;
     }
-    // save cluster containing new dot dot
+    // save cluster containing new dot dot//保存包含新点的群集
     dirCluster = file.firstCluster_;
   }
-  // change to new directory entry
+  // change to new directory entry//更改为新目录条目
   dirBlock_ = file.dirBlock_;
   dirIndex_ = file.dirIndex_;
 
-  // mark closed to avoid possible destructor close call
+  // mark closed to avoid possible destructor close call//标记关闭以避免可能的析构函数关闭调用
   file.type_ = FAT_FILE_TYPE_CLOSED;
 
-  // cache new directory entry
+  // cache new directory entry//缓存新目录项
   d = cacheDirEntry(SdVolume::CACHE_FOR_WRITE);
   if (!d) return false;
 
-  // copy all but name field to new directory entry
+  // copy all but name field to new directory entry//将除名称字段以外的所有字段复制到新目录条目
   memcpy(&d->attributes, &entry.attributes, sizeof(entry) - sizeof(d->name));
 
-  // update dot dot if directory
+  // update dot dot if directory//更新dot-dot-if目录
   if (dirCluster) {
-    // get new dot dot
+    // get new dot dot//得到新的圆点
     uint32_t block = vol_->clusterStartBlock(dirCluster);
     if (!vol_->cacheRawBlock(block, SdVolume::CACHE_FOR_READ)) return false;
     memcpy(&entry, &vol_->cache()->dir[1], sizeof(entry));
 
-    // free unused cluster
+    // free unused cluster//释放未使用的群集
     if (!vol_->freeChain(dirCluster)) return false;
 
-    // store new dot dot
+    // store new dot dot//存储新的点
     block = vol_->clusterStartBlock(firstCluster_);
     if (!vol_->cacheRawBlock(block, SdVolume::CACHE_FOR_WRITE)) return false;
     memcpy(&vol_->cache()->dir[1], &entry, sizeof(entry));
@@ -1343,7 +1344,7 @@ bool SdBaseFile::rename(SdBaseFile *dirFile, const char *newPath) {
 
 restore:
   if ((d = cacheDirEntry(SdVolume::CACHE_FOR_WRITE))) {
-    // restore entry
+    // restore entry//还原条目
     d->name[0] = entry.name[0];
     vol_->cacheFlush();
   }
@@ -1368,23 +1369,23 @@ restore:
 bool SdBaseFile::rmdir() {
   if (ENABLED(SDCARD_READONLY)) return false;
 
-  // must be open subdirectory
+  // must be open subdirectory//必须是打开的子目录
   if (!isSubDir()) return false;
 
   rewind();
 
-  // make sure directory is empty
+  // make sure directory is empty//确保目录为空
   while (curPosition_ < fileSize_) {
     dir_t *p = readDirCache();
     if (!p) return false;
-    // done if past last used entry
+    // done if past last used entry//如果超过上次使用的条目，则完成
     if (p->name[0] == DIR_NAME_FREE) break;
-    // skip empty slot, '.' or '..'
+    // skip empty slot, '.' or '..'//跳过空插槽“.”或“…”
     if (p->name[0] == DIR_NAME_DELETED || p->name[0] == '.') continue;
-    // error not empty
+    // error not empty//错误不为空
     if (DIR_IS_FILE_OR_SUBDIR(p)) return false;
   }
-  // convert empty directory to normal file for remove
+  // convert empty directory to normal file for remove//将空目录转换为普通文件以进行删除
   type_ = FAT_FILE_TYPE_NORMAL;
   flags_ |= O_WRITE;
   return remove();
@@ -1412,37 +1413,37 @@ bool SdBaseFile::rmRfStar() {
   SdBaseFile f;
   rewind();
   while (curPosition_ < fileSize_) {
-    // remember position
+    // remember position//记住位置
     index = curPosition_ / 32;
 
     dir_t *p = readDirCache();
     if (!p) return false;
 
-    // done if past last entry
+    // done if past last entry//如果超过最后一个条目，则完成
     if (p->name[0] == DIR_NAME_FREE) break;
 
-    // skip empty slot or '.' or '..'
+    // skip empty slot or '.' or '..'//跳过空插槽或“.”或“…”
     if (p->name[0] == DIR_NAME_DELETED || p->name[0] == '.') continue;
 
-    // skip if part of long file name or volume label in root
+    // skip if part of long file name or volume label in root//如果长文件名或卷标的一部分在根目录中，则跳过
     if (!DIR_IS_FILE_OR_SUBDIR(p)) continue;
 
     if (!f.open(this, index, O_READ)) return false;
     if (f.isSubDir()) {
-      // recursively delete
+      // recursively delete//递归删除
       if (!f.rmRfStar()) return false;
     }
     else {
-      // ignore read-only
+      // ignore read-only//忽略只读
       f.flags_ |= O_WRITE;
       if (!f.remove()) return false;
     }
-    // position to next entry if required
+    // position to next entry if required//如有需要，定位到下一个条目
     if (curPosition_ != (32 * (index + 1))) {
       if (!seekSet(32 * (index + 1))) return false;
     }
   }
-  // don't try to delete root
+  // don't try to delete root//不要试图删除根目录
   if (!isRoot()) {
     if (!rmdir()) return false;
   }
@@ -1472,7 +1473,7 @@ SdBaseFile::SdBaseFile(const char *path, uint8_t oflag) {
  */
 bool SdBaseFile::seekSet(const uint32_t pos) {
   uint32_t nCur, nNew;
-  // error if file not open or seek past end of file
+  // error if file not open or seek past end of file//如果文件未打开或查找超过文件结尾，则出错
   if (!isOpen() || pos > fileSize_) return false;
 
   if (type_ == FAT_FILE_TYPE_ROOT_FIXED) {
@@ -1480,18 +1481,18 @@ bool SdBaseFile::seekSet(const uint32_t pos) {
     return true;
   }
   if (pos == 0) {
-    curCluster_ = curPosition_ = 0;   // set position to start of file
+    curCluster_ = curPosition_ = 0;   // set position to start of file//将位置设置为文件的开头
     return true;
   }
 
-  // calculate cluster index for cur and new position
+  // calculate cluster index for cur and new position//计算cur和新位置的群集索引
   nCur = (curPosition_ - 1) >> (vol_->clusterSizeShift_ + 9);
   nNew = (pos - 1) >> (vol_->clusterSizeShift_ + 9);
 
   if (nNew < nCur || curPosition_ == 0)
-    curCluster_ = firstCluster_;      // must follow chain from first cluster
+    curCluster_ = firstCluster_;      // must follow chain from first cluster//必须跟随第一个集群的链
   else
-    nNew -= nCur;                     // advance from curPosition
+    nNew -= nCur;                     // advance from curPosition//提前
 
   while (nNew--)
     if (!vol_->fatGet(curCluster_, &curCluster_)) return false;
@@ -1514,27 +1515,27 @@ void SdBaseFile::setpos(filepos_t *pos) {
  * opened or an I/O error.
  */
 bool SdBaseFile::sync() {
-  // only allow open files and directories
+  // only allow open files and directories//仅允许打开文件和目录
   if (ENABLED(SDCARD_READONLY) || !isOpen()) goto FAIL;
 
   if (flags_ & F_FILE_DIR_DIRTY) {
     dir_t *d = cacheDirEntry(SdVolume::CACHE_FOR_WRITE);
-    // check for deleted by another open file object
+    // check for deleted by another open file object//检查是否已被其他打开的文件对象删除
     if (!d || d->name[0] == DIR_NAME_DELETED) goto FAIL;
 
-    // do not set filesize for dir files
+    // do not set filesize for dir files//不要为目录文件设置文件大小
     if (!isDir()) d->fileSize = fileSize_;
 
-    // update first cluster fields
+    // update first cluster fields//更新第一个群集字段
     d->firstClusterLow = firstCluster_ & 0xFFFF;
     d->firstClusterHigh = firstCluster_ >> 16;
 
-    // set modify time if user supplied a callback date/time function
+    // set modify time if user supplied a callback date/time function//如果用户提供了回调日期/时间函数，则设置修改时间
     if (dateTime_) {
       dateTime_(&d->lastWriteDate, &d->lastWriteTime);
       d->lastAccessDate = d->lastWriteDate;
     }
-    // clear directory dirty
+    // clear directory dirty//清除目录脏
     flags_ &= ~F_FILE_DIR_DIRTY;
   }
   return vol_->cacheFlush();
@@ -1558,16 +1559,16 @@ bool SdBaseFile::sync() {
 bool SdBaseFile::timestamp(SdBaseFile *file) {
   dir_t dir;
 
-  // get timestamps
+  // get timestamps//获取时间戳
   if (!file->dirEntry(&dir)) return false;
 
-  // update directory fields
+  // update directory fields//更新目录字段
   if (!sync()) return false;
 
   dir_t *d = cacheDirEntry(SdVolume::CACHE_FOR_WRITE);
   if (!d) return false;
 
-  // copy timestamps
+  // copy timestamps//复制时间戳
   d->lastAccessDate = dir.lastAccessDate;
   d->creationDate = dir.creationDate;
   d->creationTime = dir.creationTime;
@@ -1575,7 +1576,7 @@ bool SdBaseFile::timestamp(SdBaseFile *file) {
   d->lastWriteDate = dir.lastWriteDate;
   d->lastWriteTime = dir.lastWriteTime;
 
-  // write back entry
+  // write back entry//回写条目
   return vol_->cacheFlush();
 }
 
@@ -1630,7 +1631,7 @@ bool SdBaseFile::timestamp(uint8_t flags, uint16_t year, uint8_t month,
       || second > 59) {
     return false;
   }
-  // update directory entry
+  // update directory entry//更新目录项
   if (!sync()) return false;
 
   dir_t *d = cacheDirEntry(SdVolume::CACHE_FOR_WRITE);
@@ -1644,7 +1645,7 @@ bool SdBaseFile::timestamp(uint8_t flags, uint16_t year, uint8_t month,
   if (flags & T_CREATE) {
     d->creationDate = dirDate;
     d->creationTime = dirTime;
-    // seems to be units of 1/100 second not 1/10 as Microsoft states
+    // seems to be units of 1/100 second not 1/10 as Microsoft states//似乎是1/100秒的单位，而不是微软所说的1/10
     d->creationTimeTenths = second & 1 ? 100 : 0;
   }
   if (flags & T_WRITE) {
@@ -1669,23 +1670,23 @@ bool SdBaseFile::truncate(uint32_t length) {
   if (ENABLED(SDCARD_READONLY)) return false;
 
   uint32_t newPos;
-  // error if not a normal file or read-only
+  // error if not a normal file or read-only//如果不是普通文件或只读文件，则出错
   if (!isFile() || !(flags_ & O_WRITE)) return false;
 
-  // error if length is greater than current size
+  // error if length is greater than current size//长度大于当前大小时出错
   if (length > fileSize_) return false;
 
-  // fileSize and length are zero - nothing to do
+  // fileSize and length are zero - nothing to do//文件大小和长度为零-无需执行任何操作
   if (fileSize_ == 0) return true;
 
-  // remember position for seek after truncation
+  // remember position for seek after truncation//记住截断后搜索的位置
   newPos = curPosition_ > length ? length : curPosition_;
 
-  // position to last cluster in truncated file
+  // position to last cluster in truncated file//位置到截断文件中的最后一个群集
   if (!seekSet(length)) return false;
 
   if (length == 0) {
-    // free all clusters
+    // free all clusters//释放所有群集
     if (!vol_->freeChain(firstCluster_)) return false;
     firstCluster_ = 0;
   }
@@ -1694,21 +1695,21 @@ bool SdBaseFile::truncate(uint32_t length) {
     if (!vol_->fatGet(curCluster_, &toFree)) return false;
 
     if (!vol_->isEOC(toFree)) {
-      // free extra clusters
+      // free extra clusters//免费额外群集
       if (!vol_->freeChain(toFree)) return false;
 
-      // current cluster is end of chain
+      // current cluster is end of chain//当前集群是链的末端
       if (!vol_->fatPutEOC(curCluster_)) return false;
     }
   }
   fileSize_ = length;
 
-  // need to update directory entry
+  // need to update directory entry//需要更新目录条目吗
   flags_ |= F_FILE_DIR_DIRTY;
 
   if (!sync()) return false;
 
-  // set file to correct position
+  // set file to correct position//将文件设置到正确的位置
   return seekSet(newPos);
 }
 
@@ -1732,16 +1733,16 @@ int16_t SdBaseFile::write(const void *buf, uint16_t nbyte) {
     writeError = true; return -1;
   #endif
 
-  // convert void* to uint8_t*  -  must be before goto statements
+  // convert void* to uint8_t*  -  must be before goto statements//将void*转换为uint8\u t*-必须在goto语句之前
   const uint8_t *src = reinterpret_cast<const uint8_t*>(buf);
 
-  // number of bytes left to write  -  must be before goto statements
+  // number of bytes left to write  -  must be before goto statements//要写入的剩余字节数-必须在goto语句之前
   uint16_t nToWrite = nbyte;
 
-  // error if not a normal file or is read-only
+  // error if not a normal file or is read-only//如果不是普通文件或是只读文件，则出错
   if (!isFile() || !(flags_ & O_WRITE)) goto FAIL;
 
-  // seek to end of file if append flag
+  // seek to end of file if append flag//如果附加标志，则查找文件结尾
   if ((flags_ & O_APPEND) && curPosition_ != fileSize_) {
     if (!seekEnd()) goto FAIL;
   }
@@ -1750,10 +1751,10 @@ int16_t SdBaseFile::write(const void *buf, uint16_t nbyte) {
     uint8_t blockOfCluster = vol_->blockOfCluster(curPosition_);
     uint16_t blockOffset = curPosition_ & 0x1FF;
     if (blockOfCluster == 0 && blockOffset == 0) {
-      // start of new cluster
+      // start of new cluster//新集群的启动
       if (curCluster_ == 0) {
         if (firstCluster_ == 0) {
-          // allocate first cluster of file
+          // allocate first cluster of file//分配第一个文件集群
           if (!addCluster()) goto FAIL;
         }
         else {
@@ -1764,7 +1765,7 @@ int16_t SdBaseFile::write(const void *buf, uint16_t nbyte) {
         uint32_t next;
         if (!vol_->fatGet(curCluster_, &next)) goto FAIL;
         if (vol_->isEOC(next)) {
-          // add cluster if at end of chain
+          // add cluster if at end of chain//如果在链的末尾添加群集
           if (!addCluster()) goto FAIL;
         }
         else {
@@ -1772,31 +1773,31 @@ int16_t SdBaseFile::write(const void *buf, uint16_t nbyte) {
         }
       }
     }
-    // max space in block
+    // max space in block//块中的最大空间
     uint16_t n = 512 - blockOffset;
 
-    // lesser of space and amount to write
+    // lesser of space and amount to write//较小的空间和写入量
     NOMORE(n, nToWrite);
 
-    // block for data write
+    // block for data write//数据写入块
     uint32_t block = vol_->clusterStartBlock(curCluster_) + blockOfCluster;
     if (n == 512) {
-      // full block - don't need to use cache
+      // full block - don't need to use cache//完整块-不需要使用缓存
       if (vol_->cacheBlockNumber() == block) {
-        // invalidate cache if block is in cache
+        // invalidate cache if block is in cache//如果块在缓存中，则使缓存无效
         vol_->cacheSetBlockNumber(0xFFFFFFFF, false);
       }
       if (!vol_->writeBlock(block, src)) goto FAIL;
     }
     else {
       if (blockOffset == 0 && curPosition_ >= fileSize_) {
-        // start of new block don't need to read into cache
+        // start of new block don't need to read into cache//新块的开始不需要读入缓存
         if (!vol_->cacheFlush()) goto FAIL;
-        // set cache dirty and SD address of block
+        // set cache dirty and SD address of block//设置块的缓存脏地址和SD地址
         vol_->cacheSetBlockNumber(block, true);
       }
       else {
-        // rewrite part of block
+        // rewrite part of block//重写块的一部分
         if (!vol_->cacheRawBlock(block, SdVolume::CACHE_FOR_WRITE)) goto FAIL;
       }
       uint8_t *dst = vol_->cache()->data + blockOffset;
@@ -1807,12 +1808,12 @@ int16_t SdBaseFile::write(const void *buf, uint16_t nbyte) {
     nToWrite -= n;
   }
   if (curPosition_ > fileSize_) {
-    // update fileSize and insure sync will update dir entry
+    // update fileSize and insure sync will update dir entry//更新文件大小并确保同步将更新目录项
     fileSize_ = curPosition_;
     flags_ |= F_FILE_DIR_DIRTY;
   }
   else if (dateTime_ && nbyte) {
-    // insure sync will update modified date and time
+    // insure sync will update modified date and time//确保同步将更新修改的日期和时间
     flags_ |= F_FILE_DIR_DIRTY;
   }
 
@@ -1822,9 +1823,9 @@ int16_t SdBaseFile::write(const void *buf, uint16_t nbyte) {
   return nbyte;
 
   FAIL:
-  // return for write error
+  // return for write error//返回写入错误
   writeError = true;
   return -1;
 }
 
-#endif // SDSUPPORT
+#endif // SDSUPPORT//SDSUPPORT

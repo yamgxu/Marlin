@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,8 +22,8 @@
  */
 #pragma once
 
-// Unknown thermistor for the Zonestar P802M hot bed. Adjusted By Nerseth
-// These were the shipped settings from Zonestar in original firmware: P802M_8_Repetier_V1.6_Zonestar.zip
+// Unknown thermistor for the Zonestar P802M hot bed. Adjusted By Nerseth//Zonestar P802M热床的热敏电阻未知。由内塞斯调整
+// These were the shipped settings from Zonestar in original firmware: P802M_8_Repetier_V1.6_Zonestar.zip//这些是Zonestar在原始固件中提供的设置：P802M_8_Repetier_V1.6_Zonestar.zip
 constexpr temp_entry_t temptable_502[] PROGMEM = {
    { OV(  56.0 / 4), 300 },
    { OV( 187.0 / 4), 250 },

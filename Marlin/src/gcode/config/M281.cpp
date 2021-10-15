@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -65,4 +66,4 @@ void GcodeSuite::M281() {
 
 }
 
-#endif // EDITABLE_SERVO_ANGLES
+#endif // EDITABLE_SERVO_ANGLES//可编辑的伺服角度

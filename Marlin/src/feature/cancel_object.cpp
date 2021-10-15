@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,10 +30,10 @@
 
 CancelObject cancelable;
 
-int8_t CancelObject::object_count, // = 0
+int8_t CancelObject::object_count, // = 0// = 0
        CancelObject::active_object = -1;
-uint32_t CancelObject::canceled; // = 0x0000
-bool CancelObject::skipping; // = false
+uint32_t CancelObject::canceled; // = 0x0000//=0x0000
+bool CancelObject::skipping; // = false//=错误
 
 void CancelObject::set_active_object(const int8_t obj) {
   active_object = obj;
@@ -78,4 +79,4 @@ void CancelObject::report() {
   }
 }
 
-#endif // CANCEL_OBJECTS
+#endif // CANCEL_OBJECTS//取消对象

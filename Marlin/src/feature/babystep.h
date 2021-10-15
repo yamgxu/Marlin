@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -50,10 +51,10 @@
 class Babystep {
 public:
   static volatile int16_t steps[BS_AXIS_IND(Z_AXIS) + 1];
-  static int16_t accum;                                     // Total babysteps in current edit
+  static int16_t accum;                                     // Total babysteps in current edit//当前编辑中的babysteps总数
 
   #if ENABLED(BABYSTEP_DISPLAY_TOTAL)
-    static int16_t axis_total[BS_TOTAL_IND(Z_AXIS) + 1];   // Total babysteps since G28
+    static int16_t axis_total[BS_TOTAL_IND(Z_AXIS) + 1];   // Total babysteps since G28//自G28年以来的婴儿总数
     static inline void reset_total(const AxisEnum axis) {
       if (TERN1(BABYSTEP_XY, axis == Z_AXIS))
         axis_total[BS_TOTAL_IND(axis)] = 0;
@@ -67,10 +68,10 @@ public:
     return steps[BS_AXIS_IND(X_AXIS)] || steps[BS_AXIS_IND(Y_AXIS)] || steps[BS_AXIS_IND(Z_AXIS)];
   }
 
-  //
-  // Called by the Temperature or Stepper ISR to
-  // apply accumulated babysteps to the axes.
-  //
+  ////
+  // Called by the Temperature or Stepper ISR to//由温度或步进器ISR调用
+  // apply accumulated babysteps to the axes.//将累积的babysteps应用于轴。
+  ////
   static inline void task() {
     LOOP_LE_N(i, BS_AXIS_IND(Z_AXIS)) step_axis(BS_AXIS(i));
   }

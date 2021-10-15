@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,22 +30,22 @@
 
 #define BOARD_INFO_NAME "AZSMZ MINI"
 
-//
-// Servos
-//
+////
+// Servos//伺服
+////
 #define SERVO0_PIN                         P1_23
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_STOP_PIN                         P1_24
 #define Y_STOP_PIN                         P1_26
 #define Z_MIN_PIN                          P1_28
 #define Z_MAX_PIN                          P1_29
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                         P2_00
 #define X_DIR_PIN                          P0_05
 #define X_ENABLE_PIN                       P0_04
@@ -65,18 +66,18 @@
 #define E1_DIR_PIN                         P2_13
 #define E1_ENABLE_PIN                      P4_29
 
-//
-// Temperature Sensors
-//  3.3V max when defined as an analog input
-//
-#define TEMP_0_PIN                      P0_23_A0  // A0 (TH1)
-#define TEMP_BED_PIN                    P0_24_A1  // A1 (TH2)
-#define TEMP_1_PIN                      P0_25_A2  // A2 (TH3)
+////
+// Temperature Sensors//温度传感器
+//  3.3V max when defined as an analog input//当定义为模拟输入时，最大电压为3.3V
+////
+#define TEMP_0_PIN                      P0_23_A0  // A0 (TH1)//A0（TH1）
+#define TEMP_BED_PIN                    P0_24_A1  // A1 (TH2)//A1（TH2）
+#define TEMP_1_PIN                      P0_25_A2  // A2 (TH3)//A2（TH3）
 
-//
-// Heaters / Fans
-//
-// EFB
+////
+// Heaters / Fans//加热器/风扇
+////
+// EFB//EFB
 #define HEATER_0_PIN                       P2_04
 #define HEATER_BED_PIN                     P2_05
 #ifndef FAN_PIN
@@ -84,8 +85,8 @@
 #endif
 #define FAN1_PIN                           P0_26
 
-#define LCD_SDSS                           P0_16  // LCD SD chip select
-#define ONBOARD_SD_CS_PIN                  P0_06  // Chip select for "System" SD card
+#define LCD_SDSS                           P0_16  // LCD SD chip select//LCD SD芯片选择
+#define ONBOARD_SD_CS_PIN                  P0_06  // Chip select for "System" SD card//“系统”SD卡的芯片选择
 
 #if ENABLED(AZSMZ_12864)
   #define BEEPER_PIN                       P1_30
@@ -114,9 +115,9 @@
   #error "No custom SD drive cable defined for this board."
 #endif
 
-//
-// Ethernet pins
-//
+////
+// Ethernet pins//以太网管脚
+////
 #define ENET_MDIO                          P1_17
 #define ENET_RX_ER                         P1_14
 #define ENET_RXD1                          P1_10

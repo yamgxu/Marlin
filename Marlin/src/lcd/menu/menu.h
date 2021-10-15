@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -49,62 +50,62 @@ typedef void (*selectFunc_t)();
   #define BABYSTEP_TO_STR(N) ftostr53sign(N)
 #endif
 
-////////////////////////////////////////////
-///////////// Base Menu Items //////////////
-////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+///////////// Base Menu Items ///////////////////////////基本菜单项//////////////
+////////////////////////////////////////////////////////////////////////////////////////
 
 class MenuItemBase {
   public:
-    // Index to interject in the item label and/or for use by its action.
+    // Index to interject in the item label and/or for use by its action.//在项目标签中插入索引和/或供其操作使用。
     static int8_t itemIndex;
 
-    // An optional pointer for use in display or by the action
+    // An optional pointer for use in display or by the action//用于显示或操作的可选指针
     static PGM_P itemString;
 
-    // Store the index of the item ahead of use by indexed items
+    // Store the index of the item ahead of use by indexed items//在索引项使用之前存储项的索引
     FORCE_INLINE static void init(const int8_t ind=0, PGM_P const pstr=nullptr) { itemIndex = ind; itemString = pstr; }
 
-    // Draw an item either selected (pre_char) or not (space) with post_char
+    // Draw an item either selected (pre_char) or not (space) with post_char//使用post_char绘制选中（pre_char）或未选中（空格）的项目
     static void _draw(const bool sel, const uint8_t row, PGM_P const pstr, const char pre_char, const char post_char);
 
-    // Draw an item either selected ('>') or not (space) with post_char
+    // Draw an item either selected ('>') or not (space) with post_char//使用post_char绘制选中（“>”）或未选中（空格）的项目
     FORCE_INLINE static void _draw(const bool sel, const uint8_t row, PGM_P const pstr, const char post_char) {
       _draw(sel, row, pstr, '>', post_char);
     }
 };
 
-// STATIC_ITEM(LABEL,...)
+// STATIC_ITEM(LABEL,...)//静态项目（标签，…）
 class MenuItem_static : public MenuItemBase {
   public:
     static void draw(const uint8_t row, PGM_P const pstr, const uint8_t style=SS_DEFAULT, const char * const vstr=nullptr);
 };
 
-// BACK_ITEM(LABEL)
+// BACK_ITEM(LABEL)//背面项目（标签）
 class MenuItem_back : public MenuItemBase {
   public:
     FORCE_INLINE static void draw(const bool sel, const uint8_t row, PGM_P const pstr) {
       _draw(sel, row, pstr, LCD_STR_UPLEVEL[0], LCD_STR_UPLEVEL[0]);
     }
-    // Back Item action goes back one step in history
+    // Back Item action goes back one step in history//返回项操作返回历史中的一个步骤
     FORCE_INLINE static void action(PGM_P const=nullptr) { ui.go_back(); }
 };
 
-// CONFIRM_ITEM(LABEL,Y,N,FY,FN,...),
-// YESNO_ITEM(LABEL,FY,FN,...)
+// CONFIRM_ITEM(LABEL,Y,N,FY,FN,...),//确认项目（标签，Y，N，FY，FN，…），
+// YESNO_ITEM(LABEL,FY,FN,...)//是无项目（标签、FY、FN等）
 class MenuItem_confirm : public MenuItemBase {
   public:
     FORCE_INLINE static void draw(const bool sel, const uint8_t row, PGM_P const pstr, ...) {
       _draw(sel, row, pstr, '>', LCD_STR_ARROW_RIGHT[0]);
     }
-    // Implemented for HD44780 and DOGM
-    // Draw the prompt, buttons, and state
+    // Implemented for HD44780 and DOGM//为HD44780和DOGM实现
+    // Draw the prompt, buttons, and state//绘制提示、按钮和状态
     static void draw_select_screen(
-      PGM_P const yes,            // Right option label
-      PGM_P const no,             // Left option label
-      const bool yesno,           // Is "yes" selected?
-      PGM_P const pref,           // Prompt prefix
-      const char * const string,  // Prompt runtime string
-      PGM_P const suff            // Prompt suffix
+      PGM_P const yes,            // Right option label//右选项标签
+      PGM_P const no,             // Left option label//左选项标签
+      const bool yesno,           // Is "yes" selected?//是否选择了“是”？
+      PGM_P const pref,           // Prompt prefix//提示前缀
+      const char * const string,  // Prompt runtime string//提示运行时字符串
+      PGM_P const suff            // Prompt suffix//提示后缀
     );
     static void select_screen(
       PGM_P const yes, PGM_P const no,
@@ -120,17 +121,17 @@ class MenuItem_confirm : public MenuItemBase {
       strcpy_P(str, (PGM_P)string);
       select_screen(yes, no, yesFunc, noFunc, pref, str, suff);
     }
-    // Shortcut for prompt with "NO"/ "YES" labels
+    // Shortcut for prompt with "NO"/ "YES" labels//带有“否”/“是”标签的提示快捷方式
     FORCE_INLINE static void confirm_screen(selectFunc_t yesFunc, selectFunc_t noFunc, PGM_P const pref, const char * const string=nullptr, PGM_P const suff=nullptr) {
       select_screen(GET_TEXT(MSG_YES), GET_TEXT(MSG_NO), yesFunc, noFunc, pref, string, suff);
     }
 };
 
-////////////////////////////////////////////
-///////////// Edit Menu Items //////////////
-////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+///////////// Edit Menu Items ///////////////////////////编辑菜单项//////////////
+////////////////////////////////////////////////////////////////////////////////////////
 
-// The Menu Edit shadow value
+// The Menu Edit shadow value//菜单“编辑阴影值”
 typedef union {
   bool      state;
   float     decimal;
@@ -144,42 +145,42 @@ typedef union {
 } chimera_t;
 extern chimera_t editable;
 
-// Base class for Menu Edit Items
+// Base class for Menu Edit Items//菜单编辑项的基类
 class MenuEditItemBase : public MenuItemBase {
   private:
-    // These values are statically constructed by init() via action()
-    // The action() method acts like the instantiator. The entire lifespan
-    // of a menu item is within its declaration, so all these values decompose
-    // into behavior and unused items get optimized out.
+    // These values are statically constructed by init() via action()//这些值由init（）通过action（）静态构造
+    // The action() method acts like the instantiator. The entire lifespan//action（）方法的作用类似于实例化器。一生
+    // of a menu item is within its declaration, so all these values decompose//菜单项的属性在其声明中，因此所有这些值都会分解
+    // into behavior and unused items get optimized out.//进入行为和未使用的项目得到优化。
     static PGM_P editLabel;
     static void *editValue;
-    static int32_t minEditValue, maxEditValue;  // Encoder value range
+    static int32_t minEditValue, maxEditValue;  // Encoder value range//编码器值范围
     static screenFunc_t callbackFunc;
     static bool liveEdit;
   protected:
     typedef const char* (*strfunc_t)(const int32_t);
     typedef void (*loadfunc_t)(void *, const int32_t);
     static void goto_edit_screen(
-      PGM_P const el,         // Edit label
-      void * const ev,        // Edit value pointer
-      const int32_t minv,     // Encoder minimum
-      const int32_t maxv,     // Encoder maximum
-      const uint16_t ep,      // Initial encoder value
-      const screenFunc_t cs,  // MenuItem_type::draw_edit_screen => MenuEditItemBase::edit()
-      const screenFunc_t cb,  // Callback after edit
-      const bool le           // Flag to call cb() during editing
+      PGM_P const el,         // Edit label//编辑标签
+      void * const ev,        // Edit value pointer//编辑值指针
+      const int32_t minv,     // Encoder minimum//编码器最小值
+      const int32_t maxv,     // Encoder maximum//编码器最大值
+      const uint16_t ep,      // Initial encoder value//编码器初始值
+      const screenFunc_t cs,  // MenuItem_type::draw_edit_screen => MenuEditItemBase::edit()//MenuItem_type:：draw_edit_screen=>MenuEditItemBase:：edit（）
+      const screenFunc_t cb,  // Callback after edit//编辑后的回调
+      const bool le           // Flag to call cb() during editing//编辑期间调用cb（）的标志
     );
-    static void edit_screen(strfunc_t, loadfunc_t); // Edit value handler
+    static void edit_screen(strfunc_t, loadfunc_t); // Edit value handler//编辑值处理程序
   public:
-    // Implemented for HD44780 and DOGM
-    // Draw the current item at specified row with edit data
+    // Implemented for HD44780 and DOGM//为HD44780和DOGM实现
+    // Draw the current item at specified row with edit data//使用编辑数据在指定行绘制当前项
     static void draw(const bool sel, const uint8_t row, PGM_P const pstr, const char * const inStr, const bool pgm=false);
 
-    // Implemented for HD44780 and DOGM
-    // This low-level method is good to draw from anywhere
+    // Implemented for HD44780 and DOGM//为HD44780和DOGM实现
+    // This low-level method is good to draw from anywhere//这种低级方法很适合从任何地方绘制
     static void draw_edit_screen(PGM_P const pstr, const char * const value);
 
-    // This method is for the current menu item
+    // This method is for the current menu item//此方法适用于当前菜单项
     static inline void draw_edit_screen(const char * const value) { draw_edit_screen(editLabel, value); }
 };
 
@@ -187,14 +188,14 @@ class MenuEditItemBase : public MenuItemBase {
   class CardReader;
   class MenuItem_sdbase {
     public:
-      // Implemented for HD44780 and DOGM
+      // Implemented for HD44780 and DOGM//为HD44780和DOGM实现
       static void draw(const bool sel, const uint8_t row, PGM_P const pstr, CardReader &theCard, const bool isDir);
   };
 #endif
 
-////////////////////////////////////////////
-/////////////// Menu Screens ///////////////
-////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+/////////////// Menu Screens //////////////////////////////菜单屏幕///////////////
+////////////////////////////////////////////////////////////////////////////////////////
 
 void menu_main();
 void menu_move();
@@ -203,9 +204,9 @@ void menu_move();
   void menu_media();
 #endif
 
-////////////////////////////////////////////
-//////// Menu Item Helper Functions ////////
-////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+//////// Menu Item Helper Functions ////////////////菜单项辅助功能////////
+////////////////////////////////////////////////////////////////////////////////////////
 
 void lcd_move_z();
 void _lcd_draw_homing();

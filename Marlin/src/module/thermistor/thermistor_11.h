@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,7 +22,7 @@
  */
 #pragma once
 
-// R25 = 100 kOhm, beta25 = 3950 K, 4.7 kOhm pull-up, QU-BD silicone bed QWG-104F-3950 thermistor
+// R25 = 100 kOhm, beta25 = 3950 K, 4.7 kOhm pull-up, QU-BD silicone bed QWG-104F-3950 thermistor//R25=100千欧，beta25=3950千欧，4.7千欧上拉，QU-BD硅树脂床QWG-104F-3950热敏电阻
 constexpr temp_entry_t temptable_11[] PROGMEM = {
   { OV(   1), 938 },
   { OV(  31), 314 },

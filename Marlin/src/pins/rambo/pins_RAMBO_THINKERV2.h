@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2021 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -27,14 +28,14 @@
 
 #define BOARD_INFO_NAME "Rambo ThinkerV2"
 
-#define SERVO0_PIN                             4  // Motor header MX1
-#define SERVO2_PIN                            -1  // Motor header MX3
+#define SERVO0_PIN                             4  // Motor header MX1//电机收割台MX1
+#define SERVO2_PIN                            -1  // Motor header MX3//电机收割台MX3
 
 #ifndef FIL_RUNOUT_PIN
   #define FIL_RUNOUT_PIN                      10
 #endif
 
-// Support BLTouch and fixed probes
+// Support BLTouch and fixed probes//支持BLTouch和固定探头
 #if ENABLED(BLTOUCH)
   #if ENABLED(Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN)
     #define Z_MIN_PIN                         22
@@ -49,11 +50,11 @@
   #endif
 #endif
 
-// Eryone has the fan pins reversed
+// Eryone has the fan pins reversed//任何一个都有反转的风扇插脚
 #define FAN1_PIN                               2
 #define FAN2_PIN                               6
 
-// Encoder
+// Encoder//编码器
 #define BTN_EN1                               64
 #define BTN_EN2                               63
 

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -25,7 +26,7 @@
 
 #if ENABLED(USE_WATCHDOG)
 
-#define WDT_TIMEOUT_US TERN(WATCHDOG_DURATION_8S, 8000000, 4000000) // 4 or 8 second timeout
+#define WDT_TIMEOUT_US TERN(WATCHDOG_DURATION_8S, 8000000, 4000000) // 4 or 8 second timeout//4或8秒超时
 
 #include "../../inc/MarlinConfig.h"
 
@@ -41,9 +42,9 @@ void watchdog_init() {
 void HAL_watchdog_refresh() {
   IWatchdog.reload();
   #if DISABLED(PINS_DEBUGGING) && PIN_EXISTS(LED)
-    TOGGLE(LED_PIN);  // heartbeat indicator
+    TOGGLE(LED_PIN);  // heartbeat indicator//心跳指示器
   #endif
 }
 
-#endif // USE_WATCHDOG
-#endif // ARDUINO_ARCH_STM32 && !STM32GENERIC
+#endif // USE_WATCHDOG//使用看门狗
+#endif // ARDUINO_ARCH_STM32 && !STM32GENERIC//ARDUINO_ARCH_STM32&&！STM32通用

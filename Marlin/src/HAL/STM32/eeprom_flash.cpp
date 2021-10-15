@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  *
@@ -28,8 +29,8 @@
 
 #include "../shared/eeprom_api.h"
 
-// Better: "utility/stm32_eeprom.h", but only after updating stm32duino to 2.0.0
-// Use EEPROM.h for compatibility, for now.
+// Better: "utility/stm32_eeprom.h", but only after updating stm32duino to 2.0.0//更好：“utility/stm32_eeprom.h”，但仅在将stm32duino更新为2.0.0之后
+// Use EEPROM.h for compatibility, for now.//暂时使用EEPROM.h实现兼容性。
 #include <EEPROM.h>
 
 /**
@@ -55,14 +56,14 @@
   #include "../../core/debug_out.h"
 
   #ifndef MARLIN_EEPROM_SIZE
-    #define MARLIN_EEPROM_SIZE    0x1000 // 4KB
+    #define MARLIN_EEPROM_SIZE    0x1000 // 4KB//4KB
   #endif
 
   #ifndef FLASH_SECTOR
     #define FLASH_SECTOR          (FLASH_SECTOR_TOTAL - 1)
   #endif
   #ifndef FLASH_UNIT_SIZE
-    #define FLASH_UNIT_SIZE       0x20000 // 128kB
+    #define FLASH_UNIT_SIZE       0x20000 // 128kB//128kB
   #endif
 
   #ifndef FLASH_ADDRESS_START
@@ -87,7 +88,7 @@
   static uint8_t ram_eeprom[MARLIN_EEPROM_SIZE] __attribute__((aligned(4))) = {0};
   static int current_slot = -1;
 
-  static_assert(0 == MARLIN_EEPROM_SIZE % 4, "MARLIN_EEPROM_SIZE must be a multiple of 4"); // Ensure copying as uint32_t is safe
+  static_assert(0 == MARLIN_EEPROM_SIZE % 4, "MARLIN_EEPROM_SIZE must be a multiple of 4"); // Ensure copying as uint32_t is safe//确保按uint32进行复制是安全的
   static_assert(0 == FLASH_UNIT_SIZE % MARLIN_EEPROM_SIZE, "MARLIN_EEPROM_SIZE must divide evenly into your FLASH_UNIT_SIZE");
   static_assert(FLASH_UNIT_SIZE >= MARLIN_EEPROM_SIZE, "FLASH_UNIT_SIZE must be greater than or equal to your MARLIN_EEPROM_SIZE");
   static_assert(IS_FLASH_SECTOR(FLASH_SECTOR), "FLASH_SECTOR is invalid");
@@ -107,9 +108,9 @@ bool PersistentStore::access_start() {
   #if ENABLED(FLASH_EEPROM_LEVELING)
 
     if (current_slot == -1 || eeprom_data_written) {
-      // This must be the first time since power on that we have accessed the storage, or someone
-      // loaded and called write_data and never called access_finish.
-      // Lets go looking for the slot that holds our configuration.
+      // This must be the first time since power on that we have accessed the storage, or someone//这一定是自通电以来我们第一次访问存储器或其他人
+      // loaded and called write_data and never called access_finish.//加载并调用write_数据，但从未调用access_finish。
+      // Lets go looking for the slot that holds our configuration.//让我们去寻找保存配置的插槽。
       if (eeprom_data_written) DEBUG_ECHOLNPGM("Dangling EEPROM write_data");
       uint32_t address = FLASH_ADDRESS_START;
       while (address <= FLASH_ADDRESS_END) {
@@ -121,12 +122,12 @@ bool PersistentStore::access_start() {
         address += sizeof(uint32_t);
       }
       if (current_slot == -1) {
-        // We didn't find anything, so we'll just intialize to empty
+        // We didn't find anything, so we'll just intialize to empty//我们什么也没找到，所以我们只能初始化为空
         for (int i = 0; i < MARLIN_EEPROM_SIZE; i++) ram_eeprom[i] = EMPTY_UINT8;
         current_slot = EEPROM_SLOTS;
       }
       else {
-        // load current settings
+        // load current settings//负载电流设置
         uint8_t *eeprom_data = (uint8_t *)SLOT_ADDRESS(current_slot);
         for (int i = 0; i < MARLIN_EEPROM_SIZE; i++) ram_eeprom[i] = eeprom_data[i];
         DEBUG_ECHOLNPAIR("EEPROM loaded from slot ", current_slot, ".");
@@ -145,8 +146,8 @@ bool PersistentStore::access_finish() {
 
   if (eeprom_data_written) {
     #ifdef STM32F4xx
-      // MCU may come up with flash error bits which prevent some flash operations.
-      // Clear flags prior to flash operations to prevent errors.
+      // MCU may come up with flash error bits which prevent some flash operations.//MCU可能会出现闪存错误位，从而阻止某些闪存操作。
+      // Clear flags prior to flash operations to prevent errors.//在闪存操作之前清除标志以防止错误。
       __HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_OPERR | FLASH_FLAG_WRPERR | FLASH_FLAG_PGAERR | FLASH_FLAG_PGPERR | FLASH_FLAG_PGSERR);
     #endif
 
@@ -156,7 +157,7 @@ bool PersistentStore::access_finish() {
       bool flash_unlocked = false;
 
       if (--current_slot < 0) {
-        // all slots have been used, erase everything and start again
+        // all slots have been used, erase everything and start again//所有插槽都已使用，请删除所有内容并重新开始
 
         FLASH_EraseInitTypeDef EraseInitStruct;
         uint32_t SectorError = 0;
@@ -218,12 +219,12 @@ bool PersistentStore::access_finish() {
       return success;
 
     #else
-      // The following was written for the STM32F4 but may work with other MCUs as well.
-      // Most STM32F4 flash does not allow reading from flash during erase operations.
-      // This takes about a second on a STM32F407 with a 128kB sector used as EEPROM.
-      // Interrupts during this time can have unpredictable results, such as killing Servo
-      // output. Servo output still glitches with interrupts disabled, but recovers after the
-      // erase.
+      // The following was written for the STM32F4 but may work with other MCUs as well.//以下内容是为STM32F4编写的，但也可用于其他MCU。
+      // Most STM32F4 flash does not allow reading from flash during erase operations.//大多数STM32F4闪存在擦除操作期间不允许从闪存读取数据。
+      // This takes about a second on a STM32F407 with a 128kB sector used as EEPROM.//在使用128kB扇区作为EEPROM的STM32F407上，这大约需要一秒钟。
+      // Interrupts during this time can have unpredictable results, such as killing Servo//在此期间的中断可能会产生不可预测的结果，例如杀死伺服
+      // output. Servo output still glitches with interrupts disabled, but recovers after the//输出。伺服输出仍会出现故障，中断被禁用，但会在中断后恢复
+      // erase.//抹掉。
       TERN_(HAS_PAUSE_SERVO_OUTPUT, PAUSE_SERVO_OUTPUT());
       DISABLE_ISRS();
       eeprom_buffer_flush();
@@ -269,5 +270,5 @@ bool PersistentStore::read_data(int &pos, uint8_t *value, size_t size, uint16_t 
   return false;
 }
 
-#endif // FLASH_EEPROM_EMULATION
-#endif // ARDUINO_ARCH_STM32 && !STM32GENERIC
+#endif // FLASH_EEPROM_EMULATION//闪存EEPROM模拟
+#endif // ARDUINO_ARCH_STM32 && !STM32GENERIC//ARDUINO_ARCH_STM32&&！STM32通用

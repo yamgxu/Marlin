@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -84,9 +85,9 @@
  * PIN:  31   Port: A0   TEMP_BED_PIN
  */
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_MIN_PIN                             21
 #define Y_MIN_PIN                             18
 
@@ -96,9 +97,9 @@
   #define Z_MIN_PIN                           13
 #endif
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                            23
 #define X_DIR_PIN                             22
 #define X_ENABLE_PIN                          24
@@ -131,32 +132,32 @@
 #define E1_DIR_PIN                            14
 #define E1_ENABLE_PIN                         24
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                             1  // Analog Input
-#define TEMP_BED_PIN                           0  // Analog Input
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                             1  // Analog Input//模拟输入
+#define TEMP_BED_PIN                           0  // Analog Input//模拟输入
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_0_PIN                           0
 #define HEATER_BED_PIN                         1
 #define FAN_PIN                               28
 #define FAN1_PIN                              -1
 
-//
-//filament run out sensor
-//
+////
+//filament run out sensor//灯丝跳动传感器
+////
 #if EITHER(Z6S_ZFAULT, Z6BS_ZFAULT)
   #define FIL_RUNOUT_PIN                      13
 #else
-  #define FIL_RUNOUT_PIN                      25  // Z-MIN
+  #define FIL_RUNOUT_PIN                      25  // Z-MIN//Z-MIN
 #endif
 
-//
-// SD card
-//
+////
+// SD card//SD卡
+////
 #if ENABLED(SDSUPPORT)
   #define SDSS                                 4
 #endif
@@ -175,55 +176,55 @@
  *==================================================*/
 
 #if ENABLED(ZONESTAR_12864LCD)
-  //
-  // LCD 128x64
-  //
+  ////
+  // LCD 128x64//LCD 128x64
+  ////
   #define LCDSCREEN_NAME  "ZONESTAR_12864LCD"
   #define FORCE_SOFT_SPI
-  //#define LCD_SDSS                          11
-  #define LCD_PINS_RS                         11  // ST7920_CS_PIN    LCD_PIN_RS    (PIN4 of LCD module)
+  //#define LCD_SDSS                          11//#定义LCD_SDSS 11
+  #define LCD_PINS_RS                         11  // ST7920_CS_PIN    LCD_PIN_RS    (PIN4 of LCD module)//ST7920_CS_引脚LCD_引脚RS（LCD模块的引脚4）
   #ifdef IS_ZMIB_V2
-    #define LCD_PINS_ENABLE                    3  // ST7920_DAT_PIN LCD_PIN_R/W   (PIN5 of LCD module)
+    #define LCD_PINS_ENABLE                    3  // ST7920_DAT_PIN LCD_PIN_R/W   (PIN5 of LCD module)//ST7920_DAT_引脚LCD_引脚R/W（LCD模块的引脚5）
   #else
-    #define LCD_PINS_ENABLE                    4  // ST7920_DAT_PIN LCD_PIN_R/W   (PIN5 of LCD module)
+    #define LCD_PINS_ENABLE                    4  // ST7920_DAT_PIN LCD_PIN_R/W   (PIN5 of LCD module)//ST7920_DAT_引脚LCD_引脚R/W（LCD模块的引脚5）
   #endif
-  #define LCD_PINS_D4                         10  // ST7920_CLK_PIN LCD_PIN_ENABLE (PIN6 of LCD module)
+  #define LCD_PINS_D4                         10  // ST7920_CLK_PIN LCD_PIN_ENABLE (PIN6 of LCD module)//ST7920时钟引脚LCD引脚启用（LCD模块引脚6）
 
-  // Alter timing for graphical display
+  // Alter timing for graphical display//改变图形显示的时间
   #define ST7920_DELAY_1             DELAY_2_NOP
   #define ST7920_DELAY_2             DELAY_2_NOP
   #define ST7920_DELAY_3             DELAY_2_NOP
 
 #elif EITHER(ZONESTAR_12864OLED, ZONESTAR_12864OLED_SSD1306)
-  //
-  // OLED 128x64
-  //
+  ////
+  // OLED 128x64//OLED 128x64
+  ////
   #define LCDSCREEN_NAME "ZONESTAR 12864OLED"
   #define FORCE_SOFT_SPI
   #ifdef IS_ZMIB_V2
-    #define LCD_PINS_RS                        3  // RESET
+    #define LCD_PINS_RS                        3  // RESET//重置
   #else
-    #define LCD_PINS_RS                        4  // RESET
+    #define LCD_PINS_RS                        4  // RESET//重置
   #endif
-  #define LCD_PINS_DC                         10  // DC
-  #define DOGLCD_CS                           11  // CS
+  #define LCD_PINS_DC                         10  // DC//直流电
+  #define DOGLCD_CS                           11  // CS//CS
   #if ENABLED(OLED_HW_IIC)
     #error "Oops! can't choose HW IIC for ZMIB board!!"
   #elif ENABLED(OLED_HW_SPI)
-    // HW SPI
-    #define DOGLCD_A0                LCD_PINS_DC  // A0 = DC
+    // HW SPI//HW SPI
+    #define DOGLCD_A0                LCD_PINS_DC  // A0 = DC//A0=直流电
   #else
-    // SW SPI
-    #define DOGLCD_A0                LCD_PINS_DC  // A0 = DC
-    #define DOGLCD_MOSI             AVR_MOSI_PIN  // SDA
-    #define DOGLCD_SCK               AVR_SCK_PIN  // SCK
+    // SW SPI//西南SPI
+    #define DOGLCD_A0                LCD_PINS_DC  // A0 = DC//A0=直流电
+    #define DOGLCD_MOSI             AVR_MOSI_PIN  // SDA//SDA
+    #define DOGLCD_SCK               AVR_SCK_PIN  // SCK//SCK
   #endif
 
 #endif
 
-//
-// All the above are also RRDSC with rotary encoder
-//
+////
+// All the above are also RRDSC with rotary encoder//以上所有都是带有旋转编码器的RRDSC
+////
 #if IS_RRD_SC
   #define BTN_EN1                              2
   #define BTN_EN2                             12

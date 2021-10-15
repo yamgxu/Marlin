@@ -1,3 +1,4 @@
+/** translatione by yx */
 /***************************************************************************
  * ARM Stack Unwinder, Michael.McTernan.2001@cs.bris.ac.uk
  * Updated, adapted and several bug fixes on 2018 by Eduardo José Tagle
@@ -26,9 +27,9 @@
 extern "C" const UnwTabEntry __exidx_start[];
 extern "C" const UnwTabEntry __exidx_end[];
 
-// Detect if unwind information is present or not
+// Detect if unwind information is present or not//检测是否存在展开信息
 static int HasUnwindTableInfo() {
-  // > 16 because there are default entries we can't supress
+  // > 16 because there are default entries we can't supress//>16，因为有默认条目，我们无法取消
   return ((char*)(&__exidx_end) - (char*)(&__exidx_start)) > 16 ? 1 : 0;
 }
 

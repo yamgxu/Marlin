@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -74,7 +75,7 @@ if (lcd_id != 0xFFFFFFFF) return;
     OUT_WRITE(TFT_BACKLIGHT_PIN, DISABLED(DELAYED_BACKLIGHT_INIT));
   #endif
 
-  // io.Init();
+  // io.Init();//io.Init（）；
   delay(100);
 
   #if TFT_DRIVER != AUTO
@@ -101,43 +102,43 @@ if (lcd_id != 0xFFFFFFFF) return;
     lcd_id = ST7796;
     write_esc_sequence(lerdge_st7796s_init);
 
-  #elif TFT_DRIVER == AUTO // autodetect
+  #elif TFT_DRIVER == AUTO // autodetect//自动检测
 
     lcd_id = io.GetID() & 0xFFFF;
 
     switch (lcd_id) {
       case LTDC_RGB:
         break;
-      case ST7796:    // ST7796S    480x320
+      case ST7796:    // ST7796S    480x320//ST7796S 480x320
         DEBUG_ECHO_MSG(" ST7796S");
         write_esc_sequence(st7796s_init);
         break;
-      case ST7789:    // ST7789V    320x240
+      case ST7789:    // ST7789V    320x240//ST7789V 320x240
         DEBUG_ECHO_MSG(" ST7789V");
         write_esc_sequence(st7789v_init);
         break;
-      case SSD1963:    // SSD1963
+      case SSD1963:    // SSD1963//SSD1963
         DEBUG_ECHO_MSG(" SSD1963");
         write_esc_sequence(ssd1963_init);
         break;
-      case ST7735:    // ST7735     160x128
+      case ST7735:    // ST7735     160x128//ST7735 160x128
         DEBUG_ECHO_MSG(" ST7735");
         write_esc_sequence(st7735_init);
         break;
-      case R61505:    // R61505U    320x240
+      case R61505:    // R61505U    320x240//R61505U 320x240
         DEBUG_ECHO_MSG(" R61505U");
         write_esc_sequence(r61505_init);
         break;
-      case ILI9328:   // ILI9328    320x240
+      case ILI9328:   // ILI9328    320x240//ILI9328 320x240
         DEBUG_ECHO_MSG(" ILI9328");
         write_esc_sequence(ili9328_init);
         break;
-      case ILI9341:   // ILI9341    320x240
+      case ILI9341:   // ILI9341    320x240//ILI9341 320x240
         DEBUG_ECHO_MSG(" ILI9341");
         write_esc_sequence(ili9341_init);
         break;
-      case ILI9488:   // ILI9488    480x320
-      case ILI9488_ID1: // 0x8066 ILI9488    480x320
+      case ILI9488:   // ILI9488    480x320//ILI9488 480x320
+      case ILI9488_ID1: // 0x8066 ILI9488    480x320//0x8066 ILI9488 480x320
         DEBUG_ECHO_MSG(" ILI9488");
         write_esc_sequence(ili9488_init);
         break;
@@ -173,37 +174,37 @@ void TFT_IO::set_window(uint16_t Xmin, uint16_t Ymin, uint16_t Xmax, uint16_t Ym
       io.WriteData(Ymax);
       io.WriteReg(0x00);
       break;
-    case ST7735:    // ST7735     160x128
-    case ST7789:    // ST7789V    320x240
-    case ST7796:    // ST7796     480x320
-    case ILI9341:   // ILI9341    320x240
-    case ILI9488:   // ILI9488    480x320
-    case SSD1963:   // SSD1963
-    case ILI9488_ID1: // 0x8066 ILI9488    480x320
+    case ST7735:    // ST7735     160x128//ST7735 160x128
+    case ST7789:    // ST7789V    320x240//ST7789V 320x240
+    case ST7796:    // ST7796     480x320//ST7796 480x320
+    case ILI9341:   // ILI9341    320x240//ILI9341 320x240
+    case ILI9488:   // ILI9488    480x320//ILI9488 480x320
+    case SSD1963:   // SSD1963//SSD1963
+    case ILI9488_ID1: // 0x8066 ILI9488    480x320//0x8066 ILI9488 480x320
       io.DataTransferBegin(DATASIZE_8BIT);
 
-      // CASET: Column Address Set
+      // CASET: Column Address Set//CASET：列地址集
       io.WriteReg(ILI9341_CASET);
       io.WriteData((Xmin >> 8) & 0xFF);
       io.WriteData(Xmin & 0xFF);
       io.WriteData((Xmax >> 8) & 0xFF);
       io.WriteData(Xmax & 0xFF);
 
-      // RASET: Row Address Set
+      // RASET: Row Address Set//RASET：行地址集
       io.WriteReg(ILI9341_PASET);
       io.WriteData((Ymin >> 8) & 0xFF);
       io.WriteData(Ymin & 0xFF);
       io.WriteData((Ymax >> 8) & 0xFF);
       io.WriteData(Ymax & 0xFF);
 
-      // RAMWR: Memory Write
+      // RAMWR: Memory Write//内存写入
       io.WriteReg(ILI9341_RAMWR);
       break;
-    case R61505:    // R61505U    320x240
-    case ILI9328:   // ILI9328    320x240
+    case R61505:    // R61505U    320x240//R61505U 320x240
+    case ILI9328:   // ILI9328    320x240//ILI9328 320x240
       io.DataTransferBegin(DATASIZE_16BIT);
 
-      // Mind the mess: with landscape screen orientation 'Horizontal' is Y and 'Vertical' is X
+      // Mind the mess: with landscape screen orientation 'Horizontal' is Y and 'Vertical' is X//注意混乱：对于横向屏幕方向，“水平”是Y，“垂直”是X
       io.WriteReg(ILI9328_HASTART);
       io.WriteData(Ymin);
       io.WriteReg(ILI9328_HAEND);
@@ -252,4 +253,4 @@ void TFT_IO::write_esc_sequence(const uint16_t *Sequence) {
   io.DataTransferEnd();
 }
 
-#endif // HAS_SPI_TFT || HAS_FSMC_TFT || HAS_LTDC_TFT
+#endif // HAS_SPI_TFT || HAS_FSMC_TFT || HAS_LTDC_TFT//有SPI TFT |有FSMC TFT |有LTDC |有TFT

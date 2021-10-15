@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  *
@@ -38,14 +39,14 @@ void _printf (const  char *format, ...);
 void _putc(uint8_t c);
 uint8_t _getc();
 
-//extern "C" volatile uint32_t _millis;
+//extern "C" volatile uint32_t _millis;//外部“C”挥发性单位32毫米；
 
-//arduino: Print.h
+//arduino: Print.h//阿杜伊诺：打印
 #define DEC 10
 #define HEX 16
 #define OCT  8
 #define BIN  2
-//arduino: binary.h (weird defines)
+//arduino: binary.h (weird defines)//arduino:binary.h（奇怪的定义）
 #define B01 1
 #define B10 2
 
@@ -67,9 +68,9 @@ extern MSerialT usb_serial;
 #define ST7920_DELAY_2 DELAY_NS(750)
 #define ST7920_DELAY_3 DELAY_NS(750)
 
-//
-// Interrupts
-//
+////
+// Interrupts//打断
+////
 #define CRITICAL_SECTION_START()
 #define CRITICAL_SECTION_END()
 #define ISRS_ENABLED()
@@ -78,7 +79,7 @@ extern MSerialT usb_serial;
 
 inline void HAL_init() {}
 
-// Utility functions
+// Utility functions//效用函数
 #if GCC_VERSION <= 50000
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wunused-function"
@@ -90,7 +91,7 @@ int freeMemory();
   #pragma GCC diagnostic pop
 #endif
 
-// ADC
+// ADC//模数转换器
 #define HAL_ADC_VREF           5.0
 #define HAL_ADC_RESOLUTION    10
 #define HAL_ANALOG_SELECT(ch) HAL_adc_enable_channel(ch)
@@ -103,11 +104,11 @@ void HAL_adc_enable_channel(const uint8_t ch);
 void HAL_adc_start_conversion(const uint8_t ch);
 uint16_t HAL_adc_get_result();
 
-// Reset source
+// Reset source//复位源
 inline void HAL_clear_reset_source(void) {}
 inline uint8_t HAL_get_reset_source(void) { return RST_POWER_ON; }
 
-void HAL_reboot(); // Reset the application state and GPIO
+void HAL_reboot(); // Reset the application state and GPIO//重置应用程序状态和GPIO
 
 /* ---------------- Delay in cycles */
 FORCE_INLINE static void DELAY_CYCLES(uint64_t x) {

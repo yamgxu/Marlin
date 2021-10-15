@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -36,10 +37,10 @@
 
 #ifdef ARDUINO_ARCH_SAM
 
-// ISR handler type
+// ISR handler type//ISR处理程序类型
 typedef void (*pfnISR_Handler)();
 
-// Install a new interrupt vector handler for the given irq, returning the old one
+// Install a new interrupt vector handler for the given irq, returning the old one//为给定irq安装一个新的中断向量处理程序，返回旧的中断向量处理程序
 pfnISR_Handler install_isr(IRQn_Type irq, pfnISR_Handler newHandler);
 
-#endif // ARDUINO_ARCH_SAM
+#endif // ARDUINO_ARCH_SAM//阿杜伊诺·阿丘·萨姆

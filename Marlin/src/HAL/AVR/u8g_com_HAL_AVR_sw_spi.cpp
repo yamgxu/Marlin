@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -144,15 +145,15 @@ uint8_t u8g_com_HAL_AVR_sw_sp_fn(u8g_t *u8g, uint8_t msg, uint8_t arg_val, void 
       break;
 
     case U8G_COM_MSG_CHIP_SELECT:
-      #if ENABLED(FYSETC_MINI_12864)           // LCD SPI is running mode 3 while SD card is running mode 0
-        if (arg_val) {                         //   SCK idle state needs to be set to the proper idle state before
-                                               //   the next chip select goes active
-          u8g_com_arduino_digital_write(u8g, U8G_PI_SCK, 1);  // Set SCK to mode 3 idle state before CS goes active
+      #if ENABLED(FYSETC_MINI_12864)           // LCD SPI is running mode 3 while SD card is running mode 0//LCD SPI在运行模式3，而SD卡在运行模式0
+        if (arg_val) {                         //   SCK idle state needs to be set to the proper idle state before//SCK空闲状态需要设置为正确的空闲状态，然后
+                                               //   the next chip select goes active//下一个芯片选择激活
+          u8g_com_arduino_digital_write(u8g, U8G_PI_SCK, 1);  // Set SCK to mode 3 idle state before CS goes active//在CS激活之前，将SCK设置为模式3空闲状态
           u8g_com_arduino_digital_write(u8g, U8G_PI_CS, LOW);
         }
         else {
           u8g_com_arduino_digital_write(u8g, U8G_PI_CS, HIGH);
-          u8g_com_arduino_digital_write(u8g, U8G_PI_SCK, 0);  // Set SCK to mode 0 idle state after CS goes inactive
+          u8g_com_arduino_digital_write(u8g, U8G_PI_SCK, 0);  // Set SCK to mode 0 idle state after CS goes inactive//在CS变为非活动状态后，将SCK设置为模式0空闲状态
         }
       #else
         u8g_com_arduino_digital_write(u8g, U8G_PI_CS, !arg_val);
@@ -189,5 +190,5 @@ uint8_t u8g_com_HAL_AVR_sw_sp_fn(u8g_t *u8g, uint8_t msg, uint8_t arg_val, void 
   return 1;
 }
 
-#endif // HAS_MARLINUI_U8GLIB
-#endif // ARDUINO_ARCH_SAM
+#endif // HAS_MARLINUI_U8GLIB//马林努伊能说会道吗
+#endif // ARDUINO_ARCH_SAM//阿杜伊诺·阿丘·萨姆

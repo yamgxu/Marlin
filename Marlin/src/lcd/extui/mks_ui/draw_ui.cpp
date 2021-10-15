@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -34,7 +35,7 @@
 
 #include <SPI.h>
 
-#include "../../../MarlinCore.h" // for marlin_state
+#include "../../../MarlinCore.h" // for marlin_state//马林州
 #include "../../../sd/cardreader.h"
 #include "../../../module/motion.h"
 #include "../../../module/planner.h"
@@ -90,7 +91,7 @@ lv_point_t line_points[4][2] = {
 };
 void gCfgItems_init() {
   gCfgItems.multiple_language = MULTI_LANGUAGE_ENABLE;
-  #if 1 // LCD_LANGUAGE == en
+  #if 1 // LCD_LANGUAGE == en//LCD_语言==en
     gCfgItems.language = LANG_ENGLISH;
   #elif LCD_LANGUAGE == zh_CN
     gCfgItems.language = LANG_SIMPLE_CHINESE;
@@ -155,7 +156,7 @@ void gCfgItems_init() {
     gCfgItems.spi_flash_flag = FLASH_INF_VALID_FLAG;
     W25QXX.SPI_FLASH_SectorErase(VAR_INF_ADDR);
     W25QXX.SPI_FLASH_BufferWrite((uint8_t *)&gCfgItems, VAR_INF_ADDR, sizeof(gCfgItems));
-    //init gcode command
+    //init gcode command//init gcode命令
     W25QXX.SPI_FLASH_BufferWrite((uint8_t *)&custom_gcode_command[0], AUTO_LEVELING_COMMAND_ADDR, 100);
     W25QXX.SPI_FLASH_BufferWrite((uint8_t *)&custom_gcode_command[1], OTHERS_COMMAND_ADDR_1, 100);
     W25QXX.SPI_FLASH_BufferWrite((uint8_t *)&custom_gcode_command[2], OTHERS_COMMAND_ADDR_2, 100);
@@ -204,7 +205,7 @@ void ui_cfg_init() {
     memset(&ipPara, 0, sizeof(ipPara));
     strcpy(wifiPara.ap_name, WIFI_AP_NAME);
     strcpy(wifiPara.keyCode, WIFI_KEY_CODE);
-    //client
+    //client//客户
     strcpy(ipPara.ip_addr, IP_ADDR);
     strcpy(ipPara.mask, IP_MASK);
     strcpy(ipPara.gate, IP_GATE);
@@ -212,7 +213,7 @@ void ui_cfg_init() {
 
     ipPara.dhcp_flag = IP_DHCP_FLAG;
 
-    //AP
+    //AP//美联社
     strcpy(ipPara.dhcpd_ip, AP_IP_ADDR);
     strcpy(ipPara.dhcpd_mask, AP_IP_MASK);
     strcpy(ipPara.dhcpd_gate, AP_IP_GATE);
@@ -234,7 +235,7 @@ void update_spi_flash() {
   uint8_t command_buf[512];
 
   W25QXX.init(SPI_QUARTER_SPEED);
-  //read back the gcode command befor erase spi flash
+  //read back the gcode command befor erase spi flash//在擦除spi闪存之前读回gcode命令
   W25QXX.SPI_FLASH_BufferRead((uint8_t *)&command_buf, GCODE_COMMAND_ADDR, sizeof(command_buf));
   W25QXX.SPI_FLASH_SectorErase(VAR_INF_ADDR);
   W25QXX.SPI_FLASH_BufferWrite((uint8_t *)&gCfgItems, VAR_INF_ADDR, sizeof(gCfgItems));
@@ -245,7 +246,7 @@ void update_gcode_command(int addr,uint8_t *s) {
   uint8_t command_buf[512];
 
   W25QXX.init(SPI_QUARTER_SPEED);
-  //read back the gcode command befor erase spi flash
+  //read back the gcode command befor erase spi flash//在擦除spi闪存之前读回gcode命令
   W25QXX.SPI_FLASH_BufferRead((uint8_t *)&command_buf, GCODE_COMMAND_ADDR, sizeof(command_buf));
   W25QXX.SPI_FLASH_SectorErase(VAR_INF_ADDR);
   W25QXX.SPI_FLASH_BufferWrite((uint8_t *)&gCfgItems, VAR_INF_ADDR, sizeof(gCfgItems));
@@ -672,26 +673,26 @@ char *creat_title_text() {
         }
         return;
       }
-    #endif // SDSUPPORT
+    #endif // SDSUPPORT//SDSUPPORT
   }
 
   void draw_default_preview(int xpos_pixel, int ypos_pixel, uint8_t sel) {
     int index;
     int y_off = 0;
     W25QXX.init(SPI_QUARTER_SPEED);
-    for (index = 0; index < 10; index++) { // 200*200
+    for (index = 0; index < 10; index++) { // 200*200// 200*200
       #if HAS_BAK_VIEW_IN_FLASH
         if (sel == 1) {
-          flash_view_Read(bmp_public_buf, 8000); // 20k
+          flash_view_Read(bmp_public_buf, 8000); // 20k//20k
         }
         else {
-          default_view_Read(bmp_public_buf, DEFAULT_VIEW_MAX_SIZE / 10); // 8k
+          default_view_Read(bmp_public_buf, DEFAULT_VIEW_MAX_SIZE / 10); // 8k//8k
         }
       #else
-        default_view_Read(bmp_public_buf, DEFAULT_VIEW_MAX_SIZE / 10); // 8k
+        default_view_Read(bmp_public_buf, DEFAULT_VIEW_MAX_SIZE / 10); // 8k//8k
       #endif
 
-      SPI_TFT.setWindow(xpos_pixel, y_off * 20 + ypos_pixel, 200, 20); // 200*200
+      SPI_TFT.setWindow(xpos_pixel, y_off * 20 + ypos_pixel, 200, 20); // 200*200// 200*200
       SPI_TFT.tftio.WriteSequence((uint16_t*)(bmp_public_buf), DEFAULT_VIEW_MAX_SIZE / 20);
 
       y_off++;
@@ -714,7 +715,7 @@ char *creat_title_text() {
       }
     #endif
   }
-#endif // HAS_GCODE_PREVIEW
+#endif // HAS_GCODE_PREVIEW//有代码预览吗
 
 void print_time_run() {
   static uint8_t lastSec = 0;
@@ -1088,51 +1089,51 @@ void draw_return_ui() {
   }
 }
 
-// Set the same image for both Released and Pressed
+// Set the same image for both Released and Pressed//为释放和按下设置相同的图像
 void lv_imgbtn_set_src_both(lv_obj_t *imgbtn, const void *src) {
   lv_imgbtn_set_src(imgbtn, LV_BTN_STATE_REL, src);
   lv_imgbtn_set_src(imgbtn, LV_BTN_STATE_PR,  src);
 }
 
-// Use label style for the image button
+// Use label style for the image button//使用图像按钮的标签样式
 void lv_imgbtn_use_label_style(lv_obj_t *imgbtn) {
   lv_imgbtn_set_style(imgbtn, LV_BTN_STATE_REL, &tft_style_label_rel);
   lv_imgbtn_set_style(imgbtn, LV_BTN_STATE_PR,  &tft_style_label_pre);
 }
 
-// Use label style for the button
+// Use label style for the button//使用按钮的标签样式
 void lv_btn_use_label_style(lv_obj_t *btn) {
   lv_btn_set_style(btn, LV_BTN_STYLE_REL, &tft_style_label_rel);
   lv_btn_set_style(btn, LV_BTN_STYLE_PR,  &tft_style_label_pre);
 }
 
-// Use button style for the button
+// Use button style for the button//为按钮使用按钮样式
 void lv_btn_use_button_style(lv_obj_t *btn) {
   lv_btn_set_style(btn, LV_BTN_STYLE_REL, &style_btn_rel);
   lv_btn_set_style(btn, LV_BTN_STYLE_PR,  &style_btn_pr);
 }
 
-// Use a single style for both Released and Pressed
+// Use a single style for both Released and Pressed//释放和按下时使用单一样式
 void lv_btn_set_style_both(lv_obj_t *btn, lv_style_t *style) {
   lv_btn_set_style(btn, LV_BTN_STYLE_REL, style);
   lv_btn_set_style(btn, LV_BTN_STYLE_PR,  style);
 }
 
-// Create a screen
+// Create a screen//创建一个屏幕
 lv_obj_t* lv_screen_create(DISP_STATE newScreenType, const char *title) {
   lv_obj_t *scr = lv_obj_create(nullptr, nullptr);
   lv_obj_set_style(scr, &tft_style_scr);
   lv_scr_load(scr);
   lv_obj_clean(scr);
 
-  // breadcrumbs
+  // breadcrumbs//面包屑
   if (disp_state_stack._disp_state[disp_state_stack._disp_index] != newScreenType) {
     disp_state_stack._disp_index++;
     disp_state_stack._disp_state[disp_state_stack._disp_index] = newScreenType;
   }
   disp_state = newScreenType;
 
-  // title
+  // title//头衔
   lv_obj_t *titleLabel = nullptr;
   if (!title)
     titleLabel = lv_label_create(scr, TITLE_XPOS, TITLE_YPOS, creat_title_text());
@@ -1146,13 +1147,13 @@ lv_obj_t* lv_screen_create(DISP_STATE newScreenType, const char *title) {
   return scr;
 }
 
-// Create an empty label
+// Create an empty label//创建一个空标签
 lv_obj_t* lv_label_create_empty(lv_obj_t *par) {
   lv_obj_t *label = lv_label_create(par, (lv_obj_t*)nullptr);
   return label;
 }
 
-// Create a label with style and text
+// Create a label with style and text//创建带有样式和文本的标签
 lv_obj_t* lv_label_create(lv_obj_t *par, const char *text) {
   lv_obj_t *label = lv_label_create_empty(par);
   if (text) lv_label_set_text(label, text);
@@ -1160,14 +1161,14 @@ lv_obj_t* lv_label_create(lv_obj_t *par, const char *text) {
   return label;
 }
 
-// Create a label with style, position, and text
+// Create a label with style, position, and text//创建带有样式、位置和文字的标签
 lv_obj_t* lv_label_create(lv_obj_t *par, lv_coord_t x, lv_coord_t y, const char *text) {
   lv_obj_t *label = lv_label_create(par, text);
   lv_obj_set_pos(label, x, y);
   return label;
 }
 
-// Create a button with callback, ID, and Style.
+// Create a button with callback, ID, and Style.//创建具有回调、ID和样式的按钮。
 lv_obj_t* lv_btn_create(lv_obj_t *par, lv_event_cb_t cb, const int id/*=0*/, lv_style_t *style/*=&style_para_value*/) {
   lv_obj_t *btn = lv_btn_create(par, nullptr);
   if (id)
@@ -1178,21 +1179,21 @@ lv_obj_t* lv_btn_create(lv_obj_t *par, lv_event_cb_t cb, const int id/*=0*/, lv_
   return btn;
 }
 
-// Create a button with callback and ID, with label style.
+// Create a button with callback and ID, with label style.//创建一个带有回调和ID的按钮，带有标签样式。
 lv_obj_t* lv_label_btn_create(lv_obj_t *par, lv_event_cb_t cb, const int id/*=0*/) {
   lv_obj_t *btn = lv_btn_create(par, cb, id, nullptr);
   lv_btn_use_label_style(btn);
   return btn;
 }
 
-// Create a button with callback and ID, with button style.
+// Create a button with callback and ID, with button style.//创建一个具有回调和ID的按钮，并具有按钮样式。
 lv_obj_t* lv_button_btn_create(lv_obj_t *par, lv_event_cb_t cb, const int id/*=0*/) {
   lv_obj_t *btn = lv_btn_create(par, cb, id, nullptr);
   lv_btn_use_button_style(btn);
   return btn;
 }
 
-// Create a button with position, size, callback, ID, and style.
+// Create a button with position, size, callback, ID, and style.//创建具有位置、大小、回调、ID和样式的按钮。
 lv_obj_t* lv_btn_create(lv_obj_t *par, lv_coord_t x, lv_coord_t y, lv_coord_t w, lv_coord_t h, lv_event_cb_t cb, const int id, lv_style_t *style) {
   lv_obj_t *btn = lv_btn_create(par, cb, id, style);
   lv_obj_set_pos(btn, x, y);
@@ -1200,13 +1201,13 @@ lv_obj_t* lv_btn_create(lv_obj_t *par, lv_coord_t x, lv_coord_t y, lv_coord_t w,
   return btn;
 }
 
-// Create a button with position, size, callback, and ID. Style set to style_para_value.
+// Create a button with position, size, callback, and ID. Style set to style_para_value.//创建一个按钮，将位置、大小、回调和ID.Style设置为Style_para_值。
 lv_obj_t* lv_btn_create(lv_obj_t *par, lv_coord_t x, lv_coord_t y, lv_coord_t w, lv_coord_t h, lv_event_cb_t cb, const int id/*=0*/) {
   lv_obj_t *btn = lv_btn_create(par, x, y, w, h, cb, id, &style_para_value);
   return btn;
 }
 
-// Create a button with position, size, callback, and ID, with label style.
+// Create a button with position, size, callback, and ID, with label style.//创建具有位置、大小、回调和ID的按钮，并使用标签样式。
 lv_obj_t* lv_label_btn_create(lv_obj_t *par, lv_coord_t x, lv_coord_t y, lv_coord_t w, lv_coord_t h, lv_event_cb_t cb, const int id/*=0*/) {
   lv_obj_t *btn = lv_label_btn_create(par, cb, id);
   lv_obj_set_pos(btn, x, y);
@@ -1214,7 +1215,7 @@ lv_obj_t* lv_label_btn_create(lv_obj_t *par, lv_coord_t x, lv_coord_t y, lv_coor
   return btn;
 }
 
-// Create a button with position, size, callback, and ID, with label style.
+// Create a button with position, size, callback, and ID, with label style.//创建具有位置、大小、回调和ID的按钮，并使用标签样式。
 lv_obj_t* lv_button_btn_create(lv_obj_t *par, lv_coord_t x, lv_coord_t y, lv_coord_t w, lv_coord_t h, lv_event_cb_t cb, const int id/*=0*/) {
   lv_obj_t *btn = lv_button_btn_create(par, cb, id);
   lv_obj_set_pos(btn, x, y);
@@ -1222,11 +1223,11 @@ lv_obj_t* lv_button_btn_create(lv_obj_t *par, lv_coord_t x, lv_coord_t y, lv_coo
   return btn;
 }
 
-// Create a button with callback and ID. Style set to style_para_back.
+// Create a button with callback and ID. Style set to style_para_back.//创建一个回调和ID.Style设置为Style_para_back的按钮。
 lv_obj_t* lv_btn_create_back(lv_obj_t *par, lv_event_cb_t cb, const int id/*=0*/) {
   return lv_btn_create(par, cb, id, &style_para_back);
 }
-// Create a button with position, size, callback, and ID. Style set to style_para_back.
+// Create a button with position, size, callback, and ID. Style set to style_para_back.//创建一个按钮，将位置、大小、回调和ID.Style设置为Style_para_back。
 lv_obj_t* lv_btn_create_back(lv_obj_t *par, lv_coord_t x, lv_coord_t y, lv_coord_t w, lv_coord_t h, lv_event_cb_t cb, const int id/*=0*/) {
   lv_obj_t *btn = lv_btn_create_back(par, cb, id);
   lv_obj_set_pos(btn, x, y);
@@ -1234,7 +1235,7 @@ lv_obj_t* lv_btn_create_back(lv_obj_t *par, lv_coord_t x, lv_coord_t y, lv_coord
   return btn;
 }
 
-// Create an image button with image, callback, and ID. Use label style.
+// Create an image button with image, callback, and ID. Use label style.//创建具有图像、回调和ID的图像按钮。使用标签样式。
 lv_obj_t* lv_imgbtn_create(lv_obj_t *par, const char *img, lv_event_cb_t cb, const int id/*=0*/) {
   lv_obj_t *btn = lv_imgbtn_create(par, nullptr);
   if (img) lv_imgbtn_set_src_both(btn, img);
@@ -1247,7 +1248,7 @@ lv_obj_t* lv_imgbtn_create(lv_obj_t *par, const char *img, lv_event_cb_t cb, con
   return btn;
 }
 
-// Create an image button with image, position, callback, and ID. Use label style.
+// Create an image button with image, position, callback, and ID. Use label style.//创建带有图像、位置、回调和ID的图像按钮。使用标签样式。
 lv_obj_t* lv_imgbtn_create(lv_obj_t *par, const char *img, lv_coord_t x, lv_coord_t y, lv_event_cb_t cb, const int id/*=0*/) {
   lv_obj_t *btn = lv_imgbtn_create(par, img, cb, id);
   lv_obj_set_pos(btn, x, y);
@@ -1347,8 +1348,8 @@ void lv_screen_menu_item_onoff_update(lv_obj_t *btn, const bool curValue) {
 #endif
 
 void lv_ex_line(lv_obj_t *line, lv_point_t *points) {
-  // Copy the previous line and apply the new style
-  lv_line_set_points(line, points, 2);     // Set the points
+  // Copy the previous line and apply the new style//复制上一行并应用新样式
+  lv_line_set_points(line, points, 2);     // Set the points//设定要点
   lv_line_set_style(line, LV_LINE_STYLE_MAIN, &style_line);
   lv_obj_align(line, nullptr, LV_ALIGN_IN_TOP_MID, 0, 0);
 }
@@ -1375,4 +1376,4 @@ void LV_TASK_HANDLER() {
   #endif
 }
 
-#endif // HAS_TFT_LVGL_UI
+#endif // HAS_TFT_LVGL_UI//有TFT\U LVGL\U用户界面

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*
  * File:   dyn_SWI.h
  * Author: xxxajk@gmail.com
@@ -40,7 +41,7 @@
 #endif
 
 #ifdef ARDUINO_spresense_ast
-#define SWI_IRQ_NUM 666 // because this board is totally evil.
+#define SWI_IRQ_NUM 666 // because this board is totally evil.//因为这个董事会完全是邪恶的。
 #elif defined(ARDUINO_ARCH_PIC32)
 #ifndef SWI_IRQ_NUM
 #ifdef _DSPI0_IPL_ISR
@@ -67,7 +68,7 @@ extern "C"
 #endif
 #endif
 #elif !defined(NVIC_NUM_INTERRUPTS)
-// Assume CMSIS
+// Assume CMSIS//假设CMSIS
 #define __USE_CMSIS_VECTORS__
 #ifdef NUMBER_OF_INT_VECTORS
 #define NVIC_NUM_INTERRUPTS (NUMBER_OF_INT_VECTORS-16)
@@ -81,24 +82,24 @@ extern "C"
 #define NVIC_SET_PENDING(n) NVIC_SetPendingIRQ((IRQn_Type)n)
 #define NVIC_ENABLE_IRQ(n) NVIC_EnableIRQ((IRQn_Type)n)
 #define NVIC_SET_PRIORITY(n ,p) NVIC_SetPriority((IRQn_Type)n, (uint32_t) p)
-//extern "C" {
-//        extern uint32_t _VectorsRam[VECTORTABLE_SIZE] __attribute__((aligned(VECTORTABLE_ALIGNMENT)));
-//}
+//extern "C" {//外部“C”{
+//        extern uint32_t _VectorsRam[VECTORTABLE_SIZE] __attribute__((aligned(VECTORTABLE_ALIGNMENT)));//外部uint32向量RAM[可向量大小]\uuuuuuuuuuuuu属性（对齐（可向量对齐））；
+//}//}
 
 #ifndef SWI_IRQ_NUM
 #if defined(__SAM3X8E__) && defined(_VARIANT_ARDUINO_DUE_X_)
-// DUE
-// Choices available:
-// HSMCI_IRQn Multimedia Card Interface (HSMCI)
-// EMAC_IRQn Ethernet MAC (EMAC)
-// EMAC is not broken out on the official DUE, but is on clones.
-// SPI0_IRQn Serial Peripheral Interface (SPI0)
-// SPI0_IRQn seems to be the best choice, as long as nobody uses an ISR based master
+// DUE//应得的
+// Choices available://可供选择：
+// HSMCI_IRQn Multimedia Card Interface (HSMCI)//多媒体卡接口（HSMCI）
+// EMAC_IRQn Ethernet MAC (EMAC)//以太网MAC（EMAC）
+// EMAC is not broken out on the official DUE, but is on clones.//EMAC并没有在官方到期日发布，而是在克隆版上发布。
+// SPI0_IRQn Serial Peripheral Interface (SPI0)//SPI0_IRQn串行外围接口（SPI0）
+// SPI0_IRQn seems to be the best choice, as long as nobody uses an ISR based master//只要没有人使用基于ISR的主机，SPI0_IRQn似乎是最佳选择
 #define SWI_IRQ_NUM SPI0_IRQn
 #elif defined(ARDUINO_SAMD_ZERO)
-// Just use sercom4's unused IRQ vector.
+// Just use sercom4's unused IRQ vector.//只需使用sercom4未使用的IRQ向量。
 #define SWI_IRQ_NUM I2S_IRQn
-//#define SWI_IRQ_NUM SERCOM4_IRQn
+//#define SWI_IRQ_NUM SERCOM4_IRQn//#定义SWI_IRQ_NUM SERCOM4_IRQn
 #endif
 #endif
 
@@ -131,9 +132,9 @@ extern "C"
 #endif
 #endif
 #endif
-#else // Not CMSIS or PJRC CORE_TEENSY or PIC32 or SPRESENSE
+#else // Not CMSIS or PJRC CORE_TEENSY or PIC32 or SPRESENSE//不是CMSIS或PJRC CORE_TEENSY或PIC32或SPRESENSE
 #error Do not know how to relocate IRQ vectors or perform SWI
-#endif // SWI_IRQ_NUM
+#endif // SWI_IRQ_NUM//SWI_IRQ_NUM
 
 
 #ifndef SWI_IRQ_NUM
@@ -157,12 +158,12 @@ extern int exec_SWI(const dyn_SWI* klass);
 
 #include "SWI_INLINE.h"
 
-// IMPORTANT! Define this so that you do NOT end up with a NULL stub!
+// IMPORTANT! Define this so that you do NOT end up with a NULL stub!//重要！定义它，这样你就不会得到一个空存根！
 #define SWI_NO_STUB
 #endif /* SWI_IRQ_NUM */
 #endif /* __arm__ */
 
-// if no SWI for CPU (e.g. AVR) make a void stub.
+// if no SWI for CPU (e.g. AVR) make a void stub.//如果CPU没有SWI（如AVR），则创建一个空存根。
 #ifndef SWI_NO_STUB
 #define Init_dyn_SWI() (void(0))
 #ifndef DDSB

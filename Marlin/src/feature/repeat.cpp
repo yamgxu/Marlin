@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -23,7 +24,7 @@
 
 #if ENABLED(GCODE_REPEAT_MARKERS)
 
-//#define DEBUG_GCODE_REPEAT_MARKERS
+//#define DEBUG_GCODE_REPEAT_MARKERS//#定义调试代码重复标记
 
 #include "repeat.h"
 
@@ -48,18 +49,18 @@ void Repeat::add_marker(const uint32_t sdpos, const uint16_t count) {
 }
 
 void Repeat::loop() {
-  if (!index)                           // No marker?
-    SERIAL_ECHO_MSG("!No marker set."); //  Inform the user.
+  if (!index)                           // No marker?//没有记号笔？
+    SERIAL_ECHO_MSG("!No marker set."); //  Inform the user.//通知用户。
   else {
-    const uint8_t ind = index - 1;      // Active marker's index
-    if (!marker[ind].counter) {         // Did its counter run out?
+    const uint8_t ind = index - 1;      // Active marker's index//主动标记索引
+    if (!marker[ind].counter) {         // Did its counter run out?//它的柜台用完了吗？
       DEBUG_ECHOLNPAIR("Pass Marker ", index);
-      index--;                          //  Carry on. Previous marker on the next 'M808'.
+      index--;                          //  Carry on. Previous marker on the next 'M808'.//继续。下一个“M808”上的上一个标记。
     }
     else {
-      card.setIndex(marker[ind].sdpos); // Loop back to the marker.
-      if (marker[ind].counter > 0)      // Ignore a negative (or zero) counter.
-        --marker[ind].counter;          // Decrement the counter. If zero this 'M808' will be skipped next time.
+      card.setIndex(marker[ind].sdpos); // Loop back to the marker.//循环回到标记。
+      if (marker[ind].counter > 0)      // Ignore a negative (or zero) counter.//忽略负（或零）计数器。
+        --marker[ind].counter;          // Decrement the counter. If zero this 'M808' will be skipped next time.//减小计数器的数值。如果为零，则下次将跳过此“M808”。
       DEBUG_ECHOLNPAIR("Goto Marker ", index, " at ", marker[ind].sdpos, " (", marker[ind].counter, ")");
     }
   }
@@ -78,4 +79,4 @@ void Repeat::early_parse_M808(char * const cmd) {
   }
 }
 
-#endif // GCODE_REPEAT_MARKERS
+#endif // GCODE_REPEAT_MARKERS//GCODE_REPEAT_标记

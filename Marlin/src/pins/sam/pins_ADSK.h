@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -78,23 +79,23 @@ A stepper for E0 extruder
 "SpinDir":  Digital pin 13 -> will be connected to A.DIR with jumper
 */
 
-//
-// Servos
-//
-#define SERVO0_PIN                            61  // Analog pin 7, Digital pin 61
+////
+// Servos//伺服
+////
+#define SERVO0_PIN                            61  // Analog pin 7, Digital pin 61//模拟引脚7，数字引脚61
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_STOP_PIN                             9
 #define Y_STOP_PIN                            10
 #define Z_STOP_PIN                            11
 
-#define Z_MIN_PROBE_PIN                       62  // Analog pin 8, Digital pin 62
+#define Z_MIN_PROBE_PIN                       62  // Analog pin 8, Digital pin 62//模拟引脚8，数字引脚62
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                             2
 #define X_DIR_PIN                              5
 #define X_ENABLE_PIN                           8
@@ -111,24 +112,24 @@ A stepper for E0 extruder
 #define E0_DIR_PIN                            13
 #define E0_ENABLE_PIN                          8
 
-//
-// Heaters / Fans
-//
-#define HEATER_0_PIN                          55  // "Hold":   Analog pin 1, Digital pin 55
-#define HEATER_BED_PIN                        57  // "CoolEn": Analog pin 3, Digital pin 57
-#define FAN_PIN                               54  // "Abort":  Analog pin 0, Digital pin 54
+////
+// Heaters / Fans//加热器/风扇
+////
+#define HEATER_0_PIN                          55  // "Hold":   Analog pin 1, Digital pin 55//“保持”：模拟引脚1，数字引脚55
+#define HEATER_BED_PIN                        57  // "CoolEn": Analog pin 3, Digital pin 57//“CoolEn”：模拟引脚3，数字引脚57
+#define FAN_PIN                               54  // "Abort":  Analog pin 0, Digital pin 54//“中止”：模拟引脚0，数字引脚54
 #undef E0_AUTO_FAN_PIN
-#define E0_AUTO_FAN_PIN                       56  // "Resume": Analog pin 2, Digital pin 56
+#define E0_AUTO_FAN_PIN                       56  // "Resume": Analog pin 2, Digital pin 56//“恢复”：模拟引脚2，数字引脚56
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                             4  // "SDA":    Analog pin 4, Digital pin 58
-#define TEMP_BED_PIN                           5  // "SCL":    Analog pin 5, Digital pin 59
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                             4  // "SDA":    Analog pin 4, Digital pin 58//“SDA”：模拟引脚4，数字引脚58
+#define TEMP_BED_PIN                           5  // "SCL":    Analog pin 5, Digital pin 59//“SCL”：模拟引脚5，数字引脚59
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define SDSS                                  52
 
 #if ENABLED(ZONESTAR_LCD)
@@ -157,38 +158,38 @@ A stepper for E0 extruder
     #define AREF_VOLTS 5.0
   #endif
 
-  //
-  // LCD / Controller
-  //
+  ////
+  // LCD / Controller//液晶显示器/控制器
+  ////
   #define LCD_PINS_ENABLE                     14
   #define LCD_PINS_RS                         15
   #define LCD_PINS_D4                         16
   #define LCD_PINS_D5                         17
   #define LCD_PINS_D6                         18
   #define LCD_PINS_D7                         19
-  #define ADC_KEYPAD_PIN                       6  //60 // Analog pin 6, Digital pin 60
+  #define ADC_KEYPAD_PIN                       6  //60 // Analog pin 6, Digital pin 60//60//模拟引脚6，数字引脚60
 
   /**
    * The below defines will scale all the values to work properly on both
    * 5V (Mega) and 3.3V (DUE) boards with all pull-up resistors added for 3.3V
    */
 
-  #define ADC_BUTTONS_VALUE_SCALE         (5.0/AREF_VOLTS) // The LCD module pullup voltage is 5.0V but ADC reference voltage is 3.3V
+  #define ADC_BUTTONS_VALUE_SCALE         (5.0/AREF_VOLTS) // The LCD module pullup voltage is 5.0V but ADC reference voltage is 3.3V//LCD模块上拉电压为5.0V，但ADC参考电压为3.3V
 
-  #define ADC_BUTTONS_R_PULLDOWN          4.7     // Moves voltage down to be bellow 3.3V instead of 5V
-  // the resistors values will be scaled because of 4.7K pulldown parallel resistor
+  #define ADC_BUTTONS_R_PULLDOWN          4.7     // Moves voltage down to be bellow 3.3V instead of 5V//将电压降低到3.3V以下，而不是5V
+  // the resistors values will be scaled because of 4.7K pulldown parallel resistor//由于4.7K下拉并联电阻器，电阻器值将被缩放
   #define _ADC_BUTTONS_R_SCALED(R)        ((R) * (ADC_BUTTONS_R_PULLDOWN) / ((R) + ADC_BUTTONS_R_PULLDOWN))
 
-  // buttons pullup resistor
-  #define ADC_BUTTONS_R_PULLUP            4.7     // the resistor on the 2004 LCD panel
-  // buttons resistors with scaled values because of parallel pulldown resistor
+  // buttons pullup resistor//按钮上拉电阻器
+  #define ADC_BUTTONS_R_PULLUP            4.7     // the resistor on the 2004 LCD panel//2004 LCD面板上的电阻器
+  // buttons resistors with scaled values because of parallel pulldown resistor//按钮由于并联下拉电阻器而具有缩放值的电阻器
   #define ADC_BUTTONS_LEFT_R_PULLDOWN     _ADC_BUTTONS_R_SCALED(0.47)
   #define ADC_BUTTONS_RIGHT_R_PULLDOWN    _ADC_BUTTONS_R_SCALED(4.7)
   #define ADC_BUTTONS_UP_R_PULLDOWN       _ADC_BUTTONS_R_SCALED(1.0)
   #define ADC_BUTTONS_DOWN_R_PULLDOWN     _ADC_BUTTONS_R_SCALED(10.0)
   #define ADC_BUTTONS_MIDDLE_R_PULLDOWN   _ADC_BUTTONS_R_SCALED(2.2)
 
-#endif // ZONESTAR_LCD
+#endif // ZONESTAR_LCD//ZONESTAR_液晶显示器
 
 /**
  * RJ45 8 pins extruder connector

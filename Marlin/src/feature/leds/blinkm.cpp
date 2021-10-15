@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -35,7 +36,7 @@
 void blinkm_set_led_color(const LEDColor &color) {
   Wire.begin();
   Wire.beginTransmission(I2C_ADDRESS(0x09));
-  Wire.write('o');                    //to disable ongoing script, only needs to be used once
+  Wire.write('o');                    //to disable ongoing script, only needs to be used once//要禁用正在进行的脚本，只需使用一次
   Wire.write('n');
   Wire.write(color.r);
   Wire.write(color.g);
@@ -43,4 +44,4 @@ void blinkm_set_led_color(const LEDColor &color) {
   Wire.endTransmission();
 }
 
-#endif // BLINKM
+#endif // BLINKM//布林克姆

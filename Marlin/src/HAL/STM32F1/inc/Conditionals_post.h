@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,14 +22,14 @@
  */
 #pragma once
 
-// If no real EEPROM, Flash emulation, or SRAM emulation is available fall back to SD emulation
+// If no real EEPROM, Flash emulation, or SRAM emulation is available fall back to SD emulation//如果没有真正的EEPROM、闪存仿真或SRAM仿真可用，则返回SD仿真
 #if USE_FALLBACK_EEPROM
   #define SDCARD_EEPROM_EMULATION
 #elif EITHER(I2C_EEPROM, SPI_EEPROM)
   #define USE_SHARED_EEPROM 1
 #endif
 
-// Allow SDSUPPORT to be disabled
+// Allow SDSUPPORT to be disabled//允许禁用SDS支持
 #if DISABLED(SDSUPPORT)
   #undef SDIO_SUPPORT
 #endif

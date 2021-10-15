@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -35,16 +36,16 @@
   #define BOARD_INFO_NAME "Teensy3.2"
 #endif
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_STOP_PIN                             3
 #define Y_STOP_PIN                             4
 #define Z_STOP_PIN                             5
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                             5
 #define X_DIR_PIN                              6
 #define X_ENABLE_PIN                           2
@@ -61,41 +62,41 @@
 #define E0_DIR_PIN                            12
 #define E0_ENABLE_PIN                          2
 
-//#define E1_STEP_PIN                         33
-//#define E1_DIR_PIN                          34
-//#define E1_ENABLE_PIN                       35
+//#define E1_STEP_PIN                         33//#定义E1_步骤_引脚33
+//#define E1_DIR_PIN                          34//#定义E1_DIR_引脚34
+//#define E1_ENABLE_PIN                       35//#定义E1_启用_引脚35
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_0_PIN                          20
-//#define HEATER_1_PIN                        36
+//#define HEATER_1_PIN                        36//#定义加热器1的针脚36
 #define HEATER_BED_PIN                        21
 #ifndef FAN_PIN
   #define FAN_PIN                             22
 #endif
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                            14  // Analog Input - Extruder 2 => A2
-//#define TEMP_1_PIN                           0  // Analog Input
-#define TEMP_BED_PIN                          15  // Analog Input - Bed
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                            14  // Analog Input - Extruder 2 => A2//模拟输入-挤出机2=>A2
+//#define TEMP_1_PIN                           0  // Analog Input//#定义温度1引脚0//模拟输入
+#define TEMP_BED_PIN                          15  // Analog Input - Bed//模拟输入床
 
 #ifndef FILWIDTH_PIN
-  #define FILWIDTH_PIN                         6  // Analog Input
+  #define FILWIDTH_PIN                         6  // Analog Input//模拟输入
 #endif
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define LED_PIN                               13
-//#define SOL1_PIN                            28
-//#define SDSS                                16  // 8
+//#define SOL1_PIN                            28//#定义SOL1_引脚28
+//#define SDSS                                16  // 8//#定义SDSS 16//8
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 
 /*
 #if HAS_WIRED_LCD

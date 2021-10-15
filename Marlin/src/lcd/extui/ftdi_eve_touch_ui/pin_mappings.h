@@ -1,3 +1,4 @@
+/** translatione by yx */
 /******************
  * pin_mappings.h *
  ******************/
@@ -29,26 +30,26 @@
 
 #include "../../../inc/MarlinConfig.h"
 
-#if ENABLED(F6_TFT_PINMAP)              // FYSETC F6 - ATmega2560
+#if ENABLED(F6_TFT_PINMAP)              // FYSETC F6 - ATmega2560//FYSETC F6-ATmega2560
 
   #define CLCD_SPI_CS                    33
   #define CLCD_MOD_RESET                 31
 
-#elif ENABLED(S6_TFT_PINMAP)            // FYSETC S6 - STM32F4
+#elif ENABLED(S6_TFT_PINMAP)            // FYSETC S6 - STM32F4//FYSETC S6-STM32F4
 
   #define CLCD_SPI_CS                    PC7
   #define CLCD_MOD_RESET                 PC6
 
-#elif ENABLED(CR10_TFT_PINMAP)          // FYSETC S6 - STM32F4 - with TOUCH_UI_ULTIPANEL
+#elif ENABLED(CR10_TFT_PINMAP)          // FYSETC S6 - STM32F4 - with TOUCH_UI_ULTIPANEL//FYSETC S6-STM32F4-带触摸屏
 
   #define CLCD_USE_SOFT_SPI
-  #define CLCD_SOFT_SPI_SCLK             LCD_PINS_D4      // PORTA1               Pin 6
-  #define CLCD_SOFT_SPI_MOSI             LCD_PINS_ENABLE  // PORTC1               Pin 8
-  #define CLCD_SPI_CS                    LCD_PINS_RS      // PORTA3               Pin 7
-  #define CLCD_SOFT_SPI_MISO             16               // PORTC0   BTN_ENC     Pin 2
-  #define CLCD_MOD_RESET                 11               // PORTD3   BTN_EN1     Pin 3
-  #define CLCD_AUX_0                     10               // PORTD2   BTN_EN2     Pin 5
-  #define CLCD_AUX_1                     BEEPER_PIN       // PORTA4               Pin 1
+  #define CLCD_SOFT_SPI_SCLK             LCD_PINS_D4      // PORTA1               Pin 6//端口1针脚6
+  #define CLCD_SOFT_SPI_MOSI             LCD_PINS_ENABLE  // PORTC1               Pin 8//端口C1针脚8
+  #define CLCD_SPI_CS                    LCD_PINS_RS      // PORTA3               Pin 7//端口3针脚7
+  #define CLCD_SOFT_SPI_MISO             16               // PORTC0   BTN_ENC     Pin 2//端口C0 BTN_附件针脚2
+  #define CLCD_MOD_RESET                 11               // PORTD3   BTN_EN1     Pin 3//端口D3 BTN_EN1针脚3
+  #define CLCD_AUX_0                     10               // PORTD2   BTN_EN2     Pin 5//端口D2 BTN_EN2针脚5
+  #define CLCD_AUX_1                     BEEPER_PIN       // PORTA4               Pin 1//端口4针脚1
 
 #elif ENABLED(AO_EXP1_DEPRECATED_PINMAP)
 

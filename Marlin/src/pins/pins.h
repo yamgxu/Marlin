@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -53,641 +54,641 @@
   #define HAS_FREE_AUX2_PINS 1
 #endif
 
-// Test the target within the included pins file
+// Test the target within the included pins file//在包含的pins文件中测试目标
 #ifdef __MARLIN_DEPS__
   #define NOT_TARGET(V...) 0
 #else
   #define NOT_TARGET(V...) NONE(V)
 #endif
 
-//
-// RAMPS 1.3 / 1.4 - ATmega1280, ATmega2560
-//
+////
+// RAMPS 1.3 / 1.4 - ATmega1280, ATmega2560//坡道1.3/1.4-ATmega1280、ATmega2560
+////
 
 #if MB(RAMPS_OLD)
-  #include "ramps/pins_RAMPS_OLD.h"             // ATmega2560, ATmega1280                 env:mega2560 env:mega1280
+  #include "ramps/pins_RAMPS_OLD.h"             // ATmega2560, ATmega1280                 env:mega2560 env:mega1280//ATmega2560、ATmega1280环境：mega2560环境：mega1280
 #elif MB(RAMPS_13_EFB, RAMPS_13_EEB, RAMPS_13_EFF, RAMPS_13_EEF, RAMPS_13_SF)
-  #include "ramps/pins_RAMPS_13.h"              // ATmega2560, ATmega1280                 env:mega2560 env:mega1280
+  #include "ramps/pins_RAMPS_13.h"              // ATmega2560, ATmega1280                 env:mega2560 env:mega1280//ATmega2560、ATmega1280环境：mega2560环境：mega1280
 #elif MB(RAMPS_14_EFB, RAMPS_14_EEB, RAMPS_14_EFF, RAMPS_14_EEF, RAMPS_14_SF)
-  #include "ramps/pins_RAMPS.h"                 // ATmega2560, ATmega1280                 env:mega2560 env:mega1280
+  #include "ramps/pins_RAMPS.h"                 // ATmega2560, ATmega1280                 env:mega2560 env:mega1280//ATmega2560、ATmega1280环境：mega2560环境：mega1280
 #elif MB(RAMPS_PLUS_EFB, RAMPS_PLUS_EEB, RAMPS_PLUS_EFF, RAMPS_PLUS_EEF, RAMPS_PLUS_SF)
-  #include "ramps/pins_RAMPS_PLUS.h"            // ATmega2560, ATmega1280                 env:mega2560 env:mega1280
+  #include "ramps/pins_RAMPS_PLUS.h"            // ATmega2560, ATmega1280                 env:mega2560 env:mega1280//ATmega2560、ATmega1280环境：mega2560环境：mega1280
 
-//
-// RAMPS Derivatives - ATmega1280, ATmega2560
-//
+////
+// RAMPS Derivatives - ATmega1280, ATmega2560//斜坡衍生产品-ATmega1280、ATmega2560
+////
 
 #elif MB(3DRAG)
-  #include "ramps/pins_3DRAG.h"                 // ATmega2560, ATmega1280                 env:mega2560 env:mega1280
+  #include "ramps/pins_3DRAG.h"                 // ATmega2560, ATmega1280                 env:mega2560 env:mega1280//ATmega2560、ATmega1280环境：mega2560环境：mega1280
 #elif MB(K8200)
-  #include "ramps/pins_K8200.h"                 // ATmega2560, ATmega1280                 env:mega2560 env:mega1280
+  #include "ramps/pins_K8200.h"                 // ATmega2560, ATmega1280                 env:mega2560 env:mega1280//ATmega2560、ATmega1280环境：mega2560环境：mega1280
 #elif MB(K8400)
-  #include "ramps/pins_K8400.h"                 // ATmega2560, ATmega1280                 env:mega2560 env:mega1280
+  #include "ramps/pins_K8400.h"                 // ATmega2560, ATmega1280                 env:mega2560 env:mega1280//ATmega2560、ATmega1280环境：mega2560环境：mega1280
 #elif MB(K8600)
-  #include "ramps/pins_K8600.h"                 // ATmega2560, ATmega1280                 env:mega2560 env:mega1280
+  #include "ramps/pins_K8600.h"                 // ATmega2560, ATmega1280                 env:mega2560 env:mega1280//ATmega2560、ATmega1280环境：mega2560环境：mega1280
 #elif MB(K8800)
-  #include "ramps/pins_K8800.h"                 // ATmega2560, ATmega1280                 env:mega2560 env:mega1280
+  #include "ramps/pins_K8800.h"                 // ATmega2560, ATmega1280                 env:mega2560 env:mega1280//ATmega2560、ATmega1280环境：mega2560环境：mega1280
 #elif MB(BAM_DICE)
-  #include "ramps/pins_RAMPS.h"                 // ATmega2560, ATmega1280                 env:mega2560 env:mega1280
+  #include "ramps/pins_RAMPS.h"                 // ATmega2560, ATmega1280                 env:mega2560 env:mega1280//ATmega2560、ATmega1280环境：mega2560环境：mega1280
 #elif MB(BAM_DICE_DUE)
-  #include "ramps/pins_BAM_DICE_DUE.h"          // ATmega2560, ATmega1280                 env:mega2560 env:mega1280
+  #include "ramps/pins_BAM_DICE_DUE.h"          // ATmega2560, ATmega1280                 env:mega2560 env:mega1280//ATmega2560、ATmega1280环境：mega2560环境：mega1280
 #elif MB(MKS_BASE)
-  #include "ramps/pins_MKS_BASE_10.h"           // ATmega2560                             env:mega2560
+  #include "ramps/pins_MKS_BASE_10.h"           // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(MKS_BASE_14)
-  #include "ramps/pins_MKS_BASE_14.h"           // ATmega2560                             env:mega2560
+  #include "ramps/pins_MKS_BASE_14.h"           // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(MKS_BASE_15)
-  #include "ramps/pins_MKS_BASE_15.h"           // ATmega2560                             env:mega2560
+  #include "ramps/pins_MKS_BASE_15.h"           // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(MKS_BASE_16)
-  #include "ramps/pins_MKS_BASE_16.h"           // ATmega2560                             env:mega2560
+  #include "ramps/pins_MKS_BASE_16.h"           // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(MKS_BASE_HEROIC)
-  #include "ramps/pins_MKS_BASE_HEROIC.h"       // ATmega2560                             env:mega2560
+  #include "ramps/pins_MKS_BASE_HEROIC.h"       // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(MKS_GEN_13)
-  #include "ramps/pins_MKS_GEN_13.h"            // ATmega2560, ATmega1280                 env:mega2560 env:mega1280
+  #include "ramps/pins_MKS_GEN_13.h"            // ATmega2560, ATmega1280                 env:mega2560 env:mega1280//ATmega2560、ATmega1280环境：mega2560环境：mega1280
 #elif MB(MKS_GEN_L)
-  #include "ramps/pins_MKS_GEN_L.h"             // ATmega2560, ATmega1280                 env:mega2560 env:mega1280
+  #include "ramps/pins_MKS_GEN_L.h"             // ATmega2560, ATmega1280                 env:mega2560 env:mega1280//ATmega2560、ATmega1280环境：mega2560环境：mega1280
 #elif MB(KFB_2)
-  #include "ramps/pins_BIQU_KFB_2.h"            // ATmega2560                             env:mega2560
+  #include "ramps/pins_BIQU_KFB_2.h"            // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(ZRIB_V20)
-  #include "ramps/pins_ZRIB_V20.h"              // ATmega2560, ATmega1280                 env:mega2560 env:mega1280
+  #include "ramps/pins_ZRIB_V20.h"              // ATmega2560, ATmega1280                 env:mega2560 env:mega1280//ATmega2560、ATmega1280环境：mega2560环境：mega1280
 #elif MB(ZRIB_V52)
-  #include "ramps/pins_ZRIB_V52.h"              // ATmega2560, ATmega1280                 env:mega2560 env:mega1280
+  #include "ramps/pins_ZRIB_V52.h"              // ATmega2560, ATmega1280                 env:mega2560 env:mega1280//ATmega2560、ATmega1280环境：mega2560环境：mega1280
 #elif MB(FELIX2)
-  #include "ramps/pins_FELIX2.h"                // ATmega2560, ATmega1280                 env:mega2560 env:mega1280
+  #include "ramps/pins_FELIX2.h"                // ATmega2560, ATmega1280                 env:mega2560 env:mega1280//ATmega2560、ATmega1280环境：mega2560环境：mega1280
 #elif MB(RIGIDBOARD)
-  #include "ramps/pins_RIGIDBOARD.h"            // ATmega2560, ATmega1280                 env:mega2560 env:mega1280
+  #include "ramps/pins_RIGIDBOARD.h"            // ATmega2560, ATmega1280                 env:mega2560 env:mega1280//ATmega2560、ATmega1280环境：mega2560环境：mega1280
 #elif MB(RIGIDBOARD_V2)
-  #include "ramps/pins_RIGIDBOARD_V2.h"         // ATmega2560, ATmega1280                 env:mega2560 env:mega1280
+  #include "ramps/pins_RIGIDBOARD_V2.h"         // ATmega2560, ATmega1280                 env:mega2560 env:mega1280//ATmega2560、ATmega1280环境：mega2560环境：mega1280
 #elif MB(SAINSMART_2IN1)
-  #include "ramps/pins_SAINSMART_2IN1.h"        // ATmega2560, ATmega1280                 env:mega2560 env:mega1280
+  #include "ramps/pins_SAINSMART_2IN1.h"        // ATmega2560, ATmega1280                 env:mega2560 env:mega1280//ATmega2560、ATmega1280环境：mega2560环境：mega1280
 #elif MB(ULTIMAKER)
-  #include "ramps/pins_ULTIMAKER.h"             // ATmega2560, ATmega1280                 env:mega2560 env:mega1280
+  #include "ramps/pins_ULTIMAKER.h"             // ATmega2560, ATmega1280                 env:mega2560 env:mega1280//ATmega2560、ATmega1280环境：mega2560环境：mega1280
 #elif MB(ULTIMAKER_OLD)
-  #include "ramps/pins_ULTIMAKER_OLD.h"         // ATmega2560, ATmega1280                 env:mega2560 env:mega1280
+  #include "ramps/pins_ULTIMAKER_OLD.h"         // ATmega2560, ATmega1280                 env:mega2560 env:mega1280//ATmega2560、ATmega1280环境：mega2560环境：mega1280
 #elif MB(AZTEEG_X3)
-  #include "ramps/pins_AZTEEG_X3.h"             // ATmega2560                             env:mega2560
+  #include "ramps/pins_AZTEEG_X3.h"             // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(AZTEEG_X3_PRO)
-  #include "ramps/pins_AZTEEG_X3_PRO.h"         // ATmega2560                             env:mega2560
+  #include "ramps/pins_AZTEEG_X3_PRO.h"         // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(ULTIMAIN_2)
-  #include "ramps/pins_ULTIMAIN_2.h"            // ATmega2560                             env:mega2560ext
+  #include "ramps/pins_ULTIMAIN_2.h"            // ATmega2560                             env:mega2560ext//ATmega2560环境：mega2560ext
 #elif MB(FORMBOT_RAPTOR)
-  #include "ramps/pins_FORMBOT_RAPTOR.h"        // ATmega2560                             env:mega2560
+  #include "ramps/pins_FORMBOT_RAPTOR.h"        // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(FORMBOT_RAPTOR2)
-  #include "ramps/pins_FORMBOT_RAPTOR2.h"       // ATmega2560                             env:mega2560
+  #include "ramps/pins_FORMBOT_RAPTOR2.h"       // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(FORMBOT_TREX2PLUS)
-  #include "ramps/pins_FORMBOT_TREX2PLUS.h"     // ATmega2560                             env:mega2560
+  #include "ramps/pins_FORMBOT_TREX2PLUS.h"     // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(FORMBOT_TREX3)
-  #include "ramps/pins_FORMBOT_TREX3.h"         // ATmega2560                             env:mega2560
+  #include "ramps/pins_FORMBOT_TREX3.h"         // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(RUMBA)
-  #include "ramps/pins_RUMBA.h"                 // ATmega2560                             env:mega2560
+  #include "ramps/pins_RUMBA.h"                 // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(RUMBA_RAISE3D)
-  #include "ramps/pins_RUMBA_RAISE3D.h"         // ATmega2560                             env:mega2560
+  #include "ramps/pins_RUMBA_RAISE3D.h"         // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(RL200)
-  #include "ramps/pins_RL200.h"                 // ATmega2560                             env:mega2560
+  #include "ramps/pins_RL200.h"                 // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(BQ_ZUM_MEGA_3D)
-  #include "ramps/pins_BQ_ZUM_MEGA_3D.h"        // ATmega2560                             env:mega2560ext
+  #include "ramps/pins_BQ_ZUM_MEGA_3D.h"        // ATmega2560                             env:mega2560ext//ATmega2560环境：mega2560ext
 #elif MB(MAKEBOARD_MINI)
-  #include "ramps/pins_MAKEBOARD_MINI.h"        // ATmega2560                             env:mega2560
+  #include "ramps/pins_MAKEBOARD_MINI.h"        // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(TRIGORILLA_13)
-  #include "ramps/pins_TRIGORILLA_13.h"         // ATmega2560                             env:mega2560
+  #include "ramps/pins_TRIGORILLA_13.h"         // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(TRIGORILLA_14, TRIGORILLA_14_11)
-  #include "ramps/pins_TRIGORILLA_14.h"         // ATmega2560                             env:mega2560
+  #include "ramps/pins_TRIGORILLA_14.h"         // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(RAMPS_ENDER_4)
-  #include "ramps/pins_RAMPS_ENDER_4.h"         // ATmega2560                             env:mega2560
+  #include "ramps/pins_RAMPS_ENDER_4.h"         // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(RAMPS_CREALITY)
-  #include "ramps/pins_RAMPS_CREALITY.h"        // ATmega2560                             env:mega2560
+  #include "ramps/pins_RAMPS_CREALITY.h"        // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(DAGOMA_F5)
-  #include "ramps/pins_DAGOMA_F5.h"             // ATmega2560                             env:mega2560
+  #include "ramps/pins_DAGOMA_F5.h"             // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(FYSETC_F6_13)
-  #include "ramps/pins_FYSETC_F6_13.h"          // ATmega2560                             env:FYSETC_F6
+  #include "ramps/pins_FYSETC_F6_13.h"          // ATmega2560                             env:FYSETC_F6//ATmega2560环境：FYSETC_F6
 #elif MB(FYSETC_F6_14)
-  #include "ramps/pins_FYSETC_F6_14.h"          // ATmega2560                             env:FYSETC_F6
+  #include "ramps/pins_FYSETC_F6_14.h"          // ATmega2560                             env:FYSETC_F6//ATmega2560环境：FYSETC_F6
 #elif MB(DUPLICATOR_I3_PLUS)
-  #include "ramps/pins_DUPLICATOR_I3_PLUS.h"    // ATmega2560                             env:mega2560
+  #include "ramps/pins_DUPLICATOR_I3_PLUS.h"    // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(VORON)
-  #include "ramps/pins_VORON.h"                 // ATmega2560                             env:mega2560
+  #include "ramps/pins_VORON.h"                 // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(TRONXY_V3_1_0)
-  #include "ramps/pins_TRONXY_V3_1_0.h"         // ATmega2560                             env:mega2560
+  #include "ramps/pins_TRONXY_V3_1_0.h"         // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(Z_BOLT_X_SERIES)
-  #include "ramps/pins_Z_BOLT_X_SERIES.h"       // ATmega2560                             env:mega2560
+  #include "ramps/pins_Z_BOLT_X_SERIES.h"       // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(TT_OSCAR)
-  #include "ramps/pins_TT_OSCAR.h"              // ATmega2560                             env:mega2560
+  #include "ramps/pins_TT_OSCAR.h"              // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(TANGO)
-  #include "ramps/pins_TANGO.h"                 // ATmega2560                             env:mega2560
+  #include "ramps/pins_TANGO.h"                 // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(MKS_GEN_L_V2)
-  #include "ramps/pins_MKS_GEN_L_V2.h"          // ATmega2560                             env:mega2560
+  #include "ramps/pins_MKS_GEN_L_V2.h"          // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(COPYMASTER_3D)
-  #include "ramps/pins_COPYMASTER_3D.h"         // ATmega2560                             env:mega2560
+  #include "ramps/pins_COPYMASTER_3D.h"         // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(ORTUR_4)
-  #include "ramps/pins_ORTUR_4.h"               // ATmega2560                             env:mega2560
+  #include "ramps/pins_ORTUR_4.h"               // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(TENLOG_D3_HERO)
-  #include "ramps/pins_TENLOG_D3_HERO.h"        // ATmega2560                             env:mega2560
+  #include "ramps/pins_TENLOG_D3_HERO.h"        // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(MKS_GEN_L_V21)
-  #include "ramps/pins_MKS_GEN_L_V21.h"         // ATmega2560                             env:mega2560
+  #include "ramps/pins_MKS_GEN_L_V21.h"         // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(RAMPS_S_12_EEFB, RAMPS_S_12_EEEB, RAMPS_S_12_EFFB)
-  #include "ramps/pins_RAMPS_S_12.h"            // ATmega2560                             env:mega2560
+  #include "ramps/pins_RAMPS_S_12.h"            // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(LONGER3D_LK1_PRO, LONGER3D_LKx_PRO)
-  #include "ramps/pins_LONGER3D_LKx_PRO.h"      // ATmega2560                             env:mega2560
+  #include "ramps/pins_LONGER3D_LKx_PRO.h"      // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 
-//
-// RAMBo and derivatives
-//
+////
+// RAMBo and derivatives//兰博及其衍生物
+////
 
 #elif MB(RAMBO)
-  #include "rambo/pins_RAMBO.h"                 // ATmega2560                             env:rambo
+  #include "rambo/pins_RAMBO.h"                 // ATmega2560                             env:rambo//ATmega2560环境：兰博
 #elif MB(MINIRAMBO, MINIRAMBO_10A)
-  #include "rambo/pins_MINIRAMBO.h"             // ATmega2560                             env:rambo
+  #include "rambo/pins_MINIRAMBO.h"             // ATmega2560                             env:rambo//ATmega2560环境：兰博
 #elif MB(EINSY_RAMBO)
-  #include "rambo/pins_EINSY_RAMBO.h"           // ATmega2560                             env:rambo
+  #include "rambo/pins_EINSY_RAMBO.h"           // ATmega2560                             env:rambo//ATmega2560环境：兰博
 #elif MB(EINSY_RETRO)
-  #include "rambo/pins_EINSY_RETRO.h"           // ATmega2560                             env:rambo
+  #include "rambo/pins_EINSY_RETRO.h"           // ATmega2560                             env:rambo//ATmega2560环境：兰博
 #elif MB(SCOOVO_X9H)
-  #include "rambo/pins_SCOOVO_X9H.h"            // ATmega2560                             env:rambo
+  #include "rambo/pins_SCOOVO_X9H.h"            // ATmega2560                             env:rambo//ATmega2560环境：兰博
 #elif MB(RAMBO_THINKERV2)
-  #include "rambo/pins_RAMBO_THINKERV2.h"       // ATmega2560                             env:rambo
+  #include "rambo/pins_RAMBO_THINKERV2.h"       // ATmega2560                             env:rambo//ATmega2560环境：兰博
 
-//
-// Other ATmega1280, ATmega2560
-//
+////
+// Other ATmega1280, ATmega2560//其他ATmega1280、ATmega2560
+////
 
 #elif MB(CNCONTROLS_11)
-  #include "mega/pins_CNCONTROLS_11.h"          // ATmega2560, ATmega1280                 env:mega2560 env:mega1280
+  #include "mega/pins_CNCONTROLS_11.h"          // ATmega2560, ATmega1280                 env:mega2560 env:mega1280//ATmega2560、ATmega1280环境：mega2560环境：mega1280
 #elif MB(CNCONTROLS_12)
-  #include "mega/pins_CNCONTROLS_12.h"          // ATmega2560, ATmega1280                 env:mega2560 env:mega1280
+  #include "mega/pins_CNCONTROLS_12.h"          // ATmega2560, ATmega1280                 env:mega2560 env:mega1280//ATmega2560、ATmega1280环境：mega2560环境：mega1280
 #elif MB(CNCONTROLS_15)
-  #include "mega/pins_CNCONTROLS_15.h"          // ATmega2560, ATmega1280                 env:mega2560 env:mega1280
+  #include "mega/pins_CNCONTROLS_15.h"          // ATmega2560, ATmega1280                 env:mega2560 env:mega1280//ATmega2560、ATmega1280环境：mega2560环境：mega1280
 #elif MB(MIGHTYBOARD_REVE)
-  #include "mega/pins_MIGHTYBOARD_REVE.h"       // ATmega2560, ATmega1280                 env:mega2560ext env:mega1280 env:MightyBoard1280 env:MightyBoard2560
+  #include "mega/pins_MIGHTYBOARD_REVE.h"       // ATmega2560, ATmega1280                 env:mega2560ext env:mega1280 env:MightyBoard1280 env:MightyBoard2560//ATmega2560、ATmega1280环境：MEGA2560外部环境：mega1280环境：MightyBoard1280环境：MightyBoard2560
 #elif MB(CHEAPTRONIC)
-  #include "mega/pins_CHEAPTRONIC.h"            // ATmega2560                             env:mega2560
+  #include "mega/pins_CHEAPTRONIC.h"            // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(CHEAPTRONIC_V2)
-  #include "mega/pins_CHEAPTRONICv2.h"          // ATmega2560                             env:mega2560
+  #include "mega/pins_CHEAPTRONICv2.h"          // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(MEGATRONICS)
-  #include "mega/pins_MEGATRONICS.h"            // ATmega2560                             env:mega2560
+  #include "mega/pins_MEGATRONICS.h"            // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(MEGATRONICS_2)
-  #include "mega/pins_MEGATRONICS_2.h"          // ATmega2560                             env:mega2560
+  #include "mega/pins_MEGATRONICS_2.h"          // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(MEGATRONICS_3, MEGATRONICS_31, MEGATRONICS_32)
-  #include "mega/pins_MEGATRONICS_3.h"          // ATmega2560                             env:mega2560
+  #include "mega/pins_MEGATRONICS_3.h"          // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(ELEFU_3)
-  #include "mega/pins_ELEFU_3.h"                // ATmega2560                             env:mega2560
+  #include "mega/pins_ELEFU_3.h"                // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(LEAPFROG)
-  #include "mega/pins_LEAPFROG.h"               // ATmega2560, ATmega1280                 env:mega2560 env:mega1280
+  #include "mega/pins_LEAPFROG.h"               // ATmega2560, ATmega1280                 env:mega2560 env:mega1280//ATmega2560、ATmega1280环境：mega2560环境：mega1280
 #elif MB(MEGACONTROLLER)
-  #include "mega/pins_MEGACONTROLLER.h"         // ATmega2560                             env:mega2560
+  #include "mega/pins_MEGACONTROLLER.h"         // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(GT2560_REV_A)
-  #include "mega/pins_GT2560_REV_A.h"           // ATmega2560, ATmega1280                 env:mega2560 env:mega1280
+  #include "mega/pins_GT2560_REV_A.h"           // ATmega2560, ATmega1280                 env:mega2560 env:mega1280//ATmega2560、ATmega1280环境：mega2560环境：mega1280
 #elif MB(GT2560_REV_A_PLUS)
-  #include "mega/pins_GT2560_REV_A_PLUS.h"      // ATmega2560, ATmega1280                 env:mega2560 env:mega1280
+  #include "mega/pins_GT2560_REV_A_PLUS.h"      // ATmega2560, ATmega1280                 env:mega2560 env:mega1280//ATmega2560、ATmega1280环境：mega2560环境：mega1280
 #elif MB(GT2560_V3)
-  #include "mega/pins_GT2560_V3.h"              // ATmega2560                             env:mega2560
+  #include "mega/pins_GT2560_V3.h"              // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(GT2560_REV_B)
-  #include "mega/pins_GT2560_REV_B.h"           // ATmega2560                             env:mega2560
+  #include "mega/pins_GT2560_REV_B.h"           // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(GT2560_V4)
-  #include "mega/pins_GT2560_V4.h"              // ATmega2560                             env:mega2560
+  #include "mega/pins_GT2560_V4.h"              // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(GT2560_V3_MC2)
-  #include "mega/pins_GT2560_V3_MC2.h"          // ATmega2560                             env:mega2560
+  #include "mega/pins_GT2560_V3_MC2.h"          // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(GT2560_V3_A20)
-  #include "mega/pins_GT2560_V3_A20.h"          // ATmega2560                             env:mega2560
+  #include "mega/pins_GT2560_V3_A20.h"          // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(EINSTART_S)
-  #include "mega/pins_EINSTART-S.h"             // ATmega2560, ATmega1280                 env:mega2560ext env:mega1280
+  #include "mega/pins_EINSTART-S.h"             // ATmega2560, ATmega1280                 env:mega2560ext env:mega1280//ATmega2560、ATmega1280环境：mega2560ext环境：mega1280
 #elif MB(WANHAO_ONEPLUS)
-  #include "mega/pins_WANHAO_ONEPLUS.h"         // ATmega2560                             env:mega2560
+  #include "mega/pins_WANHAO_ONEPLUS.h"         // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(OVERLORD)
-  #include "mega/pins_OVERLORD.h"               // ATmega2560                             env:mega2560
+  #include "mega/pins_OVERLORD.h"               // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(HJC2560C_REV1)
-  #include "mega/pins_HJC2560C_REV2.h"          // ATmega2560                             env:mega2560
+  #include "mega/pins_HJC2560C_REV2.h"          // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(HJC2560C_REV2)
-  #include "mega/pins_HJC2560C_REV2.h"          // ATmega2560                             env:mega2560
+  #include "mega/pins_HJC2560C_REV2.h"          // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(LEAPFROG_XEED2015)
-  #include "mega/pins_LEAPFROG_XEED2015.h"      // ATmega2560                             env:mega2560
+  #include "mega/pins_LEAPFROG_XEED2015.h"      // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(PICA)
-  #include "mega/pins_PICA.h"                   // ATmega2560                             env:mega2560
+  #include "mega/pins_PICA.h"                   // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(PICA_REVB)
-  #include "mega/pins_PICAOLD.h"                // ATmega2560                             env:mega2560
+  #include "mega/pins_PICAOLD.h"                // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(INTAMSYS40)
-  #include "mega/pins_INTAMSYS40.h"             // ATmega2560                             env:mega2560
+  #include "mega/pins_INTAMSYS40.h"             // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 #elif MB(MALYAN_M180)
-  #include "mega/pins_MALYAN_M180.h"            // ATmega2560                             env:mega2560
+  #include "mega/pins_MALYAN_M180.h"            // ATmega2560                             env:mega2560//ATmega2560环境：mega2560
 
-//
-// ATmega1281, ATmega2561
-//
+////
+// ATmega1281, ATmega2561//ATmega1281、ATmega2561
+////
 
 #elif MB(MINITRONICS)
-  #include "mega/pins_MINITRONICS.h"            // ATmega1281                             env:mega1280
+  #include "mega/pins_MINITRONICS.h"            // ATmega1281                             env:mega1280//ATmega1281环境：mega1280
 #elif MB(SILVER_GATE)
-  #include "mega/pins_SILVER_GATE.h"            // ATmega2561                             env:mega2560
+  #include "mega/pins_SILVER_GATE.h"            // ATmega2561                             env:mega2560//ATmega2561环境：mega2560
 
-//
-// Sanguinololu and Derivatives - ATmega644P, ATmega1284P
-//
+////
+// Sanguinololu and Derivatives - ATmega644P, ATmega1284P//Sanguinololu及其衍生物-ATmega644P、ATmega1284P
+////
 
 #elif MB(SANGUINOLOLU_11)
-  #include "sanguino/pins_SANGUINOLOLU_11.h"    // ATmega644P, ATmega1284P                env:sanguino1284p_optimized env:sanguino1284p env:sanguino644p
+  #include "sanguino/pins_SANGUINOLOLU_11.h"    // ATmega644P, ATmega1284P                env:sanguino1284p_optimized env:sanguino1284p env:sanguino644p//ATmega644P，ATmega1284P环境：血球1284P_优化环境：血球1284P环境：血球644P
 #elif MB(SANGUINOLOLU_12)
-  #include "sanguino/pins_SANGUINOLOLU_12.h"    // ATmega644P, ATmega1284P                env:sanguino1284p_optimized env:sanguino1284p env:sanguino644p
+  #include "sanguino/pins_SANGUINOLOLU_12.h"    // ATmega644P, ATmega1284P                env:sanguino1284p_optimized env:sanguino1284p env:sanguino644p//ATmega644P，ATmega1284P环境：血球1284P_优化环境：血球1284P环境：血球644P
 #elif MB(MELZI)
-  #include "sanguino/pins_MELZI.h"              // ATmega644P, ATmega1284P                env:sanguino1284p_optimized env:sanguino1284p env:sanguino644p
+  #include "sanguino/pins_MELZI.h"              // ATmega644P, ATmega1284P                env:sanguino1284p_optimized env:sanguino1284p env:sanguino644p//ATmega644P，ATmega1284P环境：血球1284P_优化环境：血球1284P环境：血球644P
 #elif MB(MELZI_V2)
-  #include "sanguino/pins_MELZI_V2.h"           // ATmega644P, ATmega1284P                env:sanguino1284p_optimized env:sanguino1284p env:sanguino644p
+  #include "sanguino/pins_MELZI_V2.h"           // ATmega644P, ATmega1284P                env:sanguino1284p_optimized env:sanguino1284p env:sanguino644p//ATmega644P，ATmega1284P环境：血球1284P_优化环境：血球1284P环境：血球644P
 #elif MB(MELZI_MAKR3D)
-  #include "sanguino/pins_MELZI_MAKR3D.h"       // ATmega644P, ATmega1284P                env:sanguino1284p_optimized env:sanguino1284p env:sanguino644p
+  #include "sanguino/pins_MELZI_MAKR3D.h"       // ATmega644P, ATmega1284P                env:sanguino1284p_optimized env:sanguino1284p env:sanguino644p//ATmega644P，ATmega1284P环境：血球1284P_优化环境：血球1284P环境：血球644P
 #elif MB(MELZI_CREALITY)
-  #include "sanguino/pins_MELZI_CREALITY.h"     // ATmega1284P                            env:melzi_optiboot_optimized env:melzi_optiboot env:melzi_optimized env:melzi
+  #include "sanguino/pins_MELZI_CREALITY.h"     // ATmega1284P                            env:melzi_optiboot_optimized env:melzi_optiboot env:melzi_optimized env:melzi//ATmega1284P环境：melzi_optiboot_优化环境：melzi_optiboot环境：melzi_优化环境：melzi
 #elif MB(MELZI_MALYAN)
-  #include "sanguino/pins_MELZI_MALYAN.h"       // ATmega644P, ATmega1284P                env:sanguino1284p_optimized env:sanguino1284p env:sanguino644p
+  #include "sanguino/pins_MELZI_MALYAN.h"       // ATmega644P, ATmega1284P                env:sanguino1284p_optimized env:sanguino1284p env:sanguino644p//ATmega644P，ATmega1284P环境：血球1284P_优化环境：血球1284P环境：血球644P
 #elif MB(MELZI_TRONXY)
-  #include "sanguino/pins_MELZI_TRONXY.h"       // ATmega644P, ATmega1284P                env:sanguino1284p_optimized env:sanguino1284p env:sanguino644p
+  #include "sanguino/pins_MELZI_TRONXY.h"       // ATmega644P, ATmega1284P                env:sanguino1284p_optimized env:sanguino1284p env:sanguino644p//ATmega644P，ATmega1284P环境：血球1284P_优化环境：血球1284P环境：血球644P
 #elif MB(STB_11)
-  #include "sanguino/pins_STB_11.h"             // ATmega644P, ATmega1284P                env:sanguino1284p_optimized env:sanguino1284p env:sanguino644p
+  #include "sanguino/pins_STB_11.h"             // ATmega644P, ATmega1284P                env:sanguino1284p_optimized env:sanguino1284p env:sanguino644p//ATmega644P，ATmega1284P环境：血球1284P_优化环境：血球1284P环境：血球644P
 #elif MB(AZTEEG_X1)
-  #include "sanguino/pins_AZTEEG_X1.h"          // ATmega644P, ATmega1284P                env:sanguino1284p_optimized env:sanguino1284p env:sanguino644p
+  #include "sanguino/pins_AZTEEG_X1.h"          // ATmega644P, ATmega1284P                env:sanguino1284p_optimized env:sanguino1284p env:sanguino644p//ATmega644P，ATmega1284P环境：血球1284P_优化环境：血球1284P环境：血球644P
 #elif MB(ZMIB_V2)
-  #include "sanguino/pins_ZMIB_V2.h"            // ATmega644P, ATmega1284P                env:sanguino1284p_optimized env:sanguino1284p env:sanguino644p
+  #include "sanguino/pins_ZMIB_V2.h"            // ATmega644P, ATmega1284P                env:sanguino1284p_optimized env:sanguino1284p env:sanguino644p//ATmega644P，ATmega1284P环境：血球1284P_优化环境：血球1284P环境：血球644P
 
-//
-// Other ATmega644P, ATmega644, ATmega1284P
-//
+////
+// Other ATmega644P, ATmega644, ATmega1284P//其他ATmega644P、ATmega644、ATmega1284P
+////
 
 #elif MB(GEN3_MONOLITHIC)
-  #include "sanguino/pins_GEN3_MONOLITHIC.h"    // ATmega644P                             env:sanguino644p
+  #include "sanguino/pins_GEN3_MONOLITHIC.h"    // ATmega644P                             env:sanguino644p//ATmega644P环境：sanguino644p
 #elif MB(GEN3_PLUS)
-  #include "sanguino/pins_GEN3_PLUS.h"          // ATmega644P, ATmega1284P                env:sanguino1284p_optimized env:sanguino1284p env:sanguino644p
+  #include "sanguino/pins_GEN3_PLUS.h"          // ATmega644P, ATmega1284P                env:sanguino1284p_optimized env:sanguino1284p env:sanguino644p//ATmega644P，ATmega1284P环境：血球1284P_优化环境：血球1284P环境：血球644P
 #elif MB(GEN6)
-  #include "sanguino/pins_GEN6.h"               // ATmega644P, ATmega1284P                env:sanguino1284p_optimized env:sanguino1284p env:sanguino644p
+  #include "sanguino/pins_GEN6.h"               // ATmega644P, ATmega1284P                env:sanguino1284p_optimized env:sanguino1284p env:sanguino644p//ATmega644P，ATmega1284P环境：血球1284P_优化环境：血球1284P环境：血球644P
 #elif MB(GEN6_DELUXE)
-  #include "sanguino/pins_GEN6_DELUXE.h"        // ATmega644P, ATmega1284P                env:sanguino1284p_optimized env:sanguino1284p env:sanguino644p
+  #include "sanguino/pins_GEN6_DELUXE.h"        // ATmega644P, ATmega1284P                env:sanguino1284p_optimized env:sanguino1284p env:sanguino644p//ATmega644P，ATmega1284P环境：血球1284P_优化环境：血球1284P环境：血球644P
 #elif MB(GEN7_CUSTOM)
-  #include "sanguino/pins_GEN7_CUSTOM.h"        // ATmega644P, ATmega644, ATmega1284P     env:sanguino1284p_optimized env:sanguino1284p env:sanguino644p
+  #include "sanguino/pins_GEN7_CUSTOM.h"        // ATmega644P, ATmega644, ATmega1284P     env:sanguino1284p_optimized env:sanguino1284p env:sanguino644p//ATmega644P、ATmega644、ATmega1284P环境：血球1284P_优化环境：血球1284P环境：血球644P
 #elif MB(GEN7_12)
-  #include "sanguino/pins_GEN7_12.h"            // ATmega644P, ATmega644, ATmega1284P     env:sanguino1284p_optimized env:sanguino1284p env:sanguino644p
+  #include "sanguino/pins_GEN7_12.h"            // ATmega644P, ATmega644, ATmega1284P     env:sanguino1284p_optimized env:sanguino1284p env:sanguino644p//ATmega644P、ATmega644、ATmega1284P环境：血球1284P_优化环境：血球1284P环境：血球644P
 #elif MB(GEN7_13)
-  #include "sanguino/pins_GEN7_13.h"            // ATmega644P, ATmega644, ATmega1284P     env:sanguino1284p_optimized env:sanguino1284p env:sanguino644p
+  #include "sanguino/pins_GEN7_13.h"            // ATmega644P, ATmega644, ATmega1284P     env:sanguino1284p_optimized env:sanguino1284p env:sanguino644p//ATmega644P、ATmega644、ATmega1284P环境：血球1284P_优化环境：血球1284P环境：血球644P
 #elif MB(GEN7_14)
-  #include "sanguino/pins_GEN7_14.h"            // ATmega644P, ATmega644, ATmega1284P     env:sanguino1284p_optimized env:sanguino1284p env:sanguino644p
+  #include "sanguino/pins_GEN7_14.h"            // ATmega644P, ATmega644, ATmega1284P     env:sanguino1284p_optimized env:sanguino1284p env:sanguino644p//ATmega644P、ATmega644、ATmega1284P环境：血球1284P_优化环境：血球1284P环境：血球644P
 #elif MB(OMCA_A)
-  #include "sanguino/pins_OMCA_A.h"             // ATmega644                              env:sanguino644p
+  #include "sanguino/pins_OMCA_A.h"             // ATmega644                              env:sanguino644p//ATmega644环境：sanguino644p
 #elif MB(OMCA)
-  #include "sanguino/pins_OMCA.h"               // ATmega644P, ATmega644                  env:sanguino644p
+  #include "sanguino/pins_OMCA.h"               // ATmega644P, ATmega644                  env:sanguino644p//ATmega644P，ATmega644环境：sanguino644p
 #elif MB(ANET_10)
-  #include "sanguino/pins_ANET_10.h"            // ATmega1284P                            env:sanguino1284p env:sanguino1284p_optimized
+  #include "sanguino/pins_ANET_10.h"            // ATmega1284P                            env:sanguino1284p env:sanguino1284p_optimized//ATmega1284P环境：血球1284P环境：血球1284P\u优化
 #elif MB(SETHI)
-  #include "sanguino/pins_SETHI.h"              // ATmega644P, ATmega644, ATmega1284P     env:sanguino1284p_optimized env:sanguino1284p env:sanguino644p
+  #include "sanguino/pins_SETHI.h"              // ATmega644P, ATmega644, ATmega1284P     env:sanguino1284p_optimized env:sanguino1284p env:sanguino644p//ATmega644P、ATmega644、ATmega1284P环境：血球1284P_优化环境：血球1284P环境：血球644P
 
-//
-// Teensyduino - AT90USB1286, AT90USB1286P
-//
+////
+// Teensyduino - AT90USB1286, AT90USB1286P//蒂恩西杜伊诺-AT90USB1286，AT90USB1286P
+////
 
 #elif MB(TEENSYLU)
-  #include "teensy2/pins_TEENSYLU.h"            // AT90USB1286, AT90USB1286P              env:at90usb1286_cdc
+  #include "teensy2/pins_TEENSYLU.h"            // AT90USB1286, AT90USB1286P              env:at90usb1286_cdc//AT90USB1286，AT90USB1286P环境：AT90USB1286_cdc
 #elif MB(PRINTRBOARD)
-  #include "teensy2/pins_PRINTRBOARD.h"         // AT90USB1286                            env:at90usb1286_dfu
+  #include "teensy2/pins_PRINTRBOARD.h"         // AT90USB1286                            env:at90usb1286_dfu//AT90USB1286环境：AT90USB1286_dfu
 #elif MB(PRINTRBOARD_REVF)
-  #include "teensy2/pins_PRINTRBOARD_REVF.h"    // AT90USB1286                            env:at90usb1286_dfu
+  #include "teensy2/pins_PRINTRBOARD_REVF.h"    // AT90USB1286                            env:at90usb1286_dfu//AT90USB1286环境：AT90USB1286_dfu
 #elif MB(BRAINWAVE)
-  #include "teensy2/pins_BRAINWAVE.h"           // AT90USB646                             env:at90usb1286_cdc
+  #include "teensy2/pins_BRAINWAVE.h"           // AT90USB646                             env:at90usb1286_cdc//AT90USB646环境：at90usb1286_cdc
 #elif MB(BRAINWAVE_PRO)
-  #include "teensy2/pins_BRAINWAVE_PRO.h"       // AT90USB1286                            env:at90usb1286_cdc
+  #include "teensy2/pins_BRAINWAVE_PRO.h"       // AT90USB1286                            env:at90usb1286_cdc//AT90USB1286环境：AT90USB1286_cdc
 #elif MB(SAV_MKI)
-  #include "teensy2/pins_SAV_MKI.h"             // AT90USB1286                            env:at90usb1286_cdc
+  #include "teensy2/pins_SAV_MKI.h"             // AT90USB1286                            env:at90usb1286_cdc//AT90USB1286环境：AT90USB1286_cdc
 #elif MB(TEENSY2)
-  #include "teensy2/pins_TEENSY2.h"             // AT90USB1286                            env:teensy20
+  #include "teensy2/pins_TEENSY2.h"             // AT90USB1286                            env:teensy20//AT90USB1286环境：天桥20
 #elif MB(5DPRINT)
-  #include "teensy2/pins_5DPRINT.h"             // AT90USB1286                            env:at90usb1286_dfu
+  #include "teensy2/pins_5DPRINT.h"             // AT90USB1286                            env:at90usb1286_dfu//AT90USB1286环境：AT90USB1286_dfu
 
-//
-// LPC1768 ARM Cortex M3
-//
+////
+// LPC1768 ARM Cortex M3//LPC1768臂皮质M3
+////
 
 #elif MB(RAMPS_14_RE_ARM_EFB, RAMPS_14_RE_ARM_EEB, RAMPS_14_RE_ARM_EFF, RAMPS_14_RE_ARM_EEF, RAMPS_14_RE_ARM_SF)
-  #include "lpc1768/pins_RAMPS_RE_ARM.h"        // LPC1768                                env:LPC1768
+  #include "lpc1768/pins_RAMPS_RE_ARM.h"        // LPC1768                                env:LPC1768//LPC1768环境：LPC1768
 #elif MB(MKS_SBASE)
-  #include "lpc1768/pins_MKS_SBASE.h"           // LPC1768                                env:LPC1768
+  #include "lpc1768/pins_MKS_SBASE.h"           // LPC1768                                env:LPC1768//LPC1768环境：LPC1768
 #elif MB(MKS_SGEN_L)
-  #include "lpc1768/pins_MKS_SGEN_L.h"          // LPC1768                                env:LPC1768
+  #include "lpc1768/pins_MKS_SGEN_L.h"          // LPC1768                                env:LPC1768//LPC1768环境：LPC1768
 #elif MB(AZSMZ_MINI)
-  #include "lpc1768/pins_AZSMZ_MINI.h"          // LPC1768                                env:LPC1768
+  #include "lpc1768/pins_AZSMZ_MINI.h"          // LPC1768                                env:LPC1768//LPC1768环境：LPC1768
 #elif MB(BIQU_BQ111_A4)
-  #include "lpc1768/pins_BIQU_BQ111_A4.h"       // LPC1768                                env:LPC1768
+  #include "lpc1768/pins_BIQU_BQ111_A4.h"       // LPC1768                                env:LPC1768//LPC1768环境：LPC1768
 #elif MB(SELENA_COMPACT)
-  #include "lpc1768/pins_SELENA_COMPACT.h"      // LPC1768                                env:LPC1768
+  #include "lpc1768/pins_SELENA_COMPACT.h"      // LPC1768                                env:LPC1768//LPC1768环境：LPC1768
 #elif MB(BIQU_B300_V1_0)
-  #include "lpc1768/pins_BIQU_B300_V1.0.h"      // LPC1768                                env:LPC1768
+  #include "lpc1768/pins_BIQU_B300_V1.0.h"      // LPC1768                                env:LPC1768//LPC1768环境：LPC1768
 #elif MB(GMARSH_X6_REV1)
-  #include "lpc1768/pins_GMARSH_X6_REV1.h"      // LPC1768                                env:LPC1768
+  #include "lpc1768/pins_GMARSH_X6_REV1.h"      // LPC1768                                env:LPC1768//LPC1768环境：LPC1768
 #elif MB(BTT_SKR_V1_1)
-  #include "lpc1768/pins_BTT_SKR_V1_1.h"        // LPC1768                                env:LPC1768
+  #include "lpc1768/pins_BTT_SKR_V1_1.h"        // LPC1768                                env:LPC1768//LPC1768环境：LPC1768
 #elif MB(BTT_SKR_V1_3)
-  #include "lpc1768/pins_BTT_SKR_V1_3.h"        // LPC1768                                env:LPC1768
+  #include "lpc1768/pins_BTT_SKR_V1_3.h"        // LPC1768                                env:LPC1768//LPC1768环境：LPC1768
 #elif MB(BTT_SKR_V1_4)
-  #include "lpc1768/pins_BTT_SKR_V1_4.h"        // LPC1768                                env:LPC1768
+  #include "lpc1768/pins_BTT_SKR_V1_4.h"        // LPC1768                                env:LPC1768//LPC1768环境：LPC1768
 
-//
-// LPC1769 ARM Cortex M3
-//
+////
+// LPC1769 ARM Cortex M3//LPC1769臂皮质M3
+////
 
 #elif MB(MKS_SGEN)
-  #include "lpc1769/pins_MKS_SGEN.h"            // LPC1769                                env:LPC1769
+  #include "lpc1769/pins_MKS_SGEN.h"            // LPC1769                                env:LPC1769//LPC1769环境：LPC1769
 #elif MB(AZTEEG_X5_GT)
-  #include "lpc1769/pins_AZTEEG_X5_GT.h"        // LPC1769                                env:LPC1769
+  #include "lpc1769/pins_AZTEEG_X5_GT.h"        // LPC1769                                env:LPC1769//LPC1769环境：LPC1769
 #elif MB(AZTEEG_X5_MINI)
-  #include "lpc1769/pins_AZTEEG_X5_MINI.h"      // LPC1769                                env:LPC1769
+  #include "lpc1769/pins_AZTEEG_X5_MINI.h"      // LPC1769                                env:LPC1769//LPC1769环境：LPC1769
 #elif MB(AZTEEG_X5_MINI_WIFI)
-  #include "lpc1769/pins_AZTEEG_X5_MINI_WIFI.h" // LPC1769                                env:LPC1769
+  #include "lpc1769/pins_AZTEEG_X5_MINI_WIFI.h" // LPC1769                                env:LPC1769//LPC1769环境：LPC1769
 #elif MB(COHESION3D_REMIX)
-  #include "lpc1769/pins_COHESION3D_REMIX.h"    // LPC1769                                env:LPC1769
+  #include "lpc1769/pins_COHESION3D_REMIX.h"    // LPC1769                                env:LPC1769//LPC1769环境：LPC1769
 #elif MB(COHESION3D_MINI)
-  #include "lpc1769/pins_COHESION3D_MINI.h"     // LPC1769                                env:LPC1769
+  #include "lpc1769/pins_COHESION3D_MINI.h"     // LPC1769                                env:LPC1769//LPC1769环境：LPC1769
 #elif MB(SMOOTHIEBOARD)
-  #include "lpc1769/pins_SMOOTHIEBOARD.h"       // LPC1769                                env:LPC1769
+  #include "lpc1769/pins_SMOOTHIEBOARD.h"       // LPC1769                                env:LPC1769//LPC1769环境：LPC1769
 #elif MB(TH3D_EZBOARD)
-  #include "lpc1769/pins_TH3D_EZBOARD.h"        // LPC1769                                env:LPC1769
+  #include "lpc1769/pins_TH3D_EZBOARD.h"        // LPC1769                                env:LPC1769//LPC1769环境：LPC1769
 #elif MB(BTT_SKR_V1_4_TURBO)
-  #include "lpc1769/pins_BTT_SKR_V1_4_TURBO.h"  // LPC1769                                env:LPC1769
+  #include "lpc1769/pins_BTT_SKR_V1_4_TURBO.h"  // LPC1769                                env:LPC1769//LPC1769环境：LPC1769
 #elif MB(MKS_SGEN_L_V2)
-  #include "lpc1769/pins_MKS_SGEN_L_V2.h"       // LPC1769                                env:LPC1769
+  #include "lpc1769/pins_MKS_SGEN_L_V2.h"       // LPC1769                                env:LPC1769//LPC1769环境：LPC1769
 #elif MB(BTT_SKR_E3_TURBO)
-  #include "lpc1769/pins_BTT_SKR_E3_TURBO.h"    // LPC1769                                env:LPC1769
+  #include "lpc1769/pins_BTT_SKR_E3_TURBO.h"    // LPC1769                                env:LPC1769//LPC1769环境：LPC1769
 #elif MB(FLY_CDY)
-  #include "lpc1769/pins_FLY_CDY.h"             // LPC1769                                env:LPC1769
+  #include "lpc1769/pins_FLY_CDY.h"             // LPC1769                                env:LPC1769//LPC1769环境：LPC1769
 
-//
-// Due (ATSAM) boards
-//
+////
+// Due (ATSAM) boards//到期（ATSAM）板
+////
 
 #elif MB(DUE3DOM)
-  #include "sam/pins_DUE3DOM.h"                 // SAM3X8E                                env:DUE env:DUE_USB env:DUE_debug
+  #include "sam/pins_DUE3DOM.h"                 // SAM3X8E                                env:DUE env:DUE_USB env:DUE_debug//SAM3X8E环境：到期环境：到期USB环境：到期调试
 #elif MB(DUE3DOM_MINI)
-  #include "sam/pins_DUE3DOM_MINI.h"            // SAM3X8E                                env:DUE env:DUE_USB env:DUE_debug
+  #include "sam/pins_DUE3DOM_MINI.h"            // SAM3X8E                                env:DUE env:DUE_USB env:DUE_debug//SAM3X8E环境：到期环境：到期USB环境：到期调试
 #elif MB(RADDS)
-  #include "sam/pins_RADDS.h"                   // SAM3X8E                                env:DUE env:DUE_USB env:DUE_debug
+  #include "sam/pins_RADDS.h"                   // SAM3X8E                                env:DUE env:DUE_USB env:DUE_debug//SAM3X8E环境：到期环境：到期USB环境：到期调试
 #elif MB(RURAMPS4D_11)
-  #include "sam/pins_RURAMPS4D_11.h"            // SAM3X8E                                env:DUE env:DUE_USB env:DUE_debug
+  #include "sam/pins_RURAMPS4D_11.h"            // SAM3X8E                                env:DUE env:DUE_USB env:DUE_debug//SAM3X8E环境：到期环境：到期USB环境：到期调试
 #elif MB(RURAMPS4D_13)
-  #include "sam/pins_RURAMPS4D_13.h"            // SAM3X8E                                env:DUE env:DUE_USB env:DUE_debug
+  #include "sam/pins_RURAMPS4D_13.h"            // SAM3X8E                                env:DUE env:DUE_USB env:DUE_debug//SAM3X8E环境：到期环境：到期USB环境：到期调试
 #elif MB(RAMPS_FD_V1)
-  #include "sam/pins_RAMPS_FD_V1.h"             // SAM3X8E                                env:DUE env:DUE_USB env:DUE_debug
+  #include "sam/pins_RAMPS_FD_V1.h"             // SAM3X8E                                env:DUE env:DUE_USB env:DUE_debug//SAM3X8E环境：到期环境：到期USB环境：到期调试
 #elif MB(RAMPS_FD_V2)
-  #include "sam/pins_RAMPS_FD_V2.h"             // SAM3X8E                                env:DUE env:DUE_USB env:DUE_debug
+  #include "sam/pins_RAMPS_FD_V2.h"             // SAM3X8E                                env:DUE env:DUE_USB env:DUE_debug//SAM3X8E环境：到期环境：到期USB环境：到期调试
 #elif MB(RAMPS_SMART_EFB, RAMPS_SMART_EEB, RAMPS_SMART_EFF, RAMPS_SMART_EEF, RAMPS_SMART_SF)
-  #include "sam/pins_RAMPS_SMART.h"             // SAM3X8E                                env:DUE env:DUE_USB env:DUE_debug
+  #include "sam/pins_RAMPS_SMART.h"             // SAM3X8E                                env:DUE env:DUE_USB env:DUE_debug//SAM3X8E环境：到期环境：到期USB环境：到期调试
 #elif MB(RAMPS_DUO_EFB, RAMPS_DUO_EEB, RAMPS_DUO_EFF, RAMPS_DUO_EEF, RAMPS_DUO_SF)
-  #include "sam/pins_RAMPS_DUO.h"               // SAM3X8E                                env:DUE env:DUE_USB env:DUE_debug
+  #include "sam/pins_RAMPS_DUO.h"               // SAM3X8E                                env:DUE env:DUE_USB env:DUE_debug//SAM3X8E环境：到期环境：到期USB环境：到期调试
 #elif MB(RAMPS4DUE_EFB, RAMPS4DUE_EEB, RAMPS4DUE_EFF, RAMPS4DUE_EEF, RAMPS4DUE_SF)
-  #include "sam/pins_RAMPS4DUE.h"               // SAM3X8E                                env:DUE env:DUE_USB env:DUE_debug
+  #include "sam/pins_RAMPS4DUE.h"               // SAM3X8E                                env:DUE env:DUE_USB env:DUE_debug//SAM3X8E环境：到期环境：到期USB环境：到期调试
 #elif MB(ULTRATRONICS_PRO)
-  #include "sam/pins_ULTRATRONICS_PRO.h"        // SAM3X8E                                env:DUE env:DUE_debug
+  #include "sam/pins_ULTRATRONICS_PRO.h"        // SAM3X8E                                env:DUE env:DUE_debug//SAM3X8E环境：到期环境：到期调试
 #elif MB(ARCHIM1)
-  #include "sam/pins_ARCHIM1.h"                 // SAM3X8E                                env:DUE_archim env:DUE_archim_debug
+  #include "sam/pins_ARCHIM1.h"                 // SAM3X8E                                env:DUE_archim env:DUE_archim_debug//SAM3X8E环境：到期存档环境：到期存档调试
 #elif MB(ARCHIM2)
-  #include "sam/pins_ARCHIM2.h"                 // SAM3X8E                                env:DUE_archim env:DUE_archim_debug
+  #include "sam/pins_ARCHIM2.h"                 // SAM3X8E                                env:DUE_archim env:DUE_archim_debug//SAM3X8E环境：到期存档环境：到期存档调试
 #elif MB(ALLIGATOR)
-  #include "sam/pins_ALLIGATOR_R2.h"            // SAM3X8E                                env:DUE env:DUE_debug
+  #include "sam/pins_ALLIGATOR_R2.h"            // SAM3X8E                                env:DUE env:DUE_debug//SAM3X8E环境：到期环境：到期调试
 #elif MB(ADSK)
-  #include "sam/pins_ADSK.h"                    // SAM3X8E                                env:DUE env:DUE_debug
+  #include "sam/pins_ADSK.h"                    // SAM3X8E                                env:DUE env:DUE_debug//SAM3X8E环境：到期环境：到期调试
 #elif MB(PRINTRBOARD_G2)
-  #include "sam/pins_PRINTRBOARD_G2.h"          // SAM3X8C                                env:DUE_USB
+  #include "sam/pins_PRINTRBOARD_G2.h"          // SAM3X8C                                env:DUE_USB//SAM3X8C环境：到期日
 #elif MB(CNCONTROLS_15D)
-  #include "sam/pins_CNCONTROLS_15D.h"          // SAM3X8E                                env:DUE env:DUE_USB
+  #include "sam/pins_CNCONTROLS_15D.h"          // SAM3X8E                                env:DUE env:DUE_USB//SAM3X8E环境：到期环境：到期USB
 #elif MB(KRATOS32)
-  #include "sam/pins_KRATOS32.h"                // SAM3X8E                                env:DUE env:DUE_USB
+  #include "sam/pins_KRATOS32.h"                // SAM3X8E                                env:DUE env:DUE_USB//SAM3X8E环境：到期环境：到期USB
 
-//
-// STM32 ARM Cortex-M0
-//
+////
+// STM32 ARM Cortex-M0//STM32臂皮质-M0
+////
 #elif MB(MALYAN_M200_V2)
-  #include "stm32f0/pins_MALYAN_M200_V2.h"      // STM32F0                                env:STM32F070RB_malyan env:STM32F070CB_malyan
+  #include "stm32f0/pins_MALYAN_M200_V2.h"      // STM32F0                                env:STM32F070RB_malyan env:STM32F070CB_malyan//STM32F0环境：STM32F070RB_malyan环境：STM32F070CB_malyan
 #elif MB(MALYAN_M300)
-  #include "stm32f0/pins_MALYAN_M300.h"         // STM32F070                              env:malyan_M300
+  #include "stm32f0/pins_MALYAN_M300.h"         // STM32F070                              env:malyan_M300//STM32F070环境：malyan_M300
 
-//
-// STM32 ARM Cortex-M3
-//
+////
+// STM32 ARM Cortex-M3//STM32臂皮质-M3
+////
 
 #elif MB(STM32F103RE)
-  #include "stm32f1/pins_STM32F1R.h"            // STM32F103RE                            env:STM32F103RE env:STM32F103RE_maple
+  #include "stm32f1/pins_STM32F1R.h"            // STM32F103RE                            env:STM32F103RE env:STM32F103RE_maple//STM32F103RE环境：STM32F103RE环境：STM32F103RE\U枫树
 #elif MB(MALYAN_M200)
-  #include "stm32f1/pins_MALYAN_M200.h"         // STM32F103CB                            env:STM32F103CB_malyan env:STM32F103CB_malyan_maple
+  #include "stm32f1/pins_MALYAN_M200.h"         // STM32F103CB                            env:STM32F103CB_malyan env:STM32F103CB_malyan_maple//STM32F103CB环境：STM32F103CB_malyan环境：STM32F103CB_malyan_maple
 #elif MB(STM3R_MINI)
-  #include "stm32f1/pins_STM3R_MINI.h"          // STM32F103VE?                           env:STM32F103VE env:STM32F103RE_maple
+  #include "stm32f1/pins_STM3R_MINI.h"          // STM32F103VE?                           env:STM32F103VE env:STM32F103RE_maple//STM32F103VE？环境：STM32F103VE环境：STM32F103RE\U枫树
 #elif MB(GTM32_PRO_VB)
-  #include "stm32f1/pins_GTM32_PRO_VB.h"        // STM32F103VE                            env:STM32F103VE env:STM32F103RE_maple
+  #include "stm32f1/pins_GTM32_PRO_VB.h"        // STM32F103VE                            env:STM32F103VE env:STM32F103RE_maple//STM32F103VE环境：STM32F103VE环境：STM32F103RE_枫树
 #elif MB(GTM32_PRO_VD)
-  #include "stm32f1/pins_GTM32_PRO_VD.h"        // STM32F103VE                            env:STM32F103VE env:STM32F103RE_maple
+  #include "stm32f1/pins_GTM32_PRO_VD.h"        // STM32F103VE                            env:STM32F103VE env:STM32F103RE_maple//STM32F103VE环境：STM32F103VE环境：STM32F103RE_枫树
 #elif MB(GTM32_MINI)
-  #include "stm32f1/pins_GTM32_MINI.h"          // STM32F103VE                            env:STM32F103VE env:STM32F103RE_maple
+  #include "stm32f1/pins_GTM32_MINI.h"          // STM32F103VE                            env:STM32F103VE env:STM32F103RE_maple//STM32F103VE环境：STM32F103VE环境：STM32F103RE_枫树
 #elif MB(GTM32_MINI_A30)
-  #include "stm32f1/pins_GTM32_MINI_A30.h"      // STM32F103VE                            env:STM32F103VE env:STM32F103RE_maple
+  #include "stm32f1/pins_GTM32_MINI_A30.h"      // STM32F103VE                            env:STM32F103VE env:STM32F103RE_maple//STM32F103VE环境：STM32F103VE环境：STM32F103RE_枫树
 #elif MB(GTM32_REV_B)
-  #include "stm32f1/pins_GTM32_REV_B.h"         // STM32F103VE                            env:STM32F103VE env:STM32F103RE_maple
+  #include "stm32f1/pins_GTM32_REV_B.h"         // STM32F103VE                            env:STM32F103VE env:STM32F103RE_maple//STM32F103VE环境：STM32F103VE环境：STM32F103RE_枫树
 #elif MB(MORPHEUS)
-  #include "stm32f1/pins_MORPHEUS.h"            // STM32F103RE                            env:STM32F103RE env:STM32F103RE_maple
+  #include "stm32f1/pins_MORPHEUS.h"            // STM32F103RE                            env:STM32F103RE env:STM32F103RE_maple//STM32F103RE环境：STM32F103RE环境：STM32F103RE\U枫树
 #elif MB(CHITU3D)
-  #include "stm32f1/pins_CHITU3D.h"             // STM32F103ZE                            env:STM32F103ZE env:STM32F103RE_maple
+  #include "stm32f1/pins_CHITU3D.h"             // STM32F103ZE                            env:STM32F103ZE env:STM32F103RE_maple//STM32F103ZE环境：STM32F103ZE环境：STM32F103RE_枫树
 #elif MB(MKS_ROBIN)
-  #include "stm32f1/pins_MKS_ROBIN.h"           // STM32F1                                env:mks_robin env:mks_robin_maple
+  #include "stm32f1/pins_MKS_ROBIN.h"           // STM32F1                                env:mks_robin env:mks_robin_maple//STM32F1环境：mks_robin环境：mks_robin_maple
 #elif MB(MKS_ROBIN_MINI)
-  #include "stm32f1/pins_MKS_ROBIN_MINI.h"      // STM32F1                                env:mks_robin_mini
+  #include "stm32f1/pins_MKS_ROBIN_MINI.h"      // STM32F1                                env:mks_robin_mini//STM32F1环境：mks_robin_mini
 #elif MB(MKS_ROBIN_NANO)
-  #include "stm32f1/pins_MKS_ROBIN_NANO.h"      // STM32F1                                env:mks_robin_nano35 env:mks_robin_nano35_maple
+  #include "stm32f1/pins_MKS_ROBIN_NANO.h"      // STM32F1                                env:mks_robin_nano35 env:mks_robin_nano35_maple//STM32F1环境：mks_robin_nano35环境：mks_robin_nano35_maple
 #elif MB(MKS_ROBIN_NANO_V2)
-  #include "stm32f1/pins_MKS_ROBIN_NANO_V2.h"   // STM32F1                                env:mks_robin_nano35 env:mks_robin_nano35_maple
+  #include "stm32f1/pins_MKS_ROBIN_NANO_V2.h"   // STM32F1                                env:mks_robin_nano35 env:mks_robin_nano35_maple//STM32F1环境：mks_robin_nano35环境：mks_robin_nano35_maple
 #elif MB(MKS_ROBIN_LITE)
-  #include "stm32f1/pins_MKS_ROBIN_LITE.h"      // STM32F1                                env:mks_robin_lite
+  #include "stm32f1/pins_MKS_ROBIN_LITE.h"      // STM32F1                                env:mks_robin_lite//STM32F1环境：mks_robin_lite
 #elif MB(MKS_ROBIN_LITE3)
-  #include "stm32f1/pins_MKS_ROBIN_LITE3.h"     // STM32F1                                env:mks_robin_lite3
+  #include "stm32f1/pins_MKS_ROBIN_LITE3.h"     // STM32F1                                env:mks_robin_lite3//STM32F1环境：mks_robin_lite3
 #elif MB(MKS_ROBIN_PRO)
-  #include "stm32f1/pins_MKS_ROBIN_PRO.h"       // STM32F1                                env:mks_robin_pro
+  #include "stm32f1/pins_MKS_ROBIN_PRO.h"       // STM32F1                                env:mks_robin_pro//STM32F1环境：mks_robin_pro
 #elif MB(MKS_ROBIN_E3)
-  #include "stm32f1/pins_MKS_ROBIN_E3.h"        // STM32F1                                env:mks_robin_e3 env:mks_robin_e3_maple
+  #include "stm32f1/pins_MKS_ROBIN_E3.h"        // STM32F1                                env:mks_robin_e3 env:mks_robin_e3_maple//STM32F1环境：mks_robin_e3环境：mks_robin_e3_maple
 #elif MB(MKS_ROBIN_E3_V1_1)
-  #include "stm32f1/pins_MKS_ROBIN_E3_V1_1.h"   // STM32F1                                env:mks_robin_e3
+  #include "stm32f1/pins_MKS_ROBIN_E3_V1_1.h"   // STM32F1                                env:mks_robin_e3//STM32F1环境：mks_robin_e3
 #elif MB(MKS_ROBIN_E3D)
-  #include "stm32f1/pins_MKS_ROBIN_E3D.h"       // STM32F1                                env:mks_robin_e3
+  #include "stm32f1/pins_MKS_ROBIN_E3D.h"       // STM32F1                                env:mks_robin_e3//STM32F1环境：mks_robin_e3
 #elif MB(MKS_ROBIN_E3D_V1_1)
-  #include "stm32f1/pins_MKS_ROBIN_E3D_V1_1.h"  // STM32F1                                env:mks_robin_e3
+  #include "stm32f1/pins_MKS_ROBIN_E3D_V1_1.h"  // STM32F1                                env:mks_robin_e3//STM32F1环境：mks_robin_e3
 #elif MB(MKS_ROBIN_E3P)
-  #include "stm32f1/pins_MKS_ROBIN_E3P.h"       // STM32F1                                env:mks_robin_e3p
+  #include "stm32f1/pins_MKS_ROBIN_E3P.h"       // STM32F1                                env:mks_robin_e3p//STM32F1环境：mks_robin_e3p
 #elif MB(BTT_SKR_MINI_V1_1)
-  #include "stm32f1/pins_BTT_SKR_MINI_V1_1.h"   // STM32F1                                env:STM32F103RC_btt env:STM32F103RC_btt_USB env:STM32F103RC_btt_maple env:STM32F103RC_btt_USB_maple
+  #include "stm32f1/pins_BTT_SKR_MINI_V1_1.h"   // STM32F1                                env:STM32F103RC_btt env:STM32F103RC_btt_USB env:STM32F103RC_btt_maple env:STM32F103RC_btt_USB_maple//STM32F1环境：STM32F103RC_btt环境：STM32F103RC_btt_USB环境：STM32F103RC_btt_maple环境：STM32F103RC_btt_USB_maple
 #elif MB(BTT_SKR_MINI_E3_V1_0)
-  #include "stm32f1/pins_BTT_SKR_MINI_E3_V1_0.h"  // STM32F1                              env:STM32F103RC_btt env:STM32F103RC_btt_USB env:STM32F103RC_btt_maple env:STM32F103RC_btt_USB_maple
+  #include "stm32f1/pins_BTT_SKR_MINI_E3_V1_0.h"  // STM32F1                              env:STM32F103RC_btt env:STM32F103RC_btt_USB env:STM32F103RC_btt_maple env:STM32F103RC_btt_USB_maple//STM32F1环境：STM32F103RC_btt环境：STM32F103RC_btt_USB环境：STM32F103RC_btt_maple环境：STM32F103RC_btt_USB_maple
 #elif MB(BTT_SKR_MINI_E3_V1_2)
-  #include "stm32f1/pins_BTT_SKR_MINI_E3_V1_2.h"  // STM32F1                              env:STM32F103RC_btt env:STM32F103RC_btt_USB env:STM32F103RC_btt_maple env:STM32F103RC_btt_USB_maple
+  #include "stm32f1/pins_BTT_SKR_MINI_E3_V1_2.h"  // STM32F1                              env:STM32F103RC_btt env:STM32F103RC_btt_USB env:STM32F103RC_btt_maple env:STM32F103RC_btt_USB_maple//STM32F1环境：STM32F103RC_btt环境：STM32F103RC_btt_USB环境：STM32F103RC_btt_maple环境：STM32F103RC_btt_USB_maple
 #elif MB(BTT_SKR_MINI_E3_V2_0)
-  #include "stm32f1/pins_BTT_SKR_MINI_E3_V2_0.h"  // STM32F1                              env:STM32F103RC_btt env:STM32F103RC_btt_USB env:STM32F103RE_btt env:STM32F103RE_btt_USB env:STM32F103RC_btt_maple env:STM32F103RC_btt_USB_maple env:STM32F103RE_btt_maple env:STM32F103RE_btt_USB_maple
+  #include "stm32f1/pins_BTT_SKR_MINI_E3_V2_0.h"  // STM32F1                              env:STM32F103RC_btt env:STM32F103RC_btt_USB env:STM32F103RE_btt env:STM32F103RE_btt_USB env:STM32F103RC_btt_maple env:STM32F103RC_btt_USB_maple env:STM32F103RE_btt_maple env:STM32F103RE_btt_USB_maple//STM32F1环境：STM32F103RC\U btt环境：STM32F103RC\U btt\U USB环境：STM32F103RE\U btt环境：STM32F103RE\U btt\U USB环境：STM32F103RC\U btt\U枫树环境：STM32F103RC\U btt\U枫树环境：STM32F103RE\U btt\U枫树环境：STM32F103RE\U btt\U枫树环境
 #elif MB(BTT_SKR_MINI_MZ_V1_0)
-  #include "stm32f1/pins_BTT_SKR_MINI_MZ_V1_0.h"  // STM32F1                              env:STM32F103RC_btt env:STM32F103RC_btt_USB env:STM32F103RC_btt_maple env:STM32F103RC_btt_USB_maple
+  #include "stm32f1/pins_BTT_SKR_MINI_MZ_V1_0.h"  // STM32F1                              env:STM32F103RC_btt env:STM32F103RC_btt_USB env:STM32F103RC_btt_maple env:STM32F103RC_btt_USB_maple//STM32F1环境：STM32F103RC_btt环境：STM32F103RC_btt_USB环境：STM32F103RC_btt_maple环境：STM32F103RC_btt_USB_maple
 #elif MB(BTT_SKR_E3_DIP)
-  #include "stm32f1/pins_BTT_SKR_E3_DIP.h"      // STM32F1                                env:STM32F103RC_btt env:STM32F103RC_btt_USB env:STM32F103RE_btt env:STM32F103RE_btt_USB env:STM32F103RC_btt_maple env:STM32F103RC_btt_USB_maple env:STM32F103RE_btt_maple env:STM32F103RE_btt_USB_maple
+  #include "stm32f1/pins_BTT_SKR_E3_DIP.h"      // STM32F1                                env:STM32F103RC_btt env:STM32F103RC_btt_USB env:STM32F103RE_btt env:STM32F103RE_btt_USB env:STM32F103RC_btt_maple env:STM32F103RC_btt_USB_maple env:STM32F103RE_btt_maple env:STM32F103RE_btt_USB_maple//STM32F1环境：STM32F103RC\U btt环境：STM32F103RC\U btt\U USB环境：STM32F103RE\U btt环境：STM32F103RE\U btt\U USB环境：STM32F103RC\U btt\U枫树环境：STM32F103RC\U btt\U枫树环境：STM32F103RE\U btt\U枫树环境：STM32F103RE\U btt\U枫树环境
 #elif MB(BTT_SKR_CR6)
-  #include "stm32f1/pins_BTT_SKR_CR6.h"         // STM32F1                                env:STM32F103RE_btt env:STM32F103RE_btt_USB env:STM32F103RE_btt_maple env:STM32F103RE_btt_USB_maple
+  #include "stm32f1/pins_BTT_SKR_CR6.h"         // STM32F1                                env:STM32F103RE_btt env:STM32F103RE_btt_USB env:STM32F103RE_btt_maple env:STM32F103RE_btt_USB_maple//STM32F1环境：STM32F103RE_btt环境：STM32F103RE_btt_USB环境：STM32F103RE_btt_maple环境：STM32F103RE_btt_USB_maple
 #elif MB(JGAURORA_A5S_A1)
-  #include "stm32f1/pins_JGAURORA_A5S_A1.h"     // STM32F1                                env:jgaurora_a5s_a1
+  #include "stm32f1/pins_JGAURORA_A5S_A1.h"     // STM32F1                                env:jgaurora_a5s_a1//STM32F1环境：jgaurora_A5 S_a1
 #elif MB(FYSETC_AIO_II)
-  #include "stm32f1/pins_FYSETC_AIO_II.h"       // STM32F1                                env:STM32F103RC_fysetc
+  #include "stm32f1/pins_FYSETC_AIO_II.h"       // STM32F1                                env:STM32F103RC_fysetc//STM32F1环境：STM32F103RC_fysetc
 #elif MB(FYSETC_CHEETAH)
-  #include "stm32f1/pins_FYSETC_CHEETAH.h"      // STM32F1                                env:STM32F103RC_fysetc
+  #include "stm32f1/pins_FYSETC_CHEETAH.h"      // STM32F1                                env:STM32F103RC_fysetc//STM32F1环境：STM32F103RC_fysetc
 #elif MB(FYSETC_CHEETAH_V12)
-  #include "stm32f1/pins_FYSETC_CHEETAH_V12.h"  // STM32F1                                env:STM32F103RC_fysetc
+  #include "stm32f1/pins_FYSETC_CHEETAH_V12.h"  // STM32F1                                env:STM32F103RC_fysetc//STM32F1环境：STM32F103RC_fysetc
 #elif MB(LONGER3D_LK)
-  #include "stm32f1/pins_LONGER3D_LK.h"         // STM32F1                                env:STM32F103VE_longer
+  #include "stm32f1/pins_LONGER3D_LK.h"         // STM32F1                                env:STM32F103VE_longer//STM32F1环境：STM32F103VE\U更长
 #elif MB(CCROBOT_MEEB_3DP)
-  #include "stm32f1/pins_CCROBOT_MEEB_3DP.h"    // STM32F1                                env:STM32F103RC_meeb
+  #include "stm32f1/pins_CCROBOT_MEEB_3DP.h"    // STM32F1                                env:STM32F103RC_meeb//STM32F1环境：STM32F103RC_meeb
 #elif MB(CHITU3D_V5)
-  #include "stm32f1/pins_CHITU3D_V5.h"          // STM32F1                                env:chitu_f103 env:chitu_v5_gpio_init
+  #include "stm32f1/pins_CHITU3D_V5.h"          // STM32F1                                env:chitu_f103 env:chitu_v5_gpio_init//STM32F1环境：chitu_f103环境：chitu_v5_gpio_init
 #elif MB(CHITU3D_V6)
-  #include "stm32f1/pins_CHITU3D_V6.h"          // STM32F1                                env:chitu_f103
+  #include "stm32f1/pins_CHITU3D_V6.h"          // STM32F1                                env:chitu_f103//STM32F1环境：chitu_f103
 #elif MB(CREALITY_V4)
-  #include "stm32f1/pins_CREALITY_V4.h"         // STM32F1                                env:STM32F103RET6_creality env:STM32F103RET6_creality_maple
+  #include "stm32f1/pins_CREALITY_V4.h"         // STM32F1                                env:STM32F103RET6_creality env:STM32F103RET6_creality_maple//STM32F1环境：STM32F103RET6_creality环境：STM32F103RET6_creality_maple
 #elif MB(CREALITY_V4210)
-  #include "stm32f1/pins_CREALITY_V4210.h"      // STM32F1                                env:STM32F103RET6_creality env:STM32F103RET6_creality_maple
+  #include "stm32f1/pins_CREALITY_V4210.h"      // STM32F1                                env:STM32F103RET6_creality env:STM32F103RET6_creality_maple//STM32F1环境：STM32F103RET6_creality环境：STM32F103RET6_creality_maple
 #elif MB(CREALITY_V427)
-  #include "stm32f1/pins_CREALITY_V427.h"       // STM32F1                                env:STM32F103RET6_creality env:STM32F103RET6_creality_maple
+  #include "stm32f1/pins_CREALITY_V427.h"       // STM32F1                                env:STM32F103RET6_creality env:STM32F103RET6_creality_maple//STM32F1环境：STM32F103RET6_creality环境：STM32F103RET6_creality_maple
 #elif MB(CREALITY_V431)
-  #include "stm32f1/pins_CREALITY_V431.h"       // STM32F1                                env:STM32F103RET6_creality env:STM32F103RET6_creality_maple
+  #include "stm32f1/pins_CREALITY_V431.h"       // STM32F1                                env:STM32F103RET6_creality env:STM32F103RET6_creality_maple//STM32F1环境：STM32F103RET6_creality环境：STM32F103RET6_creality_maple
 #elif MB(CREALITY_V452)
-  #include "stm32f1/pins_CREALITY_V452.h"       // STM32F1                                env:STM32F103RET6_creality env:STM32F103RET6_creality_maple
+  #include "stm32f1/pins_CREALITY_V452.h"       // STM32F1                                env:STM32F103RET6_creality env:STM32F103RET6_creality_maple//STM32F1环境：STM32F103RET6_creality环境：STM32F103RET6_creality_maple
 #elif MB(CREALITY_V453)
-  #include "stm32f1/pins_CREALITY_V453.h"       // STM32F1                                env:STM32F103RET6_creality env:STM32F103RET6_creality_maple
+  #include "stm32f1/pins_CREALITY_V453.h"       // STM32F1                                env:STM32F103RET6_creality env:STM32F103RET6_creality_maple//STM32F1环境：STM32F103RET6_creality环境：STM32F103RET6_creality_maple
 #elif MB(TRIGORILLA_PRO)
-  #include "stm32f1/pins_TRIGORILLA_PRO.h"      // STM32F1                                env:trigorilla_pro
+  #include "stm32f1/pins_TRIGORILLA_PRO.h"      // STM32F1                                env:trigorilla_pro//STM32F1环境：trigorilla_pro
 #elif MB(FLY_MINI)
-  #include "stm32f1/pins_FLY_MINI.h"            // STM32F1                                env:FLY_MINI
+  #include "stm32f1/pins_FLY_MINI.h"            // STM32F1                                env:FLY_MINI//STM32F1环境：小型飞行
 #elif MB(FLSUN_HISPEED)
-  #include "stm32f1/pins_FLSUN_HISPEED.h"       // STM32F1                                env:flsun_hispeedv1
+  #include "stm32f1/pins_FLSUN_HISPEED.h"       // STM32F1                                env:flsun_hispeedv1//STM32F1环境：flsun\U hispeedv1
 #elif MB(BEAST)
-  #include "stm32f1/pins_BEAST.h"               // STM32F103VE?                           env:STM32F103VE env:STM32F103RE_maple
+  #include "stm32f1/pins_BEAST.h"               // STM32F103VE?                           env:STM32F103VE env:STM32F103RE_maple//STM32F103VE？环境：STM32F103VE环境：STM32F103RE\U枫树
 #elif MB(MINGDA_MPX_ARM_MINI)
-  #include "stm32f1/pins_MINGDA_MPX_ARM_MINI.h" // STM32F1                                env:mingda_mpx_arm_mini
+  #include "stm32f1/pins_MINGDA_MPX_ARM_MINI.h" // STM32F1                                env:mingda_mpx_arm_mini//STM32F1环境：mingda_mpx_arm_mini
 
-//
-// ARM Cortex-M4F
-//
+////
+// ARM Cortex-M4F//臂皮质-M4F
+////
 
 #elif MB(TEENSY31_32)
-  #include "teensy3/pins_TEENSY31_32.h"         // TEENSY31_32                            env:teensy31
+  #include "teensy3/pins_TEENSY31_32.h"         // TEENSY31_32                            env:teensy31//天31_32环境：天31
 #elif MB(TEENSY35_36)
-  #include "teensy3/pins_TEENSY35_36.h"         // TEENSY35_36                            env:teensy35 env:teensy36
+  #include "teensy3/pins_TEENSY35_36.h"         // TEENSY35_36                            env:teensy35 env:teensy36//TEENSY35_36环境：TEENSY35环境：teensy36
 
-//
-// STM32 ARM Cortex-M4F
-//
+////
+// STM32 ARM Cortex-M4F//STM32臂皮质-M4F
+////
 
 #elif MB(ARMED)
-  #include "stm32f4/pins_ARMED.h"               // STM32F4                                env:ARMED
+  #include "stm32f4/pins_ARMED.h"               // STM32F4                                env:ARMED//STM32F4环境：武装
 #elif MB(RUMBA32_V1_0, RUMBA32_V1_1)
-  #include "stm32f4/pins_RUMBA32_AUS3D.h"       // STM32F4                                env:rumba32
+  #include "stm32f4/pins_RUMBA32_AUS3D.h"       // STM32F4                                env:rumba32//STM32F4环境：伦巴32
 #elif MB(RUMBA32_MKS)
-  #include "stm32f4/pins_RUMBA32_MKS.h"         // STM32F4                                env:rumba32
+  #include "stm32f4/pins_RUMBA32_MKS.h"         // STM32F4                                env:rumba32//STM32F4环境：伦巴32
 #elif MB(BLACK_STM32F407VE)
-  #include "stm32f4/pins_BLACK_STM32F407VE.h"   // STM32F4                                env:STM32F407VE_black
+  #include "stm32f4/pins_BLACK_STM32F407VE.h"   // STM32F4                                env:STM32F407VE_black//STM32F4环境：STM32F407VE_黑色
 #elif MB(STEVAL_3DP001V1)
-  #include "stm32f4/pins_STEVAL_3DP001V1.h"     // STM32F4                                env:STM32F401VE_STEVAL
+  #include "stm32f4/pins_STEVAL_3DP001V1.h"     // STM32F4                                env:STM32F401VE_STEVAL//STM32F4环境：STM32F401VE
 #elif MB(BTT_SKR_PRO_V1_1)
-  #include "stm32f4/pins_BTT_SKR_PRO_V1_1.h"    // STM32F4                                env:BIGTREE_SKR_PRO env:BIGTREE_SKR_PRO_usb_flash_drive
+  #include "stm32f4/pins_BTT_SKR_PRO_V1_1.h"    // STM32F4                                env:BIGTREE_SKR_PRO env:BIGTREE_SKR_PRO_usb_flash_drive//STM32F4环境：BIGTREE_SKR_PRO环境：BIGTREE_SKR_PRO_usb_闪存_驱动器
 #elif MB(BTT_SKR_PRO_V1_2)
-  #include "stm32f4/pins_BTT_SKR_PRO_V1_2.h"    // STM32F4                                env:BIGTREE_SKR_PRO env:BIGTREE_SKR_PRO_usb_flash_drive
+  #include "stm32f4/pins_BTT_SKR_PRO_V1_2.h"    // STM32F4                                env:BIGTREE_SKR_PRO env:BIGTREE_SKR_PRO_usb_flash_drive//STM32F4环境：BIGTREE_SKR_PRO环境：BIGTREE_SKR_PRO_usb_闪存_驱动器
 #elif MB(BTT_GTR_V1_0)
-  #include "stm32f4/pins_BTT_GTR_V1_0.h"        // STM32F4                                env:BIGTREE_GTR_V1_0 env:BIGTREE_GTR_V1_0_usb_flash_drive
+  #include "stm32f4/pins_BTT_GTR_V1_0.h"        // STM32F4                                env:BIGTREE_GTR_V1_0 env:BIGTREE_GTR_V1_0_usb_flash_drive//STM32F4环境：BIGTREE_GTR_V1_0环境：BIGTREE_GTR_V1_0_usb_闪存_驱动器
 #elif MB(BTT_BTT002_V1_0)
-  #include "stm32f4/pins_BTT_BTT002_V1_0.h"     // STM32F4                                env:BIGTREE_BTT002
+  #include "stm32f4/pins_BTT_BTT002_V1_0.h"     // STM32F4                                env:BIGTREE_BTT002//STM32F4环境：BIGTREE_BTT002
 #elif MB(BTT_E3_RRF)
-  #include "stm32f4/pins_BTT_E3_RRF.h"          // STM32F4                                env:BIGTREE_E3_RRF
+  #include "stm32f4/pins_BTT_E3_RRF.h"          // STM32F4                                env:BIGTREE_E3_RRF//STM32F4环境：BIGTREE\u E3\u RRF
 #elif MB(BTT_SKR_V2_0_REV_A)
-  #include "stm32f4/pins_BTT_SKR_V2_0_REV_A.h"  // STM32F4                                env:BIGTREE_SKR_2
+  #include "stm32f4/pins_BTT_SKR_V2_0_REV_A.h"  // STM32F4                                env:BIGTREE_SKR_2//STM32F4环境：BIGTREE_SKR_2
 #elif MB(BTT_SKR_V2_0_REV_B)
-  #include "stm32f4/pins_BTT_SKR_V2_0_REV_B.h"  // STM32F4                                env:BIGTREE_SKR_2
+  #include "stm32f4/pins_BTT_SKR_V2_0_REV_B.h"  // STM32F4                                env:BIGTREE_SKR_2//STM32F4环境：BIGTREE_SKR_2
 #elif MB(BTT_OCTOPUS_V1_0)
-  #include "stm32f4/pins_BTT_OCTOPUS_V1_0.h"    // STM32F4                                env:BIGTREE_OCTOPUS_V1 env:BIGTREE_OCTOPUS_V1_USB
+  #include "stm32f4/pins_BTT_OCTOPUS_V1_0.h"    // STM32F4                                env:BIGTREE_OCTOPUS_V1 env:BIGTREE_OCTOPUS_V1_USB//STM32F4环境：BIGTREE_章鱼_V1环境：BIGTREE_章鱼_V1_USB
 #elif MB(BTT_OCTOPUS_V1_1)
-  #include "stm32f4/pins_BTT_OCTOPUS_V1_1.h"    // STM32F4                                env:BIGTREE_OCTOPUS_V1 env:BIGTREE_OCTOPUS_V1_USB
+  #include "stm32f4/pins_BTT_OCTOPUS_V1_1.h"    // STM32F4                                env:BIGTREE_OCTOPUS_V1 env:BIGTREE_OCTOPUS_V1_USB//STM32F4环境：BIGTREE_章鱼_V1环境：BIGTREE_章鱼_V1_USB
 #elif MB(LERDGE_K)
-  #include "stm32f4/pins_LERDGE_K.h"            // STM32F4                                env:LERDGEK env:LERDGEK_usb_flash_drive
+  #include "stm32f4/pins_LERDGE_K.h"            // STM32F4                                env:LERDGEK env:LERDGEK_usb_flash_drive//STM32F4环境：LERDGEK环境：LERDGEK_usb_闪存_驱动器
 #elif MB(LERDGE_S)
-  #include "stm32f4/pins_LERDGE_S.h"            // STM32F4                                env:LERDGES env:LERDGES_usb_flash_drive
+  #include "stm32f4/pins_LERDGE_S.h"            // STM32F4                                env:LERDGES env:LERDGES_usb_flash_drive//STM32F4环境：LERDGES环境：LERDGES_usb_闪存_驱动器
 #elif MB(LERDGE_X)
-  #include "stm32f4/pins_LERDGE_X.h"            // STM32F4                                env:LERDGEX env:LERDGEX_usb_flash_drive
+  #include "stm32f4/pins_LERDGE_X.h"            // STM32F4                                env:LERDGEX env:LERDGEX_usb_flash_drive//STM32F4环境：LERDGEX环境：LERDGEX_usb_闪存_驱动器
 #elif MB(VAKE403D)
-  #include "stm32f4/pins_VAKE403D.h"            // STM32F4
+  #include "stm32f4/pins_VAKE403D.h"            // STM32F4//STM32F4
 #elif MB(FYSETC_S6)
-  #include "stm32f4/pins_FYSETC_S6.h"           // STM32F4                                env:FYSETC_S6
+  #include "stm32f4/pins_FYSETC_S6.h"           // STM32F4                                env:FYSETC_S6//STM32F4环境：FYSETC_S6
 #elif MB(FYSETC_S6_V2_0)
-  #include "stm32f4/pins_FYSETC_S6_V2_0.h"      // STM32F4                                env:FYSETC_S6
+  #include "stm32f4/pins_FYSETC_S6_V2_0.h"      // STM32F4                                env:FYSETC_S6//STM32F4环境：FYSETC_S6
 #elif MB(FYSETC_SPIDER)
-  #include "stm32f4/pins_FYSETC_SPIDER.h"       // STM32F4                                env:FYSETC_S6
+  #include "stm32f4/pins_FYSETC_SPIDER.h"       // STM32F4                                env:FYSETC_S6//STM32F4环境：FYSETC_S6
 #elif MB(FLYF407ZG)
-  #include "stm32f4/pins_FLYF407ZG.h"           // STM32F4                                env:FLYF407ZG
+  #include "stm32f4/pins_FLYF407ZG.h"           // STM32F4                                env:FLYF407ZG//STM32F4环境：FLYF407ZG
 #elif MB(MKS_ROBIN2)
-  #include "stm32f4/pins_MKS_ROBIN2.h"          // STM32F4                                env:MKS_ROBIN2
+  #include "stm32f4/pins_MKS_ROBIN2.h"          // STM32F4                                env:MKS_ROBIN2//STM32F4环境：MKS_ROBIN2
 #elif MB(MKS_ROBIN_PRO_V2)
-  #include "stm32f4/pins_MKS_ROBIN_PRO_V2.h"    // STM32F4                                env:mks_robin_pro2
+  #include "stm32f4/pins_MKS_ROBIN_PRO_V2.h"    // STM32F4                                env:mks_robin_pro2//STM32F4环境：mks_robin_项目2
 #elif MB(MKS_ROBIN_NANO_V3)
-  #include "stm32f4/pins_MKS_ROBIN_NANO_V3.h"   // STM32F4                                env:mks_robin_nano_v3 env:mks_robin_nano_v3_usb_flash_drive env:mks_robin_nano_v3_usb_flash_drive_msc
+  #include "stm32f4/pins_MKS_ROBIN_NANO_V3.h"   // STM32F4                                env:mks_robin_nano_v3 env:mks_robin_nano_v3_usb_flash_drive env:mks_robin_nano_v3_usb_flash_drive_msc//STM32F4环境：mks_robin_nano_v3环境：mks_robin_nano_v3_usb_闪存_驱动器环境：mks_robin_nano_v3_usb_闪存_驱动器
 #elif MB(ANET_ET4)
-  #include "stm32f4/pins_ANET_ET4.h"            // STM32F4                                env:Anet_ET4_OpenBLT
+  #include "stm32f4/pins_ANET_ET4.h"            // STM32F4                                env:Anet_ET4_OpenBLT//STM32F4环境：Anet_ET4_OpenBLT
 #elif MB(ANET_ET4P)
-  #include "stm32f4/pins_ANET_ET4P.h"           // STM32F4                                env:Anet_ET4_OpenBLT
+  #include "stm32f4/pins_ANET_ET4P.h"           // STM32F4                                env:Anet_ET4_OpenBLT//STM32F4环境：Anet_ET4_OpenBLT
 #elif MB(FYSETC_CHEETAH_V20)
-  #include "stm32f4/pins_FYSETC_CHEETAH_V20.h"  // STM32F4                                env:FYSETC_CHEETAH_V20
+  #include "stm32f4/pins_FYSETC_CHEETAH_V20.h"  // STM32F4                                env:FYSETC_CHEETAH_V20//STM32F4环境：FYSETC_CHEETAH_V20
 
-//
-// ARM Cortex M7
-//
+////
+// ARM Cortex M7//臂皮质M7
+////
 
 #elif MB(REMRAM_V1)
-  #include "stm32f7/pins_REMRAM_V1.h"           // STM32F7                                env:REMRAM_V1
+  #include "stm32f7/pins_REMRAM_V1.h"           // STM32F7                                env:REMRAM_V1//STM32F7环境：REMRAM_V1
 #elif MB(NUCLEO_F767ZI)
-  #include "stm32f7/pins_NUCLEO_F767ZI.h"       // STM32F7                                env:NUCLEO_F767ZI
+  #include "stm32f7/pins_NUCLEO_F767ZI.h"       // STM32F7                                env:NUCLEO_F767ZI//STM32F7环境：核子F767ZI
 #elif MB(BTT_SKR_SE_BX)
-  #include "stm32h7/pins_BTT_SKR_SE_BX.h"       // STM32H7                                env:BTT_SKR_SE_BX
+  #include "stm32h7/pins_BTT_SKR_SE_BX.h"       // STM32H7                                env:BTT_SKR_SE_BX//STM32H7环境：BTT_SKR_SE_BX
 #elif MB(TEENSY41)
-  #include "teensy4/pins_TEENSY41.h"            // Teensy-4.x                             env:teensy41
+  #include "teensy4/pins_TEENSY41.h"            // Teensy-4.x                             env:teensy41//Teensy-4.x环境：Teensy 41
 #elif MB(T41U5XBB)
-  #include "teensy4/pins_T41U5XBB.h"            // Teensy-4.x                             env:teensy41
+  #include "teensy4/pins_T41U5XBB.h"            // Teensy-4.x                             env:teensy41//Teensy-4.x环境：Teensy 41
 
-//
-// Espressif ESP32
-//
+////
+// Espressif ESP32//Espressif ESP32
+////
 
 #elif MB(ESPRESSIF_ESP32)
-  #include "esp32/pins_ESP32.h"                 // ESP32                                  env:esp32
+  #include "esp32/pins_ESP32.h"                 // ESP32                                  env:esp32//ESP32环境：ESP32
 #elif MB(MRR_ESPA)
-  #include "esp32/pins_MRR_ESPA.h"              // ESP32                                  env:esp32
+  #include "esp32/pins_MRR_ESPA.h"              // ESP32                                  env:esp32//ESP32环境：ESP32
 #elif MB(MRR_ESPE)
-  #include "esp32/pins_MRR_ESPE.h"              // ESP32                                  env:esp32
+  #include "esp32/pins_MRR_ESPE.h"              // ESP32                                  env:esp32//ESP32环境：ESP32
 #elif MB(E4D_BOX)
-  #include "esp32/pins_E4D.h"                   // ESP32                                  env:esp32
+  #include "esp32/pins_E4D.h"                   // ESP32                                  env:esp32//ESP32环境：ESP32
 #elif MB(FYSETC_E4)
-  #include "esp32/pins_FYSETC_E4.h"             // ESP32                                  env:FYSETC_E4
+  #include "esp32/pins_FYSETC_E4.h"             // ESP32                                  env:FYSETC_E4//ESP32环境：FYSETC_E4
 #elif MB(ESP32CONTROLLERR3)
-  #include "esp32/pins_ESP32CONTROLLERR3.h"     // ESP32                                  env:esp32controllerr3
+  #include "esp32/pins_ESP32CONTROLLERR3.h"     // ESP32                                  env:esp32controllerr3//ESP32环境：esp32controllerr3
 
-//
-// Adafruit Grand Central M4 (SAMD51 ARM Cortex-M4)
-//
+////
+// Adafruit Grand Central M4 (SAMD51 ARM Cortex-M4)//Adafruit Grand Central M4（SAMD51臂皮质-M4）
+////
 
 #elif MB(AGCM4_RAMPS_144)
-  #include "samd/pins_RAMPS_144.h"              // SAMD51                                 env:SAMD51_grandcentral_m4
+  #include "samd/pins_RAMPS_144.h"              // SAMD51                                 env:SAMD51_grandcentral_m4//SAMD51环境：SAMD51_grandcentral_m4
 
-//
-// Custom board (with custom PIO env)
-//
+////
+// Custom board (with custom PIO env)//定制板（带有定制PIO环境）
+////
 
 #elif MB(CUSTOM)
-  #include "pins_custom.h"                      //                                        env:custom
+  #include "pins_custom.h"                      //                                        env:custom//环境：海关
 
-//
-// Linux Native Debug board
-//
+////
+// Linux Native Debug board//Linux本机调试板
+////
 
 #elif MB(LINUX_RAMPS)
-  #include "linux/pins_RAMPS_LINUX.h"           // Linux                                  env:linux_native
+  #include "linux/pins_RAMPS_LINUX.h"           // Linux                                  env:linux_native//Linux环境：Linux_本机
 
 #else
 
-  //
-  // Obsolete or unknown board
-  //
+  ////
+  // Obsolete or unknown board//已过时或未知的电路板
+  ////
 
   #define BOARD_MKS_13                  -1000
   #define BOARD_TRIGORILLA              -1001
@@ -760,7 +761,7 @@
   #elif MB(RAMPS_LONGER3D_LK4PRO)
     #error "BOARD_RAMPS_LONGER3D_LK4PRO is now BOARD_LONGER3D_LKx_PRO. Please update your configuration."
   #elif MB(BTT_SKR_V2_0)
-    #error "BTT_SKR_V2_0 is now BTT_SKR_V2_0_REV_A or BTT_SKR_V2_0_REV_B. See https://bit.ly/3t5d9JQ for more information. Please update your configuration."
+    #error "BTT_SKR_V2_0 is now BTT_SKR_V2_0_REV_A or BTT_SKR_V2_0_REV_B. See https://bit.ly/3t5d9JQ for more information. Please update your configuration."//bit.ly/3t5d9JQ了解更多信息。请更新您的配置。“
   #else
     #error "Unknown MOTHERBOARD value set in Configuration.h"
   #endif
@@ -791,7 +792,7 @@
 
 #endif
 
-//
-// Post-process pins according to configured settings
-//
+////
+// Post-process pins according to configured settings//根据配置的设置对引脚进行后期处理
+////
 #include "pins_postprocess.h"

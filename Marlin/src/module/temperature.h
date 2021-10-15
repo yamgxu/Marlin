@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -44,14 +45,14 @@
 #define HOTEND_INDEX TERN(HAS_MULTI_HOTEND, e, 0)
 #define E_NAME TERN_(HAS_MULTI_HOTEND, e)
 
-// Element identifiers. Positive values are hotends. Negative values are other heaters or coolers.
+// Element identifiers. Positive values are hotends. Negative values are other heaters or coolers.//元素标识符。正值是热端。负值表示其他加热器或冷却器。
 typedef enum : int8_t {
   H_NONE = -6,
   H_COOLER, H_PROBE, H_REDUNDANT, H_CHAMBER, H_BED,
   H_E0, H_E1, H_E2, H_E3, H_E4, H_E5, H_E6, H_E7
 } heater_id_t;
 
-// PID storage
+// PID storage//PID存储器
 typedef struct { float Kp, Ki, Kd;     } PID_t;
 typedef struct { float Kp, Ki, Kd, Kc; } PIDC_t;
 typedef struct { float Kp, Ki, Kd, Kf; } PIDF_t;
@@ -73,7 +74,7 @@ hotend_pid_t;
   typedef IF<(LPQ_MAX_LEN > 255), uint16_t, uint8_t>::type lpq_ptr_t;
 #endif
 
-#define PID_PARAM(F,H) _PID_##F(TERN(PID_PARAMS_PER_HOTEND, H, 0 & H)) // Always use 'H' to suppress warning
+#define PID_PARAM(F,H) _PID_##F(TERN(PID_PARAMS_PER_HOTEND, H, 0 & H)) // Always use 'H' to suppress warning//始终使用“H”来抑制警告
 #define _PID_Kp(H) TERN(PIDTEMP, Temperature::temp_hotend[H].pid.Kp, NAN)
 #define _PID_Ki(H) TERN(PIDTEMP, Temperature::temp_hotend[H].pid.Ki, NAN)
 #define _PID_Kd(H) TERN(PIDTEMP, Temperature::temp_hotend[H].pid.Kd, NAN)
@@ -152,13 +153,13 @@ enum ADCSensorState : char {
   #if HAS_ADC_BUTTONS
     Prepare_ADC_KEY, Measure_ADC_KEY,
   #endif
-  SensorsReady, // Temperatures ready. Delay the next round of readings to let ADC pins settle.
-  StartupDelay  // Startup, delay initial temp reading a tiny bit so the hardware can settle
+  SensorsReady, // Temperatures ready. Delay the next round of readings to let ADC pins settle.//准备好了。延迟下一轮读数，使ADC引脚稳定。
+  StartupDelay  // Startup, delay initial temp reading a tiny bit so the hardware can settle//启动时，将初始温度读数延迟一点点，以便硬件能够稳定下来
 };
 
-// Minimum number of Temperature::ISR loops between sensor readings.
-// Multiplied by 16 (OVERSAMPLENR) to obtain the total time to
-// get all oversampled sensor readings
+// Minimum number of Temperature::ISR loops between sensor readings.//传感器读数之间的最小温度：：ISR回路数。
+// Multiplied by 16 (OVERSAMPLENR) to obtain the total time to//乘以16（过采样率）以获得到达的总时间
+// get all oversampled sensor readings//获取所有过采样传感器读数
 #define MIN_ADC_ISR_LOOPS 10
 
 #define ACTUAL_ADC_SAMPLES _MAX(int(MIN_ADC_ISR_LOOPS), int(SensorsReady))
@@ -167,7 +168,7 @@ enum ADCSensorState : char {
   #define PID_K2 (1-float(PID_K1))
   #define PID_dT ((OVERSAMPLENR * float(ACTUAL_ADC_SAMPLES)) / TEMP_TIMER_FREQUENCY)
 
-  // Apply the scale factors to the PID values
+  // Apply the scale factors to the PID values//将比例因子应用于PID值
   #define scalePID_i(i)   ( float(i) * PID_dT )
   #define unscalePID_i(i) ( float(i) / PID_dT )
   #define scalePID_d(d)   ( float(d) / PID_dT )
@@ -178,7 +179,7 @@ enum ADCSensorState : char {
   #define G26_CLICK_CAN_CANCEL 1
 #endif
 
-// A temperature sensor
+// A temperature sensor//温度传感器
 typedef struct TempInfo {
   uint16_t acc;
   int16_t raw;
@@ -189,22 +190,22 @@ typedef struct TempInfo {
 } temp_info_t;
 
 #if HAS_TEMP_REDUNDANT
-  // A redundant temperature sensor
+  // A redundant temperature sensor//冗余温度传感器
   typedef struct RedundantTempInfo : public TempInfo {
     temp_info_t* target;
   } redundant_temp_info_t;
 #endif
 
-// A PWM heater with temperature sensor
+// A PWM heater with temperature sensor//一种带温度传感器的PWM加热器
 typedef struct HeaterInfo : public TempInfo {
   celsius_t target;
   uint8_t soft_pwm_amount;
 } heater_info_t;
 
-// A heater with PID stabilization
+// A heater with PID stabilization//一种PID稳定加热器
 template<typename T>
 struct PIDHeaterInfo : public HeaterInfo {
-  T pid;  // Initialized by settings.load()
+  T pid;  // Initialized by settings.load()//由settings.load（）初始化
 };
 
 #if ENABLED(PIDTEMP)
@@ -235,7 +236,7 @@ struct PIDHeaterInfo : public HeaterInfo {
   typedef heater_info_t cooler_info_t;
 #endif
 
-// Heater watch handling
+// Heater watch handling//加热器值班操作
 template <int INCREASE, int HYSTERESIS, millis_t PERIOD>
 struct HeaterWatch {
   celsius_t target;
@@ -271,13 +272,13 @@ struct HeaterWatch {
   typedef struct HeaterWatch<WATCH_COOLER_TEMP_INCREASE, TEMP_COOLER_HYSTERESIS, WATCH_COOLER_TEMP_PERIOD> cooler_watch_t;
 #endif
 
-// Temperature sensor read value ranges
+// Temperature sensor read value ranges//温度传感器读取值范围
 typedef struct { int16_t raw_min, raw_max; } raw_range_t;
 typedef struct { celsius_t mintemp, maxtemp; } celsius_range_t;
 typedef struct { int16_t raw_min, raw_max; celsius_t mintemp, maxtemp; } temp_range_t;
 
-#define THERMISTOR_ABS_ZERO_C           -273.15f  // bbbbrrrrr cold !
-#define THERMISTOR_RESISTANCE_NOMINAL_C 25.0f     // mmmmm comfortable
+#define THERMISTOR_ABS_ZERO_C           -273.15f  // bbbbrrrrr cold !//冷！
+#define THERMISTOR_RESISTANCE_NOMINAL_C 25.0f     // mmmmm comfortable//嗯，舒服吗
 
 #if HAS_USER_THERMISTORS
 
@@ -318,10 +319,10 @@ typedef struct { int16_t raw_min, raw_max; celsius_t mintemp, maxtemp; } temp_ra
     USER_THERMISTORS
   };
 
-  // User-defined thermistor
+  // User-defined thermistor//用户自定义热敏电阻
   typedef struct {
-    bool pre_calc;     // true if pre-calculations update needed
-    float sh_c_coeff,  // Steinhart-Hart C coefficient .. defaults to '0.0'
+    bool pre_calc;     // true if pre-calculations update needed//如果需要更新预计算，则为true
+    float sh_c_coeff,  // Steinhart-Hart C coefficient .. defaults to '0.0'//斯坦哈特C系数。。默认值为“0.0”
           sh_alpha,
           series_res,
           res_25, res_25_recip,
@@ -397,7 +398,7 @@ class Temperature {
 
     #if HEATER_IDLE_HANDLER
 
-      // Heater idle handling. Marlin creates one per hotend and one for the heated bed.
+      // Heater idle handling. Marlin creates one per hotend and one for the heated bed.//加热器怠速处理。Marlin为每个热端创建一个，为加热床创建一个。
       typedef struct {
         millis_t timeout_ms;
         bool timed_out;
@@ -407,7 +408,7 @@ class Temperature {
         inline void expire() { start(0); }
       } heater_idle_t;
 
-      // Indices and size for the heater_idle array
+      // Indices and size for the heater_idle array//加热器空闲阵列的索引和大小
       enum IdleIndex : int8_t {
         _II = -1
 
@@ -420,7 +421,7 @@ class Temperature {
         , NR_HEATER_IDLE
       };
 
-      // Convert the given heater_id_t to idle array index
+      // Convert the given heater_id_t to idle array index//将给定的加热器id转换为空闲阵列索引
       static inline IdleIndex idle_index_for_id(const int8_t heater_id) {
         TERN_(HAS_HEATED_BED, if (heater_id == H_BED) return IDLE_INDEX_BED);
         return (IdleIndex)_MAX(heater_id, 0);
@@ -511,7 +512,7 @@ class Temperature {
       static void reset_user_thermistors();
       static celsius_float_t user_thermistor_to_deg_c(const uint8_t t_index, const int16_t raw);
       static inline bool set_pull_up_res(int8_t t_index, float value) {
-        //if (!WITHIN(t_index, 0, USER_THERMISTORS - 1)) return false;
+        //if (!WITHIN(t_index, 0, USER_THERMISTORS - 1)) return false;//如果（！在（t_索引，0，用户_热敏电阻-1）内）返回false；
         if (!WITHIN(value, 1, 1000000)) return false;
         user_thermistor[t_index].series_res = value;
         return true;
@@ -576,7 +577,7 @@ class Temperature {
       #endif
 
       static inline uint8_t scaledFanSpeed(const uint8_t fan, const uint8_t fs) {
-        UNUSED(fan); // Potentially unused!
+        UNUSED(fan); // Potentially unused!//可能未使用！
         return (fs * uint16_t(TERN(ADAPTIVE_FAN_SLOWING, fan_speed_scaler[fan], 128))) >> 7;
       }
 
@@ -598,7 +599,7 @@ class Temperature {
         void set_fans_paused(const bool p);
       #endif
 
-    #endif // HAS_FAN
+    #endif // HAS_FAN//范先生
 
     static inline void zero_fan_speeds() {
       #if HAS_FAN
@@ -615,7 +616,7 @@ class Temperature {
     /**
      * Call periodically to manage heaters
      */
-    static void manage_heater() _O2; // Added _O2 to work around a compiler error
+    static void manage_heater() _O2; // Added _O2 to work around a compiler error//添加了O2以解决编译器错误
 
     /**
      * Preheating hotends
@@ -634,9 +635,9 @@ class Temperature {
       #define is_preheating(n) (false)
     #endif
 
-    //high level conversion routines, for use outside of temperature.cpp
-    //inline so that there is no performance decrease.
-    //deg=degreeCelsius
+    //high level conversion routines, for use outside of temperature.cpp//高级转换例程，用于温度.cpp之外的使用
+    //inline so that there is no performance decrease.//内联，这样就不会降低性能。
+    //deg=degreeCelsius//度=摄氏度
 
     static inline celsius_float_t degHotend(const uint8_t E_NAME) {
       return TERN0(HAS_HOTEND, temp_hotend[HOTEND_INDEX].celsius);
@@ -697,7 +698,7 @@ class Temperature {
         return ABS(wholeDegHotend(e) - temp) < (TEMP_HYSTERESIS);
       }
 
-      // Start watching a Hotend to make sure it's really heating up
+      // Start watching a Hotend to make sure it's really heating up//开始观看热端，确保它真的在升温
       static inline void start_watching_hotend(const uint8_t E_NAME) {
         UNUSED(HOTEND_INDEX);
         #if WATCH_HOTENDS
@@ -705,7 +706,7 @@ class Temperature {
         #endif
       }
 
-    #endif // HAS_HOTEND
+    #endif // HAS_HOTEND//霍顿德酒店
 
     #if HAS_HEATED_BED
 
@@ -718,7 +719,7 @@ class Temperature {
       static inline bool isHeatingBed()       { return temp_bed.target > temp_bed.celsius; }
       static inline bool isCoolingBed()       { return temp_bed.target < temp_bed.celsius; }
 
-      // Start watching the Bed to make sure it's really heating up
+      // Start watching the Bed to make sure it's really heating up//开始观察床，确保床真的热起来了
       static inline void start_watching_bed() { TERN_(WATCH_BED, watch_bed.restart(degBed(), degTargetBed())); }
 
       static void setTargetBed(const celsius_t celsius) {
@@ -737,7 +738,7 @@ class Temperature {
         return ABS(wholeDegBed() - temp) < (TEMP_BED_HYSTERESIS);
       }
 
-    #endif // HAS_HEATED_BED
+    #endif // HAS_HEATED_BED//你给床加热了吗
 
     #if HAS_TEMP_PROBE
       #if ENABLED(SHOW_TEMP_ADC_VALUES)
@@ -769,7 +770,7 @@ class Temperature {
         temp_chamber.target = _MIN(celsius, CHAMBER_MAX_TARGET);
         start_watching_chamber();
       }
-      // Start watching the Chamber to make sure it's really heating up
+      // Start watching the Chamber to make sure it's really heating up//开始观察房间，确保它真的在升温
       static inline void start_watching_chamber() { TERN_(WATCH_CHAMBER, watch_chamber.restart(degChamber(), degTargetChamber())); }
     #endif
 
@@ -803,7 +804,7 @@ class Temperature {
         temp_cooler.target = constrain(celsius, COOLER_MIN_TARGET, COOLER_MAX_TARGET);
         start_watching_cooler();
       }
-      // Start watching the Cooler to make sure it's really cooling down
+      // Start watching the Cooler to make sure it's really cooling down//开始观察冷却器，确保它真正冷却下来
       static inline void start_watching_cooler() { TERN_(WATCH_COOLER, watch_cooler.restart(degCooler(), degTargetCooler())); }
     #endif
 
@@ -871,7 +872,7 @@ class Temperature {
         }
       #endif
 
-    #endif // HEATER_IDLE_HANDLER
+    #endif // HEATER_IDLE_HANDLER//加热器\空闲\处理器
 
     #if HAS_TEMP_SENSOR
       static void print_heater_states(const uint8_t target_extruder
@@ -895,7 +896,7 @@ class Temperature {
 
   private:
 
-    // Reading raw temperatures and converting to Celsius when ready
+    // Reading raw temperatures and converting to Celsius when ready//读取原始温度并在准备就绪时转换为摄氏度
     static volatile bool raw_temps_ready;
     static void update_raw_temperatures();
     static void updateTemperaturesFromRawValues();
@@ -906,7 +907,7 @@ class Temperature {
       return true;
     }
 
-    // MAX Thermocouples
+    // MAX Thermocouples//最大热电偶
     #if HAS_MAX_TC
       #define MAX_TC_COUNT COUNT_ENABLED(TEMP_SENSOR_0_IS_MAX_TC, TEMP_SENSOR_1_IS_MAX_TC, TEMP_SENSOR_REDUNDANT_IS_MAX_TC)
       #if MAX_TC_COUNT > 1
@@ -938,7 +939,7 @@ class Temperature {
 
     #if HAS_THERMAL_PROTECTION
 
-      // Indices and size for the tr_state_machine array. One for each protected heater.
+      // Indices and size for the tr_state_machine array. One for each protected heater.//tr_state_机器数组的索引和大小。每个受保护加热器一个。
       enum RunawayIndex : int8_t {
         _RI = -1
         #if ENABLED(THERMAL_PROTECTION_HOTENDS)
@@ -952,7 +953,7 @@ class Temperature {
         , NR_HEATER_RUNAWAY
       };
 
-      // Convert the given heater_id_t to runaway state array index
+      // Convert the given heater_id_t to runaway state array index//将给定的加热器id转换为失控状态数组索引
       static inline RunawayIndex runaway_index_for_id(const int8_t heater_id) {
         TERN_(HAS_THERMALLY_PROTECTED_CHAMBER, if (heater_id == H_CHAMBER) return RUNAWAY_IND_CHAMBER);
         TERN_(HAS_THERMALLY_PROTECTED_CHAMBER, if (heater_id == H_COOLER)  return RUNAWAY_IND_COOLER);
@@ -971,7 +972,7 @@ class Temperature {
 
       static tr_state_machine_t tr_state_machine[NR_HEATER_RUNAWAY];
 
-    #endif // HAS_THERMAL_PROTECTION
+    #endif // HAS_THERMAL_PROTECTION//有热保护
 };
 
 extern Temperature thermalManager;

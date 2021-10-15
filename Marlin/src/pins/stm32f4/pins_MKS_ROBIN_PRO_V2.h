@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -30,36 +31,36 @@
 
 #define BOARD_INFO_NAME "MKS Robin PRO V2"
 
-// Avoid conflict with TIMER_TONE
+// Avoid conflict with TIMER_TONE//避免与计时器提示音冲突
 #define STEP_TIMER 10
 
-// Use one of these or SDCard-based Emulation will be used
-//#define SRAM_EEPROM_EMULATION                   // Use BackSRAM-based EEPROM emulation
-//#define FLASH_EEPROM_EMULATION                  // Use Flash-based EEPROM emulation
+// Use one of these or SDCard-based Emulation will be used//使用其中一个或将使用基于SD卡的仿真
+//#define SRAM_EEPROM_EMULATION                   // Use BackSRAM-based EEPROM emulation//#定义SRAM_EEPROM_仿真//使用基于后向RAM的EEPROM仿真
+//#define FLASH_EEPROM_EMULATION                  // Use Flash-based EEPROM emulation//#定义FLASH\u EEPROM\u仿真//使用基于FLASH的EEPROM仿真
 #define I2C_EEPROM
-#define MARLIN_EEPROM_SIZE                0x1000  // 4KB
+#define MARLIN_EEPROM_SIZE                0x1000  // 4KB//4KB
 
-// USB Flash Drive support
+// USB Flash Drive support//USB闪存驱动器支持
 #define HAS_OTG_USB_HOST_SUPPORT
 
-//
-// Release PB4 (Y_ENABLE_PIN) from JTAG NRST role
-//
-//#define DISABLE_DEBUG
+////
+// Release PB4 (Y_ENABLE_PIN) from JTAG NRST role//从JTAG NRST角色中释放PB4（Y_启用_引脚）
+////
+//#define DISABLE_DEBUG//#定义禁用调试
 
-//
-// Note: MKS Robin board is using SPI2 interface.
-//
-//#define SPI_MODULE 2
+////
+// Note: MKS Robin board is using SPI2 interface.//注：MKS Robin板使用SPI2接口。
+////
+//#define SPI_MODULE 2//#定义SPI_模块2
 
-//
-// Servos
-//
-#define SERVO0_PIN                          PA8   // Enable BLTOUCH
+////
+// Servos//伺服
+////
+#define SERVO0_PIN                          PA8   // Enable BLTOUCH//启用BLTOUCH
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_DIAG_PIN                          PA15
 #define Y_DIAG_PIN                          PA12
 #define Z_DIAG_PIN                          PA11
@@ -72,12 +73,12 @@
 #define Z_MAX_PIN                           PC4
 
 #ifndef FIL_RUNOUT_PIN
-  #define FIL_RUNOUT_PIN                    PA4   // MT_DET
+  #define FIL_RUNOUT_PIN                    PA4   // MT_DET//德特山
 #endif
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_ENABLE_PIN                        PE4
 #define X_STEP_PIN                          PE3
 #define X_DIR_PIN                           PE2
@@ -113,9 +114,9 @@
   #define E1_CS_PIN                         PD8
 #endif
 
-//
-// Software SPI pins for TMC2130 stepper drivers
-//
+////
+// Software SPI pins for TMC2130 stepper drivers//TMC2130步进驱动器的软件SPI引脚
+////
 #if ENABLED(TMC_USE_SW_SPI)
   #ifndef TMC_SW_MOSI
     #define TMC_SW_MOSI                     PD14
@@ -135,21 +136,21 @@
    * Hardware serial communication ports.
    * If undefined software serial is used according to the pins below
    */
-  //#define X_HARDWARE_SERIAL  Serial1
-  //#define X2_HARDWARE_SERIAL Serial1
-  //#define Y_HARDWARE_SERIAL  Serial1
-  //#define Y2_HARDWARE_SERIAL Serial1
-  //#define Z_HARDWARE_SERIAL  Serial1
-  //#define Z2_HARDWARE_SERIAL Serial1
-  //#define E0_HARDWARE_SERIAL Serial1
-  //#define E1_HARDWARE_SERIAL Serial1
-  //#define E2_HARDWARE_SERIAL Serial1
-  //#define E3_HARDWARE_SERIAL Serial1
-  //#define E4_HARDWARE_SERIAL Serial1
+  //#define X_HARDWARE_SERIAL  Serial1//#定义X_硬件_串行1
+  //#define X2_HARDWARE_SERIAL Serial1//#定义X2_硬件_串行1
+  //#define Y_HARDWARE_SERIAL  Serial1//#定义Y_硬件_串行1
+  //#define Y2_HARDWARE_SERIAL Serial1//#定义Y2\u硬件\u串行1
+  //#define Z_HARDWARE_SERIAL  Serial1//#定义Z_硬件_串行1
+  //#define Z2_HARDWARE_SERIAL Serial1//#定义Z2_硬件_串行1
+  //#define E0_HARDWARE_SERIAL Serial1//#定义E0_硬件_串行1
+  //#define E1_HARDWARE_SERIAL Serial1//#定义E1_硬件_串行1
+  //#define E2_HARDWARE_SERIAL Serial1//#定义E2_硬件_串行1
+  //#define E3_HARDWARE_SERIAL Serial1//#定义E3\u硬件\u串行1
+  //#define E4_HARDWARE_SERIAL Serial1//#定义E4\u硬件\u串行1
 
-  //
-  // Software serial
-  //
+  ////
+  // Software serial//软件系列
+  ////
 
   #define X_SERIAL_TX_PIN                   PD5
   #define X_SERIAL_RX_PIN                   PD5
@@ -166,53 +167,53 @@
   #define E1_SERIAL_TX_PIN                  PD8
   #define E1_SERIAL_RX_PIN                  PD8
 
-  // Reduce baud rate to improve software serial reliability
+  // Reduce baud rate to improve software serial reliability//降低波特率以提高软件串行可靠性
   #define TMC_BAUD_RATE                    19200
-#endif // HAS_TMC_UART
+#endif // HAS_TMC_UART//有TMC UART
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                          PC1   // TH1
-#define TEMP_1_PIN                          PC2   // TH2
-#define TEMP_BED_PIN                        PC0   // TB1
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                          PC1   // TH1//TH1
+#define TEMP_1_PIN                          PC2   // TH2//TH2
+#define TEMP_BED_PIN                        PC0   // TB1//TB1
 
-//
-// Heaters / Fans
-//
-#define HEATER_0_PIN                        PC3   // HEATER1
-#define HEATER_1_PIN                        PB0   // HEATER2
-#define HEATER_BED_PIN                      PA0   // HOT BED
+////
+// Heaters / Fans//加热器/风扇
+////
+#define HEATER_0_PIN                        PC3   // HEATER1//加热器1
+#define HEATER_1_PIN                        PB0   // HEATER2//加热器2
+#define HEATER_BED_PIN                      PA0   // HOT BED//热床
 
-#define FAN_PIN                             PB1   // FAN
+#define FAN_PIN                             PB1   // FAN//扇子
 
-//
-// Thermocouples
-//
-//#define MAX6675_SS_PIN                    PE5   // TC1 - CS1
-//#define MAX6675_SS_PIN                    PE6   // TC2 - CS2
+////
+// Thermocouples//热电偶
+////
+//#define MAX6675_SS_PIN                    PE5   // TC1 - CS1//#定义MAX6675_不锈钢_引脚PE5//TC1-CS1
+//#define MAX6675_SS_PIN                    PE6   // TC2 - CS2//#定义MAX6675_不锈钢_引脚PE6//TC2-CS2
 
-//
-// Misc. Functions
-//
-//#define POWER_LOSS_PIN                    PA2   // PW_DET
-//#define PS_ON_PIN                         PA3   // PW_OFF
-//#define SUICIDE_PIN                       PB2   // Enable MKSPWC support
-//#define KILL_PIN                          PA2   // Enable MKSPWC support
-//#define KILL_PIN_INVERTING                true  // Enable MKSPWC support
-//#define LED_PIN                           PB2
+////
+// Misc. Functions//杂项。功能
+////
+//#define POWER_LOSS_PIN                    PA2   // PW_DET//#定义电源损耗引脚PA2//PW\U DET
+//#define PS_ON_PIN                         PA3   // PW_OFF//#定义PS_ON_引脚PA3//PW_OFF
+//#define SUICIDE_PIN                       PB2   // Enable MKSPWC support//#定义引脚PB2//启用MKSPWC支持
+//#define KILL_PIN                          PA2   // Enable MKSPWC support//#定义KILL_PIN PA2//启用MKSPWC支持
+//#define KILL_PIN_INVERTING                true  // Enable MKSPWC support//#定义KILL_PIN_inversing true//启用MKSPWC支持
+//#define LED_PIN                           PB2//#定义LED_引脚PB2
 
 #ifndef SDCARD_CONNECTION
   #define SDCARD_CONNECTION ONBOARD
 #endif
 
-//#define USE_NEW_SPI_API 1
+//#define USE_NEW_SPI_API 1//#定义使用新的SPI API 1
 
-//
-// Onboard SD card
-// NOT compatible with LCD
-//
-// detect pin dont work when ONBOARD and NO_SD_HOST_DRIVE disabled
+////
+// Onboard SD card//车载SD卡
+// NOT compatible with LCD//与LCD不兼容
+////
+// detect pin dont work when ONBOARD and NO_SD_HOST_DRIVE disabled//车载和无SD主机驱动器禁用时检测pin不工作
 #if !defined(SDCARD_CONNECTION) || SDCARD_CONNECTION == ONBOARD
   #if USE_NEW_SPI_API
     #define SD_SPI MARLIN_SPI(HardwareSPI3, PC9)
@@ -228,9 +229,9 @@
 #endif
 
 /*
-//
-// LCD SD
-//
+////
+// LCD SD//液晶显示器
+////
 #if SDCARD_CONNECTION == LCD
   #define ENABLE_SPI1
   #define SDSS                              PE10
@@ -241,8 +242,8 @@
 #endif
 */
 
-//
-// LCD / Controller
+////
+// LCD / Controller//液晶显示器/控制器
 #define SPI_FLASH
 #define HAS_SPI_FLASH 1
 #define SPI_DEVICE                             2
@@ -304,10 +305,10 @@
     #define TFT_HEIGHT                       320
   #endif
 
-  #define TOUCH_CS_PIN                      PE14  // SPI1_NSS
-  #define TOUCH_SCK_PIN                     PA5   // SPI1_SCK
-  #define TOUCH_MISO_PIN                    PA6   // SPI1_MISO
-  #define TOUCH_MOSI_PIN                    PA7   // SPI1_MOSI
+  #define TOUCH_CS_PIN                      PE14  // SPI1_NSS//SPI1\U NSS
+  #define TOUCH_SCK_PIN                     PA5   // SPI1_SCK//SPI1_SCK
+  #define TOUCH_MISO_PIN                    PA6   // SPI1_MISO//味噌
+  #define TOUCH_MOSI_PIN                    PA7   // SPI1_MOSI//SPI1_MOSI
 
   #define BTN_EN1                           PE8
   #define BTN_EN2                           PE11
@@ -317,7 +318,7 @@
   #define LCD_READ_ID                       0xD3
   #define LCD_USE_DMA_SPI
 
-  //#define TFT_DRIVER                    ST7796
+  //#define TFT_DRIVER                    ST7796//#定义TFT_驱动器ST7796
   #define TFT_BUFFER_SIZE                  14400
 
 #elif HAS_WIRED_LCD
@@ -330,20 +331,20 @@
   #define BTN_EN2                           PE11
   #define LCD_BACKLIGHT_PIN                 -1
 
-  // MKS MINI12864 and MKS LCD12864B; If using MKS LCD12864A (Need to remove RPK2 resistor)
+  // MKS MINI12864 and MKS LCD12864B; If using MKS LCD12864A (Need to remove RPK2 resistor)//MKS MINI12864和MKS LCD12864B；如果使用MKS LCD12864A（需要拆除RPK2电阻器）
   #if ENABLED(MKS_MINI_12864)
-    //#define LCD_BACKLIGHT_PIN             -1
-    //#define LCD_RESET_PIN                 -1
+    //#define LCD_BACKLIGHT_PIN             -1//#定义LCD_背光_引脚-1
+    //#define LCD_RESET_PIN                 -1//#定义LCD_重置_引脚-1
     #define DOGLCD_A0                       PD11
     #define DOGLCD_CS                       PE15
-    //#define DOGLCD_SCK                    PA5
-    //#define DOGLCD_MOSI                   PA7
+    //#define DOGLCD_SCK                    PA5//#定义DOGLCD_SCK PA5
+    //#define DOGLCD_MOSI                   PA7//#定义DOGLCD_MOSI PA7
 
-    // Required for MKS_MINI_12864 with this board
-    //#define MKS_LCD12864B
-    //#undef SHOW_BOOTSCREEN
+    // Required for MKS_MINI_12864 with this board//使用此板的MKS_MINI_12864需要
+    //#define MKS_LCD12864B//#定义MKS_LCD12864B
+    //#undef SHOW_BOOTSCREEN//#未定义显示启动屏幕
 
-  #else                                           // !MKS_MINI_12864
+  #else                                           // !MKS_MINI_12864// !MKS_MINI_12864
 
     #define LCD_PINS_D4                     PE14
     #if ENABLED(ULTIPANEL)
@@ -362,6 +363,6 @@
       #define ST7920_DELAY_3       DELAY_NS(600)
     #endif
 
-  #endif // !MKS_MINI_12864
+  #endif // !MKS_MINI_12864// !MKS_MINI_12864
 
-#endif // HAS_WIRED_LCD
+#endif // HAS_WIRED_LCD//有有线液晶显示器吗

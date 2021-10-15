@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -41,4 +42,4 @@ void GcodeSuite::M22() {
   IF_ENABLED(TFT_COLOR_UI, ui.refresh(LCDVIEW_CALL_REDRAW_NEXT));
 }
 
-#endif // SDSUPPORT
+#endif // SDSUPPORT//SDSUPPORT

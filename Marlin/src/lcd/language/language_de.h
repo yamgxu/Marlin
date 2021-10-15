@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,7 +30,7 @@
  */
 
 namespace Language_de {
-  using namespace Language_en; // Inherit undefined strings from English
+  using namespace Language_en; // Inherit undefined strings from English//从英语中继承未定义的字符串
 
   constexpr uint8_t    CHARSIZE                            = 2;
   PROGMEM Language_Str LANGUAGE                            = _UxGT("Deutsch");
@@ -48,13 +49,13 @@ namespace Language_de {
   PROGMEM Language_Str MSG_MEDIA_USB_REMOVED               = _UxGT("USB Gerät entfernt");
   PROGMEM Language_Str MSG_MEDIA_USB_FAILED                = _UxGT("USB Start fehlge.");
   PROGMEM Language_Str MSG_KILL_SUBCALL_OVERFLOW           = _UxGT("Subcall überschritten");
-  PROGMEM Language_Str MSG_LCD_ENDSTOPS                    = _UxGT("Endstopp"); // Max length 8 characters
+  PROGMEM Language_Str MSG_LCD_ENDSTOPS                    = _UxGT("Endstopp"); // Max length 8 characters//最大长度为8个字符
   PROGMEM Language_Str MSG_LCD_SOFT_ENDSTOPS               = _UxGT("Software-Endstopp");
   PROGMEM Language_Str MSG_MAIN                            = _UxGT("Hauptmenü");
   PROGMEM Language_Str MSG_ADVANCED_SETTINGS               = _UxGT("Erw. Einstellungen");
   PROGMEM Language_Str MSG_CONFIGURATION                   = _UxGT("Konfiguration");
   PROGMEM Language_Str MSG_RUN_AUTO_FILES                  = _UxGT("Autostart");
-  PROGMEM Language_Str MSG_DISABLE_STEPPERS                = _UxGT("Motoren deaktivieren"); // M84 :: Max length 19 characters
+  PROGMEM Language_Str MSG_DISABLE_STEPPERS                = _UxGT("Motoren deaktivieren"); // M84 :: Max length 19 characters//M84:：最大长度为19个字符
   PROGMEM Language_Str MSG_DEBUG_MENU                      = _UxGT("Debug-Menü");
   PROGMEM Language_Str MSG_PROGRESS_BAR_TEST               = _UxGT("Statusbalken-Test");
   PROGMEM Language_Str MSG_AUTO_HOME                       = _UxGT("Auto Home");
@@ -62,7 +63,7 @@ namespace Language_de {
   PROGMEM Language_Str MSG_AUTO_HOME_Y                     = _UxGT("Home Y");
   PROGMEM Language_Str MSG_AUTO_HOME_Z                     = _UxGT("Home Z");
   PROGMEM Language_Str MSG_AUTO_Z_ALIGN                    = _UxGT("Z-Achsen ausgleichen");
-  PROGMEM Language_Str MSG_ASSISTED_TRAMMING               = _UxGT("Bett ausrichten"); // Bettausrichtung
+  PROGMEM Language_Str MSG_ASSISTED_TRAMMING               = _UxGT("Bett ausrichten"); // Bettausrichtung//贝塔斯里奇东酒店
   PROGMEM Language_Str MSG_LEVEL_BED_HOMING                = _UxGT("XYZ homen");
   PROGMEM Language_Str MSG_LEVEL_BED_WAITING               = _UxGT("Klick zum Starten");
   PROGMEM Language_Str MSG_LEVEL_BED_NEXT_POINT            = _UxGT("Nächste Koordinate");
@@ -70,7 +71,7 @@ namespace Language_de {
   PROGMEM Language_Str MSG_Z_FADE_HEIGHT                   = _UxGT("Ausblendhöhe");
   PROGMEM Language_Str MSG_SET_HOME_OFFSETS                = _UxGT("Setze Homeversatz");
   PROGMEM Language_Str MSG_HOME_OFFSETS_APPLIED            = _UxGT("Homeversatz aktiv");
-  PROGMEM Language_Str MSG_SET_ORIGIN                      = _UxGT("Setze Nullpunkte"); //"G92 X0 Y0 Z0" commented out in marlinui.cpp
+  PROGMEM Language_Str MSG_SET_ORIGIN                      = _UxGT("Setze Nullpunkte"); //"G92 X0 Y0 Z0" commented out in marlinui.cpp//marlinui.cpp中注释了“G92 X0 Y0 Z0”
   #if PREHEAT_COUNT
     PROGMEM Language_Str MSG_PREHEAT_1                     = PREHEAT_1_LABEL _UxGT(" Vorwärmen");
     PROGMEM Language_Str MSG_PREHEAT_1_H                   = PREHEAT_1_LABEL _UxGT(" Vorwärmen ~");
@@ -286,7 +287,7 @@ namespace Language_de {
   PROGMEM Language_Str MSG_VMIN                            = _UxGT("V min ");
   PROGMEM Language_Str MSG_VTRAV_MIN                       = _UxGT("V min Leerfahrt");
   PROGMEM Language_Str MSG_ACCELERATION                    = _UxGT("Beschleunigung");
-  PROGMEM Language_Str MSG_AMAX                            = _UxGT("A max "); // space intentional
+  PROGMEM Language_Str MSG_AMAX                            = _UxGT("A max "); // space intentional//空间意向
   PROGMEM Language_Str MSG_AMAX_A                          = _UxGT("A max ") LCD_STR_A;
   PROGMEM Language_Str MSG_AMAX_B                          = _UxGT("A max ") LCD_STR_B;
   PROGMEM Language_Str MSG_AMAX_C                          = _UxGT("A max ") LCD_STR_C;
@@ -396,9 +397,9 @@ namespace Language_de {
   PROGMEM Language_Str MSG_FILAMENTUNLOAD                  = _UxGT("Filament entladen");
   PROGMEM Language_Str MSG_FILAMENTUNLOAD_E                = _UxGT("Filament entladen *");
   PROGMEM Language_Str MSG_FILAMENTUNLOAD_ALL              = _UxGT("Alles entladen");
-  PROGMEM Language_Str MSG_ATTACH_MEDIA                    = _UxGT("Medium initial.");  // Manually initialize the SD-card via user interface
-  PROGMEM Language_Str MSG_CHANGE_MEDIA                    = _UxGT("Medium getauscht"); // SD-card changed by user. For machines with no autocarddetect. Both send "M21"
-  PROGMEM Language_Str MSG_RELEASE_MEDIA                   = _UxGT("Medium freigeben"); // if Marlin gets confused - M22
+  PROGMEM Language_Str MSG_ATTACH_MEDIA                    = _UxGT("Medium initial.");  // Manually initialize the SD-card via user interface//通过用户界面手动初始化SD卡
+  PROGMEM Language_Str MSG_CHANGE_MEDIA                    = _UxGT("Medium getauscht"); // SD-card changed by user. For machines with no autocarddetect. Both send "M21"//SD卡已由用户更改。对于没有自动检测的机器。两者都发送“M21”
+  PROGMEM Language_Str MSG_RELEASE_MEDIA                   = _UxGT("Medium freigeben"); // if Marlin gets confused - M22//如果马林感到困惑-M22
   PROGMEM Language_Str MSG_ZPROBE_OUT                      = _UxGT("Z-Sonde außerhalb");
   PROGMEM Language_Str MSG_SKEW_FACTOR                     = _UxGT("Korrekturfaktor");
   PROGMEM Language_Str MSG_BLTOUCH                         = _UxGT("BLTouch");
@@ -440,9 +441,9 @@ namespace Language_de {
   PROGMEM Language_Str MSG_ERR_MINTEMP                     = " " LCD_STR_THERMOMETER _UxGT(" UNTERSCHRITTEN");
   PROGMEM Language_Str MSG_HALTED                          = _UxGT("DRUCKER GESTOPPT");
   PROGMEM Language_Str MSG_PLEASE_RESET                    = _UxGT("Bitte neustarten");
-  PROGMEM Language_Str MSG_SHORT_DAY                       = _UxGT("t"); // One character only
-  PROGMEM Language_Str MSG_SHORT_HOUR                      = _UxGT("h"); // One character only
-  PROGMEM Language_Str MSG_SHORT_MINUTE                    = _UxGT("m"); // One character only
+  PROGMEM Language_Str MSG_SHORT_DAY                       = _UxGT("t"); // One character only//只有一个字符
+  PROGMEM Language_Str MSG_SHORT_HOUR                      = _UxGT("h"); // One character only//只有一个字符
+  PROGMEM Language_Str MSG_SHORT_MINUTE                    = _UxGT("m"); // One character only//只有一个字符
   PROGMEM Language_Str MSG_HEATING                         = _UxGT("heizt...");
   PROGMEM Language_Str MSG_COOLING                         = _UxGT("kühlt...");
   PROGMEM Language_Str MSG_BED_HEATING                     = _UxGT("Bett heizt...");
@@ -543,7 +544,7 @@ namespace Language_de {
   PROGMEM Language_Str MSG_MIX                             = _UxGT("Mix");
   PROGMEM Language_Str MSG_MIX_COMPONENT_N                 = _UxGT("Komponente =");
   PROGMEM Language_Str MSG_MIXER                           = _UxGT("Mixer");
-  PROGMEM Language_Str MSG_GRADIENT                        = _UxGT("Gradient"); // equal Farbverlauf
+  PROGMEM Language_Str MSG_GRADIENT                        = _UxGT("Gradient"); // equal Farbverlauf//等法伯劳夫
   PROGMEM Language_Str MSG_FULL_GRADIENT                   = _UxGT("Volle Gradient");
   PROGMEM Language_Str MSG_TOGGLE_MIX                      = _UxGT("Mix umschalten");
   PROGMEM Language_Str MSG_CYCLE_MIX                       = _UxGT("Zyklus Mix");
@@ -578,9 +579,9 @@ namespace Language_de {
   PROGMEM Language_Str MSG_REMINDER_SAVE_SETTINGS          = _UxGT("Bald speichern!");
   PROGMEM Language_Str MSG_PASSWORD_REMOVED                = _UxGT("Passwort gelöscht");
 
-  //
-  // Die Filament-Change-Bildschirme können bis zu 3 Zeilen auf einem 4-Zeilen-Display anzeigen
-  //                                       ...oder 2 Zeilen auf einem 3-Zeilen-Display.
+  ////
+  // Die Filament-Change-Bildschirme können bis zu 3 Zeilen auf einem 4-Zeilen-Display anzeigen//模具灯丝更换Bildschime können bis zu 3 Zeilen auf einem 4-Zeilen-Display ANZEGEN
+  //                                       ...oder 2 Zeilen auf einem 3-Zeilen-Display.//…订购2台Zeilen auf einem 3-Zeilen-Display。
   #if LCD_HEIGHT >= 4
     PROGMEM Language_Str MSG_ADVANCED_PAUSE_WAITING        = _UxGT(MSG_2_LINE("Knopf drücken um", "Druck fortzusetzen"));
     PROGMEM Language_Str MSG_PAUSE_PRINT_PARKING           = _UxGT(MSG_2_LINE("Druck ist", "pausiert..."));
@@ -593,7 +594,7 @@ namespace Language_de {
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_PURGE         = _UxGT(MSG_3_LINE("Warte auf", "Spülung", "der Düse..."));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_CONT_PURGE    = _UxGT(MSG_3_LINE("Klicke um", "die Düsenspülung", "zu beenden"));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_RESUME        = _UxGT(MSG_3_LINE("Warte auf", "Fortsetzen des", "Drucks..."));
-  #else // LCD_HEIGHT < 4
+  #else // LCD_HEIGHT < 4//LCD_高度<4
     PROGMEM Language_Str MSG_ADVANCED_PAUSE_WAITING        = _UxGT(MSG_1_LINE("Klick zum Fortsetzen"));
     PROGMEM Language_Str MSG_PAUSE_PRINT_PARKING           = _UxGT(MSG_1_LINE("Pausiert..."));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_INIT          = _UxGT(MSG_1_LINE("Bitte warten..."));
@@ -605,9 +606,9 @@ namespace Language_de {
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_PURGE         = _UxGT(MSG_1_LINE("Spülen..."));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_CONT_PURGE    = _UxGT(MSG_2_LINE("Klick zum beenden", "der Düsenspülung"));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_RESUME        = _UxGT(MSG_1_LINE("Fortsetzen..."));
-  #endif // LCD_HEIGHT < 4
+  #endif // LCD_HEIGHT < 4//LCD_高度<4
 
-  PROGMEM Language_Str MSG_TMC_DRIVERS                     = _UxGT("TMC Treiber"); // Max length 18 characters
+  PROGMEM Language_Str MSG_TMC_DRIVERS                     = _UxGT("TMC Treiber"); // Max length 18 characters//最大长度为18个字符
   PROGMEM Language_Str MSG_TMC_CURRENT                     = _UxGT("Treiber Strom");
   PROGMEM Language_Str MSG_TMC_HYBRID_THRS                 = _UxGT("Hybrid threshold");
   PROGMEM Language_Str MSG_TMC_HOMING_THRS                 = _UxGT("Sensorloses Homing");

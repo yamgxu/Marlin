@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Copyright (c) 2013 Arduino LLC. All right reserved.
  *
@@ -29,15 +30,15 @@
  * --------------------
  */
 
-// For SAM3X:
-//!#define _useTimer1
-//!#define _useTimer2
+// For SAM3X://对于SAM3X：
+//!#define _useTimer1//!#定义_useTimer1
+//!#define _useTimer2//!#定义_useTimer2
 #define _useTimer3
-//!#define _useTimer4
+//!#define _useTimer4//!#定义_useTimer4
 #define _useTimer5
 
-#define TRIM_DURATION             2   // compensation ticks to trim adjust for digitalWrite delays
-#define SERVO_TIMER_PRESCALER     32  // timer prescaler
+#define TRIM_DURATION             2   // compensation ticks to trim adjust for digitalWrite delays//用于调整数字写入延迟的补偿刻度
+#define SERVO_TIMER_PRESCALER     32  // timer prescaler//定时器预分频器
 
 /*
   TC0, chan 0 => TC0_Handler

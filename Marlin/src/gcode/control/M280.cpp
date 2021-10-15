@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -51,4 +52,4 @@ void GcodeSuite::M280() {
 
 }
 
-#endif // HAS_SERVOS
+#endif // HAS_SERVOS//有伺服系统吗

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /******************************
  * touch_registers_screen.cpp *
  ******************************/
@@ -82,4 +83,4 @@ void TouchRegistersScreen::onRedraw(draw_mode_t) {
    return true;
  }
 
-#endif // FTDI_TOUCH_REGISTERS_SCREEN
+#endif // FTDI_TOUCH_REGISTERS_SCREEN//触摸屏

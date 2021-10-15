@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -55,23 +56,23 @@
   }
 
   void report_current_position_detail() {
-    // Position as sent by G-code
+    // Position as sent by G-code//由G代码发送的位置
     SERIAL_ECHOPGM("\nLogical:");
     report_linear_axis_pos(current_position.asLogical());
 
-    // Cartesian position in native machine space
+    // Cartesian position in native machine space//本机空间中的笛卡尔位置
     SERIAL_ECHOPGM("Raw:    ");
     report_linear_axis_pos(current_position);
 
     xyze_pos_t leveled = current_position;
 
     #if HAS_LEVELING
-      // Current position with leveling applied
+      // Current position with leveling applied//当前位置已应用水平调整
       SERIAL_ECHOPGM("Leveled:");
       planner.apply_leveling(leveled);
       report_linear_axis_pos(leveled);
 
-      // Test planner un-leveling. This should match the Raw result.
+      // Test planner un-leveling. This should match the Raw result.//测试计划器未调平。这应该与原始结果相匹配。
       SERIAL_ECHOPGM("UnLevel:");
       xyze_pos_t unleveled = leveled;
       planner.unapply_leveling(unleveled);
@@ -79,9 +80,9 @@
     #endif
 
     #if IS_KINEMATIC
-      // Kinematics applied to the leveled position
+      // Kinematics applied to the leveled position//应用于水平位置的运动学
       SERIAL_ECHOPGM(TERN(IS_SCARA, "ScaraK: ", "DeltaK: "));
-      inverse_kinematics(leveled);  // writes delta[]
+      inverse_kinematics(leveled);  // writes delta[]//写入增量[]
       report_linear_axis_pos(delta);
     #endif
 
@@ -90,7 +91,7 @@
     #if HAS_L64XX
       char temp_buf[80];
       int32_t temp;
-      //#define ABS_POS_SIGN_MASK 0b1111 1111 1110 0000 0000 0000 0000 0000
+      //#define ABS_POS_SIGN_MASK 0b1111 1111 1110 0000 0000 0000 0000 0000//#定义ABS位置符号掩码0b1111 1111 1110 0000 0000
       #define ABS_POS_SIGN_MASK 0b11111111111000000000000000000000
       #define REPORT_ABSOLUTE_POS(Q) do{                            \
           L64xxManager.say_axis(Q, false);                          \
@@ -159,7 +160,7 @@
         REPORT_ABSOLUTE_POS(E7);
       #endif
       SERIAL_EOL();
-    #endif // HAS_L64XX
+    #endif // HAS_L64XX//有"L64XX"吗?
 
     SERIAL_ECHOPGM("Stepper:");
     LOOP_LOGICAL_AXES(i) {
@@ -178,7 +179,7 @@
     #endif
 
     SERIAL_ECHOPGM("FromStp:");
-    get_cartesian_from_steppers();  // writes 'cartes' (with forward kinematics)
+    get_cartesian_from_steppers();  // writes 'cartes' (with forward kinematics)//写入“cartes”（带正向运动学）
     xyze_pos_t from_steppers = LOGICAL_AXIS_ARRAY(
       planner.get_axis_position_mm(E_AXIS),
       cartes.x, cartes.y, cartes.z,
@@ -195,7 +196,7 @@
     TERN_(FULL_REPORT_TO_HOST_FEATURE, report_current_grblstate_moving());
   }
 
-#endif // M114_DETAIL
+#endif // M114_DETAIL//M114_详图
 
 /**
  * M114: Report the current position to host.

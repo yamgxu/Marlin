@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -20,9 +21,9 @@
  *
  */
 
-//
-// make a list of the Arduino pin numbers in the Port/Pin order
-//
+////
+// make a list of the Arduino pin numbers in the Port/Pin order//按端口/引脚顺序列出Arduino引脚编号
+////
 #ifdef PA0
   PIN_ADD(PA0)
 #endif

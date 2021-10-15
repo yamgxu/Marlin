@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,7 +32,7 @@
   #include "../../module/motion.h"
 #endif
 
-#include "../../MarlinCore.h" // for SP_X_STR, etc.
+#include "../../MarlinCore.h" // for SP_X_STR, etc.//对于SP_X_STR等。
 
 void M217_report(const bool eeprom=false) {
 
@@ -132,9 +133,9 @@ void GcodeSuite::M217() {
   if (parser.seenval('Z')) { toolchange_settings.z_raise = parser.value_linear_units(); }
 
   #if ENABLED(TOOLCHANGE_MIGRATION_FEATURE)
-    migration.target = 0;       // 0 = disabled
+    migration.target = 0;       // 0 = disabled//0=禁用
 
-    if (parser.seenval('L')) {  // Last
+    if (parser.seenval('L')) {  // Last//最后
       const int16_t lval = parser.value_int();
       if (WITHIN(lval, 0, EXTRUDERS - 1)) {
         migration.last = lval;
@@ -142,20 +143,20 @@ void GcodeSuite::M217() {
       }
     }
 
-    if (parser.seen('A'))       // Auto on/off
+    if (parser.seen('A'))       // Auto on/off//自动开/关
       migration.automode = parser.value_bool();
 
-    if (parser.seen('T')) {     // Migrate now
+    if (parser.seen('T')) {     // Migrate now//现在迁移
       if (parser.has_value()) {
         const int16_t tval = parser.value_int();
         if (WITHIN(tval, 0, EXTRUDERS - 1) && tval != active_extruder) {
           migration.target = tval + 1;
           extruder_migration();
-          migration.target = 0; // disable
+          migration.target = 0; // disable//禁用
           return;
         }
         else
-          migration.target = 0; // disable
+          migration.target = 0; // disable//禁用
       }
       else {
         extruder_migration();
@@ -168,4 +169,4 @@ void GcodeSuite::M217() {
   M217_report();
 }
 
-#endif // HAS_MULTI_EXTRUDER
+#endif // HAS_MULTI_EXTRUDER//HAS_多_挤出机

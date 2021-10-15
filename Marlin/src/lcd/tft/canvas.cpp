@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -88,7 +89,7 @@ void CANVAS::AddImage(int16_t x, int16_t y, MarlinImage image, uint16_t *colors)
   if (color_mode != HIGHCOLOR)
     return AddImage(x, y, image_width, image_height, color_mode, (uint8_t *)data, colors);
 
-  // HIGHCOLOR - 16 bits per pixel
+  // HIGHCOLOR - 16 bits per pixel//HIGHCOLOR-每像素16位
 
   for (int16_t i = 0; i < image_height; i++) {
     int16_t line = y + i;
@@ -176,4 +177,4 @@ void CANVAS::AddBar(uint16_t x, uint16_t y, uint16_t barWidth, uint16_t barHeigh
 
 CANVAS Canvas;
 
-#endif // HAS_GRAPHICAL_TFT
+#endif // HAS_GRAPHICAL_TFT//有图形化的TFT

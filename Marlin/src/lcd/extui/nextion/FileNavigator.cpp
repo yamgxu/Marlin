@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2021 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -24,7 +25,7 @@
  * lcd/extui/nextion/FileNavigator.cpp
  * ****************************************
  * Extensible_UI implementation for Nextion
- * https://github.com/Skorpi08
+ * https://github.com/Skorpi08//github.com/Skorpi08
  * ***************************************/
 
 #include "../../../inc/MarlinConfigPre.h"
@@ -39,11 +40,11 @@ using namespace ExtUI;
 #define DEBUG_OUT NEXDEBUGLEVEL
 #include "../../../core/debug_out.h"
 
-FileList  FileNavigator::filelist;                          // Instance of the Marlin file API
-char      FileNavigator::currentfoldername[MAX_PATH_LEN];   // Current folder path
+FileList  FileNavigator::filelist;                          // Instance of the Marlin file API//Marlin文件API的实例
+char      FileNavigator::currentfoldername[MAX_PATH_LEN];   // Current folder path//当前文件夹路径
 uint16_t  FileNavigator::lastindex;
 uint8_t   FileNavigator::folderdepth;
-uint16_t  FileNavigator::currentindex;                      // override the panel request
+uint16_t  FileNavigator::currentindex;                      // override the panel request//覆盖面板请求
 
 FileNavigator filenavigator;
 
@@ -54,7 +55,7 @@ void FileNavigator::reset() {
   folderdepth  = 0;
   currentindex = 0;
   lastindex    = 0;
-  // Start at root folder
+  // Start at root folder//从根文件夹开始
   while (!filelist.isAtRootDir()) filelist.upDir();
   refresh();
 }
@@ -66,9 +67,9 @@ void FileNavigator::getFiles(uint16_t index) {
   if (index == 0)
     currentindex = 0;
   else {
-    // Each time we change folder we reset the file index to 0 and keep track
-    // of the current position as the TFT panel isn't aware of folder trees.
-    --currentindex; // go back a file to take account of the .. added to the root.
+    // Each time we change folder we reset the file index to 0 and keep track//每次更改文件夹时，我们都会将文件索引重置为0并保持跟踪
+    // of the current position as the TFT panel isn't aware of folder trees.//由于TFT面板不知道文件夹树，因此显示当前位置。
+    --currentindex; // go back a file to take account of the .. added to the root.//返回一个文件以考虑。。添加到根。
     if (index > lastindex)
       currentindex += files + 1;
     else if (currentindex >= files)
@@ -82,7 +83,7 @@ void FileNavigator::getFiles(uint16_t index) {
     DEBUG_ECHOLNPAIR("index=", index, " currentindex=", currentindex);
   #endif
 
-  if (currentindex == 0 && folderdepth > 0) { // Add a link to go up a folder
+  if (currentindex == 0 && folderdepth > 0) { // Add a link to go up a folder//添加指向文件夹的链接
     nextion.SendtoTFT(PSTR("vis p0,1"));
     nextion.SendtoTFT(PSTR("\xFF\xFF\xFF"));
     SEND_VAL("tmpUP", "0");
@@ -139,7 +140,7 @@ void FileNavigator::changeDIR(char *folder) {
   #if NEXDEBUG(AC_FILE)
     DEBUG_ECHOLNPAIR("currentfolder: ", currentfoldername, "  New: ", folder);
   #endif
-  if (folderdepth >= MAX_FOLDER_DEPTH) return; // limit the folder depth
+  if (folderdepth >= MAX_FOLDER_DEPTH) return; // limit the folder depth//限制文件夹深度
   strcat(currentfoldername, folder);
   strcat(currentfoldername, "/");
   filelist.changeDir(folder);
@@ -153,7 +154,7 @@ void FileNavigator::upDIR() {
   refresh();
   folderdepth--;
   currentindex = 0;
-  // Remove the last child folder from the stored path
+  // Remove the last child folder from the stored path//从存储路径中删除最后一个子文件夹
   if (folderdepth == 0) {
     currentfoldername[0] = '\0';
     reset();
@@ -171,4 +172,4 @@ void FileNavigator::upDIR() {
 
 char* FileNavigator::getCurrentFolderName() { return currentfoldername; }
 
-#endif // NEXTION_TFT
+#endif // NEXTION_TFT//NEXTION_TFT

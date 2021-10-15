@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -56,7 +57,7 @@
 void GcodeSuite::M701() {
   xyz_pos_t park_point = NOZZLE_PARK_POINT;
 
-  // Don't raise Z if the machine isn't homed
+  // Don't raise Z if the machine isn't homed//如果机器没有回位，不要升起Z
   if (TERN0(NO_MOTION_BEFORE_HOMING, axes_should_home())) park_point.z = 0;
 
   #if ENABLED(MIXING_EXTRUDER)
@@ -75,14 +76,14 @@ void GcodeSuite::M701() {
     if (target_extruder < 0) return;
   #endif
 
-  // Z axis lift
+  // Z axis lift//Z轴提升
   if (parser.seenval('Z')) park_point.z = parser.linearval('Z');
 
-  // Show initial "wait for load" message
+  // Show initial "wait for load" message//显示初始“等待加载”消息
   ui.pause_show_message(PAUSE_MESSAGE_LOAD, PAUSE_MODE_LOAD_FILAMENT, target_extruder);
 
   #if HAS_MULTI_EXTRUDER && (HAS_PRUSA_MMU1 || !HAS_MMU)
-    // Change toolhead if specified
+    // Change toolhead if specified//如果指定，请更改工具头
     uint8_t active_extruder_before_filament_change = active_extruder;
     if (active_extruder != target_extruder)
       tool_change(target_extruder, false);
@@ -96,11 +97,11 @@ void GcodeSuite::M701() {
     }
   };
 
-  // Raise the Z axis (with max limit)
+  // Raise the Z axis (with max limit)//提升Z轴（具有最大限制）
   const float park_raise = _MIN(park_point.z, (Z_MAX_POS) - current_position.z);
   move_z_by(park_raise);
 
-  // Load filament
+  // Load filament//负荷灯丝
   #if HAS_PRUSA_MMU2
     mmu2.load_filament_to_nozzle(target_extruder);
   #else
@@ -111,27 +112,27 @@ void GcodeSuite::M701() {
     load_filament(
       slow_load_length, fast_load_length, purge_length,
       FILAMENT_CHANGE_ALERT_BEEPS,
-      true,                                           // show_lcd
-      thermalManager.still_heating(target_extruder),  // pause_for_user
-      PAUSE_MODE_LOAD_FILAMENT                        // pause_mode
+      true,                                           // show_lcd//液晶显示器
+      thermalManager.still_heating(target_extruder),  // pause_for_user//为用户暂停\u
+      PAUSE_MODE_LOAD_FILAMENT                        // pause_mode//暂停模式
       #if ENABLED(DUAL_X_CARRIAGE)
-        , target_extruder                             // Dual X target
+        , target_extruder                             // Dual X target//双X靶
       #endif
     );
   #endif
 
-  // Restore Z axis
+  // Restore Z axis//恢复Z轴
   move_z_by(-park_raise);
 
   #if HAS_MULTI_EXTRUDER && (HAS_PRUSA_MMU1 || !HAS_MMU)
-    // Restore toolhead if it was changed
+    // Restore toolhead if it was changed//如果toolhead已更改，则恢复它
     if (active_extruder_before_filament_change != active_extruder)
       tool_change(active_extruder_before_filament_change, false);
   #endif
 
-  TERN_(MIXING_EXTRUDER, mixer.T(old_mixing_tool)); // Restore original mixing tool
+  TERN_(MIXING_EXTRUDER, mixer.T(old_mixing_tool)); // Restore original mixing tool//恢复原始混合工具
 
-  // Show status screen
+  // Show status screen//显示状态屏幕
   ui.pause_show_message(PAUSE_MESSAGE_STATUS);
 }
 
@@ -149,7 +150,7 @@ void GcodeSuite::M701() {
 void GcodeSuite::M702() {
   xyz_pos_t park_point = NOZZLE_PARK_POINT;
 
-  // Don't raise Z if the machine isn't homed
+  // Don't raise Z if the machine isn't homed//如果机器没有回位，不要升起Z
   if (TERN0(NO_MOTION_BEFORE_HOMING, axes_should_home())) park_point.z = 0;
 
   #if ENABLED(MIXING_EXTRUDER)
@@ -180,24 +181,24 @@ void GcodeSuite::M702() {
     if (target_extruder < 0) return;
   #endif
 
-  // Z axis lift
+  // Z axis lift//Z轴提升
   if (parser.seenval('Z')) park_point.z = parser.linearval('Z');
 
-  // Show initial "wait for unload" message
+  // Show initial "wait for unload" message//显示初始“等待卸载”消息
   ui.pause_show_message(PAUSE_MESSAGE_UNLOAD, PAUSE_MODE_UNLOAD_FILAMENT, target_extruder);
 
   #if HAS_MULTI_EXTRUDER && (HAS_PRUSA_MMU1 || !HAS_MMU)
-    // Change toolhead if specified
+    // Change toolhead if specified//如果指定，请更改工具头
     uint8_t active_extruder_before_filament_change = active_extruder;
     if (active_extruder != target_extruder)
       tool_change(target_extruder, false);
   #endif
 
-  // Lift Z axis
+  // Lift Z axis//提升Z轴
   if (park_point.z > 0)
     do_blocking_move_to_z(_MIN(current_position.z + park_point.z, Z_MAX_POS), feedRate_t(NOZZLE_PARK_Z_FEEDRATE));
 
-  // Unload filament
+  // Unload filament//卸载灯丝
   #if HAS_PRUSA_MMU2
     mmu2.unload();
   #else
@@ -211,7 +212,7 @@ void GcodeSuite::M702() {
       else
     #endif
     {
-      // Unload length
+      // Unload length//卸载长度
       const float unload_length = -ABS(parser.seen('U') ? parser.value_axis_units(E_AXIS)
                                                         : fc_settings[target_extruder].unload_length);
 
@@ -223,20 +224,20 @@ void GcodeSuite::M702() {
     }
   #endif
 
-  // Restore Z axis
+  // Restore Z axis//恢复Z轴
   if (park_point.z > 0)
     do_blocking_move_to_z(_MAX(current_position.z - park_point.z, 0), feedRate_t(NOZZLE_PARK_Z_FEEDRATE));
 
   #if HAS_MULTI_EXTRUDER && (HAS_PRUSA_MMU1 || !HAS_MMU)
-    // Restore toolhead if it was changed
+    // Restore toolhead if it was changed//如果toolhead已更改，则恢复它
     if (active_extruder_before_filament_change != active_extruder)
       tool_change(active_extruder_before_filament_change, false);
   #endif
 
-  TERN_(MIXING_EXTRUDER, mixer.T(old_mixing_tool)); // Restore original mixing tool
+  TERN_(MIXING_EXTRUDER, mixer.T(old_mixing_tool)); // Restore original mixing tool//恢复原始混合工具
 
-  // Show status screen
+  // Show status screen//显示状态屏幕
   ui.pause_show_message(PAUSE_MESSAGE_STATUS);
 }
 
-#endif // ADVANCED_PAUSE_FEATURE
+#endif // ADVANCED_PAUSE_FEATURE//高级暂停功能

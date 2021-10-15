@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -34,7 +35,7 @@ public:
     return ns / (1000000000ULL / frequency);
   }
 
-  // Time acceleration compensated
+  // Time acceleration compensated//时间加速度补偿
   static uint64_t ticksToNanos(uint64_t tick, uint32_t frequency = Clock::frequency) {
     return (tick * (1000000000ULL / frequency)) / Clock::time_multiplier;
   }
@@ -43,7 +44,7 @@ public:
     Clock::frequency = freq;
   }
 
-  // Time Acceleration compensated
+  // Time Acceleration compensated//时间加速度补偿
   static uint64_t nanos() {
     auto now = std::chrono::high_resolution_clock::now().time_since_epoch();
     return (now.count() - Clock::startup.count()) * Clock::time_multiplier;
@@ -77,7 +78,7 @@ public:
     std::this_thread::sleep_for(std::chrono::duration<double, std::milli>(secs * 1000) / Clock::time_multiplier);
   }
 
-  // Will reduce timer resolution increasing likelihood of overflows
+  // Will reduce timer resolution increasing likelihood of overflows//将降低计时器分辨率，增加溢出的可能性
   static void setTimeMultiplier(double tm) {
     Clock::time_multiplier = tm;
   }

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,7 +22,7 @@
  */
 #pragma once
 
-// R25 = 10 kOhm, beta25 = 3950 K, 4.7 kOhm pull-up, Generic 10k thermistor
+// R25 = 10 kOhm, beta25 = 3950 K, 4.7 kOhm pull-up, Generic 10k thermistor//R25=10千欧，beta25=3950千欧，4.7千欧上拉，通用10k热敏电阻
 constexpr temp_entry_t temptable_4[] PROGMEM = {
   { OV(   1), 430 },
   { OV(  54), 137 },

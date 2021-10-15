@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -50,5 +51,5 @@
 
 #define BOARD_INFO_NAME "Gen7 v1.3"
 
-#define GEN7_VERSION 13   // v1.3
+#define GEN7_VERSION 13   // v1.3//v1.3
 #include "pins_GEN7_12.h"

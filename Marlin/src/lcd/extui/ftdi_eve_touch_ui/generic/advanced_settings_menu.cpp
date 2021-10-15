@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*****************************
  * advance_settings_menu.cpp *
  *****************************/
@@ -152,4 +153,4 @@ bool AdvancedSettingsMenu::onTouchEnd(uint8_t tag) {
   return true;
 }
 
-#endif // FTDI_ADVANCED_SETTINGS_MENU
+#endif // FTDI_ADVANCED_SETTINGS_MENU//FTDI\u高级设置\u菜单

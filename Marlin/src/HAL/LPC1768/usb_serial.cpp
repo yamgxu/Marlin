@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -34,5 +35,5 @@ bool CDC_RecvCallback(const char c) {
   return true;
 }
 
-#endif // EMERGENCY_PARSER
-#endif // TARGET_LPC1768
+#endif // EMERGENCY_PARSER//紧急语法分析器
+#endif // TARGET_LPC1768//目标为LPC1768

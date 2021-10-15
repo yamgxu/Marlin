@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**************************
  * widget_demo_screen.cpp *
  **************************/
@@ -154,4 +155,4 @@ void WidgetsScreen::onIdle() {
   BaseScreen::onIdle();
 }
 
-#endif // FTDI_WIDGET_DEMO_SCREEN
+#endif // FTDI_WIDGET_DEMO_SCREEN//FTDI小部件演示屏幕

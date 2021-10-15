@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,9 +22,9 @@
  */
 #pragma once
 
-//
-// lcd/dogm/status/cooler.h - Status Screen Laser Cooler bitmaps
-//
+////
+// lcd/dogm/status/cooler.h - Status Screen Laser Cooler bitmaps//lcd/dogm/status/cooler.h-状态屏幕激光冷却器位图
+////
 #if HAS_COOLER
 
   #define STATUS_COOLER_WIDTH 22

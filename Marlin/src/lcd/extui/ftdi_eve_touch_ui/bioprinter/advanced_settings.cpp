@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*****************************
  * bio_advanced_settings.cpp *
  *****************************/
@@ -133,4 +134,4 @@ bool AdvancedSettingsMenu::onTouchEnd(uint8_t tag) {
   return true;
 }
 
-#endif // FTDI_BIO_ADVANCED_SETTINGS_MENU
+#endif // FTDI_BIO_ADVANCED_SETTINGS_MENU//FTDI_生物_高级_设置_菜单

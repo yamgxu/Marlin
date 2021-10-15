@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -26,7 +27,7 @@
  */
 
 #if ENABLED(SDCARD_EEPROM_EMULATION) && DISABLED(SDSUPPORT)
-  #undef SDCARD_EEPROM_EMULATION // Avoid additional error noise
+  #undef SDCARD_EEPROM_EMULATION // Avoid additional error noise//避免额外的错误噪声
   #if USE_FALLBACK_EEPROM
     #warning "EEPROM type not specified. Fallback is SDCARD_EEPROM_EMULATION."
   #endif
@@ -43,9 +44,9 @@
   #error "NEOPIXEL_LED (Adafruit NeoPixel) is not supported for HAL/STM32F1. Comment out this line to proceed at your own risk!"
 #endif
 
-// Emergency Parser needs at least one serial with HardwareSerial or USBComposite.
-// The USBSerial maple don't allow any hook to implement EMERGENCY_PARSER.
-// And copy all USBSerial code to marlin space to support EMERGENCY_PARSER, when we have another options, don't worth it.
+// Emergency Parser needs at least one serial with HardwareSerial or USBComposite.//紧急解析器至少需要一个带有硬件序列号或USBComposite的序列号。
+// The USBSerial maple don't allow any hook to implement EMERGENCY_PARSER.//USBSerial maple不允许任何钩子实现紧急\u解析器。
+// And copy all USBSerial code to marlin space to support EMERGENCY_PARSER, when we have another options, don't worth it.//并将所有USBSerial代码复制到marlin空间以支持紧急解析器，当我们有其他选择时，这是不值得的。
 #if ENABLED(EMERGENCY_PARSER) && !defined(USE_USB_COMPOSITE) && ((SERIAL_PORT == -1 && !defined(SERIAL_PORT_2)) || (SERIAL_PORT_2 == -1 && !defined(SERIAL_PORT)))
   #error "EMERGENCY_PARSER is only supported by HardwareSerial or USBComposite in HAL/STM32F1."
 #endif

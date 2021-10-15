@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -24,80 +25,80 @@
 #define BOARD_INFO_NAME "BTT SKR V1.3"
 #define LPC1768_IS_SKRV1_3 1
 
-//
-// Trinamic Stallguard pins
-//
-#define X_DIAG_PIN                         P1_29  // X-
-#define Y_DIAG_PIN                         P1_27  // Y-
-#define Z_DIAG_PIN                         P1_25  // Z-
-#define E0_DIAG_PIN                        P1_28  // X+
-#define E1_DIAG_PIN                        P1_26  // Y+
+////
+// Trinamic Stallguard pins//Trinamic保护销
+////
+#define X_DIAG_PIN                         P1_29  // X-//X-
+#define Y_DIAG_PIN                         P1_27  // Y-//Y-
+#define Z_DIAG_PIN                         P1_25  // Z-//Z-
+#define E0_DIAG_PIN                        P1_28  // X+//X+
+#define E1_DIAG_PIN                        P1_26  // Y+//Y+
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #ifdef X_STALL_SENSITIVITY
   #define X_STOP_PIN                  X_DIAG_PIN
   #if X_HOME_TO_MIN
-    #define X_MAX_PIN                      P1_28  // X+
+    #define X_MAX_PIN                      P1_28  // X+//X+
   #else
-    #define X_MIN_PIN                      P1_28  // X+
+    #define X_MIN_PIN                      P1_28  // X+//X+
   #endif
 #else
-  #define X_MIN_PIN                        P1_29  // X-
-  #define X_MAX_PIN                        P1_28  // X+
+  #define X_MIN_PIN                        P1_29  // X-//X-
+  #define X_MAX_PIN                        P1_28  // X+//X+
 #endif
 
 #ifdef Y_STALL_SENSITIVITY
   #define Y_STOP_PIN                  Y_DIAG_PIN
   #if Y_HOME_TO_MIN
-    #define Y_MAX_PIN                      P1_26  // Y+
+    #define Y_MAX_PIN                      P1_26  // Y+//Y+
   #else
-    #define Y_MIN_PIN                      P1_26  // Y+
+    #define Y_MIN_PIN                      P1_26  // Y+//Y+
   #endif
 #else
-  #define Y_MIN_PIN                        P1_27  // Y-
-  #define Y_MAX_PIN                        P1_26  // Y+
+  #define Y_MIN_PIN                        P1_27  // Y-//Y-
+  #define Y_MAX_PIN                        P1_26  // Y+//Y+
 #endif
 
 #ifdef Z_STALL_SENSITIVITY
   #define Z_STOP_PIN                  Z_DIAG_PIN
   #if Z_HOME_TO_MIN
-    #define Z_MAX_PIN                      P1_24  // Z+
+    #define Z_MAX_PIN                      P1_24  // Z+//Z+
   #else
-    #define Z_MIN_PIN                      P1_24  // Z+
+    #define Z_MIN_PIN                      P1_24  // Z+//Z+
   #endif
 #else
-  #define Z_MIN_PIN                        P1_25  // Z-
-  #define Z_MAX_PIN                        P1_24  // Z+
+  #define Z_MIN_PIN                        P1_25  // Z-//Z-
+  #define Z_MAX_PIN                        P1_24  // Z+//Z+
 #endif
 
-#define ONBOARD_ENDSTOPPULLUPS                    // Board has built-in pullups
+#define ONBOARD_ENDSTOPPULLUPS                    // Board has built-in pullups//板上有内置的上拉
 
-//
-// Servos
-//
+////
+// Servos//伺服
+////
 #ifndef SERVO0_PIN
   #define SERVO0_PIN                       P2_00
 #endif
 
-//
-// Z Probe (when not Z_MIN_PIN)
-//
+////
+// Z Probe (when not Z_MIN_PIN)//Z探头（非Z_MIN_引脚时）
+////
 #ifndef Z_MIN_PROBE_PIN
   #define Z_MIN_PROBE_PIN                  P1_24
 #endif
 
-//
-// Filament Runout Sensor
-//
+////
+// Filament Runout Sensor//灯丝偏移传感器
+////
 #ifndef FIL_RUNOUT_PIN
   #define FIL_RUNOUT_PIN                   P1_28
 #endif
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                         P2_02
 #define X_DIR_PIN                          P2_06
 #define X_ENABLE_PIN                       P2_01
@@ -130,9 +131,9 @@
   #define E1_CS_PIN                        P1_01
 #endif
 
-//
-// Software SPI pins for TMC2130 stepper drivers
-//
+////
+// Software SPI pins for TMC2130 stepper drivers//TMC2130步进驱动器的软件SPI引脚
+////
 #if ENABLED(TMC_USE_SW_SPI)
   #ifndef TMC_SW_MOSI
     #define TMC_SW_MOSI                    P4_28
@@ -152,21 +153,21 @@
    * Hardware serial communication ports.
    * If undefined software serial is used according to the pins below
    */
-  //#define X_HARDWARE_SERIAL  Serial1
-  //#define X2_HARDWARE_SERIAL Serial1
-  //#define Y_HARDWARE_SERIAL  Serial1
-  //#define Y2_HARDWARE_SERIAL Serial1
-  //#define Z_HARDWARE_SERIAL  Serial1
-  //#define Z2_HARDWARE_SERIAL Serial1
-  //#define E0_HARDWARE_SERIAL Serial1
-  //#define E1_HARDWARE_SERIAL Serial1
-  //#define E2_HARDWARE_SERIAL Serial1
-  //#define E3_HARDWARE_SERIAL Serial1
-  //#define E4_HARDWARE_SERIAL Serial1
+  //#define X_HARDWARE_SERIAL  Serial1//#定义X_硬件_串行1
+  //#define X2_HARDWARE_SERIAL Serial1//#定义X2_硬件_串行1
+  //#define Y_HARDWARE_SERIAL  Serial1//#定义Y_硬件_串行1
+  //#define Y2_HARDWARE_SERIAL Serial1//#定义Y2\u硬件\u串行1
+  //#define Z_HARDWARE_SERIAL  Serial1//#定义Z_硬件_串行1
+  //#define Z2_HARDWARE_SERIAL Serial1//#定义Z2_硬件_串行1
+  //#define E0_HARDWARE_SERIAL Serial1//#定义E0_硬件_串行1
+  //#define E1_HARDWARE_SERIAL Serial1//#定义E1_硬件_串行1
+  //#define E2_HARDWARE_SERIAL Serial1//#定义E2_硬件_串行1
+  //#define E3_HARDWARE_SERIAL Serial1//#定义E3\u硬件\u串行1
+  //#define E4_HARDWARE_SERIAL Serial1//#定义E4\u硬件\u串行1
 
-  //
-  // Software serial
-  //
+  ////
+  // Software serial//软件系列
+  ////
   #define X_SERIAL_TX_PIN                  P4_29
   #define X_SERIAL_RX_PIN                  P1_17
 
@@ -182,7 +183,7 @@
   #define E1_SERIAL_TX_PIN                 P1_04
   #define E1_SERIAL_RX_PIN                 P1_01
 
-  // Reduce baud rate to improve software serial reliability
+  // Reduce baud rate to improve software serial reliability//降低波特率以提高软件串行可靠性
   #define TMC_BAUD_RATE                    19200
 #endif
 
@@ -258,7 +259,7 @@
 
     #define BTN_EN1                  EXP1_08_PIN
     #define BTN_EN2                  EXP1_06_PIN
-    #define BTN_ENC                  EXP1_09_PIN  // (58) open-drain
+    #define BTN_ENC                  EXP1_09_PIN  // (58) open-drain//（58）明渠
 
     #define LCD_PINS_ENABLE          EXP1_03_PIN
     #define LCD_PINS_D4              EXP1_05_PIN
@@ -267,7 +268,7 @@
 
     #error "ADC BUTTONS do not work unmodifed on SKR 1.3, The ADC ports cannot take more than 3.3v."
 
-  #elif HAS_SPI_TFT                               // Config for Classic UI (emulated DOGM) and Color UI
+  #elif HAS_SPI_TFT                               // Config for Classic UI (emulated DOGM) and Color UI//经典用户界面（仿真狗）和彩色用户界面的配置
 
     #define TFT_A0_PIN               EXP1_03_PIN
     #define TFT_DC_PIN               EXP1_03_PIN
@@ -335,19 +336,19 @@
 
     #define SD_DETECT_PIN            EXP2_04_PIN
 
-  #else                                           // !CR10_STOCKDISPLAY
+  #else                                           // !CR10_STOCKDISPLAY// !CR10_库存显示器
 
     #define LCD_PINS_RS              EXP1_07_PIN
 
-    #define BTN_EN1                  EXP2_08_PIN  // (31) J3-2 & AUX-4
-    #define BTN_EN2                  EXP2_06_PIN  // (33) J3-4 & AUX-4
-    #define BTN_ENC                  EXP1_09_PIN  // (58) open-drain
+    #define BTN_EN1                  EXP2_08_PIN  // (31) J3-2 & AUX-4//（31）J3-2和AUX-4
+    #define BTN_EN2                  EXP2_06_PIN  // (33) J3-4 & AUX-4//（33）J3-4和AUX-4
+    #define BTN_ENC                  EXP1_09_PIN  // (58) open-drain//（58）明渠
 
     #define LCD_PINS_ENABLE          EXP1_08_PIN
     #define LCD_PINS_D4              EXP1_06_PIN
 
-    #define LCD_SDSS                 EXP2_07_PIN  // (16) J3-7 & AUX-4
-    #define SD_DETECT_PIN            EXP2_04_PIN  // (49) (NOT 5V tolerant)
+    #define LCD_SDSS                 EXP2_07_PIN  // (16) J3-7 & AUX-4//（16）J3-7和AUX-4
+    #define SD_DETECT_PIN            EXP2_04_PIN  // (49) (NOT 5V tolerant)//（49）（不可容忍）
 
     #if ENABLED(FYSETC_MINI_12864)
       #define DOGLCD_CS              EXP1_08_PIN
@@ -357,10 +358,10 @@
 
       #define LCD_BACKLIGHT_PIN            -1
 
-      #define FORCE_SOFT_SPI                      // Use this if default of hardware SPI causes display problems
-                                                  //   results in LCD soft SPI mode 3, SD soft SPI mode 0
+      #define FORCE_SOFT_SPI                      // Use this if default of hardware SPI causes display problems//如果硬件SPI的默认值导致显示问题，请使用此选项
+                                                  //   results in LCD soft SPI mode 3, SD soft SPI mode 0//结果为LCD软SPI模式3，SD软SPI模式0
 
-      #define LCD_RESET_PIN          EXP1_06_PIN  // Must be high or open for LCD to operate normally.
+      #define LCD_RESET_PIN          EXP1_06_PIN  // Must be high or open for LCD to operate normally.//必须为高电平或开路，LCD才能正常工作。
 
       #if EITHER(FYSETC_MINI_12864_1_2, FYSETC_MINI_12864_2_0)
         #ifndef RGB_LED_R_PIN
@@ -376,7 +377,7 @@
         #define NEOPIXEL_PIN         EXP1_05_PIN
       #endif
 
-    #else                                         // !FYSETC_MINI_12864
+    #else                                         // !FYSETC_MINI_12864// !FYSETC_MINI_12864
 
       #if ENABLED(MKS_MINI_12864)
 
@@ -416,16 +417,16 @@
         #define LCD_PINS_D7          EXP1_03_PIN
 
         #if ENABLED(REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER)
-          #define BTN_ENC_EN         LCD_PINS_D7  // Detect the presence of the encoder
+          #define BTN_ENC_EN         LCD_PINS_D7  // Detect the presence of the encoder//检测编码器的存在
         #endif
 
       #endif
 
-    #endif // !FYSETC_MINI_12864
+    #endif // !FYSETC_MINI_12864// !FYSETC_MINI_12864
 
-  #endif // !CR10_STOCKDISPLAY
+  #endif // !CR10_STOCKDISPLAY// !CR10_库存显示器
 
-#endif // HAS_WIRED_LCD
+#endif // HAS_WIRED_LCD//有有线液晶显示器吗
 
 #if NEED_TOUCH_PINS
   #define TOUCH_CS_PIN               EXP1_06_PIN
@@ -443,5 +444,5 @@
  *   P0_28  (58) (Open collector)
  */
 
-// Include common SKR pins
+// Include common SKR pins//包括普通SKR引脚
 #include "pins_BTT_SKR_common.h"

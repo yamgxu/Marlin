@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -53,6 +54,6 @@
 
 #define PWM_PIN(P)            digitalPinHasPWM(P)
 
-// digitalRead/Write wrappers
+// digitalRead/Write wrappers//数字读/写包装器
 #define extDigitalRead(IO)    digitalRead(IO)
 #define extDigitalWrite(IO,V) digitalWrite(IO,V)

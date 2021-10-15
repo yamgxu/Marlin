@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -34,7 +35,7 @@
 
 #if HAS_SD_HOST_DRIVE
 
-  // use USB drivers
+  // use USB drivers//使用USB驱动程序
 
   extern "C" {
     int8_t SD_MSC_Read(uint8_t lun, uint8_t *buf, uint32_t blk_addr, uint16_t blk_len);
@@ -43,22 +44,22 @@
   }
 
   bool SDIO_Init() {
-    return hsd.State == HAL_SD_STATE_READY;  // return pass/fail status
+    return hsd.State == HAL_SD_STATE_READY;  // return pass/fail status//返回通过/失败状态
   }
 
   bool SDIO_ReadBlock(uint32_t block, uint8_t *src) {
-    int8_t status = SD_MSC_Read(0, (uint8_t*)src, block, 1); // read one 512 byte block
+    int8_t status = SD_MSC_Read(0, (uint8_t*)src, block, 1); // read one 512 byte block//读取一个512字节的块
     return (bool) status;
   }
 
   bool SDIO_WriteBlock(uint32_t block, const uint8_t *src) {
-    int8_t status = SD_MSC_Write(0, (uint8_t*)src, block, 1); // write one 512 byte block
+    int8_t status = SD_MSC_Write(0, (uint8_t*)src, block, 1); // write one 512 byte block//写入一个512字节的块
     return (bool) status;
   }
 
-#else // !USBD_USE_CDC_COMPOSITE
+#else // !USBD_USE_CDC_COMPOSITE// !USBD_使用_CDC_复合材料
 
-  // use local drivers
+  // use local drivers//使用本地司机
   #if defined(STM32F103xE) || defined(STM32F103xG)
     #include <stm32f1xx_hal_rcc_ex.h>
     #include <stm32f1xx_hal_sd.h>
@@ -76,7 +77,7 @@
     #error "ERROR - Only STM32F103xE, STM32F103xG, STM32F4xx or STM32F7xx CPUs supported"
   #endif
 
-  // Fixed
+  // Fixed//固定的
   #define SDIO_D0_PIN   PC8
   #define SDIO_D1_PIN   PC9
   #define SDIO_D2_PIN   PC10
@@ -84,9 +85,9 @@
   #define SDIO_CK_PIN   PC12
   #define SDIO_CMD_PIN  PD2
 
-  SD_HandleTypeDef hsd;  // create SDIO structure
-  // F4 supports one DMA for RX and another for TX, but Marlin will never
-  // do read and write at same time, so we use the same DMA for both.
+  SD_HandleTypeDef hsd;  // create SDIO structure//创建SDIO结构
+  // F4 supports one DMA for RX and another for TX, but Marlin will never//F4支持一个DMA用于接收，另一个DMA用于发送，但Marlin永远不会支持
+  // do read and write at same time, so we use the same DMA for both.//同时进行读写操作，因此我们对这两者使用相同的DMA。
   DMA_HandleTypeDef hdma_sdio;
 
   /*
@@ -106,28 +107,28 @@
     #define USBD_OK 0
   #endif
 
-  // Target Clock, configurable. Default is 18MHz, from STM32F1
+  // Target Clock, configurable. Default is 18MHz, from STM32F1//目标时钟，可配置。默认值为18MHz，从STM32F1开始
   #ifndef SDIO_CLOCK
-    #define SDIO_CLOCK 18000000 // 18 MHz
+    #define SDIO_CLOCK 18000000 // 18 MHz//18兆赫
   #endif
 
-  // SDIO retries, configurable. Default is 3, from STM32F1
+  // SDIO retries, configurable. Default is 3, from STM32F1//SDIO重试，可配置。默认值为3，从STM32F1开始
   #ifndef SDIO_READ_RETRIES
     #define SDIO_READ_RETRIES 3
   #endif
 
-  // SDIO Max Clock (naming from STM Manual, don't change)
+  // SDIO Max Clock (naming from STM Manual, don't change)//SDIO最大时钟（根据STM手册命名，不更改）
   #define SDIOCLK 48000000
 
   static uint32_t clock_to_divider(uint32_t clk) {
-    // limit the SDIO master clock to 8/3 of PCLK2. See STM32 Manuals
-    // Also limited to no more than 48Mhz (SDIOCLK).
+    // limit the SDIO master clock to 8/3 of PCLK2. See STM32 Manuals//将SDIO主时钟限制为PCLK2的8/3。参见STM32手册
+    // Also limited to no more than 48Mhz (SDIOCLK).//也被限制为不超过48Mhz（SDIOCLK）。
     const uint32_t pclk2 = HAL_RCC_GetPCLK2Freq();
     clk = min(clk, (uint32_t)(pclk2 * 8 / 3));
     clk = min(clk, (uint32_t)SDIOCLK);
-    // Round up divider, so we don't run the card over the speed supported,
-    // and subtract by 2, because STM32 will add 2, as written in the manual:
-    // SDIO_CK frequency = SDIOCLK / [CLKDIV + 2]
+    // Round up divider, so we don't run the card over the speed supported,//向上取整除法器，这样我们就不会以支持的速度运行卡，
+    // and subtract by 2, because STM32 will add 2, as written in the manual://减去2，因为STM32将加2，如手册所述：
+    // SDIO_CK frequency = SDIOCLK / [CLKDIV + 2]//SDIO_-CK频率=SDIOCLK/[CLKDIV+2]
     return pclk2 / clk + (pclk2 % clk != 0) - 2;
   }
 
@@ -147,32 +148,32 @@
   void SD_LowLevel_Init(void) {
     uint32_t tempreg;
 
-    __HAL_RCC_GPIOC_CLK_ENABLE(); //enable GPIO clocks
-    __HAL_RCC_GPIOD_CLK_ENABLE(); //enable GPIO clocks
+    __HAL_RCC_GPIOC_CLK_ENABLE(); //enable GPIO clocks//启用GPIO时钟
+    __HAL_RCC_GPIOD_CLK_ENABLE(); //enable GPIO clocks//启用GPIO时钟
 
     GPIO_InitTypeDef  GPIO_InitStruct;
 
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = 1;  //GPIO_NOPULL;
+    GPIO_InitStruct.Pull = 1;  //GPIO_NOPULL;//GPIO_NOPULL；
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
 
     #if DISABLED(STM32F1xx)
       GPIO_InitStruct.Alternate = GPIO_AF12_SDIO;
     #endif
 
-    GPIO_InitStruct.Pin = GPIO_PIN_8 | GPIO_PIN_12;  // D0 & SCK
+    GPIO_InitStruct.Pin = GPIO_PIN_8 | GPIO_PIN_12;  // D0 & SCK//D0&SCK
     HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-    #if PINS_EXIST(SDIO_D1, SDIO_D2, SDIO_D3)  // define D1-D3 only if have a four bit wide SDIO bus
-      GPIO_InitStruct.Pin = GPIO_PIN_9 | GPIO_PIN_10 | GPIO_PIN_11;  // D1-D3
+    #if PINS_EXIST(SDIO_D1, SDIO_D2, SDIO_D3)  // define D1-D3 only if have a four bit wide SDIO bus//仅当具有四位宽SDIO总线时定义D1-D3
+      GPIO_InitStruct.Pin = GPIO_PIN_9 | GPIO_PIN_10 | GPIO_PIN_11;  // D1-D3//D1-D3
       HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
     #endif
 
-    // Configure PD.02 CMD line
+    // Configure PD.02 CMD line//配置PD.02命令行
     GPIO_InitStruct.Pin = GPIO_PIN_2;
     HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
-    // Setup DMA
+    // Setup DMA//设置DMA
     #if defined(STM32F1xx)
       hdma_sdio.Init.Mode = DMA_NORMAL;
       hdma_sdio.Instance = DMA2_Channel4;
@@ -213,21 +214,21 @@
       __HAL_RCC_DMA2_CLK_ENABLE();
     #endif
 
-    //Initialize the SDIO (with initial <400Khz Clock)
-    tempreg = 0;  //Reset value
-    tempreg |= SDIO_CLKCR_CLKEN;  // Clock enabled
-    tempreg |= SDIO_INIT_CLK_DIV; // Clock Divider. Clock = 48000 / (118 + 2) = 400Khz
-    // Keep the rest at 0 => HW_Flow Disabled, Rising Clock Edge, Disable CLK ByPass, Bus Width = 0, Power save Disable
+    //Initialize the SDIO (with initial <400Khz Clock)//初始化SDIO（初始时钟<400Khz）
+    tempreg = 0;  //Reset value//重置值
+    tempreg |= SDIO_CLKCR_CLKEN;  // Clock enabled//时钟启用
+    tempreg |= SDIO_INIT_CLK_DIV; // Clock Divider. Clock = 48000 / (118 + 2) = 400Khz//时钟分频器。时钟=48000/（118+2）=400Khz
+    // Keep the rest at 0 => HW_Flow Disabled, Rising Clock Edge, Disable CLK ByPass, Bus Width = 0, Power save Disable//将其余部分保持在0=>HW_流量禁用，上升时钟边缘，禁用时钟旁路，总线宽度=0，节能禁用
     SDIO->CLKCR = tempreg;
 
-    // Power up the SDIO
+    // Power up the SDIO//接通SDIO的电源
     SDIO_PowerState_ON(SDIO);
     hsd.Instance = SDIO;
   }
 
-  void HAL_SD_MspInit(SD_HandleTypeDef *hsd) { // application specific init
-    UNUSED(hsd);   // Prevent unused argument(s) compilation warning
-    __HAL_RCC_SDIO_CLK_ENABLE();  // turn on SDIO clock
+  void HAL_SD_MspInit(SD_HandleTypeDef *hsd) { // application specific init//特定于应用程序的初始化
+    UNUSED(hsd);   // Prevent unused argument(s) compilation warning//防止未使用的参数编译警告
+    __HAL_RCC_SDIO_CLK_ENABLE();  // turn on SDIO clock//打开SDIO时钟
   }
 
   bool SDIO_Init() {
@@ -244,27 +245,27 @@
       TERN_(USE_WATCHDOG, HAL_watchdog_refresh());
       status = (bool) HAL_SD_Init(&hsd);
       if (!status) break;
-      if (!--retry_Cnt) return false;   // return failing status if retries are exhausted
+      if (!--retry_Cnt) return false;   // return failing status if retries are exhausted//如果重试次数已用尽，则返回失败状态
     }
 
     go_to_transfer_speed();
 
-    #if PINS_EXIST(SDIO_D1, SDIO_D2, SDIO_D3) // go to 4 bit wide mode if pins are defined
+    #if PINS_EXIST(SDIO_D1, SDIO_D2, SDIO_D3) // go to 4 bit wide mode if pins are defined//如果定义了管脚，则转到4位宽模式
       retry_Cnt = retryCnt;
       for (;;) {
         TERN_(USE_WATCHDOG, HAL_watchdog_refresh());
-        if (!HAL_SD_ConfigWideBusOperation(&hsd, SDIO_BUS_WIDE_4B)) break;  // some cards are only 1 bit wide so a pass here is not required
+        if (!HAL_SD_ConfigWideBusOperation(&hsd, SDIO_BUS_WIDE_4B)) break;  // some cards are only 1 bit wide so a pass here is not required//有些卡只有1位宽，所以不需要在这里通行证
         if (!--retry_Cnt) break;
       }
-      if (!retry_Cnt) {  // wide bus failed, go back to one bit wide mode
-        hsd.State = (HAL_SD_StateTypeDef) 0;  // HAL_SD_STATE_RESET
+      if (!retry_Cnt) {  // wide bus failed, go back to one bit wide mode//宽总线故障，返回一位宽模式
+        hsd.State = (HAL_SD_StateTypeDef) 0;  // HAL_SD_STATE_RESET//HAL_SD_状态_重置
         SD_LowLevel_Init();
         retry_Cnt = retryCnt;
         for (;;) {
           TERN_(USE_WATCHDOG, HAL_watchdog_refresh());
           status = (bool) HAL_SD_Init(&hsd);
           if (!status) break;
-          if (!--retry_Cnt) return false;   // return failing status if retries are exhausted
+          if (!--retry_Cnt) return false;   // return failing status if retries are exhausted//如果重试次数已用尽，则返回失败状态
         }
         go_to_transfer_speed();
       }
@@ -297,7 +298,7 @@
     }
 
     millis_t timeout = millis() + 500;
-    // Wait the transfer
+    // Wait the transfer//等待换乘
     while (hsd.State != HAL_SD_STATE_READY) {
       if (ELAPSED(millis(), timeout)) {
         HAL_DMA_Abort_IT(&hdma_sdio);
@@ -341,6 +342,6 @@
   extern "C" void SDIO_IRQHandler(void) { HAL_SD_IRQHandler(&hsd); }
   extern "C" void DMA_IRQ_HANDLER(void) { HAL_DMA_IRQHandler(&hdma_sdio); }
 
-#endif // !USBD_USE_CDC_COMPOSITE
-#endif // SDIO_SUPPORT
-#endif // ARDUINO_ARCH_STM32 && !STM32GENERIC
+#endif // !USBD_USE_CDC_COMPOSITE// !USBD_使用_CDC_复合材料
+#endif // SDIO_SUPPORT//SDIO_支持
+#endif // ARDUINO_ARCH_STM32 && !STM32GENERIC//ARDUINO_ARCH_STM32&&！STM32通用

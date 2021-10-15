@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -35,17 +36,17 @@
 #define BOARD_INFO_NAME      "Formbot"
 #define DEFAULT_MACHINE_NAME BOARD_INFO_NAME
 
-//
-// Servos
-//
+////
+// Servos//伺服
+////
 #define SERVO0_PIN                            11
-#define SERVO1_PIN                            -1  // was 6
-#define SERVO2_PIN                            -1  // was 5
+#define SERVO1_PIN                            -1  // was 6//6岁
+#define SERVO2_PIN                            -1  // was 5//当时是5岁
 #define SERVO3_PIN                            -1
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_MIN_PIN                              3
 #ifndef X_MAX_PIN
   #define X_MAX_PIN                            2
@@ -55,16 +56,16 @@
 #define Z_MIN_PIN                             18
 #define Z_MAX_PIN                             19
 
-//
-// Z Probe (when not Z_MIN_PIN)
-//
+////
+// Z Probe (when not Z_MIN_PIN)//Z探头（非Z_MIN_引脚时）
+////
 #ifndef Z_MIN_PROBE_PIN
   #define Z_MIN_PROBE_PIN                     32
 #endif
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                            54
 #define X_DIR_PIN                             55
 #define X_ENABLE_PIN                          38
@@ -104,23 +105,23 @@
 #define E2_DIR_PIN                            43
 #define E2_ENABLE_PIN                         44
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                            13  // Analog Input
-#define TEMP_1_PIN                            15  // Analog Input
-#define TEMP_BED_PIN                           3  // Analog Input
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                            13  // Analog Input//模拟输入
+#define TEMP_1_PIN                            15  // Analog Input//模拟输入
+#define TEMP_BED_PIN                           3  // Analog Input//模拟输入
 
-// SPI for Max6675 or Max31855 Thermocouple
+// SPI for Max6675 or Max31855 Thermocouple//Max6675或Max31855热电偶的SPI
 #if DISABLED(SDSUPPORT)
-  #define MAX6675_SS_PIN                      66  // Don't use 53 if using Display/SD card
+  #define MAX6675_SS_PIN                      66  // Don't use 53 if using Display/SD card//如果使用显示卡/SD卡，请不要使用53
 #else
-  #define MAX6675_SS_PIN                      66  // Don't use 49 (SD_DETECT_PIN)
+  #define MAX6675_SS_PIN                      66  // Don't use 49 (SD_DETECT_PIN)//不要使用49（SD_DETECT_引脚）
 #endif
 
-//
-// Augmentation for auto-assigning RAMPS plugs
-//
+////
+// Augmentation for auto-assigning RAMPS plugs//自动分配坡道插头的扩充
+////
 #if NONE(IS_RAMPS_EEB, IS_RAMPS_EEF, IS_RAMPS_EFB, IS_RAMPS_EFF, IS_RAMPS_SF) && !PIN_EXISTS(MOSFET_D)
   #if HAS_MULTI_HOTEND
     #if TEMP_SENSOR_BED
@@ -135,9 +136,9 @@
   #endif
 #endif
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_0_PIN                          10
 #define HEATER_1_PIN                           7
 #define HEATER_BED_PIN                        58
@@ -146,22 +147,22 @@
 
 #if HAS_FILAMENT_SENSOR
   #define FIL_RUNOUT_PIN                       4
-  //#define FIL_RUNOUT2_PIN                   -1
+  //#define FIL_RUNOUT2_PIN                   -1//#定义FIL_输出2_引脚-1
 #else
-  // Though defined as a fan pin, it is utilized as a dedicated laser pin by Formbot.
+  // Though defined as a fan pin, it is utilized as a dedicated laser pin by Formbot.//尽管定义为风扇引脚，但Formbot将其用作专用激光引脚。
   #define FAN1_PIN                             4
 #endif
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define SDSS                                  53
 #ifndef LED_PIN
-  #define LED_PIN                             13  // The Formbot v 1 board has almost no unassigned pins on it.  The Board's LED
-#endif                          // is a good place to get a signal to control the Max7219 LED Matrix.
+  #define LED_PIN                             13  // The Formbot v 1 board has almost no unassigned pins on it.  The Board's LED//Formbot v 1板上几乎没有未分配的引脚。董事会的领导
+#endif                          // is a good place to get a signal to control the Max7219 LED Matrix.//是获取信号以控制Max7219 LED矩阵的好地方。
 
-// Use the RAMPS 1.4 Analog input 5 on the AUX2 connector
-#define FILWIDTH_PIN                           5  // Analog Input
+// Use the RAMPS 1.4 Analog input 5 on the AUX2 connector//使用AUX2接头上的斜坡1.4模拟输入5
+#define FILWIDTH_PIN                           5  // Analog Input//模拟输入
 
 #ifndef PS_ON_PIN
   #define PS_ON_PIN                           12
@@ -171,11 +172,11 @@
   #define CASE_LIGHT_PIN                       8
 #endif
 
-//
-// LCD / Controller
-//
-// Formbot only supports REPRAP_DISCOUNT_SMART_CONTROLLER
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
+// Formbot only supports REPRAP_DISCOUNT_SMART_CONTROLLER//Formbot仅支持REPRAP\u折扣\u智能\u控制器
+////
 #if IS_RRD_SC
   #ifndef BEEPER_PIN
     #define BEEPER_PIN                        37
@@ -185,7 +186,7 @@
   #define BTN_ENC                             35
   #define SD_DETECT_PIN                       49
 
-  // Allow MAX7219 to steal the KILL pin
+  // Allow MAX7219 to steal the KILL pin//允许MAX7219窃取压井销
   #if !defined(KILL_PIN) && MAX7219_CLK_PIN != 41 && MAX7219_DIN_PIN != 41 && MAX7219_LOAD_PIN != 41
     #define KILL_PIN                          41
   #endif

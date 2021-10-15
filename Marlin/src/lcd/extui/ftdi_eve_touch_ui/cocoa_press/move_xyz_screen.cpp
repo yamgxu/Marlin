@@ -1,3 +1,4 @@
+/** translatione by yx */
 /***********************************
  * cocoa_press/move_xyz_screen.cpp *
  ***********************************/
@@ -49,4 +50,4 @@ void MoveXYZScreen::onIdle() {
   }
   BaseScreen::onIdle();
 }
-#endif // COCOA_MOVE_XYZ_SCREEN
+#endif // COCOA_MOVE_XYZ_SCREEN//COCOA_MOVE_XYZ_屏幕

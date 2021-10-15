@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*******************
  * tune_menu.cpp *
  *******************/
@@ -152,4 +153,4 @@ void TuneMenu::resumePrint() {
   GOTO_SCREEN(StatusScreen);
 }
 
-#endif // FTDI_TUNE_MENU
+#endif // FTDI_TUNE_MENU//FTDI调谐菜单

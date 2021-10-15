@@ -1,3 +1,4 @@
+/** translatione by yx */
 /* Copyright (C) 2015-2016 Andrew J. Kroll
    and
 Copyright (C) 2011 Circuits At Home, LTD. All rights reserved.
@@ -20,14 +21,14 @@ Contact information
 -------------------
 
 Circuits At Home, LTD
-Web      :  https://www.circuitsathome.com
+Web      :  https://www.circuitsathome.com//www.circuitsathome.com
 e-mail   :  support@circuitsathome.com
  */
 #ifndef _UHS_UNOFFICIAL_IDs_h
 #define _UHS_UNOFFICIAL_IDs_h
 
-// Bogus unofficial and unregistered VIDs from cloners to be listed here.
+// Bogus unofficial and unregistered VIDs from cloners to be listed here.//这里列出克隆人伪造的非官方和未注册的视频。
 
-#define UHS_VID_UNOFFICIAL_JOYTECH 0x162EU  // For unofficial Joytech controllers
+#define UHS_VID_UNOFFICIAL_JOYTECH 0x162EU  // For unofficial Joytech controllers//对于非官方的Joytech控制器
 
 #endif

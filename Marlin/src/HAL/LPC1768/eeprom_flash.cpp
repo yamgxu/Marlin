@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -47,7 +48,7 @@ extern "C" {
 }
 
 #ifndef MARLIN_EEPROM_SIZE
-  #define MARLIN_EEPROM_SIZE 0x1000 // 4KB
+  #define MARLIN_EEPROM_SIZE 0x1000 // 4KB//4KB
 #endif
 
 #define SECTOR_START(sector)  ((sector < 16) ? (sector << 12) : ((sector - 14) << 15))
@@ -67,21 +68,21 @@ bool PersistentStore::access_start() {
   uint32_t first_nblank_loc, first_nblank_val;
   IAP_STATUS_CODE status;
 
-  // discover which slot we are currently using.
+  // discover which slot we are currently using.//发现我们当前使用的插槽。
   __disable_irq();
   status = BlankCheckSector(EEPROM_SECTOR, EEPROM_SECTOR, &first_nblank_loc, &first_nblank_val);
   __enable_irq();
 
   if (status == CMD_SUCCESS) {
-    // sector is blank so nothing stored yet
+    // sector is blank so nothing stored yet//扇区为空，因此尚未存储任何内容
     for (int i = 0; i < MARLIN_EEPROM_SIZE; i++) ram_eeprom[i] = EEPROM_ERASE;
     current_slot = EEPROM_SLOTS;
   }
   else {
-    // current slot is the first non blank one
+    // current slot is the first non blank one//当前插槽是第一个非空插槽
     current_slot = first_nblank_loc / (MARLIN_EEPROM_SIZE);
     uint8_t *eeprom_data = SLOT_ADDRESS(EEPROM_SECTOR, current_slot);
-    // load current settings
+    // load current settings//负载电流设置
     for (int i = 0; i < MARLIN_EEPROM_SIZE; i++) ram_eeprom[i] = eeprom_data[i];
   }
   eeprom_dirty = false;
@@ -93,7 +94,7 @@ bool PersistentStore::access_finish() {
   if (eeprom_dirty) {
     IAP_STATUS_CODE status;
     if (--current_slot < 0) {
-      // all slots have been used, erase everything and start again
+      // all slots have been used, erase everything and start again//所有插槽都已使用，请删除所有内容并重新开始
       __disable_irq();
       status = EraseSector(EEPROM_SECTOR, EEPROM_SECTOR);
       __enable_irq();
@@ -116,7 +117,7 @@ bool PersistentStore::write_data(int &pos, const uint8_t *value, size_t size, ui
   eeprom_dirty = true;
   crc16(crc, value, size);
   pos += size;
-  return false;  // return true for any error
+  return false;  // return true for any error//对于任何错误，返回true
 }
 
 bool PersistentStore::read_data(int &pos, uint8_t *value, size_t size, uint16_t *crc, const bool writing/*=true*/) {
@@ -124,8 +125,8 @@ bool PersistentStore::read_data(int &pos, uint8_t *value, size_t size, uint16_t 
   if (writing) for (size_t i = 0; i < size; i++) value[i] = ram_eeprom[pos + i];
   crc16(crc, buff, size);
   pos += size;
-  return false;  // return true for any error
+  return false;  // return true for any error//对于任何错误，返回true
 }
 
-#endif // FLASH_EEPROM_EMULATION
-#endif // TARGET_LPC1768
+#endif // FLASH_EEPROM_EMULATION//闪存EEPROM模拟
+#endif // TARGET_LPC1768//目标为LPC1768

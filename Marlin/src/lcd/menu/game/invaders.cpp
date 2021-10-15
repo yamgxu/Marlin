@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -48,7 +49,7 @@
 
 #define INVADER_RIGHT ((INVADER_COLS) * (INVADER_COL_W))
 
-// 11x8
+// 11x8//11x8
 const unsigned char invader[3][2][16] PROGMEM = {
   { { B00000110,B00000000,
       B00001111,B00000000,
@@ -164,7 +165,7 @@ constexpr uint8_t inv_off[] = { 2, 1, 0 }, inv_wide[] = { 8, 11, 12 };
 
 inline void update_invader_data() {
   uint8_t inv_mask = 0;
-  // Get a list of all active invaders
+  // Get a list of all active invaders//获取所有活动入侵者的列表
   uint8_t sc = 0;
   LOOP_L_N(y, INVADER_ROWS) {
     uint8_t m = idat.bugs[y];
@@ -230,12 +231,12 @@ inline void kill_cannon(uint8_t &game_state, const uint8_t st) {
 }
 
 void InvadersGame::game_screen() {
-  ui.refresh(LCDVIEW_CALL_NO_REDRAW); // Call as often as possible
+  ui.refresh(LCDVIEW_CALL_NO_REDRAW); // Call as often as possible//尽量多打电话
 
-  // Run game logic once per full screen
+  // Run game logic once per full screen//每全屏运行一次游戏逻辑
   if (ui.first_page) {
 
-    // Update Cannon Position
+    // Update Cannon Position//更新加农炮位置
     int16_t ep = constrain(int16_t(ui.encoderPosition), 0, (LCD_PIXEL_WIDTH - (CANNON_W)) / (CANNON_VEL));
     ui.encoderPosition = ep;
 
@@ -243,10 +244,10 @@ void InvadersGame::game_screen() {
     if (ep > idat.cannon_x) { idat.cannon_x += CANNON_VEL - 1; if (ep - idat.cannon_x < 2) idat.cannon_x = ep; }
     if (ep < idat.cannon_x) { idat.cannon_x -= CANNON_VEL - 1; if (idat.cannon_x - ep < 2) idat.cannon_x = ep; }
 
-    // Run the game logic
+    // Run the game logic//运行游戏逻辑
     if (game_state) do {
 
-      // Move the UFO, if any
+      // Move the UFO, if any//移动不明飞行物，如果有的话
       if (idat.ufov) { idat.ufox += idat.ufov; if (!WITHIN(idat.ufox, -(UFO_W), LCD_PIXEL_WIDTH - 1)) idat.ufov = 0; }
 
       if (game_state > 1) { if (--game_state == 2) { reset_invaders(); } else if (game_state == 100) { game_state = 1; } break; }
@@ -259,25 +260,25 @@ void InvadersGame::game_screen() {
 
       if (idat.count && did_blink) {
         const int8_t newx = idat.pos.x + idat.dir;
-        if (!WITHIN(newx, idat.leftmost, idat.rightmost)) { // Invaders reached the edge?
-          idat.dir *= -1;                                   // Invaders change direction
-          idat.pos.y += (INVADER_ROW_H) / 2;                        // Invaders move down
-          idat.pos.x -= idat.dir;                           // ...and only move down this time.
-          if (idat.pos.y + idat.botmost * (INVADER_ROW_H) - 2 >= CANNON_Y) // Invaders reached the bottom?
-            kill_cannon(game_state, 20);                    // Kill the cannon. Reset invaders.
+        if (!WITHIN(newx, idat.leftmost, idat.rightmost)) { // Invaders reached the edge?//入侵者到达了边缘？
+          idat.dir *= -1;                                   // Invaders change direction//入侵者改变方向
+          idat.pos.y += (INVADER_ROW_H) / 2;                        // Invaders move down//入侵者向下移动
+          idat.pos.x -= idat.dir;                           // ...and only move down this time.//…这次只能下移。
+          if (idat.pos.y + idat.botmost * (INVADER_ROW_H) - 2 >= CANNON_Y) // Invaders reached the bottom?//入侵者到达了谷底？
+            kill_cannon(game_state, 20);                    // Kill the cannon. Reset invaders.//杀了大炮。重置入侵者。
         }
 
-        idat.pos.x += idat.dir; // Invaders take one step left/right
+        idat.pos.x += idat.dir; // Invaders take one step left/right//入侵者向左/向右走一步
 
-        // Randomly shoot if invaders are listed
+        // Randomly shoot if invaders are listed//如果入侵者被列入名单，则随机射击
         if (idat.count && !random(0, 20)) {
 
-          // Find a free bullet
+          // Find a free bullet//找到一颗免费的子弹
           laser_t *b = nullptr;
           LOOP_L_N(i, COUNT(idat.bullet)) if (!idat.bullet[i].v) { b = &idat.bullet[i]; break; }
           if (b) {
-            // Pick a random shooter and update the bullet
-            //SERIAL_ECHOLNPGM("free bullet found");
+            // Pick a random shooter and update the bullet//选择一个随机射手并更新子弹
+            //SERIAL_ECHOLNPGM("free bullet found");//序列号ECHOLNPGM（“找到免费子弹”）；
             const uint8_t inv = idat.shooters[random(0, idat.count + 1)], col = inv & 0x0F, row = inv >> 4, type = inv_type[row];
             b->x = INV_X_CTR(col, type);
             b->y = INV_Y_BOT(row);
@@ -286,13 +287,13 @@ void InvadersGame::game_screen() {
         }
       }
 
-      // Update the laser position
+      // Update the laser position//更新激光位置
       if (idat.laser.v) {
         idat.laser.y += idat.laser.v;
         if (idat.laser.y < 0) idat.laser.v = 0;
       }
 
-      // Did the laser collide with an invader?
+      // Did the laser collide with an invader?//激光与入侵者相撞了吗？
       if (idat.laser.v && WITHIN(idat.laser.y, idat.pos.y, idat.pos.y + INVADERS_HIGH - 1)) {
         const int8_t col = idat.laser_col();
         if (WITHIN(col, 0, INVADER_COLS - 1)) {
@@ -303,49 +304,49 @@ void InvadersGame::game_screen() {
               const uint8_t type = inv_type[row];
               const int8_t invx = INV_X_LEFT(col, type);
               if (WITHIN(idat.laser.x, invx, invx + inv_wide[type] - 1)) {
-                // Turn off laser
+                // Turn off laser//关闭激光器
                 idat.laser.v = 0;
-                // Remove the invader!
+                // Remove the invader!//消灭入侵者！
                 idat.bugs[row] &= ~mask;
-                // Score!
+                // Score!//得分！
                 score += INVADER_ROWS - row;
-                // Explode sound!
+                // Explode sound!//爆炸声！
                 _BUZZ(40, 10);
-                // Explosion bitmap!
+                // Explosion bitmap!//爆炸位图！
                 explode(invx + inv_wide[type] / 2, idat.pos.y + row * (INVADER_ROW_H));
-                // If invaders are gone, go to reset invaders state
+                // If invaders are gone, go to reset invaders state//如果入侵者消失，请转到重置入侵者状态
                 if (--idat.count) update_invader_data(); else { game_state = 20; reset_bullets(); }
-              } // laser x hit
-            } // invader exists
-          } // good row
-        } // good col
-      } // laser in invader zone
+              } // laser x hit//激光x射线击中
+            } // invader exists//入侵者存在
+          } // good row//排得好
+        } // good col//好上校
+      } // laser in invader zone//入侵区的激光
 
-      // Handle alien bullets
+      // Handle alien bullets//处理外星子弹
       LOOP_L_N(s, COUNT(idat.bullet)) {
         laser_t *b = &idat.bullet[s];
         if (b->v) {
-          // Update alien bullet position
+          // Update alien bullet position//更新外星子弹位置
           b->y += b->v;
           if (b->y >= LCD_PIXEL_HEIGHT)
-            b->v = 0; // Offscreen
+            b->v = 0; // Offscreen//屏幕外
           else if (b->y >= CANNON_Y && WITHIN(b->x, idat.cannon_x, idat.cannon_x + CANNON_W - 1))
-            kill_cannon(game_state, 120); // Hit the cannon
+            kill_cannon(game_state, 120); // Hit the cannon//开炮
         }
       }
 
-      // Randomly spawn a UFO
+      // Randomly spawn a UFO//随机产生一个不明飞行物
       if (!idat.ufov && !random(0,500)) spawn_ufo();
 
-      // Did the laser hit a ufo?
+      // Did the laser hit a ufo?//激光击中不明飞行物了吗？
       if (idat.laser.v && idat.ufov && idat.laser.y < UFO_H + 2 && WITHIN(idat.laser.x, idat.ufox, idat.ufox + UFO_W - 1)) {
-        // Turn off laser and UFO
+        // Turn off laser and UFO//关闭激光和UFO
         idat.laser.v = idat.ufov = 0;
-        // Score!
+        // Score!//得分！
         score += 10;
-        // Explode!
+        // Explode!//爆炸！
         _BUZZ(40, 10);
-        // Explosion bitmap
+        // Explosion bitmap//爆炸位图
         explode(idat.ufox + (UFO_W) / 2, 1);
       }
 
@@ -353,10 +354,10 @@ void InvadersGame::game_screen() {
 
   }
 
-  // Click-and-hold to abort
+  // Click-and-hold to abort//单击并按住以中止
   if (ui.button_pressed()) --idat.quit_count; else idat.quit_count = 10;
 
-  // Click to fire or exit
+  // Click to fire or exit//单击以开火或退出
   if (ui.use_click()) {
     if (!game_state)
       idat.quit_count = 0;
@@ -368,7 +369,7 @@ void InvadersGame::game_screen() {
 
   u8g.setColorIndex(1);
 
-  // Draw invaders
+  // Draw invaders//吸引入侵者
   if (PAGE_CONTAINS(idat.pos.y, idat.pos.y + idat.botmost * (INVADER_ROW_H) - 2 - 1)) {
     int8_t yy = idat.pos.y;
     LOOP_L_N(y, INVADER_ROWS) {
@@ -385,40 +386,40 @@ void InvadersGame::game_screen() {
     }
   }
 
-  // Draw UFO
+  // Draw UFO//画飞碟
   if (idat.ufov && PAGE_UNDER(UFO_H + 2))
     u8g.drawBitmapP(idat.ufox, 2, 2, UFO_H, ufo);
 
-  // Draw cannon
+  // Draw cannon//拉炮
   if (game_state && PAGE_CONTAINS(CANNON_Y, CANNON_Y + CANNON_H - 1) && (game_state < 2 || (game_state & 0x02)))
     u8g.drawBitmapP(idat.cannon_x, CANNON_Y, 2, CANNON_H, cannon);
 
-  // Draw laser
+  // Draw laser//牵引激光器
   if (idat.laser.v && PAGE_CONTAINS(idat.laser.y, idat.laser.y + LASER_H - 1))
     u8g.drawVLine(idat.laser.x, idat.laser.y, LASER_H);
 
-  // Draw invader bullets
+  // Draw invader bullets//拔入侵者的子弹
   LOOP_L_N (i, COUNT(idat.bullet)) {
     if (idat.bullet[i].v && PAGE_CONTAINS(idat.bullet[i].y - (SHOT_H - 1), idat.bullet[i].y))
       u8g.drawVLine(idat.bullet[i].x, idat.bullet[i].y - (SHOT_H - 1), SHOT_H);
   }
 
-  // Draw explosion
+  // Draw explosion//牵引爆炸
   if (idat.explod.v && PAGE_CONTAINS(idat.explod.y, idat.explod.y + 7 - 1)) {
     u8g.drawBitmapP(idat.explod.x, idat.explod.y, 2, 7, explosion);
     --idat.explod.v;
   }
 
-  // Blink GAME OVER when game is over
+  // Blink GAME OVER when game is over//当游戏结束时，闪烁游戏结束
   if (!game_state) draw_game_over();
 
   if (PAGE_UNDER(MENU_FONT_ASCENT - 1)) {
-    // Draw Score
-    //const uint8_t sx = (LCD_PIXEL_WIDTH - (score >= 10 ? score >= 100 ? score >= 1000 ? 4 : 3 : 2 : 1) * MENU_FONT_WIDTH) / 2;
+    // Draw Score//平局
+    //const uint8_t sx = (LCD_PIXEL_WIDTH - (score >= 10 ? score >= 100 ? score >= 1000 ? 4 : 3 : 2 : 1) * MENU_FONT_WIDTH) / 2;//const uint8\u t sx=（LCD像素宽度-（分数>=10？分数>=100？分数>=1000？4:3:2:1）*菜单字体宽度）/2；
     constexpr uint8_t sx = 0;
     lcd_put_int(sx, MENU_FONT_ASCENT - 1, score);
 
-    // Draw lives
+    // Draw lives//画生命
     if (idat.cannons_left)
       for (uint8_t i = 1; i <= idat.cannons_left; ++i)
         u8g.drawBitmapP(LCD_PIXEL_WIDTH - i * (LIFE_W), 6 - (LIFE_H), 1, LIFE_H, life);
@@ -427,7 +428,7 @@ void InvadersGame::game_screen() {
 }
 
 void InvadersGame::enter_game() {
-  init_game(20, game_screen); // countdown to reset invaders
+  init_game(20, game_screen); // countdown to reset invaders//重置入侵者的倒计时
   idat.cannons_left = 3;
   idat.quit_count = 10;
   idat.laser.v = 0;
@@ -435,4 +436,4 @@ void InvadersGame::enter_game() {
   reset_player();
 }
 
-#endif // MARLIN_INVADERS
+#endif // MARLIN_INVADERS//马林鱼入侵者

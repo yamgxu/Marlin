@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -38,14 +39,14 @@ BulkStorage bulk(&usb);
 static void USBH_UserProcess(USBH_HandleTypeDef *phost, uint8_t id) {
   switch(id) {
     case HOST_USER_SELECT_CONFIGURATION:
-      //SERIAL_ECHOLNPGM("APPLICATION_SELECT_CONFIGURATION");
+      //SERIAL_ECHOLNPGM("APPLICATION_SELECT_CONFIGURATION");//串行ECHOLNPGM（“应用程序选择配置”）；
       break;
     case HOST_USER_DISCONNECTION:
-      //SERIAL_ECHOLNPGM("APPLICATION_DISCONNECT");
-      //usb.setUsbTaskState(USB_STATE_RUNNING);
+      //SERIAL_ECHOLNPGM("APPLICATION_DISCONNECT");//串行ECHOLNPGM（“应用程序断开”）；
+      //usb.setUsbTaskState(USB_STATE_RUNNING);//setUsbTaskState（usb_状态_运行）；
       break;
     case HOST_USER_CLASS_ACTIVE:
-      //SERIAL_ECHOLNPGM("APPLICATION_READY");
+      //SERIAL_ECHOLNPGM("APPLICATION_READY");//串行ECHOLNPGM（“应用程序准备就绪”）；
       usb.setUsbTaskState(USB_STATE_RUNNING);
       break;
     case HOST_USER_CONNECTION:
@@ -87,9 +88,9 @@ void USBHost::setUsbTaskState(uint8_t state) {
     capacity = info.capacity.block_nbr / 2000;
     block_size = info.capacity.block_size;
     block_count = info.capacity.block_nbr;
-    // SERIAL_ECHOLNPAIR("info.capacity.block_nbr : %ld\n", info.capacity.block_nbr);
-    // SERIAL_ECHOLNPAIR("info.capacity.block_size: %d\n", info.capacity.block_size);
-    // SERIAL_ECHOLNPAIR("capacity                : %d MB\n", capacity);
+    // SERIAL_ECHOLNPAIR("info.capacity.block_nbr : %ld\n", info.capacity.block_nbr);//串行通信对（“info.capacity.block\u nbr:%ld\n”，info.capacity.block\u nbr）；
+    // SERIAL_ECHOLNPAIR("info.capacity.block_size: %d\n", info.capacity.block_size);//串行\u ECHOLNPAIR（“info.capacity.block\u大小：%d\n”，info.capacity.block\u大小）；
+    // SERIAL_ECHOLNPAIR("capacity                : %d MB\n", capacity);//串行对（“容量：%d MB\n”，容量）；
   }
 };
 
@@ -113,5 +114,5 @@ uint8_t BulkStorage::Write(uint8_t lun, uint32_t addr, uint16_t bsize, uint8_t b
   return USBH_MSC_Write(&hUsbHost, lun, addr, const_cast<uint8_t*>(buf), blocks) != USBH_OK;
 }
 
-#endif // USE_OTG_USB_HOST && USBHOST
-#endif // ARDUINO_ARCH_STM32 && !STM32GENERIC
+#endif // USE_OTG_USB_HOST && USBHOST//使用\u OTG\u USB\u主机和&USBHOST
+#endif // ARDUINO_ARCH_STM32 && !STM32GENERIC//ARDUINO_ARCH_STM32&&！STM32通用

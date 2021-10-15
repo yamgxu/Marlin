@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -20,9 +21,9 @@
  *
  */
 
-//
-// LED Menu
-//
+////
+// LED Menu//LED菜单
+////
 
 #include "../../inc/MarlinConfigPre.h"
 
@@ -155,9 +156,9 @@ void menu_led() {
     SUBMENU(MSG_CUSTOM_LEDS, menu_led_custom);
   #endif
 
-  //
-  // Set Case light on/off/brightness
-  //
+  ////
+  // Set Case light on/off/brightness//设置箱灯开/关/亮度
+  ////
   #if ENABLED(CASE_LIGHT_MENU)
     #if CASELIGHT_USES_BRIGHTNESS
       if (caselight.has_brightness())
@@ -170,4 +171,4 @@ void menu_led() {
   END_MENU();
 }
 
-#endif // HAS_LCD_MENU && LED_CONTROL_MENU
+#endif // HAS_LCD_MENU && LED_CONTROL_MENU//具有LCD菜单和LED控制菜单

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /************
  * config.h *
  ************/
@@ -21,7 +22,7 @@
 
 #pragma once
 
-// Configure this display with options in Configuration_adv.h
+// Configure this display with options in Configuration_adv.h//使用Configuration_adv.h中的选项配置此显示
 #include "../../../inc/MarlinConfigPre.h"
 #if ENABLED(TOUCH_UI_FTDI_EVE)
 

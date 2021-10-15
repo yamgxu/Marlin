@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -33,7 +34,7 @@
   #include "digipot_mcp4451_I2C_routines.h"
 #endif
 
-// Settings for the I2C based DIGIPOT (MCP4451) on Azteeg X3 Pro
+// Settings for the I2C based DIGIPOT (MCP4451) on Azteeg X3 Pro//Azteeg X3 Pro上基于I2C的DIGIPOT（MCP4451）的设置
 #if MB(5DPRINT)
   #define DIGIPOT_I2C_FACTOR      117.96f
   #define DIGIPOT_I2C_MAX_CURRENT   1.736f
@@ -65,28 +66,28 @@ static void digipot_i2c_send(const byte addr, const byte a, const byte b) {
   #endif
 }
 
-// This is for the MCP4451 I2C based digipot
+// This is for the MCP4451 I2C based digipot//这适用于基于MCP4451 I2C的digipot
 void DigipotI2C::set_current(const uint8_t channel, const float current) {
-  // These addresses are specific to Azteeg X3 Pro, can be set to others.
-  // In this case first digipot is at address A0=0, A1=0, second one is at A0=0, A1=1
-  const byte addr = channel < 4 ? DIGIPOT_I2C_ADDRESS_A : DIGIPOT_I2C_ADDRESS_B; // channel 0-3 vs 4-7
+  // These addresses are specific to Azteeg X3 Pro, can be set to others.//这些地址特定于Azteeg X3 Pro，可以设置为其他地址。
+  // In this case first digipot is at address A0=0, A1=0, second one is at A0=0, A1=1//在这种情况下，第一个digipot位于地址A0=0，A1=0，第二个digipot位于地址A0=0，A1=1
+  const byte addr = channel < 4 ? DIGIPOT_I2C_ADDRESS_A : DIGIPOT_I2C_ADDRESS_B; // channel 0-3 vs 4-7//频道0-3对4-7
 
-  // Initial setup
+  // Initial setup//初始设置
   digipot_i2c_send(addr, 0x40, 0xFF);
   digipot_i2c_send(addr, 0xA0, 0xFF);
 
-  // Set actual wiper value
+  // Set actual wiper value//设置实际雨刮器值
   byte addresses[4] = { 0x00, 0x10, 0x60, 0x70 };
   digipot_i2c_send(addr, addresses[channel & 0x3], current_to_wiper(_MIN(float(_MAX(current, 0)), DIGIPOT_I2C_MAX_CURRENT)));
 }
 
 void DigipotI2C::init() {
   #if MB(MKS_SBASE)
-    configure_i2c(16); // Set clock_option to 16 ensure I2C is initialized at 400kHz
+    configure_i2c(16); // Set clock_option to 16 ensure I2C is initialized at 400kHz//将时钟_选项设置为16，确保I2C初始化为400kHz
   #else
     Wire.begin();
   #endif
-  // Set up initial currents as defined in Configuration_adv.h
+  // Set up initial currents as defined in Configuration_adv.h//按照配置高级h中的定义设置初始电流
   static const float digipot_motor_current[] PROGMEM =
     #if ENABLED(DIGIPOT_USE_RAW_VALUES)
       DIGIPOT_MOTOR_CURRENT
@@ -100,4 +101,4 @@ void DigipotI2C::init() {
 
 DigipotI2C digipot_i2c;
 
-#endif // DIGIPOT_MCP4451
+#endif // DIGIPOT_MCP4451//DIGIPOT_MCP4451

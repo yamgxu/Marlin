@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,12 +30,12 @@
 #include "timers.h"
 
 void set_pwm_frequency(const pin_t pin, int f_desired) {
-  if (!PWM_PIN(pin)) return;            // Don't proceed if no hardware timer
+  if (!PWM_PIN(pin)) return;            // Don't proceed if no hardware timer//如果没有硬件计时器，则不要继续
 
   PinName pin_name = digitalPinToPinName(pin);
-  TIM_TypeDef *Instance = (TIM_TypeDef *)pinmap_peripheral(pin_name, PinMap_PWM); // Get HAL timer instance
+  TIM_TypeDef *Instance = (TIM_TypeDef *)pinmap_peripheral(pin_name, PinMap_PWM); // Get HAL timer instance//获取HAL计时器实例
 
-  LOOP_S_L_N(i, 0, NUM_HARDWARE_TIMERS) // Protect used timers
+  LOOP_S_L_N(i, 0, NUM_HARDWARE_TIMERS) // Protect used timers//保护使用过的计时器
     if (timer_instance[i] && timer_instance[i]->getHandle()->Instance == Instance)
       return;
 
@@ -55,5 +56,5 @@ void set_pwm_duty(const pin_t pin, const uint16_t v, const uint16_t v_size/*=255
   }
 }
 
-#endif // NEEDS_HARDWARE_PWM
-#endif // ARDUINO_ARCH_STM32 && !STM32GENERIC
+#endif // NEEDS_HARDWARE_PWM//需要硬件\u PWM
+#endif // ARDUINO_ARCH_STM32 && !STM32GENERIC//ARDUINO_ARCH_STM32&&！STM32通用

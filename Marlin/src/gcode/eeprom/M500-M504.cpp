@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -55,7 +56,7 @@ void GcodeSuite::M502() {
     (void)settings.report(!parser.boolval('S', true));
   }
 
-#endif // !DISABLE_M503
+#endif // !DISABLE_M503// !禁用_M503
 
 #if ENABLED(EEPROM_SETTINGS)
 

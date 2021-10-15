@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,7 +30,7 @@
 
 #include "../inc/MarlinConfig.h"
 
-//#define DEBUG_GCODE_PARSER
+//#define DEBUG_GCODE_PARSER//#定义调试代码解析器
 #if ENABLED(DEBUG_GCODE_PARSER)
   #include "../libs/hex_print.h"
 #endif
@@ -57,18 +58,18 @@
 class GCodeParser {
 
 private:
-  static char *value_ptr;           // Set by seen, used to fetch the value
+  static char *value_ptr;           // Set by seen, used to fetch the value//由seen设置，用于获取值
 
   #if ENABLED(FASTER_GCODE_PARSER)
-    static uint32_t codebits;       // Parameters pre-scanned
-    static uint8_t param[26];       // For A-Z, offsets into command args
+    static uint32_t codebits;       // Parameters pre-scanned//预扫描参数
+    static uint8_t param[26];       // For A-Z, offsets into command args//对于A-Z，将偏移量转换为命令参数
   #else
-    static char *command_args;      // Args start here, for slow scan
+    static char *command_args;      // Args start here, for slow scan//Args从这里开始，用于慢速扫描
   #endif
 
 public:
 
-  // Global states for GCode-level units features
+  // Global states for GCode-level units features//GCode级别单位功能的全局状态
 
   static bool volumetric_enabled;
 
@@ -80,13 +81,13 @@ public:
     static TempUnit input_temp_units;
   #endif
 
-  // Command line state
-  static char *command_ptr,               // The command, so it can be echoed
-              *string_arg,                // string of command line
-              command_letter;             // G, M, or T
-  static uint16_t codenum;                // 123
+  // Command line state//命令行状态
+  static char *command_ptr,               // The command, so it can be echoed//命令，以便可以响应
+              *string_arg,                // string of command line//命令行字符串
+              command_letter;             // G, M, or T//G、M或T
+  static uint16_t codenum;                // 123// 123
   #if USE_GCODE_SUBCODES
-    static uint8_t subcode;               // .1
+    static uint8_t subcode;               // .1// .1
   #endif
 
   #if ENABLED(GCODE_MOTION_MODES)
@@ -101,36 +102,36 @@ public:
     static void debug();
   #endif
 
-  // Reset is done before parsing
+  // Reset is done before parsing//重置在解析之前完成
   static void reset();
 
   #define LETTER_BIT(N) ((N) - 'A')
 
   FORCE_INLINE static bool valid_signless(const char * const p) {
-    return NUMERIC(p[0]) || (p[0] == '.' && NUMERIC(p[1])); // .?[0-9]
+    return NUMERIC(p[0]) || (p[0] == '.' && NUMERIC(p[1])); // .?[0-9]// .?[0-9]
   }
 
   FORCE_INLINE static bool valid_float(const char * const p) {
-    return valid_signless(p) || ((p[0] == '-' || p[0] == '+') && valid_signless(&p[1])); // [-+]?.?[0-9]
+    return valid_signless(p) || ((p[0] == '-' || p[0] == '+') && valid_signless(&p[1])); // [-+]?.?[0-9]// [-+]?.?[0-9]
   }
 
   FORCE_INLINE static bool valid_number(const char * const p) {
-    // TODO: With MARLIN_DEV_MODE allow HEX values starting with "x"
+    // TODO: With MARLIN_DEV_MODE allow HEX values starting with "x"//TODO:在MARLIN_DEV_模式下，允许以“x”开头的十六进制值
     return valid_float(p);
   }
 
   #if ENABLED(FASTER_GCODE_PARSER)
 
     FORCE_INLINE static bool valid_int(const char * const p) {
-      return NUMERIC(p[0]) || ((p[0] == '-' || p[0] == '+') && NUMERIC(p[1])); // [-+]?[0-9]
+      return NUMERIC(p[0]) || ((p[0] == '-' || p[0] == '+') && NUMERIC(p[1])); // [-+]?[0-9]// [-+]?[0-9]
     }
 
-    // Set the flag and pointer for a parameter
+    // Set the flag and pointer for a parameter//设置参数的标志和指针
     static inline void set(const char c, char * const ptr) {
       const uint8_t ind = LETTER_BIT(c);
-      if (ind >= COUNT(param)) return;           // Only A-Z
-      SBI32(codebits, ind);                      // parameter exists
-      param[ind] = ptr ? ptr - command_ptr : 0;  // parameter offset or 0
+      if (ind >= COUNT(param)) return;           // Only A-Z//只有A-Z
+      SBI32(codebits, ind);                      // parameter exists//参数存在
+      param[ind] = ptr ? ptr - command_ptr : 0;  // parameter offset or 0//参数偏移量或0
       #if ENABLED(DEBUG_GCODE_PARSER)
         if (codenum == 800) {
           SERIAL_ECHOPAIR("Set bit ", ind, " of codebits (", hex_address((void*)(codebits >> 16)));
@@ -140,11 +141,11 @@ public:
       #endif
     }
 
-    // Code seen bit was set. If not found, value_ptr is unchanged.
-    // This allows "if (seen('A')||seen('B'))" to use the last-found value.
+    // Code seen bit was set. If not found, value_ptr is unchanged.//代码位已设置。如果未找到，则值_ptr不变。
+    // This allows "if (seen('A')||seen('B'))" to use the last-found value.//这允许“if（seen（'A'）| | seen（'B'））”使用最后找到的值。
     static inline bool seen(const char c) {
       const uint8_t ind = LETTER_BIT(c);
-      if (ind >= COUNT(param)) return false; // Only A-Z
+      if (ind >= COUNT(param)) return false; // Only A-Z//只有A-Z
       const bool b = TEST32(codebits, ind);
       if (b) {
         if (param[ind]) {
@@ -171,7 +172,7 @@ public:
             : 0) : 0) : 0) : 0) : 0) : 0) : 0) : 0) : 0) : 0);
     }
 
-    // At least one of a list of code letters was seen
+    // At least one of a list of code letters was seen//至少看到了代码字母列表中的一个
     #ifdef CPU_32_BIT
       FORCE_INLINE static bool seen(const char * const str) { return !!(codebits & letter_bits(str)); }
     #else
@@ -187,7 +188,7 @@ public:
 
     FORCE_INLINE static bool seen_test(const char c) { return TEST32(codebits, LETTER_BIT(c)); }
 
-  #else // !FASTER_GCODE_PARSER
+  #else // !FASTER_GCODE_PARSER// !更快的代码解析器
 
     #if ENABLED(GCODE_CASE_INSENSITIVE)
       FORCE_INLINE static char* strgchr(char *p, char g) {
@@ -202,8 +203,8 @@ public:
       #define strgchr strchr
     #endif
 
-    // Code is found in the string. If not found, value_ptr is unchanged.
-    // This allows "if (seen('A')||seen('B'))" to use the last-found value.
+    // Code is found in the string. If not found, value_ptr is unchanged.//在字符串中找到代码。如果未找到，则值_ptr不变。
+    // This allows "if (seen('A')||seen('B'))" to use the last-found value.//这允许“if（seen（'A'）| | seen（'B'））”使用最后找到的值。
     static inline bool seen(const char c) {
       char *p = strgchr(command_args, c);
       const bool b = !!p;
@@ -215,16 +216,16 @@ public:
 
     FORCE_INLINE static bool seen_test(const char c) { return (bool)strgchr(command_args, c); }
 
-    // At least one of a list of code letters was seen
+    // At least one of a list of code letters was seen//至少看到了代码字母列表中的一个
     static inline bool seen(const char * const str) {
       for (uint8_t i = 0; const char c = str[i]; i++)
         if (seen_test(c)) return true;
       return false;
     }
 
-  #endif // !FASTER_GCODE_PARSER
+  #endif // !FASTER_GCODE_PARSER// !更快的代码解析器
 
-  // Seen any axis parameter
+  // Seen any axis parameter//看到任何轴参数了吗
   static inline bool seen_axis() {
     return seen(LOGICAL_AXIS_GANG("E", "X", "Y", "Z", AXIS4_STR, AXIS5_STR, AXIS6_STR));
   }
@@ -235,28 +236,28 @@ public:
     FORCE_INLINE static char* unescape_string(char* &src) { return src; }
   #endif
 
-  // Populate all fields by parsing a single line of GCode
-  // This uses 54 bytes of SRAM to speed up seen/value
+  // Populate all fields by parsing a single line of GCode//通过解析一行GCode填充所有字段
+  // This uses 54 bytes of SRAM to speed up seen/value//这使用54字节的SRAM来加速SEED/value
   static void parse(char * p);
 
   #if ENABLED(CNC_COORDINATE_SYSTEMS)
-    // Parse the next parameter as a new command
+    // Parse the next parameter as a new command//将下一个参数解析为新命令
     static bool chain();
   #endif
 
-  // Test whether the parsed command matches the input
+  // Test whether the parsed command matches the input//测试解析的命令是否与输入匹配
   static inline bool is_command(const char ltr, const uint16_t num) { return command_letter == ltr && codenum == num; }
 
-  // The code value pointer was set
+  // The code value pointer was set//已设置代码值指针
   FORCE_INLINE static bool has_value() { return !!value_ptr; }
 
-  // Seen a parameter with a value
+  // Seen a parameter with a value//查看带有值的参数
   static inline bool seenval(const char c) { return seen(c) && has_value(); }
 
-  // The value as a string
+  // The value as a string//将值设置为字符串
   static inline char* value_string() { return value_ptr; }
 
-  // Float removes 'E' to prevent scientific notation interpretation
+  // Float removes 'E' to prevent scientific notation interpretation//Float删除“E”以防止科学符号解释
   static inline float value_float() {
     if (value_ptr) {
       char *e = value_ptr;
@@ -276,29 +277,29 @@ public:
     return 0;
   }
 
-  // Code value as a long or ulong
+  // Code value as a long or ulong//代码值为long或ulong
   static inline int32_t value_long() { return value_ptr ? strtol(value_ptr, nullptr, 10) : 0L; }
   static inline uint32_t value_ulong() { return value_ptr ? strtoul(value_ptr, nullptr, 10) : 0UL; }
 
-  // Code value for use as time
+  // Code value for use as time//用作时间的代码值
   static inline millis_t value_millis() { return value_ulong(); }
   static inline millis_t value_millis_from_seconds() { return (millis_t)SEC_TO_MS(value_float()); }
 
-  // Reduce to fewer bits
+  // Reduce to fewer bits//减少到更少的位
   static inline int16_t value_int() { return (int16_t)value_long(); }
   static inline uint16_t value_ushort() { return (uint16_t)value_long(); }
   static inline uint8_t value_byte() { return (uint8_t)constrain(value_long(), 0, 255); }
 
-  // Bool is true with no value or non-zero
+  // Bool is true with no value or non-zero//Bool为true，无值或非零
   static inline bool value_bool() { return !has_value() || !!value_byte(); }
 
-  // Units modes: Inches, Fahrenheit, Kelvin
+  // Units modes: Inches, Fahrenheit, Kelvin//单位模式：英寸、华氏度、开尔文
 
   #if ENABLED(INCH_MODE_SUPPORT)
     static inline float mm_to_linear_unit(const_float_t mm)     { return mm / linear_unit_factor; }
     static inline float mm_to_volumetric_unit(const_float_t mm) { return mm / (volumetric_enabled ? volumetric_unit_factor : linear_unit_factor); }
 
-    // Init linear units by constructor
+    // Init linear units by constructor//构造函数初始化线性单位
     GCodeParser() { set_input_linear_units(LINEARUNIT_MM); }
 
     static inline void set_input_linear_units(const LinearUnit units) {
@@ -367,7 +368,7 @@ public:
         }
       }
 
-    #endif // HAS_LCD_MENU && !DISABLE_M503
+    #endif // HAS_LCD_MENU && !DISABLE_M503//有_LCD_菜单&！禁用_M503
 
     static inline celsius_t value_celsius() {
       float f = value_float();
@@ -391,20 +392,20 @@ public:
       return LROUND(f);
     }
 
-  #else // !TEMPERATURE_UNITS_SUPPORT
+  #else // !TEMPERATURE_UNITS_SUPPORT// !温度单元支持
 
     static inline float to_temp_units(int16_t c) { return (float)c; }
 
     static inline celsius_t value_celsius()      { return value_int(); }
     static inline celsius_t value_celsius_diff() { return value_int(); }
 
-  #endif // !TEMPERATURE_UNITS_SUPPORT
+  #endif // !TEMPERATURE_UNITS_SUPPORT// !温度单元支持
 
   static inline feedRate_t value_feedrate() { return MMM_TO_MMS(value_linear_units()); }
 
   void unknown_command_warning();
 
-  // Provide simple value accessors with default option
+  // Provide simple value accessors with default option//提供带有默认选项的简单值访问器
   static inline char*     stringval(const char c, char * const dval=nullptr) { return seenval(c) ? value_string()   : dval; }
   static inline float     floatval(const char c, const float dval=0.0)   { return seenval(c) ? value_float()        : dval; }
   static inline bool      boolval(const char c, const bool dval=false)   { return seenval(c) ? value_bool()         : (seen(c) ? true : dval); }

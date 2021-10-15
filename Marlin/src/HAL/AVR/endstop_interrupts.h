@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -40,7 +41,7 @@
 
 #include <stdint.h>
 
-// One ISR for all EXT-Interrupts
+// One ISR for all EXT-Interrupts//一个ISR用于所有外部中断
 void endstop_ISR() { endstops.update(); }
 
 /**
@@ -92,16 +93,16 @@ void endstop_ISR() { endstops.update(); }
 #endif
 
 
-// Install Pin change interrupt for a pin. Can be called multiple times.
+// Install Pin change interrupt for a pin. Can be called multiple times.//为引脚安装引脚更改中断。可以多次调用。
 void pciSetup(const int8_t pin) {
   if (digitalPinHasPCICR(pin)) {
-    SBI(*digitalPinToPCMSK(pin), digitalPinToPCMSKbit(pin));  // enable pin
-    SBI(PCIFR, digitalPinToPCICRbit(pin)); // clear any outstanding interrupt
-    SBI(PCICR, digitalPinToPCICRbit(pin)); // enable interrupt for the group
+    SBI(*digitalPinToPCMSK(pin), digitalPinToPCMSKbit(pin));  // enable pin//使能引脚
+    SBI(PCIFR, digitalPinToPCICRbit(pin)); // clear any outstanding interrupt//清除任何未完成的中断
+    SBI(PCICR, digitalPinToPCICRbit(pin)); // enable interrupt for the group//为组启用中断
   }
 }
 
-// Handlers for pin change interrupts
+// Handlers for pin change interrupts//针更改中断的处理程序
 #ifdef PCINT0_vect
   ISR(PCINT0_vect) { endstop_ISR(); }
 #endif
@@ -301,5 +302,5 @@ void setup_endstop_interrupts() {
       pciSetup(Z_MIN_PROBE_PIN);
     #endif
   #endif
-  // If we arrive here without raising an assertion, each pin has either an EXT-interrupt or a PCI.
+  // If we arrive here without raising an assertion, each pin has either an EXT-interrupt or a PCI.//如果我们到达这里时没有提出断言，则每个管脚都有一个EXT中断或一个PCI。
 }

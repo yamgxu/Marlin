@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  *
@@ -30,37 +31,37 @@
 class PersistentStore {
 public:
 
-  // Total available persistent storage space (in bytes)
+  // Total available persistent storage space (in bytes)//总可用持久存储空间（字节）
   static size_t capacity();
 
-  // Prepare to read or write
+  // Prepare to read or write//准备读或写
   static bool access_start();
 
-  // Housecleaning after read or write
+  // Housecleaning after read or write//读写后打扫房间
   static bool access_finish();
 
-  // Write one or more bytes of data and update the CRC
-  // Return 'true' on write error
+  // Write one or more bytes of data and update the CRC//写入一个或多个字节的数据并更新CRC
+  // Return 'true' on write error//写入错误时返回“true”
   static bool write_data(int &pos, const uint8_t *value, size_t size, uint16_t *crc);
 
-  // Read one or more bytes of data and update the CRC
-  // Return 'true' on read error
+  // Read one or more bytes of data and update the CRC//读取一个或多个字节的数据并更新CRC
+  // Return 'true' on read error//读取错误时返回“true”
   static bool read_data(int &pos, uint8_t *value, size_t size, uint16_t *crc, const bool writing=true);
 
-  // Write one or more bytes of data
-  // Return 'true' on write error
+  // Write one or more bytes of data//写入一个或多个字节的数据
+  // Return 'true' on write error//写入错误时返回“true”
   static inline bool write_data(const int pos, const uint8_t *value, const size_t size=sizeof(uint8_t)) {
     int data_pos = pos;
     uint16_t crc = 0;
     return write_data(data_pos, value, size, &crc);
   }
 
-  // Write a single byte of data
-  // Return 'true' on write error
+  // Write a single byte of data//写入单个字节的数据
+  // Return 'true' on write error//写入错误时返回“true”
   static inline bool write_data(const int pos, const uint8_t value) { return write_data(pos, &value); }
 
-  // Read one or more bytes of data
-  // Return 'true' on read error
+  // Read one or more bytes of data//读取一个或多个字节的数据
+  // Return 'true' on read error//读取错误时返回“true”
   static inline bool read_data(const int pos, uint8_t *value, const size_t size=1) {
     int data_pos = pos;
     uint16_t crc = 0;

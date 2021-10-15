@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,7 +30,7 @@
 #if ENABLED(HAS_MOTOR_CURRENT_DAC)
 
 #include "stepper_dac.h"
-#include "../../MarlinCore.h" // for SP_X_LBL...
+#include "../../MarlinCore.h" // for SP_X_LBL...//对于SP_X_LBL。。。
 
 bool dac_present = false;
 constexpr xyze_uint8_t dac_order = DAC_STEPPER_ORDER;
@@ -39,7 +40,7 @@ StepperDAC stepper_dac;
 
 int StepperDAC::init() {
   #if PIN_EXISTS(DAC_DISABLE)
-    OUT_WRITE(DAC_DISABLE_PIN, LOW);  // set pin low to enable DAC
+    OUT_WRITE(DAC_DISABLE_PIN, LOW);  // set pin low to enable DAC//将引脚设置为低以启用DAC
   #endif
 
   mcp4728.init();
@@ -102,4 +103,4 @@ void StepperDAC::commit_eeprom() {
   mcp4728.eepromWrite();
 }
 
-#endif // HAS_MOTOR_CURRENT_DAC
+#endif // HAS_MOTOR_CURRENT_DAC//有电机电流DAC

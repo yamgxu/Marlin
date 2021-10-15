@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -115,7 +116,7 @@ static void event_handler(lv_obj_t *obj, lv_event_t event) {
 
 void lv_draw_extrusion() {
   scr = lv_screen_create(EXTRUSION_UI);
-  // Create image buttons
+  // Create image buttons//创建图像按钮
   lv_obj_t *buttonAdd = lv_big_button_create(scr, "F:/bmp_in.bin", extrude_menu.in, INTERVAL_V, titleHeight, event_handler, ID_E_ADD);
   lv_obj_clear_protect(buttonAdd, LV_PROTECT_FOLLOW);
   lv_big_button_create(scr, "F:/bmp_out.bin", extrude_menu.out, BTN_X_PIXEL * 3 + INTERVAL_V * 4, titleHeight, event_handler, ID_E_DEC);
@@ -134,7 +135,7 @@ void lv_draw_extrusion() {
 
   lv_big_button_create(scr, "F:/bmp_return.bin", common_menu.text_back, BTN_X_PIXEL * 3 + INTERVAL_V * 4, BTN_Y_PIXEL + INTERVAL_H + titleHeight, event_handler, ID_E_RETURN);
 
-  // Create labels on the image buttons
+  // Create labels on the image buttons//在图像按钮上创建标签
   labelType = lv_label_create_empty(buttonType);
   labelStep = lv_label_create_empty(buttonStep);
   labelSpeed = lv_label_create_empty(buttonSpeed);
@@ -251,4 +252,4 @@ void lv_clear_extrusion() {
   lv_obj_del(scr);
 }
 
-#endif // HAS_TFT_LVGL_UI
+#endif // HAS_TFT_LVGL_UI//有TFT\U LVGL\U用户界面

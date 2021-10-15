@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -25,7 +26,7 @@
 #if ENABLED(DIRECT_PIN_CONTROL)
 
 #include "../gcode.h"
-#include "../../MarlinCore.h" // for pin_is_protected
+#include "../../MarlinCore.h" // for pin_is_protected//因为pin_受保护
 
 #if HAS_FAN
   #include "../../module/temperature.h"
@@ -104,4 +105,4 @@ void GcodeSuite::M42() {
   analogWrite(pin, pin_status);
 }
 
-#endif // DIRECT_PIN_CONTROL
+#endif // DIRECT_PIN_CONTROL//直接引脚控制

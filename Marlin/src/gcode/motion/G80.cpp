@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -35,4 +36,4 @@ void GcodeSuite::G80() {
 
 }
 
-#endif // GCODE_MOTION_MODES
+#endif // GCODE_MOTION_MODES//GCODE_运动模式

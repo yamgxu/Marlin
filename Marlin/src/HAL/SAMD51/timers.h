@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  *
@@ -22,30 +23,30 @@
 
 #include <stdint.h>
 
-// --------------------------------------------------------------------------
-// Defines
-// --------------------------------------------------------------------------
-#define RTC_TIMER_NUM       8   // This is not a TC but a RTC
+// --------------------------------------------------------------------------// --------------------------------------------------------------------------
+// Defines//定义
+// --------------------------------------------------------------------------// --------------------------------------------------------------------------
+#define RTC_TIMER_NUM       8   // This is not a TC but a RTC//这不是TC，而是RTC
 
 typedef uint32_t hal_timer_t;
 #define HAL_TIMER_TYPE_MAX 0xFFFFFFFF
 
-#define HAL_TIMER_RATE      F_CPU   // frequency of timers peripherals
+#define HAL_TIMER_RATE      F_CPU   // frequency of timers peripherals//定时器和外围设备的频率
 
 #ifndef STEP_TIMER_NUM
-  #define STEP_TIMER_NUM        0  // Timer Index for Stepper
+  #define STEP_TIMER_NUM        0  // Timer Index for Stepper//步进电机的定时器索引
 #endif
 #ifndef PULSE_TIMER_NUM
   #define PULSE_TIMER_NUM       STEP_TIMER_NUM
 #endif
 #ifndef TEMP_TIMER_NUM
-  #define TEMP_TIMER_NUM        RTC_TIMER_NUM // Timer Index for Temperature
+  #define TEMP_TIMER_NUM        RTC_TIMER_NUM // Timer Index for Temperature//温度计时器索引
 #endif
 
-#define TEMP_TIMER_FREQUENCY   1000 // temperature interrupt frequency
+#define TEMP_TIMER_FREQUENCY   1000 // temperature interrupt frequency//温度中断频率
 
-#define STEPPER_TIMER_RATE          HAL_TIMER_RATE   // frequency of stepper timer (HAL_TIMER_RATE / STEPPER_TIMER_PRESCALE)
-#define STEPPER_TIMER_TICKS_PER_US  (STEPPER_TIMER_RATE / 1000000) // stepper timer ticks per µs
+#define STEPPER_TIMER_RATE          HAL_TIMER_RATE   // frequency of stepper timer (HAL_TIMER_RATE / STEPPER_TIMER_PRESCALE)//步进定时器的频率（HAL\u定时器\u速率/步进定时器\u预刻度）
+#define STEPPER_TIMER_TICKS_PER_US  (STEPPER_TIMER_RATE / 1000000) // stepper timer ticks per µs//步进定时器滴答声每微秒
 #define STEPPER_TIMER_PRESCALE      (CYCLES_PER_MICROSECOND / STEPPER_TIMER_TICKS_PER_US)
 
 #define PULSE_TIMER_RATE          STEPPER_TIMER_RATE
@@ -78,9 +79,9 @@ typedef uint32_t hal_timer_t;
   #define HAL_TEMP_TIMER_ISR()  TC_HANDLER(TEMP_TIMER_NUM)
 #endif
 
-// --------------------------------------------------------------------------
-// Types
-// --------------------------------------------------------------------------
+// --------------------------------------------------------------------------// --------------------------------------------------------------------------
+// Types//类型
+// --------------------------------------------------------------------------// --------------------------------------------------------------------------
 
 typedef struct {
   union {
@@ -91,32 +92,32 @@ typedef struct {
   uint8_t     priority;
 } tTimerConfig;
 
-// --------------------------------------------------------------------------
-// Public Variables
-// --------------------------------------------------------------------------
+// --------------------------------------------------------------------------// --------------------------------------------------------------------------
+// Public Variables//公共变量
+// --------------------------------------------------------------------------// --------------------------------------------------------------------------
 
 extern const tTimerConfig TimerConfig[];
 
-// --------------------------------------------------------------------------
-// Public functions
-// --------------------------------------------------------------------------
+// --------------------------------------------------------------------------// --------------------------------------------------------------------------
+// Public functions//公共职能
+// --------------------------------------------------------------------------// --------------------------------------------------------------------------
 
 void HAL_timer_start(const uint8_t timer_num, const uint32_t frequency);
 
 FORCE_INLINE static void HAL_timer_set_compare(const uint8_t timer_num, const hal_timer_t compare) {
-  // Should never be called with timer RTC_TIMER_NUM
+  // Should never be called with timer RTC_TIMER_NUM//不应使用计时器RTC\U timer\U NUM调用
   Tc * const tc = TimerConfig[timer_num].pTc;
   tc->COUNT32.CC[0].reg = compare;
 }
 
 FORCE_INLINE static hal_timer_t HAL_timer_get_compare(const uint8_t timer_num) {
-  // Should never be called with timer RTC_TIMER_NUM
+  // Should never be called with timer RTC_TIMER_NUM//不应使用计时器RTC\U timer\U NUM调用
   Tc * const tc = TimerConfig[timer_num].pTc;
   return (hal_timer_t)tc->COUNT32.CC[0].reg;
 }
 
 FORCE_INLINE static hal_timer_t HAL_timer_get_count(const uint8_t timer_num) {
-  // Should never be called with timer RTC_TIMER_NUM
+  // Should never be called with timer RTC_TIMER_NUM//不应使用计时器RTC\U timer\U NUM调用
   Tc * const tc = TimerConfig[timer_num].pTc;
   tc->COUNT32.CTRLBSET.reg = TC_CTRLBCLR_CMD_READSYNC;
   SYNC(tc->COUNT32.SYNCBUSY.bit.CTRLB || tc->COUNT32.SYNCBUSY.bit.COUNT);
@@ -130,12 +131,12 @@ bool HAL_timer_interrupt_enabled(const uint8_t timer_num);
 FORCE_INLINE static void HAL_timer_isr_prologue(const uint8_t timer_num) {
   if (timer_num == RTC_TIMER_NUM) {
     Rtc * const rtc = TimerConfig[timer_num].pRtc;
-    // Clear interrupt flag
+    // Clear interrupt flag//清除中断标志
     rtc->MODE0.INTFLAG.reg = RTC_MODE0_INTFLAG_CMP0;
   }
   else {
     Tc * const tc = TimerConfig[timer_num].pTc;
-    // Clear interrupt flag
+    // Clear interrupt flag//清除中断标志
     tc->COUNT32.INTFLAG.reg = TC_INTFLAG_OVF;
   }
 }

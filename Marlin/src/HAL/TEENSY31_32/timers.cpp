@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -49,20 +50,20 @@ void HAL_timer_start(const uint8_t timer_num, const uint32_t frequency) {
   switch (timer_num) {
     case 0:
       FTM0_MODE = FTM_MODE_WPDIS | FTM_MODE_FTMEN;
-      FTM0_SC = 0x00; // Set this to zero before changing the modulus
-      FTM0_CNT = 0x0000; // Reset the count to zero
-      FTM0_MOD = 0xFFFF; // max modulus = 65535
-      FTM0_C0V = (FTM0_TIMER_RATE) / frequency; // Initial FTM Channel 0 compare value
-      FTM0_SC = (FTM_SC_CLKS(0b1) & FTM_SC_CLKS_MASK) | (FTM_SC_PS(FTM0_TIMER_PRESCALE_BITS) & FTM_SC_PS_MASK); // Bus clock 60MHz divided by prescaler 8
+      FTM0_SC = 0x00; // Set this to zero before changing the modulus//在更改模数之前，将其设置为零
+      FTM0_CNT = 0x0000; // Reset the count to zero//将计数重置为零
+      FTM0_MOD = 0xFFFF; // max modulus = 65535//最大模数=65535
+      FTM0_C0V = (FTM0_TIMER_RATE) / frequency; // Initial FTM Channel 0 compare value//初始FTM通道0比较值
+      FTM0_SC = (FTM_SC_CLKS(0b1) & FTM_SC_CLKS_MASK) | (FTM_SC_PS(FTM0_TIMER_PRESCALE_BITS) & FTM_SC_PS_MASK); // Bus clock 60MHz divided by prescaler 8//总线时钟60MHz除以预分频器8
       FTM0_C0SC = FTM_CSC_CHIE | FTM_CSC_MSA | FTM_CSC_ELSA;
       break;
     case 1:
-      FTM1_MODE = FTM_MODE_WPDIS | FTM_MODE_FTMEN; // Disable write protection, Enable FTM1
-      FTM1_SC = 0x00; // Set this to zero before changing the modulus
-      FTM1_CNT = 0x0000; // Reset the count to zero
-      FTM1_MOD = 0xFFFF; // max modulus = 65535
-      FTM1_C0V = (FTM1_TIMER_RATE) / frequency; // Initial FTM Channel 0 compare value 65535
-      FTM1_SC = (FTM_SC_CLKS(0b1) & FTM_SC_CLKS_MASK) | (FTM_SC_PS(FTM1_TIMER_PRESCALE_BITS) & FTM_SC_PS_MASK); // Bus clock 60MHz divided by prescaler 4
+      FTM1_MODE = FTM_MODE_WPDIS | FTM_MODE_FTMEN; // Disable write protection, Enable FTM1//禁用写保护，启用FTM1
+      FTM1_SC = 0x00; // Set this to zero before changing the modulus//在更改模数之前，将其设置为零
+      FTM1_CNT = 0x0000; // Reset the count to zero//将计数重置为零
+      FTM1_MOD = 0xFFFF; // max modulus = 65535//最大模数=65535
+      FTM1_C0V = (FTM1_TIMER_RATE) / frequency; // Initial FTM Channel 0 compare value 65535//初始FTM通道0比较值65535
+      FTM1_SC = (FTM_SC_CLKS(0b1) & FTM_SC_CLKS_MASK) | (FTM_SC_PS(FTM1_TIMER_PRESCALE_BITS) & FTM_SC_PS_MASK); // Bus clock 60MHz divided by prescaler 4//总线时钟60MHz除以预分频器4
       FTM1_C0SC = FTM_CSC_CHIE | FTM_CSC_MSA | FTM_CSC_ELSA;
       break;
   }
@@ -81,8 +82,8 @@ void HAL_timer_disable_interrupt(const uint8_t timer_num) {
     case 1: NVIC_DISABLE_IRQ(IRQ_FTM1); break;
   }
 
-  // We NEED memory barriers to ensure Interrupts are actually disabled!
-  // ( https://dzone.com/articles/nvic-disabling-interrupts-on-arm-cortex-m-and-the )
+  // We NEED memory barriers to ensure Interrupts are actually disabled!//我们需要内存屏障来确保中断实际上被禁用！
+  // ( https://dzone.com/articles/nvic-disabling-interrupts-on-arm-cortex-m-and-the )// ( https://dzone.com/articles/nvic-disabling-interrupts-on-arm-cortex-m-and-the )
   __DSB();
   __ISB();
 }
@@ -99,15 +100,15 @@ void HAL_timer_isr_prologue(const uint8_t timer_num) {
   switch (timer_num) {
     case 0:
       FTM0_CNT = 0x0000;
-      FTM0_SC &= ~FTM_SC_TOF; // Clear FTM Overflow flag
-      FTM0_C0SC &= ~FTM_CSC_CHF; // Clear FTM Channel Compare flag
+      FTM0_SC &= ~FTM_SC_TOF; // Clear FTM Overflow flag//清除FTM溢出标志
+      FTM0_C0SC &= ~FTM_CSC_CHF; // Clear FTM Channel Compare flag//清除FTM通道比较标志
       break;
     case 1:
       FTM1_CNT = 0x0000;
-      FTM1_SC &= ~FTM_SC_TOF; // Clear FTM Overflow flag
-      FTM1_C0SC &= ~FTM_CSC_CHF; // Clear FTM Channel Compare flag
+      FTM1_SC &= ~FTM_SC_TOF; // Clear FTM Overflow flag//清除FTM溢出标志
+      FTM1_C0SC &= ~FTM_CSC_CHF; // Clear FTM Channel Compare flag//清除FTM通道比较标志
       break;
   }
 }
 
-#endif // __MK20DX256__
+#endif // __MK20DX256__//_uuumk20dx256__

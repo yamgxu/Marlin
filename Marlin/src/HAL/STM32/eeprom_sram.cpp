@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  *
@@ -30,7 +31,7 @@
 #include "../shared/eeprom_api.h"
 
 #ifndef MARLIN_EEPROM_SIZE
-  #define MARLIN_EEPROM_SIZE 0x1000 // 4KB
+  #define MARLIN_EEPROM_SIZE 0x1000 // 4KB//4KB
 #endif
 size_t PersistentStore::capacity()    { return MARLIN_EEPROM_SIZE; }
 
@@ -41,7 +42,7 @@ bool PersistentStore::write_data(int &pos, const uint8_t *value, size_t size, ui
   while (size--) {
     uint8_t v = *value;
 
-    // Save to Backup SRAM
+    // Save to Backup SRAM//保存到备份SRAM
     *(__IO uint8_t *)(BKPSRAM_BASE + (uint8_t * const)pos) = v;
 
     crc16(crc, &v, 1);
@@ -54,7 +55,7 @@ bool PersistentStore::write_data(int &pos, const uint8_t *value, size_t size, ui
 
 bool PersistentStore::read_data(int &pos, uint8_t *value, size_t size, uint16_t *crc, const bool writing/*=true*/) {
   do {
-    // Read from either external EEPROM, program flash or Backup SRAM
+    // Read from either external EEPROM, program flash or Backup SRAM//从外部EEPROM、程序闪存或备份SRAM读取
     const uint8_t c = ( *(__IO uint8_t *)(BKPSRAM_BASE + ((uint8_t*)pos)) );
     if (writing) *value = c;
     crc16(crc, &c, 1);
@@ -64,5 +65,5 @@ bool PersistentStore::read_data(int &pos, uint8_t *value, size_t size, uint16_t 
   return false;
 }
 
-#endif // SRAM_EEPROM_EMULATION
-#endif // ARDUINO_ARCH_STM32 && !STM32GENERIC
+#endif // SRAM_EEPROM_EMULATION//SRAM_EEPROM_仿真
+#endif // ARDUINO_ARCH_STM32 && !STM32GENERIC//ARDUINO_ARCH_STM32&&！STM32通用

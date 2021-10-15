@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -50,16 +51,16 @@
 #endif
 
 #ifndef MARLIN_EEPROM_SIZE
-  #define MARLIN_EEPROM_SIZE              0x1000  // 4KB
+  #define MARLIN_EEPROM_SIZE              0x1000  // 4KB//4KB
 #endif
 
 #define IS_RAMPS_EFB
 
-//
-// Servos
-//
+////
+// Servos//伺服
+////
 #ifdef IS_RAMPS_13
-  #define SERVO0_PIN                           7  // RAMPS_13 // Will conflict with BTN_EN2 on LCD_I2C_VIKI
+  #define SERVO0_PIN                           7  // RAMPS_13 // Will conflict with BTN_EN2 on LCD_I2C_VIKI//斜坡13//将与LCD I2C VIKI上的BTN EN2冲突
 #else
   #define SERVO0_PIN                          11
 #endif
@@ -69,9 +70,9 @@
   #define SERVO3_PIN                           4
 #endif
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_MIN_PIN                              3
 #ifndef X_MAX_PIN
   #define X_MAX_PIN                            2
@@ -81,16 +82,16 @@
 #define Z_MIN_PIN                             18
 #define Z_MAX_PIN                             19
 
-//
-// Z Probe (when not Z_MIN_PIN)
-//
+////
+// Z Probe (when not Z_MIN_PIN)//Z探头（非Z_MIN_引脚时）
+////
 #ifndef Z_MIN_PROBE_PIN
   #define Z_MIN_PROBE_PIN                     32
 #endif
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                            54
 #define X_DIR_PIN                             55
 #define X_ENABLE_PIN                          38
@@ -126,23 +127,23 @@
   #define E1_CS_PIN                           44
 #endif
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                             0  // Analog Input
-#define TEMP_1_PIN                             1  // Analog Input
-#define TEMP_BED_PIN                           2  // Analog Input
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                             0  // Analog Input//模拟输入
+#define TEMP_1_PIN                             1  // Analog Input//模拟输入
+#define TEMP_BED_PIN                           2  // Analog Input//模拟输入
 
-// SPI for Max6675 or Max31855 Thermocouple
+// SPI for Max6675 or Max31855 Thermocouple//Max6675或Max31855热电偶的SPI
 #if DISABLED(SDSUPPORT)
-  #define MAX6675_SS_PIN                      66  // Don't use 53 if using Display/SD card
+  #define MAX6675_SS_PIN                      66  // Don't use 53 if using Display/SD card//如果使用显示卡/SD卡，请不要使用53
 #else
-  #define MAX6675_SS_PIN                      66  // Don't use 49 (SD_DETECT_PIN)
+  #define MAX6675_SS_PIN                      66  // Don't use 49 (SD_DETECT_PIN)//不要使用49（SD_DETECT_引脚）
 #endif
 
-//
-// Augmentation for auto-assigning RAMPS plugs
-//
+////
+// Augmentation for auto-assigning RAMPS plugs//自动分配坡道插头的扩充
+////
 #if NONE(IS_RAMPS_EEB, IS_RAMPS_EEF, IS_RAMPS_EFB, IS_RAMPS_EFF, IS_RAMPS_SF) && !PIN_EXISTS(MOSFET_D)
   #if HAS_MULTI_HOTEND
     #if TEMP_SENSOR_BED
@@ -157,9 +158,9 @@
   #endif
 #endif
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #ifndef MOSFET_D_PIN
   #define MOSFET_D_PIN                        -1
 #endif
@@ -175,21 +176,21 @@
 
 #define HEATER_0_PIN               RAMPS_D10_PIN
 
-#if ENABLED(IS_RAMPS_EFB)                         // Hotend, Fan, Bed
+#if ENABLED(IS_RAMPS_EFB)                         // Hotend, Fan, Bed//热端、风扇、床
   #define FAN_PIN                   RAMPS_D9_PIN
   #define HEATER_BED_PIN            RAMPS_D8_PIN
-#elif ENABLED(IS_RAMPS_EEF)                       // Hotend, Hotend, Fan
+#elif ENABLED(IS_RAMPS_EEF)                       // Hotend, Hotend, Fan//热端，热端，风扇
   #define HEATER_1_PIN              RAMPS_D9_PIN
   #define FAN_PIN                   RAMPS_D8_PIN
-#elif ENABLED(IS_RAMPS_EEB)                       // Hotend, Hotend, Bed
+#elif ENABLED(IS_RAMPS_EEB)                       // Hotend, Hotend, Bed//热端，热端，床
   #define HEATER_1_PIN              RAMPS_D9_PIN
   #define HEATER_BED_PIN            RAMPS_D8_PIN
-#elif ENABLED(IS_RAMPS_EFF)                       // Hotend, Fan, Fan
+#elif ENABLED(IS_RAMPS_EFF)                       // Hotend, Fan, Fan//热端，风扇，风扇
   #define FAN_PIN                   RAMPS_D9_PIN
   #define FAN1_PIN                  RAMPS_D8_PIN
-#elif ENABLED(IS_RAMPS_SF)                        // Spindle, Fan
+#elif ENABLED(IS_RAMPS_SF)                        // Spindle, Fan//主轴，风扇
   #define FAN_PIN                   RAMPS_D8_PIN
-#else                                             // Non-specific are "EFB" (i.e., "EFBF" or "EFBE")
+#else                                             // Non-specific are "EFB" (i.e., "EFBF" or "EFBE")//不具体的是“EFB”（即“EFBF”或“EFBE”）
   #define FAN_PIN                   RAMPS_D9_PIN
   #define HEATER_BED_PIN            RAMPS_D8_PIN
   #if HOTENDS == 1
@@ -200,20 +201,20 @@
 #endif
 
 #ifndef FAN_PIN
-  #define FAN_PIN                              4  // IO pin. Buffer needed
+  #define FAN_PIN                              4  // IO pin. Buffer needed//IO引脚。需要缓冲区
 #endif
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define SDSS                                  53
 #define LED_PIN                               13
 
 #ifndef FILWIDTH_PIN
-  #define FILWIDTH_PIN                         5  // Analog Input on AUX2
+  #define FILWIDTH_PIN                         5  // Analog Input on AUX2//AUX2上的模拟输入
 #endif
 
-// define digital pin 4 for the filament runout sensor. Use the RAMPS 1.4 digital input 4 on the servos connector
+// define digital pin 4 for the filament runout sensor. Use the RAMPS 1.4 digital input 4 on the servos connector//定义灯丝偏移传感器的数字针脚4。使用伺服接头上的斜坡1.4数字输入4
 #ifndef FIL_RUNOUT_PIN
   #define FIL_RUNOUT_PIN                       4
 #endif
@@ -223,39 +224,39 @@
 #endif
 
 #if ENABLED(CASE_LIGHT_ENABLE) && !defined(CASE_LIGHT_PIN) && !defined(SPINDLE_LASER_ENA_PIN)
-  #if NUM_SERVOS <= 1                             // Prefer the servo connector
-    #define CASE_LIGHT_PIN                     6  // Hardware PWM
-  #elif HAS_FREE_AUX2_PINS                        // try to use AUX 2
-    #define CASE_LIGHT_PIN                    44  // Hardware PWM
+  #if NUM_SERVOS <= 1                             // Prefer the servo connector//首选伺服连接器
+    #define CASE_LIGHT_PIN                     6  // Hardware PWM//硬件脉宽调制
+  #elif HAS_FREE_AUX2_PINS                        // try to use AUX 2//尝试使用辅助2
+    #define CASE_LIGHT_PIN                    44  // Hardware PWM//硬件脉宽调制
   #endif
 #endif
 
-//
-// M3/M4/M5 - Spindle/Laser Control
-//
+////
+// M3/M4/M5 - Spindle/Laser Control//M3/M4/M5-主轴/激光控制
+////
 #if HAS_CUTTER && !PIN_EXISTS(SPINDLE_LASER_ENA)
-  #if !defined(NUM_SERVOS) || NUM_SERVOS == 0     // Prefer the servo connector
-    #define SPINDLE_LASER_ENA_PIN              4  // Pullup or pulldown!
-    #define SPINDLE_LASER_PWM_PIN              6  // Hardware PWM
+  #if !defined(NUM_SERVOS) || NUM_SERVOS == 0     // Prefer the servo connector//首选伺服连接器
+    #define SPINDLE_LASER_ENA_PIN              4  // Pullup or pulldown!//拉起还是拉下！
+    #define SPINDLE_LASER_PWM_PIN              6  // Hardware PWM//硬件脉宽调制
     #define SPINDLE_DIR_PIN                    5
-  #elif HAS_FREE_AUX2_PINS                        // try to use AUX 2
-    #define SPINDLE_LASER_ENA_PIN             40  // Pullup or pulldown!
-    #define SPINDLE_LASER_PWM_PIN             44  // Hardware PWM
+  #elif HAS_FREE_AUX2_PINS                        // try to use AUX 2//尝试使用辅助2
+    #define SPINDLE_LASER_ENA_PIN             40  // Pullup or pulldown!//拉起还是拉下！
+    #define SPINDLE_LASER_PWM_PIN             44  // Hardware PWM//硬件脉宽调制
     #define SPINDLE_DIR_PIN                   65
   #endif
 #endif
 
-//
-// Průša i3 MK2 Multiplexer Support
-//
+////
+// Průša i3 MK2 Multiplexer Support//Průša i3 MK2多路复用器支持
+////
 #ifndef E_MUX0_PIN
-  #define E_MUX0_PIN                          40  // Z_CS_PIN
+  #define E_MUX0_PIN                          40  // Z_CS_PIN//Z_CS_PIN
 #endif
 #ifndef E_MUX1_PIN
-  #define E_MUX1_PIN                          42  // E0_CS_PIN
+  #define E_MUX1_PIN                          42  // E0_CS_PIN//E0_CS_引脚
 #endif
 #ifndef E_MUX2_PIN
-  #define E_MUX2_PIN                          44  // E1_CS_PIN
+  #define E_MUX2_PIN                          44  // E1_CS_PIN//E1_CS_引脚
 #endif
 
 /**
@@ -280,17 +281,17 @@
    * Hardware serial communication ports.
    * If undefined software serial is used according to the pins below
    */
-  //#define X_HARDWARE_SERIAL  Serial1
-  //#define X2_HARDWARE_SERIAL Serial1
-  //#define Y_HARDWARE_SERIAL  Serial1
-  //#define Y2_HARDWARE_SERIAL Serial1
-  //#define Z_HARDWARE_SERIAL  Serial1
-  //#define Z2_HARDWARE_SERIAL Serial1
-  //#define E0_HARDWARE_SERIAL Serial1
-  //#define E1_HARDWARE_SERIAL Serial1
-  //#define E2_HARDWARE_SERIAL Serial1
-  //#define E3_HARDWARE_SERIAL Serial1
-  //#define E4_HARDWARE_SERIAL Serial1
+  //#define X_HARDWARE_SERIAL  Serial1//#定义X_硬件_串行1
+  //#define X2_HARDWARE_SERIAL Serial1//#定义X2_硬件_串行1
+  //#define Y_HARDWARE_SERIAL  Serial1//#定义Y_硬件_串行1
+  //#define Y2_HARDWARE_SERIAL Serial1//#定义Y2\u硬件\u串行1
+  //#define Z_HARDWARE_SERIAL  Serial1//#定义Z_硬件_串行1
+  //#define Z2_HARDWARE_SERIAL Serial1//#定义Z2_硬件_串行1
+  //#define E0_HARDWARE_SERIAL Serial1//#定义E0_硬件_串行1
+  //#define E1_HARDWARE_SERIAL Serial1//#定义E1_硬件_串行1
+  //#define E2_HARDWARE_SERIAL Serial1//#定义E2_硬件_串行1
+  //#define E3_HARDWARE_SERIAL Serial1//#定义E3\u硬件\u串行1
+  //#define E4_HARDWARE_SERIAL Serial1//#定义E4\u硬件\u串行1
 
   /**
    * Software serial
@@ -385,20 +386,20 @@
   #endif
 #endif
 
-//////////////////////////
-// LCDs and Controllers //
-//////////////////////////
+////////////////////////////////////////////////////
+// LCDs and Controllers ////液晶显示器和控制器//
+////////////////////////////////////////////////////
 
 #if HAS_WIRED_LCD
 
-  //
-  // LCD Display output pins
-  //
+  ////
+  // LCD Display output pins//液晶显示器输出引脚
+  ////
   #if ENABLED(REPRAPWORLD_GRAPHICAL_LCD)
 
-    #define LCD_PINS_RS                       49  // CS chip select /SS chip slave select
-    #define LCD_PINS_ENABLE                   51  // SID (MOSI)
-    #define LCD_PINS_D4                       52  // SCK (CLK) clock
+    #define LCD_PINS_RS                       49  // CS chip select /SS chip slave select//CS芯片选择/SS芯片从属选择
+    #define LCD_PINS_ENABLE                   51  // SID (MOSI)//SID（MOSI）
+    #define LCD_PINS_D4                       52  // SCK (CLK) clock//时钟
 
   #elif BOTH(IS_NEWPANEL, PANEL_ONE)
 
@@ -433,9 +434,9 @@
     #else
 
       #if EITHER(MKS_12864OLED, MKS_12864OLED_SSD1306)
-        #define LCD_PINS_DC                   25  // Set as output on init
-        #define LCD_PINS_RS                   27  // Pull low for 1s to init
-        // DOGM SPI LCD Support
+        #define LCD_PINS_DC                   25  // Set as output on init//在init上设置为输出
+        #define LCD_PINS_RS                   27  // Pull low for 1s to init//拉低1s至初始
+        // DOGM SPI LCD Support//DOGM SPI LCD支持
         #define DOGLCD_CS                     16
         #define DOGLCD_MOSI                   17
         #define DOGLCD_SCK                    23
@@ -457,19 +458,19 @@
     #endif
 
     #if !IS_NEWPANEL
-      // Buttons attached to a shift register
-      // Not wired yet
-      //#define SHIFT_CLK_PIN                 38
-      //#define SHIFT_LD_PIN                  42
-      //#define SHIFT_OUT_PIN                 40
-      //#define SHIFT_EN_PIN                  17
+      // Buttons attached to a shift register//与移位寄存器相连的按钮
+      // Not wired yet//还没连线
+      //#define SHIFT_CLK_PIN                 38//#定义换档锁定销38
+      //#define SHIFT_LD_PIN                  42//#定义SHIFT_LD_引脚42
+      //#define SHIFT_OUT_PIN                 40//#定义SHIFT_OUT_引脚40
+      //#define SHIFT_EN_PIN                  17//#定义SHIFT_EN_针脚17
     #endif
 
   #endif
 
-  //
-  // LCD Display input pins
-  //
+  ////
+  // LCD Display input pins//液晶显示器输入引脚
+  ////
   #if IS_NEWPANEL
 
     #if ENABLED(REPRAP_DISCOUNT_SMART_CONTROLLER)
@@ -509,8 +510,8 @@
 
     #elif ENABLED(LCD_I2C_VIKI)
 
-      #define BTN_EN1                         22  // https://files.panucatt.com/datasheets/viki_wiring_diagram.pdf explains 40/42.
-      #define BTN_EN2                          7  // 22/7 are unused on RAMPS_14. 22 is unused and 7 the SERVO0_PIN on RAMPS_13.
+      #define BTN_EN1                         22  // https://files.panucatt.com/datasheets/viki_wiring_diagram.pdf explains 40/42.// https://files.panucatt.com/datasheets/viki_wiring_diagram.pdf 解释40/42。
+      #define BTN_EN2                          7  // 22/7 are unused on RAMPS_14. 22 is unused and 7 the SERVO0_PIN on RAMPS_13.//22/7在坡道上未使用。22未使用，7斜坡13上的伺服0_销。
       #define BTN_ENC                         -1
 
       #define LCD_SDSS                      SDSS
@@ -530,7 +531,7 @@
       #define BTN_EN2                          7
       #define BTN_ENC                         39
 
-      #define SD_DETECT_PIN                   -1  // Pin 49 for display sd interface, 72 for easy adapter board
+      #define SD_DETECT_PIN                   -1  // Pin 49 for display sd interface, 72 for easy adapter board//引脚49用于显示sd接口，72用于简易适配器板
       #define KILL_PIN                        31
 
     #elif ENABLED(ELB_FULL_GRAPHIC_CONTROLLER)
@@ -554,15 +555,15 @@
       #define DOGLCD_A0                       27
       #define DOGLCD_CS                       25
 
-      // GLCD features
-      // Uncomment screen orientation
-      //#define LCD_SCREEN_ROT_90
-      //#define LCD_SCREEN_ROT_180
-      //#define LCD_SCREEN_ROT_270
+      // GLCD features//GLCD功能
+      // Uncomment screen orientation//取消注释屏幕方向
+      //#define LCD_SCREEN_ROT_90//#定义LCD屏幕旋转90
+      //#define LCD_SCREEN_ROT_180//#定义LCD屏幕旋转180
+      //#define LCD_SCREEN_ROT_270//#定义LCD屏幕旋转270
 
       #define BEEPER_PIN                      37
-      // not connected to a pin
-      #define LCD_BACKLIGHT_PIN               65  // backlight LED on A11/D65
+      // not connected to a pin//未连接到pin
+      #define LCD_BACKLIGHT_PIN               65  // backlight LED on A11/D65//A11/D65上的背光LED
 
       #define BTN_EN1                         31
       #define BTN_EN2                         33
@@ -574,17 +575,17 @@
     #elif ENABLED(MINIPANEL)
 
       #define BEEPER_PIN                      42
-      // not connected to a pin
-      #define LCD_BACKLIGHT_PIN               65  // backlight LED on A11/D65
+      // not connected to a pin//未连接到pin
+      #define LCD_BACKLIGHT_PIN               65  // backlight LED on A11/D65//A11/D65上的背光LED
 
       #define DOGLCD_A0                       44
       #define DOGLCD_CS                       66
 
-      // GLCD features
-      // Uncomment screen orientation
-      //#define LCD_SCREEN_ROT_90
-      //#define LCD_SCREEN_ROT_180
-      //#define LCD_SCREEN_ROT_270
+      // GLCD features//GLCD功能
+      // Uncomment screen orientation//取消注释屏幕方向
+      //#define LCD_SCREEN_ROT_90//#定义LCD屏幕旋转90
+      //#define LCD_SCREEN_ROT_180//#定义LCD屏幕旋转180
+      //#define LCD_SCREEN_ROT_270//#定义LCD屏幕旋转270
 
       #define BTN_EN1                         40
       #define BTN_EN2                         63
@@ -599,14 +600,14 @@
 
     #elif ENABLED(AZSMZ_12864)
 
-      // Pins only defined for RAMPS_SMART currently
+      // Pins only defined for RAMPS_SMART currently//目前仅为坡道定义了引脚
 
     #else
 
-      // Beeper on AUX-4
+      // Beeper on AUX-4//AUX-4上的蜂鸣器
       #define BEEPER_PIN                      33
 
-      // Buttons are directly attached to AUX-2
+      // Buttons are directly attached to AUX-2//按钮直接连接到AUX-2
       #if IS_RRW_KEYPAD
         #define SHIFT_OUT_PIN                 40
         #define SHIFT_CLK_PIN                 44
@@ -615,9 +616,9 @@
         #define BTN_EN2                       59
         #define BTN_ENC                       63
       #elif ENABLED(PANEL_ONE)
-        #define BTN_EN1                       59  // AUX2 PIN 3
-        #define BTN_EN2                       63  // AUX2 PIN 4
-        #define BTN_ENC                       49  // AUX3 PIN 7
+        #define BTN_EN1                       59  // AUX2 PIN 3//AUX2引脚3
+        #define BTN_EN2                       63  // AUX2 PIN 4//AUX2引脚4
+        #define BTN_ENC                       49  // AUX3 PIN 7//AUX3引脚7
       #else
         #define BTN_EN1                       37
         #define BTN_EN2                       35
@@ -630,6 +631,6 @@
       #endif
 
     #endif
-  #endif // IS_NEWPANEL
+  #endif // IS_NEWPANEL//这是新小组吗
 
-#endif // HAS_WIRED_LCD
+#endif // HAS_WIRED_LCD//有有线液晶显示器吗

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -26,7 +27,7 @@
 #include <stdint.h>
 #include <string.h>
 
-// the colors of the last MKS Ui
+// the colors of the last MKS Ui//最后一个MKS用户界面的颜色
 #undef LV_COLOR_BACKGROUND
 #define LV_COLOR_BACKGROUND LV_COLOR_MAKE(0x1A, 0x1A, 0x1A)
 
@@ -110,18 +111,18 @@
   #define TFT_WIDTH         480
   #define TFT_HEIGHT        320
 
-  #define titleHeight        36   // TFT_screen.title_high
-  #define INTERVAL_H          2   // TFT_screen.gap_h // 2
-  #define INTERVAL_V          2   // TFT_screen.gap_v // 2
-  #define BTN_X_PIXEL       117   // TFT_screen.btn_x_pixel
-  #define BTN_Y_PIXEL       140   // TFT_screen.btn_y_pixel
+  #define titleHeight        36   // TFT_screen.title_high//TFT_屏幕标题_高
+  #define INTERVAL_H          2   // TFT_screen.gap_h // 2//TFT_屏幕。间隙_h//2
+  #define INTERVAL_V          2   // TFT_screen.gap_v // 2//TFT_屏幕。间隙_v//2
+  #define BTN_X_PIXEL       117   // TFT_screen.btn_x_pixel//TFT_屏幕.btn_x_像素
+  #define BTN_Y_PIXEL       140   // TFT_screen.btn_y_pixel//TFT_screen.btn_y_像素
 
   #define SIMPLE_FIRST_PAGE_GRAP   30
 
   #define BUTTON_TEXT_Y_OFFSET    -20
 
-  #define TITLE_XPOS          3    // TFT_screen.title_xpos
-  #define TITLE_YPOS          5    // TFT_screen.title_ypos
+  #define TITLE_XPOS          3    // TFT_screen.title_xpos//TFT_screen.title_xpos
+  #define TITLE_YPOS          5    // TFT_screen.title_ypos//TFT_screen.title_ypos
 
   #define FILE_BTN_CNT        6
 
@@ -131,10 +132,10 @@
   #define FILE_PRE_PIC_X_OFFSET 8
   #define FILE_PRE_PIC_Y_OFFSET 0
 
-  #define PREVIEW_LITTLE_PIC_SIZE  40910  // 400*100+9*101+1
-  #define PREVIEW_SIZE      202720        // (PREVIEW_LITTLE_PIC_SIZE+800*200+201*9+1)
+  #define PREVIEW_LITTLE_PIC_SIZE  40910  // 400*100+9*101+1// 400*100+9*101+1
+  #define PREVIEW_SIZE      202720        // (PREVIEW_LITTLE_PIC_SIZE+800*200+201*9+1)//（预览图片大小+800*200+201*9+1）
 
-  // machine parameter ui
+  // machine parameter ui//机器参数界面
   #define PARA_UI_POS_X             10
   #define PARA_UI_POS_Y             50
 
@@ -170,12 +171,12 @@
   #define QRCODE_Y                  40
   #define QRCODE_WIDTH              160
 
-#else // ifdef TFT35
+#else // ifdef TFT35//ifdef TFT35
 
   #define TFT_WIDTH     320
   #define TFT_HEIGHT    240
 
-#endif // ifdef TFT35
+#endif // ifdef TFT35//ifdef TFT35
 
 #ifdef __cplusplus
   extern "C" { /* C-declarations for C++ */
@@ -471,67 +472,67 @@ void lv_ex_line(lv_obj_t *line, lv_point_t *points);
   } /* C-declarations for C++ */
 #endif
 
-// Set the same image for both Released and Pressed
+// Set the same image for both Released and Pressed//为释放和按下设置相同的图像
 void lv_imgbtn_set_src_both(lv_obj_t *imgbtn, const void *src);
 
-// Set label styles for Released and Pressed
+// Set label styles for Released and Pressed//设置释放和按下的标签样式
 void lv_imgbtn_use_label_style(lv_obj_t *imgbtn);
 
-// Set label styles for Released and Pressed
+// Set label styles for Released and Pressed//设置释放和按下的标签样式
 void lv_btn_use_label_style(lv_obj_t *btn);
 
-// Set the same style for both Released and Pressed
+// Set the same style for both Released and Pressed//为释放和按下设置相同的样式
 void lv_btn_set_style_both(lv_obj_t *btn, lv_style_t *style);
 
-// Create a screen
+// Create a screen//创建一个屏幕
 lv_obj_t* lv_screen_create(DISP_STATE newScreenType, const char *title = nullptr);
 
-// Create an empty label
+// Create an empty label//创建一个空标签
 lv_obj_t* lv_label_create_empty(lv_obj_t *par);
 
-// Create a label with style and text
+// Create a label with style and text//创建带有样式和文本的标签
 lv_obj_t* lv_label_create(lv_obj_t *par, const char *text);
 
-// Create a label with style, position, and text
+// Create a label with style, position, and text//创建带有样式、位置和文字的标签
 lv_obj_t* lv_label_create(lv_obj_t *par, lv_coord_t x, lv_coord_t y, const char *text);
 
-// Create a button with callback, ID, and Style.
+// Create a button with callback, ID, and Style.//创建具有回调、ID和样式的按钮。
 lv_obj_t* lv_btn_create(lv_obj_t *par, lv_event_cb_t cb, const int id, lv_style_t *style=&style_para_value);
 
-// Create a button with callback and ID, with label style.
+// Create a button with callback and ID, with label style.//创建一个带有回调和ID的按钮，带有标签样式。
 lv_obj_t* lv_label_btn_create(lv_obj_t *par, lv_event_cb_t cb, const int id=0);
 
-// Create a button with callback and ID, with button style.
+// Create a button with callback and ID, with button style.//创建一个具有回调和ID的按钮，并具有按钮样式。
 lv_obj_t* lv_button_btn_create(lv_obj_t *par, lv_event_cb_t cb, const int id=0);
 
-// Create a button with position, size, callback, ID, and style.
+// Create a button with position, size, callback, ID, and style.//创建具有位置、大小、回调、ID和样式的按钮。
 lv_obj_t* lv_btn_create(lv_obj_t *par, lv_coord_t x, lv_coord_t y, lv_coord_t w, lv_coord_t h, lv_event_cb_t cb, const int id, lv_style_t *style);
 
-// Create a button with position, size, callback, and ID. Style set to style_para_value.
+// Create a button with position, size, callback, and ID. Style set to style_para_value.//创建一个按钮，将位置、大小、回调和ID.Style设置为Style_para_值。
 lv_obj_t* lv_btn_create(lv_obj_t *par, lv_coord_t x, lv_coord_t y, lv_coord_t w, lv_coord_t h, lv_event_cb_t cb, const int id=0);
 
-// Create a button with position, size, callback, and ID, with label style.
+// Create a button with position, size, callback, and ID, with label style.//创建具有位置、大小、回调和ID的按钮，并使用标签样式。
 lv_obj_t* lv_label_btn_create(lv_obj_t *par, lv_coord_t x, lv_coord_t y, lv_coord_t w, lv_coord_t h, lv_event_cb_t cb, const int id=0);
 
-// Create a button with position, size, callback, and ID, with button style.
+// Create a button with position, size, callback, and ID, with button style.//创建一个具有位置、大小、回调和ID以及按钮样式的按钮。
 lv_obj_t* lv_button_btn_create(lv_obj_t *par, lv_coord_t x, lv_coord_t y, lv_coord_t w, lv_coord_t h, lv_event_cb_t cb, const int id=0);
 
-// Create a button with callback and ID. Style set to style_para_back.
+// Create a button with callback and ID. Style set to style_para_back.//创建一个回调和ID.Style设置为Style_para_back的按钮。
 lv_obj_t* lv_btn_create_back(lv_obj_t *par, lv_event_cb_t cb, const int id=0);
 
-// Create a button with position, size, callback, and ID. Style set to style_para_back.
+// Create a button with position, size, callback, and ID. Style set to style_para_back.//创建一个按钮，将位置、大小、回调和ID.Style设置为Style_para_back。
 lv_obj_t* lv_btn_create_back(lv_obj_t *par, lv_coord_t x, lv_coord_t y, lv_coord_t w, lv_coord_t h, lv_event_cb_t cb, const int id=0);
 
-// Create an image button with image, callback, and ID. Use label style.
+// Create an image button with image, callback, and ID. Use label style.//创建具有图像、回调和ID的图像按钮。使用标签样式。
 lv_obj_t* lv_imgbtn_create(lv_obj_t *par, const char *img, lv_event_cb_t cb, const int id=0);
 
-// Create an image button with image, position, callback, and ID. Use label style.
+// Create an image button with image, position, callback, and ID. Use label style.//创建带有图像、位置、回调和ID的图像按钮。使用标签样式。
 lv_obj_t* lv_imgbtn_create(lv_obj_t *par, const char *img, lv_coord_t x, lv_coord_t y, lv_event_cb_t cb, const int id=0);
 
-// Create a big image button with a label, follow the LVGL UI standard.
+// Create a big image button with a label, follow the LVGL UI standard.//创建带有标签的大图像按钮，遵循LVGL UI标准。
 lv_obj_t* lv_big_button_create(lv_obj_t *par, const char *img, const char *text, lv_coord_t x, lv_coord_t y, lv_event_cb_t cb, const int id, bool centerLabel = false);
 
-// Create a menu item, follow the LVGL UI standard.
+// Create a menu item, follow the LVGL UI standard.//创建菜单项，遵循LVGL UI标准。
 lv_obj_t* lv_screen_menu_item(lv_obj_t *par, const char *text, lv_coord_t x, lv_coord_t y, lv_event_cb_t cb, const int id, const int index, bool drawArrow = true);
 lv_obj_t* lv_screen_menu_item_1_edit(lv_obj_t *par, const char *text, lv_coord_t x, lv_coord_t y, lv_event_cb_t cb, const int id, const int index, const char *editValue);
 lv_obj_t* lv_screen_menu_item_2_edit(lv_obj_t *par, const char *text, lv_coord_t x, lv_coord_t y, lv_event_cb_t cb, const int id, const int index, const char *editValue, const int idEdit2, const char *editValue2);

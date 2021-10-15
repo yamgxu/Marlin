@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -54,7 +55,7 @@ void GcodeSuite::M355() {
   }
   if (didset) caselight.update(sflag);
 
-  // Always report case light status
+  // Always report case light status//始终报告案例灯状态
   SERIAL_ECHO_START();
   SERIAL_ECHOPGM("Case light: ");
   if (!caselight.on)
@@ -70,4 +71,4 @@ void GcodeSuite::M355() {
   }
 }
 
-#endif // CASE_LIGHT_ENABLE
+#endif // CASE_LIGHT_ENABLE//案例\灯\启用

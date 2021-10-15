@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -33,9 +34,9 @@
   #define BOARD_INFO_NAME "MKS Robin E3D V1.1"
 #endif
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #ifndef X_CS_PIN
   #define X_CS_PIN                          PC7
 #endif
@@ -49,9 +50,9 @@
   #define E0_CS_PIN                         PC11
 #endif
 
-//
-// Software SPI pins for TMC2130 stepper drivers
-//
+////
+// Software SPI pins for TMC2130 stepper drivers//TMC2130步进驱动器的软件SPI引脚
+////
 #if ENABLED(TMC_USE_SW_SPI)
   #ifndef TMC_SW_MOSI
     #define TMC_SW_MOSI                     PB15

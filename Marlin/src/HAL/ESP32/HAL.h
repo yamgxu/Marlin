@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -43,11 +44,11 @@
   #include "esp3dlib.h"
 #endif
 
-// ------------------------
-// Defines
-// ------------------------
+// ------------------------// ------------------------
+// Defines//定义
+// ------------------------// ------------------------
 
-// hacky
+// hacky//哈奇
 #undef O_RDONLY
 #undef O_WRONLY
 #undef O_RDWR
@@ -60,16 +61,16 @@
 
 extern portMUX_TYPE spinlock;
 
-// TODO check if serial_port === -1 an initialize USB serial only on ESP32-S2
-// TODO add serial2 for ESP32
-// typedef ForwardSerial1Class< decltype(Serial) > DefaultSerial1; -- only if using serial0 as output serial
+// TODO check if serial_port === -1 an initialize USB serial only on ESP32-S2//TODO检查串行_端口==-1是否仅在ESP32-S2上初始化USB串行
+// TODO add serial2 for ESP32//为ESP32添加serial2的步骤
+// typedef ForwardSerial1Class< decltype(Serial) > DefaultSerial1; -- only if using serial0 as output serial//typedef ForwardSerial1类<decltype（Serial）>DefaultSerial1；--仅当使用串行0作为串行输出时
 typedef ForwardSerial1Class< decltype(Serial1) > DefaultSerial2;
 typedef Serial1Class<USBCDC> DefaultSerialUSB;
-// typedef Serial1Class<WebSocketSerial> MSerialWebSocketT;
+// typedef Serial1Class<WebSocketSerial> MSerialWebSocketT;//typedef Serial1Class<WebSocketSerial>MSerialWebSocketT；
 
 
-// extern DefaultSerial1 MSerial1;
-// extern DefaultSerial2 MSerial2;
+// extern DefaultSerial1 MSerial1;//外部默认串行1 mseria1；
+// extern DefaultSerial2 MSerial2;//外部默认串行2 MSerial2；
 extern DefaultSerialUSB MSerialUSB;
 
 #define MYSERIAL1 flushableSerial
@@ -87,39 +88,39 @@ extern DefaultSerialUSB MSerialUSB;
 #define CRITICAL_SECTION_START() portENTER_CRITICAL(&spinlock)
 #define CRITICAL_SECTION_END()   portEXIT_CRITICAL(&spinlock)
 #define ISRS_ENABLED() (spinlock.owner == portMUX_FREE_VAL)
-#define ENABLE_ISRS()  if (spinlock.owner != portMUX_FREE_VAL) portEXIT_CRITICAL(&spinlock)
+#define ENABLE_ISRS()  portEXIT_CRITICAL(&spinlock)
 #define DISABLE_ISRS() portENTER_CRITICAL(&spinlock)
 
-// ------------------------
-// Types
-// ------------------------
+// ------------------------// ------------------------
+// Types//类型
+// ------------------------// ------------------------
 
 typedef int16_t pin_t;
 
 #define HAL_SERVO_LIB Servo
 
-// ------------------------
-// Public Variables
-// ------------------------
+// ------------------------// ------------------------
+// Public Variables//公共变量
+// ------------------------// ------------------------
 
 /** result of last ADC conversion */
 extern uint16_t HAL_adc_result;
 
-// ------------------------
-// Public functions
-// ------------------------
+// ------------------------// ------------------------
+// Public functions//公共职能
+// ------------------------// ------------------------
 
-//
-// Tone
-//
+////
+// Tone//语气
+////
 void toneInit();
 void tone(const pin_t _pin, const unsigned int frequency, const unsigned long duration=0);
 void noTone(const pin_t _pin);
 
-// clear reset reason
+// clear reset reason//清除重置原因
 void HAL_clear_reset_source();
 
-// reset reason
+// reset reason//重置原因
 uint8_t HAL_get_reset_source();
 
 void HAL_reboot();
@@ -139,7 +140,7 @@ int freeMemory();
 
 void analogWrite(pin_t pin, int value);
 
-// ADC
+// ADC//模数转换器
 #define HAL_ANALOG_SELECT(pin)
 
 void HAL_adc_init();
@@ -156,16 +157,16 @@ void HAL_adc_start_conversion(const uint8_t adc_pin);
 #define GET_PIN_MAP_INDEX(pin) pin
 #define PARSED_PIN_INDEX(code, dval) parser.intval(code, dval)
 
-// Enable hooks into idle and setup for HAL
+// Enable hooks into idle and setup for HAL//为HAL启用空闲挂钩和设置
 #define HAL_IDLETASK 1
 #define BOARD_INIT() HAL_init_board();
 void HAL_idletask();
 inline void HAL_init() {}
 void HAL_init_board();
 
-//
-// Delay in cycles (used by DELAY_NS / DELAY_US)
-//
+////
+// Delay in cycles (used by DELAY_NS / DELAY_US)//周期延迟（由延迟/延迟使用）
+////
 FORCE_INLINE static void DELAY_CYCLES(uint32_t x) {
   unsigned long start, ccount, stop;
 
@@ -188,15 +189,15 @@ FORCE_INLINE static void DELAY_CYCLES(uint32_t x) {
   ccount = start;
 
   if (stop >= start) {
-    // no overflow, so only loop while in between start and stop:
-    // 0x00000000 -----------------start****stop-- 0xFFFFFFFF
+    // no overflow, so only loop while in between start and stop://无溢出，因此在启动和停止之间仅循环：
+    // 0x00000000 -----------------start****stop-- 0xFFFFFFFF//0x00000000---------开始****停止--0xFFFFFFFF
     while (ccount >= start && ccount < stop) {
       __asm__ __volatile__ ( "rsr     %0, ccount" : "=a" (ccount) );
     }
   }
   else {
-    // stop did overflow, so only loop while outside of stop and start:
-    // 0x00000000 **stop-------------------start** 0xFFFFFFFF
+    // stop did overflow, so only loop while outside of stop and start://stop没有溢出，因此只有在stop和start之外循环：
+    // 0x00000000 **stop-------------------start** 0xFFFFFFFF//0x00000000**停止-----------------开始**0xFFFFFFFF
     while (ccount >= start || ccount < stop) {
       __asm__ __volatile__ ( "rsr     %0, ccount" : "=a" (ccount) );
     }
@@ -206,5 +207,5 @@ FORCE_INLINE static void DELAY_CYCLES(uint32_t x) {
 
 
 
-// HardwareSerial Serial1(1);
-// HardwareSerial Serial2(2);
+// HardwareSerial Serial1(1);//《硬件研究》系列1（1）；
+// HardwareSerial Serial2(2);//《硬件研究》系列2（2）；

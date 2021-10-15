@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -68,4 +69,4 @@ void GcodeSuite::M218() {
   #endif
 }
 
-#endif // HAS_HOTEND_OFFSET
+#endif // HAS_HOTEND_OFFSET//有\u热端\u偏移

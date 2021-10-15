@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -59,7 +60,7 @@ WifiSerial::WifiSerial(usart_dev *usart_device, uint8 tx_pin, uint8 rx_pin) {
     if (with_irq) usart_enable(usart_device);
     else {
       usart_reg_map *regs = usart_device->regs;
-      regs->CR1 |= (USART_CR1_TE | USART_CR1_RE); // don't change the word length etc, and 'or' in the pattern not overwrite |USART_CR1_M_8N1);
+      regs->CR1 |= (USART_CR1_TE | USART_CR1_RE); // don't change the word length etc, and 'or' in the pattern not overwrite |USART_CR1_M_8N1);//不要更改字长等，模式中的“或”不覆盖| USART_CR1_M_8N1）；
       regs->CR1 |= USART_CR1_UE;
     }
   }
@@ -71,7 +72,7 @@ WifiSerial::WifiSerial(usart_dev *usart_device, uint8 tx_pin, uint8 rx_pin) {
     if (with_irq) usart_enable(usart_device);
     else {
       usart_reg_map *regs = usart_device->regs;
-      regs->CR1 |= (USART_CR1_TE | USART_CR1_RE); // don't change the word length etc, and 'or' in the pattern not overwrite |USART_CR1_M_8N1);
+      regs->CR1 |= (USART_CR1_TE | USART_CR1_RE); // don't change the word length etc, and 'or' in the pattern not overwrite |USART_CR1_M_8N1);//不要更改字长等，模式中的“或”不覆盖| USART_CR1_M_8N1）；
       regs->CR1 |= USART_CR1_UE;
     }
   }
@@ -89,7 +90,7 @@ void WifiSerial::begin(uint32 baud) { begin(baud, SERIAL_8N1); }
  */
 
 void WifiSerial::begin(uint32 baud, uint8_t config) {
-  //ASSERT(baud <= this->usart_device->max_baud); // Roger Clark. Assert doesn't do anything useful, we may as well save the space in flash and ram etc
+  //ASSERT(baud <= this->usart_device->max_baud); // Roger Clark. Assert doesn't do anything useful, we may as well save the space in flash and ram etc//断言（波特率<=this->usart\u设备->最大波特率）；//罗杰·克拉克。Assert没有做任何有用的事情，我们还可以在flash和ram中节省空间
 
   if (baud > this->usart_device->max_baud) return;
 
@@ -100,7 +101,7 @@ void WifiSerial::begin(uint32 baud, uint8_t config) {
 
   usart_init(this->usart_device);
 
-  // Reinitialize the receive buffer, mks_esp8266 fixed data frame length is 1k bytes
+  // Reinitialize the receive buffer, mks_esp8266 fixed data frame length is 1k bytes//重新初始化接收缓冲区，mks\u esp8266固定数据帧长度为1k字节
   rb_init(this->usart_device->rb, WIFI_RX_BUF_SIZE, wifiRxBuf);
 
   usart_config_gpios_async(this->usart_device,
@@ -119,9 +120,9 @@ int WifiSerial::available() {
   return usart_data_available(this->usart_device);
 }
 
-//
-// I/O
-//
+////
+// I/O//输入输出
+////
 
 int WifiSerial::read() {
   if (usart_data_available(usart_device) <= 0) return -1;
@@ -137,5 +138,5 @@ int WifiSerial::wifi_rb_is_full() {
   return rb_is_full(this->usart_device->rb);
 }
 
-#endif // MKS_WIFI_MODULE
-#endif // HAS_TFT_LVGL_UI
+#endif // MKS_WIFI_MODULE//MKS_无线模块
+#endif // HAS_TFT_LVGL_UI//有TFT\U LVGL\U用户界面

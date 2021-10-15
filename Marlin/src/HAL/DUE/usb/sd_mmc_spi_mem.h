@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*****************************************************************************
  *
  * \file
@@ -42,7 +43,7 @@
  *
  ******************************************************************************/
 /*
- * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>
+ * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>//www.atmel.com/design support/“>atmel支持</a>
  */
 
 
@@ -67,41 +68,41 @@
 #include "ctrl_access.h"
 
 
-//_____ D E F I N I T I O N S ______________________________________________
+//_____ D E F I N I T I O N S ______________________________________________//_____D E F I T N S______________________________________________
 
 #define   SD_MMC_REMOVED       0
 #define   SD_MMC_INSERTED      1
 #define   SD_MMC_REMOVING      2
 
 
-//---- CONTROL FONCTIONS ----
-//!
-//! @brief This function initializes the hw/sw resources required to drive the SD_MMC_SPI.
-//!/
+//---- CONTROL FONCTIONS ----//----控制函数----
+//!//!
+//! @brief This function initializes the hw/sw resources required to drive the SD_MMC_SPI.//！@brief此函数初始化驱动SD\U MMC\U SPI所需的硬件/软件资源。
+//!///!/
 extern void           sd_mmc_spi_mem_init(void);
 
-//!
-//! @brief This function tests the state of the SD_MMC memory and sends it to the Host.
-//!        For a PC, this device is seen as a removable media
-//!        Before indicating any modification of the status of the media (GOOD->NO_PRESENT or vice-versa),
-//!         the function must return the BUSY data to make the PC accepting the change
-//!
-//! @return                Ctrl_status
-//!   Media is ready       ->    CTRL_GOOD
-//!   Media not present    ->    CTRL_NO_PRESENT
-//!   Media has changed    ->    CTRL_BUSY
-//!/
+//!//!
+//! @brief This function tests the state of the SD_MMC memory and sends it to the Host.//！@brief此功能测试SD_MMC内存的状态并将其发送到主机。
+//!        For a PC, this device is seen as a removable media//！对于PC，此设备被视为可移动媒体
+//!        Before indicating any modification of the status of the media (GOOD->NO_PRESENT or vice-versa),//！在指示媒体状态的任何修改之前（良好->不存在，反之亦然），
+//!         the function must return the BUSY data to make the PC accepting the change//！该函数必须返回繁忙数据，以使PC接受更改
+//!//!
+//! @return                Ctrl_status//！@返回Ctrl\u状态
+//!   Media is ready       ->    CTRL_GOOD//！媒体就绪->CTRL\u正常
+//!   Media not present    ->    CTRL_NO_PRESENT//！媒体不存在->CTRL\u不存在
+//!   Media has changed    ->    CTRL_BUSY//！媒体已更改->CTRL\u忙
+//!///!/
 extern Ctrl_status    sd_mmc_spi_test_unit_ready(void);
 
-//!
-//! @brief This function gives the address of the last valid sector.
-//!
-//! @param *nb_sector  number of sector (sector = 512B). OUT
-//!
-//! @return                Ctrl_status
-//!   Media ready          ->  CTRL_GOOD
-//!   Media not present    ->  CTRL_NO_PRESENT
-//!/
+//!//!
+//! @brief This function gives the address of the last valid sector.//！@brief此函数提供最后一个有效扇区的地址。
+//!//!
+//! @param *nb_sector  number of sector (sector = 512B). OUT//！@param*nb_扇区的扇区号（扇区=512B）。输出
+//!//!
+//! @return                Ctrl_status//！@返回Ctrl\u状态
+//!   Media ready          ->  CTRL_GOOD//！媒体就绪->CTRL\u正常
+//!   Media not present    ->  CTRL_NO_PRESENT//！媒体不存在->CTRL\u不存在
+//!///!/
 extern Ctrl_status    sd_mmc_spi_read_capacity(uint32_t *nb_sector);
 
 /*! \brief Unload/Load the SD/MMC card selected
@@ -115,63 +116,63 @@ extern Ctrl_status    sd_mmc_spi_read_capacity(uint32_t *nb_sector);
  */
 extern bool sd_mmc_spi_unload(bool unload);
 
-//!
-//! @brief This function returns the write protected status of the memory.
-//!
-//! Only used by memory removal with a HARDWARE SPECIFIC write protected detection
-//! ! The user must unplug the memory to change this write protected status,
-//! which cannot be for a SD_MMC.
-//!
-//! @return false  -> the memory is not write-protected (always)
-//!/
+//!//!
+//! @brief This function returns the write protected status of the memory.//！@brief此函数返回内存的写保护状态。
+//!//!
+//! Only used by memory removal with a HARDWARE SPECIFIC write protected detection//！仅用于具有硬件特定写保护检测的内存删除
+//! ! The user must unplug the memory to change this write protected status,//！！用户必须拔下内存才能更改此写保护状态，
+//! which cannot be for a SD_MMC.//！它不能用于SD\U MMC。
+//!//!
+//! @return false  -> the memory is not write-protected (always)//！@return false->内存没有写保护（始终）
+//!///!/
 extern bool           sd_mmc_spi_wr_protect(void);
 
-//!
-//! @brief This function tells if the memory has been removed or not.
-//!
-//! @return false  -> The memory isn't removed
-//!
+//!//!
+//! @brief This function tells if the memory has been removed or not.//! @简要说明此功能说明内存是否已被删除。
+//!//!
+//! @return false  -> The memory isn't removed//! @return false->内存未被删除
+//!//!
 extern bool           sd_mmc_spi_removal(void);
 
 
-//---- ACCESS DATA FONCTIONS ----
+//---- ACCESS DATA FONCTIONS ----//----访问数据功能----
 
 #if ACCESS_USB == true
-// Standard functions for open in read/write mode the device
+// Standard functions for open in read/write mode the device//在读/写模式下打开设备的标准功能
 
-//!
-//! @brief This function performs a read operation of n sectors from a given address on.
-//! (sector = 512B)
-//!
-//!         DATA FLOW is: SD_MMC => USB
-//!
-//! @param addr         Sector address to start the read from
-//! @param nb_sector    Number of sectors to transfer
-//!
-//! @return                Ctrl_status
-//!   It is ready    ->    CTRL_GOOD
-//!   A error occur  ->    CTRL_FAIL
-//!
+//!//!
+//! @brief This function performs a read operation of n sectors from a given address on.//! @简要说明：此函数从上的给定地址执行n个扇区的读取操作。
+//! (sector = 512B)//! （扇区=512B）
+//!//!
+//!         DATA FLOW is: SD_MMC => USB//!         数据流为：SD_MMC=>USB
+//!//!
+//! @param addr         Sector address to start the read from//! @要开始读取的param addr扇区地址
+//! @param nb_sector    Number of sectors to transfer//! @param nb_扇区要传输的扇区数
+//!//!
+//! @return                Ctrl_status//! @返回Ctrl\U状态
+//!   It is ready    ->    CTRL_GOOD//!   准备好了->CTRL\u很好
+//!   A error occur  ->    CTRL_FAIL//!   出现错误->CTRL\u失败
+//!//!
 extern Ctrl_status    sd_mmc_spi_usb_read_10(uint32_t addr, uint16_t nb_sector);
 
-//! This function initializes the SD/MMC memory for a write operation
-//!
-//!         DATA FLOW is: USB => SD_MMC
-//!
-//! (sector = 512B)
-//! @param addr         Sector address to start write
-//! @param nb_sector    Number of sectors to transfer
-//!
-//! @return                Ctrl_status
-//!   It is ready    ->    CTRL_GOOD
-//!   An error occurs  ->    CTRL_FAIL
-//!
+//! This function initializes the SD/MMC memory for a write operation//! 此函数用于初始化SD/MMC内存以进行写入操作
+//!//!
+//!         DATA FLOW is: USB => SD_MMC//!         数据流为：USB=>SD\U MMC
+//!//!
+//! (sector = 512B)//! （扇区=512B）
+//! @param addr         Sector address to start write//! @要开始写入的param addr扇区地址
+//! @param nb_sector    Number of sectors to transfer//! @param nb_扇区要传输的扇区数
+//!//!
+//! @return                Ctrl_status//! @返回Ctrl\U状态
+//!   It is ready    ->    CTRL_GOOD//!   准备好了->CTRL\u很好
+//!   An error occurs  ->    CTRL_FAIL//!   出现错误->CTRL\u失败
+//!//!
 extern Ctrl_status    sd_mmc_spi_usb_write_10(uint32_t addr, uint16_t nb_sector);
 
-#endif // #if ACCESS_USB == true
+#endif // #if ACCESS_USB == true//#如果访问_USB==真
 
 /**
  * \}
  */
 
-#endif  // _SD_MMC_SPI_MEM_H_
+#endif  // _SD_MMC_SPI_MEM_H_//_SD_MMC_SPI_MEM_H_

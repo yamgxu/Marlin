@@ -1,10 +1,11 @@
+/** translatione by yx */
 /*
  * Libbacktrace
  * Copyright 2015 Stephen Street <stephen@redrocketcomputing.com>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at https://www.mozilla.org/en-US/MPL/2.0/
+ * file, You can obtain one at https://www.mozilla.org/en-US/MPL/2.0///www.mozilla.org/en-US/MPL/2.0/
  *
  * This library was modified, some bugs fixed, stack address validated
  * and adapted to be used in Marlin 3D printer firmware as backtracer
@@ -134,11 +135,11 @@ static UnwResult UnwTabExecuteInstructions(const UnwindCallbacks *cb, UnwTabStat
   /* Consume all instruction byte */
   while ((instruction = UnwTabGetNextInstruction(cb, ucb)) != -1) {
 
-    if ((instruction & 0xC0) == 0x00) { // ARM_EXIDX_CMD_DATA_POP
+    if ((instruction & 0xC0) == 0x00) { // ARM_EXIDX_CMD_DATA_POP//ARM_EXIDX_CMD_DATA_POP
       /* vsp = vsp + (xxxxxx << 2) + 4 */
       ucb->vrs[13] += ((instruction & 0x3F) << 2) + 4;
     }
-    else if ((instruction & 0xC0) == 0x40) { // ARM_EXIDX_CMD_DATA_PUSH
+    else if ((instruction & 0xC0) == 0x40) { // ARM_EXIDX_CMD_DATA_PUSH//ARM\U EXIDX\U CMD\U数据\U推送
       /* vsp = vsp - (xxxxxx << 2) - 4 */
       ucb->vrs[13] -= ((instruction & 0x3F) << 2) - 4;
     }
@@ -147,10 +148,10 @@ static UnwResult UnwTabExecuteInstructions(const UnwindCallbacks *cb, UnwTabStat
       instruction = instruction << 8 | UnwTabGetNextInstruction(cb, ucb);
 
       /* Check for refuse to unwind */
-      if (instruction == 0x8000)        // ARM_EXIDX_CMD_REFUSED
+      if (instruction == 0x8000)        // ARM_EXIDX_CMD_REFUSED//ARM_EXIDX_CMD_拒绝
         return UNWIND_REFUSED;
 
-      /* Pop registers using mask */    // ARM_EXIDX_CMD_REG_POP
+      /* Pop registers using mask */    // ARM_EXIDX_CMD_REG_POP//ARM_EXIDX_CMD_REG_POP
       vsp = ucb->vrs[13];
       mask = instruction & 0xFFF;
 
@@ -171,14 +172,14 @@ static UnwResult UnwTabExecuteInstructions(const UnwindCallbacks *cb, UnwTabStat
       if (instruction & (1 << (13 - 4)))
         ucb->vrs[13] = vsp;
     }
-    else if ((instruction & 0xF0) == 0x90 // ARM_EXIDX_CMD_REG_TO_SP
+    else if ((instruction & 0xF0) == 0x90 // ARM_EXIDX_CMD_REG_TO_SP//ARM_EXIDX_CMD_REG_至_SP
            && instruction != 0x9D
            && instruction != 0x9F
     ) {
       /* vsp = r[nnnn] */
       ucb->vrs[13] = ucb->vrs[instruction & 0x0F];
     }
-    else if ((instruction & 0xF0) == 0xA0) { // ARM_EXIDX_CMD_REG_POP
+    else if ((instruction & 0xF0) == 0xA0) { // ARM_EXIDX_CMD_REG_POP//ARM_EXIDX_CMD_REG_POP
       /* pop r4-r[4+nnn] or pop r4-r[4+nnn], r14*/
       vsp = ucb->vrs[13];
 
@@ -191,7 +192,7 @@ static UnwResult UnwTabExecuteInstructions(const UnwindCallbacks *cb, UnwTabStat
         vsp += 4;
       }
 
-      if (instruction & 0x08) { // ARM_EXIDX_CMD_REG_POP
+      if (instruction & 0x08) { // ARM_EXIDX_CMD_REG_POP//ARM_EXIDX_CMD_REG_POP
         uint32_t v;
         if (!cb->readW(vsp,&v))
           return UNWIND_DREAD_W_FAIL;
@@ -202,7 +203,7 @@ static UnwResult UnwTabExecuteInstructions(const UnwindCallbacks *cb, UnwTabStat
       ucb->vrs[13] = vsp;
 
     }
-    else if (instruction == 0xB0) { // ARM_EXIDX_CMD_FINISH
+    else if (instruction == 0xB0) { // ARM_EXIDX_CMD_FINISH//ARM_EXIDX_CMD_完成
       /* finished */
       if (ucb->vrs[15] == 0)
         ucb->vrs[15] = ucb->vrs[14];
@@ -211,7 +212,7 @@ static UnwResult UnwTabExecuteInstructions(const UnwindCallbacks *cb, UnwTabStat
       return UNWIND_SUCCESS;
 
     }
-    else if (instruction == 0xB1) { // ARM_EXIDX_CMD_REG_POP
+    else if (instruction == 0xB1) { // ARM_EXIDX_CMD_REG_POP//ARM_EXIDX_CMD_REG_POP
       /* pop register under mask {r3,r2,r1,r0} */
       vsp = ucb->vrs[13];
       mask = UnwTabGetNextInstruction(cb, ucb);
@@ -232,11 +233,11 @@ static UnwResult UnwTabExecuteInstructions(const UnwindCallbacks *cb, UnwTabStat
       ucb->vrs[13] = (uint32_t)vsp;
 
     }
-    else if (instruction == 0xB2) { // ARM_EXIDX_CMD_DATA_POP
+    else if (instruction == 0xB2) { // ARM_EXIDX_CMD_DATA_POP//ARM_EXIDX_CMD_DATA_POP
       /* vps = vsp + 0x204 + (uleb128 << 2) */
       ucb->vrs[13] += 0x204 + (UnwTabGetNextInstruction(cb, ucb) << 2);
     }
-    else if (instruction == 0xB3 // ARM_EXIDX_CMD_VFP_POP
+    else if (instruction == 0xB3 // ARM_EXIDX_CMD_VFP_POP//ARM_EXIDX_CMD_VFP_POP
           || instruction == 0xC8
           || instruction == 0xC9
     ) {
@@ -427,4 +428,4 @@ UnwResult UnwindByTableStart(UnwindFrame* frame, const UnwindCallbacks *cb, void
   return err;
 }
 
-#endif // __arm__ || __thumb__
+#endif // __arm__ || __thumb__//手臂拇指__

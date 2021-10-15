@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -22,9 +23,9 @@
 
 #include "../gcode.h"
 
-#include "../../lcd/marlinui.h" // for lcd_reset_alert_level
-#include "../../MarlinCore.h"   // for marlin_state
-#include "../queue.h"           // for flush_and_request_resend
+#include "../../lcd/marlinui.h" // for lcd_reset_alert_level//对于lcd\u重置\u警报\u级别
+#include "../../MarlinCore.h"   // for marlin_state//马林州
+#include "../queue.h"           // for flush_and_request_resend//对于刷新\u和\u请求\u重新发送
 
 /**
  * M999: Restart after being stopped

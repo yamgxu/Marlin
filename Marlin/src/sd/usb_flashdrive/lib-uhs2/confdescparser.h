@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Copyright (C) 2011 Circuits At Home, LTD. All rights reserved.
  *
@@ -30,8 +31,8 @@
 
 class UsbConfigXtracter {
 public:
-  //virtual void ConfigXtract(const USB_FD_CONFIGURATION_DESCRIPTOR *conf) = 0;
-  //virtual void InterfaceXtract(uint8_t conf, const USB_FD_INTERFACE_DESCRIPTOR *iface) = 0;
+  //virtual void ConfigXtract(const USB_FD_CONFIGURATION_DESCRIPTOR *conf) = 0;//虚拟void ConfigXtract（const USB\u FD\u CONFIGURATION\u DESCRIPTOR*conf）=0；
+  //virtual void InterfaceXtract(uint8_t conf, const USB_FD_INTERFACE_DESCRIPTOR *iface) = 0;//虚拟空接口提取（uint8配置，常量USB FD接口描述符*iface）=0；
 
   virtual void EndpointXtract(uint8_t conf __attribute__((unused)), uint8_t iface __attribute__((unused)), uint8_t alt __attribute__((unused)), uint8_t proto __attribute__((unused)), const USB_FD_ENDPOINT_DESCRIPTOR *ep __attribute__((unused))) {
   }
@@ -42,7 +43,7 @@ public:
 #define CP_MASK_COMPARE_PROTOCOL  4
 #define CP_MASK_COMPARE_ALL       7
 
-// Configuration Descriptor Parser Class Template
+// Configuration Descriptor Parser Class Template//配置描述符解析器类模板
 
 template <const uint8_t CLASS_ID, const uint8_t SUBCLASS_ID, const uint8_t PROTOCOL_ID, const uint8_t MASK>
 class ConfigDescParser : public USBReadParser {
@@ -52,16 +53,16 @@ class ConfigDescParser : public USBReadParser {
   ByteSkipper theSkipper;
   uint8_t varBuffer[16 /*sizeof(USB_FD_CONFIGURATION_DESCRIPTOR)*/];
 
-  uint8_t stateParseDescr; // ParseDescriptor state
+  uint8_t stateParseDescr; // ParseDescriptor state//解析描述符状态
 
-  uint8_t dscrLen; // Descriptor length
-  uint8_t dscrType; // Descriptor type
+  uint8_t dscrLen; // Descriptor length//描述符长度
+  uint8_t dscrType; // Descriptor type//描述符类型
 
-  bool isGoodInterface; // Apropriate interface flag
-  uint8_t confValue; // Configuration value
-  uint8_t protoValue; // Protocol value
-  uint8_t ifaceNumber; // Interface number
-  uint8_t ifaceAltSet; // Interface alternate settings
+  bool isGoodInterface; // Apropriate interface flag//适当的接口标志
+  uint8_t confValue; // Configuration value//配置值
+  uint8_t protoValue; // Protocol value//协议值
+  uint8_t ifaceNumber; // Interface number//接口号
+  uint8_t ifaceAltSet; // Interface alternate settings//接口替代设置
 
   bool UseOr;
   bool ParseDescriptor(uint8_t **pp, uint16_t *pcntdn);
@@ -110,11 +111,11 @@ bool ConfigDescParser<CLASS_ID, SUBCLASS_ID, PROTOCOL_ID, MASK>::ParseDescriptor
       dscrType = *((uint8_t*)theBuffer.pValue + 1);
       stateParseDescr = 2;
     case 2:
-      // This is a sort of hack. Assuming that two bytes are all ready in the buffer
-      //      the pointer is positioned two bytes ahead in order for the rest of descriptor
-      //      to be read right after the size and the type fields.
-      // This should be used carefully. varBuffer should be used directly to handle data
-      //      in the buffer.
+      // This is a sort of hack. Assuming that two bytes are all ready in the buffer//这是一种黑客行为。假设缓冲区中的两个字节都准备好了
+      //      the pointer is positioned two bytes ahead in order for the rest of descriptor//指针位于前面两个字节的位置，以便用于描述符的其余部分
+      //      to be read right after the size and the type fields.//在大小和类型字段之后读取。
+      // This should be used carefully. varBuffer should be used directly to handle data//这应该小心使用。varBuffer应该直接用于处理数据
+      //      in the buffer.//在缓冲区中。
       theBuffer.pValue = varBuffer + 2;
       stateParseDescr = 3;
     case 3:
@@ -157,10 +158,10 @@ bool ConfigDescParser<CLASS_ID, SUBCLASS_ID, PROTOCOL_ID, MASK>::ParseDescriptor
           if (isGoodInterface && theXtractor)
             theXtractor->EndpointXtract(confValue, ifaceNumber, ifaceAltSet, protoValue, (USB_FD_ENDPOINT_DESCRIPTOR*)varBuffer);
           break;
-          //case HID_DESCRIPTOR_HID:
-          //  if (!valParser.Parse(pp, pcntdn)) return false;
-          //  PrintHidDescriptor((const USB_HID_DESCRIPTOR*)varBuffer);
-          //  break;
+          //case HID_DESCRIPTOR_HID://案例隐藏\u描述符\u隐藏：
+          //  if (!valParser.Parse(pp, pcntdn)) return false;//if（！valParser.Parse（pp，pcntdn））返回false；
+          //  PrintHidDescriptor((const USB_HID_DESCRIPTOR*)varBuffer);//PrintHidDescriptor（（常量USB\U HID\U描述符*）varBuffer）；
+          //  break;//中断；
         default:
           if (!theSkipper.Skip(pp, pcntdn, dscrLen - 2)) return false;
       }

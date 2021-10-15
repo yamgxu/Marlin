@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,7 +32,7 @@
 #include "../../inc/MarlinConfig.h"
 
 #if ENABLED(TFT_INTERFACE_FSMC_8BIT)
-  // When we have a 8 bit interface, we need to invert the bytes of the color
+  // When we have a 8 bit interface, we need to invert the bytes of the color//当我们有一个8位接口时，我们需要反转颜色的字节
   #define ENDIAN_COLOR(C) (((C) >> 8) | ((C) << 8))
 #else
   #define ENDIAN_COLOR(C) (C)
@@ -57,16 +58,16 @@
   #ifdef STM32F103xB
     #define TFT_BUFFER_SIZE       1024
   #elif defined(STM32F103xE)
-    #define TFT_BUFFER_SIZE       19200 // 320 * 60
+    #define TFT_BUFFER_SIZE       19200 // 320 * 60// 320 * 60
   #elif defined(STM32F1)
     #define TFT_BUFFER_SIZE       8192
   #else
-    #define TFT_BUFFER_SIZE       19200 // 320 * 60
+    #define TFT_BUFFER_SIZE       19200 // 320 * 60// 320 * 60
   #endif
 #endif
 
 #if TFT_BUFFER_SIZE > 65535
-  // DMA Count parameter is uint16_t
+  // DMA Count parameter is uint16_t//DMA计数参数为uint16\u t
   #error "TFT_BUFFER_SIZE can not exceed 65535"
 #endif
 

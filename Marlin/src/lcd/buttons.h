@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -33,7 +34,7 @@
   #define HAS_SHIFT_ENCODER 1
 #endif
 
-// I2C buttons must be read in the main thread
+// I2C buttons must be read in the main thread//I2C按钮必须在主线程中读取
 #if ANY(LCD_I2C_VIKI, LCD_I2C_PANELOLU2, IS_TFTGLCD_PANEL)
   #define HAS_SLOW_BUTTONS 1
 #endif
@@ -46,7 +47,7 @@
 #endif
 
 #if IS_RRW_KEYPAD
-  #define BTN_OFFSET          0 // Bit offset into buttons for shift register values
+  #define BTN_OFFSET          0 // Bit offset into buttons for shift register values//移位寄存器值按钮的位偏移量
 
   #define BLEN_KEYPAD_F3      0
   #define BLEN_KEYPAD_F2      1
@@ -76,7 +77,7 @@
 #endif
 
 #if EITHER(HAS_DIGITAL_BUTTONS, DWIN_CREALITY_LCD)
-  // Wheel spin pins where BA is 00, 10, 11, 01 (1 bit always changes)
+  // Wheel spin pins where BA is 00, 10, 11, 01 (1 bit always changes)//车轮旋转销，其中BA为00、10、11、01（1位始终更改）
   #define BLEN_A 0
   #define BLEN_B 1
 
@@ -92,29 +93,29 @@
 
   #if ENABLED(LCD_I2C_VIKI)
     #include <LiquidTWI2.h>
-    #define B_I2C_BTN_OFFSET 3 // (the first three bit positions reserved for EN_A, EN_B, EN_C)
+    #define B_I2C_BTN_OFFSET 3 // (the first three bit positions reserved for EN_A, EN_B, EN_C)//（为EN_A、EN_B、EN_C保留的前三位位置）
 
-    // button and encoder bit positions within 'buttons'
-    #define B_LE (BUTTON_LEFT   << B_I2C_BTN_OFFSET)      // The remaining normalized buttons are all read via I2C
+    // button and encoder bit positions within 'buttons'//“按钮”内的按钮和编码器位位置
+    #define B_LE (BUTTON_LEFT   << B_I2C_BTN_OFFSET)      // The remaining normalized buttons are all read via I2C//其余的标准化按钮都是通过I2C读取的
     #define B_UP (BUTTON_UP     << B_I2C_BTN_OFFSET)
     #define B_MI (BUTTON_SELECT << B_I2C_BTN_OFFSET)
     #define B_DW (BUTTON_DOWN   << B_I2C_BTN_OFFSET)
     #define B_RI (BUTTON_RIGHT  << B_I2C_BTN_OFFSET)
 
-    #if BUTTON_EXISTS(ENC)                                // The pause/stop/restart button is connected to BTN_ENC when used
-      #define B_ST (EN_C)                                 // Map the pause/stop/resume button into its normalized functional name
-      #define BUTTON_CLICK() (buttons & (B_MI|B_RI|B_ST)) // Pause/stop also acts as click until a proper pause/stop is implemented.
+    #if BUTTON_EXISTS(ENC)                                // The pause/stop/restart button is connected to BTN_ENC when used//使用时，暂停/停止/重新启动按钮连接到BTN_ENC
+      #define B_ST (EN_C)                                 // Map the pause/stop/resume button into its normalized functional name//将暂停/停止/恢复按钮映射到其规范化的功能名称中
+      #define BUTTON_CLICK() (buttons & (B_MI|B_RI|B_ST)) // Pause/stop also acts as click until a proper pause/stop is implemented.//暂停/停止也可作为单击，直到实现正确的暂停/停止。
     #else
       #define BUTTON_CLICK() (buttons & (B_MI|B_RI))
     #endif
 
-    // I2C buttons take too long to read inside an interrupt context and so we read them during lcd_update
+    // I2C buttons take too long to read inside an interrupt context and so we read them during lcd_update//I2C按钮在中断上下文中的读取时间太长，因此我们在lcd_更新期间读取它们
 
   #elif ENABLED(LCD_I2C_PANELOLU2)
-    #if !BUTTON_EXISTS(ENC) // Use I2C if not directly connected to a pin
-      #define B_I2C_BTN_OFFSET 3 // (the first three bit positions reserved for EN_A, EN_B, EN_C)
+    #if !BUTTON_EXISTS(ENC) // Use I2C if not directly connected to a pin//如果未直接连接到引脚，则使用I2C
+      #define B_I2C_BTN_OFFSET 3 // (the first three bit positions reserved for EN_A, EN_B, EN_C)//（为EN_A、EN_B、EN_C保留的前三位位置）
 
-      #define B_MI (PANELOLU2_ENCODER_C << B_I2C_BTN_OFFSET) // requires LiquidTWI2 library v1.2.3 or later
+      #define B_MI (PANELOLU2_ENCODER_C << B_I2C_BTN_OFFSET) // requires LiquidTWI2 library v1.2.3 or later//需要LiquidTWI2库v1.2.3或更高版本
 
       #define BUTTON_CLICK() (buttons & B_MI)
     #endif
@@ -123,16 +124,16 @@
   #undef BUTTON_EXISTS
   #define BUTTON_EXISTS(...) false
 
-  // Dummy button, never pressed
+  // Dummy button, never pressed//虚拟按钮，从未按下
   #define _BUTTON_PRESSED(BN) false
 
-  // Shift register bits correspond to buttons:
-  #define BL_LE 7   // Left
-  #define BL_UP 6   // Up
-  #define BL_MI 5   // Middle
-  #define BL_DW 4   // Down
-  #define BL_RI 3   // Right
-  #define BL_ST 2   // Red Button
+  // Shift register bits correspond to buttons://移位寄存器位对应于按钮：
+  #define BL_LE 7   // Left//左
+  #define BL_UP 6   // Up//向上
+  #define BL_MI 5   // Middle//中间的
+  #define BL_DW 4   // Down//向下
+  #define BL_RI 3   // Right//对
+  #define BL_ST 2   // Red Button//红色按钮
   #define B_LE _BV(BL_LE)
   #define B_UP _BV(BL_UP)
   #define B_MI _BV(BL_MI)

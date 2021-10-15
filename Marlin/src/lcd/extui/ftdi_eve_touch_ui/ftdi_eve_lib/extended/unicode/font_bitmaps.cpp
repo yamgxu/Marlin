@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*******************
  * font_bitmap.cpp *
  *******************/
@@ -53,6 +54,6 @@ namespace FTDI {
     }
   }
 
-} // namespace FTDI
+} // namespace FTDI//名称空间FTDI
 
-#endif // FTDI_EXTENDED
+#endif // FTDI_EXTENDED//FTDI_扩展

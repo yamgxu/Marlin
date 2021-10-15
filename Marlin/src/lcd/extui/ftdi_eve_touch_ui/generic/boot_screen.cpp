@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*******************
  * boot_screen.cpp *
  *******************/
@@ -56,13 +57,13 @@ void BootScreen::onRedraw(draw_mode_t) {
 
 void BootScreen::onIdle() {
   if (CLCD::is_touching()) {
-    // If the user is touching the screen at startup, then
-    // assume the user wants to re-calibrate the screen.
-    // This gives the user the ability to recover a
-    // miscalibration that has been stored to EEPROM.
+    // If the user is touching the screen at startup, then//如果用户在启动时触摸屏幕，则
+    // assume the user wants to re-calibrate the screen.//假设用户想要重新校准屏幕。
+    // This gives the user the ability to recover a//这使用户能够恢复
+    // miscalibration that has been stored to EEPROM.//存储在EEPROM中的校准错误。
 
-    // Also reset display parameters to defaults, just
-    // in case the display is borked.
+    // Also reset display parameters to defaults, just//还可以将显示参数重置为默认值，只需
+    // in case the display is borked.//以防显示器损坏。
     InterfaceSettingsScreen::failSafeSettings();
 
     StatusScreen::loadBitmaps();
@@ -81,8 +82,8 @@ void BootScreen::onIdle() {
 
     #if DISABLED(TOUCH_UI_NO_BOOTSCREEN)
       if (UIData::animations_enabled()) {
-        // If there is a startup video in the flash SPI, play
-        // that, otherwise show a static splash screen.
+        // If there is a startup video in the flash SPI, play//如果flash SPI中有启动视频，请播放
+        // that, otherwise show a static splash screen.//否则会显示一个静态启动屏幕。
         if (!MediaPlayerScreen::playBootMedia())
           showSplashScreen();
       }
@@ -125,4 +126,4 @@ void BootScreen::showSplashScreen() {
   ExtUI::delay_ms(2500);
 }
 
-#endif // FTDI_BOOT_SCREEN
+#endif // FTDI_BOOT_SCREEN//FTDI_启动_屏幕

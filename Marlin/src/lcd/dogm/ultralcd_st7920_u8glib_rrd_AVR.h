@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,8 +22,8 @@
  */
 #pragma once
 
-// NOTE - the HAL version of the rrd device uses a generic ST7920 device.  See the
-// file u8g_dev_st7920_128x64_HAL.cpp for the HAL version.
+// NOTE - the HAL version of the rrd device uses a generic ST7920 device.  See the//注意-rrd设备的HAL版本使用通用ST7920设备。见
+// file u8g_dev_st7920_128x64_HAL.cpp for the HAL version.//HAL版本的文件u8g_dev_st7920_128x64_HAL.cpp。
 
 #include "../../inc/MarlinConfig.h"
 #include "../../HAL/shared/Delay.h"
@@ -31,9 +32,9 @@
 #define ST7920_DAT_PIN  LCD_PINS_ENABLE
 #define ST7920_CS_PIN   LCD_PINS_RS
 
-//#define PAGE_HEIGHT 8   // 128 byte framebuffer
-#define PAGE_HEIGHT 16    // 256 byte framebuffer
-//#define PAGE_HEIGHT 32  // 512 byte framebuffer
+//#define PAGE_HEIGHT 8   // 128 byte framebuffer//#定义页面高度8//128字节帧缓冲区
+#define PAGE_HEIGHT 16    // 256 byte framebuffer//256字节帧缓冲区
+//#define PAGE_HEIGHT 32  // 512 byte framebuffer//#定义页面高度32//512字节帧缓冲区
 
 #include <U8glib.h>
 

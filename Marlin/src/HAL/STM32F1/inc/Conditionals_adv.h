@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -22,7 +23,7 @@
 #pragma once
 
 #ifdef USE_USB_COMPOSITE
-  //#warning "SD_CHECK_AND_RETRY isn't needed with USE_USB_COMPOSITE."
+  //#warning "SD_CHECK_AND_RETRY isn't needed with USE_USB_COMPOSITE."//#警告“USE_USB_COMPOSITE不需要SD_检查和_重试。”
   #undef SD_CHECK_AND_RETRY
   #if DISABLED(NO_SD_HOST_DRIVE)
     #define HAS_SD_HOST_DRIVE 1

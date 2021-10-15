@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -39,4 +40,4 @@ namespace SdFatUtil {
   int FreeRam();
 }
 
-using namespace SdFatUtil;  // NOLINT
+using namespace SdFatUtil;  // NOLINT//诺林特

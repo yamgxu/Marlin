@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,7 +22,7 @@
  */
 #pragma once
 
-// Dagoma NTC 100k white thermistor
+// Dagoma NTC 100k white thermistor//达戈马NTC 100k白色热敏电阻
 constexpr temp_entry_t temptable_17[] PROGMEM = {
   { OV(  16),  309 },
   { OV(  18),  307 },
@@ -74,5 +75,5 @@ constexpr temp_entry_t temptable_17[] PROGMEM = {
   { OV( 975),   28 },
   { OV(1000),   20 },
   { OV(1010),   10 },
-  { OV(1024), -273 } // for safety
+  { OV(1024), -273 } // for safety//为了安全
 };

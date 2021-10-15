@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Generated automatically by buildroot/share/fonts/uxggenpages.sh
  * Contents will be REPLACED by future processing!
@@ -66,12 +67,12 @@ const u8g_fntpgm_uint8_t fontpage_8_206_207[39] U8G_FONT_SECTION("fontpage_8_206
 
 #define FONTDATA_ITEM(page, begin, end, data) { page, begin, end, COUNT(data), data }
 static const uxg_fontinfo_t g_fontinfo[] PROGMEM = {
-    FONTDATA_ITEM(8, 144, 149, fontpage_8_144_149), // 'А' -- 'Е'
-    FONTDATA_ITEM(8, 151, 152, fontpage_8_151_152), // 'З' -- 'И'
-    FONTDATA_ITEM(8, 154, 164, fontpage_8_154_164), // 'К' -- 'Ф'
-    FONTDATA_ITEM(8, 166, 166, fontpage_8_166_166), // 'Ц' -- 'Ц'
-    FONTDATA_ITEM(8, 175, 195, fontpage_8_175_195), // 'Я' -- 'у'
-    FONTDATA_ITEM(8, 197, 200, fontpage_8_197_200), // 'х' -- 'ш'
-    FONTDATA_ITEM(8, 202, 202, fontpage_8_202_202), // 'ъ' -- 'ъ'
-    FONTDATA_ITEM(8, 206, 207, fontpage_8_206_207), // 'ю' -- 'я'
+    FONTDATA_ITEM(8, 144, 149, fontpage_8_144_149), // 'А' -- 'Е'// 'А' -- 'Е'
+    FONTDATA_ITEM(8, 151, 152, fontpage_8_151_152), // 'З' -- 'И'// 'З' -- 'И'
+    FONTDATA_ITEM(8, 154, 164, fontpage_8_154_164), // 'К' -- 'Ф'// 'К' -- 'Ф'
+    FONTDATA_ITEM(8, 166, 166, fontpage_8_166_166), // 'Ц' -- 'Ц'// 'Ц' -- 'Ц'
+    FONTDATA_ITEM(8, 175, 195, fontpage_8_175_195), // 'Я' -- 'у'// 'Я' -- 'у'
+    FONTDATA_ITEM(8, 197, 200, fontpage_8_197_200), // 'х' -- 'ш'// 'х' -- 'ш'
+    FONTDATA_ITEM(8, 202, 202, fontpage_8_202_202), // 'ъ' -- 'ъ'// 'ъ' -- 'ъ'
+    FONTDATA_ITEM(8, 206, 207, fontpage_8_206_207), // 'ю' -- 'я'// 'ю' -- 'я'
 };

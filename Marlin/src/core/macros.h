@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -70,28 +71,28 @@
 #define _O2          __attribute__((optimize("O2")))
 #define _O3          __attribute__((optimize("O3")))
 
-#define IS_CONSTEXPR(...) __builtin_constant_p(__VA_ARGS__) // Only valid solution with C++14. Should use std::is_constant_evaluated() in C++20 instead
+#define IS_CONSTEXPR(...) __builtin_constant_p(__VA_ARGS__) // Only valid solution with C++14. Should use std::is_constant_evaluated() in C++20 instead//使用C++14的唯一有效解决方案。在C++20中应该使用std:：is_constant_evaluated（）
 
 #ifndef UNUSED
   #define UNUSED(x) ((void)(x))
 #endif
 
-// Clock speed factors
+// Clock speed factors//时钟速度系数
 #if !defined(CYCLES_PER_MICROSECOND) && !defined(__STM32F1__)
-  #define CYCLES_PER_MICROSECOND (F_CPU / 1000000UL) // 16 or 20 on AVR
+  #define CYCLES_PER_MICROSECOND (F_CPU / 1000000UL) // 16 or 20 on AVR//AVR上的16或20
 #endif
 
-// Nanoseconds per cycle
+// Nanoseconds per cycle//纳秒/周期
 #define NANOSECONDS_PER_CYCLE (1000000000.0 / F_CPU)
 
-// Macros to make a string from a macro
+// Macros to make a string from a macro//宏从宏生成字符串
 #define STRINGIFY_(M) #M
 #define STRINGIFY(M) STRINGIFY_(M)
 
 #define A(CODE) " " CODE "\n\t"
 #define L(CODE) CODE ":\n\t"
 
-// Macros for bit masks
+// Macros for bit masks//位掩码宏
 #undef _BV
 #define _BV(n) (1<<(n))
 #define TEST(n,b) (!!((n)&_BV(b)))
@@ -121,10 +122,10 @@
 #define SIGN(a) ({__typeof__(a) _a = (a); (_a>0)-(_a<0);})
 #define IS_POWER_OF_2(x) ((x) && !((x) & ((x) - 1)))
 
-// Macros to constrain values
+// Macros to constrain values//用于约束值的宏
 #ifdef __cplusplus
 
-  // C++11 solution that is standards compliant.
+  // C++11 solution that is standards compliant.//符合标准的C++11解决方案。
   template <class V, class N> static inline constexpr void NOLESS(V& v, const N n) {
     if (n > v) v = n;
   }
@@ -160,7 +161,7 @@
 
 #endif
 
-// Macros to chain up to 14 conditions
+// Macros to chain up to 14 conditions//宏可链接多达14个条件
 #define _DO_1(W,C,A)       (_##W##_1(A))
 #define _DO_2(W,C,A,B)     (_##W##_1(A) C _##W##_1(B))
 #define _DO_3(W,C,A,V...)  (_##W##_1(A) C _DO_2(W,C,V))
@@ -180,7 +181,7 @@
 #define _DO_N(W,C,N,V...)  __DO_N(W,C,N,V)
 #define DO(W,C,V...)       (_DO_N(W,C,NUM_ARGS(V),V))
 
-// Macros to support option testing
+// Macros to support option testing//支持选项测试的宏
 #define _CAT(a,V...) a##V
 #define CAT(a,V...) _CAT(a,V)
 
@@ -196,25 +197,25 @@
 #define DISABLED(V...)      DO(DIS,&&,V)
 #define COUNT_ENABLED(V...) DO(ENA,+,V)
 
-#define TERN(O,A,B)         _TERN(_ENA_1(O),B,A)    // OPTION ? 'A' : 'B'
-#define TERN0(O,A)          _TERN(_ENA_1(O),0,A)    // OPTION ? 'A' : '0'
-#define TERN1(O,A)          _TERN(_ENA_1(O),1,A)    // OPTION ? 'A' : '1'
-#define TERN_(O,A)          _TERN(_ENA_1(O),,A)     // OPTION ? 'A' : '<nul>'
-#define _TERN(E,V...)       __TERN(_CAT(T_,E),V)    // Prepend 'T_' to get 'T_0' or 'T_1'
-#define __TERN(T,V...)      ___TERN(_CAT(_NO,T),V)  // Prepend '_NO' to get '_NOT_0' or '_NOT_1'
-#define ___TERN(P,V...)     THIRD(P,V)              // If first argument has a comma, A. Else B.
+#define TERN(O,A,B)         _TERN(_ENA_1(O),B,A)    // OPTION ? 'A' : 'B'//选择？”A'：'B'
+#define TERN0(O,A)          _TERN(_ENA_1(O),0,A)    // OPTION ? 'A' : '0'//选择？”A'：“0”
+#define TERN1(O,A)          _TERN(_ENA_1(O),1,A)    // OPTION ? 'A' : '1'//选择？”A'：'1'
+#define TERN_(O,A)          _TERN(_ENA_1(O),,A)     // OPTION ? 'A' : '<nul>'//选择？”A'：'<nul>'
+#define _TERN(E,V...)       __TERN(_CAT(T_,E),V)    // Prepend 'T_' to get 'T_0' or 'T_1'//前置'T_'以获取'T_0'或'T_1'
+#define __TERN(T,V...)      ___TERN(_CAT(_NO,T),V)  // Prepend '_NO' to get '_NOT_0' or '_NOT_1'//预加“\u NO”以获取“\u NOT\u 0”或“\u NOT\u 1”
+#define ___TERN(P,V...)     THIRD(P,V)              // If first argument has a comma, A. Else B.//若第一个参数有一个逗号，a。否则B。
 
 #define _OPTARG(A)          , A
 #define OPTARG(O,A)         TERN_(O,DEFER4(_OPTARG)(A))
 #define _OPTCODE(A)         A;
 #define OPTCODE(O,A)        TERN_(O,DEFER4(_OPTCODE)(A))
 
-// Macros to avoid 'f + 0.0' which is not always optimized away. Minus included for symmetry.
-// Compiler flags -fno-signed-zeros -ffinite-math-only also cover 'f * 1.0', 'f - f', etc.
-#define PLUS_TERN0(O,A)     _TERN(_ENA_1(O),,+ (A)) // OPTION ? '+ (A)' : '<nul>'
-#define MINUS_TERN0(O,A)    _TERN(_ENA_1(O),,- (A)) // OPTION ? '- (A)' : '<nul>'
-#define SUM_TERN(O,B,A)     ((B) PLUS_TERN0(O,A))   // ((B) (OPTION ? '+ (A)' : '<nul>'))
-#define DIFF_TERN(O,B,A)    ((B) MINUS_TERN0(O,A))  // ((B) (OPTION ? '- (A)' : '<nul>'))
+// Macros to avoid 'f + 0.0' which is not always optimized away. Minus included for symmetry.//避免“f+0.0”的宏，因为“f+0.0”并不总是经过优化。减号包括对称性。
+// Compiler flags -fno-signed-zeros -ffinite-math-only also cover 'f * 1.0', 'f - f', etc.//编译器标志-fno有符号零-FNITE math仅包括“f*1.0”、“f-f”等。
+#define PLUS_TERN0(O,A)     _TERN(_ENA_1(O),,+ (A)) // OPTION ? '+ (A)' : '<nul>'//选项？'+（A） “：”<nul>”
+#define MINUS_TERN0(O,A)    _TERN(_ENA_1(O),,- (A)) // OPTION ? '- (A)' : '<nul>'//选项？’（A） “：”<nul>”
+#define SUM_TERN(O,B,A)     ((B) PLUS_TERN0(O,A))   // ((B) (OPTION ? '+ (A)' : '<nul>'))//（（B）（选项？“+（A）”：“<nul>”）
+#define DIFF_TERN(O,B,A)    ((B) MINUS_TERN0(O,A))  // ((B) (OPTION ? '- (A)' : '<nul>'))//（（B）（选项？—（A）：“<nul>”）
 
 #define IF_ENABLED          TERN_
 #define IF_DISABLED(O,A)    TERN(O,,A)
@@ -226,7 +227,7 @@
 #define EITHER(V1,V2)       ANY(V1,V2)
 #define MANY(V...)          (COUNT_ENABLED(V) > 1)
 
-// Macros to support pins/buttons exist testing
+// Macros to support pins/buttons exist testing//支持引脚/按钮的宏存在测试
 #define PIN_EXISTS(PN)      (defined(PN##_PIN) && PN##_PIN >= 0)
 #define _PINEX_1            PIN_EXISTS
 #define PINS_EXIST(V...)    DO(PINEX,&&,V)
@@ -283,7 +284,7 @@
 #define GANG_N(N,V...) _GANG_N(N,V)
 #define GANG_N_1(N,K) _GANG_N(N,K,K,K,K,K,K,K,K,K,K,K,K,K,K,K,K)
 
-// Macros for initializing arrays
+// Macros for initializing arrays//用于初始化数组的宏
 #define LIST_16(A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,...) A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P
 #define LIST_15(A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,...) A,B,C,D,E,F,G,H,I,J,K,L,M,N,O
 #define LIST_14(A,B,C,D,E,F,G,H,I,J,K,L,M,N,...) A,B,C,D,E,F,G,H,I,J,K,L,M,N
@@ -334,9 +335,9 @@
 #define RECIPROCAL(x) (NEAR_ZERO(x) ? 0 : (1 / float(x)))
 #define FIXFLOAT(f)  ({__typeof__(f) _f = (f); _f + (_f < 0 ? -0.0000005f : 0.0000005f);})
 
-//
-// Maths macros that can be overridden by HAL
-//
+////
+// Maths macros that can be overridden by HAL//HAL可以覆盖的数学宏
+////
 #define ACOS(x)     acosf(x)
 #define ATAN2(y, x) atan2f(y, x)
 #define POW(x, y)   powf(x, y)
@@ -349,11 +350,11 @@
 #define FMOD(x, y)  fmodf(x, y)
 #define HYPOT(x,y)  SQRT(HYPOT2(x,y))
 
-// Use NUM_ARGS(__VA_ARGS__) to get the number of variadic arguments
+// Use NUM_ARGS(__VA_ARGS__) to get the number of variadic arguments//使用NUM_ARGS（uu VA_ARGS_uu）获取可变参数的数量
 #define _NUM_ARGS(_,n,m,l,k,j,i,h,g,f,e,d,c,b,a,Z,Y,X,W,V,U,T,S,R,Q,P,O,N,M,L,K,J,I,H,G,F,E,D,C,B,A,OUT,...) OUT
 #define NUM_ARGS(V...) _NUM_ARGS(0,V,40,39,38,37,36,35,34,33,32,31,30,29,28,27,26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0)
 
-// Use TWO_ARGS(__VA_ARGS__) to get whether there are 1, 2, or >2 arguments
+// Use TWO_ARGS(__VA_ARGS__) to get whether there are 1, 2, or >2 arguments//使用两个参数（uuu VA_uargs_uuuu）获取是否有1个、2个或>2个参数
 #define _TWO_ARGS(_,n,m,l,k,j,i,h,g,f,e,d,c,b,a,Z,Y,X,W,V,U,T,S,R,Q,P,O,N,M,L,K,J,I,H,G,F,E,D,C,B,A,OUT,...) OUT
 #define TWO_ARGS(V...) _TWO_ARGS(0,V,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,1,0)
 
@@ -364,7 +365,7 @@
 
     extern "C++" {
 
-      // C++11 solution that is standards compliant. Return type is deduced automatically
+      // C++11 solution that is standards compliant. Return type is deduced automatically//符合标准的C++11解决方案。返回类型是自动推导的
       template <class L, class R> static inline constexpr auto _MIN(const L lhs, const R rhs) -> decltype(lhs + rhs) {
         return lhs < rhs ? lhs : rhs;
       }
@@ -378,7 +379,7 @@
 
   #endif
 
-  // Allow manipulating enumeration value like flags without ugly cast everywhere
+  // Allow manipulating enumeration value like flags without ugly cast everywhere//允许操作枚举值，如标记，而不在任何地方进行丑陋的强制转换
   #define ENUM_FLAGS(T) \
     FORCE_INLINE constexpr T operator&(T x, T y) { return static_cast<T>(static_cast<int>(x) & static_cast<int>(y)); } \
     FORCE_INLINE constexpr T operator|(T x, T y) { return static_cast<T>(static_cast<int>(x) | static_cast<int>(y)); } \
@@ -388,7 +389,7 @@
     FORCE_INLINE T & operator|=(T &x, T y) { return x |= y; } \
     FORCE_INLINE T & operator^=(T &x, T y) { return x ^= y; }
 
-  // C++11 solution that is standard compliant. <type_traits> is not available on all platform
+  // C++11 solution that is standard compliant. <type_traits> is not available on all platform//符合标准的C++11解决方案<并非所有平台上都提供类型_traits>
   namespace Private {
     template<bool, typename _Tp = void> struct enable_if { };
     template<typename _Tp>              struct enable_if<true, _Tp> { typedef _Tp type; };
@@ -399,8 +400,8 @@
     template <typename T, typename ... Args> struct first_type_of { typedef T type; };
     template <typename T> struct first_type_of<T> { typedef T type; };
   }
-  // C++11 solution using SFINAE to detect the existance of a member in a class at compile time.
-  // It creates a HasMember<Type> structure containing 'value' set to true if the member exists
+  // C++11 solution using SFINAE to detect the existance of a member in a class at compile time.//C++11解决方案使用SFINAE在编译时检测类中成员的存在。
+  // It creates a HasMember<Type> structure containing 'value' set to true if the member exists//它创建一个HasMember<Type>结构，如果成员存在，则包含设置为true的“value”
   #define HAS_MEMBER_IMPL(Member) \
     namespace Private { \
       template <typename Type, typename Yes=char, typename No=long> struct HasMember_ ## Member { \
@@ -409,8 +410,8 @@
         enum { value = sizeof(test<Type>(0)) == sizeof(Yes) }; }; \
     }
 
-  // Call the method if it exists, but do nothing if it does not. The method is detected at compile time.
-  // If the method exists, this is inlined and does not cost anything. Else, an "empty" wrapper is created, returning a default value
+  // Call the method if it exists, but do nothing if it does not. The method is detected at compile time.//如果方法存在，则调用该方法，如果不存在，则不执行任何操作。在编译时检测该方法。
+  // If the method exists, this is inlined and does not cost anything. Else, an "empty" wrapper is created, returning a default value//如果该方法存在，则该方法是内联的，不需要任何费用。否则，将创建一个“空”包装，返回默认值
   #define CALL_IF_EXISTS_IMPL(Return, Method, ...) \
     HAS_MEMBER_IMPL(Method) \
     namespace Private { \
@@ -420,33 +421,33 @@
   #define CALL_IF_EXISTS(Return, That, Method, ...) \
     static_cast<Return>(Private::Call_ ## Method(That, ##__VA_ARGS__))
 
-  // Compile-time string manipulation
+  // Compile-time string manipulation//编译时字符串操作
   namespace CompileTimeString {
-    // Simple compile-time parser to find the position of the end of a string
+    // Simple compile-time parser to find the position of the end of a string//查找字符串结尾位置的简单编译时解析器
     constexpr const char* findStringEnd(const char *str) {
       return *str ? findStringEnd(str + 1) : str;
     }
 
-    // Check whether a string contains a specific character
+    // Check whether a string contains a specific character//检查字符串是否包含特定字符
     constexpr bool contains(const char *str, const char ch) {
       return *str == ch ? true : (*str ? contains(str + 1, ch) : false);
     }
-    // Find the last position of the specific character (should be called with findStringEnd)
+    // Find the last position of the specific character (should be called with findStringEnd)//查找特定字符的最后位置（应使用findStringEnd调用）
     constexpr const char* findLastPos(const char *str, const char ch) {
       return *str == ch ? (str + 1) : findLastPos(str - 1, ch);
     }
-    // Compile-time evaluation of the last part of a file path
-    // Typically used to shorten the path to file in compiled strings
-    // CompileTimeString::baseName(__FILE__) returns "macros.h" and not /path/to/Marlin/src/core/macros.h
+    // Compile-time evaluation of the last part of a file path//文件路径最后一部分的编译时计算
+    // Typically used to shorten the path to file in compiled strings//通常用于缩短编译字符串中的文件路径
+    // CompileTimeString::baseName(__FILE__) returns "macros.h" and not /path/to/Marlin/src/core/macros.h//CompileTimeString:：baseName（_文件__）返回“macros.h”，而不是/path/to/Marlin/src/core/macros.h
     constexpr const char* baseName(const char *str) {
       return contains(str, '/') ? findLastPos(findStringEnd(str), '/') : str;
     }
 
-    // Find the first occurence of a character in a string (or return the last position in the string)
+    // Find the first occurence of a character in a string (or return the last position in the string)//查找字符串中第一个出现的字符（或返回字符串中的最后一个位置）
     constexpr const char* findFirst(const char *str, const char ch) {
       return *str == ch || *str == 0 ? (str + 1) : findFirst(str + 1, ch);
     }
-    // Compute the string length at compile time
+    // Compute the string length at compile time//在编译时计算字符串长度
     constexpr unsigned stringLen(const char *str) {
       return *str == 0 ? 0 : 1 + stringLen(str + 1);
     }
@@ -458,7 +459,7 @@
       The name is chosen very short since the binary will store "const char* gtn(T*) [with T = YourTypeHere]" so avoid long function name here */
   template <typename T>
   inline const char* gtn(T*) {
-    // It works on GCC by instantiating __PRETTY_FUNCTION__ and parsing the result. So the syntax here is very limited to GCC output
+    // It works on GCC by instantiating __PRETTY_FUNCTION__ and parsing the result. So the syntax here is very limited to GCC output//它通过实例化uu PRETTY_函数并解析结果在GCC上工作。因此这里的语法仅限于GCC输出
     constexpr unsigned verboseChatLen = sizeof("const char* gtn(T*) [with T = ") - 1;
     static char templateType[sizeof(__PRETTY_FUNCTION__) - verboseChatLen] = {};
     __builtin_memcpy(templateType, __PRETTY_FUNCTION__ + verboseChatLen, sizeof(__PRETTY_FUNCTION__) - verboseChatLen - 2);
@@ -483,7 +484,7 @@
 
 #endif
 
-// Macros for adding
+// Macros for adding//用于添加的宏
 #define INC_0   1
 #define INC_1   2
 #define INC_2   3
@@ -518,7 +519,7 @@
 #define DOUBLE_(n) ADD##n(n)
 #define DOUBLE(n) DOUBLE_(n)
 
-// Macros for subtracting
+// Macros for subtracting//减法宏
 #define DEC_0   0
 #define DEC_1   0
 #define DEC_2   1
@@ -550,21 +551,21 @@
 #define SUB9(N)  SUB4(SUB5(N))
 #define SUB10(N) SUB5(SUB5(N))
 
-//
-// Primitives supporting precompiler REPEAT
-//
+////
+// Primitives supporting precompiler REPEAT//支持预编译器重复的原语
+////
 #define FIRST(a,...)     a
 #define SECOND(a,b,...)  b
 #define THIRD(a,b,c,...) c
 
-// Defer expansion
+// Defer expansion//延迟扩展
 #define EMPTY()
 #define DEFER(M)  M EMPTY()
 #define DEFER2(M) M EMPTY EMPTY()()
 #define DEFER3(M) M EMPTY EMPTY EMPTY()()()
 #define DEFER4(M) M EMPTY EMPTY EMPTY EMPTY()()()()
 
-// Force define expansion
+// Force define expansion//强制定义扩展
 #define EVAL(V...)     EVAL16(V)
 #define EVAL1024(V...) EVAL512(EVAL512(V))
 #define EVAL512(V...)  EVAL256(EVAL256(V))
@@ -578,11 +579,11 @@
 #define EVAL2(V...)    EVAL1(EVAL1(V))
 #define EVAL1(V...)    V
 
-#define IS_PROBE(V...) SECOND(V, 0)     // Get the second item passed, or 0
-#define PROBE() ~, 1                    // Second item will be 1 if this is passed
+#define IS_PROBE(V...) SECOND(V, 0)     // Get the second item passed, or 0//获取通过的第二项，或0
+#define PROBE() ~, 1                    // Second item will be 1 if this is passed//如果通过，则第二项将为1
 #define _NOT_0 PROBE()
-#define NOT(x) IS_PROBE(_CAT(_NOT_, x)) // NOT('0') gets '1'. Anything else gets '0'.
-#define _BOOL(x) NOT(NOT(x))            // NOT('0') gets '0'. Anything else gets '1'.
+#define NOT(x) IS_PROBE(_CAT(_NOT_, x)) // NOT('0') gets '1'. Anything else gets '0'.//NOT（'0'）获取“1”。其他任何内容都将获得“0”。
+#define _BOOL(x) NOT(NOT(x))            // NOT('0') gets '0'. Anything else gets '1'.//NOT（'0'）获取“0”。其他任何东西都会得到“1”。
 
 #define IF_ELSE(TF) _IF_ELSE(_BOOL(TF))
 #define _IF_ELSE(TF) _CAT(_IF_, TF)
@@ -597,16 +598,16 @@
 #define _END_OF_ARGUMENTS_() 0
 
 
-// Simple Inline IF Macros, friendly to use in other macro definitions
+// Simple Inline IF Macros, friendly to use in other macro definitions//简单的内联IF宏，便于在其他宏定义中使用
 #define IF(O, A, B) ((O) ? (A) : (B))
 #define IF_0(O, A) IF(O, A, 0)
 #define IF_1(O, A) IF(O, A, 1)
 
-//
-// REPEAT core macros. Recurse N times with ascending I.
-//
+////
+// REPEAT core macros. Recurse N times with ascending I.//重复核心宏。以升序I递归N次。
+////
 
-// Call OP(I) N times with ascending counter.
+// Call OP(I) N times with ascending counter.//使用递增计数器调用OP（I）N次。
 #define _REPEAT(_RPT_I,_RPT_N,_RPT_OP)                        \
   _RPT_OP(_RPT_I)                                             \
   IF_ELSE(SUB1(_RPT_N))                                       \
@@ -614,7 +615,7 @@
     ( /* Do nothing */ )
 #define __REPEAT() _REPEAT
 
-// Call OP(I, ...) N times with ascending counter.
+// Call OP(I, ...) N times with ascending counter.//使用递增计数器调用OP（I，…）N次。
 #define _REPEAT2(_RPT_I,_RPT_N,_RPT_OP,V...)                     \
   _RPT_OP(_RPT_I,V)                                              \
   IF_ELSE(SUB1(_RPT_N))                                          \
@@ -622,16 +623,16 @@
     ( /* Do nothing */ )
 #define __REPEAT2() _REPEAT2
 
-// Repeat a macro passing S...N-1.
+// Repeat a macro passing S...N-1.//重复通过S…N-1的宏。
 #define REPEAT_S(S,N,OP)        EVAL(_REPEAT(S,SUB##S(N),OP))
 #define REPEAT(N,OP)            REPEAT_S(0,N,OP)
 #define REPEAT_1(N,OP)          REPEAT_S(1,INCREMENT(N),OP)
 
-// Repeat a macro passing 0...N-1 plus additional arguments.
+// Repeat a macro passing 0...N-1 plus additional arguments.//重复一个宏，传递0…N-1和其他参数。
 #define REPEAT2_S(S,N,OP,V...)  EVAL(_REPEAT2(S,SUB##S(N),OP,V))
 #define REPEAT2(N,OP,V...)      REPEAT2_S(0,N,OP,V)
 
-// Use RREPEAT macros with REPEAT macros for nesting
+// Use RREPEAT macros with REPEAT macros for nesting//将重复宏与重复宏一起用于嵌套
 #define _RREPEAT(_RPT_I,_RPT_N,_RPT_OP)                           \
   _RPT_OP(_RPT_I)                                                 \
   IF_ELSE(SUB1(_RPT_N))                                           \
@@ -649,7 +650,7 @@
 #define RREPEAT2_S(S,N,OP,V...)  EVAL1024(_RREPEAT2(S,SUB##S(N),OP,V))
 #define RREPEAT2(N,OP,V...)      RREPEAT2_S(0,N,OP,V)
 
-// See https://github.com/swansontec/map-macro
+// See https://github.com/swansontec/map-macro//看https://github.com/swansontec/map-macro
 #define MAP_OUT
 #define MAP_END(...)
 #define MAP_GET_END() 0, MAP_END

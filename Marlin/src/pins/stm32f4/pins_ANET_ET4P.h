@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -24,9 +25,9 @@
 
 #define BOARD_INFO_NAME "Anet ET4P 1.x"
 
-//
-// TMC2208 Configuration_adv defaults for Anet ET4P-MB_V1.x
-//
+////
+// TMC2208 Configuration_adv defaults for Anet ET4P-MB_V1.x//AMET ET4P-MB V1.x的TMC2208配置默认值
+////
 #if !AXIS_DRIVER_TYPE_X(TMC2208_STANDALONE) || !AXIS_DRIVER_TYPE_Y(TMC2208_STANDALONE) || !AXIS_DRIVER_TYPE_Z(TMC2208_STANDALONE) || !AXIS_DRIVER_TYPE_E0(TMC2208_STANDALONE)
   #error "ANET_ET4P requires ([XYZ]|E0)_DRIVER_TYPE set to TMC2208_STANDALONE."
 #endif

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -57,15 +58,15 @@ void eeprom_init() {
 
 static constexpr uint8_t eeprom_device_address = I2C_ADDRESS(EEPROM_DEVICE_ADDRESS);
 
-// ------------------------
-// Public functions
-// ------------------------
+// ------------------------// ------------------------
+// Public functions//公共职能
+// ------------------------// ------------------------
 
 #define SMALL_EEPROM (MARLIN_EEPROM_SIZE <= 2048)
 
-// Combine Address high bits into the device address on <=16Kbit (2K) and >512Kbit (64K) EEPROMs.
-// Note: MARLIN_EEPROM_SIZE is specified in bytes, whereas EEPROM model numbers refer to bits.
-//       e.g., The "16" in BL24C16 indicates a 16Kbit (2KB) size.
+// Combine Address high bits into the device address on <=16Kbit (2K) and >512Kbit (64K) EEPROMs.//在<=16Kbit（2K）和>512Kbit（64K）的EEPROM上将地址高位合并到设备地址中。
+// Note: MARLIN_EEPROM_SIZE is specified in bytes, whereas EEPROM model numbers refer to bits.//注：MARLIN_EEPROM_大小以字节为单位指定，而EEPROM型号指位。
+//       e.g., The "16" in BL24C16 indicates a 16Kbit (2KB) size.//例如，BL24C16中的“16”表示16Kbit（2KB）大小。
 static uint8_t _eeprom_calc_device_address(uint8_t * const pos) {
   const unsigned eeprom_address = (unsigned)pos;
   return (SMALL_EEPROM || MARLIN_EEPROM_SIZE > 65536)
@@ -77,8 +78,8 @@ static void _eeprom_begin(uint8_t * const pos) {
   const unsigned eeprom_address = (unsigned)pos;
   Wire.beginTransmission(_eeprom_calc_device_address(pos));
   if (!SMALL_EEPROM)
-    Wire.write(uint8_t((eeprom_address >> 8) & 0xFF));  // Address High, if needed
-  Wire.write(uint8_t(eeprom_address & 0xFF));           // Address Low
+    Wire.write(uint8_t((eeprom_address >> 8) & 0xFF));  // Address High, if needed//如有需要，地址为High
+  Wire.write(uint8_t(eeprom_address & 0xFF));           // Address Low//地址低
 }
 
 void eeprom_write_byte(uint8_t *pos, uint8_t value) {
@@ -86,8 +87,8 @@ void eeprom_write_byte(uint8_t *pos, uint8_t value) {
   Wire.write(value);
   Wire.endTransmission();
 
-  // wait for write cycle to complete
-  // this could be done more efficiently with "acknowledge polling"
+  // wait for write cycle to complete//等待写入周期完成
+  // this could be done more efficiently with "acknowledge polling"//这可以通过“确认轮询”更有效地完成
   delay(EEPROM_WRITE_DELAY);
 }
 
@@ -98,5 +99,5 @@ uint8_t eeprom_read_byte(uint8_t *pos) {
   return Wire.available() ? Wire.read() : 0xFF;
 }
 
-#endif // USE_SHARED_EEPROM
-#endif // I2C_EEPROM
+#endif // USE_SHARED_EEPROM//使用共享EEPROM
+#endif // I2C_EEPROM//I2C_EEPROM

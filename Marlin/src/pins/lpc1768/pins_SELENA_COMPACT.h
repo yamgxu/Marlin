@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -30,14 +31,14 @@
 #define BOARD_INFO_NAME   "Selena Compact"
 #define BOARD_WEBSITE_URL "github.com/Ales2-k/Selena"
 
-//
-// Servos
-//
+////
+// Servos//伺服
+////
 #define SERVO0_PIN                         P1_23
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_MIN_PIN                          P1_28
 #define X_MAX_PIN                          P1_25
 #define Y_STOP_PIN                         P2_11
@@ -46,9 +47,9 @@
   #define Z_MIN_PROBE_PIN                  P1_22
 #endif
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                         P2_00
 #define X_DIR_PIN                          P0_05
 #define X_ENABLE_PIN                       P0_04
@@ -69,17 +70,17 @@
 #define E1_DIR_PIN                         P2_13
 #define E1_ENABLE_PIN                      P4_29
 
-//
-// Temperature Sensors
-// 3.3V max when defined as an analog input
-//
-#define TEMP_BED_PIN                    P0_23_A0  // A0 (TH1)
-#define TEMP_0_PIN                      P0_24_A1  // A1 (TH2)
-#define TEMP_1_PIN                      P0_25_A2  // A2 (TH3)
+////
+// Temperature Sensors//温度传感器
+// 3.3V max when defined as an analog input//当定义为模拟输入时，最大电压为3.3V
+////
+#define TEMP_BED_PIN                    P0_23_A0  // A0 (TH1)//A0（TH1）
+#define TEMP_0_PIN                      P0_24_A1  // A1 (TH2)//A1（TH2）
+#define TEMP_1_PIN                      P0_25_A2  // A2 (TH3)//A2（TH3）
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 
 #define HEATER_BED_PIN                     P2_05
 #define HEATER_BED2_PIN                    P2_04
@@ -90,9 +91,9 @@
 #endif
 #define FAN1_PIN                           P1_26
 
-//
-// Display
-//
+////
+// Display//展示
+////
 
 #if IS_RRD_FG_SC
   #define LCD_PINS_RS                      P0_16
@@ -110,7 +111,7 @@
   #define SD_DETECT_PIN                    -1
 
   #if ENABLED(REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER)
-    #define BTN_ENC_EN               LCD_PINS_D7  // Detect the presence of the encoder
+    #define BTN_ENC_EN               LCD_PINS_D7  // Detect the presence of the encoder//检测编码器的存在
   #endif
 
-#endif // IS_RRD_FG_SC
+#endif // IS_RRD_FG_SC//这是你的简历吗

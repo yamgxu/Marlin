@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -24,8 +25,8 @@
 #define BOARD_INFO_NAME      "Raise3D Rumba"
 #define DEFAULT_MACHINE_NAME "Raise3D N Series"
 
-// Raise3D uses thermocouples on the standard input pins
-#define TEMP_0_PIN         15   // Analog Input
-#define TEMP_1_PIN         14   // Analog Input
+// Raise3D uses thermocouples on the standard input pins//Raise3D在标准输入引脚上使用热电偶
+#define TEMP_0_PIN         15   // Analog Input//模拟输入
+#define TEMP_1_PIN         14   // Analog Input//模拟输入
 
 #include "pins_RUMBA.h"

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -26,7 +27,7 @@
 
 #include "tft.h"
 
-//#define DEBUG_GRAPHICAL_TFT
+//#define DEBUG_GRAPHICAL_TFT//#定义调试\u图形\u TFT
 #define DEBUG_OUT ENABLED(DEBUG_GRAPHICAL_TFT)
 #include "../../core/debug_out.h"
 
@@ -39,4 +40,4 @@ void TFT::init() {
 
 TFT tft;
 
-#endif // HAS_GRAPHICAL_TFT
+#endif // HAS_GRAPHICAL_TFT//有图形化的TFT

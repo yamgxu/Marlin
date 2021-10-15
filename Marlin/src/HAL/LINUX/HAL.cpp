@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -26,7 +27,7 @@
 
 MSerialT usb_serial(TERN0(EMERGENCY_PARSER, true));
 
-// U8glib required functions
+// U8glib required functions//U8glib必需的函数
 extern "C" {
   void u8g_xMicroDelay(uint16_t val) { DELAY_US(val); }
   void u8g_MicroDelay()              { u8g_xMicroDelay(1); }
@@ -36,14 +37,14 @@ extern "C" {
 
 //************************//
 
-// return free heap space
+// return free heap space//返回可用堆空间
 int freeMemory() {
   return 0;
 }
 
-// ------------------------
-// ADC
-// ------------------------
+// ------------------------// ------------------------
+// ADC//模数转换器
+// ------------------------// ------------------------
 
 void HAL_adc_init() {
 
@@ -66,7 +67,7 @@ uint16_t HAL_adc_get_result() {
   pin_t pin = analogInputToDigitalPin(active_ch);
   if (!VALID_PIN(pin)) return 0;
   uint16_t data = ((Gpio::get(pin) >> 2) & 0x3FF);
-  return data;    // return 10bit value as Marlin expects
+  return data;    // return 10bit value as Marlin expects//返回Marlin期望的10位值
 }
 
 void HAL_pwm_init() {
@@ -75,4 +76,4 @@ void HAL_pwm_init() {
 
 void HAL_reboot() { /* Reset the application state and GPIO */ }
 
-#endif // __PLAT_LINUX__
+#endif // __PLAT_LINUX__//_uuu平台u LINUX__

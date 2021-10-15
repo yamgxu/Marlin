@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -47,7 +48,7 @@ public:
 
   static uint8_t dir_commands[MAX_L64XX];
 
-  // Flags to guarantee graceful switch if stepper interrupts L6470 SPI transfer
+  // Flags to guarantee graceful switch if stepper interrupts L6470 SPI transfer//当步进器中断L6470 SPI传输时，确保正常切换的标志
   static volatile uint8_t spi_abort;
   static uint8_t spi_active;
 
@@ -64,7 +65,7 @@ public:
 
   static void set_param(const L64XX_axis_t axis, const uint8_t param, const uint32_t value);
 
-  //static void send_command(const L64XX_axis_t axis, uint8_t command);
+  //static void send_command(const L64XX_axis_t axis, uint8_t command);//静态无效发送命令（常量L64XX\u轴\u t轴，uint8\u t命令）；
 
   static uint8_t get_user_input(uint8_t &driver_count, L64XX_axis_t axis_index[3], char axis_mon[3][3],
                             float &position_max, float &position_min, float &final_feedrate, uint8_t &kval_hold,
@@ -89,29 +90,29 @@ public:
     ){}
   #endif
 
-  // ~40 bytes SRAM to simplify status decode routines
+  // ~40 bytes SRAM to simplify status decode routines//~40字节SRAM，简化状态解码例程
   typedef struct {
-    uint8_t STATUS_AXIS_LAYOUT;              // Copy of L6470_status_layout
-    uint8_t AXIS_OCD_TH_MAX;              // Size of OCD_TH field
-    uint8_t AXIS_STALL_TH_MAX;            // Size of STALL_TH field
-    float AXIS_OCD_CURRENT_CONSTANT_INV;   // mA per count
-    float AXIS_STALL_CURRENT_CONSTANT_INV; // mA per count
-    uint8_t L6470_AXIS_CONFIG,            // Address of the CONFIG register
-            L6470_AXIS_STATUS;            // Address of the STATUS register
-    uint16_t L6470_ERROR_MASK,            // STATUS_UVLO | STATUS_TH_WRN | STATUS_TH_SD  | STATUS_OCD | STATUS_STEP_LOSS_A | STATUS_STEP_LOSS_B
-             L6474_ERROR_MASK,            // STATUS_UVLO | STATUS_TH_WRN | STATUS_TH_SD  | STATUS_OCD
-             STATUS_AXIS_RAW,             // Copy of status register contents
-             STATUS_AXIS,                 // Copy of status register contents but with all error bits active low
-             STATUS_AXIS_OCD,             // Overcurrent detected bit position
-             STATUS_AXIS_SCK_MOD,         // Step clock mode is active bit position
-             STATUS_AXIS_STEP_LOSS_A,     // Stall detected on A bridge bit position
-             STATUS_AXIS_STEP_LOSS_B,     // Stall detected on B bridge bit position
-             STATUS_AXIS_TH_SD,           // Thermal shutdown bit position
-             STATUS_AXIS_TH_WRN,          // Thermal warning bit position
-             STATUS_AXIS_UVLO,            // Undervoltage lockout is active bit position
-             STATUS_AXIS_WRONG_CMD,       // Last command not valid bit position
-             STATUS_AXIS_CMD_ERR,         // Command error bit position
-             STATUS_AXIS_NOTPERF_CMD;     // Last command not performed bit position
+    uint8_t STATUS_AXIS_LAYOUT;              // Copy of L6470_status_layout//L6470_状态_布局图的副本
+    uint8_t AXIS_OCD_TH_MAX;              // Size of OCD_TH field//OCD_TH字段的大小
+    uint8_t AXIS_STALL_TH_MAX;            // Size of STALL_TH field//失速区大小
+    float AXIS_OCD_CURRENT_CONSTANT_INV;   // mA per count//每计数毫安
+    float AXIS_STALL_CURRENT_CONSTANT_INV; // mA per count//每计数毫安
+    uint8_t L6470_AXIS_CONFIG,            // Address of the CONFIG register//配置寄存器的地址
+            L6470_AXIS_STATUS;            // Address of the STATUS register//身份登记册地址
+    uint16_t L6470_ERROR_MASK,            // STATUS_UVLO | STATUS_TH_WRN | STATUS_TH_SD  | STATUS_OCD | STATUS_STEP_LOSS_A | STATUS_STEP_LOSS_B//状态|状态|工作状态|状态| SD |状态|强迫症|状态|步骤|损失| A |状态|步骤|损失|B
+             L6474_ERROR_MASK,            // STATUS_UVLO | STATUS_TH_WRN | STATUS_TH_SD  | STATUS_OCD//状态|状态|工作状态|状态| SD |状态|强迫症
+             STATUS_AXIS_RAW,             // Copy of status register contents//状态寄存器内容的副本
+             STATUS_AXIS,                 // Copy of status register contents but with all error bits active low//状态寄存器内容的副本，但所有错误位均为低电平
+             STATUS_AXIS_OCD,             // Overcurrent detected bit position//过电流检测位位置
+             STATUS_AXIS_SCK_MOD,         // Step clock mode is active bit position//步进时钟模式为激活位位置
+             STATUS_AXIS_STEP_LOSS_A,     // Stall detected on A bridge bit position//在桥接器位位置检测到失速
+             STATUS_AXIS_STEP_LOSS_B,     // Stall detected on B bridge bit position//在B桥位位置检测到失速
+             STATUS_AXIS_TH_SD,           // Thermal shutdown bit position//热停堆钻头位置
+             STATUS_AXIS_TH_WRN,          // Thermal warning bit position//热警告位位置
+             STATUS_AXIS_UVLO,            // Undervoltage lockout is active bit position//欠压锁定处于激活位位置
+             STATUS_AXIS_WRONG_CMD,       // Last command not valid bit position//最后一个命令位位置无效
+             STATUS_AXIS_CMD_ERR,         // Command error bit position//命令错误位位置
+             STATUS_AXIS_NOTPERF_CMD;     // Last command not performed bit position//位位置未执行最后一个命令
   } L64XX_shadow_t;
 
   static L64XX_shadow_t shadow;
@@ -125,8 +126,8 @@ public:
     static inline void pause_monitor(const bool) {}
   #endif
 
-//protected:
-  // L64XXHelper methods
+//protected://受保护：
+  // L64XXHelper methods//L64XXHelper方法
   static void spi_init();
   static uint8_t transfer_single(uint8_t data, int16_t ss_pin);
   static uint8_t transfer_chain(uint8_t data, int16_t ss_pin, uint8_t chain_position);

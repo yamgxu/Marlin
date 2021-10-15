@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -28,38 +29,38 @@
 
 #define BOARD_INFO_NAME "Malyan M300"
 
-//
-// EEPROM Emulation
-//
+////
+// EEPROM Emulation//EEPROM仿真
+////
 #if NO_EEPROM_SELECTED
   #define FLASH_EEPROM_EMULATION
   #ifndef MARLIN_EEPROM_SIZE
-    #define MARLIN_EEPROM_SIZE 0x800U             // 2KB
+    #define MARLIN_EEPROM_SIZE 0x800U             // 2KB//2KB
   #endif
 #endif
 
-//
-// SD CARD SPI
-//
+////
+// SD CARD SPI//SD卡SPI
+////
 #define SDSS                           SD_SS_PIN
 
-//
-// Timers
-//
+////
+// Timers//计时器
+////
 #define STEP_TIMER                             6
 #define TEMP_TIMER                             7
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_MAX_PIN                           PC13
 #define Y_MAX_PIN                           PC14
 #define Z_MAX_PIN                           PC15
 #define Z_MIN_PIN                           PB7
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                          PB14
 #define X_DIR_PIN                           PB13
 #define X_ENABLE_PIN                        PB10
@@ -76,16 +77,16 @@
 #define E0_DIR_PIN                          PA6
 #define E0_ENABLE_PIN                       PB0
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                          PA0   // Analog Input (HOTEND0 thermistor)
-#define TEMP_BED_PIN                        PA4   // Analog Input (BED thermistor)
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                          PA0   // Analog Input (HOTEND0 thermistor)//模拟输入（HOTEND0热敏电阻）
+#define TEMP_BED_PIN                        PA4   // Analog Input (BED thermistor)//模拟输入（床用热敏电阻）
 
-//
-// Heaters / Fans
-//
-#define HEATER_0_PIN                        PA1   // HOTEND0 MOSFET
-#define HEATER_BED_PIN                      PA5   // BED MOSFET
+////
+// Heaters / Fans//加热器/风扇
+////
+#define HEATER_0_PIN                        PA1   // HOTEND0 MOSFET//HOTEND0 MOSFET
+#define HEATER_BED_PIN                      PA5   // BED MOSFET//床层MOSFET
 
 #define AUTO_FAN_PIN                        PA8

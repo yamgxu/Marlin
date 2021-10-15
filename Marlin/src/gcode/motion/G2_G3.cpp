@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -49,10 +50,10 @@
  * boards to produce much smoother curved surfaces.
  */
 void plan_arc(
-  const xyze_pos_t &cart,   // Destination position
-  const ab_float_t &offset, // Center of rotation relative to current_position
-  const bool clockwise,     // Clockwise?
-  const uint8_t circles     // Take the scenic route
+  const xyze_pos_t &cart,   // Destination position//目的地位置
+  const ab_float_t &offset, // Center of rotation relative to current_position//相对于当前位置的旋转中心
+  const bool clockwise,     // Clockwise?//顺时针？
+  const uint8_t circles     // Take the scenic route//走风景优美的路线
 ) {
   #if ENABLED(CNC_WORKSPACE_PLANES)
     AxisEnum p_axis, q_axis, l_axis;
@@ -66,7 +67,7 @@ void plan_arc(
     constexpr AxisEnum p_axis = X_AXIS, q_axis = Y_AXIS OPTARG(HAS_Z_AXIS, l_axis = Z_AXIS);
   #endif
 
-  // Radius vector from center to current location
+  // Radius vector from center to current location//从中心到当前位置的半径向量
   ab_float_t rvec = -offset;
 
   const float radius = HYPOT(rvec.a, rvec.b),
@@ -82,25 +83,25 @@ void plan_arc(
     constexpr uint16_t min_segments = 1;
   #endif
 
-  // Angle of rotation between position and target from the circle center.
+  // Angle of rotation between position and target from the circle center.//从圆心到位置和目标之间的旋转角度。
   float angular_travel;
 
-  // Do a full circle if starting and ending positions are "identical"
+  // Do a full circle if starting and ending positions are "identical"//如果起始和结束位置“相同”，则做一整圈
   if (NEAR(current_position[p_axis], cart[p_axis]) && NEAR(current_position[q_axis], cart[q_axis])) {
-    // Preserve direction for circles
+    // Preserve direction for circles//保留圆的方向
     angular_travel = clockwise ? -RADIANS(360) : RADIANS(360);
   }
   else {
-    // Calculate the angle
+    // Calculate the angle//计算角度
     angular_travel = ATAN2(rvec.a * rt_Y - rvec.b * rt_X, rvec.a * rt_X + rvec.b * rt_Y);
 
-    // Angular travel too small to detect? Just return.
+    // Angular travel too small to detect? Just return.//角行程太小而无法检测？回来吧。
     if (!angular_travel) return;
 
-    // Make sure angular travel over 180 degrees goes the other way around.
+    // Make sure angular travel over 180 degrees goes the other way around.//确保超过180度的角行程反过来。
     switch (((angular_travel < 0) << 1) | clockwise) {
-      case 1: angular_travel -= RADIANS(360); break; // Positive but CW? Reverse direction.
-      case 2: angular_travel += RADIANS(360); break; // Negative but CCW? Reverse direction.
+      case 1: angular_travel -= RADIANS(360); break; // Positive but CW? Reverse direction.//是的，但是CW？反向。
+      case 2: angular_travel += RADIANS(360); break; // Negative but CCW? Reverse direction.//是的，但是《特定常规武器公约》？反向。
     }
 
     #ifdef MIN_ARC_SEGMENTS
@@ -116,23 +117,23 @@ void plan_arc(
     float extruder_travel = cart.e - current_position.e;
   #endif
 
-  // If circling around...
+  // If circling around...//如果绕着…转。。。
   if (ENABLED(ARC_P_CIRCLES) && circles) {
-    const float total_angular = angular_travel + circles * RADIANS(360),  // Total rotation with all circles and remainder
-              part_per_circle = RADIANS(360) / total_angular;             // Each circle's part of the total
+    const float total_angular = angular_travel + circles * RADIANS(360),  // Total rotation with all circles and remainder//带所有圆和余数的总旋转
+              part_per_circle = RADIANS(360) / total_angular;             // Each circle's part of the total//每个圆都是总的一部分
 
     #if HAS_Z_AXIS
-      const float l_per_circle = linear_travel * part_per_circle;         // L movement per circle
+      const float l_per_circle = linear_travel * part_per_circle;         // L movement per circle//L每圈移动
     #endif
     #if HAS_EXTRUDERS
-      const float e_per_circle = extruder_travel * part_per_circle;       // E movement per circle
+      const float e_per_circle = extruder_travel * part_per_circle;       // E movement per circle//E每圈移动量
     #endif
 
-    xyze_pos_t temp_position = current_position;                          // for plan_arc to compare to current_position
+    xyze_pos_t temp_position = current_position;                          // for plan_arc to compare to current_position//用于将平面弧与当前位置进行比较
     for (uint16_t n = circles; n--;) {
-      TERN_(HAS_EXTRUDERS, temp_position.e += e_per_circle);              // Destination E axis
-      TERN_(HAS_Z_AXIS, temp_position[l_axis] += l_per_circle);           // Destination L axis
-      plan_arc(temp_position, offset, clockwise, 0);                      // Plan a single whole circle
+      TERN_(HAS_EXTRUDERS, temp_position.e += e_per_circle);              // Destination E axis//目的地E轴
+      TERN_(HAS_Z_AXIS, temp_position[l_axis] += l_per_circle);           // Destination L axis//目的地L轴
+      plan_arc(temp_position, offset, clockwise, 0);                      // Plan a single whole circle//计划一整圈
     }
     TERN_(HAS_Z_AXIS, linear_travel = cart[l_axis] - current_position[l_axis]);
     TERN_(HAS_EXTRUDERS, extruder_travel = cart.e - current_position.e);
@@ -144,7 +145,7 @@ void plan_arc(
 
   const feedRate_t scaled_fr_mm_s = MMS_SCALED(feedrate_mm_s);
 
-  // Start with a nominal segment length
+  // Start with a nominal segment length//从标称段长度开始
   float seg_length = (
     #ifdef ARC_SEGMENTS_PER_R
       constrain(MM_PER_ARC_SEGMENT * radius, MM_PER_ARC_SEGMENT, ARC_SEGMENTS_PER_R)
@@ -154,9 +155,9 @@ void plan_arc(
       MM_PER_ARC_SEGMENT
     #endif
   );
-  // Divide total travel by nominal segment length
+  // Divide total travel by nominal segment length//将总行程除以标称段长度
   uint16_t segments = FLOOR(mm_of_travel / seg_length);
-  NOLESS(segments, min_segments);         // At least some segments
+  NOLESS(segments, min_segments);         // At least some segments//至少有一些部分
   seg_length = mm_of_travel / segments;
 
   /**
@@ -185,12 +186,12 @@ void plan_arc(
    * a correction, the planner should have caught up to the lag caused by the initial plan_arc overhead.
    * This is important when there are successive arc motions.
    */
-  // Vector rotation matrix values
+  // Vector rotation matrix values//向量旋转矩阵值
   xyze_pos_t raw;
   const float theta_per_segment = angular_travel / segments,
               sq_theta_per_segment = sq(theta_per_segment),
               sin_T = theta_per_segment - sq_theta_per_segment * theta_per_segment / 6,
-              cos_T = 1 - 0.5f * sq_theta_per_segment; // Small angle approximation
+              cos_T = 1 - 0.5f * sq_theta_per_segment; // Small angle approximation//小角度近似
 
   #if HAS_Z_AXIS && DISABLED(AUTO_BED_LEVELING_UBL)
     const float linear_per_segment = linear_travel / segments;
@@ -199,10 +200,10 @@ void plan_arc(
     const float extruder_per_segment = extruder_travel / segments;
   #endif
 
-  // Initialize the linear axis
+  // Initialize the linear axis//初始化线性轴
   TERN_(HAS_Z_AXIS, raw[l_axis] = current_position[l_axis]);
 
-  // Initialize the extruder axis
+  // Initialize the extruder axis//初始化挤出机轴
   TERN_(HAS_EXTRUDERS, raw.e = current_position.e);
 
   #if ENABLED(SCARA_FEEDRATE_SCALING)
@@ -215,7 +216,7 @@ void plan_arc(
     int8_t arc_recalc_count = N_ARC_CORRECTION;
   #endif
 
-  for (uint16_t i = 1; i < segments; i++) { // Iterate (segments-1) times
+  for (uint16_t i = 1; i < segments; i++) { // Iterate (segments-1) times//迭代（段-1）次
 
     thermalManager.manage_heater();
     if (ELAPSED(millis(), next_idle_ms)) {
@@ -225,7 +226,7 @@ void plan_arc(
 
     #if N_ARC_CORRECTION > 1
       if (--arc_recalc_count) {
-        // Apply vector rotation matrix to previous rvec.a / 1
+        // Apply vector rotation matrix to previous rvec.a / 1//将矢量旋转矩阵应用于上一个rvec.a/1
         const float r_new_Y = rvec.a * sin_T + rvec.b * cos_T;
         rvec.a = rvec.a * cos_T - rvec.b * sin_T;
         rvec.b = r_new_Y;
@@ -237,16 +238,16 @@ void plan_arc(
         arc_recalc_count = N_ARC_CORRECTION;
       #endif
 
-      // Arc correction to radius vector. Computed only every N_ARC_CORRECTION increments.
-      // Compute exact location by applying transformation matrix from initial radius vector(=-offset).
-      // To reduce stuttering, the sin and cos could be computed at different times.
-      // For now, compute both at the same time.
+      // Arc correction to radius vector. Computed only every N_ARC_CORRECTION increments.//对半径向量进行圆弧校正。仅每N_弧_校正增量计算一次。
+      // Compute exact location by applying transformation matrix from initial radius vector(=-offset).//通过从初始半径向量（=偏移量）应用变换矩阵计算精确位置。
+      // To reduce stuttering, the sin and cos could be computed at different times.//为了减少口吃，可以在不同的时间计算sin和cos。
+      // For now, compute both at the same time.//现在，请同时计算两者。
       const float cos_Ti = cos(i * theta_per_segment), sin_Ti = sin(i * theta_per_segment);
       rvec.a = -offset[0] * cos_Ti + offset[1] * sin_Ti;
       rvec.b = -offset[0] * sin_Ti - offset[1] * cos_Ti;
     }
 
-    // Update raw location
+    // Update raw location//更新原始位置
     raw[p_axis] = center_P + rvec.a;
     raw[q_axis] = center_Q + rvec.b;
     #if HAS_Z_AXIS
@@ -266,7 +267,7 @@ void plan_arc(
     )) break;
   }
 
-  // Ensure last segment arrives at target location.
+  // Ensure last segment arrives at target location.//确保最后一段到达目标位置。
   raw = cart;
   TERN_(AUTO_BED_LEVELING_UBL, TERN_(HAS_Z_AXIS, raw[l_axis] = start_L));
 
@@ -283,7 +284,7 @@ void plan_arc(
   TERN_(AUTO_BED_LEVELING_UBL, TERN_(HAS_Z_AXIS, raw[l_axis] = start_L));
   current_position = raw;
 
-} // plan_arc
+} // plan_arc//平面图
 
 /**
  * G2: Clockwise Arc
@@ -322,7 +323,7 @@ void GcodeSuite::G2_G3(const bool clockwise) {
       relative_mode = true;
     #endif
 
-    get_destination_from_command();   // Get X Y Z E F (and set cutter power)
+    get_destination_from_command();   // Get X Y Z E F (and set cutter power)//获取X Y Z E F（并设置刀具功率）
 
     TERN_(SF_ARC_FIX, relative_mode = relative_mode_backup);
 
@@ -332,13 +333,13 @@ void GcodeSuite::G2_G3(const bool clockwise) {
       if (r) {
         const xy_pos_t p1 = current_position, p2 = destination;
         if (p1 != p2) {
-          const xy_pos_t d2 = (p2 - p1) * 0.5f;          // XY vector to midpoint of move from current
-          const float e = clockwise ^ (r < 0) ? -1 : 1,  // clockwise -1/1, counterclockwise 1/-1
-                      len = d2.magnitude(),              // Distance to mid-point of move from current
-                      h2 = (r - len) * (r + len),        // factored to reduce rounding error
-                      h = (h2 >= 0) ? SQRT(h2) : 0.0f;   // Distance to the arc pivot-point from midpoint
-          const xy_pos_t s = { -d2.y, d2.x };            // Perpendicular bisector. (Divide by len for unit vector.)
-          arc_offset = d2 + s / len * e * h;             // The calculated offset (mid-point if |r| <= len)
+          const xy_pos_t d2 = (p2 - p1) * 0.5f;          // XY vector to midpoint of move from current//XY矢量到从当前移动的中点
+          const float e = clockwise ^ (r < 0) ? -1 : 1,  // clockwise -1/1, counterclockwise 1/-1//顺时针-1/1，逆时针1/-1
+                      len = d2.magnitude(),              // Distance to mid-point of move from current//从当前位置到移动中点的距离
+                      h2 = (r - len) * (r + len),        // factored to reduce rounding error//减少舍入误差的因素
+                      h = (h2 >= 0) ? SQRT(h2) : 0.0f;   // Distance to the arc pivot-point from midpoint//从中点到圆弧轴点的距离
+          const xy_pos_t s = { -d2.y, d2.x };            // Perpendicular bisector. (Divide by len for unit vector.)//垂直平分线。（单位向量除以len。）
+          arc_offset = d2 + s / len * e * h;             // The calculated offset (mid-point if |r| <= len)//计算的偏移量（如果| r |<=len，则为中点）
         }
       }
     }
@@ -361,7 +362,7 @@ void GcodeSuite::G2_G3(const bool clockwise) {
     if (arc_offset) {
 
       #if ENABLED(ARC_P_CIRCLES)
-        // P indicates number of circles to do
+        // P indicates number of circles to do//P表示要做的圈数
         const int8_t circles_to_do = parser.byteval('P');
         if (!WITHIN(circles_to_do, 0, 100))
           SERIAL_ERROR_MSG(STR_ERR_ARC_ARGS);
@@ -369,7 +370,7 @@ void GcodeSuite::G2_G3(const bool clockwise) {
         constexpr uint8_t circles_to_do = 0;
       #endif
 
-      // Send the arc to the planner
+      // Send the arc to the planner//将弧发送给计划员
       plan_arc(destination, arc_offset, clockwise, circles_to_do);
       reset_stepper_timeout();
     }
@@ -380,4 +381,4 @@ void GcodeSuite::G2_G3(const bool clockwise) {
   }
 }
 
-#endif // ARC_SUPPORT
+#endif // ARC_SUPPORT//弧形支架

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,7 +30,7 @@
 
 #include "../../../inc/MarlinConfig.h"
 
-// Not using regular SPI interface by default to avoid SPI mode conflicts with other SPI devices
+// Not using regular SPI interface by default to avoid SPI mode conflicts with other SPI devices//默认情况下不使用常规SPI接口，以避免与其他SPI设备发生SPI模式冲突
 
 #if !PIN_EXISTS(TOUCH_MISO)
   #error "TOUCH_MISO_PIN is not defined."

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2019 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -109,4 +110,4 @@ bool TouchCalibration::handleTouch(uint16_t x, uint16_t y) {
   return true;
 }
 
-#endif // TOUCH_SCREEN_CALIBRATION
+#endif // TOUCH_SCREEN_CALIBRATION//触摸屏校准

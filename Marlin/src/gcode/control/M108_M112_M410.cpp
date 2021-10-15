@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -25,8 +26,8 @@
 #if DISABLED(EMERGENCY_PARSER)
 
 #include "../gcode.h"
-#include "../../MarlinCore.h" // for wait_for_heatup, kill, M112_KILL_STR
-#include "../../module/motion.h" // for quickstop_stepper
+#include "../../MarlinCore.h" // for wait_for_heatup, kill, M112_KILL_STR//等待加热，停止，M112停止
+#include "../../module/motion.h" // for quickstop_stepper//用于快速停止步进机
 
 /**
  * M108: Stop the waiting for heaters in M109, M190, M303. Does not affect the target temperature.
@@ -53,4 +54,4 @@ void GcodeSuite::M410() {
   quickstop_stepper();
 }
 
-#endif // !EMERGENCY_PARSER
+#endif // !EMERGENCY_PARSER// !紧急语法分析器

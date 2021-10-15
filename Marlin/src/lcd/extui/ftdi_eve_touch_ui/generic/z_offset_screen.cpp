@@ -1,3 +1,4 @@
+/** translatione by yx */
 /***********************
  * z_offset_screen.cpp *
  ***********************/
@@ -62,16 +63,16 @@ void ZOffsetScreen::move(float mm, int16_t steps) {
     setAxisPosition_mm(mydata.z, Z);
   }
   else {
-    // Otherwise doing a manual adjustment, possibly during a print.
+    // Otherwise doing a manual adjustment, possibly during a print.//否则，可能在打印过程中进行手动调整。
     TERN(BABYSTEPPING, babystepAxis_steps(steps, Z), UNUSED(steps));
   }
 }
 
 void ZOffsetScreen::runWizard() {
-  // Restore the default Z offset
+  // Restore the default Z offset//恢复默认的Z偏移
   constexpr float offset[] = NOZZLE_TO_PROBE_OFFSET;
   setZOffset_mm(offset[Z_AXIS]);
-  // Move above probe point
+  // Move above probe point//移动到探测点上方
   char cmd[64], str[10];
   strcpy_P(cmd, PSTR("G28 Z\nG0 F1000 X"));
   dtostrf(TERN(Z_SAFE_HOMING,Z_SAFE_HOMING_X_POINT,X_CENTER), 3, 1, str);
@@ -83,14 +84,14 @@ void ZOffsetScreen::runWizard() {
   dtostrf(SHEET_THICKNESS, 3, 1, str);
   strcat(cmd, str);
   injectCommands(cmd);
-  // Show instructions for user.
+  // Show instructions for user.//为用户显示说明。
   AlertDialogBox::show(PSTR("After the printer finishes homing, adjust the Z Offset so that a sheet of paper can pass between the nozzle and bed with slight resistance."));
 }
 
 bool ZOffsetScreen::wizardRunning() {
-  // We can't store state after the call to the AlertBox, so
-  // check whether the current Z position equals mydata.z in order
-  // to know whether the user started the wizard.
+  // We can't store state after the call to the AlertBox, so//我们无法在调用AlertBox后存储状态，因此
+  // check whether the current Z position equals mydata.z in order//按顺序检查当前Z位置是否等于mydata.Z
+  // to know whether the user started the wizard.//以了解用户是否启动了向导。
   return getAxisPosition_mm(Z) == mydata.z;
 }
 
@@ -108,4 +109,4 @@ bool ZOffsetScreen::onTouchHeld(uint8_t tag) {
   return true;
 }
 
-#endif // FTDI_Z_OFFSET_SCREEN
+#endif // FTDI_Z_OFFSET_SCREEN//FTDI_Z_偏移屏幕

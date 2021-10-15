@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -87,47 +88,47 @@
   #endif
 #endif
 
-// Send command and return error code. Return zero for OK
+// Send command and return error code. Return zero for OK//发送命令并返回错误代码。返回零表示正常
 uint8_t DiskIODriver_SPI_SD::cardCommand(const uint8_t cmd, const uint32_t arg) {
 
   #if ENABLED(SDCARD_COMMANDS_SPLIT)
     if (cmd != CMD12) chipDeselect();
   #endif
 
-  // Select card
+  // Select card//选卡
   chipSelect();
 
-  // Wait up to 300 ms if busy
+  // Wait up to 300 ms if busy//如果忙，请等待300毫秒
   waitNotBusy(SD_WRITE_TIMEOUT);
 
   uint8_t *pa = (uint8_t *)(&arg);
 
   #if ENABLED(SD_CHECK_AND_RETRY)
 
-    // Form message
+    // Form message//格式消息
     uint8_t d[6] = {(uint8_t) (cmd | 0x40), pa[3], pa[2], pa[1], pa[0] };
 
-    // Add crc
+    // Add crc//加crc
     d[5] = CRC7(d, 5);
 
-    // Send message
+    // Send message//发送消息
     LOOP_L_N(k, 6) spiSend(d[k]);
 
   #else
-    // Send command
+    // Send command//发送命令
     spiSend(cmd | 0x40);
 
-    // Send argument
+    // Send argument//发送参数
     for (int8_t i = 3; i >= 0; i--) spiSend(pa[i]);
 
-    // Send CRC - correct for CMD0 with arg zero or CMD8 with arg 0X1AA
+    // Send CRC - correct for CMD0 with arg zero or CMD8 with arg 0X1AA//发送CRC-对于参数为零的CMD0或参数为0X1AA的CMD8正确
     spiSend(cmd == CMD0 ? 0X95 : 0X87);
   #endif
 
-  // Skip stuff byte for stop read
+  // Skip stuff byte for stop read//跳过停止读取的填充字节
   if (cmd == CMD12) spiRec();
 
-  // Wait for response
+  // Wait for response//等待回应
   for (uint8_t i = 0; ((status_ = spiRec()) & 0x80) && i != 0xFF; i++) { /* Intentionally left empty */ }
   return status_;
 }
@@ -162,7 +163,7 @@ uint32_t DiskIODriver_SPI_SD::cardSize() {
 
 void DiskIODriver_SPI_SD::chipDeselect() {
   extDigitalWrite(chipSelectPin_, HIGH);
-  spiSend(0xFF); // Ensure MISO goes high impedance
+  spiSend(0xFF); // Ensure MISO goes high impedance//确保味噌去高阻抗
 }
 
 void DiskIODriver_SPI_SD::chipSelect() {
@@ -189,12 +190,12 @@ bool DiskIODriver_SPI_SD::erase(uint32_t firstBlock, uint32_t lastBlock) {
   csd_t csd;
   if (!readCSD(&csd)) goto FAIL;
 
-  // check for single block erase
+  // check for single block erase//检查单块擦除
   if (!csd.v1.erase_blk_en) {
-    // erase size mask
+    // erase size mask//擦除大小掩码
     uint8_t m = (csd.v1.sector_size_high << 1) | csd.v1.sector_size_low;
     if ((firstBlock & m) != 0 || ((lastBlock + 1) & m) != 0) {
-      // error card can't erase specified area
+      // error card can't erase specified area//错误卡无法擦除指定区域
       error(SD_CARD_ERROR_ERASE_SINGLE_BLOCK);
       goto FAIL;
     }
@@ -245,34 +246,34 @@ bool DiskIODriver_SPI_SD::init(const uint8_t sckRateID, const pin_t chipSelectPi
 
   errorCode_ = type_ = 0;
   chipSelectPin_ = chipSelectPin;
-  // 16-bit init start time allows over a minute
+  // 16-bit init start time allows over a minute//16位初始启动时间允许超过一分钟
   const millis_t init_timeout = millis() + SD_INIT_TIMEOUT;
   uint32_t arg;
 
-  watchdog_refresh(); // In case init takes too long
+  watchdog_refresh(); // In case init takes too long//以防init花费的时间太长
 
-  // Set pin modes
+  // Set pin modes//设置pin模式
   #if ENABLED(ZONESTAR_12864OLED)
     if (chipSelectPin_ != DOGLCD_CS) {
       SET_OUTPUT(DOGLCD_CS);
       WRITE(DOGLCD_CS, HIGH);
     }
   #else
-    extDigitalWrite(chipSelectPin_, HIGH);  // For some CPUs pinMode can write the wrong data so init desired data value first
-    pinMode(chipSelectPin_, OUTPUT);        // Solution for #8746 by @benlye
+    extDigitalWrite(chipSelectPin_, HIGH);  // For some CPUs pinMode can write the wrong data so init desired data value first//对于某些CPU，pinMode可能会写入错误的数据，因此首先初始化所需的数据值
+    pinMode(chipSelectPin_, OUTPUT);        // Solution for #8746 by @benlye//@benlye对#8746的解决方案
   #endif
   spiBegin();
 
-  // Set SCK rate for initialization commands
+  // Set SCK rate for initialization commands//设置初始化命令的SCK速率
   spiRate_ = SPI_SD_INIT_RATE;
   spiInit(spiRate_);
 
-  // Must supply min of 74 clock cycles with CS high.
+  // Must supply min of 74 clock cycles with CS high.//必须在CS高的情况下提供至少74个时钟周期。
   LOOP_L_N(i, 10) spiSend(0xFF);
 
-  watchdog_refresh(); // In case init takes too long
+  watchdog_refresh(); // In case init takes too long//以防init花费的时间太长
 
-  // Command to go idle in SPI mode
+  // Command to go idle in SPI mode//在SPI模式下进入空闲状态的命令
   while ((status_ = cardCommand(CMD0, 0)) != R1_IDLE_STATE) {
     if (ELAPSED(millis(), init_timeout)) {
       error(SD_CARD_ERROR_CMD0);
@@ -284,16 +285,16 @@ bool DiskIODriver_SPI_SD::init(const uint8_t sckRateID, const pin_t chipSelectPi
     crcSupported = (cardCommand(CMD59, 1) == R1_IDLE_STATE);
   #endif
 
-  watchdog_refresh(); // In case init takes too long
+  watchdog_refresh(); // In case init takes too long//以防init花费的时间太长
 
-  // check SD version
+  // check SD version//检查SD版本
   for (;;) {
     if (cardCommand(CMD8, 0x1AA) == (R1_ILLEGAL_COMMAND | R1_IDLE_STATE)) {
       type(SD_CARD_TYPE_SD1);
       break;
     }
 
-    // Get the last byte of r7 response
+    // Get the last byte of r7 response//获取r7响应的最后一个字节
     LOOP_L_N(i, 4) status_ = spiRec();
     if (status_ == 0xAA) {
       type(SD_CARD_TYPE_SD2);
@@ -306,25 +307,25 @@ bool DiskIODriver_SPI_SD::init(const uint8_t sckRateID, const pin_t chipSelectPi
     }
   }
 
-  watchdog_refresh(); // In case init takes too long
+  watchdog_refresh(); // In case init takes too long//以防init花费的时间太长
 
-  // Initialize card and send host supports SDHC if SD2
+  // Initialize card and send host supports SDHC if SD2//如果SD2支持SDHC，则初始化卡和发送主机
   arg = type() == SD_CARD_TYPE_SD2 ? 0x40000000 : 0;
   while ((status_ = cardAcmd(ACMD41, arg)) != R1_READY_STATE) {
-    // Check for timeout
+    // Check for timeout//检查超时
     if (ELAPSED(millis(), init_timeout)) {
       error(SD_CARD_ERROR_ACMD41);
       goto FAIL;
     }
   }
-  // If SD2 read OCR register to check for SDHC card
+  // If SD2 read OCR register to check for SDHC card//如果SD2读取OCR寄存器以检查SDHC卡
   if (type() == SD_CARD_TYPE_SD2) {
     if (cardCommand(CMD58, 0)) {
       error(SD_CARD_ERROR_CMD58);
       goto FAIL;
     }
     if ((spiRec() & 0xC0) == 0xC0) type(SD_CARD_TYPE_SDHC);
-    // Discard rest of ocr - contains allowed voltage range
+    // Discard rest of ocr - contains allowed voltage range//丢弃ocr的其余部分-包含允许的电压范围
     LOOP_L_N(i, 3) spiRec();
   }
   chipDeselect();
@@ -350,7 +351,7 @@ bool DiskIODriver_SPI_SD::readBlock(uint32_t blockNumber, uint8_t *dst) {
     return 0 == SDHC_CardReadBlock(dst, blockNumber);
   #endif
 
-  if (type() != SD_CARD_TYPE_SDHC) blockNumber <<= 9;   // Use address if not SDHC card
+  if (type() != SD_CARD_TYPE_SDHC) blockNumber <<= 9;   // Use address if not SDHC card//如果不是SDHC卡，请使用地址
 
   #if ENABLED(SD_CHECK_AND_RETRY)
     uint8_t retryCnt = 3;
@@ -363,7 +364,7 @@ bool DiskIODriver_SPI_SD::readBlock(uint32_t blockNumber, uint8_t *dst) {
       chipDeselect();
       if (!--retryCnt) break;
 
-      cardCommand(CMD12, 0); // Try sending a stop command, ignore the result.
+      cardCommand(CMD12, 0); // Try sending a stop command, ignore the result.//尝试发送停止命令，忽略结果。
       errorCode_ = 0;
     }
     return false;
@@ -426,8 +427,8 @@ bool DiskIODriver_SPI_SD::readData(uint8_t *dst) {
     0xEF1F, 0xFF3E, 0xCF5D, 0xDF7C, 0xAF9B, 0xBFBA, 0x8FD9, 0x9FF8,
     0x6E17, 0x7E36, 0x4E55, 0x5E74, 0x2E93, 0x3EB2, 0x0ED1, 0x1EF0
   };
-    // faster CRC-CCITT
-    // uses the x^16,x^12,x^5,x^1 polynomial.
+    // faster CRC-CCITT//更快的CRC-CCITT
+    // uses the x^16,x^12,x^5,x^1 polynomial.//使用x^16、x^12、x^5、x^1多项式。
   static uint16_t CRC_CCITT(const uint8_t *data, size_t n) {
     uint16_t crc = 0;
     for (size_t i = 0; i < n; i++) {
@@ -436,8 +437,8 @@ bool DiskIODriver_SPI_SD::readData(uint8_t *dst) {
     return crc;
   }
   #else
-    // slower CRC-CCITT
-    // uses the x^16,x^12,x^5,x^1 polynomial.
+    // slower CRC-CCITT//慢CRC-CCITT
+    // uses the x^16,x^12,x^5,x^1 polynomial.//使用x^16、x^12、x^5、x^1多项式。
     static uint16_t CRC_CCITT(const uint8_t *data, size_t n) {
       uint16_t crc = 0;
       for (size_t i = 0; i < n; i++) {
@@ -450,13 +451,13 @@ bool DiskIODriver_SPI_SD::readData(uint8_t *dst) {
       return crc;
     }
   #endif
-#endif // SD_CHECK_AND_RETRY
+#endif // SD_CHECK_AND_RETRY//SD\u检查\u并重试
 
 bool DiskIODriver_SPI_SD::readData(uint8_t *dst, const uint16_t count) {
   bool success = false;
 
   const millis_t read_timeout = millis() + SD_READ_TIMEOUT;
-  while ((status_ = spiRec()) == 0xFF) {      // Wait for start block token
+  while ((status_ = spiRec()) == 0xFF) {      // Wait for start block token//等待启动块令牌
     if (ELAPSED(millis(), read_timeout)) {
       error(SD_CARD_ERROR_READ_TIMEOUT);
       goto FAIL;
@@ -464,7 +465,7 @@ bool DiskIODriver_SPI_SD::readData(uint8_t *dst, const uint16_t count) {
   }
 
   if (status_ == DATA_START_BLOCK) {
-    spiRead(dst, count);                      // Transfer data
+    spiRead(dst, count);                      // Transfer data//传输数据
 
     const uint16_t recvCrc = (spiRec() << 8) | spiRec();
     #if ENABLED(SD_CHECK_AND_RETRY)
@@ -572,11 +573,11 @@ bool DiskIODriver_SPI_SD::writeBlock(uint32_t blockNumber, const uint8_t *src) {
   #endif
 
   bool success = false;
-  if (type() != SD_CARD_TYPE_SDHC) blockNumber <<= 9;   // Use address if not SDHC card
+  if (type() != SD_CARD_TYPE_SDHC) blockNumber <<= 9;   // Use address if not SDHC card//如果不是SDHC卡，请使用地址
   if (!cardCommand(CMD24, blockNumber)) {
     if (writeData(DATA_START_BLOCK, src)) {
-      if (waitNotBusy(SD_WRITE_TIMEOUT)) {              // Wait for flashing to complete
-        success = !(cardCommand(CMD13, 0) || spiRec()); // Response is r2 so get and check two bytes for nonzero
+      if (waitNotBusy(SD_WRITE_TIMEOUT)) {              // Wait for flashing to complete//等待闪烁完成
+        success = !(cardCommand(CMD13, 0) || spiRec()); // Response is r2 so get and check two bytes for nonzero//响应是r2，所以获取并检查两个字节是否为非零
         if (!success) error(SD_CARD_ERROR_WRITE_PROGRAMMING);
       }
       else
@@ -600,7 +601,7 @@ bool DiskIODriver_SPI_SD::writeData(const uint8_t *src) {
 
   bool success = true;
   chipSelect();
-  // Wait for previous write to finish
+  // Wait for previous write to finish//等待上一次写入完成
   if (!waitNotBusy(SD_WRITE_TIMEOUT) || !writeData(WRITE_MULTIPLE_TOKEN, src)) {
     error(SD_CARD_ERROR_WRITE_MULTIPLE);
     success = false;
@@ -609,7 +610,7 @@ bool DiskIODriver_SPI_SD::writeData(const uint8_t *src) {
   return success;
 }
 
-// Send one block of data for write block or write multiple blocks
+// Send one block of data for write block or write multiple blocks//为写入块或写入多个块发送一个数据块
 bool DiskIODriver_SPI_SD::writeData(const uint8_t token, const uint8_t *src) {
   if (ENABLED(SDCARD_READONLY)) return false;
 
@@ -642,8 +643,8 @@ bool DiskIODriver_SPI_SD::writeStart(uint32_t blockNumber, const uint32_t eraseC
   if (ENABLED(SDCARD_READONLY)) return false;
 
   bool success = false;
-  if (!cardAcmd(ACMD23, eraseCount)) {                    // Send pre-erase count
-    if (type() != SD_CARD_TYPE_SDHC) blockNumber <<= 9;   // Use address if not SDHC card
+  if (!cardAcmd(ACMD23, eraseCount)) {                    // Send pre-erase count//发送预擦除计数
+    if (type() != SD_CARD_TYPE_SDHC) blockNumber <<= 9;   // Use address if not SDHC card//如果不是SDHC卡，请使用地址
     success = !cardCommand(CMD25, blockNumber);
     if (!success) error(SD_CARD_ERROR_CMD25);
   }
@@ -675,4 +676,4 @@ bool DiskIODriver_SPI_SD::writeStop() {
   return success;
 }
 
-#endif // NEED_SD2CARD_SPI
+#endif // NEED_SD2CARD_SPI//需要SD2CARD\U SPI

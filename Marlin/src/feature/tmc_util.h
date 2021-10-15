@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -48,7 +49,7 @@ constexpr uint16_t _tmc_thrs(const uint16_t msteps, const uint32_t thrs, const u
 template<char AXIS_LETTER, char DRIVER_ID>
 class TMCStorage {
   protected:
-    // Only a child class has access to constructor => Don't create on its own! "Poor man's abstract class"
+    // Only a child class has access to constructor => Don't create on its own! "Poor man's abstract class"//只有子类可以访问构造函数=>不要自己创建！“穷人的抽象阶级”
     TMCStorage() {}
 
   public:
@@ -354,7 +355,7 @@ void test_tmc_connection(LOGICAL_AXIS_DECL(const bool, true));
  */
 #if USE_SENSORLESS
 
-  // Track enabled status of stealthChop and only re-enable where applicable
+  // Track enabled status of stealthChop and only re-enable where applicable//隐形斩波的轨道启用状态，仅在适用时重新启用
   struct sensorless_t { bool LINEAR_AXIS_ARGS(), x2, y2, z2, z3, z4; };
 
   #if ENABLED(IMPROVE_HOMING_RELIABILITY)
@@ -384,7 +385,7 @@ void test_tmc_connection(LOGICAL_AXIS_DECL(const bool, true));
     bool TMCMarlin<TMC, AXIS_LETTER, DRIVER_ID, AXIS_ID>::test_stall_status() {
       this->switchCSpin(LOW);
 
-      // read stallGuard flag from TMC library, will handle HW and SW SPI
+      // read stallGuard flag from TMC library, will handle HW and SW SPI//从TMC库读取stallGuard标志，将处理硬件和软件SPI
       TMC2130_n::DRV_STATUS_t drv_status{0};
       drv_status.sr = this->DRV_STATUS();
 
@@ -392,12 +393,12 @@ void test_tmc_connection(LOGICAL_AXIS_DECL(const bool, true));
 
       return drv_status.stallGuard;
     }
-  #endif // SPI_ENDSTOPS
+  #endif // SPI_ENDSTOPS//SPI_止动块
 
-#endif // USE_SENSORLESS
+#endif // USE_SENSORLESS//使用无传感器
 
 #if HAS_TMC_SPI
   void tmc_init_cs_pins();
 #endif
 
-#endif // HAS_TRINAMIC_CONFIG
+#endif // HAS_TRINAMIC_CONFIG//有_TRINAMIC _CONFIG

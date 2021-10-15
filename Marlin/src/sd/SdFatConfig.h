@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -39,7 +40,7 @@
  *
  * Each card requires about 550 bytes of SRAM so use of a Mega is recommended.
  */
-#define USE_MULTIPLE_CARDS 0 //TODO? ENABLED(MULTI_VOLUME)
+#define USE_MULTIPLE_CARDS 0 //TODO? ENABLED(MULTI_VOLUME)//待办事项？已启用（多卷）
 
 /**
  * Call flush for endl if ENDL_CALLS_FLUSH is nonzero
@@ -88,7 +89,7 @@
  */
 #define MEGA_SOFT_SPI 0
 
-// Set USE_SOFTWARE_SPI nonzero to ALWAYS use Software SPI.
+// Set USE_SOFTWARE_SPI nonzero to ALWAYS use Software SPI.//将USE_SOFTWARE_SPI设置为非零以始终使用软件SPI。
 #define USE_SOFTWARE_SPI 0
 
 /**
@@ -101,12 +102,12 @@
  * Defines for 8.3 and long (vfat) filenames
  */
 
-#define FILENAME_LENGTH 13 // Number of UTF-16 characters per entry
+#define FILENAME_LENGTH 13 // Number of UTF-16 characters per entry//每个条目的UTF-16字符数
 
-// UTF-8 may use up to 3 bytes to represent single UTF-16 code point.
-// We discard 3-byte characters allowing only 2-bytes
-// or 1-byte if UTF_FILENAME_SUPPORT disabled.
+// UTF-8 may use up to 3 bytes to represent single UTF-16 code point.//UTF-8最多可使用3个字节来表示单个UTF-16代码点。
+// We discard 3-byte characters allowing only 2-bytes//我们丢弃3字节字符，只允许2字节
+// or 1-byte if UTF_FILENAME_SUPPORT disabled.//如果禁用UTF\u文件名\u支持，则为1字节。
 #define LONG_FILENAME_CHARSIZE TERN(UTF_FILENAME_SUPPORT, 2, 1)
 
-// Total bytes needed to store a single long filename
+// Total bytes needed to store a single long filename//存储单个长文件名所需的总字节数
 #define LONG_FILENAME_LENGTH (FILENAME_LENGTH * LONG_FILENAME_CHARSIZE * MAX_VFAT_ENTRIES + 1)

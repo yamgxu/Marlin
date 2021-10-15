@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,8 +32,8 @@
   }
 #endif
 
-// Initialize watchdog with a 4 second interrupt time
+// Initialize watchdog with a 4 second interrupt time//用4秒的中断时间初始化看门狗
 void watchdog_init();
 
-// Reset watchdog.
+// Reset watchdog.//重置看门狗。
 inline void HAL_watchdog_refresh() { esp_task_wdt_reset(); }

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,9 +30,9 @@
 
 #include "pins_RAMPS.h"
 
-// The board only has one PWM fan connector. The others are 12V always-on.
-// The default config uses this pin to control the brightness of the LED
-// band (case light). Thus the hotend and controller fans are always-on.
+// The board only has one PWM fan connector. The others are 12V always-on.//该板只有一个PWM风扇接头。其他的都是12V，一直开着。
+// The default config uses this pin to control the brightness of the LED//默认配置使用此引脚控制LED的亮度
+// band (case light). Thus the hotend and controller fans are always-on.//带（箱灯）。因此，热端和控制器风扇始终打开。
 
 #if ENABLED(CASE_LIGHT_ENABLE)
   #undef FAN_PIN

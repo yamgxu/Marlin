@@ -1,3 +1,4 @@
+/** translatione by yx */
 /***************
  * screens.cpp *
  ***************/
@@ -123,4 +124,4 @@ SCREEN_TABLE_POST
 #include "screen_data.h"
 screen_data_t screen_data;
 
-#endif // TOUCH_UI_FTDI_EVE
+#endif // TOUCH_UI_FTDI_EVE//触摸屏

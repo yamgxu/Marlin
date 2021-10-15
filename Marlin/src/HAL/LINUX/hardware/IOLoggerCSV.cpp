@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -33,7 +34,7 @@ IOLoggerCSV::~IOLoggerCSV() {
 
 void IOLoggerCSV::log(GpioEvent ev) {
   std::lock_guard<std::mutex> lock(vector_lock);
-  events.push_back(ev); //minimal impact to signal handler
+  events.push_back(ev); //minimal impact to signal handler//对信号处理器的影响最小
 }
 
 void IOLoggerCSV::flush() {
@@ -46,4 +47,4 @@ void IOLoggerCSV::flush() {
   file.flush();
 }
 
-#endif // __PLAT_LINUX__
+#endif // __PLAT_LINUX__//_uuu平台u LINUX__

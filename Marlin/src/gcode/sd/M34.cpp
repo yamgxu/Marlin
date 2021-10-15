@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -36,7 +37,7 @@ void GcodeSuite::M34() {
     const int v = parser.value_long();
     card.setSortFolders(v < 0 ? -1 : v > 0 ? 1 : 0);
   }
-  //if (parser.seen('R')) card.setSortReverse(parser.value_bool());
+  //if (parser.seen('R')) card.setSortReverse(parser.value_bool());//if（parser.seen（'R'））card.setSortReverse（parser.value_bool（））；
 }
 
-#endif // SDCARD_SORT_ALPHA && SDSORT_GCODE
+#endif // SDCARD_SORT_ALPHA && SDSORT_GCODE//SDCARD\u SORT\u ALPHA&&SDSORT\u GCODE

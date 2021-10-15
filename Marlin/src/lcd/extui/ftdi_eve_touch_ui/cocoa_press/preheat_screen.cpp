@@ -1,3 +1,4 @@
+/** translatione by yx */
 /***************************************
  * cocoapress/preheat_timer_screen.cpp *
  ***************************************/
@@ -145,8 +146,8 @@ bool PreheatTimerScreen::onTouchEnd(uint8_t tag) {
 void PreheatTimerScreen::onIdle() {
   if (secondsRemaining() == 0) {
     AlertDialogBox::show(GET_TEXT_F(MSG_PREHEAT_FINISHED));
-    // Remove SaveSettingsDialogBox from the stack
-    // so the alert box doesn't return to me.
+    // Remove SaveSettingsDialogBox from the stack//从堆栈中删除SaveSettingsDialogBox
+    // so the alert box doesn't return to me.//所以警报框不会返回给我。
     current_screen.forget();
   }
 
@@ -158,4 +159,4 @@ void PreheatTimerScreen::onIdle() {
   BaseScreen::onIdle();
 }
 
-#endif // COCOA_PREHEAT_SCREEN
+#endif // COCOA_PREHEAT_SCREEN//可可豆预热筛

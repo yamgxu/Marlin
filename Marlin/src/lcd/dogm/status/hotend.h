@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,9 +22,9 @@
  */
 #pragma once
 
-//
-// lcd/dogm/status/hotend.h - Status Screen Hotends bitmaps
-//
+////
+// lcd/dogm/status/hotend.h - Status Screen Hotends bitmaps//lcd/dogm/status/hotend.h-状态屏幕热端位图
+////
 
 #if HAS_MMU
   #define STATUS_HOTEND_BITMAPS EXTRUDERS

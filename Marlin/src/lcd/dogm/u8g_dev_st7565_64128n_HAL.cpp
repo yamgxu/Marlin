@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -78,74 +79,74 @@
 #define ST7565_COLUMN_ADR(N)     (0x10 | (((N) >> 4) & 0xF)), ((N) & 0xF)
 #define ST7565_PAGE_ADR(N)       (0xB0 | (N))
 #define ST7565_START_LINE(N)     (0x40 | (N))
-#define ST7565_SLEEP_MODE()      (0xAC) // ,(N) needed?
+#define ST7565_SLEEP_MODE()      (0xAC) // ,(N) needed?//，（N）需要什么？
 #define ST7565_NOOP()            (0xE3)
 
-/* init sequence from https://github.com/adafruit/ST7565-LCD/blob/master/ST7565/ST7565.cpp */
+/* init sequence from https://github.com/adafruit/ST7565-LCD/blob/master/ST7565/ST7565.cpp *///github.com/adafruit/ST7565-LCD/blob/master/ST7565/ST7565.cpp*/
 static const uint8_t u8g_dev_st7565_64128n_HAL_init_seq[] PROGMEM = {
-  U8G_ESC_CS(0),              // disable chip
-  U8G_ESC_ADR(0),             // instruction mode
-  U8G_ESC_CS(1),              // enable chip
-  U8G_ESC_RST(15),            // do reset low pulse with (15*16)+2 milliseconds (=maximum delay)*/
+  U8G_ESC_CS(0),              // disable chip//禁用芯片
+  U8G_ESC_ADR(0),             // instruction mode//教学模式
+  U8G_ESC_CS(1),              // enable chip//使能芯片
+  U8G_ESC_RST(15),            // do reset low pulse with (15*16)+2 milliseconds (=maximum delay)*///用（15*16）+2毫秒（=最大延迟）重置低脉冲*/
 
-  ST7565_BIAS_MODE(0),        // 0xA2: LCD bias 1/9 (according to Displaytech 64128N datasheet)
-  ST7565_ADC_REVERSE(0),      // Normal ADC Select (according to Displaytech 64128N datasheet)
+  ST7565_BIAS_MODE(0),        // 0xA2: LCD bias 1/9 (according to Displaytech 64128N datasheet)//0xA2:LCD偏差1/9（根据Displaytech 64128N数据表）
+  ST7565_ADC_REVERSE(0),      // Normal ADC Select (according to Displaytech 64128N datasheet)//正常ADC选择（根据Displaytech 64128N数据表）
 
-  ST7565_OUT_MODE(1),         // common output mode: set scan direction
-  ST7565_START_LINE(0),       // Display start line for Displaytech 64128N
+  ST7565_OUT_MODE(1),         // common output mode: set scan direction//公共输出模式：设置扫描方向
+  ST7565_START_LINE(0),       // Display start line for Displaytech 64128N//Displaytech 64128N的显示起始行
 
-  ST7565_POWER_CONTROL(0x4),  // power control: turn on voltage converter
-  U8G_ESC_DLY(50),            // delay 50 ms
+  ST7565_POWER_CONTROL(0x4),  // power control: turn on voltage converter//电源控制：打开电压转换器
+  U8G_ESC_DLY(50),            // delay 50 ms//延迟50毫秒
 
-  ST7565_POWER_CONTROL(0x6),  // power control: turn on voltage regulator
-  U8G_ESC_DLY(50),            // delay 50 ms
+  ST7565_POWER_CONTROL(0x6),  // power control: turn on voltage regulator//电源控制：打开电压调节器
+  U8G_ESC_DLY(50),            // delay 50 ms//延迟50毫秒
 
-  ST7565_POWER_CONTROL(0x7),  // power control: turn on voltage follower
-  U8G_ESC_DLY(50),            // delay 50 ms
+  ST7565_POWER_CONTROL(0x7),  // power control: turn on voltage follower//电源控制：打开电压跟随器
+  U8G_ESC_DLY(50),            // delay 50 ms//延迟50毫秒
 
-  ST7565_V0_RATIO(0),         // Set V0 voltage resistor ratio. Setting for controlling brightness of Displaytech 64128N
+  ST7565_V0_RATIO(0),         // Set V0 voltage resistor ratio. Setting for controlling brightness of Displaytech 64128N//设置V0电压电阻比。Displaytech 64128N亮度控制设置
 
-  ST7565_INVERTED(0),         // display normal, bit val 0: LCD pixel off.
+  ST7565_INVERTED(0),         // display normal, bit val 0: LCD pixel off.//显示正常，位val 0：LCD像素关闭。
 
-  ST7565_CONTRAST(0x1E),      // Contrast value. Setting for controlling brightness of Displaytech 64128N
+  ST7565_CONTRAST(0x1E),      // Contrast value. Setting for controlling brightness of Displaytech 64128N//对比度值。Displaytech 64128N亮度控制设置
 
-  ST7565_ON(1),               // display on
+  ST7565_ON(1),               // display on//展示
 
-  U8G_ESC_DLY(100),           // delay 100 ms
-  ST7565_ALL_PIX(1),          // display all points, ST7565
-  U8G_ESC_DLY(100),           // delay 100 ms
-  U8G_ESC_DLY(100),           // delay 100 ms
-  ST7565_ALL_PIX(0),          // normal display
-  U8G_ESC_CS(0),              // disable chip
-  U8G_ESC_END                 // end of sequence
+  U8G_ESC_DLY(100),           // delay 100 ms//延迟100毫秒
+  ST7565_ALL_PIX(1),          // display all points, ST7565//显示所有点，ST7565
+  U8G_ESC_DLY(100),           // delay 100 ms//延迟100毫秒
+  U8G_ESC_DLY(100),           // delay 100 ms//延迟100毫秒
+  ST7565_ALL_PIX(0),          // normal display//正常显示
+  U8G_ESC_CS(0),              // disable chip//禁用芯片
+  U8G_ESC_END                 // end of sequence//序列结束
 };
 
 static const uint8_t u8g_dev_st7565_64128n_HAL_data_start[] PROGMEM = {
-  U8G_ESC_ADR(0),             // instruction mode
-  U8G_ESC_CS(1),              // enable chip
-  ST7565_COLUMN_ADR(0x00),    // high 4 bits to 0, low 4 bits to 0. Changed for DisplayTech 64128N
-  U8G_ESC_END                 // end of sequence
+  U8G_ESC_ADR(0),             // instruction mode//教学模式
+  U8G_ESC_CS(1),              // enable chip//使能芯片
+  ST7565_COLUMN_ADR(0x00),    // high 4 bits to 0, low 4 bits to 0. Changed for DisplayTech 64128N//高4位到0，低4位到0。更改为DisplayTech 64128N
+  U8G_ESC_END                 // end of sequence//序列结束
 };
 
 static const uint8_t u8g_dev_st7565_64128n_HAL_sleep_on[] PROGMEM = {
-  U8G_ESC_ADR(0),             // instruction mode
-  U8G_ESC_CS(1),              // enable chip
-  ST7565_SLEEP_MODE(),        // static indicator off
-  //0x00,                     // indicator register set (not sure if this is required)
-  ST7565_ON(0),               // display off
-  ST7565_ALL_PIX(1),          // all points on
-  U8G_ESC_CS(0),              // disable chip, bugfix 12 nov 2014
-  U8G_ESC_END                 // end of sequence
+  U8G_ESC_ADR(0),             // instruction mode//教学模式
+  U8G_ESC_CS(1),              // enable chip//使能芯片
+  ST7565_SLEEP_MODE(),        // static indicator off//静态指示器关闭
+  //0x00,                     // indicator register set (not sure if this is required)//0x00，//指示器寄存器集（不确定是否需要）
+  ST7565_ON(0),               // display off//炫耀
+  ST7565_ALL_PIX(1),          // all points on//所有要点
+  U8G_ESC_CS(0),              // disable chip, bugfix 12 nov 2014//禁用芯片，错误修复2014年11月12日
+  U8G_ESC_END                 // end of sequence//序列结束
   };
 
 static const uint8_t u8g_dev_st7565_64128n_HAL_sleep_off[] PROGMEM = {
-  U8G_ESC_ADR(0),             // instruction mode
-  U8G_ESC_CS(1),              // enable chip
-  ST7565_ALL_PIX(0),          // all points off
-  ST7565_ON(1),               // display on
-  U8G_ESC_DLY(50),            // delay 50 ms
-  U8G_ESC_CS(0),              // disable chip, bugfix 12 nov 2014
-  U8G_ESC_END                 // end of sequence
+  U8G_ESC_ADR(0),             // instruction mode//教学模式
+  U8G_ESC_CS(1),              // enable chip//使能芯片
+  ST7565_ALL_PIX(0),          // all points off//所有的分数都被扣掉了
+  ST7565_ON(1),               // display on//展示
+  U8G_ESC_DLY(50),            // delay 50 ms//延迟50毫秒
+  U8G_ESC_CS(0),              // disable chip, bugfix 12 nov 2014//禁用芯片，错误修复2014年11月12日
+  U8G_ESC_END                 // end of sequence//序列结束
 };
 
 uint8_t u8g_dev_st7565_64128n_HAL_fn(u8g_t *u8g, u8g_dev_t *dev, const uint8_t msg, void *arg) {
@@ -233,4 +234,4 @@ u8g_dev_t u8g_dev_st7565_64128n_HAL_2x_sw_spi = { u8g_dev_st7565_64128n_HAL_2x_f
 U8G_PB_DEV(u8g_dev_st7565_64128n_HAL_hw_spi, WIDTH, HEIGHT, PAGE_HEIGHT, u8g_dev_st7565_64128n_HAL_fn, U8G_COM_HAL_HW_SPI_FN);
 u8g_dev_t u8g_dev_st7565_64128n_HAL_2x_hw_spi = { u8g_dev_st7565_64128n_HAL_2x_fn, &u8g_dev_st7565_64128n_HAL_2x_pb, U8G_COM_HAL_HW_SPI_FN };
 
-#endif // HAS_MARLINUI_U8GLIB
+#endif // HAS_MARLINUI_U8GLIB//马林努伊能说会道吗

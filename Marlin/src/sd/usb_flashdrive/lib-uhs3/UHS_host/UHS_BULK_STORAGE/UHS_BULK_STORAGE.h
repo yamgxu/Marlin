@@ -1,3 +1,4 @@
+/** translatione by yx */
 /* Copyright (C) 2015-2016 Andrew J. Kroll
    and
  Copyright (C) 2011 Circuits At Home, LTD. All rights reserved.
@@ -20,7 +21,7 @@ Contact information
 -------------------
 
 Circuits At Home, LTD
-Web      :  https://www.circuitsathome.com
+Web      :  https://www.circuitsathome.com//www.circuitsathome.com
 e-mail   :  support@circuitsathome.com
  */
 
@@ -28,21 +29,21 @@ e-mail   :  support@circuitsathome.com
 #define __UHS_BULK_STORAGE_H__
 
 
-////////////////////////////////////////////////////////////////////////////////
-// Define any of these options at the top of your sketch to override
-// the defaults contained herewith. Do NOT do modifications here.
-// Macro                                 | Settings and notes    | Default
-// -----------------------------------------+-----------------------+-----------
-//                                          | 1 to 8                |
-//                                          | Each LUN needs        |
-// MASS_MAX_SUPPORTED_LUN                   | ~13 bytes to be able  | 8
-//                                          | to track the state of |
-//                                          | each unit.            |
-// -----------------------------------------+-----------------------+-----------
-//                                          | Just define to use.   |
-// DEBUG_PRINTF_EXTRA_HUGE_UHS_BULK_STORAGE | works only if extra   |
-//                                          | huge debug is on too. |
-// -----------------------------------------^-----------------------^-----------
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Define any of these options at the top of your sketch to override//在草图顶部定义要替代的任何选项
+// the defaults contained herewith. Do NOT do modifications here.//本函所载默认值。不要在这里做修改。
+// Macro                                 | Settings and notes    | Default//宏|设置和注释|默认值
+// -----------------------------------------+-----------------------+-----------// -----------------------------------------+-----------------------+-----------
+//                                          | 1 to 8                |//| 1至8|
+//                                          | Each LUN needs        |//|每个LUN都需要|
+// MASS_MAX_SUPPORTED_LUN                   | ~13 bytes to be able  | 8//支持的海量LUN |最多| 13个字节，可以| 8
+//                                          | to track the state of |//|跟踪|
+//                                          | each unit.            |//|每个单元|
+// -----------------------------------------+-----------------------+-----------// -----------------------------------------+-----------------------+-----------
+//                                          | Just define to use.   |//|只需定义使用即可|
+// DEBUG_PRINTF_EXTRA_HUGE_UHS_BULK_STORAGE | works only if extra   |//DEBUG_PRINTF_EXTRA_Large_UHS_BULK|u STORAGE|仅在额外的情况下工作|
+//                                          | huge debug is on too. |//|大型调试也在进行中|
+// -----------------------------------------^-----------------------^-----------// -----------------------------------------^-----------------------^-----------
 
 #ifndef MASS_MAX_SUPPORTED_LUN
 #define MASS_MAX_SUPPORTED_LUN 8
@@ -53,12 +54,12 @@ e-mail   :  support@circuitsathome.com
 #define                UHS_BULK_bmREQ_OUT USB_SETUP_HOST_TO_DEVICE|USB_SETUP_TYPE_CLASS|USB_SETUP_RECIPIENT_INTERFACE
 #define                 UHS_BULK_bmREQ_IN USB_SETUP_DEVICE_TO_HOST|USB_SETUP_TYPE_CLASS|USB_SETUP_RECIPIENT_INTERFACE
 
-// Request Codes
+// Request Codes//请求代码
 #define                 UHS_BULK_REQ_ADSC 0x00U
 #define                  UHS_BULK_REQ_GET 0xFCU
 #define                  UHS_BULK_REQ_PUT 0xFDU
 #define          UHS_BULK_REQ_GET_MAX_LUN 0xFEU
-#define                UHS_BULK_REQ_BOMSR 0xFFU // Mass Storage Reset
+#define                UHS_BULK_REQ_BOMSR 0xFFU // Mass Storage Reset//大容量存储器复位
 
 #define            UHS_BULK_CBW_SIGNATURE 0x43425355LU
 #define            UHS_BULK_CSW_SIGNATURE 0x53425355LU
@@ -78,7 +79,7 @@ e-mail   :  support@circuitsathome.com
 #define              UHS_BULK_ERR_BAD_LBA 0x29U
 #define        UHS_BULK_ERR_MEDIA_CHANGED 0x2AU
 #define  UHS_BULK_ERR_DEVICE_DISCONNECTED UHS_HOST_ERROR_UNPLUGGED
-#define    UHS_BULK_ERR_UNABLE_TO_RECOVER 0x32U // Reset recovery error
+#define    UHS_BULK_ERR_UNABLE_TO_RECOVER 0x32U // Reset recovery error//重置恢复错误
 #define          UHS_BULK_ERR_INVALID_LUN 0x33U
 #define          UHS_BULK_ERR_WRITE_STALL 0x34U
 #define            UHS_BULK_ERR_READ_NAKS 0x35U
@@ -87,7 +88,7 @@ e-mail   :  support@circuitsathome.com
 #define      UHS_BULK_ERR_NOT_IMPLEMENTED 0xFDU
 #define   UHS_BULK_ERR_GENERAL_SCSI_ERROR 0xF0U
 #define    UHS_BULK_ERR_GENERAL_USB_ERROR 0xFFU
-#define                 UHS_BULK_ERR_USER 0xA0U // For subclasses to define their own error codes
+#define                 UHS_BULK_ERR_USER 0xA0U // For subclasses to define their own error codes//用于子类定义自己的错误代码
 
 #define                MASS_MAX_ENDPOINTS 3
 
@@ -121,14 +122,14 @@ struct UHS_BULK_CommandBlockWrapper : public UHS_BULK_CommandBlockWrapperBase {
         uint8_t CBWCB[16];
 
 public:
-        // All zeroed.
+        // All zeroed.//全部归零。
 
         UHS_BULK_CommandBlockWrapper() :
         UHS_BULK_CommandBlockWrapperBase(0, 0, 0), bmReserved1(0), bmReserved2(0) {
                 for(int i = 0; i < 16; i++) CBWCB[i] = 0;
         }
 
-        // Generic Wrap, CDB zeroed.
+        // Generic Wrap, CDB zeroed.//通用包装，CDB归零。
 
         UHS_BULK_CommandBlockWrapper(uint32_t tag, uint32_t xflen, uint8_t flgs, uint8_t lu, uint8_t cmdlen, uint8_t cmd) :
         UHS_BULK_CommandBlockWrapperBase(tag, xflen, flgs),
@@ -138,14 +139,14 @@ public:
                 x->LUN = cmd;
         }
 
-        // Wrap for CDB of 6
+        // Wrap for CDB of 6//国开行6号包裹
 
         UHS_BULK_CommandBlockWrapper(uint32_t tag, uint32_t xflen, SCSI_CDB6_t *cdb, uint8_t dir) :
         UHS_BULK_CommandBlockWrapperBase(tag, xflen, dir),
         bmCBWLUN(cdb->LUN), bmReserved1(0), bmCBWCBLength(6), bmReserved2(0) {
                 memcpy(&CBWCB, cdb, 6);
         }
-        // Wrap for CDB of 10
+        // Wrap for CDB of 10//国开行10美元包装
 
         UHS_BULK_CommandBlockWrapper(uint32_t tag, uint32_t xflen, SCSI_CDB10_t *cdb, uint8_t dir) :
         UHS_BULK_CommandBlockWrapperBase(tag, xflen, dir),
@@ -163,16 +164,16 @@ struct UHS_BULK_CommandStatusWrapper {
 
 class UHS_Bulk_Storage : public UHS_USBInterface {
 protected:
-        static const uint8_t epDataInIndex = 1; // DataIn endpoint index
-        static const uint8_t epDataOutIndex = 2; // DataOUT endpoint index
-        static const uint8_t epInterruptInIndex = 3; // InterruptIN  endpoint index
+        static const uint8_t epDataInIndex = 1; // DataIn endpoint index//端点索引中的数据
+        static const uint8_t epDataOutIndex = 2; // DataOUT endpoint index//数据输出端点索引
+        static const uint8_t epInterruptInIndex = 3; // InterruptIN  endpoint index//中断端点索引
 
-        uint8_t bMaxLUN; // Max LUN
-        volatile uint32_t dCBWTag; // Tag
-        volatile uint8_t bTheLUN; // Active LUN
-        volatile uint32_t CurrentCapacity[MASS_MAX_SUPPORTED_LUN]; // Total sectors
-        volatile uint16_t CurrentSectorSize[MASS_MAX_SUPPORTED_LUN]; // Sector size, clipped to 16 bits
-        volatile bool LUNOk[MASS_MAX_SUPPORTED_LUN]; // use this to check for media changes.
+        uint8_t bMaxLUN; // Max LUN//最大LUN
+        volatile uint32_t dCBWTag; // Tag//标签
+        volatile uint8_t bTheLUN; // Active LUN//活动LUN
+        volatile uint32_t CurrentCapacity[MASS_MAX_SUPPORTED_LUN]; // Total sectors//总扇区
+        volatile uint16_t CurrentSectorSize[MASS_MAX_SUPPORTED_LUN]; // Sector size, clipped to 16 bits//扇区大小，剪裁为16位
+        volatile bool LUNOk[MASS_MAX_SUPPORTED_LUN]; // use this to check for media changes.//使用此选项检查介质更改。
         volatile bool WriteOk[MASS_MAX_SUPPORTED_LUN];
         void PrintEndpointDescriptor(const USB_FD_ENDPOINT_DESCRIPTOR* ep_ptr);
 
@@ -182,11 +183,11 @@ public:
         volatile UHS_EpInfo epInfo[MASS_MAX_ENDPOINTS];
 
         uint8_t GetbMaxLUN() {
-                return bMaxLUN; // Max LUN
+                return bMaxLUN; // Max LUN//最大LUN
         }
 
         uint8_t GetbTheLUN() {
-                return bTheLUN; // Active LUN
+                return bTheLUN; // Active LUN//活动LUN
         }
 
         bool WriteProtected(uint8_t lun);
@@ -202,7 +203,7 @@ public:
         uint8_t SCSITransaction10(SCSI_CDB10_t *cdb, uint16_t buf_size, void *buf, uint8_t dir);
 
 
-        // Configure and internal methods, these should never be called by a user's sketch.
+        // Configure and internal methods, these should never be called by a user's sketch.//配置和内部方法，用户的草图不应调用这些方法。
         uint8_t Start();
         bool OKtoEnumerate(ENUMERATION_INFO *ei);
         uint8_t SetInterface(ENUMERATION_INFO *ei);
@@ -246,4 +247,4 @@ private:
 #if defined(LOAD_UHS_BULK_STORAGE) && !defined(UHS_BULK_STORAGE_LOADED)
 #include "UHS_BULK_STORAGE_INLINE.h"
 #endif
-#endif // __MASSTORAGE_H__
+#endif // __MASSTORAGE_H__//质量存储__

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -32,11 +33,11 @@
 #include "../../inc/MarlinConfigPre.h"
 #include "../../core/serial_hook.h"
 
-// Define constants and variables for buffering incoming serial data.  We're
-// using a ring buffer (I think), in which rx_buffer_head is the index of the
-// location to which to write the next incoming character and rx_buffer_tail
-// is the index of the location from which to read.
-// 256 is the max limit due to uint8_t head and tail. Use only powers of 2. (...,16,32,64,128,256)
+// Define constants and variables for buffering incoming serial data.  We're//定义用于缓冲传入串行数据的常量和变量。我们是
+// using a ring buffer (I think), in which rx_buffer_head is the index of the//使用一个环形缓冲区（我认为），其中rx\u buffer\u head是
+// location to which to write the next incoming character and rx_buffer_tail//写入下一个传入字符和接收缓冲区尾端的位置
+// is the index of the location from which to read.//要从中读取的位置的索引。
+// 256 is the max limit due to uint8_t head and tail. Use only powers of 2. (...,16,32,64,128,256)//256是由于uint8_t头和尾的最大限制。只能使用2的幂。(...,16,32,64,128,256)
 #ifndef RX_BUFFER_SIZE
   #define RX_BUFFER_SIZE 128
 #endif
@@ -44,19 +45,19 @@
   #define TX_BUFFER_SIZE 32
 #endif
 
-//#if ENABLED(SERIAL_XON_XOFF) && RX_BUFFER_SIZE < 1024
-//  #error "SERIAL_XON_XOFF requires RX_BUFFER_SIZE >= 1024 for reliable transfers without drops."
-//#elif RX_BUFFER_SIZE && (RX_BUFFER_SIZE < 2 || !IS_POWER_OF_2(RX_BUFFER_SIZE))
-//  #error "RX_BUFFER_SIZE must be a power of 2 greater than 1."
-//#elif TX_BUFFER_SIZE && (TX_BUFFER_SIZE < 2 || TX_BUFFER_SIZE > 256 || !IS_POWER_OF_2(TX_BUFFER_SIZE))
-//  #error "TX_BUFFER_SIZE must be 0, a power of 2 greater than 1, and no greater than 256."
-//#endif
+//#if ENABLED(SERIAL_XON_XOFF) && RX_BUFFER_SIZE < 1024//#如果启用（串行XON XOFF）和接收缓冲区大小<1024
+//  #error "SERIAL_XON_XOFF requires RX_BUFFER_SIZE >= 1024 for reliable transfers without drops."//#error“串行_XON_XOFF需要RX_BUFFER_SIZE>=1024才能进行可靠的传输，而不会发生丢包。”
+//#elif RX_BUFFER_SIZE && (RX_BUFFER_SIZE < 2 || !IS_POWER_OF_2(RX_BUFFER_SIZE))//#elif RX_BUFFER_SIZE&（RX_BUFFER_SIZE<2|||！RX_BUFFER_SIZE）的功率是
+//  #error "RX_BUFFER_SIZE must be a power of 2 greater than 1."//#错误“RX_缓冲区大小必须是大于1的2的幂。”
+//#elif TX_BUFFER_SIZE && (TX_BUFFER_SIZE < 2 || TX_BUFFER_SIZE > 256 || !IS_POWER_OF_2(TX_BUFFER_SIZE))//#elif TX|u BUFFER_SIZE&（TX|u BUFFER_SIZE<2||TX|u BUFFER_SIZE>256||！是_2（TX|u BUFFER_SIZE）的幂吗
+//  #error "TX_BUFFER_SIZE must be 0, a power of 2 greater than 1, and no greater than 256."//#错误“TX_BUFFER_SIZE必须为0，2的幂大于1，且不大于256。”
+//#endif//#恩迪夫
 
-// Templated type selector
+// Templated type selector//模板类型选择器
 template<bool b, typename T, typename F> struct TypeSelector { typedef T type;} ;
 template<typename T, typename F> struct TypeSelector<false, T, F> { typedef F type; };
 
-// Templated structure wrapper
+// Templated structure wrapper//模板结构包装器
 template<typename S, unsigned int addr> struct StructWrapper {
   constexpr StructWrapper(int) {}
   FORCE_INLINE S* operator->() const { return (S*)addr; }
@@ -65,17 +66,17 @@ template<typename S, unsigned int addr> struct StructWrapper {
 template<typename Cfg>
 class MarlinSerial {
 protected:
-  // Information for all supported UARTs
+  // Information for all supported UARTs//所有受支持的UART的信息
   static constexpr uint32_t BASES[] = {0x400E0800U, 0x40098000U, 0x4009C000U, 0x400A0000U, 0x400A4000U};
   static constexpr IRQn_Type IRQS[] = {  UART_IRQn, USART0_IRQn, USART1_IRQn, USART2_IRQn, USART3_IRQn};
   static constexpr int    IRQ_IDS[] = {    ID_UART,   ID_USART0,   ID_USART1,   ID_USART2,   ID_USART3};
 
-  // Alias for shorter code
+  // Alias for shorter code//短代码的别名
   static constexpr StructWrapper<Uart,BASES[Cfg::PORT]> HWUART = 0;
   static constexpr IRQn_Type HWUART_IRQ = IRQS[Cfg::PORT];
   static constexpr int HWUART_IRQ_ID = IRQ_IDS[Cfg::PORT];
 
-  // Base size of type on buffer size
+  // Base size of type on buffer size//类型的基大小取决于缓冲区大小
   typedef typename TypeSelector<(Cfg::RX_SIZE>256), uint16_t, uint8_t>::type ring_buffer_pos_t;
 
   struct ring_buffer_r {
@@ -92,10 +93,10 @@ protected:
   static ring_buffer_t tx_buffer;
   static bool _written;
 
-  static constexpr uint8_t XON_XOFF_CHAR_SENT = 0x80,  // XON / XOFF Character was sent
-                           XON_XOFF_CHAR_MASK = 0x1F;  // XON / XOFF character to send
+  static constexpr uint8_t XON_XOFF_CHAR_SENT = 0x80,  // XON / XOFF Character was sent//已发送XON/XOFF字符
+                           XON_XOFF_CHAR_MASK = 0x1F;  // XON / XOFF character to send//要发送的XON/XOFF字符
 
-  // XON / XOFF character definitions
+  // XON / XOFF character definitions//XON/XOFF字符定义
   static constexpr uint8_t XON_CHAR  = 17, XOFF_CHAR = 19;
   static uint8_t xon_xoff_state,
                  rx_dropped_bytes,
@@ -126,7 +127,7 @@ public:
   FORCE_INLINE static ring_buffer_pos_t rxMaxEnqueued() { return Cfg::MAX_RX_QUEUED ? rx_max_enqueued : 0; }
 };
 
-// Serial port configuration
+// Serial port configuration//串行端口配置
 template <uint8_t serial>
 struct MarlinSerialCfg {
   static constexpr int PORT               = serial;

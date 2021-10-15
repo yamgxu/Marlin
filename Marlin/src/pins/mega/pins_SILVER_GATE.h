@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -52,7 +53,7 @@
 #define SDSS                                  16
 
 #ifndef FIL_RUNOUT_PIN
-  #define FIL_RUNOUT_PIN                      34  // X_MAX unless overridden
+  #define FIL_RUNOUT_PIN                      34  // X_MAX unless overridden//X_最大值，除非被覆盖
 #endif
 
 #ifndef FAN_PIN
@@ -67,13 +68,13 @@
 
 #define CONTROLLER_FAN_PIN                     2
 
-#define TEMP_0_PIN                             7  // Analog Input
+#define TEMP_0_PIN                             7  // Analog Input//模拟输入
 
 #define HEATER_BED_PIN                         8
 #define TEMP_BED_PIN                           6
 
 #if HAS_MARLINUI_U8GLIB
-  #if ENABLED(U8GLIB_ST7920)                      // SPI GLCD 12864 ST7920
+  #if ENABLED(U8GLIB_ST7920)                      // SPI GLCD 12864 ST7920//SPI GLCD 12864 ST7920
     #define LCD_PINS_RS                       30
     #define LCD_PINS_ENABLE                   20
     #define LCD_PINS_D4                       25

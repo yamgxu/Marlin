@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*********************************
  * cocoa_press/leveling_menu.cpp *
  *********************************/
@@ -88,4 +89,4 @@ bool LevelingMenu::onTouchEnd(uint8_t tag) {
   return true;
 }
 
-#endif // COCOA_LEVELING_MENU
+#endif // COCOA_LEVELING_MENU//可可豆调平菜单

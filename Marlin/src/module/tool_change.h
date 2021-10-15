@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -23,7 +24,7 @@
 
 #include "../inc/MarlinConfig.h"
 
-//#define DEBUG_TOOLCHANGE_MIGRATION_FEATURE
+//#define DEBUG_TOOLCHANGE_MIGRATION_FEATURE//#定义调试工具更改迁移功能
 
 #if HAS_MULTI_EXTRUDER
 
@@ -94,12 +95,12 @@
 #elif ENABLED(MAGNETIC_PARKING_EXTRUDER)
 
   typedef struct MPESettings {
-      float parking_xpos[2],      // M951 L R
-            grab_distance;        // M951 I
- feedRate_t slow_feedrate,        // M951 J
-            fast_feedrate;        // M951 H
-      float travel_distance,      // M951 D
-            compensation_factor;  // M951 C
+      float parking_xpos[2],      // M951 L R//M951 L R
+            grab_distance;        // M951 I//M951 I
+ feedRate_t slow_feedrate,        // M951 J//M951 J
+            fast_feedrate;        // M951 H//M951H
+      float travel_distance,      // M951 D//M951 D
+            compensation_factor;  // M951 C//M951 C
   } mpe_settings_t;
 
   extern mpe_settings_t mpe_settings;

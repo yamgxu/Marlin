@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,22 +32,22 @@
 
 #include "watchdog.h"
 
-#define WDT_TIMEOUT TERN(WATCHDOG_DURATION_8S, 8, 4) // 4 or 8 second timeout
+#define WDT_TIMEOUT TERN(WATCHDOG_DURATION_8S, 8, 4) // 4 or 8 second timeout//4或8秒超时
 
 constexpr uint8_t timeoutval = (WDT_TIMEOUT - 0.5f) / 0.5f;
 
 void watchdog_init() {
-  CCM_CCGR3 |= CCM_CCGR3_WDOG1(3);  // enable WDOG1 clocks
-  WDOG1_WMCR = 0;                   // disable power down PDE
+  CCM_CCGR3 |= CCM_CCGR3_WDOG1(3);  // enable WDOG1 clocks//启用WDOG1时钟
+  WDOG1_WMCR = 0;                   // disable power down PDE//禁用掉电PDE
   WDOG1_WCR |= WDOG_WCR_SRS | WDOG_WCR_WT(timeoutval);
   WDOG1_WCR |= WDOG_WCR_WDE | WDOG_WCR_WDT | WDOG_WCR_SRE;
 }
 
 void HAL_watchdog_refresh() {
-  // Watchdog refresh sequence
+  // Watchdog refresh sequence//看门狗刷新序列
   WDOG1_WSR = 0x5555;
   WDOG1_WSR = 0xAAAA;
 }
 
-#endif // USE_WATCHDOG
-#endif // __IMXRT1062__
+#endif // USE_WATCHDOG//使用看门狗
+#endif // __IMXRT1062__//_uuimxrt1062__

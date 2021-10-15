@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -33,7 +34,7 @@ class SPIclass {
     FORCE_INLINE static uint8_t receive() { return softSPI.receive(); }
 };
 
-// Hardware SPI
+// Hardware SPI//硬件SPI
 template<>
 class SPIclass<SD_MISO_PIN, SD_MOSI_PIN, SD_SCK_PIN> {
   public:

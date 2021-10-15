@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,9 +22,9 @@
  */
 #pragma once
 
-// R25 = 100 kOhm, beta25 = 4700 K, 4.7 kOhm pull-up, (personal calibration for Makibox hot bed)
+// R25 = 100 kOhm, beta25 = 4700 K, 4.7 kOhm pull-up, (personal calibration for Makibox hot bed)//R25=100千欧，beta25=4700千欧，上拉4.7千欧，（Makibox热床的个人校准）
 constexpr temp_entry_t temptable_12[] PROGMEM = {
-  { OV(  35), 180 }, // top rating 180C
+  { OV(  35), 180 }, // top rating 180C//最高评级180摄氏度
   { OV( 211), 140 },
   { OV( 233), 135 },
   { OV( 261), 130 },

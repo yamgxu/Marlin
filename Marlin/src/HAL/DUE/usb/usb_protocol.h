@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * \file
  *
@@ -44,7 +45,7 @@
  *
  */
 /*
- * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>
+ * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>//www.atmel.com/design support/“>atmel支持</a>
  */
 
 #ifndef _USB_PROTOCOL_H_
@@ -60,49 +61,49 @@
  * @{
  */
 
-//! Value for field bcdUSB
-#define  USB_V2_0    0x0200 //!< USB Specification version 2.00
-#define  USB_V2_1    0x0201 //!< USB Specification version 2.01
+//! Value for field bcdUSB//！字段bcdUSB的值
+#define  USB_V2_0    0x0200 //!< USB Specification version 2.00//！<USB规格版本2.00
+#define  USB_V2_1    0x0201 //!< USB Specification version 2.01//!< USB规范版本2.01
 
 /*! \name Generic definitions (Class, subclass and protocol)
  */
-//! @{
+//! @{//! @{
 #define  NO_CLASS                0x00
 #define  CLASS_VENDOR_SPECIFIC   0xFF
 #define  NO_SUBCLASS             0x00
 #define  NO_PROTOCOL             0x00
-//! @}
+//! @}//! @}
 
-//! \name IAD (Interface Association Descriptor) constants
-//! @{
+//! \name IAD (Interface Association Descriptor) constants//! \名称IAD（接口关联描述符）常量
+//! @{//! @{
 #define  CLASS_IAD               0xEF
 #define  SUB_CLASS_IAD           0x02
 #define  PROTOCOL_IAD            0x01
-//! @}
+//! @}//! @}
 
 /**
  * \brief USB request data transfer direction (bmRequestType)
  */
-#define  USB_REQ_DIR_OUT         (0<<7) //!< Host to device
-#define  USB_REQ_DIR_IN          (1<<7) //!< Device to host
-#define  USB_REQ_DIR_MASK        (1<<7) //!< Mask
+#define  USB_REQ_DIR_OUT         (0<<7) //!< Host to device//!< 主机到设备
+#define  USB_REQ_DIR_IN          (1<<7) //!< Device to host//!< 设备到主机
+#define  USB_REQ_DIR_MASK        (1<<7) //!< Mask//!< 面具
 
 /**
  * \brief USB request types (bmRequestType)
  */
-#define  USB_REQ_TYPE_STANDARD   (0<<5) //!< Standard request
-#define  USB_REQ_TYPE_CLASS      (1<<5) //!< Class-specific request
-#define  USB_REQ_TYPE_VENDOR     (2<<5) //!< Vendor-specific request
-#define  USB_REQ_TYPE_MASK       (3<<5) //!< Mask
+#define  USB_REQ_TYPE_STANDARD   (0<<5) //!< Standard request//!< 标准要求
+#define  USB_REQ_TYPE_CLASS      (1<<5) //!< Class-specific request//!< 特定于类的请求
+#define  USB_REQ_TYPE_VENDOR     (2<<5) //!< Vendor-specific request//!< 供应商特定请求
+#define  USB_REQ_TYPE_MASK       (3<<5) //!< Mask//!< 面具
 
 /**
  * \brief USB recipient codes (bmRequestType)
  */
-#define  USB_REQ_RECIP_DEVICE    (0<<0) //!< Recipient device
-#define  USB_REQ_RECIP_INTERFACE (1<<0) //!< Recipient interface
-#define  USB_REQ_RECIP_ENDPOINT  (2<<0) //!< Recipient endpoint
-#define  USB_REQ_RECIP_OTHER     (3<<0) //!< Recipient other
-#define  USB_REQ_RECIP_MASK      (0x1F) //!< Mask
+#define  USB_REQ_RECIP_DEVICE    (0<<0) //!< Recipient device//!< 接收设备
+#define  USB_REQ_RECIP_INTERFACE (1<<0) //!< Recipient interface//!< 收件人接口
+#define  USB_REQ_RECIP_ENDPOINT  (2<<0) //!< Recipient endpoint//!< 收件人端点
+#define  USB_REQ_RECIP_OTHER     (3<<0) //!< Recipient other//!< 收件人其他
+#define  USB_REQ_RECIP_MASK      (0x1F) //!< Mask//!< 面具
 
 /**
  * \brief Standard USB requests (bRequest)
@@ -153,8 +154,8 @@ enum usb_endpoint_status {
  * \note valid for SetFeature request.
  */
 enum usb_device_feature {
-	USB_DEV_FEATURE_REMOTE_WAKEUP = 1, //!< Remote wakeup enabled
-	USB_DEV_FEATURE_TEST_MODE = 2,     //!< USB test mode
+	USB_DEV_FEATURE_REMOTE_WAKEUP = 1, //!< Remote wakeup enabled//!< 启用远程唤醒
+	USB_DEV_FEATURE_TEST_MODE = 2,     //!< USB test mode//!< USB测试模式
 	USB_DEV_FEATURE_OTG_B_HNP_ENABLE = 3,
 	USB_DEV_FEATURE_OTG_A_HNP_SUPPORT = 4,
 	USB_DEV_FEATURE_OTG_A_ALT_HNP_SUPPORT = 5
@@ -265,7 +266,7 @@ enum usb_ep_type {
  * \brief Standard USB language IDs for string descriptors
  */
 enum usb_langid {
-	USB_LANGID_EN_US = 0x0409, //!< English (United States)
+	USB_LANGID_EN_US = 0x0409, //!< English (United States)//!< 英语（美国）
 };
 
 /**
@@ -273,7 +274,7 @@ enum usb_langid {
  */
 #define  USB_EP_ADDR_MASK     0x0F
 
-//! \brief USB address identifier
+//! \brief USB address identifier//! \简要USB地址标识符
 typedef uint8_t usb_add_t;
 
 /**
@@ -286,7 +287,7 @@ typedef uint8_t usb_add_t;
  */
 #define  USB_EP_DIR_OUT       0x00
 
-//! \brief Endpoint identifier
+//! \brief Endpoint identifier//! \简要端点标识符
 typedef uint8_t usb_ep_t;
 
 /**
@@ -401,14 +402,14 @@ typedef struct {
  * \brief Standard USB Interface Association Descriptor structure
  */
 typedef struct {
-	uint8_t bLength;          //!< size of this descriptor in bytes
-	uint8_t bDescriptorType;  //!< INTERFACE descriptor type
-	uint8_t bFirstInterface;  //!< Number of interface
-	uint8_t bInterfaceCount;  //!< value to select alternate setting
-	uint8_t bFunctionClass;   //!< Class code assigned by the USB
-	uint8_t bFunctionSubClass;//!< Sub-class code assigned by the USB
-	uint8_t bFunctionProtocol;//!< Protocol code assigned by the USB
-	uint8_t iFunction;        //!< Index of string descriptor
+	uint8_t bLength;          //!< size of this descriptor in bytes//!< 此描述符的大小（字节）
+	uint8_t bDescriptorType;  //!< INTERFACE descriptor type//!< 接口描述符类型
+	uint8_t bFirstInterface;  //!< Number of interface//!< 接口数量
+	uint8_t bInterfaceCount;  //!< value to select alternate setting//!< 值以选择备用设置
+	uint8_t bFunctionClass;   //!< Class code assigned by the USB//!< 由USB分配的类代码
+	uint8_t bFunctionSubClass;//!< Sub-class code assigned by the USB//!< USB分配的子类代码
+	uint8_t bFunctionProtocol;//!< Protocol code assigned by the USB//!< USB接口分配的协议代码
+	uint8_t iFunction;        //!< Index of string descriptor//!< 字符串描述符索引
 } usb_association_desc_t;
 
 
@@ -427,25 +428,25 @@ typedef struct {
 } usb_conf_desc_t;
 
 
-#define  USB_CONFIG_ATTR_MUST_SET         (1 << 7) //!< Must always be set
-#define  USB_CONFIG_ATTR_BUS_POWERED      (0 << 6) //!< Bus-powered
-#define  USB_CONFIG_ATTR_SELF_POWERED     (1 << 6) //!< Self-powered
-#define  USB_CONFIG_ATTR_REMOTE_WAKEUP    (1 << 5) //!< remote wakeup supported
+#define  USB_CONFIG_ATTR_MUST_SET         (1 << 7) //!< Must always be set//!< 必须始终设置
+#define  USB_CONFIG_ATTR_BUS_POWERED      (0 << 6) //!< Bus-powered//！<公共汽车供电
+#define  USB_CONFIG_ATTR_SELF_POWERED     (1 << 6) //!< Self-powered//！<自供电
+#define  USB_CONFIG_ATTR_REMOTE_WAKEUP    (1 << 5) //!< remote wakeup supported//！<支持远程唤醒
 
-#define  USB_CONFIG_MAX_POWER(ma)         (((ma) + 1) / 2) //!< Max power in mA
+#define  USB_CONFIG_MAX_POWER(ma)         (((ma) + 1) / 2) //!< Max power in mA//！<最大功率（毫安）
 
 /**
  * \brief Standard USB association descriptor structure
  */
 typedef struct {
-	uint8_t bLength;              //!< Size of this descriptor in bytes
-	uint8_t bDescriptorType;      //!< Interface descriptor type
-	uint8_t bFirstInterface;      //!< Number of interface
-	uint8_t bInterfaceCount;      //!< value to select alternate setting
-	uint8_t bFunctionClass;       //!< Class code assigned by the USB
-	uint8_t bFunctionSubClass;    //!< Sub-class code assigned by the USB
-	uint8_t bFunctionProtocol;    //!< Protocol code assigned by the USB
-	uint8_t iFunction;            //!< Index of string descriptor
+	uint8_t bLength;              //!< Size of this descriptor in bytes//！<此描述符的大小（字节）
+	uint8_t bDescriptorType;      //!< Interface descriptor type//！<接口描述符类型
+	uint8_t bFirstInterface;      //!< Number of interface//！<接口数量
+	uint8_t bInterfaceCount;      //!< value to select alternate setting//！<选择备用设置的值
+	uint8_t bFunctionClass;       //!< Class code assigned by the USB//！<由USB分配的类别代码
+	uint8_t bFunctionSubClass;    //!< Sub-class code assigned by the USB//！<USB分配的子类代码
+	uint8_t bFunctionProtocol;    //!< Protocol code assigned by the USB//！<USB分配的协议代码
+	uint8_t iFunction;            //!< Index of string descriptor//！<字符串描述符的索引
 } usb_iad_desc_t;
 
 /**
@@ -491,6 +492,6 @@ typedef struct {
 
 COMPILER_PACK_RESET()
 
-//! @}
+//! @}//! @}
 
 #endif /* _USB_PROTOCOL_H_ */

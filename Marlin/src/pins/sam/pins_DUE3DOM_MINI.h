@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,24 +30,24 @@
 
 #define BOARD_INFO_NAME "DUE3DOM MINI"
 
-//
-// Servos
-//
+////
+// Servos//伺服
+////
 #define SERVO0_PIN                             5
 #define SERVO1_PIN                             6
-#define SERVO2_PIN                             8  // 4-pin header FAN0
+#define SERVO2_PIN                             8  // 4-pin header FAN0//4针割台风扇0
 #define SERVO3_PIN                            -1
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_STOP_PIN                            38
 #define Y_STOP_PIN                            34
 #define Z_STOP_PIN                            30
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                            17
 #define X_DIR_PIN                             16
 #define X_ENABLE_PIN                          22
@@ -63,43 +64,43 @@
 #define E0_DIR_PIN                            60
 #define E0_ENABLE_PIN                         62
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                             0  // Analog Input (HOTEND0 thermistor)
-#define TEMP_1_PIN                             2  // Analog Input (unused)
-#define TEMP_2_PIN                             5  // Analog Input (OnBoard thermistor beta 3950)
-#define TEMP_BED_PIN                           1  // Analog Input (BED thermistor)
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                             0  // Analog Input (HOTEND0 thermistor)//模拟输入（HOTEND0热敏电阻）
+#define TEMP_1_PIN                             2  // Analog Input (unused)//模拟输入（未使用）
+#define TEMP_2_PIN                             5  // Analog Input (OnBoard thermistor beta 3950)//模拟输入（车载热敏电阻beta 3950）
+#define TEMP_BED_PIN                           1  // Analog Input (BED thermistor)//模拟输入（床用热敏电阻）
 
-// SPI for Max6675 or Max31855 Thermocouple
+// SPI for Max6675 or Max31855 Thermocouple//Max6675或Max31855热电偶的SPI
 #if DISABLED(SDSUPPORT)
   #define MAX6675_SS_PIN                      53
 #else
   #define MAX6675_SS_PIN                      53
 #endif
 
-//
-// Heaters / Fans
-//
-#define HEATER_0_PIN                          13  // HOTEND0 MOSFET
-#define HEATER_BED_PIN                         7  // BED MOSFET
+////
+// Heaters / Fans//加热器/风扇
+////
+#define HEATER_0_PIN                          13  // HOTEND0 MOSFET//HOTEND0 MOSFET
+#define HEATER_BED_PIN                         7  // BED MOSFET//床层MOSFET
 
 #ifndef FAN_PIN
-  #define FAN_PIN                             11  // FAN1 header on board - PRINT FAN
+  #define FAN_PIN                             11  // FAN1 header on board - PRINT FAN//FAN1板上页眉-打印风扇
 #endif
-#define FAN1_PIN                              12  // FAN2 header on board - CONTROLLER FAN
-#define FAN2_PIN                               9  // FAN3 header on board - EXTRUDER0 FAN
-//#define FAN3_PIN                             8  // FAN0 4-pin header on board
+#define FAN1_PIN                              12  // FAN2 header on board - CONTROLLER FAN//板上风扇2收割台-控制器风扇
+#define FAN2_PIN                               9  // FAN3 header on board - EXTRUDER0 FAN//板上风扇3集管-风扇0
+//#define FAN3_PIN                             8  // FAN0 4-pin header on board//#在板上定义FAN3_引脚8//FAN0 4引脚头
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define SDSS                                   4
 #define PS_ON_PIN                             40
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 #if HAS_WIRED_LCD
 
   #define LCD_PINS_RS                         42
@@ -118,7 +119,7 @@
     #define BTN_ENC                           48
 
     #if ENABLED(REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER)
-      #define BTN_ENC_EN             LCD_PINS_D7  // Detect the presence of the encoder
+      #define BTN_ENC_EN             LCD_PINS_D7  // Detect the presence of the encoder//检测编码器的存在
     #endif
 
     #define SD_DETECT_PIN                     14
@@ -169,4 +170,4 @@
 
   #endif
 
-#endif // HAS_WIRED_LCD
+#endif // HAS_WIRED_LCD//有有线液晶显示器吗

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -39,14 +40,14 @@
   #define DEFAULT_MACHINE_NAME BOARD_INFO_NAME
 #endif
 
-//
-// Servos
-//
+////
+// Servos//伺服
+////
 #define SERVO0_PIN                             5
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_MIN_PIN                             37
 #define X_MAX_PIN                             36
 #define Y_MIN_PIN                             35
@@ -54,16 +55,16 @@
 #define Z_MIN_PIN                             33
 #define Z_MAX_PIN                             32
 
-//
-// Z Probe (when not Z_MIN_PIN)
-//
+////
+// Z Probe (when not Z_MIN_PIN)//Z探头（非Z_MIN_引脚时）
+////
 #ifndef Z_MIN_PROBE_PIN
   #define Z_MIN_PROBE_PIN                     32
 #endif
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                            17
 #define X_DIR_PIN                             16
 #define X_ENABLE_PIN                          48
@@ -94,47 +95,47 @@
   #define E2_ENABLE_PIN                       39
 #endif
 
-//
-// Temperature Sensors
-//
+////
+// Temperature Sensors//温度传感器
+////
 #ifndef TEMP_0_PIN
   #if TEMP_SENSOR_0 == -1
-    #define TEMP_0_PIN                         6  // Analog Input (connector *K1* on RUMBA thermocouple ADD ON is used)
+    #define TEMP_0_PIN                         6  // Analog Input (connector *K1* on RUMBA thermocouple ADD ON is used)//模拟输入（使用伦巴热电偶附加组件上的连接器*K1*）
   #else
-    #define TEMP_0_PIN                        15  // Analog Input (default connector for thermistor *T0* on rumba board is used)
+    #define TEMP_0_PIN                        15  // Analog Input (default connector for thermistor *T0* on rumba board is used)//模拟输入（使用伦巴板上热敏电阻*T0*的默认连接器）
   #endif
 #endif
 
 #ifndef TEMP_1_PIN
   #if TEMP_SENSOR_1 == -1
-    #define TEMP_1_PIN                         5  // Analog Input (connector *K2* on RUMBA thermocouple ADD ON is used)
+    #define TEMP_1_PIN                         5  // Analog Input (connector *K2* on RUMBA thermocouple ADD ON is used)//模拟输入（使用伦巴热电偶附加组件上的连接器*K2*）
   #else
-    #define TEMP_1_PIN                        14  // Analog Input (default connector for thermistor *T1* on rumba board is used)
+    #define TEMP_1_PIN                        14  // Analog Input (default connector for thermistor *T1* on rumba board is used)//模拟输入（使用伦巴板上热敏电阻*T1*的默认连接器）
   #endif
 #endif
 
 #if TEMP_SENSOR_2 == -1
-  #define TEMP_2_PIN                           7  // Analog Input (connector *K3* on RUMBA thermocouple ADD ON is used <-- this can't be used when TEMP_SENSOR_BED is defined as thermocouple)
+  #define TEMP_2_PIN                           7  // Analog Input (connector *K3* on RUMBA thermocouple ADD ON is used <-- this can't be used when TEMP_SENSOR_BED is defined as thermocouple)//模拟输入（使用伦巴热电偶附加组件上的接头*K3*<--当温度传感器床被定义为热电偶时，不能使用此接口）
 #else
-  #define TEMP_2_PIN                          13  // Analog Input (default connector for thermistor *T2* on rumba board is used)
+  #define TEMP_2_PIN                          13  // Analog Input (default connector for thermistor *T2* on rumba board is used)//模拟输入（使用伦巴板上热敏电阻*T2*的默认连接器）
 #endif
 
-// Optional for extruder 4 or chamber:
-//#define TEMP_X_PIN                          12  // Analog Input (default connector for thermistor *T3* on rumba board is used)
+// Optional for extruder 4 or chamber://4号挤出机或腔室可选：
+//#define TEMP_X_PIN                          12  // Analog Input (default connector for thermistor *T3* on rumba board is used)//#定义温度X引脚12//模拟输入（使用伦巴板上热敏电阻*T3*的默认连接器）
 
 #ifndef TEMP_CHAMBER_PIN
-  //#define TEMP_CHAMBER_PIN                  12  // Analog Input (default connector for thermistor *T3* on rumba board is used)
+  //#define TEMP_CHAMBER_PIN                  12  // Analog Input (default connector for thermistor *T3* on rumba board is used)//#定义温度室引脚12//模拟输入（使用伦巴板上热敏电阻*T3*的默认连接器）
 #endif
 
 #if TEMP_SENSOR_BED == -1
-  #define TEMP_BED_PIN                         7  // Analog Input (connector *K3* on RUMBA thermocouple ADD ON is used <-- this can't be used when TEMP_SENSOR_2 is defined as thermocouple)
+  #define TEMP_BED_PIN                         7  // Analog Input (connector *K3* on RUMBA thermocouple ADD ON is used <-- this can't be used when TEMP_SENSOR_2 is defined as thermocouple)//模拟输入（使用伦巴热电偶附加组件上的连接器*K3*<--当温度传感器2被定义为热电偶时，不能使用该连接器）
 #else
-  #define TEMP_BED_PIN                        11  // Analog Input (default connector for thermistor *THB* on rumba board is used)
+  #define TEMP_BED_PIN                        11  // Analog Input (default connector for thermistor *THB* on rumba board is used)//模拟输入（使用伦巴板上热敏电阻*THB*的默认连接器）
 #endif
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_0_PIN                           2
 #define HEATER_1_PIN                           3
 #define HEATER_2_PIN                           6
@@ -148,9 +149,9 @@
   #define FAN1_PIN                             8
 #endif
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define LED_PIN                               13
 #define PS_ON_PIN                             45
 #define KILL_PIN                              46
@@ -159,26 +160,26 @@
   #define CASE_LIGHT_PIN                      45
 #endif
 
-//
-// M3/M4/M5 - Spindle/Laser Control
-//
+////
+// M3/M4/M5 - Spindle/Laser Control//M3/M4/M5-主轴/激光控制
+////
 #ifndef SPINDLE_LASER_PWM_PIN
-  #define SPINDLE_LASER_PWM_PIN                4  // Hardware PWM. Pin 4 interrupts OC0* and OC1* always in use?
+  #define SPINDLE_LASER_PWM_PIN                4  // Hardware PWM. Pin 4 interrupts OC0* and OC1* always in use?//硬件PWM。引脚4中断OC0*和OC1*是否一直在使用？
 #endif
 #ifndef SPINDLE_LASER_ENA_PIN
-  #define SPINDLE_LASER_ENA_PIN               14  // Pullup!
+  #define SPINDLE_LASER_ENA_PIN               14  // Pullup!//拉起！
 #endif
 #ifndef SPINDLE_DIR_PIN
   #define SPINDLE_DIR_PIN                     15
 #endif
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 #if EITHER(MKS_12864OLED, MKS_12864OLED_SSD1306)
-  #define LCD_PINS_DC                         38  // Set as output on init
-  #define LCD_PINS_RS                         41  // Pull low for 1s to init
-  // DOGM SPI LCD Support
+  #define LCD_PINS_DC                         38  // Set as output on init//在init上设置为输出
+  #define LCD_PINS_RS                         41  // Pull low for 1s to init//拉低1s至初始
+  // DOGM SPI LCD Support//DOGM SPI LCD支持
   #define DOGLCD_CS                           19
   #define DOGLCD_MOSI                         42
   #define DOGLCD_SCK                          18
@@ -189,10 +190,10 @@
   #define DOGLCD_MOSI                         51
   #define DOGLCD_SCK                          52
 
-  //#define FORCE_SOFT_SPI                        // Use this if default of hardware SPI causes display problems
-                                                  //   results in LCD soft SPI mode 3, SD soft SPI mode 0
+  //#define FORCE_SOFT_SPI                        // Use this if default of hardware SPI causes display problems//#定义FORCE\u SOFT\u SPI//如果硬件SPI的默认值导致显示问题，请使用此选项
+                                                  //   results in LCD soft SPI mode 3, SD soft SPI mode 0//结果为LCD软SPI模式3，SD软SPI模式0
 
-  #define LCD_RESET_PIN                       18  // Must be high or open for LCD to operate normally.
+  #define LCD_RESET_PIN                       18  // Must be high or open for LCD to operate normally.//必须为高电平或开路，LCD才能正常工作。
 
   #if EITHER(FYSETC_MINI_12864_1_2, FYSETC_MINI_12864_2_0)
     #ifndef RGB_LED_R_PIN
@@ -218,9 +219,9 @@
 
 #define LCD_PINS_D7                           40
 
-//
-// Beeper, SD Card, Encoder
-//
+////
+// Beeper, SD Card, Encoder//传呼机、SD卡、编码器
+////
 #define BEEPER_PIN                            44
 
 #if ENABLED(SDSUPPORT)

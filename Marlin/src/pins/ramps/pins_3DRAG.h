@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -37,46 +38,46 @@
   #define DEFAULT_SOURCE_CODE_URL "3dprint.elettronicain.it"
 #endif
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define RAMPS_D8_PIN                           9
 #define RAMPS_D9_PIN                           8
 #define MOSFET_D_PIN                          12
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define SDSS                                  25
 
 #ifndef CASE_LIGHT_PIN
-  #define CASE_LIGHT_PIN                      -1  // Hardware PWM but one is not available on expansion header
+  #define CASE_LIGHT_PIN                      -1  // Hardware PWM but one is not available on expansion header//硬件PWM，但扩展收割台上没有一个
 #endif
 
 #include "pins_RAMPS.h"
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #undef Z_MAX_PIN
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #undef Z_ENABLE_PIN
 #define Z_ENABLE_PIN                          63
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_2_PIN                           6
 
 #undef SD_DETECT_PIN
 #define SD_DETECT_PIN                         53
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 #if IS_ULTRA_LCD && IS_NEWPANEL
   #undef BEEPER_PIN
 
@@ -93,7 +94,7 @@
   #define LCD_PINS_D6                         33
   #define LCD_PINS_D7                         31
 
-  // Buttons
+  // Buttons//钮扣
   #undef BTN_EN1
   #undef BTN_EN2
   #undef BTN_ENC
@@ -105,7 +106,7 @@
 
   #define BEEPER_PIN                          33
 
-#endif // IS_ULTRA_LCD && IS_NEWPANEL
+#endif // IS_ULTRA_LCD && IS_NEWPANEL//IS_ULTRA_LCD和IS_NEWPANEL
 
 /**
  *  M3/M4/M5 - Spindle/Laser Control
@@ -138,7 +139,7 @@
  *
  *  Note: Socket names vary from vendor to vendor
  */
-#undef SPINDLE_LASER_PWM_PIN                      // Definitions in pins_RAMPS.h are not good with 3DRAG
+#undef SPINDLE_LASER_PWM_PIN                      // Definitions in pins_RAMPS.h are not good with 3DRAG//引脚_RAMPS.h中的定义不适用于3DRAG
 #undef SPINDLE_LASER_ENA_PIN
 #undef SPINDLE_DIR_PIN
 
@@ -153,11 +154,11 @@
     #define Z_DIR_PIN                         28
     #define Z_ENABLE_PIN                      24
     #define Z_STEP_PIN                        26
-    #define SPINDLE_LASER_PWM_PIN             46  // Hardware PWM
-    #define SPINDLE_LASER_ENA_PIN             62  // Pullup!
+    #define SPINDLE_LASER_PWM_PIN             46  // Hardware PWM//硬件脉宽调制
+    #define SPINDLE_LASER_ENA_PIN             62  // Pullup!//拉起！
     #define SPINDLE_DIR_PIN                   48
-  #elif !BOTH(IS_ULTRA_LCD, IS_NEWPANEL)          // Use expansion header if no LCD in use
-    #define SPINDLE_LASER_ENA_PIN             16  // Pullup or pulldown!
+  #elif !BOTH(IS_ULTRA_LCD, IS_NEWPANEL)          // Use expansion header if no LCD in use//如果未使用LCD，则使用扩展标题
+    #define SPINDLE_LASER_ENA_PIN             16  // Pullup or pulldown!//拉起还是拉下！
     #define SPINDLE_DIR_PIN                   17
   #endif
 #endif

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,18 +32,18 @@
   #endif
 #endif
 
-// ------------------------
-// Public Variables
-// ------------------------
+// ------------------------// ------------------------
+// Public Variables//公共变量
+// ------------------------// ------------------------
 
-//uint8_t MCUSR;
+//uint8_t MCUSR;//uint8_t MCUSR；
 
-// ------------------------
-// Public functions
-// ------------------------
+// ------------------------// ------------------------
+// Public functions//公共职能
+// ------------------------// ------------------------
 
 void HAL_init() {
-  // Init Servo Pins
+  // Init Servo Pins//初始伺服销
   #define INIT_SERVO(N) OUT_WRITE(SERVO##N##_PIN, LOW)
   #if HAS_SERVO_0
     INIT_SERVO(0);
@@ -62,8 +63,8 @@ void HAL_reboot() {
   #if ENABLED(USE_WATCHDOG)
     while (1) { /* run out the watchdog */ }
   #else
-    void (*resetFunc)() = 0;  // Declare resetFunc() at address 0
-    resetFunc();              // Jump to address 0
+    void (*resetFunc)() = 0;  // Declare resetFunc() at address 0//在地址0处声明resetFunc（）
+    resetFunc();              // Jump to address 0//跳转到地址0
   #endif
 }
 
@@ -72,7 +73,7 @@ void HAL_reboot() {
   #include "../../sd/SdFatUtil.h"
   int freeMemory() { return SdFatUtil::FreeRam(); }
 
-#else // !SDSUPPORT
+#else // !SDSUPPORT// !SDSUPPORT
 
 extern "C" {
   extern char __bss_end;
@@ -89,6 +90,6 @@ extern "C" {
   }
 }
 
-#endif // !SDSUPPORT
+#endif // !SDSUPPORT// !SDSUPPORT
 
-#endif // __AVR__
+#endif // __AVR__//_uuuavr__

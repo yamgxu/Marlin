@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -83,7 +84,7 @@ class WifiSerial {
         if (!rb_is_empty(this->usart_device->wb))
           regs->DR=rb_remove(this->usart_device->wb);
         else
-          regs->CR1 &= ~((uint32)USART_CR1_TXEIE); // disable TXEIE
+          regs->CR1 &= ~((uint32)USART_CR1_TXEIE); // disable TXEIE//禁用TXIE
       }
     }
 
@@ -99,4 +100,4 @@ extern WifiSerial WifiSerial1;
 
 #define WIFISERIAL  WifiSerial1
 
-#endif // MKS_WIFI_MODULE
+#endif // MKS_WIFI_MODULE//MKS_无线模块

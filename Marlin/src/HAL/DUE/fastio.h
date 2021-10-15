@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -45,8 +46,8 @@
  * Utility functions
  */
 
-// Due has 12 PWMs assigned to logical pins 2-13.
-// 6, 7, 8 & 9 come from the PWM controller. The others come from the timers.
+// Due has 12 PWMs assigned to logical pins 2-13.//Due将12个PWM分配给逻辑引脚2-13。
+// 6, 7, 8 & 9 come from the PWM controller. The others come from the timers.//6、7、8和9来自PWM控制器。其他的来自计时器。
 #define PWM_PIN(P)              WITHIN(P, 2, 13)
 
 #ifndef MASK
@@ -61,10 +62,10 @@
  * Why double up on these macros? see https://gcc.gnu.org/onlinedocs/cpp/Stringification.html
  */
 
-// Read a pin
+// Read a pin//读别针
 #define _READ(IO) bool(DIO ## IO ## _WPORT -> PIO_PDSR & MASK(DIO ## IO ## _PIN))
 
-// Write to a pin
+// Write to a pin//用别针写字
 #define _WRITE(IO,V) do { \
   volatile Pio* port = (DIO ##  IO ## _WPORT); \
   const uint32_t mask = MASK(DIO ## IO ## _PIN); \
@@ -72,20 +73,20 @@
   else port->PIO_CODR = mask; \
 }while(0)
 
-// Toggle a pin
+// Toggle a pin//拨动别针
 #define _TOGGLE(IO) _WRITE(IO, !READ(IO))
 
 #if MB(PRINTRBOARD_G2)
 
   #include "fastio/G2_pins.h"
 
-  // Set pin as input
+  // Set pin as input//将引脚设置为输入
   #define _SET_INPUT(IO) do{ \
     pmc_enable_periph_clk(G2_g_APinDescription[IO].ulPeripheralId); \
     PIO_Configure((DIO ## IO ## _WPORT), PIO_INPUT, MASK(DIO ## IO ## _PIN), 0); \
   }while(0)
 
-  // Set pin as output
+  // Set pin as output//将引脚设置为输出
   #define _SET_OUTPUT(IO) do{ \
     uint32_t mask = MASK(G2_g_APinDescription[IO].ulPeripheralId); \
     if ((PMC->PMC_PCSR0 & mask) != (mask)) PMC->PMC_PCER0 = mask; \
@@ -133,13 +134,13 @@
 
 #else
 
-    // Set pin as input
+    // Set pin as input//将引脚设置为输入
   #define _SET_INPUT(IO) do{ \
     pmc_enable_periph_clk(g_APinDescription[IO].ulPeripheralId); \
     PIO_Configure(digitalPinToPort(IO), PIO_INPUT, digitalPinToBitMask(IO), 0); \
   }while(0)
 
-  // Set pin as output
+  // Set pin as output//将引脚设置为输出
   #define _SET_OUTPUT(IO) do{ \
     pmc_enable_periph_clk(g_APinDescription[IO].ulPeripheralId); \
     PIO_Configure(digitalPinToPort(IO), _READ(IO) ? PIO_OUTPUT_1 : PIO_OUTPUT_0, digitalPinToBitMask(IO), g_APinDescription[IO].ulPinConfiguration); \
@@ -147,39 +148,39 @@
   }while(0)
 #endif
 
-// Set pin as input with pullup mode
+// Set pin as input with pullup mode//使用上拉模式将引脚设置为输入
 #define _PULLUP(IO,V)        pinMode(IO, (V) ? INPUT_PULLUP : INPUT)
 
-// Read a pin (wrapper)
+// Read a pin (wrapper)//读取pin码（包装器）
 #define READ(IO)             _READ(IO)
 
-// Write to a pin (wrapper)
+// Write to a pin (wrapper)//写入pin（包装器）
 #define WRITE(IO,V)          _WRITE(IO,V)
 
-// Toggle a pin (wrapper)
+// Toggle a pin (wrapper)//切换插针（包装器）
 #define TOGGLE(IO)           _TOGGLE(IO)
 
-// Set pin as input (wrapper)
+// Set pin as input (wrapper)//将pin设置为输入（包装器）
 #define SET_INPUT(IO)        _SET_INPUT(IO)
-// Set pin as input with pullup (wrapper)
+// Set pin as input with pullup (wrapper)//使用上拉（包装器）将引脚设置为输入
 #define SET_INPUT_PULLUP(IO) do{ _SET_INPUT(IO); _PULLUP(IO, HIGH); }while(0)
-// Set pin as input with pulldown (substitution)
+// Set pin as input with pulldown (substitution)//通过下拉设置引脚作为输入（替换）
 #define SET_INPUT_PULLDOWN   SET_INPUT
 
-// Set pin as output (wrapper) -  reads the pin and sets the output to that value
+// Set pin as output (wrapper) -  reads the pin and sets the output to that value//将pin设置为输出（包装）-读取pin并将输出设置为该值
 #define SET_OUTPUT(IO)       _SET_OUTPUT(IO)
-// Set pin as PWM
+// Set pin as PWM//将引脚设置为PWM
 #define SET_PWM               SET_OUTPUT
 
-// Check if pin is an input
+// Check if pin is an input//检查引脚是否为输入
 #define IS_INPUT(IO)         ((digitalPinToPort(IO)->PIO_OSR & digitalPinToBitMask(IO)) == 0)
-// Check if pin is an output
+// Check if pin is an output//检查引脚是否为输出
 #define IS_OUTPUT(IO)        ((digitalPinToPort(IO)->PIO_OSR & digitalPinToBitMask(IO)) != 0)
 
-// Shorthand
+// Shorthand//速记
 #define OUT_WRITE(IO,V)      do{ SET_OUTPUT(IO); WRITE(IO,V); }while(0)
 
-// digitalRead/Write wrappers
+// digitalRead/Write wrappers//数字读/写包装器
 #define extDigitalRead(IO)    digitalRead(IO)
 #define extDigitalWrite(IO,V) digitalWrite(IO,V)
 
@@ -188,11 +189,11 @@
  * Added as necessary or if I feel like it- not a comprehensive list!
  */
 
-// UART
+// UART//通用异步收发器
 #define RXD        DIO0
 #define TXD        DIO1
 
-// TWI (I2C)
+// TWI (I2C)//TWI（I2C）
 #define SCL        DIO21
 #define SDA        DIO20
 
@@ -302,7 +303,7 @@
 #define DIO33_PIN 1
 #define DIO33_WPORT PIOC
 
-#if !MB(PRINTRBOARD_G2)    // normal DUE pin mapping
+#if !MB(PRINTRBOARD_G2)    // normal DUE pin mapping//正常引脚映射
 
   #define DIO34_PIN 2
   #define DIO34_WPORT PIOC
@@ -328,7 +329,7 @@
   #define DIO41_PIN 9
   #define DIO41_WPORT PIOC
 
-#endif // !PRINTRBOARD_G2
+#endif // !PRINTRBOARD_G2// !PrinterBoard_G2
 
 #define DIO42_PIN 19
 #define DIO42_WPORT PIOA
@@ -533,7 +534,7 @@
   #define DIO108_PIN 9
   #define DIO108_WPORT PIOB
 
-#else // !ARDUINO_SAM_ARCHIM
+#else // !ARDUINO_SAM_ARCHIM// !阿杜伊诺·萨姆·阿奇姆
 
   #define DIO92_PIN 5
   #define DIO92_WPORT PIOA
@@ -562,4 +563,4 @@
   #define DIO100_PIN 11
   #define DIO100_WPORT PIOC
 
-#endif // !ARDUINO_SAM_ARCHIM
+#endif // !ARDUINO_SAM_ARCHIM// !阿杜伊诺·萨姆·阿奇姆

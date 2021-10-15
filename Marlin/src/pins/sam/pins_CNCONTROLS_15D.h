@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,14 +30,14 @@
 
 #define BOARD_INFO_NAME "CN Controls V15D"
 
-//
-// Servos
-//
+////
+// Servos//伺服
+////
 #define SERVO0_PIN                             6
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_STOP_PIN                            34
 #define Y_STOP_PIN                            39
 #define Z_STOP_PIN                            62
@@ -45,9 +46,9 @@
   #define Z_MIN_PROBE_PIN                     49
 #endif
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                            14
 #define X_DIR_PIN                             25
 #define X_ENABLE_PIN                          26
@@ -68,10 +69,10 @@
 #define E1_DIR_PIN                             7
 #define E1_ENABLE_PIN                         29
 
-//
-// Temperature Sensors
-// Analog Inputs
-//
+////
+// Temperature Sensors//温度传感器
+// Analog Inputs//模拟输入
+////
 #define TEMP_0_PIN                             1
 #define TEMP_1_PIN                             2
 #define TEMP_BED_PIN                           4
@@ -80,22 +81,22 @@
   #define TEMP_CHAMBER_PIN                     5
 #endif
 
-//
-// Heaters
-//
+////
+// Heaters//加热器
+////
 #define HEATER_0_PIN                           3
 #define HEATER_1_PIN                           4
 #define HEATER_BED_PIN                        32
 #define HEATER_CHAMBER_PIN                    33
 
-//
-// Fans
-//
-//#define FAN_PIN                              8
+////
+// Fans//扇子
+////
+//#define FAN_PIN                              8//#定义风扇U引脚8
 
-//
-// Auto fans
-//
+////
+// Auto fans//汽车风扇
+////
 #define AUTO_FAN_PIN                          30
 #ifndef E0_AUTO_FAN_PIN
   #define E0_AUTO_FAN_PIN           AUTO_FAN_PIN
@@ -113,25 +114,25 @@
   #define CHAMBER_AUTO_FAN_PIN                10
 #endif
 
-//
-// SD card
-//
+////
+// SD card//SD卡
+////
 #define SD_SCK_PIN                            76
 #define SD_MISO_PIN                           74
 #define SD_MOSI_PIN                           75
 #define SDSS                                  53
 #define SD_DETECT_PIN                         40
 
-// Common I/O
+// Common I/O//通用I/O
 
-//#define PWM_1_PIN                            6  // probe
-//#define PWM_2_PIN                           13
-//#define SPARE_IO                            17
+//#define PWM_1_PIN                            6  // probe//#定义PWM_1_引脚6//探头
+//#define PWM_2_PIN                           13//#定义PWM_2_引脚13
+//#define SPARE_IO                            17//#定义备用IO 17
 #define BEEPER_PIN                            13
 #define STAT_LED_BLUE_PIN                     -1
 #define STAT_LED_RED_PIN                      31
 
-// G425 CALIBRATION_GCODE default pin
+// G425 CALIBRATION_GCODE default pin//G425校准代码默认引脚
 #ifndef CALIBRATION_PIN
   #define CALIBRATION_PIN                     66
 #endif

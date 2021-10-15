@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -109,21 +110,21 @@
       static void tick();
   };
 
-  // Provide a buzzer instance
+  // Provide a buzzer instance//提供一个蜂鸣器实例
   extern Buzzer buzzer;
 
-  // Buzz directly via the BEEPER pin tone queue
+  // Buzz directly via the BEEPER pin tone queue//通过蜂鸣器pin音队列直接鸣叫
   #define BUZZ(d,f) buzzer.tone(d, f)
 
 #elif HAS_BUZZER
 
-  // Buzz indirectly via the MarlinUI instance
+  // Buzz indirectly via the MarlinUI instance//Buzz通过MarlinUI实例间接访问
   #include "../lcd/marlinui.h"
   #define BUZZ(d,f) ui.buzz(d,f)
 
 #else
 
-  // No buzz capability
+  // No buzz capability//无嗡嗡声功能
   #define BUZZ(d,f) NOOP
 
 #endif

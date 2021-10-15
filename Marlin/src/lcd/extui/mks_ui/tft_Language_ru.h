@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -216,7 +217,7 @@
 #define AUTO_SHUTDOWN_RU                    "авто-откл"
 #define MANUAL_SHUTDOWN_RU                  "ручн-откл"
 
-#define DIALOG_CONFIRM_RU                   "да"//"подтвердить"
+#define DIALOG_CONFIRM_RU                   "да"//"подтвердить"//"подтвердить"
 #define DIALOG_CANCLE_RU                    "отмена"
 #define DIALOG_OK_RU                        "да"
 #define DIALOG_RESET_RU                     "сброс"

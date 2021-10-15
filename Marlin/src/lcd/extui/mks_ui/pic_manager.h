@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,7 +32,7 @@
 #include <string.h>
 
 #ifndef HAS_SPI_FLASH_FONT
-  #define HAS_SPI_FLASH_FONT              1 // Disabled until fix the font load code
+  #define HAS_SPI_FLASH_FONT              1 // Disabled until fix the font load code//在修复字体加载代码之前禁用
 #endif
 #ifndef HAS_GCODE_PREVIEW
   #define HAS_GCODE_PREVIEW               1
@@ -49,15 +50,15 @@
   #define HAS_LOGO_IN_FLASH 1
 #endif
 #ifndef SPI_FLASH_SIZE
-  #define SPI_FLASH_SIZE                0x1000000 // 16MB
+  #define SPI_FLASH_SIZE                0x1000000 // 16MB//16MB
 #endif
 
-#define PIC_MAX_CN           100    // Maximum number of pictures
-#define PIC_NAME_MAX_LEN      50    // Picture name maximum length
+#define PIC_MAX_CN           100    // Maximum number of pictures//最大图片数
+#define PIC_NAME_MAX_LEN      50    // Picture name maximum length//图片名称最大长度
 
 #define LOGO_MAX_SIZE_TFT35             (300*1024)
 #define LOGO_MAX_SIZE_TFT32             (150*1024)
-#define TITLELOGO_MAX_SIZE              (150*1024) // Little logo maximum
+#define TITLELOGO_MAX_SIZE              (150*1024) // Little logo maximum//小标志最大值
 #define DEFAULT_VIEW_MAX_SIZE           (200*200*2)
 #define FLASH_VIEW_MAX_SIZE             (200*200*2)
 
@@ -66,63 +67,63 @@
 #define PER_FONT_MAX_SPACE              (16*1024)
 
 #if SPI_FLASH_SIZE == 0x200000
-  //pic
-  //Robin_pro pic addr
-  #define PIC_NAME_ADDR                 0x001000      // Pic information addr
-  #define PIC_SIZE_ADDR                 0x001800      // Pic size information addr
-  #define PIC_COUNTER_ADDR              0x002000      // Pic total number
-  #define PER_PIC_SAVE_ADDR             0x000000      // Storage address of each picture
-  #define PIC_LOGO_ADDR                 0x000000      // Logo addr
-  #define PIC_DATA_ADDR                 0x003000      //
+  //pic//图片
+  //Robin_pro pic addr//Robin_专业地址
+  #define PIC_NAME_ADDR                 0x001000      // Pic information addr//图片信息地址
+  #define PIC_SIZE_ADDR                 0x001800      // Pic size information addr//图片大小信息地址
+  #define PIC_COUNTER_ADDR              0x002000      // Pic total number//图片总数
+  #define PER_PIC_SAVE_ADDR             0x000000      // Storage address of each picture//每张图片的存储地址
+  #define PIC_LOGO_ADDR                 0x000000      // Logo addr//标识地址
+  #define PIC_DATA_ADDR                 0x003000      ////
 
-  // TFT35
+  // TFT35//TFT35
   #define DEFAULT_VIEW_ADDR_TFT35       0x1EA070
   #define BAK_VIEW_ADDR_TFT35           (DEFAULT_VIEW_ADDR_TFT35+90*1024)
   #define PIC_ICON_LOGO_ADDR_TFT35      (BAK_VIEW_ADDR_TFT35+80*1024)
-  #define PIC_DATA_ADDR_TFT35           0x003000 // (PIC_ICON_LOGO_ADDR_TFT35+350*1024) //0xC5800
+  #define PIC_DATA_ADDR_TFT35           0x003000 // (PIC_ICON_LOGO_ADDR_TFT35+350*1024) //0xC5800//（图片图标图标地址TFT35+350*1024）//0xC5800
 
   #define PIC_DATA_ADDR_TFT32           0x00F000
   #define PIC_ICON_LOGO_ADDR_TFT32      0x5D8000
   #define PIC_OTHER_SIZE_ADDR_TFT32     0x5EE000
 
-  // font
-  #define FONTINFOADDR                  0x150000 // 6M -- font addr
-  #define UNIGBK_FLASH_ADDR            (FONTINFOADDR+4096) // 4*1024
+  // font//字体
+  #define FONTINFOADDR                  0x150000 // 6M -- font addr//6M——字体地址
+  #define UNIGBK_FLASH_ADDR            (FONTINFOADDR+4096) // 4*1024// 4*1024
 
 #else
-  //pic
-  //Robin_pro pic addr
-  #define PIC_NAME_ADDR                 0x003000      // Pic information addr
-  #define PIC_SIZE_ADDR                 0x007000      // Pic size information addr
-  #define PIC_COUNTER_ADDR              0x008000      // Pic total number
-  #define PIC_LOGO_ADDR                 0x009000      // Logo addr
+  //pic//图片
+  //Robin_pro pic addr//Robin_专业地址
+  #define PIC_NAME_ADDR                 0x003000      // Pic information addr//图片信息地址
+  #define PIC_SIZE_ADDR                 0x007000      // Pic size information addr//图片大小信息地址
+  #define PIC_COUNTER_ADDR              0x008000      // Pic total number//图片总数
+  #define PIC_LOGO_ADDR                 0x009000      // Logo addr//标识地址
 
-  // TFT35
+  // TFT35//TFT35
   #define DEFAULT_VIEW_ADDR_TFT35       0xC5800
   #define BAK_VIEW_ADDR_TFT35           (DEFAULT_VIEW_ADDR_TFT35+90*1024)
   #define PIC_ICON_LOGO_ADDR_TFT35      (BAK_VIEW_ADDR_TFT35+80*1024)
-  #define PIC_DATA_ADDR_TFT35           (PIC_ICON_LOGO_ADDR_TFT35+350*1024) //0xC5800
+  #define PIC_DATA_ADDR_TFT35           (PIC_ICON_LOGO_ADDR_TFT35+350*1024) //0xC5800//0xC5800
 
-  // TFT32
+  // TFT32//TFT32
   #define PIC_DATA_ADDR_TFT32           0x02F000
   #define PIC_ICON_LOGO_ADDR_TFT32      0x5D8000
   #define PIC_OTHER_SIZE_ADDR_TFT32     0x5EE000
 
-  // font
-  #define FONTINFOADDR                  0x600000 // 6M -- font addr
-  #define UNIGBK_FLASH_ADDR            (FONTINFOADDR+4096) // 4*1024
-  #define GBK_FLASH_ADDR               (UNIGBK_FLASH_ADDR+180224) // 176*1024
+  // font//字体
+  #define FONTINFOADDR                  0x600000 // 6M -- font addr//6M——字体地址
+  #define UNIGBK_FLASH_ADDR            (FONTINFOADDR+4096) // 4*1024// 4*1024
+  #define GBK_FLASH_ADDR               (UNIGBK_FLASH_ADDR+180224) // 176*1024// 176*1024
 
 #endif
 
-// Flash flag
+// Flash flag//闪光旗
 #define REFLSHE_FLGA_ADD                (0x800000-32)
 
-// SD card information first addr
+// SD card information first addr//SD卡信息第一地址
 #define VAR_INF_ADDR                    0x000000
 #define FLASH_INF_VALID_FLAG            0x20201118
 
-//Store some gcode commands, such as auto leveling commands
+//Store some gcode commands, such as auto leveling commands//存储一些gcode命令，例如自动调平命令
 #define GCODE_COMMAND_ADDR              VAR_INF_ADDR + 3*1024
 #define AUTO_LEVELING_COMMAND_ADDR      GCODE_COMMAND_ADDR
 #define OTHERS_COMMAND_ADDR_1           AUTO_LEVELING_COMMAND_ADDR + 100
@@ -139,7 +140,7 @@ union union32 {
   uint32_t dwords;
 };
 
-// pic information
+// pic information//图片信息
 struct pic_msg {
   uint8_t name[PIC_NAME_MAX_LEN];
   union union32 size;

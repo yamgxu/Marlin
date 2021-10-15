@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Copyright (C) 2011 Circuits At Home, LTD. All rights reserved.
  *
@@ -74,4 +75,4 @@ bool PTPListParser::Parse(uint8_t **pp, uint16_t *pcntdn, PTP_ARRAY_EL_FUNC pf, 
   return true;
 }
 
-#endif // USB_FLASH_DRIVE_SUPPORT
+#endif // USB_FLASH_DRIVE_SUPPORT//USB闪存驱动器支持

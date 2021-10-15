@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -36,7 +37,7 @@
 
 TFT SPI_TFT;
 
-// use SPI1 for the spi tft.
+// use SPI1 for the spi tft.//spi tft使用SPI1。
 void TFT::spi_init(uint8_t spiRate) {
   tftio.Init();
 }
@@ -83,4 +84,4 @@ void TFT::LCD_Draw_Logo() {
   #endif
 }
 
-#endif // HAS_TFT_LVGL_UI
+#endif // HAS_TFT_LVGL_UI//有TFT\U LVGL\U用户界面

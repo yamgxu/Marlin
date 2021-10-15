@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -33,10 +34,10 @@
 #define USB_DEBUG         1
 #define USB_STARTUP_DELAY 0
 
-// uncomment to get 'printf' console debugging. NOT FOR UNO!
-//#define HOST_DEBUG(...)     {char s[255]; sprintf(s,__VA_ARGS__); SERIAL_ECHOLNPAIR("UHS:",s);}
-//#define BS_HOST_DEBUG(...)  {char s[255]; sprintf(s,__VA_ARGS__); SERIAL_ECHOLNPAIR("UHS:",s);}
-//#define MAX_HOST_DEBUG(...) {char s[255]; sprintf(s,__VA_ARGS__); SERIAL_ECHOLNPAIR("UHS:",s);}
+// uncomment to get 'printf' console debugging. NOT FOR UNO!//取消注释以获取“printf”控制台调试。不适合乌诺！
+//#define HOST_DEBUG(...)     {char s[255]; sprintf(s,__VA_ARGS__); SERIAL_ECHOLNPAIR("UHS:",s);}//#定义主机调试（…）{char s[255]；sprintf（s，uu VA_ARGS）；（UHS:，s）；}
+//#define BS_HOST_DEBUG(...)  {char s[255]; sprintf(s,__VA_ARGS__); SERIAL_ECHOLNPAIR("UHS:",s);}//#定义BS_HOST_DEBUG（…）{char s[255]；sprintf（s，u VA_ARGS）；；SERIAL_ECHOLNPAIR（“UHS:，s）；}
+//#define MAX_HOST_DEBUG(...) {char s[255]; sprintf(s,__VA_ARGS__); SERIAL_ECHOLNPAIR("UHS:",s);}//#定义MAX_HOST_DEBUG（…）{char s[255]；sprintf（s，u VA_ARGS）；SERIAL_ECHOLNPAIR（“UHS:，s）；}
 
 #if ENABLED(USB_FLASH_DRIVE_SUPPORT)
 
@@ -56,12 +57,12 @@
   #define MASS_MAX_SUPPORTED_LUN 1
   #define USB_HOST_SERIAL MYSERIAL1
 
-  // Workaround for certain issues with UHS3
-  #define SKIP_PAGE3F // Required for IOGEAR media adapter
-  #define USB_NO_TEST_UNIT_READY // Required for removable media adapter
-  #define USB_HOST_MANUAL_POLL // Optimization to shut off IRQ automatically
+  // Workaround for certain issues with UHS3//UHS3某些问题的解决方法
+  #define SKIP_PAGE3F // Required for IOGEAR media adapter//iGear媒体适配器需要
+  #define USB_NO_TEST_UNIT_READY // Required for removable media adapter//可移动媒体适配器需要
+  #define USB_HOST_MANUAL_POLL // Optimization to shut off IRQ automatically//自动关闭IRQ的优化
 
-  // Workarounds for keeping Marlin's watchdog timer from barking...
+  // Workarounds for keeping Marlin's watchdog timer from barking...//防止马林的看门狗定时器吠叫的变通方法。。。
   void marlin_yield() {
     thermalManager.manage_heater();
   }
@@ -130,7 +131,7 @@ bool DiskIODriver_USBFlash::usbStartup() {
       return false;
     }
 
-    // SPI quick test - check revision register
+    // SPI quick test - check revision register//SPI快速测试-检查修订寄存器
     switch (usb.regRd(rREVISION)) {
       case 0x01: SERIAL_ECHOLNPGM("rev.01 started"); break;
       case 0x12: SERIAL_ECHOLNPGM("rev.02 started"); break;
@@ -142,10 +143,10 @@ bool DiskIODriver_USBFlash::usbStartup() {
   return true;
 }
 
-// The USB library needs to be called periodically to detect USB thumbdrive
-// insertion and removals. Call this idle() function periodically to allow
-// the USB library to monitor for such events. This function also takes care
-// of initializing the USB library for the first time.
+// The USB library needs to be called periodically to detect USB thumbdrive//需要定期调用USB库以检测USB thumbdrive
+// insertion and removals. Call this idle() function periodically to allow//插入和删除。定期调用此idle（）函数以允许
+// the USB library to monitor for such events. This function also takes care//用于监视此类事件的USB库。此功能也会起作用
+// of initializing the USB library for the first time.//第一次初始化USB库。
 
 void DiskIODriver_USBFlash::idle() {
   usb.Task();
@@ -182,7 +183,7 @@ void DiskIODriver_USBFlash::idle() {
   #define GOTO_STATE_AFTER_DELAY(STATE, DELAY) do{ state = STATE; next_state_ms  = millis() + DELAY; }while(0)
 
   if (ELAPSED(millis(), next_state_ms)) {
-    GOTO_STATE_AFTER_DELAY(state, 250); // Default delay
+    GOTO_STATE_AFTER_DELAY(state, 250); // Default delay//默认延迟
 
     switch (state) {
 
@@ -214,7 +215,7 @@ void DiskIODriver_USBFlash::idle() {
         }
         else {
           #ifdef USB_HOST_MANUAL_POLL
-            // Make sure we catch disconnect events
+            // Make sure we catch disconnect events//确保我们捕捉到断开连接的事件
             usb.busprobe();
             usb.VBUS_changed();
           #endif
@@ -231,7 +232,7 @@ void DiskIODriver_USBFlash::idle() {
     }
 
     if (state > WAIT_FOR_DEVICE && task_state != UHS_STATE(RUNNING)) {
-      // Handle device removal events
+      // Handle device removal events//处理设备删除事件
       #if USB_DEBUG >= 1
         SERIAL_ECHOLNPGM("USB device removed");
       #endif
@@ -241,7 +242,7 @@ void DiskIODriver_USBFlash::idle() {
     }
 
     else if (state > WAIT_FOR_LUN && !bulk.LUNIsGood(0)) {
-      // Handle media removal events
+      // Handle media removal events//处理媒体删除事件
       #if USB_DEBUG >= 1
         SERIAL_ECHOLNPGM("Media removed");
       #endif
@@ -256,8 +257,8 @@ void DiskIODriver_USBFlash::idle() {
   }
 }
 
-// Marlin calls this function to check whether an USB drive is inserted.
-// This is equivalent to polling the SD_DETECT when using SD cards.
+// Marlin calls this function to check whether an USB drive is inserted.//Marlin调用此函数检查是否插入了USB驱动器。
+// This is equivalent to polling the SD_DETECT when using SD cards.//这相当于在使用SD卡时轮询SDU检测。
 bool DiskIODriver_USBFlash::isInserted() {
   return state == MEDIA_READY;
 }
@@ -266,7 +267,7 @@ bool DiskIODriver_USBFlash::isReady() {
   return state > DO_STARTUP && usb.getUsbTaskState() == UHS_STATE(RUNNING);
 }
 
-// Marlin calls this to initialize an SD card once it is inserted.
+// Marlin calls this to initialize an SD card once it is inserted.//Marlin调用此函数以在SD卡插入后初始化SD卡。
 bool DiskIODriver_USBFlash::init(const uint8_t, const pin_t) {
   if (!isInserted()) return false;
 
@@ -285,7 +286,7 @@ bool DiskIODriver_USBFlash::init(const uint8_t, const pin_t) {
   return true;
 }
 
-// Returns the capacity of the card in blocks.
+// Returns the capacity of the card in blocks.//以块为单位返回卡的容量。
 uint32_t DiskIODriver_USBFlash::cardSize() {
   if (!isInserted()) return false;
   #if USB_DEBUG < 3
@@ -323,4 +324,4 @@ bool DiskIODriver_USBFlash::writeBlock(uint32_t block, const uint8_t *src) {
   return bulk.Write(0, block, 512, 1, src) == 0;
 }
 
-#endif // USB_FLASH_DRIVE_SUPPORT
+#endif // USB_FLASH_DRIVE_SUPPORT//USB闪存驱动器支持

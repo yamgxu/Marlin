@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -35,120 +36,120 @@ public:
 
   static bool loop();
 
-  // Send all 4 strings that are displayed on the infoscreen, confirmation screen and kill screen
-  // The bools specifing whether the strings are in RAM or FLASH.
+  // Send all 4 strings that are displayed on the infoscreen, confirmation screen and kill screen//发送信息屏幕、确认屏幕和终止屏幕上显示的所有4个字符串
+  // The bools specifing whether the strings are in RAM or FLASH.//指定字符串是在RAM中还是在FLASH中的布尔值。
   static void sendinfoscreen(const char *line1, const char *line2, const char *line3, const char *line4, bool l1inflash, bool l2inflash, bool l3inflash, bool liinflash);
 
   static void HandleUserConfirmationPopUp(uint16_t ConfirmVP, const char *line1, const char *line2, const char *line3, const char *line4, bool l1inflash, bool l2inflash, bool l3inflash, bool liinflash);
 
-  // "M117" Message -- msg is a RAM ptr.
+  // "M117" Message -- msg is a RAM ptr.//“M117”消息——msg是一个RAM ptr。
   static void setstatusmessage(const char *msg);
-  // The same for messages from Flash
+  // The same for messages from Flash//来自Flash的消息也是如此
   static void setstatusmessagePGM(PGM_P const msg);
-  // Callback for VP "Display wants to change screen on idle printer"
+  // Callback for VP "Display wants to change screen on idle printer"//VP“显示器想更改闲置打印机上的屏幕”的回调
   static void ScreenChangeHookIfIdle(DGUS_VP_Variable &var, void *val_ptr);
-  // Callback for VP "Screen has been changed"
+  // Callback for VP "Screen has been changed"//VP“屏幕已更改”的回调
   static void ScreenChangeHook(DGUS_VP_Variable &var, void *val_ptr);
 
-  // Callback for VP "All Heaters Off"
+  // Callback for VP "All Heaters Off"//回拨VP“所有加热器关闭”
   static void HandleAllHeatersOff(DGUS_VP_Variable &var, void *val_ptr);
-  // Hook for "Change this temperature"
+  // Hook for "Change this temperature"//勾选“改变此温度”
   static void HandleTemperatureChanged(DGUS_VP_Variable &var, void *val_ptr);
-  // Hook for "Change Flowrate"
+  // Hook for "Change Flowrate"//用于“改变流量”的挂钩
   static void HandleFlowRateChanged(DGUS_VP_Variable &var, void *val_ptr);
   #if ENABLED(DGUS_UI_MOVE_DIS_OPTION)
-    // Hook for manual move option
+    // Hook for manual move option//手动移动选项的挂钩
     static void HandleManualMoveOption(DGUS_VP_Variable &var, void *val_ptr);
   #endif
 
-  // Hook for manual move.
+  // Hook for manual move.//用于手动移动的挂钩。
   static void HandleManualMove(DGUS_VP_Variable &var, void *val_ptr);
-  // Hook for manual extrude.
+  // Hook for manual extrude.//手动挤压的挂钩。
   static void HandleManualExtrude(DGUS_VP_Variable &var, void *val_ptr);
-  // Hook for motor lock and unlook
+  // Hook for motor lock and unlook//电机锁钩和解锁钩
   static void HandleMotorLockUnlock(DGUS_VP_Variable &var, void *val_ptr);
   #if ENABLED(POWER_LOSS_RECOVERY)
-    // Hook for power loss recovery.
+    // Hook for power loss recovery.//电源损耗恢复挂钩。
     static void HandlePowerLossRecovery(DGUS_VP_Variable &var, void *val_ptr);
   #endif
-  // Hook for settings
+  // Hook for settings//设置挂钩
   static void HandleSettings(DGUS_VP_Variable &var, void *val_ptr);
   static void HandleStepPerMMChanged(DGUS_VP_Variable &var, void *val_ptr);
   static void HandleStepPerMMExtruderChanged(DGUS_VP_Variable &var, void *val_ptr);
 
   #if HAS_PID_HEATING
-    // Hook for "Change this temperature PID para"
+    // Hook for "Change this temperature PID para"//“更改此温度PID参数”的挂钩
     static void HandleTemperaturePIDChanged(DGUS_VP_Variable &var, void *val_ptr);
-    // Hook for PID autotune
+    // Hook for PID autotune//PID自动调谐挂钩
     static void HandlePIDAutotune(DGUS_VP_Variable &var, void *val_ptr);
   #endif
   #if HAS_BED_PROBE
-    // Hook for "Change probe offset z"
+    // Hook for "Change probe offset z"//“更改探针偏移z”的挂钩
     static void HandleProbeOffsetZChanged(DGUS_VP_Variable &var, void *val_ptr);
   #endif
   #if ENABLED(BABYSTEPPING)
-    // Hook for live z adjust action
+    // Hook for live z adjust action//活z调整动作挂钩
     static void HandleLiveAdjustZ(DGUS_VP_Variable &var, void *val_ptr);
   #endif
   #if HAS_FAN
-    // Hook for fan control
+    // Hook for fan control//风扇控制钩
     static void HandleFanControl(DGUS_VP_Variable &var, void *val_ptr);
   #endif
-  // Hook for heater control
+  // Hook for heater control//加热器控制钩
   static void HandleHeaterControl(DGUS_VP_Variable &var, void *val_ptr);
   #if ENABLED(DGUS_PREHEAT_UI)
-    // Hook for preheat
+    // Hook for preheat//预热钩
     static void HandlePreheat(DGUS_VP_Variable &var, void *val_ptr);
   #endif
   #if ENABLED(DGUS_FILAMENT_LOADUNLOAD)
-    // Hook for filament load and unload filament option
+    // Hook for filament load and unload filament option//灯丝装载和卸载灯丝选件的挂钩
     static void HandleFilamentOption(DGUS_VP_Variable &var, void *val_ptr);
-    // Hook for filament load and unload
+    // Hook for filament load and unload//灯丝装卸挂钩
     static void HandleFilamentLoadUnload(DGUS_VP_Variable &var);
   #endif
 
   #if ENABLED(SDSUPPORT)
-    // Callback for VP "Display wants to change screen when there is a SD card"
+    // Callback for VP "Display wants to change screen when there is a SD card"//VP“当有SD卡时显示器想改变屏幕”的回调
     static void ScreenChangeHookIfSD(DGUS_VP_Variable &var, void *val_ptr);
-    // Scroll buttons on the file listing screen.
+    // Scroll buttons on the file listing screen.//文件列表屏幕上的滚动按钮。
     static void DGUSLCD_SD_ScrollFilelist(DGUS_VP_Variable &var, void *val_ptr);
-    // File touched.
+    // File touched.//文件被触动了。
     static void DGUSLCD_SD_FileSelected(DGUS_VP_Variable &var, void *val_ptr);
-    // start print after confirmation received.
+    // start print after confirmation received.//收到确认后开始打印。
     static void DGUSLCD_SD_StartPrint(DGUS_VP_Variable &var, void *val_ptr);
-    // User hit the pause, resume or abort button.
+    // User hit the pause, resume or abort button.//用户点击暂停、恢复或中止按钮。
     static void DGUSLCD_SD_ResumePauseAbort(DGUS_VP_Variable &var, void *val_ptr);
-    // User confirmed the abort action
+    // User confirmed the abort action//用户确认了中止操作
     static void DGUSLCD_SD_ReallyAbort(DGUS_VP_Variable &var, void *val_ptr);
-    // User hit the tune button
+    // User hit the tune button//用户点击调谐按钮
     static void DGUSLCD_SD_PrintTune(DGUS_VP_Variable &var, void *val_ptr);
-    // Send a single filename to the display.
+    // Send a single filename to the display.//向显示器发送单个文件名。
     static void DGUSLCD_SD_SendFilename(DGUS_VP_Variable &var);
-    // Marlin informed us that a new SD has been inserted.
+    // Marlin informed us that a new SD has been inserted.//Marlin通知我们已插入一个新的SD。
     static void SDCardInserted();
-    // Marlin informed us that the SD Card has been removed().
+    // Marlin informed us that the SD Card has been removed().//Marlin通知我们SD卡已被移除（）。
     static void SDCardRemoved();
-    // Marlin informed us about a bad SD Card.
+    // Marlin informed us about a bad SD Card.//马林告诉我们SD卡坏了。
     static void SDCardError();
   #endif
 
-  // OK Button the Confirm screen.
+  // OK Button the Confirm screen.//确认屏幕上的OK按钮。
   static void ScreenConfirmedOK(DGUS_VP_Variable &var, void *val_ptr);
 
-  // Update data after went to new screen (by display or by GotoScreen)
-  // remember: store the last-displayed screen, so it can get returned to.
-  // (e.g for pop up messages)
+  // Update data after went to new screen (by display or by GotoScreen)//转到新屏幕后更新数据（通过显示器或GotoScreen）
+  // remember: store the last-displayed screen, so it can get returned to.//记住：存储最后显示的屏幕，以便返回到。
+  // (e.g for pop up messages)//（例如，用于弹出消息）
   static void UpdateNewScreen(DGUSLCD_Screens newscreen, bool popup=false);
 
-  // Recall the remembered screen.
+  // Recall the remembered screen.//回忆记忆中的屏幕。
   static void PopToOldScreen();
 
-  // Make the display show the screen and update all VPs in it.
+  // Make the display show the screen and update all VPs in it.//使显示屏显示屏幕并更新其中的所有VP。
   static void GotoScreen(DGUSLCD_Screens screen, bool ispopup = false);
 
   static void UpdateScreenVPData();
 
-  // Helpers to convert and transfer data to the display.
+  // Helpers to convert and transfer data to the display.//用于将数据转换和传输到显示器的助手。
   static void DGUSLCD_SendWordValueToDisplay(DGUS_VP_Variable &var);
   static void DGUSLCD_SendStringToDisplay(DGUS_VP_Variable &var);
   static void DGUSLCD_SendStringToDisplayPGM(DGUS_VP_Variable &var);
@@ -169,7 +170,7 @@ public:
     static void DGUSLCD_SendWaitingStatusToDisplay(DGUS_VP_Variable &var);
   #endif
 
-  // Send a value from 0..100 to a variable with a range from 0..255
+  // Send a value from 0..100 to a variable with a range from 0..255//将0..100的值发送到范围为0..255的变量
   static void DGUSLCD_PercentageToUint8(DGUS_VP_Variable &var, void *val_ptr);
 
   template<typename T>
@@ -181,9 +182,9 @@ public:
     *(T*)var.memadr = x.t;
   }
 
-  // Send a float value to the display.
-  // Display will get a 4-byte integer scaled to the number of digits:
-  // Tell the display the number of digits and it cheats by displaying a dot between...
+  // Send a float value to the display.//向显示器发送浮点值。
+  // Display will get a 4-byte integer scaled to the number of digits://显示器将获得一个按位数缩放的4字节整数：
+  // Tell the display the number of digits and it cheats by displaying a dot between...//告诉显示器数字的数量，它通过在…之间显示一个点来作弊。。。
   template<unsigned int decimals>
   static void DGUSLCD_SendFloatAsLongValueToDisplay(DGUS_VP_Variable &var) {
     if (var.memadr) {
@@ -193,9 +194,9 @@ public:
     }
   }
 
-  // Send a float value to the display.
-  // Display will get a 2-byte integer scaled to the number of digits:
-  // Tell the display the number of digits and it cheats by displaying a dot between...
+  // Send a float value to the display.//向显示器发送浮点值。
+  // Display will get a 2-byte integer scaled to the number of digits://显示器将获得一个按位数缩放的2字节整数：
+  // Tell the display the number of digits and it cheats by displaying a dot between...//告诉显示器数字的数量，它通过在…之间显示一个点来作弊。。。
   template<unsigned int decimals>
   static void DGUSLCD_SendFloatAsIntValueToDisplay(DGUS_VP_Variable &var) {
     if (var.memadr) {
@@ -206,9 +207,9 @@ public:
     }
   }
 
-  // Force an update of all VP on the current screen.
+  // Force an update of all VP on the current screen.//强制更新当前屏幕上的所有VP。
   static inline void ForceCompleteUpdate() { update_ptr = 0; ScreenComplete = false; }
-  // Has all VPs sent to the screen
+  // Has all VPs sent to the screen//是否已将所有VP发送到屏幕
   static inline bool IsScreenComplete() { return ScreenComplete; }
 
   static inline DGUSLCD_Screens getCurrentScreen() { return current_screen; }
@@ -216,19 +217,19 @@ public:
   static inline void SetupConfirmAction( void (*f)()) { confirm_action_cb = f; }
 
 private:
-  static DGUSLCD_Screens current_screen;  //< currently on screen
+  static DGUSLCD_Screens current_screen;  //< currently on screen//<当前在屏幕上
   static constexpr uint8_t NUM_PAST_SCREENS = 4;
-  static DGUSLCD_Screens past_screens[NUM_PAST_SCREENS]; //< LIFO with past screens for the "back" button.
+  static DGUSLCD_Screens past_screens[NUM_PAST_SCREENS]; //< LIFO with past screens for the "back" button.//<后进先出与“后退”按钮的过去屏幕。
 
-  static uint8_t update_ptr;      //< Last sent entry in the VPList for the actual screen.
-  static uint16_t skipVP;         //< When updating the screen data, skip this one, because the user is interacting with it.
-  static bool ScreenComplete;     //< All VPs sent to screen?
+  static uint8_t update_ptr;      //< Last sent entry in the VPList for the actual screen.//<实际屏幕的VPList中最后发送的条目。
+  static uint16_t skipVP;         //< When updating the screen data, skip this one, because the user is interacting with it.//<更新屏幕数据时，跳过此数据，因为用户正在与之交互。
+  static bool ScreenComplete;     //< All VPs sent to screen?//<是否将所有VP发送到屏幕？
 
-  static uint16_t ConfirmVP;      //< context for confirm screen (VP that will be emulated-sent on "OK").
+  static uint16_t ConfirmVP;      //< context for confirm screen (VP that will be emulated-sent on "OK").//<确认屏幕的上下文（将在“确定”时发送模拟的VP）。
 
   #if ENABLED(SDSUPPORT)
-    static int16_t top_file;      //< file on top of file chooser
-    static int16_t file_to_print; //< touched file to be confirmed
+    static int16_t top_file;      //< file on top of file chooser//<文件选择器顶部的文件
+    static int16_t file_to_print; //< touched file to be confirmed//<待确认的文件
   #endif
 
   static void (*confirm_action_cb)();

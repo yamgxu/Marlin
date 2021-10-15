@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,7 +32,7 @@
 #define DISPLAY_CHARSET_ISO10646_GREEK
 
 namespace Language_el {
-  using namespace Language_en; // Inherit undefined strings from English
+  using namespace Language_en; // Inherit undefined strings from English//从英语中继承未定义的字符串
 
   constexpr uint8_t    CHARSIZE                            = 2;
   PROGMEM Language_Str LANGUAGE                            = _UxGT("Greek");
@@ -42,16 +43,16 @@ namespace Language_el {
   PROGMEM Language_Str MSG_MAIN                            = _UxGT("Βασική Οθόνη");
   PROGMEM Language_Str MSG_RUN_AUTO_FILES                  = _UxGT("Αυτόματη εκκίνηση");
   PROGMEM Language_Str MSG_DISABLE_STEPPERS                = _UxGT("Απενεργοποίηση Μοτέρ");
-  PROGMEM Language_Str MSG_AUTO_HOME                       = _UxGT("Αυτομ. επαναφορά στο αρχικό σημείο"); //SHORTEN
+  PROGMEM Language_Str MSG_AUTO_HOME                       = _UxGT("Αυτομ. επαναφορά στο αρχικό σημείο"); //SHORTEN//缩短
   PROGMEM Language_Str MSG_AUTO_HOME_X                     = _UxGT("Αρχικό σημείο X");
   PROGMEM Language_Str MSG_AUTO_HOME_Y                     = _UxGT("Αρχικό σημείο Y");
   PROGMEM Language_Str MSG_AUTO_HOME_Z                     = _UxGT("Αρχικό σημείο Z");
-  PROGMEM Language_Str MSG_LEVEL_BED_HOMING                = _UxGT("Επαναφορά Επ. Εκτύπωσης"); //SHORTEN
-  PROGMEM Language_Str MSG_LEVEL_BED_WAITING               = _UxGT("Επιπεδοποίηση επ. Εκτύπωσης περιμενει"); //SHORTEN
+  PROGMEM Language_Str MSG_LEVEL_BED_HOMING                = _UxGT("Επαναφορά Επ. Εκτύπωσης"); //SHORTEN//缩短
+  PROGMEM Language_Str MSG_LEVEL_BED_WAITING               = _UxGT("Επιπεδοποίηση επ. Εκτύπωσης περιμενει"); //SHORTEN//缩短
   PROGMEM Language_Str MSG_LEVEL_BED_NEXT_POINT            = _UxGT("Επόμενο σημείο");
-  PROGMEM Language_Str MSG_LEVEL_BED_DONE                  = _UxGT("Ολοκλήρωση επιπεδοποίησης!"); //SHORTEN
-  PROGMEM Language_Str MSG_SET_HOME_OFFSETS                = _UxGT("Ορισμός βασικών μετατοπίσεων"); //SHORTEN
-  PROGMEM Language_Str MSG_HOME_OFFSETS_APPLIED            = _UxGT("Εφαρμόστηκαν οι μετατοπίσεις"); //SHORTEN
+  PROGMEM Language_Str MSG_LEVEL_BED_DONE                  = _UxGT("Ολοκλήρωση επιπεδοποίησης!"); //SHORTEN//缩短
+  PROGMEM Language_Str MSG_SET_HOME_OFFSETS                = _UxGT("Ορισμός βασικών μετατοπίσεων"); //SHORTEN//缩短
+  PROGMEM Language_Str MSG_HOME_OFFSETS_APPLIED            = _UxGT("Εφαρμόστηκαν οι μετατοπίσεις"); //SHORTEN//缩短
   PROGMEM Language_Str MSG_SET_ORIGIN                      = _UxGT("Ορισμός προέλευσης");
   #if PREHEAT_COUNT
     PROGMEM Language_Str MSG_PREHEAT_1                     = _UxGT("Προθέρμανση ") PREHEAT_1_LABEL;
@@ -59,16 +60,16 @@ namespace Language_el {
     PROGMEM Language_Str MSG_PREHEAT_1_END                 = _UxGT("Προθέρμανση ") PREHEAT_1_LABEL _UxGT(" End");
     PROGMEM Language_Str MSG_PREHEAT_1_END_E               = _UxGT("Προθέρμανση ") PREHEAT_1_LABEL _UxGT(" End ~");
     PROGMEM Language_Str MSG_PREHEAT_1_ALL                 = _UxGT("Προθέρμανση ") PREHEAT_1_LABEL _UxGT(" όλα");
-    PROGMEM Language_Str MSG_PREHEAT_1_BEDONLY             = _UxGT("Προθέρμανση ") PREHEAT_1_LABEL _UxGT(" bed"); //SHORTEN
-    PROGMEM Language_Str MSG_PREHEAT_1_SETTINGS            = _UxGT("Προθέρμανση ") PREHEAT_1_LABEL _UxGT(" επιβεβαίωση"); //SHORTEN
+    PROGMEM Language_Str MSG_PREHEAT_1_BEDONLY             = _UxGT("Προθέρμανση ") PREHEAT_1_LABEL _UxGT(" bed"); //SHORTEN//缩短
+    PROGMEM Language_Str MSG_PREHEAT_1_SETTINGS            = _UxGT("Προθέρμανση ") PREHEAT_1_LABEL _UxGT(" επιβεβαίωση"); //SHORTEN//缩短
 
     PROGMEM Language_Str MSG_PREHEAT_M                     = _UxGT("Προθέρμανση $");
     PROGMEM Language_Str MSG_PREHEAT_M_H                   = _UxGT("Προθέρμανση $ ~");
     PROGMEM Language_Str MSG_PREHEAT_M_END                 = _UxGT("Προθέρμανση $ End");
     PROGMEM Language_Str MSG_PREHEAT_M_END_E               = _UxGT("Προθέρμανση $ End ~");
     PROGMEM Language_Str MSG_PREHEAT_M_ALL                 = _UxGT("Προθέρμανση $ όλα");
-    PROGMEM Language_Str MSG_PREHEAT_M_BEDONLY             = _UxGT("Προθέρμανση $ bed"); //SHORTEN
-    PROGMEM Language_Str MSG_PREHEAT_M_SETTINGS            = _UxGT("Προθέρμανση $ επιβεβαίωση"); //SHORTEN
+    PROGMEM Language_Str MSG_PREHEAT_M_BEDONLY             = _UxGT("Προθέρμανση $ bed"); //SHORTEN//缩短
+    PROGMEM Language_Str MSG_PREHEAT_M_SETTINGS            = _UxGT("Προθέρμανση $ επιβεβαίωση"); //SHORTEN//缩短
   #endif
   PROGMEM Language_Str MSG_COOLDOWN                        = _UxGT("Μειωση θερμοκρασιας");
   PROGMEM Language_Str MSG_SWITCH_PS_ON                    = _UxGT("Ενεργοποίηση");
@@ -76,8 +77,8 @@ namespace Language_el {
   PROGMEM Language_Str MSG_EXTRUDE                         = _UxGT("Εξώθηση");
   PROGMEM Language_Str MSG_RETRACT                         = _UxGT("Ανάσυρση");
   PROGMEM Language_Str MSG_MOVE_AXIS                       = _UxGT("Μετακίνηση άξονα");
-  PROGMEM Language_Str MSG_BED_LEVELING                    = _UxGT("Επιπεδοποίηση Επ. Εκτύπωσης"); //SHORTEN
-  PROGMEM Language_Str MSG_LEVEL_BED                       = _UxGT("Επιπεδοποίηση Επ. Εκτύπωσης"); //SHORTEN
+  PROGMEM Language_Str MSG_BED_LEVELING                    = _UxGT("Επιπεδοποίηση Επ. Εκτύπωσης"); //SHORTEN//缩短
+  PROGMEM Language_Str MSG_LEVEL_BED                       = _UxGT("Επιπεδοποίηση Επ. Εκτύπωσης"); //SHORTEN//缩短
   PROGMEM Language_Str MSG_MOVE_X                          = _UxGT("Μετακίνηση X");
   PROGMEM Language_Str MSG_MOVE_Y                          = _UxGT("Μετακίνηση Y");
   PROGMEM Language_Str MSG_MOVE_Z                          = _UxGT("Μετακίνηση Z");
@@ -101,7 +102,7 @@ namespace Language_el {
   PROGMEM Language_Str MSG_MIN                             = " " LCD_STR_THERMOMETER _UxGT(" Min");
   PROGMEM Language_Str MSG_MAX                             = " " LCD_STR_THERMOMETER _UxGT(" Max");
   PROGMEM Language_Str MSG_FACTOR                          = " " LCD_STR_THERMOMETER _UxGT(" Fact");
-  PROGMEM Language_Str MSG_AUTOTEMP                        = _UxGT("Αυτομ ρύθμιση θερ/σίας"); //SHORTEN
+  PROGMEM Language_Str MSG_AUTOTEMP                        = _UxGT("Αυτομ ρύθμιση θερ/σίας"); //SHORTEN//缩短
   PROGMEM Language_Str MSG_LCD_ON                          = _UxGT("Ενεργοποιημένο");
   PROGMEM Language_Str MSG_LCD_OFF                         = _UxGT("Απενεργοποιημένο");
   PROGMEM Language_Str MSG_ACC                             = _UxGT("Επιτάχυνση");
@@ -139,7 +140,7 @@ namespace Language_el {
   PROGMEM Language_Str MSG_CONTRAST                        = _UxGT("Κοντράστ LCD");
   PROGMEM Language_Str MSG_STORE_EEPROM                    = _UxGT("Αποθήκευση");
   PROGMEM Language_Str MSG_LOAD_EEPROM                     = _UxGT("Φόρτωση");
-  PROGMEM Language_Str MSG_RESTORE_DEFAULTS                = _UxGT("Επαναφορά ασφαλούς αντιγράφου"); //SHORTEN
+  PROGMEM Language_Str MSG_RESTORE_DEFAULTS                = _UxGT("Επαναφορά ασφαλούς αντιγράφου"); //SHORTEN//缩短
   PROGMEM Language_Str MSG_REFRESH                         = LCD_STR_REFRESH  _UxGT("Ανανέωση");
   PROGMEM Language_Str MSG_INFO_SCREEN                     = _UxGT("Οθόνη πληροφόρησης");
   PROGMEM Language_Str MSG_PREPARE                         = _UxGT("Προετοιμασία");
@@ -151,12 +152,12 @@ namespace Language_el {
   PROGMEM Language_Str MSG_NO_MEDIA                        = _UxGT("Δεν βρέθηκε SD");
   PROGMEM Language_Str MSG_DWELL                           = _UxGT("Αναστολή λειτουργίας");
   PROGMEM Language_Str MSG_USERWAIT                        = _UxGT("Αναμονή για χρήστη");
-  PROGMEM Language_Str MSG_PRINT_ABORTED                   = _UxGT("Διακόπτεται η εκτύπωση"); //SHORTEN
+  PROGMEM Language_Str MSG_PRINT_ABORTED                   = _UxGT("Διακόπτεται η εκτύπωση"); //SHORTEN//缩短
   PROGMEM Language_Str MSG_NO_MOVE                         = _UxGT("Καμία κίνηση.");
   PROGMEM Language_Str MSG_KILLED                          = _UxGT("ΤΕΡΜΑΤΙΣΜΟΣ. ");
   PROGMEM Language_Str MSG_STOPPED                         = _UxGT("ΔΙΑΚΟΠΗ. ");
   PROGMEM Language_Str MSG_CONTROL_RETRACT                 = _UxGT("Ανάσυρση μμ");
-  PROGMEM Language_Str MSG_CONTROL_RETRACT_SWAP            = _UxGT("Εναλλαγή ανάσυρσης μμ");  //SHORTEN
+  PROGMEM Language_Str MSG_CONTROL_RETRACT_SWAP            = _UxGT("Εναλλαγή ανάσυρσης μμ");  //SHORTEN//缩短
   PROGMEM Language_Str MSG_CONTROL_RETRACTF                = _UxGT("Ανάσυρση V");
   PROGMEM Language_Str MSG_CONTROL_RETRACT_ZHOP            = _UxGT("Μεταπήδηση μμ");
   PROGMEM Language_Str MSG_CONTROL_RETRACT_RECOVER         = _UxGT("Unretr. mm");
@@ -165,10 +166,10 @@ namespace Language_el {
   PROGMEM Language_Str MSG_AUTORETRACT                     = _UxGT("Αυτόματη ανάσυρση");
   PROGMEM Language_Str MSG_FILAMENTCHANGE                  = _UxGT("Αλλαγή νήματος");
   PROGMEM Language_Str MSG_FILAMENTCHANGE_E                = _UxGT("Αλλαγή νήματος *");
-  PROGMEM Language_Str MSG_ATTACH_MEDIA                    = _UxGT("Προετοιμασία κάρτας SD");  //SHORTEN
+  PROGMEM Language_Str MSG_ATTACH_MEDIA                    = _UxGT("Προετοιμασία κάρτας SD");  //SHORTEN//缩短
   PROGMEM Language_Str MSG_CHANGE_MEDIA                    = _UxGT("Αλλαγή κάρτας SD");
-  PROGMEM Language_Str MSG_ZPROBE_OUT                      = _UxGT("Διερεύνηση Z εκτός Επ.Εκτύπωσης"); //SHORTEN
-  PROGMEM Language_Str MSG_YX_UNHOMED                      = _UxGT("Επαναφορά Χ/Υ πριν από Ζ"); //SHORTEN
+  PROGMEM Language_Str MSG_ZPROBE_OUT                      = _UxGT("Διερεύνηση Z εκτός Επ.Εκτύπωσης"); //SHORTEN//缩短
+  PROGMEM Language_Str MSG_YX_UNHOMED                      = _UxGT("Επαναφορά Χ/Υ πριν από Ζ"); //SHORTEN//缩短
   PROGMEM Language_Str MSG_XYZ_UNHOMED                     = _UxGT("Επαναφορά ΧΥΖ πρώτα");
   PROGMEM Language_Str MSG_ZPROBE_ZOFFSET                  = _UxGT("Μετατόπιση Ζ");
   PROGMEM Language_Str MSG_BABYSTEP_X                      = _UxGT("Μικρό βήμα Χ");
@@ -179,10 +180,10 @@ namespace Language_el {
   PROGMEM Language_Str MSG_ERR_REDUNDANT_TEMP              = _UxGT("ΠΛΕΟΝΑΖΟΥΣΑ ΘΕΡΜΟΤΗΤΑ");
   PROGMEM Language_Str MSG_THERMAL_RUNAWAY                 = _UxGT("ΔΙΑΦΥΓΗ ΘΕΡΜΟΚΡΑΣΙΑΣ");
   PROGMEM Language_Str MSG_ERR_MAXTEMP                     = _UxGT("ΠΕΡΙΤΗ ΘΕΡΜΟΚΡΑΣΙΑ");
-  PROGMEM Language_Str MSG_ERR_MINTEMP                     = _UxGT("ΜΗ ΕΠΑΡΚΗΣ ΘΕΡΜΟΚΡΑΣΙΑΣ"); //SHORTEN
+  PROGMEM Language_Str MSG_ERR_MINTEMP                     = _UxGT("ΜΗ ΕΠΑΡΚΗΣ ΘΕΡΜΟΚΡΑΣΙΑΣ"); //SHORTEN//缩短
   PROGMEM Language_Str MSG_HALTED                          = _UxGT("H εκτύπωση διακόπηκε");
   PROGMEM Language_Str MSG_HEATING                         = _UxGT("Θερμαίνεται…");
-  PROGMEM Language_Str MSG_BED_HEATING                     = _UxGT("Θέρμανση ΕΠ. Εκτύπωσης"); //SHORTEN
+  PROGMEM Language_Str MSG_BED_HEATING                     = _UxGT("Θέρμανση ΕΠ. Εκτύπωσης"); //SHORTEN//缩短
   PROGMEM Language_Str MSG_DELTA_CALIBRATE                 = _UxGT("Βαθμονόμηση Delta");
   PROGMEM Language_Str MSG_DELTA_CALIBRATE_X               = _UxGT("Βαθμονόμηση X");
   PROGMEM Language_Str MSG_DELTA_CALIBRATE_Y               = _UxGT("Βαθμονόμηση Y");

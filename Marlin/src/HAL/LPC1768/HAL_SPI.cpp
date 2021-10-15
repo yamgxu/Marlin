@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -51,18 +52,18 @@
 #include "../../inc/MarlinConfig.h"
 #include <SPI.h>
 
-// Hardware SPI and SPIClass
+// Hardware SPI and SPIClass//硬件SPI和SPIClass
 #include <lpc17xx_pinsel.h>
 #include <lpc17xx_clkpwr.h>
 
 #include "../shared/HAL_SPI.h"
 
-// ------------------------
-// Public functions
-// ------------------------
+// ------------------------// ------------------------
+// Public functions//公共职能
+// ------------------------// ------------------------
 #if ENABLED(LPC_SOFTWARE_SPI)
 
-  // Software SPI
+  // Software SPI//软件SPI
 
   #include <SoftwareSPI.h>
 
@@ -108,7 +109,7 @@
     #define INIT_SPI_SPEED SPI_FULL_SPEED
   #endif
 
-  void spiBegin() { spiInit(INIT_SPI_SPEED); } // Set up SCK, MOSI & MISO pins for SSP0
+  void spiBegin() { spiInit(INIT_SPI_SPEED); } // Set up SCK, MOSI & MISO pins for SSP0//为SSP0设置SCK、MOSI和MISO引脚
 
   void spiInit(uint8_t spiRate) {
     #if SD_MISO_PIN == BOARD_SPI1_MISO_PIN
@@ -137,54 +138,54 @@
 
   void spiSend(uint32_t chan, const uint8_t *buf, size_t nbyte) {}
 
-  // Read single byte from SPI
+  // Read single byte from SPI//从SPI读取单字节
   uint8_t spiRec() { return doio(0xFF); }
 
   uint8_t spiRec(uint32_t chan) { return 0; }
 
-  // Read from SPI into buffer
+  // Read from SPI into buffer//从SPI读入缓冲区
   void spiRead(uint8_t *buf, uint16_t nbyte) {
     for (uint16_t i = 0; i < nbyte; i++) buf[i] = doio(0xFF);
   }
 
   uint8_t spiTransfer(uint8_t b) { return doio(b); }
 
-  // Write from buffer to SPI
+  // Write from buffer to SPI//从缓冲区写入SPI
   void spiSendBlock(uint8_t token, const uint8_t *buf) {
    (void)spiTransfer(token);
     for (uint16_t i = 0; i < 512; i++)
       (void)spiTransfer(buf[i]);
   }
 
-  // Begin SPI transaction, set clock, bit order, data mode
+  // Begin SPI transaction, set clock, bit order, data mode//开始SPI事务、设置时钟、位顺序、数据模式
   void spiBeginTransaction(uint32_t spiClock, uint8_t bitOrder, uint8_t dataMode) {
-    // TODO: Implement this method
+    // TODO: Implement this method//TODO:实现此方法
   }
 
-#endif // LPC_SOFTWARE_SPI
+#endif // LPC_SOFTWARE_SPI//LPC_软件_SPI
 
 /**
  * @brief Wait until TXE (tx empty) flag is set and BSY (busy) flag unset.
  */
 static inline void waitSpiTxEnd(LPC_SSP_TypeDef *spi_d) {
-  while (SSP_GetStatus(spi_d, SSP_STAT_TXFIFO_EMPTY) == RESET) { /* nada */ } // wait until TXE=1
-  while (SSP_GetStatus(spi_d, SSP_STAT_BUSY) == SET) { /* nada */ }     // wait until BSY=0
+  while (SSP_GetStatus(spi_d, SSP_STAT_TXFIFO_EMPTY) == RESET) { /* nada */ } // wait until TXE=1//等到TXE=1
+  while (SSP_GetStatus(spi_d, SSP_STAT_BUSY) == SET) { /* nada */ }     // wait until BSY=0//等待BSY=0
 }
 
-// Retain the pin init state of the SPI, to avoid init more than once,
-// even if more instances of SPIClass exist
+// Retain the pin init state of the SPI, to avoid init more than once,//保留SPI的引脚初始化状态，以避免多次初始化，
+// even if more instances of SPIClass exist//即使存在更多SPIClass实例
 static bool spiInitialised[BOARD_NR_SPI] = { false };
 
 SPIClass::SPIClass(uint8_t device) {
-  // Init things specific to each SPI device
-  // clock divider setup is a bit of hack, and needs to be improved at a later date.
+  // Init things specific to each SPI device//初始化特定于每个SPI设备的内容
+  // clock divider setup is a bit of hack, and needs to be improved at a later date.//时钟分频器的设置有点麻烦，需要在以后改进。
 
   #if BOARD_NR_SPI >= 1
     _settings[0].spi_d = LPC_SSP0;
     _settings[0].dataMode = SPI_MODE0;
     _settings[0].dataSize = DATA_SIZE_8BIT;
     _settings[0].clock = SPI_CLOCK_MAX;
-    //_settings[0].clockDivider = determine_baud_rate(_settings[0].spi_d, _settings[0].clock);
+    //_settings[0].clockDivider = determine_baud_rate(_settings[0].spi_d, _settings[0].clock);//_设置[0]。时钟分配器=确定波特率（设置[0]。spi设置[0]。时钟）；
   #endif
 
   #if BOARD_NR_SPI >= 2
@@ -192,13 +193,13 @@ SPIClass::SPIClass(uint8_t device) {
     _settings[1].dataMode = SPI_MODE0;
     _settings[1].dataSize = DATA_SIZE_8BIT;
     _settings[1].clock = SPI_CLOCK_MAX;
-    //_settings[1].clockDivider = determine_baud_rate(_settings[1].spi_d, _settings[1].clock);
+    //_settings[1].clockDivider = determine_baud_rate(_settings[1].spi_d, _settings[1].clock);//_设置[1]。时钟分配器=确定波特率（设置[1]。spi设置[1]。时钟）；
   #endif
 
   setModule(device);
 
-  // Init the GPDMA controller
-  // TODO: call once in the constructor? or each time?
+  // Init the GPDMA controller//初始化GPDMA控制器
+  // TODO: call once in the constructor? or each time?//TODO:在构造函数中调用一次？还是每次？
   GPDMA_Init();
 }
 
@@ -212,7 +213,7 @@ SPIClass::SPIClass(pin_t mosi, pin_t miso, pin_t sclk, pin_t ssel) {
 }
 
 void SPIClass::begin() {
-  // Init the SPI pins in the first begin call
+  // Init the SPI pins in the first begin call//初始化第一个begin调用中的SPI引脚
   if ((_currentSetting->spi_d == LPC_SSP0 && spiInitialised[0] == false) ||
       (_currentSetting->spi_d == LPC_SSP1 && spiInitialised[1] == false)) {
     pin_t sck, miso, mosi;
@@ -228,7 +229,7 @@ void SPIClass::begin() {
       mosi = BOARD_SPI2_MOSI_PIN;
       spiInitialised[1] = true;
     }
-    PINSEL_CFG_Type PinCfg;  // data structure to hold init values
+    PINSEL_CFG_Type PinCfg;  // data structure to hold init values//用于保存初始值的数据结构
     PinCfg.Funcnum = 2;
     PinCfg.OpenDrain = 0;
     PinCfg.Pinmode = 0;
@@ -249,22 +250,22 @@ void SPIClass::begin() {
   }
 
   updateSettings();
-  SSP_Cmd(_currentSetting->spi_d, ENABLE);  // start SSP running
+  SSP_Cmd(_currentSetting->spi_d, ENABLE);  // start SSP running//启动SSP运行
 }
 
 void SPIClass::beginTransaction(const SPISettings &cfg) {
   setBitOrder(cfg.bitOrder);
   setDataMode(cfg.dataMode);
   setDataSize(cfg.dataSize);
-  //setClockDivider(determine_baud_rate(_currentSetting->spi_d, settings.clock));
+  //setClockDivider(determine_baud_rate(_currentSetting->spi_d, settings.clock));//设置时钟分频器（确定波特率（_currentSetting->spi_d，settings.clock））；
   begin();
 }
 
 uint8_t SPIClass::transfer(const uint16_t b) {
-  // Send and receive a single byte
-  SSP_ReceiveData(_currentSetting->spi_d); // read any previous data
+  // Send and receive a single byte//发送和接收单个字节
+  SSP_ReceiveData(_currentSetting->spi_d); // read any previous data//读取任何以前的数据
   SSP_SendData(_currentSetting->spi_d, b);
-  waitSpiTxEnd(_currentSetting->spi_d);  // wait for it to finish
+  waitSpiTxEnd(_currentSetting->spi_d);  // wait for it to finish//等它结束
   return SSP_ReceiveData(_currentSetting->spi_d);
 }
 
@@ -273,9 +274,9 @@ uint16_t SPIClass::transfer16(const uint16_t data) {
 }
 
 void SPIClass::end() {
-  // Neither is needed for Marlin
-  //SSP_Cmd(_currentSetting->spi_d, DISABLE);
-  //SSP_DeInit(_currentSetting->spi_d);
+  // Neither is needed for Marlin//马林鱼也不需要
+  //SSP_Cmd(_currentSetting->spi_d, DISABLE);//SSP_Cmd（当前设置->spi_d，禁用）；
+  //SSP_DeInit(_currentSetting->spi_d);//SSP_去离子（_currentSetting->spi_d）；
 }
 
 void SPIClass::send(uint8_t data) {
@@ -283,49 +284,49 @@ void SPIClass::send(uint8_t data) {
 }
 
 void SPIClass::dmaSend(void *buf, uint16_t length, bool minc) {
-  //TODO: LPC dma can only write 0xFFF bytes at once.
+  //TODO: LPC dma can only write 0xFFF bytes at once.//TODO:LPC dma一次只能写入0xFFF字节。
   GPDMA_Channel_CFG_Type GPDMACfg;
 
   /* Configure GPDMA channel 0 -------------------------------------------------------------*/
   /* DMA Channel 0 */
   GPDMACfg.ChannelNum = 0;
-  // Source memory
+  // Source memory//源存储器
   GPDMACfg.SrcMemAddr = (uint32_t)buf;
-  // Destination memory - Not used
+  // Destination memory - Not used//目标内存-未使用
   GPDMACfg.DstMemAddr = 0;
-  // Transfer size
+  // Transfer size//转移尺寸
   GPDMACfg.TransferSize = length;
-  // Transfer width
+  // Transfer width//转移宽度
   GPDMACfg.TransferWidth = (_currentSetting->dataSize == DATA_SIZE_16BIT) ? GPDMA_WIDTH_HALFWORD : GPDMA_WIDTH_BYTE;
-  // Transfer type
+  // Transfer type//转移类型
   GPDMACfg.TransferType = GPDMA_TRANSFERTYPE_M2P;
-  // Source connection - unused
+  // Source connection - unused//源连接-未使用
   GPDMACfg.SrcConn = 0;
-  // Destination connection
+  // Destination connection//目的地连接
   GPDMACfg.DstConn = (_currentSetting->spi_d == LPC_SSP0) ? GPDMA_CONN_SSP0_Tx : GPDMA_CONN_SSP1_Tx;
 
   GPDMACfg.DMALLI = 0;
 
-  // Enable dma on SPI
+  // Enable dma on SPI//在SPI上启用dma
   SSP_DMACmd(_currentSetting->spi_d, SSP_DMA_TX, ENABLE);
 
-  // Only increase memory if minc is true
+  // Only increase memory if minc is true//仅当minc为true时增加内存
   GPDMACfg.MemoryIncrease = (minc ? GPDMA_DMACCxControl_SI : 0);
 
-  // Setup channel with given parameter
+  // Setup channel with given parameter//设置具有给定参数的通道
   GPDMA_Setup(&GPDMACfg);
 
-  // Enable DMA
+  // Enable DMA//启用DMA
   GPDMA_ChannelCmd(0, ENABLE);
 
-  // Wait for data transfer
+  // Wait for data transfer//等待数据传输
   while (!GPDMA_IntGetStatus(GPDMA_STAT_RAWINTTC, 0) && !GPDMA_IntGetStatus(GPDMA_STAT_RAWINTERR, 0)) { }
 
-  // Clear err and int
+  // Clear err and int//清除err和int
   GPDMA_ClearIntPending (GPDMA_STATCLR_INTTC, 0);
   GPDMA_ClearIntPending (GPDMA_STATCLR_INTERR, 0);
 
-  // Disable DMA
+  // Disable DMA//禁用DMA
   GPDMA_ChannelCmd(0, DISABLE);
 
   waitSpiTxEnd(_currentSetting->spi_d);
@@ -343,7 +344,7 @@ void SPIClass::read(uint8_t *buf, uint32_t len) {
 
 void SPIClass::setClock(uint32_t clock) { _currentSetting->clock = clock; }
 
-void SPIClass::setModule(uint8_t device) { _currentSetting = &_settings[device - 1]; } // SPI channels are called 1, 2, and 3 but the array is zero-indexed
+void SPIClass::setModule(uint8_t device) { _currentSetting = &_settings[device - 1]; } // SPI channels are called 1, 2, and 3 but the array is zero-indexed//SPI通道称为1、2和3，但数组的索引为零
 
 void SPIClass::setBitOrder(uint8_t bitOrder) { _currentSetting->bitOrder = bitOrder; }
 
@@ -355,13 +356,13 @@ void SPIClass::setDataSize(uint32_t dataSize) { _currentSetting->dataSize = data
  * Set up/tear down
  */
 void SPIClass::updateSettings() {
-  //SSP_DeInit(_currentSetting->spi_d); //todo: need force de init?!
+  //SSP_DeInit(_currentSetting->spi_d); //todo: need force de init?!//SSP_去离子（_currentSetting->spi_d）//todo:需要原力吗？！
 
-  // Divide PCLK by 2 for SSP0
-  //CLKPWR_SetPCLKDiv(_currentSetting->spi_d == LPC_SSP0 ? CLKPWR_PCLKSEL_SSP0 : CLKPWR_PCLKSEL_SSP1, CLKPWR_PCLKSEL_CCLK_DIV_2);
+  // Divide PCLK by 2 for SSP0//将PCLK除以2表示SSP0
+  //CLKPWR_SetPCLKDiv(_currentSetting->spi_d == LPC_SSP0 ? CLKPWR_PCLKSEL_SSP0 : CLKPWR_PCLKSEL_SSP1, CLKPWR_PCLKSEL_CCLK_DIV_2);//CLKPWR_设置PCLKDIV（_currentSetting->spi_d==LPC_SSP0？CLKPWR_PCLKSEL_SSP0:CLKPWR_PCLKSEL_SSP1，CLKPWR_PCLKSEL_CCLK_DIV 2）；
 
-  SSP_CFG_Type HW_SPI_init; // data structure to hold init values
-  SSP_ConfigStructInit(&HW_SPI_init);  // set values for SPI mode
+  SSP_CFG_Type HW_SPI_init; // data structure to hold init values//用于保存初始值的数据结构
+  SSP_ConfigStructInit(&HW_SPI_init);  // set values for SPI mode//设置SPI模式的值
   HW_SPI_init.ClockRate = _currentSetting->clock;
   HW_SPI_init.Databit = _currentSetting->dataSize;
 
@@ -393,8 +394,8 @@ void SPIClass::updateSettings() {
       break;
   }
 
-  // TODO: handle bitOrder
-  SSP_Init(_currentSetting->spi_d, &HW_SPI_init);  // puts the values into the proper bits in the SSP0 registers
+  // TODO: handle bitOrder//TODO:处理比特顺序
+  SSP_Init(_currentSetting->spi_d, &HW_SPI_init);  // puts the values into the proper bits in the SSP0 registers//将值放入SSP0寄存器中的正确位
 }
 
 #if SD_MISO_PIN == BOARD_SPI1_MISO_PIN
@@ -403,4 +404,4 @@ void SPIClass::updateSettings() {
   SPIClass SPI(2);
 #endif
 
-#endif // TARGET_LPC1768
+#endif // TARGET_LPC1768//目标为LPC1768

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -20,9 +21,9 @@
  *
  */
 
-//
-// Advanced Settings Menus
-//
+////
+// Advanced Settings Menus//高级设置菜单
+////
 
 #include "../../inc/MarlinConfigPre.h"
 
@@ -36,19 +37,19 @@
 void menu_advanced_settings();
 
 screenFunc_t success_screen, fail_screen;
-bool authenticating; // = false
+bool authenticating; // = false//=错误
 char string[(PASSWORD_LENGTH) + 1];
 static uint8_t digit_no;
 
-//
-// Screen for both editing and setting the password
-//
+////
+// Screen for both editing and setting the password//用于编辑和设置密码的屏幕
+////
 void Password::menu_password_entry() {
-  ui.defer_status_screen(!did_first_run); // No timeout to status before first auth
+  ui.defer_status_screen(!did_first_run); // No timeout to status before first auth//首次身份验证前状态没有超时
 
   START_MENU();
 
-  // "Login" or "New Code"
+  // "Login" or "New Code"//“登录”或“新代码”
   STATIC_ITEM_P(authenticating ? GET_TEXT(MSG_LOGIN_REQUIRED) : GET_TEXT(MSG_EDIT_PASSWORD), SS_CENTER|SS_INVERT);
 
   STATIC_ITEM_P(NUL_STR, SS_CENTER, string);
@@ -57,7 +58,7 @@ void Password::menu_password_entry() {
     STATIC_ITEM_P(NUL_STR, SS_CENTER, "");
   #endif
 
-  // Make the digit edit item look like a sub-menu
+  // Make the digit edit item look like a sub-menu//使数字编辑项看起来像子菜单
   PGM_P const label = GET_TEXT(MSG_ENTER_DIGIT);
   EDIT_ITEM_P(uint8, label, &editable.uint8, 0, 9, digit_entered);
   MENU_ITEM_ADDON_START(utf8_strlen_P(label) + 1);
@@ -74,27 +75,27 @@ void Password::menu_password_entry() {
   END_MENU();
 }
 
-//
-// Authentication check
-//
+////
+// Authentication check//身份验证检查
+////
 void Password::authentication_done() {
   ui.goto_screen(is_locked ? fail_screen : success_screen);
   ui.completion_feedback(!is_locked);
 }
 
-// A single digit was completed
+// A single digit was completed//完成了一位数字
 void Password::digit_entered() {
-  uint32_t multiplier = CAT(1e, PASSWORD_LENGTH); // 1e5 = 100000
+  uint32_t multiplier = CAT(1e, PASSWORD_LENGTH); // 1e5 = 100000//1e5=100000
   LOOP_LE_N(i, digit_no) multiplier /= 10;
   value_entry += editable.uint8 * multiplier;
   string[digit_no++] = '0' + editable.uint8;
 
-  // Exit edit screen menu and go to another screen
+  // Exit edit screen menu and go to another screen//退出编辑屏幕菜单并转到其他屏幕
   ui.goto_previous_screen();
   ui.use_click();
   ui.goto_screen(menu_password_entry);
 
-  // After password has been keyed in
+  // After password has been keyed in//输入密码后
   if (digit_no == PASSWORD_LENGTH) {
     if (authenticating)
       authentication_check();
@@ -103,9 +104,9 @@ void Password::digit_entered() {
   }
 }
 
-//
-// Set/Change Password
-//
+////
+// Set/Change Password//设置/更改密码
+////
 void Password::screen_password_entry() {
   value_entry = 0;
   digit_no = 0;
@@ -145,7 +146,7 @@ void Password::access_menu_password() {
 #endif
 
 void Password::start_over() {
-  ui.goto_previous_screen(); // Goto previous screen, if any
+  ui.goto_previous_screen(); // Goto previous screen, if any//转到上一屏幕（如果有）
   ui.goto_screen(screen_password_entry);
 }
 
@@ -170,9 +171,9 @@ void Password::remove_password() {
   set_password_done(false);
 }
 
-//
-// Password Menu
-//
+////
+// Password Menu//密码菜单
+////
 void Password::menu_password() {
   START_MENU();
   BACK_ITEM(MSG_ADVANCED_SETTINGS);
@@ -184,4 +185,4 @@ void Password::menu_password() {
   END_MENU();
 }
 
-#endif // HAS_LCD_MENU && PASSWORD_FEATURE
+#endif // HAS_LCD_MENU && PASSWORD_FEATURE//具有LCD菜单和密码功能

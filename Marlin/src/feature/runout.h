@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -28,7 +29,7 @@
 #include "../sd/cardreader.h"
 #include "../module/printcounter.h"
 #include "../module/planner.h"
-#include "../module/stepper.h" // for block_t
+#include "../module/stepper.h" // for block_t//对于block\t
 #include "../gcode/queue.h"
 #include "../feature/pause.h"
 
@@ -38,7 +39,7 @@
   #include "../lcd/extui/ui_api.h"
 #endif
 
-//#define FILAMENT_RUNOUT_SENSOR_DEBUG
+//#define FILAMENT_RUNOUT_SENSOR_DEBUG//#定义灯丝\u跳动\u传感器\u调试
 #ifndef FILAMENT_RUNOUT_THRESHOLD
   #define FILAMENT_RUNOUT_THRESHOLD 5
 #endif
@@ -93,8 +94,8 @@ class TFilamentMonitor : public FilamentMonitorBase {
       response.reset();
     }
 
-    // Call this method when filament is present,
-    // so the response can reset its counter.
+    // Call this method when filament is present,//当灯丝存在时调用此方法，
+    // so the response can reset its counter.//因此，响应可以重置其计数器。
     static inline void filament_present(const uint8_t extruder) {
       response.filament_present(extruder);
     }
@@ -104,8 +105,8 @@ class TFilamentMonitor : public FilamentMonitorBase {
       static inline void set_runout_distance(const_float_t mm) { response.runout_distance_mm = mm; }
     #endif
 
-    // Handle a block completion. RunoutResponseDelayed uses this to
-    // add up the length of filament moved while the filament is out.
+    // Handle a block completion. RunoutResponseDelayed uses this to//处理块完成。RunOutResponseDisplayed使用此
+    // add up the length of filament moved while the filament is out.//将灯丝伸出时移动的灯丝长度相加。
     static inline void block_completed(const block_t * const b) {
       if (enabled) {
         response.block_completed(b);
@@ -113,17 +114,17 @@ class TFilamentMonitor : public FilamentMonitorBase {
       }
     }
 
-    // Give the response a chance to update its counter.
+    // Give the response a chance to update its counter.//给响应一个更新其计数器的机会。
     static inline void run() {
       if (enabled && !filament_ran_out && (printingIsActive() || did_pause_print)) {
-        TERN_(HAS_FILAMENT_RUNOUT_DISTANCE, cli()); // Prevent RunoutResponseDelayed::block_completed from accumulating here
+        TERN_(HAS_FILAMENT_RUNOUT_DISTANCE, cli()); // Prevent RunoutResponseDelayed::block_completed from accumulating here//防止RunOutResponsedLayed:：块_在此累积完成
         response.run();
         sensor.run();
         const uint8_t runout_flags = response.has_run_out();
         TERN_(HAS_FILAMENT_RUNOUT_DISTANCE, sei());
         #if MULTI_FILAMENT_SENSOR
           #if ENABLED(WATCH_ALL_RUNOUT_SENSORS)
-            const bool ran_out = !!runout_flags;  // any sensor triggers
+            const bool ran_out = !!runout_flags;  // any sensor triggers//任何传感器都会触发
             uint8_t extruder = 0;
             if (ran_out) {
               uint8_t bitmask = runout_flags;
@@ -133,7 +134,7 @@ class TFilamentMonitor : public FilamentMonitorBase {
               }
             }
           #else
-            const bool ran_out = TEST(runout_flags, active_extruder);  // suppress non active extruders
+            const bool ran_out = TEST(runout_flags, active_extruder);  // suppress non active extruders//抑制非活性挤出机
             uint8_t extruder = active_extruder;
           #endif
         #else
@@ -169,7 +170,7 @@ class FilamentSensorBase {
      * Called by FilamentSensorEncoder::block_completed when motion is detected.
      */
     static inline void filament_present(const uint8_t extruder) {
-      runout.filament_present(extruder); // ...which calls response.filament_present(extruder)
+      runout.filament_present(extruder); // ...which calls response.filament_present(extruder)//…调用响应。灯丝存在（挤出机）
     }
 
   public:
@@ -204,14 +205,14 @@ class FilamentSensorBase {
       #undef  INIT_RUNOUT_PIN
     }
 
-    // Return a bitmask of runout pin states
+    // Return a bitmask of runout pin states//返回输出引脚状态的位掩码
     static inline uint8_t poll_runout_pins() {
       #define _OR_RUNOUT(N) | (READ(FIL_RUNOUT##N##_PIN) ? _BV((N) - 1) : 0)
       return (0 REPEAT_1(NUM_RUNOUT_SENSORS, _OR_RUNOUT));
       #undef _OR_RUNOUT
     }
 
-    // Return a bitmask of runout flag states (1 bits always indicates runout)
+    // Return a bitmask of runout flag states (1 bits always indicates runout)//返回输出标志状态的位掩码（1位始终表示输出）
     static inline uint8_t poll_runout_states() {
       return poll_runout_pins() ^ uint8_t(0
         #if NUM_RUNOUT_SENSORS >= 1
@@ -274,12 +275,12 @@ class FilamentSensorBase {
 
     public:
       static inline void block_completed(const block_t * const b) {
-        // If the sensor wheel has moved since the last call to
-        // this method reset the runout counter for the extruder.
+        // If the sensor wheel has moved since the last call to//如果自上次调用后传感器轮已移动
+        // this method reset the runout counter for the extruder.//此方法可重置挤出机的跳动计数器。
         if (TEST(motion_detected, b->extruder))
           filament_present(b->extruder);
 
-        // Clear motion triggers for next block
+        // Clear motion triggers for next block//清除下一块的运动触发器
         motion_detected = 0;
       }
 
@@ -299,11 +300,11 @@ class FilamentSensorBase {
         #if MULTI_FILAMENT_SENSOR
           if ( !TERN0(DUAL_X_CARRIAGE, idex_is_duplicating())
             && !TERN0(MULTI_NOZZLE_DUPLICATION, extruder_duplication_enabled)
-          ) return TEST(runout_states, extruder); // A specific extruder ran out
+          ) return TEST(runout_states, extruder); // A specific extruder ran out//一台特殊的挤出机用完了
         #else
           UNUSED(extruder);
         #endif
-        return !!runout_states;                   // Any extruder ran out
+        return !!runout_states;                   // Any extruder ran out//任何挤出机都用完了
       }
 
     public:
@@ -314,7 +315,7 @@ class FilamentSensorBase {
           const bool out = poll_runout_state(s);
           if (!out) filament_present(s);
           #if ENABLED(FILAMENT_RUNOUT_SENSOR_DEBUG)
-            static uint8_t was_out; // = 0
+            static uint8_t was_out; // = 0// = 0
             if (out != TEST(was_out, s)) {
               TBI(was_out, s);
               SERIAL_ECHOLNPAIR_P(PSTR("Filament Sensor "), '0' + s, out ? PSTR(" OUT") : PSTR(" IN"));
@@ -325,15 +326,15 @@ class FilamentSensorBase {
   };
 
 
-#endif // !FILAMENT_MOTION_SENSOR
+#endif // !FILAMENT_MOTION_SENSOR// !灯丝运动传感器
 
 /********************************* RESPONSE TYPE *********************************/
 
 #if HAS_FILAMENT_RUNOUT_DISTANCE
 
-  // RunoutResponseDelayed triggers a runout event only if the length
-  // of filament specified by FILAMENT_RUNOUT_DISTANCE_MM has been fed
-  // during a runout condition.
+  // RunoutResponseDelayed triggers a runout event only if the length//仅当长度为
+  // of filament specified by FILAMENT_RUNOUT_DISTANCE_MM has been fed//已喂入由灯丝\u跳动量\u距离\u MM指定的灯丝长度
+  // during a runout condition.//在跳动条件下。
   class RunoutResponseDelayed {
     private:
       static volatile float runout_mm_countdown[NUM_RUNOUT_SENSORS];
@@ -369,8 +370,8 @@ class FilamentSensorBase {
       }
 
       static inline void block_completed(const block_t * const b) {
-        if (b->steps.x || b->steps.y || b->steps.z || did_pause_print) { // Allow pause purge move to re-trigger runout state
-          // Only trigger on extrusion with XYZ movement to allow filament change and retract/recover.
+        if (b->steps.x || b->steps.y || b->steps.z || did_pause_print) { // Allow pause purge move to re-trigger runout state//允许暂停吹扫移动以重新触发跳动状态
+          // Only trigger on extrusion with XYZ movement to allow filament change and retract/recover.//仅在XYZ运动挤出时触发，以允许灯丝更换和缩回/恢复。
           const uint8_t e = b->extruder;
           const int32_t steps = b->steps.e;
           runout_mm_countdown[e] -= (TEST(b->direction_bits, E_AXIS) ? -steps : steps) * planner.steps_to_mm[E_AXIS_N(e)];
@@ -378,10 +379,10 @@ class FilamentSensorBase {
       }
   };
 
-#else // !HAS_FILAMENT_RUNOUT_DISTANCE
+#else // !HAS_FILAMENT_RUNOUT_DISTANCE// !有\u灯丝\u跳动\u距离
 
-  // RunoutResponseDebounced triggers a runout event after a runout
-  // condition has been detected runout_threshold times in a row.
+  // RunoutResponseDebounced triggers a runout event after a runout//RunOutResponsedBunched在跳动后触发跳动事件
+  // condition has been detected runout_threshold times in a row.//已连续多次检测到条件跳动\u阈值。
 
   class RunoutResponseDebounced {
     private:
@@ -410,4 +411,4 @@ class FilamentSensorBase {
       }
   };
 
-#endif // !HAS_FILAMENT_RUNOUT_DISTANCE
+#endif // !HAS_FILAMENT_RUNOUT_DISTANCE// !有\u灯丝\u跳动\u距离

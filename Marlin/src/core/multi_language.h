@@ -1,3 +1,4 @@
+/** translatione by yx */
 /********************
  * multi_language.h *
  ********************/
@@ -36,8 +37,8 @@ typedef const char Language_Str[];
   #define NUM_LANGUAGES 1
 #endif
 
-// Setting the unused languages equal to each other allows
-// the compiler to optimize away the conditionals
+// Setting the unused languages equal to each other allows//将未使用的语言设置为彼此相等允许
+// the compiler to optimize away the conditionals//编译器将优化这些条件
 
 #ifndef LCD_LANGUAGE_2
   #define LCD_LANGUAGE_2 LCD_LANGUAGE

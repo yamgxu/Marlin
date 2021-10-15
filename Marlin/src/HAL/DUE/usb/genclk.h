@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * \file
  *
@@ -41,7 +42,7 @@
  *
  */
 /*
- * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>
+ * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>//www.atmel.com/design support/“>atmel支持</a>
  */
 
 #ifndef CHIP_GENCLK_H_INCLUDED
@@ -50,59 +51,59 @@
 #include <osc.h>
 #include <pll.h>
 
-/// @cond 0
+/// @cond 0///@cond 0
 /**INDENT-OFF**/
 #ifdef __cplusplus
 extern "C" {
 #endif
 /**INDENT-ON**/
-/// @endcond
+/// @endcond///@endcond
 
 /**
  * \weakgroup genclk_group
  * @{
  */
 
-//! \name Programmable Clock Identifiers (PCK)
-//@{
-#define GENCLK_PCK_0      0 //!< PCK0 ID
-#define GENCLK_PCK_1      1 //!< PCK1 ID
-#define GENCLK_PCK_2      2 //!< PCK2 ID
-//@}
+//! \name Programmable Clock Identifiers (PCK)//! \名称可编程时钟标识符（PCK）
+//@{//@{
+#define GENCLK_PCK_0      0 //!< PCK0 ID//！<PCK0 ID
+#define GENCLK_PCK_1      1 //!< PCK1 ID//！<PCK1 ID
+#define GENCLK_PCK_2      2 //!< PCK2 ID//！<PCK2 ID
+//@}//@}
 
-//! \name Programmable Clock Sources (PCK)
-//@{
+//! \name Programmable Clock Sources (PCK)//！\name可编程时钟源（PCK）
+//@{//@{
 
 enum genclk_source {
-	GENCLK_PCK_SRC_SLCK_RC       = 0, //!< Internal 32kHz RC oscillator as PCK source clock
-	GENCLK_PCK_SRC_SLCK_XTAL     = 1, //!< External 32kHz crystal oscillator as PCK source clock
-	GENCLK_PCK_SRC_SLCK_BYPASS   = 2, //!< External 32kHz bypass oscillator as PCK source clock
-	GENCLK_PCK_SRC_MAINCK_4M_RC  = 3, //!< Internal 4MHz RC oscillator as PCK source clock
-	GENCLK_PCK_SRC_MAINCK_8M_RC  = 4, //!< Internal 8MHz RC oscillator as PCK source clock
-	GENCLK_PCK_SRC_MAINCK_12M_RC = 5, //!< Internal 12MHz RC oscillator as PCK source clock
-	GENCLK_PCK_SRC_MAINCK_XTAL   = 6, //!< External crystal oscillator as PCK source clock
-	GENCLK_PCK_SRC_MAINCK_BYPASS = 7, //!< External bypass oscillator as PCK source clock
-	GENCLK_PCK_SRC_PLLACK        = 8, //!< Use PLLACK as PCK source clock
-	GENCLK_PCK_SRC_PLLBCK        = 9, //!< Use PLLBCK as PCK source clock
-	GENCLK_PCK_SRC_MCK           = 10, //!< Use Master Clk as PCK source clock
+	GENCLK_PCK_SRC_SLCK_RC       = 0, //!< Internal 32kHz RC oscillator as PCK source clock//！<内部32kHz RC振荡器作为PCK源时钟
+	GENCLK_PCK_SRC_SLCK_XTAL     = 1, //!< External 32kHz crystal oscillator as PCK source clock//！<外部32kHz晶体振荡器作为PCK源时钟
+	GENCLK_PCK_SRC_SLCK_BYPASS   = 2, //!< External 32kHz bypass oscillator as PCK source clock//！<作为PCK源时钟的外部32kHz旁路振荡器
+	GENCLK_PCK_SRC_MAINCK_4M_RC  = 3, //!< Internal 4MHz RC oscillator as PCK source clock//！<内部4MHz RC振荡器作为PCK源时钟
+	GENCLK_PCK_SRC_MAINCK_8M_RC  = 4, //!< Internal 8MHz RC oscillator as PCK source clock//！<内部8MHz RC振荡器作为PCK源时钟
+	GENCLK_PCK_SRC_MAINCK_12M_RC = 5, //!< Internal 12MHz RC oscillator as PCK source clock//！<内部12MHz RC振荡器作为PCK源时钟
+	GENCLK_PCK_SRC_MAINCK_XTAL   = 6, //!< External crystal oscillator as PCK source clock//！<作为PCK源时钟的外部晶体振荡器
+	GENCLK_PCK_SRC_MAINCK_BYPASS = 7, //!< External bypass oscillator as PCK source clock//！<作为PCK源时钟的外部旁路振荡器
+	GENCLK_PCK_SRC_PLLACK        = 8, //!< Use PLLACK as PCK source clock//！<使用PLLACK作为PCK源时钟
+	GENCLK_PCK_SRC_PLLBCK        = 9, //!< Use PLLBCK as PCK source clock//！<使用PLLBCK作为PCK源时钟
+	GENCLK_PCK_SRC_MCK           = 10, //!< Use Master Clk as PCK source clock//！<使用主时钟作为PCK源时钟
 };
 
-//@}
+//@}//@}
 
-//! \name Programmable Clock Prescalers (PCK)
-//@{
+//! \name Programmable Clock Prescalers (PCK)//! \名称可编程时钟预分频器（PCK）
+//@{//@{
 
 enum genclk_divider {
-	GENCLK_PCK_PRES_1  = PMC_PCK_PRES_CLK_1, //!< Set PCK clock prescaler to 1
-	GENCLK_PCK_PRES_2  = PMC_PCK_PRES_CLK_2, //!< Set PCK clock prescaler to 2
-	GENCLK_PCK_PRES_4  = PMC_PCK_PRES_CLK_4, //!< Set PCK clock prescaler to 4
-	GENCLK_PCK_PRES_8  = PMC_PCK_PRES_CLK_8, //!< Set PCK clock prescaler to 8
-	GENCLK_PCK_PRES_16 = PMC_PCK_PRES_CLK_16, //!< Set PCK clock prescaler to 16
-	GENCLK_PCK_PRES_32 = PMC_PCK_PRES_CLK_32, //!< Set PCK clock prescaler to 32
-	GENCLK_PCK_PRES_64 = PMC_PCK_PRES_CLK_64, //!< Set PCK clock prescaler to 64
+	GENCLK_PCK_PRES_1  = PMC_PCK_PRES_CLK_1, //!< Set PCK clock prescaler to 1//！<将PCK时钟预分频器设置为1
+	GENCLK_PCK_PRES_2  = PMC_PCK_PRES_CLK_2, //!< Set PCK clock prescaler to 2//！<将PCK时钟预分频器设置为2
+	GENCLK_PCK_PRES_4  = PMC_PCK_PRES_CLK_4, //!< Set PCK clock prescaler to 4//！<将PCK时钟预分频器设置为4
+	GENCLK_PCK_PRES_8  = PMC_PCK_PRES_CLK_8, //!< Set PCK clock prescaler to 8//！<将PCK时钟预分频器设置为8
+	GENCLK_PCK_PRES_16 = PMC_PCK_PRES_CLK_16, //!< Set PCK clock prescaler to 16//！<将PCK时钟预分频器设置为16
+	GENCLK_PCK_PRES_32 = PMC_PCK_PRES_CLK_32, //!< Set PCK clock prescaler to 32//！<将PCK时钟预分频器设置为32
+	GENCLK_PCK_PRES_64 = PMC_PCK_PRES_CLK_64, //!< Set PCK clock prescaler to 64//！<将PCK时钟预分频器设置为64
 };
 
-//@}
+//@}//@}
 
 struct genclk_config {
 	uint32_t ctrl;
@@ -127,8 +128,8 @@ static inline void genclk_config_write(const struct genclk_config *p_cfg,
 	PMC->PMC_PCK[ul_id] = p_cfg->ctrl;
 }
 
-//! \name Programmable Clock Source and Prescaler configuration
-//@{
+//! \name Programmable Clock Source and Prescaler configuration//! \名称可编程时钟源和预分频器配置
+//@{//@{
 
 static inline void genclk_config_set_source(struct genclk_config *p_cfg,
 		enum genclk_source e_src)
@@ -171,7 +172,7 @@ static inline void genclk_config_set_divider(struct genclk_config *p_cfg,
 	p_cfg->ctrl |= e_divider;
 }
 
-//@}
+//@}//@}
 
 static inline void genclk_enable(const struct genclk_config *p_cfg,
 		uint32_t ul_id)
@@ -265,14 +266,14 @@ static inline void genclk_enable_source(enum genclk_source e_src)
 	}
 }
 
-//! @}
+//! @}//! @}
 
-/// @cond 0
+/// @cond 0///@cond 0
 /**INDENT-OFF**/
 #ifdef __cplusplus
 }
 #endif
 /**INDENT-ON**/
-/// @endcond
+/// @endcond///@endcond
 
 #endif /* CHIP_GENCLK_H_INCLUDED */

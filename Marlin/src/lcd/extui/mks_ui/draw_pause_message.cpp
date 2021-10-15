@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -48,4 +49,4 @@ void lv_draw_pause_message(const PauseMessage msg) {
   }
 }
 
-#endif // HAS_TFT_LVGL_UI && ADVANCED_PAUSE_FEATURE
+#endif // HAS_TFT_LVGL_UI && ADVANCED_PAUSE_FEATURE//具有\u TFT\u LVGL\u UI和高级\u暂停\u功能

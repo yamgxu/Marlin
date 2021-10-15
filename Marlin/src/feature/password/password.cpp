@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -30,22 +31,22 @@
 
 Password password;
 
-// public:
-bool     Password::is_set, Password::is_locked, Password::did_first_run; // = false
+// public://公众：
+bool     Password::is_set, Password::is_locked, Password::did_first_run; // = false//=错误
 uint32_t Password::value, Password::value_entry;
 
-//
-// Authenticate user with password.
-// Called from Setup, after SD Prinitng Stops/Aborts, and M510
-//
+////
+// Authenticate user with password.//使用密码验证用户。
+// Called from Setup, after SD Prinitng Stops/Aborts, and M510//在SD Prinitng停止/中止和M510后，从安装程序调用
+////
 void Password::lock_machine() {
   is_locked = true;
   TERN_(HAS_LCD_MENU, authenticate_user(ui.status_screen, screen_password_entry));
 }
 
-//
-// Authentication check
-//
+////
+// Authentication check//身份验证检查
+////
 void Password::authentication_check() {
   if (value_entry == value) {
     is_locked = false;
@@ -58,4 +59,4 @@ void Password::authentication_check() {
   TERN_(HAS_LCD_MENU, authentication_done());
 }
 
-#endif // PASSWORD_FEATURE
+#endif // PASSWORD_FEATURE//密码加密功能

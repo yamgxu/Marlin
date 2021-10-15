@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  *
@@ -67,5 +68,5 @@ bool PersistentStore::read_data(int &pos, uint8_t *value, size_t size, uint16_t 
   return false;
 }
 
-#endif // QSPI_EEPROM
-#endif // __SAMD51__
+#endif // QSPI_EEPROM//QSPI_EEPROM
+#endif // __SAMD51__//_uusamd51__

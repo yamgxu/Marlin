@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -54,12 +55,12 @@ public:
 
   static void handler(int sig, siginfo_t *si, void *uc){
     Timer* _this = (Timer*)si->si_value.sival_ptr;
-    _this->avg_error += (Clock::nanos() - _this->start_time) - _this->period; //high_resolution_clock is also limited in precision, but best we have
-    _this->avg_error /= 2; //very crude precision analysis (actually within +-500ns usually)
-    _this->start_time = Clock::nanos(); // wrap
+    _this->avg_error += (Clock::nanos() - _this->start_time) - _this->period; //high_resolution_clock is also limited in precision, but best we have//高分辨率时钟的精度也有限，但我们拥有最好的
+    _this->avg_error /= 2; //very crude precision analysis (actually within +-500ns usually)//非常粗略的精度分析（通常在+-500ns范围内）
+    _this->start_time = Clock::nanos(); // wrap//包裹
     _this->cbfn();
-    _this->overruns += timer_getoverrun(_this->timerid); // even at 50Khz this doesn't stay zero, again demonstrating the limitations
-                                                         // using a realtime linux kernel would help somewhat
+    _this->overruns += timer_getoverrun(_this->timerid); // even at 50Khz this doesn't stay zero, again demonstrating the limitations//即使在50Khz，这也不会保持为零，再次证明了其局限性
+                                                         // using a realtime linux kernel would help somewhat//使用实时linux内核会有所帮助
   }
 
 private:

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -65,7 +66,7 @@
 #include "../../shared/HAL_SPI.h"
 
 #ifndef LCD_SPI_SPEED
-  #define LCD_SPI_SPEED SPI_EIGHTH_SPEED  // About 1 MHz
+  #define LCD_SPI_SPEED SPI_EIGHTH_SPEED  // About 1 MHz//大约1兆赫
 #endif
 
 static pin_t SCK_pin_ST7920_HAL, MOSI_pin_ST7920_HAL_HAL;
@@ -74,10 +75,10 @@ static uint8_t SPI_speed = 0;
 static void u8g_com_LPC1768_st7920_write_byte_sw_spi(uint8_t rs, uint8_t val) {
   static uint8_t rs_last_state = 255;
   if (rs != rs_last_state) {
-    // Transfer Data (FA) or Command (F8)
+    // Transfer Data (FA) or Command (F8)//传输数据（FA）或命令（F8）
     swSpiTransfer(rs ? 0x0FA : 0x0F8, SPI_speed, SCK_pin_ST7920_HAL, -1, MOSI_pin_ST7920_HAL_HAL);
     rs_last_state = rs;
-    DELAY_US(40); // Give the controller time to process the data: 20 is bad, 30 is OK, 40 is safe
+    DELAY_US(40); // Give the controller time to process the data: 20 is bad, 30 is OK, 40 is safe//给控制器处理数据的时间：20是坏的，30是正常的，40是安全的
   }
   swSpiTransfer(val & 0x0F0, SPI_speed, SCK_pin_ST7920_HAL, -1, MOSI_pin_ST7920_HAL_HAL);
   swSpiTransfer(val << 4, SPI_speed, SCK_pin_ST7920_HAL, -1, MOSI_pin_ST7920_HAL_HAL);
@@ -115,7 +116,7 @@ uint8_t u8g_com_HAL_LPC1768_ST7920_sw_spi_fn(u8g_t *u8g, uint8_t msg, uint8_t ar
       break;
 
     case U8G_COM_MSG_CHIP_SELECT:
-      if (U8G_PIN_NONE != u8g->pin_list[U8G_PI_CS]) u8g_SetPILevel(u8g, U8G_PI_CS, arg_val);  //note: the st7920 has an active high chip select
+      if (U8G_PIN_NONE != u8g->pin_list[U8G_PI_CS]) u8g_SetPILevel(u8g, U8G_PI_CS, arg_val);  //note: the st7920 has an active high chip select//注：st7920有一个有源高电平芯片选择
       break;
 
     case U8G_COM_MSG_WRITE_BYTE:
@@ -143,5 +144,5 @@ uint8_t u8g_com_HAL_LPC1768_ST7920_sw_spi_fn(u8g_t *u8g, uint8_t msg, uint8_t ar
   return 1;
 }
 
-#endif // U8GLIB_ST7920
-#endif // TARGET_LPC1768
+#endif // U8GLIB_ST7920//U8GLIB_ST7920
+#endif // TARGET_LPC1768//目标为LPC1768

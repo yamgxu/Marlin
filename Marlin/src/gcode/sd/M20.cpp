@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -40,4 +41,4 @@ void GcodeSuite::M20() {
     SERIAL_ECHO_MSG(STR_NO_MEDIA);
 }
 
-#endif // SDSUPPORT
+#endif // SDSUPPORT//SDSUPPORT

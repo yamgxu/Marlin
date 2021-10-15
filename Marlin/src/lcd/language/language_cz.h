@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -36,7 +37,7 @@
 #define DISPLAY_CHARSET_ISO10646_CZ
 
 namespace Language_cz {
-  using namespace Language_en; // Inherit undefined strings from English
+  using namespace Language_en; // Inherit undefined strings from English//从英语中继承未定义的字符串
 
   constexpr uint8_t    CHARSIZE                            = 2;
   PROGMEM Language_Str LANGUAGE                            = _UxGT("Czech");
@@ -52,7 +53,7 @@ namespace Language_cz {
   PROGMEM Language_Str MSG_MEDIA_READ_ERROR                = _UxGT("Chyba čtení média");
   PROGMEM Language_Str MSG_MEDIA_USB_REMOVED               = _UxGT("USB odstraněno");
   PROGMEM Language_Str MSG_MEDIA_USB_FAILED                = _UxGT("Chyba USB");
-  PROGMEM Language_Str MSG_LCD_ENDSTOPS                    = _UxGT("Endstopy"); // max 8 znaku
+  PROGMEM Language_Str MSG_LCD_ENDSTOPS                    = _UxGT("Endstopy"); // max 8 znaku//最多8个znaku
   PROGMEM Language_Str MSG_LCD_SOFT_ENDSTOPS               = _UxGT("Soft Endstopy");
   PROGMEM Language_Str MSG_MAIN                            = _UxGT("Hlavní nabídka");
   PROGMEM Language_Str MSG_ADVANCED_SETTINGS               = _UxGT("Další nastavení");
@@ -551,7 +552,7 @@ namespace Language_cz {
   PROGMEM Language_Str MSG_MAZE                            = _UxGT("Bludiště");
 
   #if LCD_HEIGHT >= 4
-    // Up to 3 lines allowed
+    // Up to 3 lines allowed//最多允许3行
     PROGMEM Language_Str MSG_ADVANCED_PAUSE_WAITING        = _UxGT(MSG_2_LINE("Stikněte tlačítko", "pro obnovení tisku"));
     PROGMEM Language_Str MSG_PAUSE_PRINT_PARKING           = _UxGT(MSG_1_LINE("Parkování..."));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_INIT          = _UxGT(MSG_3_LINE("Čekejte prosím", "na zahájení", "výměny filamentu"));
@@ -563,8 +564,8 @@ namespace Language_cz {
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_PURGE         = _UxGT(MSG_2_LINE("Vyčkejte na", "vytlačení"));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_CONT_PURGE    = _UxGT(MSG_3_LINE("Klikněte pro", "ukončení", "vytlačování"));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_RESUME        = _UxGT(MSG_3_LINE("Čekejte prosím", "na pokračování", "tisku"));
-  #else // LCD_HEIGHT < 4
-    // Up to 2 lines allowed
+  #else // LCD_HEIGHT < 4//LCD_高度<4
+    // Up to 2 lines allowed//最多允许2行
     PROGMEM Language_Str MSG_ADVANCED_PAUSE_WAITING        = _UxGT(MSG_2_LINE("Stikněte tlač.", "pro obnovení"));
     PROGMEM Language_Str MSG_PAUSE_PRINT_PARKING           = _UxGT(MSG_1_LINE("Parkování..."));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_INIT          = _UxGT(MSG_1_LINE("Čekejte..."));
@@ -576,7 +577,7 @@ namespace Language_cz {
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_PURGE         = _UxGT(MSG_1_LINE("Vytlačování..."));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_CONT_PURGE    = _UxGT(MSG_2_LINE("Klikněte pro", "ukončení"));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_RESUME        = _UxGT(MSG_1_LINE("Pokračování..."));
-  #endif // LCD_HEIGHT < 4
+  #endif // LCD_HEIGHT < 4//LCD_高度<4
 
   PROGMEM Language_Str MSG_TMC_DRIVERS                     = _UxGT("TMC budiče");
   PROGMEM Language_Str MSG_TMC_CURRENT                     = _UxGT("Proud budičů");

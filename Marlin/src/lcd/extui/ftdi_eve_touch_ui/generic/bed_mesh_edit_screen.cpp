@@ -1,3 +1,4 @@
+/** translatione by yx */
 /****************************
  * bed_mesh_edit_screen.cpp *
  ****************************/
@@ -172,7 +173,7 @@ bool BedMeshEditScreen::onTouchHeld(uint8_t tag) {
 bool BedMeshEditScreen::onTouchEnd(uint8_t tag) {
   switch (tag) {
     case 1:
-      // On Cancel, reload saved mesh, discarding changes
+      // On Cancel, reload saved mesh, discarding changes//取消时，重新加载保存的网格，放弃更改
       GOTO_PREVIOUS();
       injectCommands_P(PSTR("G29 L1"));
       return true;
@@ -190,10 +191,10 @@ bool BedMeshEditScreen::onTouchEnd(uint8_t tag) {
 }
 
 void BedMeshEditScreen::show() {
-  // On entry, home if needed and save current mesh
+  // On entry, home if needed and save current mesh//在输入时，如果需要，返回主页并保存当前网格
   if (!ExtUI::isMachineHomed()) {
     SpinnerDialogBox::enqueueAndWait_P(F("G28\nG29 S1"));
-    // After the spinner, go to this screen.
+    // After the spinner, go to this screen.//旋转器后，转到此屏幕。
     current_screen.forget();
     PUSH_SCREEN(BedMeshEditScreen);
   }
@@ -203,4 +204,4 @@ void BedMeshEditScreen::show() {
   }
 }
 
-#endif // FTDI_BED_MESH_EDIT_SCREEN
+#endif // FTDI_BED_MESH_EDIT_SCREEN//FTDI_床_网_编辑_屏幕

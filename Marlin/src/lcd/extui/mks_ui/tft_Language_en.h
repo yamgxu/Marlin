@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -503,7 +504,7 @@
 #define TEXT_WIFI_FORGET_EN         "Forget Network"
 #define TEXT_DISCONECTED_EN         "Wi-Fi Connected"
 
-//wifi-list
+//wifi-list//wifi列表
 #define MAIN_BUILT_EN       "Build"
 #define MAIN_FILAMENT_EN    "Filament"
 #define MAIN_SETUP_EN       "Setup"
@@ -512,7 +513,7 @@
 #define FILE_MENU_BUILD_EN  "Build"
 #define FILE_MENU_MENU_EN   " < Menu"
 
-//about
+//about//关于
 #define ABOUT_TITLE_EN                    "About"
 #define ABOUT_BUILT_MACHINES_EN           "Built Machines"
 #define ABOUT_SPARK_EN                    "Spark"
@@ -520,52 +521,52 @@
 #define ABOUT_SERIAL_NUMBER_EN            "Serial Number:"
 #define ABOUT_S_NUMBER_EN                 "DCPLX02KFC6P"
 
-//set
+//set//设置
 #define SETUP_TITLE_EN                    "Setup"
 #define SETUP_WIFI_EN                     "Wi-Fi"
 #define SETUP_MANUAL_IP_EN                "Manual IP"
 #define SETUP_WIFI_NOT_CONNECTED_EN       "Not Connected"
 #define SETUP_WIFI_NETWORK_EN             "WiFi_Network"
 
-//build
+//build//建造
 #define BUILD_TITLE_EN                    "Build"
 #define BUILD_SD_CARD_EN                  "SD Card"
 #define BUILD_USB_DRIVE_EN                "USB Drive"
 
-//SD card
+//SD card//SD卡
 #define SD_CARD_TITLE_EN                  "SD Card"
 #define SD_CARD_BACK_EN                   "< Back"
-//USB Drive
+//USB Drive//USB驱动器
 #define USB_DRIVE_TITLE_EN                "USB Drive"
 #define USB_DRIVE_BACK_EN                 "< Back"
 #define FILE_PAGES_EN                     "%d/%d"
 #define FILE_NEXT_PAGE_EN                 "Next Page"
 #define MEDIA_SELECT_TITLE_EN             "Select Media"
 
-//BUILD PLATE
+//BUILD PLATE//造板
 #define PLATE_TITLE_EN                    "Build Plate"
 #define PLATE_BACK_EN                     "< Back"
 #define PLATE_CONFIRM_EN                  "Confirm >"
 #define PLATE_TIPS_EN                     "Confirm that there is a Clear\nBuild Plate installed in the\nmachine."
 
-//build model
+//build model//构建模型
 #define MODEL_TITLE_EN                    "Build Model"
 #define MODEL_START_BUILD_EN              "Start Build"
 #define MODEL_BACK_EN                     "< Back"
 
-//building
+//building//建筑
 #define BUILDING_TITLE_EN                 "Building"
 #define BUILDING_MENU_EN                  "Build Menu"
 #define BUILDING_COMPLETED                "Build\nComplete"
 
-//building menu
+//building menu//建筑菜单
 #define BUILDING_MENU_TITLE_EN            "Build Menu"
 #define BUILDING_MENU_SETTINGS_EN         "Build Settings"
 #define BUILDING_MENU_PAUSE_EN            "Pause Build"
 #define BUILDING_MENU_CANCEL_EN           "Cancel Build"
 #define BUILDING_MENU_BACK_EN             "< Back"
 
-//build settings
+//build settings//生成设置
 #define SETTINGS_TITLE_EN                 "Build Settings"
 #define SETTINGS_NOZZLE_TEMPER_EN         "Nozzle Temp:"
 #define SETTINGS_NOZZLE_VALUE_EN          "%d"
@@ -575,13 +576,13 @@
 #define SETTINGS_SPEED_VALUE_EN           "Standard"
 #define SETTINGS_BACK_EN                  "< Back"
 
-//build paused
+//build paused//构建暂停
 #define PAUSED_TITLE_EN                   "Build Paused"
 #define PAUSED_RESUME_EN                  "Resume Build"
 #define PAUSED_CANCEL_EN                  "Cancel Build"
 #define PAUSED_BACK_EN                    "< Back"
 
-//build cancel
+//build cancel//生成取消
 #define CANCEL_TITLE_EN                   "Cancel Build"
 #define CANCEL_BUILD_EN                   "Cancel Build"
 #define CANCEL_TIPS_EN                    "Are you sure you want to\ncancel this build? The model\nwill be deleted from this\nmachine. It will need to be\nresent from your computer\nbefore it can be built in the\nfuture."
@@ -589,31 +590,31 @@
 #define CANCEL_BUILD_DISPLAY_EN           "Build\nCanceled"
 #define CANCEL_OVER_PLATE_TIPS_EN         "Confirm that the Build Plate\nhas been removed from the\nmachine."
 
-//filament model enter
+//filament model enter//灯丝模型输入
 #define FILAMENT_MODEL_ENTER_TITLE_EN     "Model-PLA"
 #define FILAMENT_MODEL_ENTER_BACK_EN      "< Back"
 #define FILAMENT_MODEL_ENTER_BEGIN_EN     "Begin >"
 #define FILAMENT_MODEL_ENTER_TIPS_EN      "The Model Filament spool\ncompartment is located on\nthe right side of the machine."
 
-//filament model PLA
+//filament model PLA//长丝型聚乳酸
 #define FILAMENT_MODEL_PLA_TITLE_EN       "Model-PLA"
 #define FILAMENT_PLA_LOAD_TITLE_EN        "Load Filament"
 #define FILAMENT_PLA_UNLOAD_TITLE_EN      "Unload Filament"
 #define FILAMENT_MODEL_PLA_LOAD_EN        "Load Filament"
 #define FILAMENT_MODEL_PLA_UNLOAD_EN      "Unload Filament"
-//filament support enter
+//filament support enter//灯丝支架进入
 #define FILAMENT_SUPPORT_ENTER_TITLE_EN   "Support-PVA"
 #define FILAMENT_SUPPORT_ENTER_BACK_EN    "< Back"
 #define FILAMENT_SUPPORT_ENTER_BEGIN_EN   "Begin >"
 #define FILAMENT_SUPPORT_ENTER_TIPS_EN    "The Support Filament spool\ncompartment is located on\nthe left side of the machine."
-//filament heating
+//filament heating//灯丝加热
 #define FILAMENT_HEATING_LOAD_TITLE_EN    "Load Filament"
 #define FILAMENT_HEATING_UNLOAD_TITLE_EN  "Unload Filament"
 #define FILAMENT_HEATING_CANCEL_EN        "< Cancel"
 #define FILAMENT_HEATING_MATERIAL_EN      "Material:"
 #define FILAMENT_HEATING_PLA_EN           "Model-PLA"
 #define FILAMENT_HEATING_TIPS_EN          "Print head is heating..."
-//rotate left
+//rotate left//向左旋转
 #define ROTATE_LEFT_LOAD_TITLE_EN         "Load Filament"
 #define ROTATE_LEFT_UNLOAD_TITLE_EN       "Unload Filament"
 #define ROTATE_LEFT_CANCEL_EN             "< Cancel"
@@ -622,7 +623,7 @@
 #define ROTATE_LEFT_NEXT_EN               "Next >"
 #define ROTATE_LEFT_TIPS_EN               "Rotate extruder selection\ndial to the left."
 
-//hang spool
+//hang spool//悬挂线轴
 #define HANG_SPOOL_TITLE_EN         "Load Filament"
 #define HANG_SPOOL_PREVIOUS_EN      "< Previous"
 #define HANG_SPOOL_MATERIAL_EN      "Material:"
@@ -630,7 +631,7 @@
 #define HANG_SPOOL_NEXT_EN          "Next >"
 #define HANG_SPOOL_TIPS_EN          "Hang the spool in the spool\ncompartment as shown."
 
-//feed filament
+//feed filament//喂丝
 #define FEED_FILAMENT_TITLE_EN      "Load Filament"
 #define FEED_FILAMENT_PREVIOUS_EN   "< Previous"
 #define FEED_FILAMENT_MATERIAL_EN   "Material:"
@@ -638,7 +639,7 @@
 #define FEED_FILAMENT_NEXT_EN       "Next >"
 #define FEED_FILAMENT_TIPS_EN       "Feed filament into extruder\nup beyond the gears."
 
-//feed filament
+//feed filament//喂丝
 #define ROTATE_UP_TITLE_EN          "Load Filament"
 #define ROTATE_UP_PREVIOUS_EN        "< Previous"
 #define ROTATE_UP_MATERIAL_EN       "Material:"
@@ -646,20 +647,20 @@
 #define ROTATE_UP_NEXT_EN           "Next >"
 #define ROTATE_UP_TIPS_EN           "Rotate extruder selection\ndial up."
 
-//filament begin
+//filament begin//灯丝开始
 #define FEED_BEGIN_TITLE_EN         "Load Filament"
 #define FEED_BEGIN_MATERIAL_EN      "Material:"
 #define FEED_BEGIN_PLA_EN           "Model-PLA"
 #define FEED_BEGIN_NEXT_EN          "Next >"
 #define FEED_BEGIN_TIPS_EN          "Press Next when filament\nbegins to extrude."
 
-//filament finish
+//filament finish//长丝整理
 #define FEED_FINISH_TITLE_EN        "Load Filament"
 #define FEED_FINISH_MATERIAL_EN     "Material:"
 #define FEED_FINISH_PLA_EN          "Model-PLA"
 #define FEED_FINISH_NEXT_EN         "Finish >"
 #define FEED_FINISH_TIPS_EN         "Remove filament from the\nnozzle and discard."
-//fiament remove
+//fiament remove//分离
 #define REMOVE_SPOOL_TITLE_EN       "Unload Filament"
 #define REMOVE_SPOOL_PREVIOUS_EN     "< Previous"
 #define REMOVE_SPOOL_FINISH_EN      "Finish >"
@@ -671,7 +672,7 @@
 #define LOAD_FINISH_EN              "Load\nFilament\nComplete"
 #define UNLOAD_FINISH_EN            "Unload\nFilament\nComplete"
 
-//manual ip
+//manual ip//手动ip
 #define MANUAL_IP_TITLE_EN          "Manual IP"
 #define MANUAL_IP_CANCEL_EN         "< Cancel"
 #define MANUAL_IP_APPLY_EN          "Join >"

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /****************
  * dl_cache.cpp *
  ****************/
@@ -65,7 +66,7 @@
 
 using namespace FTDI;
 
-// The init function ensures all cache locations are marked as empty
+// The init function ensures all cache locations are marked as empty//init函数确保所有缓存位置都标记为空
 
 void DLCache::init() {
   CLCD::mem_write_32(DL_FREE_ADDR, DL_FREE_ADDR + 4);
@@ -104,16 +105,16 @@ bool DLCache::wait_until_idle() {
 bool DLCache::store(uint32_t min_bytes /* = 0*/) {
   CLCD::CommandFifo cmd;
 
-  // Execute any commands already in the FIFO
+  // Execute any commands already in the FIFO//执行FIFO中已有的任何命令
   cmd.execute();
   if (!wait_until_idle())
     return false;
 
-  // Figure out how long the display list is
+  // Figure out how long the display list is//计算显示列表的长度
   const uint32_t dl_size = CLCD::dl_size();
 
   if (dl_slot_addr == 0) {
-    // If we are allocating new space...
+    // If we are allocating new space...//如果我们正在分配新的空间。。。
     dl_slot_addr = CLCD::mem_read_32(DL_FREE_ADDR);
     dl_slot_size = max(dl_size, min_bytes);
 
@@ -129,7 +130,7 @@ bool DLCache::store(uint32_t min_bytes /* = 0*/) {
   }
 
   if (dl_size > dl_slot_size) {
-    // Not enough memory to cache the display list.
+    // Not enough memory to cache the display list.//内存不足，无法缓存显示列表。
     #if ENABLED(TOUCH_UI_DEBUG)
       SERIAL_ECHO_START();
       SERIAL_ECHOPAIR  ("Not enough space in GRAM to cache display list, free space: ", dl_slot_size);
@@ -177,4 +178,4 @@ void DLCache::append() {
   #endif
 }
 
-#endif // FTDI_EXTENDED
+#endif // FTDI_EXTENDED//FTDI_扩展

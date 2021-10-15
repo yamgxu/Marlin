@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Copyright (C) 2011 Circuits At Home, LTD. All rights reserved.
  *
@@ -29,21 +30,21 @@
 
 #include "../../../inc/MarlinConfigPre.h"
 
-// WARNING: Do not change the order of includes, or stuff will break!
+// WARNING: Do not change the order of includes, or stuff will break!//警告：请勿更改包含的顺序，否则内容将被破坏！
 #include <inttypes.h>
 #include <stddef.h>
 #include <stdio.h>
 
-// None of these should ever be included by a driver, or a user's sketch.
+// None of these should ever be included by a driver, or a user's sketch.//驱动程序或用户草图不应包含这些内容。
 #include "settings.h"
 #include "printhex.h"
 #include "message.h"
 
 #include "hexdump.h"
-//#include "sink_parser.h"
+//#include "sink_parser.h"//#包括“sink_parser.h”
 #include "max3421e.h"
 #include "address.h"
-//#include "avrpins.h"
+//#include "avrpins.h"//#包括“avrpins.h”
 #include "usb_ch9.h"
 #include "usbhost.h"
 #include "UsbCore.h"

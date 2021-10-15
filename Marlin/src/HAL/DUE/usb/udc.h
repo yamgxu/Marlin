@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * \file
  *
@@ -41,7 +42,7 @@
  *
  */
 /*
- * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>
+ * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>//www.atmel.com/design support/“>atmel支持</a>
  */
 
 #ifndef _UDC_H_
@@ -225,7 +226,7 @@ static inline void udc_remotewakeup(void)
  */
 usb_iface_desc_t UDC_DESC_STORAGE *udc_get_interface_desc(void);
 
-//@}
+//@}//@}
 
 /**
  * \ingroup usb_group
@@ -254,7 +255,7 @@ usb_iface_desc_t UDC_DESC_STORAGE *udc_get_interface_desc(void);
  * @{
  */
 
-//! @}
+//! @}//! @}
 
 #ifdef __cplusplus
 }
@@ -694,4 +695,4 @@ usb_iface_desc_t UDC_DESC_STORAGE *udc_get_interface_desc(void);
 
 
 
-#endif // _UDC_H_
+#endif // _UDC_H_//_UDC_H_

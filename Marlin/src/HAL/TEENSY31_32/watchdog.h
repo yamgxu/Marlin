@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -23,12 +24,12 @@
 
 #include "HAL.h"
 
-// Arduino Due core now has watchdog support
+// Arduino Due core now has watchdog support//Arduino Due core现在有看门狗支持
 
 void watchdog_init();
 
 inline void HAL_watchdog_refresh() {
-  // Watchdog refresh sequence
+  // Watchdog refresh sequence//看门狗刷新序列
   WDOG_REFRESH = 0xA602;
   WDOG_REFRESH = 0xB480;
 }

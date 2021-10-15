@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -20,9 +21,9 @@
  *
  */
 
-//
-// Mixer Menu
-//
+////
+// Mixer Menu//混音器菜单
+////
 
 #include "../../inc/MarlinConfigPre.h"
 
@@ -106,13 +107,13 @@
     END_MENU();
   }
 
-#endif // GRADIENT_MIX
+#endif // GRADIENT_MIX//梯度混合
 
 static uint8_t v_index;
 
 #if HAS_DUAL_MIXING
   void _lcd_draw_mix(const uint8_t y) {
-    char tmp[20]; // "100%_100%"
+    char tmp[20]; // "100%_100%"// "100%_100%"
     sprintf_P(tmp, PSTR("%3d%% %3d%%"), int(mixer.mix[0]), int(mixer.mix[1]));
     SETCURSOR(2, y); lcd_put_u8str_P(GET_TEXT(MSG_MIX));
     SETCURSOR_RJ(10, y); lcd_put_u8str(tmp);
@@ -146,7 +147,7 @@ void lcd_mixer_mix_edit() {
 
   #if HAS_DUAL_MIXING && !CHANNEL_MIX_EDITING
 
-    // Adjust 2-channel mix from the encoder
+    // Adjust 2-channel mix from the encoder//从编码器调整2通道混音
     if (ui.encoderPosition) {
       mixer.mix[0] += int32_t(ui.encoderPosition);
       ui.encoderPosition = 0;
@@ -156,7 +157,7 @@ void lcd_mixer_mix_edit() {
     }
     _lcd_draw_mix((LCD_HEIGHT - 1) / 2);
 
-    // Click to commit the change
+    // Click to commit the change//单击以提交更改
     if (ui.lcd_clicked) {
       mixer.update_vtool_from_mix();
       ui.goto_previous_screen();
@@ -186,9 +187,9 @@ void lcd_mixer_mix_edit() {
 
 #if HAS_DUAL_MIXING
 
-  //
-  // Toggle Dual-Mix
-  //
+  ////
+  // Toggle Dual-Mix//切换双混音
+  ////
   inline void _lcd_mixer_toggle_mix() {
     mixer.mix[0] = mixer.mix[0] == 100 ? 0 : 100;
     mixer.mix[1] = 100 - mixer.mix[0];
@@ -200,9 +201,9 @@ void lcd_mixer_mix_edit() {
 
 #if CHANNEL_MIX_EDITING
 
-  //
-  // Prepare and Edit Mix
-  //
+  ////
+  // Prepare and Edit Mix//准备并编辑混音
+  ////
   inline void _lcd_goto_mix_edit() {
     mixer.refresh_collector(10, v_index);
     ui.goto_screen(lcd_mixer_mix_edit);
@@ -212,9 +213,9 @@ void lcd_mixer_mix_edit() {
 #endif
 
 #if ENABLED(GRADIENT_MIX)
-  //
-  // Reverse Gradient
-  //
+  ////
+  // Reverse Gradient//反向梯度
+  ////
   inline void _lcd_mixer_reverse_gradient() {
     const uint8_t sv = mixer.gradient.start_vtool;
     mixer.gradient.start_vtool = mixer.gradient.end_vtool;
@@ -246,9 +247,9 @@ void menu_mixer() {
     SUBMENU(MSG_MIX, _lcd_goto_mix_edit);
   #endif
 
-  //
-  // Reset All V-Tools
-  //
+  ////
+  // Reset All V-Tools//重置所有V形工具
+  ////
   CONFIRM_ITEM(MSG_RESET_VTOOLS,
     MSG_BUTTON_RESET, MSG_BUTTON_CANCEL,
     []{
@@ -275,4 +276,4 @@ void menu_mixer() {
   END_MENU();
 }
 
-#endif // HAS_LCD_MENU && MIXING_EXTRUDER
+#endif // HAS_LCD_MENU && MIXING_EXTRUDER//有LCD菜单和混合挤出机

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -44,20 +45,20 @@
 
     if (parser.seenval('D')) {
       const float dval = parser.value_linear_units();
-      if (dval) { // Set filament size for volumetric calculation
+      if (dval) { // Set filament size for volumetric calculation//设置用于体积计算的灯丝尺寸
         planner.set_filament_size(target_extruder, dval);
-        vol_enable = true;    // Dn = enable for compatibility
+        vol_enable = true;    // Dn = enable for compatibility//Dn=启用兼容性
       }
       else
-        can_enable = false;   // D0 = disable for compatibility
+        can_enable = false;   // D0 = disable for compatibility//D0=禁用兼容性
     }
 
-    // Enable or disable with S1 / S0
+    // Enable or disable with S1 / S0//使用S1/S0启用或禁用
     parser.volumetric_enabled = can_enable && parser.boolval('S', vol_enable);
 
     #if ENABLED(VOLUMETRIC_EXTRUDER_LIMIT)
       if (parser.seenval('L')) {
-        // Set volumetric limit (in mm^3/sec)
+        // Set volumetric limit (in mm^3/sec)//设置体积限制（单位：mm^3/秒）
         const float lval = parser.value_float();
         if (WITHIN(lval, 0, 20))
           planner.set_volumetric_extruder_limit(target_extruder, lval);
@@ -69,7 +70,7 @@
     planner.calculate_volumetric_multipliers();
   }
 
-#endif // !NO_VOLUMETRICS
+#endif // !NO_VOLUMETRICS// !无体积计量学
 
 /**
  * M201: Set max acceleration in units/s^2 for print moves (M201 X1000 Y1000)
@@ -125,8 +126,8 @@ void GcodeSuite::M204() {
     SERIAL_ECHOLNPAIR_P(SP_T_STR, planner.settings.travel_acceleration);
   }
   else {
-    //planner.synchronize();
-    // 'S' for legacy compatibility. Should NOT BE USED for new development
+    //planner.synchronize();//planner.synchronize（）；
+    // 'S' for legacy compatibility. Should NOT BE USED for new development//“S”表示旧式兼容性。不应用于新的开发
     if (parser.seenval('S')) planner.settings.travel_acceleration = planner.settings.acceleration = parser.value_linear_units();
     if (parser.seenval('P')) planner.settings.acceleration = parser.value_linear_units();
     if (parser.seenval('R')) planner.settings.retract_acceleration = parser.value_linear_units();
@@ -149,7 +150,7 @@ void GcodeSuite::M204() {
 void GcodeSuite::M205() {
   if (!parser.seen("BST" TERN_(HAS_JUNCTION_DEVIATION, "J") TERN_(HAS_CLASSIC_JERK, "XYZE"))) return;
 
-  //planner.synchronize();
+  //planner.synchronize();//planner.synchronize（）；
   if (parser.seenval('B')) planner.settings.min_segment_time_us = parser.value_ulong();
   if (parser.seenval('S')) planner.settings.min_feedrate_mm_s = parser.value_linear_units();
   if (parser.seenval('T')) planner.settings.min_travel_feedrate_mm_s = parser.value_linear_units();
@@ -182,5 +183,5 @@ void GcodeSuite::M205() {
       if (seenZ && planner.max_jerk.z <= 0.1f)
         SERIAL_ECHOLNPGM("WARNING! Low Z Jerk may lead to unwanted pauses.");
     #endif
-  #endif // HAS_CLASSIC_JERK
+  #endif // HAS_CLASSIC_JERK//有经典的混蛋吗
 }

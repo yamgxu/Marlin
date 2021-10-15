@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*********************************
  * junction_deviation_screen.cpp *
  *********************************/
@@ -50,4 +51,4 @@ bool JunctionDeviationScreen::onTouchHeld(uint8_t tag) {
   return true;
 }
 
-#endif // FTDI_JUNCTION_DEVIATION_SCREEN
+#endif // FTDI_JUNCTION_DEVIATION_SCREEN//FTDI_连接_偏差_屏幕

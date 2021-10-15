@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,10 +22,10 @@
  */
 #pragma once
 
-// Print debug messages with M111 S2 (Uses 156 bytes of PROGMEM)
-//#define DEBUG_STOPWATCH
+// Print debug messages with M111 S2 (Uses 156 bytes of PROGMEM)//使用M111 S2打印调试消息（使用156字节的PROGMEM）
+//#define DEBUG_STOPWATCH//#定义秒表
 
-#include "../core/macros.h" // for FORCE_INLINE
+#include "../core/macros.h" // for FORCE_INLINE//对于FORCE_INLINE
 
 #include <stdint.h>
 typedef uint32_t millis_t;
@@ -56,7 +57,7 @@ class Stopwatch {
      * @return true on success
      */
     static bool stop();
-    static inline bool abort() { return stop(); } // Alias by default
+    static inline bool abort() { return stop(); } // Alias by default//默认情况下为别名
 
     /**
      * @brief Pause the stopwatch

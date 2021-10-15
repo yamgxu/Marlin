@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -40,11 +41,11 @@ enum StealthIndex : uint8_t {
 };
 #define TMC_INIT(ST, STEALTH_INDEX) tmc_init(stepper##ST, ST##_CURRENT, ST##_MICROSTEPS, ST##_HYBRID_THRESHOLD, stealthchop_by_axis[STEALTH_INDEX], chopper_timing_##ST, ST##_INTERPOLATE)
 
-//   IC = TMC model number
-//   ST = Stepper object letter
-//   L  = Label characters
-//   AI = Axis Enum Index
-// SWHW = SW/SH UART selection
+//   IC = TMC model number//IC=TMC型号
+//   ST = Stepper object letter//ST=步进器对象字母
+//   L  = Label characters//L=标签字符
+//   AI = Axis Enum Index//AI=轴枚举索引
+// SWHW = SW/SH UART selection//SWHW=SW/SH UART选择
 #if ENABLED(TMC_USE_SW_SPI)
   #define __TMC_SPI_DEFINE(IC, ST, L, AI) TMCMarlin<IC##Stepper, L, AI> stepper##ST(ST##_CS_PIN, float(ST##_RSENSE), TMC_SW_MOSI, TMC_SW_MISO, TMC_SW_SCK, ST##_CHAIN_POS)
 #else
@@ -72,7 +73,7 @@ enum StealthIndex : uint8_t {
   #define TMC_UART_DEFINE_E(SWHW, AI) TMC_UART_DEFINE(SWHW, E##AI, E)
 #endif
 
-// Stepper objects of TMC2130/TMC2160/TMC2660/TMC5130/TMC5160 steppers used
+// Stepper objects of TMC2130/TMC2160/TMC2660/TMC5130/TMC5160 steppers used//使用TMC2130/TMC2160/TMC2660/TMC5130/TMC5160步进器的步进器对象
 #if AXIS_HAS_SPI(X)
   TMC_SPI_DEFINE(X, X);
 #endif
@@ -132,11 +133,11 @@ enum StealthIndex : uint8_t {
 #endif
 
 #ifndef TMC_BAUD_RATE
-  // Reduce baud rate for boards not already overriding TMC_BAUD_RATE for software serial.
-  // Testing has shown that 115200 is not 100% reliable on AVR platforms, occasionally
-  // failing to read status properly. 32-bit platforms typically define an even lower
-  // TMC_BAUD_RATE, due to differences in how SoftwareSerial libraries work on different
-  // platforms.
+  // Reduce baud rate for boards not already overriding TMC_BAUD_RATE for software serial.//降低尚未覆盖串行软件TMC_波特率的电路板的波特率。
+  // Testing has shown that 115200 is not 100% reliable on AVR platforms, occasionally//测试表明，115200在AVR平台上并非100%可靠，偶尔也会出现这种情况
+  // failing to read status properly. 32-bit platforms typically define an even lower//无法正确读取状态。32位平台通常定义更低的
+  // TMC_BAUD_RATE, due to differences in how SoftwareSerial libraries work on different//TMC_波特率，由于软件串行库在不同系统上的工作方式不同
+  // platforms.//平台。
   #define TMC_BAUD_RATE TERN(HAS_TMC_SW_SERIAL, 57600, 115200)
 #endif
 
@@ -206,13 +207,13 @@ enum StealthIndex : uint8_t {
     st.rms_current(mA, HOLD_MULTIPLIER);
     st.microsteps(microsteps);
     st.iholddelay(10);
-    st.TPOWERDOWN(128); // ~2s until driver lowers to hold current
+    st.TPOWERDOWN(128); // ~2s until driver lowers to hold current//~2s，直到驱动器降低以保持电流
 
     st.en_pwm_mode(stealth);
     st.stored.stealthChop_enabled = stealth;
 
     PWMCONF_t pwmconf{0};
-    pwmconf.pwm_freq = 0b01; // f_pwm = 2/683 f_clk
+    pwmconf.pwm_freq = 0b01; // f_pwm = 2/683 f_clk//f_pwm=2/683 f_clk
     pwmconf.pwm_autoscale = true;
     pwmconf.pwm_grad = 5;
     pwmconf.pwm_ampl = 180;
@@ -220,9 +221,9 @@ enum StealthIndex : uint8_t {
 
     TERN(HYBRID_THRESHOLD, st.set_pwm_thrs(hyb_thrs), UNUSED(hyb_thrs));
 
-    st.GSTAT(); // Clear GSTAT
+    st.GSTAT(); // Clear GSTAT//清除GSTAT
   }
-#endif // TMC2130
+#endif // TMC2130//TMC2130
 
 #if HAS_DRIVER(TMC2160)
   template<char AXIS_LETTER, char DRIVER_ID, AxisEnum AXIS_ID>
@@ -241,7 +242,7 @@ enum StealthIndex : uint8_t {
     st.rms_current(mA, HOLD_MULTIPLIER);
     st.microsteps(microsteps);
     st.iholddelay(10);
-    st.TPOWERDOWN(128); // ~2s until driver lowers to hold current
+    st.TPOWERDOWN(128); // ~2s until driver lowers to hold current//~2s，直到驱动器降低以保持电流
 
     st.en_pwm_mode(stealth);
     st.stored.stealthChop_enabled = stealth;
@@ -258,13 +259,13 @@ enum StealthIndex : uint8_t {
 
     TERN(HYBRID_THRESHOLD, st.set_pwm_thrs(hyb_thrs), UNUSED(hyb_thrs));
 
-    st.GSTAT(); // Clear GSTAT
+    st.GSTAT(); // Clear GSTAT//清除GSTAT
   }
-#endif // TMC2160
+#endif // TMC2160//TMC2160
 
-//
-// TMC2208/2209 Driver objects and inits
-//
+////
+// TMC2208/2209 Driver objects and inits//TMC2208/2209驱动程序对象和初始化
+////
 #if HAS_TMC220x
   #if AXIS_HAS_UART(X)
     #ifdef X_HARDWARE_SERIAL
@@ -597,15 +598,15 @@ enum StealthIndex : uint8_t {
   template<char AXIS_LETTER, char DRIVER_ID, AxisEnum AXIS_ID>
   void tmc_init(TMCMarlin<TMC2208Stepper, AXIS_LETTER, DRIVER_ID, AXIS_ID> &st, const uint16_t mA, const uint16_t microsteps, const uint32_t hyb_thrs, const bool stealth, const chopper_timing_t &chop_init, const bool interpolate) {
     TMC2208_n::GCONF_t gconf{0};
-    gconf.pdn_disable = true; // Use UART
-    gconf.mstep_reg_select = true; // Select microsteps with UART
+    gconf.pdn_disable = true; // Use UART//使用UART
+    gconf.mstep_reg_select = true; // Select microsteps with UART//使用UART选择微步
     gconf.i_scale_analog = false;
     gconf.en_spreadcycle = !stealth;
     st.GCONF(gconf.sr);
     st.stored.stealthChop_enabled = stealth;
 
     TMC2208_n::CHOPCONF_t chopconf{0};
-    chopconf.tbl = 0b01; // blank_time = 24
+    chopconf.tbl = 0b01; // blank_time = 24//空白时间=24
     chopconf.toff = chop_init.toff;
     chopconf.intpol = interpolate;
     chopconf.hend = chop_init.hend + 3;
@@ -616,7 +617,7 @@ enum StealthIndex : uint8_t {
     st.rms_current(mA, HOLD_MULTIPLIER);
     st.microsteps(microsteps);
     st.iholddelay(10);
-    st.TPOWERDOWN(128); // ~2s until driver lowers to hold current
+    st.TPOWERDOWN(128); // ~2s until driver lowers to hold current//~2s，直到驱动器降低以保持电流
 
     TMC2208_n::PWMCONF_t pwmconf{0};
     pwmconf.pwm_lim = 12;
@@ -630,24 +631,24 @@ enum StealthIndex : uint8_t {
 
     TERN(HYBRID_THRESHOLD, st.set_pwm_thrs(hyb_thrs), UNUSED(hyb_thrs));
 
-    st.GSTAT(0b111); // Clear
+    st.GSTAT(0b111); // Clear//清楚的
     delay(200);
   }
-#endif // TMC2208
+#endif // TMC2208//TMC2208
 
 #if HAS_DRIVER(TMC2209)
   template<char AXIS_LETTER, char DRIVER_ID, AxisEnum AXIS_ID>
   void tmc_init(TMCMarlin<TMC2209Stepper, AXIS_LETTER, DRIVER_ID, AXIS_ID> &st, const uint16_t mA, const uint16_t microsteps, const uint32_t hyb_thrs, const bool stealth, const chopper_timing_t &chop_init, const bool interpolate) {
     TMC2208_n::GCONF_t gconf{0};
-    gconf.pdn_disable = true; // Use UART
-    gconf.mstep_reg_select = true; // Select microsteps with UART
+    gconf.pdn_disable = true; // Use UART//使用UART
+    gconf.mstep_reg_select = true; // Select microsteps with UART//使用UART选择微步
     gconf.i_scale_analog = false;
     gconf.en_spreadcycle = !stealth;
     st.GCONF(gconf.sr);
     st.stored.stealthChop_enabled = stealth;
 
     TMC2208_n::CHOPCONF_t chopconf{0};
-    chopconf.tbl = 0b01; // blank_time = 24
+    chopconf.tbl = 0b01; // blank_time = 24//空白时间=24
     chopconf.toff = chop_init.toff;
     chopconf.intpol = interpolate;
     chopconf.hend = chop_init.hend + 3;
@@ -658,7 +659,7 @@ enum StealthIndex : uint8_t {
     st.rms_current(mA, HOLD_MULTIPLIER);
     st.microsteps(microsteps);
     st.iholddelay(10);
-    st.TPOWERDOWN(128); // ~2s until driver lowers to hold current
+    st.TPOWERDOWN(128); // ~2s until driver lowers to hold current//~2s，直到驱动器降低以保持电流
 
     TMC2208_n::PWMCONF_t pwmconf{0};
     pwmconf.pwm_lim = 12;
@@ -672,10 +673,10 @@ enum StealthIndex : uint8_t {
 
     TERN(HYBRID_THRESHOLD, st.set_pwm_thrs(hyb_thrs), UNUSED(hyb_thrs));
 
-    st.GSTAT(0b111); // Clear
+    st.GSTAT(0b111); // Clear//清楚的
     delay(200);
   }
-#endif // TMC2209
+#endif // TMC2209//TMC2209
 
 #if HAS_DRIVER(TMC2660)
   template<char AXIS_LETTER, char DRIVER_ID, AxisEnum AXIS_ID>
@@ -694,10 +695,10 @@ enum StealthIndex : uint8_t {
     st.microsteps(microsteps);
     TERN_(SQUARE_WAVE_STEPPING, st.dedge(true));
     st.intpol(interpolate);
-    st.diss2g(true); // Disable short to ground protection. Too many false readings?
+    st.diss2g(true); // Disable short to ground protection. Too many false readings?//禁用对地短路保护。错误读数太多？
     TERN_(TMC_DEBUG, st.rdsel(0b01));
   }
-#endif // TMC2660
+#endif // TMC2660//TMC2660
 
 #if HAS_DRIVER(TMC5130)
   template<char AXIS_LETTER, char DRIVER_ID, AxisEnum AXIS_ID>
@@ -716,13 +717,13 @@ enum StealthIndex : uint8_t {
     st.rms_current(mA, HOLD_MULTIPLIER);
     st.microsteps(microsteps);
     st.iholddelay(10);
-    st.TPOWERDOWN(128); // ~2s until driver lowers to hold current
+    st.TPOWERDOWN(128); // ~2s until driver lowers to hold current//~2s，直到驱动器降低以保持电流
 
     st.en_pwm_mode(stealth);
     st.stored.stealthChop_enabled = stealth;
 
     PWMCONF_t pwmconf{0};
-    pwmconf.pwm_freq = 0b01; // f_pwm = 2/683 f_clk
+    pwmconf.pwm_freq = 0b01; // f_pwm = 2/683 f_clk//f_pwm=2/683 f_clk
     pwmconf.pwm_autoscale = true;
     pwmconf.pwm_grad = 5;
     pwmconf.pwm_ampl = 180;
@@ -730,9 +731,9 @@ enum StealthIndex : uint8_t {
 
     TERN(HYBRID_THRESHOLD, st.set_pwm_thrs(hyb_thrs), UNUSED(hyb_thrs));
 
-    st.GSTAT(); // Clear GSTAT
+    st.GSTAT(); // Clear GSTAT//清除GSTAT
   }
-#endif // TMC5130
+#endif // TMC5130//TMC5130
 
 #if HAS_DRIVER(TMC5160)
   template<char AXIS_LETTER, char DRIVER_ID, AxisEnum AXIS_ID>
@@ -751,7 +752,7 @@ enum StealthIndex : uint8_t {
     st.rms_current(mA, HOLD_MULTIPLIER);
     st.microsteps(microsteps);
     st.iholddelay(10);
-    st.TPOWERDOWN(128); // ~2s until driver lowers to hold current
+    st.TPOWERDOWN(128); // ~2s until driver lowers to hold current//~2s，直到驱动器降低以保持电流
 
     st.en_pwm_mode(stealth);
     st.stored.stealthChop_enabled = stealth;
@@ -767,9 +768,9 @@ enum StealthIndex : uint8_t {
     st.PWMCONF(pwmconf.sr);
 
     TERN(HYBRID_THRESHOLD, st.set_pwm_thrs(hyb_thrs), UNUSED(hyb_thrs));
-    st.GSTAT(); // Clear GSTAT
+    st.GSTAT(); // Clear GSTAT//清除GSTAT
   }
-#endif // TMC5160
+#endif // TMC5160//TMC5160
 
 void restore_trinamic_drivers() {
   #if AXIS_IS_TMC(X)
@@ -943,7 +944,7 @@ void reset_trinamic_drivers() {
         stepperK.homing_threshold(CAT(TERN(K_SENSORLESS, K, K), _STALL_SENSITIVITY));
       #endif
     #endif
-  #endif // USE SENSORLESS
+  #endif // USE SENSORLESS//使用无传感器
 
   #ifdef TMC_ADV
     TMC_ADV()
@@ -952,19 +953,19 @@ void reset_trinamic_drivers() {
   stepper.set_directions();
 }
 
-// TMC Slave Address Conflict Detection
-//
-// Conflict detection is performed in the following way. Similar methods are used for
-// hardware and software serial, but the implementations are indepenent.
-//
-// 1. Populate a data structure with UART parameters and addresses for all possible axis.
-//      If an axis is not in use, populate it with recognizable placeholder data.
-// 2. For each axis in use, static_assert using a constexpr function, which counts the
-//      number of matching/conflicting axis. If the value is not exactly 1, fail.
+// TMC Slave Address Conflict Detection//从机地址冲突检测
+////
+// Conflict detection is performed in the following way. Similar methods are used for//冲突检测按以下方式执行。类似的方法也用于
+// hardware and software serial, but the implementations are indepenent.//硬件和软件串行，但实现是独立的。
+////
+// 1. Populate a data structure with UART parameters and addresses for all possible axis.// 1. 使用UART参数和所有可能轴的地址填充数据结构。
+//      If an axis is not in use, populate it with recognizable placeholder data.//如果未使用轴，请使用可识别的占位符数据填充该轴。
+// 2. For each axis in use, static_assert using a constexpr function, which counts the// 2. 对于使用中的每个轴，静态_使用constexpr函数断言，该函数统计
+//      number of matching/conflicting axis. If the value is not exactly 1, fail.//匹配/冲突轴的数量。如果该值不完全为1，则失败。
 
 #if ANY_AXIS_HAS(HW_SERIAL)
-  // Hardware serial names are compared as strings, since actually resolving them cannot occur in a constexpr.
-  // Using a fixed-length character array for the port name allows this to be constexpr compatible.
+  // Hardware serial names are compared as strings, since actually resolving them cannot occur in a constexpr.//硬件序列名作为字符串进行比较，因为在constexpr中无法实际解析它们。
+  // Using a fixed-length character array for the port name allows this to be constexpr compatible.//使用端口名的固定长度字符数组可以使其与constexpr兼容。
   struct SanityHwSerialDetails { const char port[20]; uint32_t address; };
   #define TMC_HW_DETAIL_ARGS(A) TERN(A##_HAS_HW_SERIAL, STRINGIFY(A##_HARDWARE_SERIAL), ""), TERN0(A##_HAS_HW_SERIAL, A##_SLAVE_ADDRESS)
   #define TMC_HW_DETAIL(A) { TMC_HW_DETAIL_ARGS(A) }
@@ -976,7 +977,7 @@ void reset_trinamic_drivers() {
     TMC_HW_DETAIL(E0), TMC_HW_DETAIL(E1), TMC_HW_DETAIL(E2), TMC_HW_DETAIL(E3), TMC_HW_DETAIL(E4), TMC_HW_DETAIL(E5), TMC_HW_DETAIL(E6), TMC_HW_DETAIL(E7)
   };
 
-  // constexpr compatible string comparison
+  // constexpr compatible string comparison//与constexpr兼容的字符串比较
   constexpr bool str_eq_ce(const char * a, const char * b) {
     return *a == *b && (*a == '\0' || str_eq_ce(a+1,b+1));
   }
@@ -1029,4 +1030,4 @@ void reset_trinamic_drivers() {
   SA_NO_TMC_SW_C(E0); SA_NO_TMC_SW_C(E1); SA_NO_TMC_SW_C(E2); SA_NO_TMC_SW_C(E3); SA_NO_TMC_SW_C(E4); SA_NO_TMC_SW_C(E5); SA_NO_TMC_SW_C(E6); SA_NO_TMC_SW_C(E7);
 #endif
 
-#endif // HAS_TRINAMIC_CONFIG
+#endif // HAS_TRINAMIC_CONFIG//有_TRINAMIC _CONFIG

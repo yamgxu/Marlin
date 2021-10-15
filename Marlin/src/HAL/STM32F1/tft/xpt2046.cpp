@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -48,14 +49,14 @@ uint16_t delta(uint16_t a, uint16_t b) { return a > b ? a - b : b - a; }
       case SPI_EIGHTH_SPEED:  clock = SPI_CLOCK_DIV16; break;
       case SPI_SPEED_5:       clock = SPI_CLOCK_DIV32; break;
       case SPI_SPEED_6:       clock = SPI_CLOCK_DIV64; break;
-      default:                clock = SPI_CLOCK_DIV2;        // Default from the SPI library
+      default:                clock = SPI_CLOCK_DIV2;        // Default from the SPI library//SPI库中的默认值
     }
     XPT2046::SPIx.setModule(TOUCH_BUTTONS_HW_SPI_DEVICE);
     XPT2046::SPIx.setClockDivider(clock);
     XPT2046::SPIx.setBitOrder(MSBFIRST);
     XPT2046::SPIx.setDataMode(SPI_MODE0);
   }
-#endif // TOUCH_BUTTONS_HW_SPI
+#endif // TOUCH_BUTTONS_HW_SPI//触摸按钮
 
 void XPT2046::Init() {
   SET_INPUT(TOUCH_MISO_PIN);
@@ -64,13 +65,13 @@ void XPT2046::Init() {
   OUT_WRITE(TOUCH_CS_PIN, HIGH);
 
   #if PIN_EXISTS(TOUCH_INT)
-    // Optional Pendrive interrupt pin
+    // Optional Pendrive interrupt pin//可选Pendrive中断引脚
     SET_INPUT(TOUCH_INT_PIN);
   #endif
 
   TERN_(TOUCH_BUTTONS_HW_SPI, touch_spi_init(SPI_SPEED_6));
 
-  // Read once to enable pendrive status pin
+  // Read once to enable pendrive status pin//读取一次以启用pendrive状态引脚
   getRawData(XPT2046_X);
 }
 
@@ -141,4 +142,4 @@ uint16_t XPT2046::SoftwareIO(uint16_t data) {
   return result;
 }
 
-#endif // HAS_TFT_XPT2046
+#endif // HAS_TFT_XPT2046//具有_TFT _XPT2046

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -25,10 +26,10 @@
 
 #define BOARD_CUSTOM_BUILD_FLAGS -DTONE_CHANNEL=4 -DTONE_TIMER=4
 
-// Onboard I2C EEPROM
+// Onboard I2C EEPROM//板载I2C EEPROM
 #if NO_EEPROM_SELECTED
   #define I2C_EEPROM
-  #define MARLIN_EEPROM_SIZE 0x1000                 // 4KB
+  #define MARLIN_EEPROM_SIZE 0x1000                 // 4KB//4KB
   #undef NO_EEPROM_SELECTED
 #endif
 
@@ -38,15 +39,15 @@
   #define BOARD_INFO_NAME "BTT SKR Mini E3 V2.0"
 #endif
 
-// Release PA13/PA14 (led, usb control) from SWD pins
+// Release PA13/PA14 (led, usb control) from SWD pins//从SWD引脚上松开PA13/PA14（led，usb控制）
 #define DISABLE_DEBUG
 
 #ifndef NEOPIXEL_PIN
-  #define NEOPIXEL_PIN                     PA8   // LED driving pin
+  #define NEOPIXEL_PIN                     PA8   // LED driving pin//LED驱动引脚
 #endif
 
 #ifndef PS_ON_PIN
-  #define PS_ON_PIN                        PC13  // Power Supply Control
+  #define PS_ON_PIN                        PC13  // Power Supply Control//电源控制
 #endif
 
 #define FAN1_PIN                           PC7
@@ -65,7 +66,7 @@
   #define Z_HARDWARE_SERIAL  MSerial4
   #define E0_HARDWARE_SERIAL MSerial4
 
-  // Default TMC slave addresses
+  // Default TMC slave addresses//默认TMC从机地址
   #ifndef X_SLAVE_ADDRESS
     #define X_SLAVE_ADDRESS  0
   #endif

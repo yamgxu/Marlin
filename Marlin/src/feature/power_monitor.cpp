@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -33,7 +34,7 @@
 
 #include "../libs/numtostr.h"
 
-uint8_t PowerMonitor::flags; // = 0
+uint8_t PowerMonitor::flags; // = 0// = 0
 
 #if ENABLED(POWER_MONITOR_CURRENT)
   pm_lpf_t<PowerMonitor::amps_adc_scale, PM_K_VALUE, PM_K_SCALE> PowerMonitor::amps;
@@ -45,7 +46,7 @@ uint8_t PowerMonitor::flags; // = 0
 millis_t PowerMonitor::display_item_ms;
 uint8_t PowerMonitor::display_item;
 
-PowerMonitor power_monitor; // Single instance - this calls the constructor
+PowerMonitor power_monitor; // Single instance - this calls the constructor//单实例-这将调用构造函数
 
 #if HAS_MARLINUI_U8GLIB
 
@@ -73,6 +74,6 @@ PowerMonitor power_monitor; // Single instance - this calls the constructor
     }
   #endif
 
-#endif // HAS_MARLINUI_U8GLIB
+#endif // HAS_MARLINUI_U8GLIB//马林努伊能说会道吗
 
-#endif // HAS_POWER_MONITOR
+#endif // HAS_POWER_MONITOR//有电源监视器吗

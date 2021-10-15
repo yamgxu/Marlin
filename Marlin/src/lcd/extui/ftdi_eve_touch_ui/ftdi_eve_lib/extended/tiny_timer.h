@@ -1,3 +1,4 @@
+/** translatione by yx */
 /****************
  * tiny_timer.h *
  ****************/
@@ -23,7 +24,7 @@
 
 /* Helpful Reference:
  *
- *  https://arduino.stackexchange.com/questions/12587/how-can-i-handle-the-millis-rollover
+ *  https://arduino.stackexchange.com/questions/12587/how-can-i-handle-the-millis-rollover//arduino.stackexchange.com/questions/12587/how-can-i-handle-the-millis-rollover
  */
 
 /* tiny_interval_t downsamples a 32-bit millis() value

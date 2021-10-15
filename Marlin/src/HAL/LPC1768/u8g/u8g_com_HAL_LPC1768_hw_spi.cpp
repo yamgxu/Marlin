@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -64,9 +65,9 @@
 
 #ifndef LCD_SPI_SPEED
   #ifdef SD_SPI_SPEED
-    #define LCD_SPI_SPEED SD_SPI_SPEED    // Assume SPI speed shared with SD
+    #define LCD_SPI_SPEED SD_SPI_SPEED    // Assume SPI speed shared with SD//假设SPI速度与SD共享
   #else
-    #define LCD_SPI_SPEED SPI_FULL_SPEED  // Use full speed if SD speed is not supplied
+    #define LCD_SPI_SPEED SPI_FULL_SPEED  // Use full speed if SD speed is not supplied//如果未提供SD速度，则使用全速
   #endif
 #endif
 
@@ -124,6 +125,6 @@ uint8_t u8g_com_HAL_LPC1768_hw_spi_fn(u8g_t *u8g, uint8_t msg, uint8_t arg_val, 
   return 1;
 }
 
-#endif // HAS_MARLINUI_U8GLIB
+#endif // HAS_MARLINUI_U8GLIB//马林努伊能说会道吗
 
-#endif // TARGET_LPC1768
+#endif // TARGET_LPC1768//目标为LPC1768

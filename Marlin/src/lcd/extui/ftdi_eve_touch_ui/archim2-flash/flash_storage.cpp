@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*********************
  * flash_storage.cpp *
  *********************/
@@ -29,8 +30,8 @@
 #include "media_file_reader.h"
 #include "flash_storage.h"
 
-// The following must be changed whenever the layout of the flash
-// data is changed in a manner that would render the data invalid.
+// The following must be changed whenever the layout of the flash//每当闪光灯的布局改变时，必须更改以下内容
+// data is changed in a manner that would render the data invalid.//数据的更改方式会导致数据无效。
 
 constexpr uint32_t flash_eeprom_version = 1;
 
@@ -171,10 +172,10 @@ bool UIFlashStorage::is_present = false;
     read_jedec_id(manufacturer_id, device_type, capacity);
 
     const bool is_known =
-        ((manufacturer_id == 0xEF) && (device_type == 0x40) && (capacity == 0x15)) || // unknown
-        ((manufacturer_id == 0x01) && (device_type == 0x40) && (capacity == 0x15)) || // Cypress S25FL116K
-        ((manufacturer_id == 0xEF) && (device_type == 0x14) && (capacity == 0x15)) || // Winbond W25Q16JV
-        ((manufacturer_id == 0x1F) && (device_type == 0x86) && (capacity == 0x01)) ;  // Adesto AT255F161
+        ((manufacturer_id == 0xEF) && (device_type == 0x40) && (capacity == 0x15)) || // unknown//不为人知
+        ((manufacturer_id == 0x01) && (device_type == 0x40) && (capacity == 0x15)) || // Cypress S25FL116K//赛普拉斯S25FL116K
+        ((manufacturer_id == 0xEF) && (device_type == 0x14) && (capacity == 0x15)) || // Winbond W25Q16JV//Winbond W25Q16JV
+        ((manufacturer_id == 0x1F) && (device_type == 0x86) && (capacity == 0x01)) ;  // Adesto AT255F161//Adesto电话255F161
 
     if (!is_known) {
       SERIAL_ECHO_MSG("Unable to locate supported SPI Flash Memory.");
@@ -199,9 +200,9 @@ bool UIFlashStorage::is_present = false;
   /**************************** DATA STORAGE AREA (first 4K or 64k) ********************/
 
   #ifdef DATA_STORAGE_SIZE_64K
-    constexpr uint32_t data_storage_area_size = 64 * 1024; // Large erase unit
+    constexpr uint32_t data_storage_area_size = 64 * 1024; // Large erase unit//大擦除单元
   #else
-    constexpr uint32_t data_storage_area_size =  4 * 1024; // Small erase unit
+    constexpr uint32_t data_storage_area_size =  4 * 1024; // Small erase unit//小型擦除单元
   #endif
 
   /* In order to provide some degree of wear leveling, each data write to the
@@ -259,12 +260,12 @@ bool UIFlashStorage::is_present = false;
    * appended, or -1 if the Flash needs to be erased */
   int32_t UIFlashStorage::get_config_write_offset(uint32_t block_size) {
     int32_t read_offset = get_config_read_offset(block_size);
-    if (read_offset == -1) return -1; // The SPI flash is invalid
+    if (read_offset == -1) return -1; // The SPI flash is invalid//SPI闪存无效
 
     int32_t write_offset = read_offset + 4 + block_size;
     if ((write_offset + 4 + block_size) > data_storage_area_size) {
       SERIAL_ECHO_MSG("Not enough free space in Flash.");
-      return -1; // Not enough free space
+      return -1; // Not enough free space//没有足够的可用空间
     }
     return write_offset;
   }
@@ -303,8 +304,8 @@ bool UIFlashStorage::is_present = false;
       return;
     }
 
-    // Since Flash storage has a limited number of write cycles,
-    // make sure that the data is different before rewriting.
+    // Since Flash storage has a limited number of write cycles,//由于闪存的写入周期有限，
+    // make sure that the data is different before rewriting.//在重写之前，请确保数据不同。
 
     if (verify_config_data(data, size)) {
       SERIAL_ECHO_MSG("UI settings already written, skipping write.");
@@ -348,7 +349,7 @@ bool UIFlashStorage::is_present = false;
   } flash_version_info;
 
   constexpr uint32_t version_info_addr = data_storage_area_size;
-  constexpr uint32_t version_info_size = 4 * 1024; // Small erase unit
+  constexpr uint32_t version_info_size = 4 * 1024; // Small erase unit//小型擦除单元
 
   bool UIFlashStorage::is_valid() {
     flash_version_info info;
@@ -439,7 +440,7 @@ bool UIFlashStorage::is_present = false;
       set_media_file_size(slot, reader.size());
       addr = get_media_file_start(slot);
 
-      // Write out the file itself
+      // Write out the file itself//写出文件本身
       for (;;) {
         const int16_t nBytes = reader.read(buff, write_page_size);
         if (nBytes == -1) {
@@ -459,14 +460,14 @@ bool UIFlashStorage::is_present = false;
 
       bool verifyOk = true;
 
-      // Verify the file index
+      // Verify the file index//验证文件索引
 
       if (get_media_file_start(slot+1) != (get_media_file_start(slot) + reader.size())) {
         SERIAL_ECHOLNPGM("File index verification failed. ");
         verifyOk = false;
       }
 
-      // Verify the file itself
+      // Verify the file itself//验证文件本身
       addr = get_media_file_start(slot);
       reader.rewind();
 
@@ -501,7 +502,7 @@ bool UIFlashStorage::is_present = false;
       }
     #else
       return VERIFY_ERROR;
-    #endif // SDSUPPORT
+    #endif // SDSUPPORT//SDSUPPORT
   }
 
   bool UIFlashStorage::BootMediaReader::isAvailable(uint32_t slot) {
@@ -549,5 +550,5 @@ bool UIFlashStorage::is_present = false;
   bool UIFlashStorage::BootMediaReader::isAvailable(uint32_t)                 {return false;}
   int16_t UIFlashStorage::BootMediaReader::read(void *, const size_t)         {return -1;}
   int16_t UIFlashStorage::BootMediaReader::read(void *, void *, const size_t) {return -1;}
-#endif // SPI_FLASH_SS
-#endif // TOUCH_UI_FTDI_EVE
+#endif // SPI_FLASH_SS//SPI_闪存_不锈钢
+#endif // TOUCH_UI_FTDI_EVE//触摸屏

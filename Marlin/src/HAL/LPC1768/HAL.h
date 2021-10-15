@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  *
@@ -47,9 +48,9 @@ extern "C" volatile uint32_t _millis;
 #include <pinmapping.h>
 #include <CDCSerial.h>
 
-//
-// Default graphical display delays
-//
+////
+// Default graphical display delays//默认图形显示延迟
+////
 #ifndef ST7920_DELAY_1
   #define ST7920_DELAY_1 DELAY_NS(600)
 #endif
@@ -117,18 +118,18 @@ extern DefaultSerial1 USBSerial;
   #endif
 #endif
 
-//
-// Interrupts
-//
+////
+// Interrupts//打断
+////
 #define CRITICAL_SECTION_START()  uint32_t primask = __get_PRIMASK(); __disable_irq()
 #define CRITICAL_SECTION_END()    if (!primask) __enable_irq()
 #define ISRS_ENABLED() (!__get_PRIMASK())
 #define ENABLE_ISRS()  __enable_irq()
 #define DISABLE_ISRS() __disable_irq()
 
-//
-// Utility functions
-//
+////
+// Utility functions//效用函数
+////
 #if GCC_VERSION <= 50000
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wunused-function"
@@ -140,30 +141,30 @@ int freeMemory();
   #pragma GCC diagnostic pop
 #endif
 
-//
-// ADC API
-//
+////
+// ADC API//ADC API
+////
 
-#define ADC_MEDIAN_FILTER_SIZE (23) // Higher values increase step delay (phase shift),
-                                    // (ADC_MEDIAN_FILTER_SIZE + 1) / 2 sample step delay (12 samples @ 500Hz: 24ms phase shift)
-                                    // Memory usage per ADC channel (bytes): (6 * ADC_MEDIAN_FILTER_SIZE) + 16
-                                    // 8 * ((6 * 23) + 16 ) = 1232 Bytes for 8 channels
+#define ADC_MEDIAN_FILTER_SIZE (23) // Higher values increase step delay (phase shift),//较高的值会增加阶跃延迟（相移），
+                                    // (ADC_MEDIAN_FILTER_SIZE + 1) / 2 sample step delay (12 samples @ 500Hz: 24ms phase shift)//（ADC_中值_滤波器_尺寸+1）/2采样步长延迟（12个采样@500Hz:24ms相移）
+                                    // Memory usage per ADC channel (bytes): (6 * ADC_MEDIAN_FILTER_SIZE) + 16//每个ADC通道的内存使用率（字节）：（6*ADC\u中值\u滤波器大小）+16
+                                    // 8 * ((6 * 23) + 16 ) = 1232 Bytes for 8 channels//8*（（6*23）+16）=8个通道的1232字节
 
-#define ADC_LOWPASS_K_VALUE    (2)  // Higher values increase rise time
-                                    // Rise time sample delays for 100% signal convergence on full range step
-                                    // (1 : 13, 2 : 32, 3 : 67, 4 : 139, 5 : 281, 6 : 565, 7 : 1135, 8 : 2273)
-                                    // K = 6, 565 samples, 500Hz sample rate, 1.13s convergence on full range step
-                                    // Memory usage per ADC channel (bytes): 4 (32 Bytes for 8 channels)
+#define ADC_LOWPASS_K_VALUE    (2)  // Higher values increase rise time//值越高，上升时间越长
+                                    // Rise time sample delays for 100% signal convergence on full range step//全量程步长上100%信号收敛的上升时间采样延迟
+                                    // (1 : 13, 2 : 32, 3 : 67, 4 : 139, 5 : 281, 6 : 565, 7 : 1135, 8 : 2273)// (1 : 13, 2 : 32, 3 : 67, 4 : 139, 5 : 281, 6 : 565, 7 : 1135, 8 : 2273)
+                                    // K = 6, 565 samples, 500Hz sample rate, 1.13s convergence on full range step//K=6565个样本，500Hz采样率，全范围步长收敛1.13s
+                                    // Memory usage per ADC channel (bytes): 4 (32 Bytes for 8 channels)//每个ADC通道的内存使用率（字节）：4（8个通道32字节）
 
-#define HAL_ADC_VREF            3.3 // ADC voltage reference
+#define HAL_ADC_VREF            3.3 // ADC voltage reference//ADC电压基准
 
-#define HAL_ADC_RESOLUTION     12   // 15 bit maximum, raw temperature is stored as int16_t
-#define HAL_ADC_FILTERED            // Disable oversampling done in Marlin as ADC values already filtered in HAL
+#define HAL_ADC_RESOLUTION     12   // 15 bit maximum, raw temperature is stored as int16_t//最大15位，原始温度存储为int16
+#define HAL_ADC_FILTERED            // Disable oversampling done in Marlin as ADC values already filtered in HAL//禁用Marlin中的过采样，因为ADC值已在HAL中过滤
 
 using FilteredADC = LPC176x::ADC<ADC_LOWPASS_K_VALUE, ADC_MEDIAN_FILTER_SIZE>;
 extern uint32_t HAL_adc_reading;
 [[gnu::always_inline]] inline void HAL_start_adc(const pin_t pin) {
-  HAL_adc_reading = FilteredADC::read(pin) >> (16 - HAL_ADC_RESOLUTION); // returns 16bit value, reduce to required bits
+  HAL_adc_reading = FilteredADC::read(pin) >> (16 - HAL_ADC_RESOLUTION); // returns 16bit value, reduce to required bits//返回16位值，减少到所需位
 }
 [[gnu::always_inline]] inline uint16_t HAL_read_adc() {
   return HAL_adc_reading;
@@ -175,29 +176,29 @@ extern uint32_t HAL_adc_reading;
 #define HAL_READ_ADC()         HAL_read_adc()
 #define HAL_ADC_READY()        (true)
 
-// Test whether the pin is valid
+// Test whether the pin is valid//测试pin码是否有效
 constexpr bool VALID_PIN(const pin_t pin) {
   return LPC176x::pin_is_valid(pin);
 }
 
-// Get the analog index for a digital pin
+// Get the analog index for a digital pin//获取数字管脚的模拟索引
 constexpr int8_t DIGITAL_PIN_TO_ANALOG_PIN(const pin_t pin) {
   return (LPC176x::pin_is_valid(pin) && LPC176x::pin_has_adc(pin)) ? pin : -1;
 }
 
-// Return the index of a pin number
+// Return the index of a pin number//返回pin码的索引
 constexpr int16_t GET_PIN_MAP_INDEX(const pin_t pin) {
   return LPC176x::pin_index(pin);
 }
 
-// Get the pin number at the given index
+// Get the pin number at the given index//获取给定索引处的pin码
 constexpr pin_t GET_PIN_MAP_PIN(const int16_t index) {
   return LPC176x::pin_index(index);
 }
 
-// Parse a G-code word into a pin index
+// Parse a G-code word into a pin index//将G代码字解析为pin索引
 int16_t PARSED_PIN_INDEX(const char code, const int16_t dval);
-// P0.6 thru P0.9 are for the onboard SD card
+// P0.6 thru P0.9 are for the onboard SD card//P0.6至P0.9用于车载SD卡
 #define HAL_SENSITIVE_PINS P0_06, P0_07, P0_08, P0_09,
 
 #define HAL_IDLETASK 1
@@ -206,7 +207,7 @@ void HAL_idletask();
 #define PLATFORM_M997_SUPPORT
 void flashFirmware(const int16_t);
 
-#define HAL_CAN_SET_PWM_FREQ   // This HAL supports PWM Frequency adjustment
+#define HAL_CAN_SET_PWM_FREQ   // This HAL supports PWM Frequency adjustment//该HAL支持PWM频率调整
 
 /**
  * set_pwm_frequency
@@ -224,7 +225,7 @@ void set_pwm_frequency(const pin_t pin, int f_desired);
  */
 void set_pwm_duty(const pin_t pin, const uint16_t v, const uint16_t v_size=255, const bool invert=false);
 
-// Reset source
+// Reset source//复位源
 void HAL_clear_reset_source(void);
 uint8_t HAL_get_reset_source(void);
 

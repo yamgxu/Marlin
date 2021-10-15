@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -116,21 +117,21 @@ void tft_lvgl_init() {
   ui_cfg_init();
   disp_language_init();
 
-  watchdog_refresh();     // LVGL init takes time
+  watchdog_refresh();     // LVGL init takes time//lvglinit需要时间
 
   #if MB(MKS_ROBIN_NANO)
-    OUT_WRITE(PB0, LOW);  // HE1
+    OUT_WRITE(PB0, LOW);  // HE1//呵呵
   #endif
 
-  // Init TFT first!
+  // Init TFT first!//先初始化TFT！
   SPI_TFT.spi_init(SPI_FULL_SPEED);
   SPI_TFT.LCD_init();
 
-  watchdog_refresh();     // LVGL init takes time
+  watchdog_refresh();     // LVGL init takes time//lvglinit需要时间
 
   #if ENABLED(SDSUPPORT)
     UpdateAssets();
-    watchdog_refresh();   // LVGL init takes time
+    watchdog_refresh();   // LVGL init takes time//lvglinit需要时间
   #endif
 
   mks_test_get();
@@ -139,19 +140,19 @@ void tft_lvgl_init() {
 
   lv_init();
 
-  lv_disp_buf_init(&disp_buf, bmp_public_buf, nullptr, LV_HOR_RES_MAX * 14); // Initialize the display buffer
+  lv_disp_buf_init(&disp_buf, bmp_public_buf, nullptr, LV_HOR_RES_MAX * 14); // Initialize the display buffer//初始化显示缓冲区
 
-  lv_disp_drv_t disp_drv;     // Descriptor of a display driver
-  lv_disp_drv_init(&disp_drv);    // Basic initialization
-  disp_drv.flush_cb = my_disp_flush; // Set your driver function
-  disp_drv.buffer = &disp_buf;    // Assign the buffer to the display
-  lv_disp_drv_register(&disp_drv);  // Finally register the driver
+  lv_disp_drv_t disp_drv;     // Descriptor of a display driver//显示驱动程序的描述符
+  lv_disp_drv_init(&disp_drv);    // Basic initialization//基本初始化
+  disp_drv.flush_cb = my_disp_flush; // Set your driver function//设置驱动程序功能
+  disp_drv.buffer = &disp_buf;    // Assign the buffer to the display//将缓冲区分配给显示器
+  lv_disp_drv_register(&disp_drv);  // Finally register the driver//最后注册驱动程序
 
   lv_indev_drv_t indev_drv;
-  lv_indev_drv_init(&indev_drv);     // Descriptor of a input device driver
-  indev_drv.type = LV_INDEV_TYPE_POINTER; // Touch pad is a pointer-like device
-  indev_drv.read_cb = my_touchpad_read;  // Set your driver function
-  lv_indev_drv_register(&indev_drv);   // Finally register the driver
+  lv_indev_drv_init(&indev_drv);     // Descriptor of a input device driver//输入设备驱动程序的描述符
+  indev_drv.type = LV_INDEV_TYPE_POINTER; // Touch pad is a pointer-like device//触摸板是一种类似指针的设备
+  indev_drv.read_cb = my_touchpad_read;  // Set your driver function//设置驱动程序功能
+  lv_indev_drv_register(&indev_drv);   // Finally register the driver//最后注册驱动程序
 
   #if HAS_ROTARY_ENCODER
     g = lv_group_create();
@@ -228,7 +229,7 @@ void my_disp_flush(lv_disp_drv_t * disp, const lv_area_t * area, lv_color_t * co
   for (uint16_t i = 0; i < height; i++)
     SPI_TFT.tftio.WriteSequence((uint16_t*)(color_p + width * i), width);
 
-  lv_disp_flush_ready(disp); // Indicate you are ready with the flushing
+  lv_disp_flush_ready(disp); // Indicate you are ready with the flushing//表明您已准备好冲洗
 
   W25QXX.init(SPI_QUARTER_SPEED);
 }
@@ -283,7 +284,7 @@ bool my_touchpad_read(lv_indev_drv_t * indev_driver, lv_indev_data_t * data) {
       if (last_touch_state == LV_INDEV_STATE_PR) return false;
       data->state = LV_INDEV_STATE_PR;
 
-      // Set the coordinates (if released use the last-pressed coordinates)
+      // Set the coordinates (if released use the last-pressed coordinates)//设置坐标（如果释放，则使用上次按下的坐标）
       data->point.x = last_x;
       data->point.y = last_y;
 
@@ -299,25 +300,25 @@ bool my_touchpad_read(lv_indev_drv_t * indev_driver, lv_indev_data_t * data) {
     touch_time1 = tmpTime;
   }
 
-  return false; // Return `false` since no data is buffering or left to read
+  return false; // Return `false` since no data is buffering or left to read//返回'false'，因为没有数据正在缓冲或留待读取
 }
 
 int16_t enc_diff = 0;
 lv_indev_state_t state = LV_INDEV_STATE_REL;
 
 bool my_mousewheel_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data) {
-  (void) indev_drv;   // Unused
+  (void) indev_drv;   // Unused//未使用
 
   data->state = state;
   data->enc_diff = enc_diff;
   enc_diff = 0;
 
-  return false;       // No more data to read so return false
+  return false;       // No more data to read so return false//没有更多要读取的数据，因此返回false
 }
 
 extern uint8_t currentFlashPage;
 
-//spi_flash
+//spi_flash//spi_闪光灯
 uint32_t pic_read_base_addr = 0, pic_read_addr_offset = 0;
 lv_fs_res_t spi_flash_open_cb (lv_fs_drv_t * drv, void * file_p, const char * path, lv_fs_mode_t mode) {
   static char last_path_name[30];
@@ -366,7 +367,7 @@ lv_fs_res_t spi_flash_tell_cb(lv_fs_drv_t * drv, void * file_p, uint32_t * pos_p
   return LV_FS_RES_OK;
 }
 
-//sd
+//sd//sd
 char *cur_namefff;
 uint32_t sd_read_base_addr = 0, sd_read_addr_offset = 0, small_image_size = 409;
 lv_fs_res_t sd_open_cb (lv_fs_drv_t * drv, void * file_p, const char * path, lv_fs_mode_t mode) {
@@ -378,7 +379,7 @@ lv_fs_res_t sd_open_cb (lv_fs_drv_t * drv, void * file_p, const char * path, lv_
   sd_read_base_addr = lv_open_gcode_file((char *)name_buf);
   sd_read_addr_offset = sd_read_base_addr;
   if (sd_read_addr_offset == UINT32_MAX) return LV_FS_RES_NOT_EX;
-  // find small image size
+  // find small image size//查找较小的图像大小
   card.read(public_buf, 512);
   public_buf[511] = '\0';
   char* eol = strpbrk((const char*)public_buf, "\n\r");
@@ -395,7 +396,7 @@ lv_fs_res_t sd_close_cb (lv_fs_drv_t * drv, void * file_p) {
 lv_fs_res_t sd_read_cb (lv_fs_drv_t * drv, void * file_p, void * buf, uint32_t btr, uint32_t * br) {
   if (btr == 200) {
     lv_gcode_file_read((uint8_t *)buf);
-    //pic_read_addr_offset += 208;
+    //pic_read_addr_offset += 208;//pic_read_addr_offset+=208；
     *br = 200;
   }
   else if (btr == 4) {
@@ -447,7 +448,7 @@ void lv_encoder_pin_init() {
   #endif
 }
 
-#if 1 // HAS_ENCODER_ACTION
+#if 1 // HAS_ENCODER_ACTION//有编码器动作吗
   void lv_update_encoder() {
     static uint32_t encoder_time1;
     uint32_t tmpTime, diffTime = 0;
@@ -506,11 +507,11 @@ void lv_encoder_pin_init() {
           last_button_state = enc_c;
         }
 
-      #endif // HAS_ENCODER_WHEEL
+      #endif // HAS_ENCODER_WHEEL//有编码器和转轮
 
-    } // next_button_update_ms
+    } // next_button_update_ms//下一步按钮更新
   }
 
-#endif // HAS_ENCODER_ACTION
+#endif // HAS_ENCODER_ACTION//有编码器动作吗
 
-#endif // HAS_TFT_LVGL_UI
+#endif // HAS_TFT_LVGL_UI//有TFT\U LVGL\U用户界面

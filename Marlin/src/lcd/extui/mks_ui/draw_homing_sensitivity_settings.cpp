@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -101,4 +102,4 @@ void lv_clear_homing_sensitivity_settings() {
   lv_obj_del(scr);
 }
 
-#endif // HAS_TFT_LVGL_UI && USE_SENSORLESS
+#endif // HAS_TFT_LVGL_UI && USE_SENSORLESS//有无传感器的TFT、LVGL、UI和使用

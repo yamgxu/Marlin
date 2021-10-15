@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,7 +22,7 @@
  */
 
 #include "../gcode.h"
-#include "../../MarlinCore.h" // for stepper_inactive_time, disable_e_steppers
+#include "../../MarlinCore.h" // for stepper_inactive_time, disable_e_steppers//对于步进电机非活动时间，禁用步进电机
 #include "../../lcd/marlinui.h"
 #include "../../module/stepper.h"
 

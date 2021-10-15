@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -34,14 +35,14 @@
   #define BOARD_INFO_NAME "GT2560 3.x"
 #endif
 
-//
-// Servos
-//
-#define SERVO0_PIN                            11  // 13 untested  3Dtouch
+////
+// Servos//伺服
+////
+#define SERVO0_PIN                            11  // 13 untested  3Dtouch//13未经测试的3Dtouch
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #ifndef X_STOP_PIN
   #ifndef X_MIN_PIN
     #define X_MIN_PIN                         24
@@ -67,16 +68,16 @@
   #endif
 #endif
 
-//
-// Z Probe (when not Z_MIN_PIN)
-//
+////
+// Z Probe (when not Z_MIN_PIN)//Z探头（非Z_MIN_引脚时）
+////
 #ifndef Z_MIN_PROBE_PIN
   #define Z_MIN_PROBE_PIN                     32
 #endif
 
-//
-// Runout Sensor
-//
+////
+// Runout Sensor//跳动传感器
+////
 #ifndef FIL_RUNOUT_PIN
   #define FIL_RUNOUT_PIN                      66
 #endif
@@ -87,15 +88,15 @@
   #define FIL_RUNOUT3_PIN                     54
 #endif
 
-//
-// Power Recovery
-//
-#define POWER_LOSS_PIN                        69  // Pin to detect power loss
+////
+// Power Recovery//功率恢复
+////
+#define POWER_LOSS_PIN                        69  // Pin to detect power loss//用于检测电源损耗的引脚
 #define POWER_LOSS_STATE                     LOW
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                            37
 #define X_DIR_PIN                             39
 #define X_ENABLE_PIN                          35
@@ -120,17 +121,17 @@
 #define E2_DIR_PIN                            45
 #define E2_ENABLE_PIN                         41
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                            11  // Analog Input
-#define TEMP_1_PIN                             9  // Analog Input
-#define TEMP_2_PIN                             8  // Analog Input
-#define TEMP_BED_PIN                          10  // Analog Input
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                            11  // Analog Input//模拟输入
+#define TEMP_1_PIN                             9  // Analog Input//模拟输入
+#define TEMP_2_PIN                             8  // Analog Input//模拟输入
+#define TEMP_BED_PIN                          10  // Analog Input//模拟输入
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_0_PIN                          10
 #define HEATER_1_PIN                           3
 #define HEATER_2_PIN                           2
@@ -139,25 +140,25 @@
 #define FAN1_PIN                               8
 #define FAN2_PIN                               7
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define SD_DETECT_PIN                         38
 #define SDSS                                  53
-#define LED_PIN                               13  // Use 6 (case light) for external LED. 13 is internal (yellow) LED.
+#define LED_PIN                               13  // Use 6 (case light) for external LED. 13 is internal (yellow) LED.//外部LED使用6（箱灯）。13是内部（黄色）发光二极管。
 #define PS_ON_PIN                             12
 
 #if NUM_RUNOUT_SENSORS < 3
-  #define SUICIDE_PIN                         54  // This pin must be enabled at boot to keep power flowing
+  #define SUICIDE_PIN                         54  // This pin must be enabled at boot to keep power flowing//此引脚必须在开机时启用，以保持电源流动
 #endif
 
 #ifndef CASE_LIGHT_PIN
-  #define CASE_LIGHT_PIN                       6  // 21
+  #define CASE_LIGHT_PIN                       6  // 21// 21
 #endif
 
-//
-// LCD Controller
-//
+////
+// LCD Controller//液晶控制器
+////
 #define BEEPER_PIN                            18
 
 #if ENABLED(YHCB2004)

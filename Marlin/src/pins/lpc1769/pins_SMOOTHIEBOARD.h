@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -30,14 +31,14 @@
 #define BOARD_INFO_NAME   "Smoothieboard"
 #define BOARD_WEBSITE_URL "smoothieware.org/smoothieboard"
 
-//
-// Servos
-//
+////
+// Servos//伺服
+////
 #define SERVO0_PIN                         P1_23
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_MIN_PIN                          P1_24
 #define X_MAX_PIN                          P1_25
 #define Y_MIN_PIN                          P1_26
@@ -45,9 +46,9 @@
 #define Z_MIN_PIN                          P1_28
 #define Z_MAX_PIN                          P1_29
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                         P2_00
 #define X_DIR_PIN                          P0_05
 #define X_ENABLE_PIN                       P0_04
@@ -68,18 +69,18 @@
 #define E1_DIR_PIN                         P2_13
 #define E1_ENABLE_PIN                      P4_29
 
-//
-// Temperature Sensors
-// 3.3V max when defined as an analog input
-//
-#define TEMP_0_PIN                      P0_23_A0  // (T1)
-#define TEMP_BED_PIN                    P0_24_A1  // (T2)
-#define TEMP_1_PIN                      P0_25_A2  // (T3)
-#define TEMP_2_PIN                      P0_26_A3  // (T4)
+////
+// Temperature Sensors//温度传感器
+// 3.3V max when defined as an analog input//当定义为模拟输入时，最大电压为3.3V
+////
+#define TEMP_0_PIN                      P0_23_A0  // (T1)//（T1）
+#define TEMP_BED_PIN                    P0_24_A1  // (T2)//（T2）
+#define TEMP_1_PIN                      P0_25_A2  // (T3)//（T3）
+#define TEMP_2_PIN                      P0_26_A3  // (T4)//（T4）
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_BED_PIN                     P2_05
 #define HEATER_0_PIN                       P2_07
 #define HEATER_1_PIN                       P1_23
@@ -88,9 +89,9 @@
 #endif
 #define FAN1_PIN                           P2_04
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 #if ANY(VIKI2, miniVIKI)
 
   #define BEEPER_PIN                       P1_31
@@ -120,12 +121,12 @@
    * sdcard is inserted in the RRD LCD sdcard slot at boot time, it must be
    * inserted after it has booted.
    */
-  #define SD_DETECT_PIN                    P0_27  // EXP2 Pin 7 (SD_CD, SD_DET)
+  #define SD_DETECT_PIN                    P0_27  // EXP2 Pin 7 (SD_CD, SD_DET)//EXP2引脚7（SD_CD，SD_DET）
 
-  #define SD_MISO_PIN                      P0_08  // EXP2 Pin 1 (PB3, SD_MISO)
-  #define SD_SCK_PIN                       P0_07  // EXP2 Pin 2 (SD_SCK)
-  #define SD_SS_PIN                        P0_28  // EXP2 Pin 4 (SD_CSEL, SD_CS)
-  #define SD_MOSI_PIN                      P0_09  // EXP2 Pin 6 (PB2, SD_MOSI)
+  #define SD_MISO_PIN                      P0_08  // EXP2 Pin 1 (PB3, SD_MISO)//EXP2引脚1（PB3，SD_MISO）
+  #define SD_SCK_PIN                       P0_07  // EXP2 Pin 2 (SD_SCK)//EXP2引脚2（SD_SCK）
+  #define SD_SS_PIN                        P0_28  // EXP2 Pin 4 (SD_CSEL, SD_CS)//EXP2引脚4（SD_CSEL、SD_CS）
+  #define SD_MOSI_PIN                      P0_09  // EXP2 Pin 6 (PB2, SD_MOSI)//EXP2引脚6（PB2，SD_MOSI）
 
   /**
    * The Smoothieboard supports the REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER with either
@@ -137,22 +138,22 @@
    * http://smoothieware.org/panel
    */
   #if IS_RRD_FG_SC
-    //  EXP1 Pins
-    #define BEEPER_PIN                     P1_31  // EXP1 Pin 1
-    #define BTN_ENC                        P1_30  // EXP1 Pin 2
-    #define LCD_PINS_ENABLE                P0_18  // EXP1 Pin 3 (MOSI)
-    #define LCD_PINS_RS                    P0_16  // EXP1 Pin 4 (CS)
-    #define LCD_PINS_D4                    P0_15  // EXP1 Pin 5 (SCK)
-    //  EXP2 Pins
-    #define BTN_EN2                        P3_26  // EXP2 Pin 3
-    #define BTN_EN1                        P3_25  // EXP2 Pin 5
+    //  EXP1 Pins//EXP1引脚
+    #define BEEPER_PIN                     P1_31  // EXP1 Pin 1//EXP1引脚1
+    #define BTN_ENC                        P1_30  // EXP1 Pin 2//EXP1引脚2
+    #define LCD_PINS_ENABLE                P0_18  // EXP1 Pin 3 (MOSI)//EXP1引脚3（MOSI）
+    #define LCD_PINS_RS                    P0_16  // EXP1 Pin 4 (CS)//EXP1引脚4（CS）
+    #define LCD_PINS_D4                    P0_15  // EXP1 Pin 5 (SCK)//EXP1引脚5（SCK）
+    //  EXP2 Pins//EXP2引脚
+    #define BTN_EN2                        P3_26  // EXP2 Pin 3//EXP2引脚3
+    #define BTN_EN1                        P3_25  // EXP2 Pin 5//EXP2引脚5
 
   #elif IS_TFTGLCD_PANEL
 
-    #define SD_DETECT_PIN                  P0_27  // EXP2 Pin 7 (SD_CD, SD_DET)
+    #define SD_DETECT_PIN                  P0_27  // EXP2 Pin 7 (SD_CD, SD_DET)//EXP2引脚7（SD_CD，SD_DET）
 
     #if ENABLED(TFTGLCD_PANEL_SPI)
-      #define TFTGLCD_CS                   P3_26  // EXP2 Pin 3
+      #define TFTGLCD_CS                   P3_26  // EXP2 Pin 3//EXP2引脚3
     #endif
 
   #else
@@ -175,5 +176,5 @@
 #define DIGIPOTS_I2C_SDA_E1                P4_29
 
 #ifndef DIGIPOT_I2C_ADDRESS_A
-  #define DIGIPOT_I2C_ADDRESS_A             0x2C  // unshifted slave address (58 <- 2C << 1)
+  #define DIGIPOT_I2C_ADDRESS_A             0x2C  // unshifted slave address (58 <- 2C << 1)//未移位的从属地址（58<-2C<<1）
 #endif

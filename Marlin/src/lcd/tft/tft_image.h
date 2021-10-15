@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -105,11 +106,11 @@ enum MarlinImage : uint8_t {
 
 enum colorMode_t : uint8_t {
   NOCOLORS = 0x00,
-  MONOCHROME = 0x01,  // 1 bit per pixel
-  GREYSCALE1 = 0x01,  // 1 bit per pixel
-  GREYSCALE2,         // 2 bits per pixel
-  GREYSCALE4,         // 4 bits per pixel
-  HIGHCOLOR           // 16 bits per pixel
+  MONOCHROME = 0x01,  // 1 bit per pixel//每像素1位
+  GREYSCALE1 = 0x01,  // 1 bit per pixel//每像素1位
+  GREYSCALE2,         // 2 bits per pixel//每像素2位
+  GREYSCALE4,         // 4 bits per pixel//每像素4位
+  HIGHCOLOR           // 16 bits per pixel//每像素16位
 };
 
 typedef colorMode_t ColorMode;

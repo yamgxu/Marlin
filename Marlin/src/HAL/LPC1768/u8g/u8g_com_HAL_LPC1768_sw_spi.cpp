@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -63,7 +64,7 @@
 #include "../../shared/HAL_SPI.h"
 
 #ifndef LCD_SPI_SPEED
-  #define LCD_SPI_SPEED SPI_QUARTER_SPEED  // About 2 MHz
+  #define LCD_SPI_SPEED SPI_QUARTER_SPEED  // About 2 MHz//大约2兆赫
 #endif
 
 #include <Arduino.h>
@@ -109,7 +110,7 @@ uint8_t swSpiTransfer_mode_3(uint8_t b, const uint8_t spi_speed, const pin_t sck
     if (spi_speed == 0) {
       LPC176x::gpio_set(sck_pin, LOW);
       LPC176x::gpio_set(mosi_pin, state);
-      LPC176x::gpio_set(mosi_pin, state);  // need some setup time
+      LPC176x::gpio_set(mosi_pin, state);  // need some setup time//需要一些设置时间吗
       LPC176x::gpio_set(sck_pin, HIGH);
     }
     else {
@@ -160,15 +161,15 @@ uint8_t u8g_com_HAL_LPC1768_sw_spi_fn(u8g_t *u8g, uint8_t msg, uint8_t arg_val, 
       break;
 
     case U8G_COM_MSG_CHIP_SELECT:
-      #if EITHER(FYSETC_MINI_12864, MKS_MINI_12864)  // LCD SPI is running mode 3 while SD card is running mode 0
-        if (arg_val) {                               //   SCK idle state needs to be set to the proper idle state before
-                                                     //   the next chip select goes active
-          u8g_SetPILevel(u8g, U8G_PI_SCK, 1);        // Set SCK to mode 3 idle state before CS goes active
+      #if EITHER(FYSETC_MINI_12864, MKS_MINI_12864)  // LCD SPI is running mode 3 while SD card is running mode 0//LCD SPI在运行模式3，而SD卡在运行模式0
+        if (arg_val) {                               //   SCK idle state needs to be set to the proper idle state before//SCK空闲状态需要设置为正确的空闲状态，然后
+                                                     //   the next chip select goes active//下一个芯片选择激活
+          u8g_SetPILevel(u8g, U8G_PI_SCK, 1);        // Set SCK to mode 3 idle state before CS goes active//在CS激活之前，将SCK设置为模式3空闲状态
           u8g_SetPILevel(u8g, U8G_PI_CS, LOW);
         }
         else {
           u8g_SetPILevel(u8g, U8G_PI_CS, HIGH);
-          u8g_SetPILevel(u8g, U8G_PI_SCK, 0);  // Set SCK to mode 0 idle state after CS goes inactive
+          u8g_SetPILevel(u8g, U8G_PI_SCK, 0);  // Set SCK to mode 0 idle state after CS goes inactive//在CS变为非活动状态后，将SCK设置为模式0空闲状态
         }
       #else
         u8g_SetPILevel(u8g, U8G_PI_CS, !arg_val);
@@ -205,5 +206,5 @@ uint8_t u8g_com_HAL_LPC1768_sw_spi_fn(u8g_t *u8g, uint8_t msg, uint8_t arg_val, 
   return 1;
 }
 
-#endif // HAS_MARLINUI_U8GLIB && !U8GLIB_ST7920
-#endif // TARGET_LPC1768
+#endif // HAS_MARLINUI_U8GLIB && !U8GLIB_ST7920//马林努伊的口齿不清！U8GLIB_ST7920
+#endif // TARGET_LPC1768//目标为LPC1768

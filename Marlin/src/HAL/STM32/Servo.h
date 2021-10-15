@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -26,11 +27,11 @@
 
 #include "../../core/millis_t.h"
 
-// Inherit and expand on the official library
+// Inherit and expand on the official library//对官方图书馆的继承与拓展
 class libServo {
   public:
     libServo();
-    int8_t attach(const int pin = 0); // pin == 0 uses value from previous call
+    int8_t attach(const int pin = 0); // pin == 0 uses value from previous call//pin==0使用上一次调用的值
     int8_t attach(const int pin, const int min, const int max);
     void detach() { stm32_servo.detach(); }
     int read() { return stm32_servo.read(); }

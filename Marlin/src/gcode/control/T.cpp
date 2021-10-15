@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -51,19 +52,19 @@ void GcodeSuite::T(const int8_t tool_index) {
   DEBUG_SECTION(log_T, "T", DEBUGGING(LEVELING));
   if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPAIR("...(", tool_index, ")");
 
-  // Count this command as movement / activity
+  // Count this command as movement / activity//将此命令计为移动/活动
   reset_stepper_timeout();
 
   #if HAS_PRUSA_MMU2
     if (parser.string_arg) {
-      mmu2.tool_change(parser.string_arg);   // Special commands T?/Tx/Tc
+      mmu2.tool_change(parser.string_arg);   // Special commands T?/Tx/Tc//特殊命令T？/Tx/Tc
       return;
     }
   #endif
 
   tool_change(tool_index
     #if HAS_MULTI_EXTRUDER
-      ,  TERN(PARKING_EXTRUDER, false, tool_index == active_extruder) // For PARKING_EXTRUDER motion is decided in tool_change()
+      ,  TERN(PARKING_EXTRUDER, false, tool_index == active_extruder) // For PARKING_EXTRUDER motion is decided in tool_change()//停车时，挤出机的运动由刀具更换（）决定
       || parser.boolval('S')
     #endif
   );

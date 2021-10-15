@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,7 +30,7 @@
 
 #if ENABLED(LCD_I2C_TYPE_PCF8575)
 
-  // NOTE: These are register-mapped pins on the PCF8575 controller, not Arduino pins.
+  // NOTE: These are register-mapped pins on the PCF8575 controller, not Arduino pins.//注意：这些是PCF8575控制器上的寄存器映射管脚，而不是Arduino管脚。
   #define LCD_I2C_PIN_BL  3
   #define LCD_I2C_PIN_EN  2
   #define LCD_I2C_PIN_RW  1
@@ -46,11 +47,11 @@
 
 #elif ENABLED(LCD_I2C_TYPE_MCP23017)
 
-  // For the LED indicators (which may be mapped to different events in update_indicators())
+  // For the LED indicators (which may be mapped to different events in update_indicators())//对于LED指示灯（可能映射到update_indicators（）中的不同事件）
   #define LCD_HAS_STATUS_INDICATORS
-  #define LED_A 0x04 //100
-  #define LED_B 0x02 //010
-  #define LED_C 0x01 //001
+  #define LED_A 0x04 //100//100
+  #define LED_B 0x02 //010//010
+  #define LED_C 0x01 //001//001
 
   #include <Wire.h>
   #include <LiquidTWI2.h>
@@ -69,16 +70,16 @@
 
 #elif ENABLED(SR_LCD_2W_NL)
 
-  // 2 wire Non-latching LCD SR from:
-  // https://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/schematics#!shiftregister-connection
+  // 2 wire Non-latching LCD SR from://2线非闭锁式LCD SR来自：
+  // https://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/schematics#!shiftregister-connection// https://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/schematics#!移位寄存器连接
   #include <LCD.h>
   #include <LiquidCrystal_SR.h>
   #define LCD_CLASS LiquidCrystal_SR
 
 #elif ENABLED(SR_LCD_3W_NL)
 
-  // NewLiquidCrystal didn't work, so this uses
-  // https://github.com/mikeshub/SailfishLCD
+  // NewLiquidCrystal didn't work, so this uses//NewLiquidCrystal不起作用，因此使用
+  // https://github.com/mikeshub/SailfishLCD// https://github.com/mikeshub/SailfishLCD
 
   #include <SailfishLCD.h>
   #define LCD_CLASS LiquidCrystalSerial
@@ -97,7 +98,7 @@
 
 #else
 
-  // Standard directly connected LCD implementations
+  // Standard directly connected LCD implementations//标准直接连接LCD实现
   #include <LiquidCrystal.h>
   #define LCD_CLASS LiquidCrystal
 

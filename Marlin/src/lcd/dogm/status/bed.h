@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,9 +22,9 @@
  */
 #pragma once
 
-//
-// lcd/dogm/status/bed.h - Status Screen Bed bitmaps
-//
+////
+// lcd/dogm/status/bed.h - Status Screen Bed bitmaps//lcd/dogm/status/bed.h-状态屏幕床位图
+////
 
 #if ENABLED(STATUS_ALT_BED_BITMAP)
 

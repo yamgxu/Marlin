@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -38,7 +39,7 @@ void XPT2046::Init() {
   OUT_WRITE(TOUCH_CS_PIN, HIGH);
 
   #if PIN_EXISTS(TOUCH_INT)
-    // Optional Pendrive interrupt pin
+    // Optional Pendrive interrupt pin//可选Pendrive中断引脚
     SET_INPUT(TOUCH_INT_PIN);
   #endif
 
@@ -166,5 +167,5 @@ uint16_t XPT2046::SoftwareIO(uint16_t data) {
   return result;
 }
 
-#endif // HAS_TFT_XPT2046
-#endif // ARDUINO_ARCH_STM32 && !STM32GENERIC
+#endif // HAS_TFT_XPT2046//具有_TFT _XPT2046
+#endif // ARDUINO_ARCH_STM32 && !STM32GENERIC//ARDUINO_ARCH_STM32&&！STM32通用

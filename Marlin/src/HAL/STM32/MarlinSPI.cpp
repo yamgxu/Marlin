@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -25,8 +26,8 @@
 
 static void spi_init(spi_t *obj, uint32_t speed, spi_mode_e mode, uint8_t msb, uint32_t dataSize) {
   spi_init(obj, speed, mode, msb);
-  // spi_init set 8bit always
-  // TODO: copy the code from spi_init and handle data size, to avoid double init always!!
+  // spi_init set 8bit always//spi_初始集8bit始终
+  // TODO: copy the code from spi_init and handle data size, to avoid double init always!!//TODO:从spi_init复制代码并处理数据大小，以避免总是重复初始化！！
   if (dataSize != SPI_DATASIZE_8BIT) {
     obj->handle.Init.DataSize = dataSize;
     HAL_SPI_Init(&obj->handle);
@@ -35,12 +36,12 @@ static void spi_init(spi_t *obj, uint32_t speed, spi_mode_e mode, uint8_t msb, u
 }
 
 void MarlinSPI::setClockDivider(uint8_t _div) {
-  _speed = spi_getClkFreq(&_spi);// / _div;
+  _speed = spi_getClkFreq(&_spi);// / _div;///)分区;；
   _clockDivider = _div;
 }
 
 void MarlinSPI::begin(void) {
-  //TODO: only call spi_init if any parameter changed!!
+  //TODO: only call spi_init if any parameter changed!!//TODO:只有在任何参数更改时才调用spi_init！！
   spi_init(&_spi, _speed, _dataMode, _bitOrder, _dataSize);
 }
 
@@ -63,8 +64,8 @@ void MarlinSPI::setupDma(SPI_HandleTypeDef &_spiHandle, DMA_HandleTypeDef &_dmaH
     _dmaHandle.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
   #endif
 
-  // start DMA hardware
-  // TODO: check if hardware is already enabled
+  // start DMA hardware//启动DMA硬件
+  // TODO: check if hardware is already enabled//TODO:检查硬件是否已启用
   #ifdef SPI1_BASE
     if (_spiHandle.Instance == SPI1) {
       #ifdef STM32F1xx
@@ -114,7 +115,7 @@ byte MarlinSPI::transfer(uint8_t _data) {
 uint8_t MarlinSPI::dmaTransfer(const void *transmitBuf, void *receiveBuf, uint16_t length) {
   const uint8_t ff = 0xFF;
 
-  //if ((hspi->Instance->CR1 & SPI_CR1_SPE) != SPI_CR1_SPE) //only enable if disabled
+  //if ((hspi->Instance->CR1 & SPI_CR1_SPE) != SPI_CR1_SPE) //only enable if disabled//if（（hspi->Instance->CR1&SPI\u CR1\u SPE）！=SPI\u CR1\u SPE）//仅在禁用时启用
   __HAL_SPI_ENABLE(&_spi.handle);
 
   if (receiveBuf) {
@@ -123,7 +124,7 @@ uint8_t MarlinSPI::dmaTransfer(const void *transmitBuf, void *receiveBuf, uint16
     SET_BIT(_spi.handle.Instance->CR2, SPI_CR2_RXDMAEN); /* Enable Rx DMA Request */
   }
 
-  // check for 2 lines transfer
+  // check for 2 lines transfer//检查是否有两条换乘线路
   bool mincTransmit = true;
   if (transmitBuf == nullptr && _spi.handle.Init.Direction == SPI_DIRECTION_2LINES && _spi.handle.Init.Mode == SPI_MODE_MASTER) {
     transmitBuf = &ff;
@@ -142,7 +143,7 @@ uint8_t MarlinSPI::dmaTransfer(const void *transmitBuf, void *receiveBuf, uint16
     HAL_DMA_DeInit(&_dmaTx);
   }
 
-  // while ((_spi.handle.Instance->SR & SPI_FLAG_RXNE) != SPI_FLAG_RXNE) {}
+  // while ((_spi.handle.Instance->SR & SPI_FLAG_RXNE) != SPI_FLAG_RXNE) {}//while（（_spi.handle.Instance->SR&spi_FLAG_RXNE）！=spi_FLAG_RXNE）{}
 
   if (receiveBuf) {
     HAL_DMA_PollForTransfer(&_dmaRx, HAL_DMA_FULL_TRANSFER, HAL_MAX_DELAY);
@@ -160,9 +161,9 @@ uint8_t MarlinSPI::dmaSend(const void * transmitBuf, uint16_t length, bool minc)
   SET_BIT(_spi.handle.Instance->CR2, SPI_CR2_TXDMAEN);   /* Enable Tx DMA Request */
   HAL_DMA_PollForTransfer(&_dmaTx, HAL_DMA_FULL_TRANSFER, HAL_MAX_DELAY);
   HAL_DMA_Abort(&_dmaTx);
-  // DeInit objects
+  // DeInit objects//脱硝物
   HAL_DMA_DeInit(&_dmaTx);
   return 1;
 }
 
-#endif // ARDUINO_ARCH_STM32 && !STM32GENERIC
+#endif // ARDUINO_ARCH_STM32 && !STM32GENERIC//ARDUINO_ARCH_STM32&&！STM32通用

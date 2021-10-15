@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * anycubic_i3mega_lcd.cpp  --- Support for Anycubic i3 Mega TFT
  * Created by Christian Hopp on 09.12.17.
@@ -27,11 +28,11 @@
 #include "../ui_api.h"
 
 #include "../../../libs/numtostr.h"
-#include "../../../module/motion.h"  // for quickstop_stepper, A20 read printing speed, feedrate_percentage
-#include "../../../MarlinCore.h"     // for disable_steppers
+#include "../../../module/motion.h"  // for quickstop_stepper, A20 read printing speed, feedrate_percentage//对于quickstop_步进机，A20读取打印速度、进给率_百分比
+#include "../../../MarlinCore.h"     // for disable_steppers//用于禁用步进器
 #include "../../../inc/MarlinConfig.h"
 
-// command sending macro's with debugging capability
+// command sending macro's with debugging capability//具有调试功能的命令发送宏
 #define SEND_PGM(x)       send_P(PSTR(x))
 #define SENDLINE_PGM(x)   sendLine_P(PSTR(x))
 #define SEND_PGM_VAL(x,y) (send_P(PSTR(x)), sendLine(i16tostr3rj(y)))
@@ -61,7 +62,7 @@ AnycubicMediaPauseState AnycubicTFTClass::mediaPauseState = AMPAUSESTATE_NOT_PAU
 char AnycubicTFTClass::SelectedDirectory[30];
 char AnycubicTFTClass::SelectedFile[FILENAME_LENGTH];
 
-// Serial helpers
+// Serial helpers//连续助手
 static void sendNewLine(void) { LCD_SERIAL.write('\r'); LCD_SERIAL.write('\n'); }
 static void send(const char *str) { LCD_SERIAL.print(str); }
 static void send_P(PGM_P str) {
@@ -81,10 +82,10 @@ void AnycubicTFTClass::OnSetup() {
   #endif
   LCD_SERIAL.begin(LCD_BAUDRATE);
 
-  SENDLINE_DBG_PGM("J17", "TFT Serial Debug: Main board reset... J17"); // J17 Main board reset
+  SENDLINE_DBG_PGM("J17", "TFT Serial Debug: Main board reset... J17"); // J17 Main board reset//J17主板复位
   delay_ms(10);
 
-  // initialise the state of the key pins running on the tft
+  // initialise the state of the key pins running on the tft//初始化tft上运行的钥匙销的状态
   #if ENABLED(SDSUPPORT) && PIN_EXISTS(SD_DETECT)
     SET_INPUT_PULLUP(SD_DETECT_PIN);
   #endif
@@ -95,8 +96,8 @@ void AnycubicTFTClass::OnSetup() {
   mediaPrintingState = AMPRINTSTATE_NOT_PRINTING;
   mediaPauseState = AMPAUSESTATE_NOT_PAUSED;
 
-  // DoSDCardStateCheck();
-  SENDLINE_DBG_PGM("J12", "TFT Serial Debug: Ready... J12"); // J12 Ready
+  // DoSDCardStateCheck();//DoSDCardStateCheck（）；
+  SENDLINE_DBG_PGM("J12", "TFT Serial Debug: Ready... J12"); // J12 Ready//J12就绪
   delay_ms(10);
 
   DoFilamentRunoutCheck();
@@ -111,7 +112,7 @@ void AnycubicTFTClass::OnSetup() {
 }
 
 void AnycubicTFTClass::OnCommandScan() {
-  static millis_t nextStopCheck = 0; // used to slow the stopped print check down to reasonable times
+  static millis_t nextStopCheck = 0; // used to slow the stopped print check down to reasonable times//用于将停止的打印检查降低到合理的时间
   const millis_t ms = millis();
   if (ELAPSED(ms, nextStopCheck)) {
     nextStopCheck = ms + 1000UL;
@@ -121,9 +122,9 @@ void AnycubicTFTClass::OnCommandScan() {
       #endif
       mediaPrintingState = AMPRINTSTATE_NOT_PRINTING;
       mediaPauseState = AMPAUSESTATE_NOT_PAUSED;
-      injectCommands_P(PSTR("M84\nM27")); // disable stepper motors and force report of SD status
+      injectCommands_P(PSTR("M84\nM27")); // disable stepper motors and force report of SD status//禁用步进电机并强制报告SD状态
       delay_ms(200);
-      // tell printer to release resources of print to indicate it is done
+      // tell printer to release resources of print to indicate it is done//告诉打印机释放打印资源以指示打印已完成
       SENDLINE_DBG_PGM("J14", "TFT Serial Debug: SD Print Stopped... J14");
     }
   }
@@ -181,36 +182,36 @@ void AnycubicTFTClass::OnUserConfirmRequired(const char * const msg) {
     if (strcmp_P(msg, PSTR("Nozzle Parked")) == 0) {
       mediaPrintingState = AMPRINTSTATE_PAUSED;
       mediaPauseState    = AMPAUSESTATE_PARKED;
-      // enable continue button
+      // enable continue button//启用继续按钮
       SENDLINE_DBG_PGM("J18", "TFT Serial Debug: UserConfirm SD print paused done... J18");
     }
     else if (strcmp_P(msg, PSTR("Load Filament")) == 0) {
       mediaPrintingState = AMPRINTSTATE_PAUSED;
       mediaPauseState    = AMPAUSESTATE_FILAMENT_OUT;
-      // enable continue button
+      // enable continue button//启用继续按钮
       SENDLINE_DBG_PGM("J18", "TFT Serial Debug: UserConfirm Filament is out... J18");
       SENDLINE_DBG_PGM("J23", "TFT Serial Debug: UserConfirm Blocking filament prompt... J23");
     }
     else if (strcmp_P(msg, PSTR("Filament Purging...")) == 0) {
       mediaPrintingState = AMPRINTSTATE_PAUSED;
       mediaPauseState    = AMPAUSESTATE_PARKING;
-      // TODO: JBA I don't think J05 just disables the continue button, i think it injects a rogue M25. So taking this out
-      // disable continue button
-      // SENDLINE_DBG_PGM("J05", "TFT Serial Debug: UserConfirm SD Filament Purging... J05"); // J05 printing pause
+      // TODO: JBA I don't think J05 just disables the continue button, i think it injects a rogue M25. So taking this out//TODO:JBA我不认为J05只是禁用了继续按钮，我认为它注入了一个流氓M25。所以把这个拿出来
+      // disable continue button//禁用继续按钮
+      // SENDLINE_DBG_PGM("J05", "TFT Serial Debug: UserConfirm SD Filament Purging... J05"); // J05 printing pause//SENDLINE_DBG_PGM（“J05”，“TFT串行调试：用户确认SD灯丝吹扫…J05”）；//J05打印暂停
 
-      // enable continue button
+      // enable continue button//启用继续按钮
       SENDLINE_DBG_PGM("J18", "TFT Serial Debug: UserConfirm Filament is purging... J18");
     }
     else if (strcmp_P(msg, PSTR("HeaterTimeout")) == 0) {
       mediaPrintingState = AMPRINTSTATE_PAUSED;
       mediaPauseState    = AMPAUSESTATE_HEATER_TIMEOUT;
-      // enable continue button
+      // enable continue button//启用继续按钮
       SENDLINE_DBG_PGM("J18", "TFT Serial Debug: UserConfirm SD Heater timeout... J18");
     }
     else if (strcmp_P(msg, PSTR("Reheat finished.")) == 0) {
       mediaPrintingState = AMPRINTSTATE_PAUSED;
       mediaPauseState    = AMPAUSESTATE_REHEAT_FINISHED;
-      // enable continue button
+      // enable continue button//启用继续按钮
       SENDLINE_DBG_PGM("J18", "TFT Serial Debug: UserConfirm SD Reheat done... J18");
     }
   #endif
@@ -222,7 +223,7 @@ float AnycubicTFTClass::CodeValue() {
 
 bool AnycubicTFTClass::CodeSeen(char code) {
   TFTstrchr_pointer = strchr(TFTcmdbuffer[TFTbufindr], code);
-  return !!TFTstrchr_pointer; // Return True if a character was found
+  return !!TFTstrchr_pointer; // Return True if a character was found//如果找到字符，则返回True
 }
 
 bool AnycubicTFTClass::IsNozzleHomed() {
@@ -238,7 +239,7 @@ void AnycubicTFTClass::HandleSpecialMenu() {
    */
   if (SelectedDirectory[0] == '<') {
     switch (SelectedDirectory[1]) {
-      case 'e': // "<exit>"
+      case 'e': // "<exit>"//“<exit>”
         SpecialMenu = false;
         return;
         break;
@@ -246,48 +247,48 @@ void AnycubicTFTClass::HandleSpecialMenu() {
         #if ENABLED(PROBE_MANUALLY)
           case '0':
             switch (SelectedDirectory[2]) {
-              case '1': // "<01ZUp0.1>"
+              case '1': // "<01ZUp0.1>"//“<01ZUp0.1>”
                 SERIAL_ECHOLNPGM("Special Menu: Z Up 0.1");
                 injectCommands_P(PSTR("G91\nG1 Z+0.1\nG90"));
                 break;
 
-              case '2': // "<02ZUp0.02>"
+              case '2': // "<02ZUp0.02>"//“<02ZUp0.02>”
                 SERIAL_ECHOLNPGM("Special Menu: Z Up 0.02");
                 injectCommands_P(PSTR("G91\nG1 Z+0.02\nG90"));
                 break;
 
-              case '3': // "<03ZDn0.02>"
+              case '3': // "<03ZDn0.02>"//“<03ZDn0.02>”
                 SERIAL_ECHOLNPGM("Special Menu: Z Down 0.02");
                 injectCommands_P(PSTR("G91\nG1 Z-0.02\nG90"));
                 break;
 
-              case '4': // "<04ZDn0.1>"
+              case '4': // "<04ZDn0.1>"//“<04ZDn0.1>”
                 SERIAL_ECHOLNPGM("Special Menu: Z Down 0.1");
                 injectCommands_P(PSTR("G91\nG1 Z-0.1\nG90"));
                 break;
 
-              case '5': // "<05PrehtBed>"
+              case '5': // "<05PrehtBed>"//“<05PrehtBed>”
                 SERIAL_ECHOLNPGM("Special Menu: Preheat Bed");
                 injectCommands_P(PSTR("M140 S65"));
                 break;
 
-              case '6': // "<06SMeshLvl>"
+              case '6': // "<06SMeshLvl>"//“<06SMeshLvl>”
                 SERIAL_ECHOLNPGM("Special Menu: Start Mesh Leveling");
                 injectCommands_P(PSTR("G29S1"));
                 break;
 
-              case '7': // "<07MeshNPnt>"
+              case '7': // "<07MeshNPnt>"//“<07MeshNPnt>”
                 SERIAL_ECHOLNPGM("Special Menu: Next Mesh Point");
                 injectCommands_P(PSTR("G29S2"));
                 break;
 
-              case '8': // "<08HtEndPID>"
+              case '8': // "<08HtEndPID>"//“<08dpid>”
                 SERIAL_ECHOLNPGM("Special Menu: Auto Tune Hotend PID");
-                // need to dwell for half a second to give the fan a chance to start before the pid tuning starts
+                // need to dwell for half a second to give the fan a chance to start before the pid tuning starts//需要停留半秒钟，以便在pid调节开始之前让风扇有机会启动
                 injectCommands_P(PSTR("M106 S204\nG4 P500\nM303 E0 S215 C15 U1"));
                 break;
 
-              case '9': // "<09HtBedPID>"
+              case '9': // "<09HtBedPID>"//“<09HtBedPID>”
                 SERIAL_ECHOLNPGM("Special Menu: Auto Tune Hotbed Pid");
                 injectCommands_P(PSTR("M303 E-1 S65 C6 U1"));
                 break;
@@ -299,12 +300,12 @@ void AnycubicTFTClass::HandleSpecialMenu() {
 
           case '1':
             switch (SelectedDirectory[2]) {
-              case '0': // "<10FWDeflts>"
+              case '0': // "<10FWDeflts>"//“<10FWDeflts>”
                 SERIAL_ECHOLNPGM("Special Menu: Load FW Defaults");
                 injectCommands_P(PSTR("M502\nM300 P105 S1661\nM300 P210 S1108"));
                 break;
 
-              case '1': // "<11SvEEPROM>"
+              case '1': // "<11SvEEPROM>"//“<11SvEEPROM>”
                 SERIAL_ECHOLNPGM("Special Menu: Save EEPROM");
                 injectCommands_P(PSTR("M500\nM300 P105 S1108\nM300 P210 S1661"));
                 break;
@@ -313,41 +314,41 @@ void AnycubicTFTClass::HandleSpecialMenu() {
                 break;
             }
             break;
-        #else // if ENABLED(PROBE_MANUALLY)
+        #else // if ENABLED(PROBE_MANUALLY)//如果启用（手动探测）
           case '0':
             switch (SelectedDirectory[2]) {
-              case '1': // "<01PrehtBed>"
+              case '1': // "<01PrehtBed>"//“<01PrehtBed>”
                 SERIAL_ECHOLNPGM("Special Menu: Preheat Bed");
                 injectCommands_P(PSTR("M140 S65"));
                 break;
 
-              case '2': // "<02ABL>"
+              case '2': // "<02ABL>"//“<02ABL>”
                 SERIAL_ECHOLNPGM("Special Menu: Auto Bed Leveling");
                 injectCommands_P(PSTR("G29N"));
                 break;
 
-              case '3': // "<03HtendPID>"
+              case '3': // "<03HtendPID>"//“<03dpid>”
                 SERIAL_ECHOLNPGM("Special Menu: Auto Tune Hotend PID");
-                // need to dwell for half a second to give the fan a chance to start before the pid tuning starts
+                // need to dwell for half a second to give the fan a chance to start before the pid tuning starts//需要停留半秒钟，以便在pid调节开始之前让风扇有机会启动
                 injectCommands_P(PSTR("M106 S204\nG4 P500\nM303 E0 S215 C15 U1"));
                 break;
 
-              case '4': // "<04HtbedPID>"
+              case '4': // "<04HtbedPID>"//“<04HtbedPID>”
                 SERIAL_ECHOLNPGM("Special Menu: Auto Tune Hotbed Pid");
                 injectCommands_P(PSTR("M303 E-1 S65 C6 U1"));
                 break;
 
-              case '5': // "<05FWDeflts>"
+              case '5': // "<05FWDeflts>"//“<05FWDeflts>”
                 SERIAL_ECHOLNPGM("Special Menu: Load FW Defaults");
                 injectCommands_P(PSTR("M502\nM300 P105 S1661\nM300 P210 S1108"));
                 break;
 
-              case '6': // "<06SvEEPROM>"
+              case '6': // "<06SvEEPROM>"//“<06SvEEPROM>”
                 SERIAL_ECHOLNPGM("Special Menu: Save EEPROM");
                 injectCommands_P(PSTR("M500\nM300 P105 S1108\nM300 P210 S1661"));
                 break;
 
-              case '7': // <07SendM108>
+              case '7': // <07SendM108>//<07SendM108>
                 SERIAL_ECHOLNPGM("Special Menu: Send User Confirmation");
                 injectCommands_P(PSTR("M108"));
                 break;
@@ -356,7 +357,7 @@ void AnycubicTFTClass::HandleSpecialMenu() {
                 break;
             }
             break;
-            #endif  // PROBE_MANUALLY
+            #endif  // PROBE_MANUALLY//手动探测
 
           default:
             break;
@@ -377,7 +378,7 @@ void AnycubicTFTClass::RenderCurrentFileList() {
     SelectedFile[0] = 0;
     FileList currentFileList;
 
-    SENDLINE_PGM("FN "); // Filelist start
+    SENDLINE_PGM("FN "); // Filelist start//文件列表开始
 
     if (!isMediaInserted() && !SpecialMenu) {
       SENDLINE_DBG_PGM("J02", "TFT Serial Debug: No SD Card mounted to render Current File List... J02");
@@ -394,14 +395,14 @@ void AnycubicTFTClass::RenderCurrentFileList() {
       else if (selectedNumber <= currentFileList.count())
         RenderCurrentFolder(selectedNumber);
     }
-    SENDLINE_PGM("END"); // Filelist stop
-  #endif // SDSUPPORT
+    SENDLINE_PGM("END"); // Filelist stop//文件列表停止
+  #endif // SDSUPPORT//SDSUPPORT
 }
 
 void AnycubicTFTClass::RenderSpecialMenu(uint16_t selectedNumber) {
   switch (selectedNumber) {
     #if ENABLED(PROBE_MANUALLY)
-      case 0: // First Page
+      case 0: // First Page//首页
         SENDLINE_PGM("<01ZUp0.1>");
         SENDLINE_PGM("<Z Up 0.1>");
         SENDLINE_PGM("<02ZUp0.02>");
@@ -412,7 +413,7 @@ void AnycubicTFTClass::RenderSpecialMenu(uint16_t selectedNumber) {
         SENDLINE_PGM("<Z Down 0.1>");
         break;
 
-      case 4: // Second Page
+      case 4: // Second Page//第二页
         SENDLINE_PGM("<05PrehtBed>");
         SENDLINE_PGM("<Preheat bed>");
         SENDLINE_PGM("<06SMeshLvl>");
@@ -423,7 +424,7 @@ void AnycubicTFTClass::RenderSpecialMenu(uint16_t selectedNumber) {
         SENDLINE_PGM("<Auto Tune Hotend PID>");
         break;
 
-      case 8: // Third Page
+      case 8: // Third Page//第三页
         SENDLINE_PGM("<09HtBedPID>");
         SENDLINE_PGM("<Auto Tune Hotbed PID>");
         SENDLINE_PGM("<10FWDeflts>");
@@ -434,7 +435,7 @@ void AnycubicTFTClass::RenderSpecialMenu(uint16_t selectedNumber) {
         SENDLINE_PGM("<Exit>");
         break;
     #else
-      case 0: // First Page
+      case 0: // First Page//首页
         SENDLINE_PGM("<01PrehtBed>");
         SENDLINE_PGM("<Preheat bed>");
         SENDLINE_PGM("<02ABL>");
@@ -445,7 +446,7 @@ void AnycubicTFTClass::RenderSpecialMenu(uint16_t selectedNumber) {
         SENDLINE_PGM("<Auto Tune Hotbed PID>");
         break;
 
-      case 4: // Second Page
+      case 4: // Second Page//第二页
         SENDLINE_PGM("<05FWDeflts>");
         SENDLINE_PGM("<Load FW Defaults>");
         SENDLINE_PGM("<06SvEEPROM>");
@@ -456,7 +457,7 @@ void AnycubicTFTClass::RenderSpecialMenu(uint16_t selectedNumber) {
         SENDLINE_PGM("<Exit>");
         break;
 
-        #endif // PROBE_MANUALLY
+        #endif // PROBE_MANUALLY//手动探测
 
       default:
         break;
@@ -475,7 +476,7 @@ void AnycubicTFTClass::RenderCurrentFolder(uint16_t selectedNumber) {
     max_files = selectedNumber + 3;
 
   for (cnt = selectedNumber; cnt <= max_files; cnt++) {
-    if (cnt == 0) { // Special Entry
+    if (cnt == 0) { // Special Entry//特别条目
       if (currentFileList.isAtRootDir()) {
         SENDLINE_PGM("<specialmnu>");
         SENDLINE_PGM("<Special Menu>");
@@ -509,7 +510,7 @@ void AnycubicTFTClass::RenderCurrentFolder(uint16_t selectedNumber) {
 void AnycubicTFTClass::OnPrintTimerStarted() {
   #if ENABLED(SDSUPPORT)
     if (mediaPrintingState == AMPRINTSTATE_PRINTING)
-      SENDLINE_DBG_PGM("J04", "TFT Serial Debug: Starting SD Print... J04"); // J04 Starting Print
+      SENDLINE_DBG_PGM("J04", "TFT Serial Debug: Starting SD Print... J04"); // J04 Starting Print//J04开始打印
 
   #endif
 }
@@ -530,7 +531,7 @@ void AnycubicTFTClass::OnPrintTimerStopped() {
       mediaPauseState    = AMPAUSESTATE_NOT_PAUSED;
       SENDLINE_DBG_PGM("J14", "TFT Serial Debug: SD Print Completed... J14");
     }
-    // otherwise it was stopped by the printer so don't send print completed signal to TFT
+    // otherwise it was stopped by the printer so don't send print completed signal to TFT//否则打印机会停止打印，因此不要向TFT发送打印完成信号
   #endif
 }
 
@@ -546,9 +547,9 @@ void AnycubicTFTClass::GetCommandFromTFT() {
         serial3_count >= (TFT_MAX_CMD_SIZE - 1)
     ) {
 
-      if (!serial3_count) return; // if empty line
+      if (!serial3_count) return; // if empty line//如果是空行
 
-      TFTcmdbuffer[TFTbufindw][serial3_count] = 0; // terminate string
+      TFTcmdbuffer[TFTbufindw][serial3_count] = 0; // terminate string//终止字符串
 
       if ((strchr(TFTcmdbuffer[TFTbufindw], 'A') != nullptr)) {
         int16_t a_command;
@@ -556,39 +557,39 @@ void AnycubicTFTClass::GetCommandFromTFT() {
         a_command = ((int)((strtod(&TFTcmdbuffer[TFTbufindw][TFTstrchr_pointer - TFTcmdbuffer[TFTbufindw] + 1], nullptr))));
 
         #if ENABLED(ANYCUBIC_LCD_DEBUG)
-          if ((a_command > 7) && (a_command != 20))   // No debugging of status polls, please!
+          if ((a_command > 7) && (a_command != 20))   // No debugging of status polls, please!//请不要调试状态轮询！
             SERIAL_ECHOLNPAIR("TFT Serial Command: ", TFTcmdbuffer[TFTbufindw]);
         #endif
 
         switch (a_command) {
-          case 0: { // A0 GET HOTEND TEMP
+          case 0: { // A0 GET HOTEND TEMP//A0获得热端温度
             const celsius_float_t hotendActualTemp = getActualTemp_celsius(E0);
             SEND_PGM_VAL("A0V ", ROUND(hotendActualTemp));
           }
           break;
 
-          case 1: { // A1  GET HOTEND TARGET TEMP
+          case 1: { // A1  GET HOTEND TARGET TEMP//A1获取热端目标温度
             const celsius_float_t hotendTargetTemp = getTargetTemp_celsius(E0);
             SEND_PGM_VAL("A1V ", ROUND(hotendTargetTemp));
           }
           break;
 
-          case 2: { // A2 GET HOTBED TEMP
+          case 2: { // A2 GET HOTBED TEMP//A2获得温床温度
             const celsius_float_t heatedBedActualTemp = getActualTemp_celsius(BED);
             SEND_PGM_VAL("A2V ", ROUND(heatedBedActualTemp));
           }
           break;
 
-          case 3: { // A3 GET HOTBED TARGET TEMP
+          case 3: { // A3 GET HOTBED TARGET TEMP//A3获得温床目标温度
             const celsius_float_t heatedBedTargetTemp = getTargetTemp_celsius(BED);
             SEND_PGM_VAL("A3V ", ROUND(heatedBedTargetTemp));
           } break;
 
-          case 4: { // A4 GET FAN SPEED
+          case 4: { // A4 GET FAN SPEED//A4获得风扇转速
             SEND_PGM_VAL("A4V ", int(getActualFan_percent(FAN0)));
           } break;
 
-          case 5: { // A5 GET CURRENT COORDINATE
+          case 5: { // A5 GET CURRENT COORDINATE//A5获取当前坐标
             const float xPosition = getAxisPosition_mm(X),
                         yPosition = getAxisPosition_mm(Y),
                         zPosition = getAxisPosition_mm(Z);
@@ -598,7 +599,7 @@ void AnycubicTFTClass::GetCommandFromTFT() {
             SENDLINE_PGM("");
           } break;
 
-          case 6: // A6 GET SD CARD PRINTING STATUS
+          case 6: // A6 GET SD CARD PRINTING STATUS//A6获取SD卡打印状态
             #if ENABLED(SDSUPPORT)
               if (isPrintingFromMedia()) {
                 SEND_PGM("A6V ");
@@ -612,10 +613,10 @@ void AnycubicTFTClass::GetCommandFromTFT() {
             #endif
             break;
 
-          case 7: { // A7 GET PRINTING TIME
+          case 7: { // A7 GET PRINTING TIME//A7获得打印时间
             const uint32_t elapsedSeconds = getProgress_seconds_elapsed();
             SEND_PGM("A7V ");
-            if (elapsedSeconds != 0) {  // print time
+            if (elapsedSeconds != 0) {  // print time//打印时间
               const uint32_t elapsedMinutes = elapsedSeconds / 60;
               SEND(ui8tostr2(elapsedMinutes / 60));
               SEND_PGM(" H ");
@@ -627,50 +628,50 @@ void AnycubicTFTClass::GetCommandFromTFT() {
           }
           break;
 
-          case 8: // A8 GET  SD LIST
+          case 8: // A8 GET  SD LIST//A8获取SD列表
             #if ENABLED(SDSUPPORT)
               SelectedFile[0] = 0;
               RenderCurrentFileList();
             #endif
             break;
 
-          case 9: // A9 pause sd print
+          case 9: // A9 pause sd print//A9暂停sd打印
             #if ENABLED(SDSUPPORT)
               if (isPrintingFromMedia())
                 PausePrint();
             #endif
             break;
 
-          case 10: // A10 resume sd print
+          case 10: // A10 resume sd print//A10简历sd打印
             #if ENABLED(SDSUPPORT)
               if (isPrintingFromMediaPaused())
                 ResumePrint();
             #endif
             break;
 
-          case 11: // A11 STOP SD PRINT
+          case 11: // A11 STOP SD PRINT//A11停止SD打印
             TERN_(SDSUPPORT, StopPrint());
             break;
 
-          case 12: // A12 kill
+          case 12: // A12 kill//A12杀戮
             kill(PSTR(STR_ERR_KILLED));
             break;
 
-          case 13: // A13 SELECTION FILE
+          case 13: // A13 SELECTION FILE//A13选择文件
             #if ENABLED(SDSUPPORT)
               if (isMediaInserted()) {
                 starpos = (strchr(TFTstrchr_pointer + 4, '*'));
                 if (TFTstrchr_pointer[4] == '/') {
                   strcpy(SelectedDirectory, TFTstrchr_pointer + 5);
                   SelectedFile[0] = 0;
-                  SENDLINE_DBG_PGM("J21", "TFT Serial Debug: Clear file selection... J21 "); // J21 Not File Selected
+                  SENDLINE_DBG_PGM("J21", "TFT Serial Debug: Clear file selection... J21 "); // J21 Not File Selected//未选择J21文件
                   SENDLINE_PGM("");
                 }
                 else if (TFTstrchr_pointer[4] == '<') {
                   strcpy(SelectedDirectory, TFTstrchr_pointer + 4);
                   SpecialMenu = true;
                   SelectedFile[0] = 0;
-                  SENDLINE_DBG_PGM("J21", "TFT Serial Debug: Clear file selection... J21 "); // J21 Not File Selected
+                  SENDLINE_DBG_PGM("J21", "TFT Serial Debug: Clear file selection... J21 "); // J21 Not File Selected//未选择J21文件
                   SENDLINE_PGM("");
                 }
                 else {
@@ -679,24 +680,24 @@ void AnycubicTFTClass::GetCommandFromTFT() {
                   if (starpos) *(starpos - 1) = '\0';
 
                   strcpy(SelectedFile, TFTstrchr_pointer + 4);
-                  SENDLINE_DBG_PGM_VAL("J20", "TFT Serial Debug: File Selected... J20 ", SelectedFile); // J20 File Selected
+                  SENDLINE_DBG_PGM_VAL("J20", "TFT Serial Debug: File Selected... J20 ", SelectedFile); // J20 File Selected//已选择J20文件
                 }
               }
             #endif
             break;
 
-          case 14: // A14 START PRINTING
+          case 14: // A14 START PRINTING//A14开始打印
             #if ENABLED(SDSUPPORT)
               if (!isPrinting() && strlen(SelectedFile) > 0)
                 StartPrint();
             #endif
             break;
 
-          case 15: // A15 RESUMING FROM OUTAGE
-            // TODO: JBA implement resume form outage
+          case 15: // A15 RESUMING FROM OUTAGE//A15从大修中恢复
+            // TODO: JBA implement resume form outage//TODO:JBA实现恢复表单中断
             break;
 
-          case 16: { // A16 set hotend temp
+          case 16: { // A16 set hotend temp//A16设置热端温度
             unsigned int tempvalue;
             if (CodeSeen('S')) {
               tempvalue = constrain(CodeValue(), 0, 275);
@@ -704,14 +705,14 @@ void AnycubicTFTClass::GetCommandFromTFT() {
             }
             else if (CodeSeen('C') && !isPrinting()) {
               if (getAxisPosition_mm(Z) < 10)
-                injectCommands_P(PSTR("G1 Z10")); // RASE Z AXIS
+                injectCommands_P(PSTR("G1 Z10")); // RASE Z AXIS//RASE Z轴
               tempvalue = constrain(CodeValue(), 0, 275);
               setTargetTemp_celsius(tempvalue, (extruder_t)E0);
             }
           }
           break;
 
-          case 17: { // A17 set heated bed temp
+          case 17: { // A17 set heated bed temp//A17设定加热床温度
             unsigned int tempbed;
             if (CodeSeen('S')) {
               tempbed = constrain(CodeValue(), 0, 100);
@@ -720,7 +721,7 @@ void AnycubicTFTClass::GetCommandFromTFT() {
           }
           break;
 
-          case 18: { // A18 set fan speed
+          case 18: { // A18 set fan speed//A18设定风扇转速
             float fanPercent;
             if (CodeSeen('S')) {
               fanPercent = CodeValue();
@@ -735,7 +736,7 @@ void AnycubicTFTClass::GetCommandFromTFT() {
           }
           break;
 
-          case 19: // A19 stop stepper drivers - sent on stop extrude command and on turn motors off command
+          case 19: // A19 stop stepper drivers - sent on stop extrude command and on turn motors off command//A19停止步进驱动器-在停止挤出命令和打开关闭电机命令时发送
             if (!isPrinting()) {
               quickstop_stepper();
               disable_all_steppers();
@@ -744,14 +745,14 @@ void AnycubicTFTClass::GetCommandFromTFT() {
             SENDLINE_PGM("");
             break;
 
-          case 20: // A20 read printing speed
+          case 20: // A20 read printing speed//A20读取打印速度
             if (CodeSeen('S'))
               feedrate_percentage = constrain(CodeValue(), 40, 999);
             else
               SEND_PGM_VAL("A20V ", feedrate_percentage);
             break;
 
-          case 21: // A21 all home
+          case 21: // A21 all home//A21全体回家
             if (!isPrinting() && !isPrintingFromMediaPaused()) {
               if (CodeSeen('X') || CodeSeen('Y') || CodeSeen('Z')) {
                 if (CodeSeen('X'))
@@ -767,18 +768,18 @@ void AnycubicTFTClass::GetCommandFromTFT() {
             }
             break;
 
-          case 22: // A22 move X/Y/Z or extrude
+          case 22: // A22 move X/Y/Z or extrude//A22移动X/Y/Z或挤出
             if (!isPrinting()) {
               float coorvalue;
               unsigned int movespeed = 0;
               char commandStr[30];
               char fullCommandStr[38];
 
-              commandStr[0] = 0; // empty string
-              if (CodeSeen('F'))  // Set feedrate
+              commandStr[0] = 0; // empty string//空字符串
+              if (CodeSeen('F'))  // Set feedrate//设定进给速度
                 movespeed = CodeValue();
 
-              if (CodeSeen('X')) { // Move in X direction
+              if (CodeSeen('X')) { // Move in X direction//向X方向移动
                 coorvalue = CodeValue();
                 if ((coorvalue <= 0.2) && coorvalue > 0)
                   sprintf_P(commandStr, PSTR("G1 X0.1F%i"), movespeed);
@@ -787,7 +788,7 @@ void AnycubicTFTClass::GetCommandFromTFT() {
                 else
                   sprintf_P(commandStr, PSTR("G1 X%iF%i"), int(coorvalue), movespeed);
               }
-              else if (CodeSeen('Y')) {  // Move in Y direction
+              else if (CodeSeen('Y')) {  // Move in Y direction//向Y方向移动
                 coorvalue = CodeValue();
                 if ((coorvalue <= 0.2) && coorvalue > 0)
                   sprintf_P(commandStr, PSTR("G1 Y0.1F%i"), movespeed);
@@ -796,7 +797,7 @@ void AnycubicTFTClass::GetCommandFromTFT() {
                 else
                   sprintf_P(commandStr, PSTR("G1 Y%iF%i"), int(coorvalue), movespeed);
               }
-              else if (CodeSeen('Z')) {  // Move in Z direction
+              else if (CodeSeen('Z')) {  // Move in Z direction//向Z方向移动
                 coorvalue = CodeValue();
                 if ((coorvalue <= 0.2) && coorvalue > 0)
                   sprintf_P(commandStr, PSTR("G1 Z0.1F%i"), movespeed);
@@ -805,7 +806,7 @@ void AnycubicTFTClass::GetCommandFromTFT() {
                 else
                   sprintf_P(commandStr, PSTR("G1 Z%iF%i"), int(coorvalue), movespeed);
               }
-              else if (CodeSeen('E')) { // Extrude
+              else if (CodeSeen('E')) { // Extrude//挤出
                 coorvalue = CodeValue();
                 if ((coorvalue <= 0.2) && coorvalue > 0)
                   sprintf_P(commandStr, PSTR("G1 E0.1F%i"), movespeed);
@@ -827,10 +828,10 @@ void AnycubicTFTClass::GetCommandFromTFT() {
             SENDLINE_PGM("");
             break;
 
-          case 23: // A23 preheat pla
+          case 23: // A23 preheat pla//A23预热聚乳酸
             if (!isPrinting()) {
               if (getAxisPosition_mm(Z) < 10)
-                injectCommands_P(PSTR("G1 Z10")); // RASE Z AXIS
+                injectCommands_P(PSTR("G1 Z10")); // RASE Z AXIS//RASE Z轴
 
               setTargetTemp_celsius(PREHEAT_1_TEMP_BED, (heater_t)BED);
               setTargetTemp_celsius(PREHEAT_1_TEMP_HOTEND, (extruder_t)E0);
@@ -838,10 +839,10 @@ void AnycubicTFTClass::GetCommandFromTFT() {
             }
             break;
 
-          case 24:// A24 preheat abs
+          case 24:// A24 preheat abs//A24预热abs
             if (!isPrinting()) {
               if (getAxisPosition_mm(Z) < 10)
-                injectCommands_P(PSTR("G1 Z10")); // RASE Z AXIS
+                injectCommands_P(PSTR("G1 Z10")); // RASE Z AXIS//RASE Z轴
 
               setTargetTemp_celsius(PREHEAT_2_TEMP_BED, (heater_t)BED);
               setTargetTemp_celsius(PREHEAT_2_TEMP_HOTEND, (extruder_t)E0);
@@ -849,16 +850,16 @@ void AnycubicTFTClass::GetCommandFromTFT() {
             }
             break;
 
-          case 25: // A25 cool down
+          case 25: // A25 cool down//A25冷却
             if (!isPrinting()) {
               setTargetTemp_celsius(0, (heater_t) BED);
               setTargetTemp_celsius(0, (extruder_t) E0);
 
-              SENDLINE_DBG_PGM("J12", "TFT Serial Debug: Cooling down... J12"); // J12 cool down
+              SENDLINE_DBG_PGM("J12", "TFT Serial Debug: Cooling down... J12"); // J12 cool down//J12冷却
             }
             break;
 
-          case 26: // A26 refresh SD
+          case 26: // A26 refresh SD//A26刷新SD
             #if ENABLED(SDSUPPORT)
               if (isMediaInserted()) {
                 if (strlen(SelectedDirectory) > 0) {
@@ -883,10 +884,10 @@ void AnycubicTFTClass::GetCommandFromTFT() {
             break;
 
             #if ENABLED(SERVO_ENDSTOPS)
-              case 27: break; // A27 servos angles adjust
+              case 27: break; // A27 servos angles adjust//A27伺服角度调整
             #endif
 
-          case 28: // A28 filament test
+          case 28: // A28 filament test//A28灯丝试验
             if (CodeSeen('O'))
               NOOP;
             else if (CodeSeen('C'))
@@ -894,7 +895,7 @@ void AnycubicTFTClass::GetCommandFromTFT() {
             SENDLINE_PGM("");
             break;
 
-          case 33: // A33 get version info
+          case 33: // A33 get version info//A33获取版本信息
             SEND_PGM("J33 ");
             SENDLINE_PGM(DETAILED_BUILD_VERSION);
             break;
@@ -906,7 +907,7 @@ void AnycubicTFTClass::GetCommandFromTFT() {
 
       TFTbufindw = (TFTbufindw + 1) % TFTBUFSIZE;
       TFTbuflen += 1;
-      serial3_count = 0; // clear buffer
+      serial3_count = 0; // clear buffer//清除缓冲区
     }
     else {
       TFTcmdbuffer[TFTbufindw][serial3_count++] = serial3_char;
@@ -927,21 +928,21 @@ void AnycubicTFTClass::DoSDCardStateCheck() {
 
 void AnycubicTFTClass::DoFilamentRunoutCheck() {
   #if ENABLED(FILAMENT_RUNOUT_SENSOR)
-    // NOTE: getFilamentRunoutState() only returns the runout state if the job is printing
-    // we want to actually check the status of the pin here, regardless of printstate
+    // NOTE: getFilamentRunoutState() only returns the runout state if the job is printing//注意：getRunOutState（）仅在作业正在打印时返回runout状态
+    // we want to actually check the status of the pin here, regardless of printstate//我们想在这里实际检查pin的状态，而不考虑printstate
     if (READ(FIL_RUNOUT1_PIN)) {
       if (mediaPrintingState == AMPRINTSTATE_PRINTING || mediaPrintingState == AMPRINTSTATE_PAUSED || mediaPrintingState == AMPRINTSTATE_PAUSE_REQUESTED) {
-        // play tone to indicate filament is out
+        // play tone to indicate filament is out//播放提示灯丝已断开的音调
         injectCommands_P(PSTR("\nM300 P200 S1567\nM300 P200 S1174\nM300 P200 S1567\nM300 P200 S1174\nM300 P2000 S1567"));
 
-        // tell the user that the filament has run out and wait
+        // tell the user that the filament has run out and wait//告诉用户灯丝已用完，请等待
         SENDLINE_DBG_PGM("J23", "TFT Serial Debug: Blocking filament prompt... J23");
       }
       else {
         SENDLINE_DBG_PGM("J15", "TFT Serial Debug: Non blocking filament runout... J15");
       }
     }
-  #endif // FILAMENT_RUNOUT_SENSOR
+  #endif // FILAMENT_RUNOUT_SENSOR//灯丝跳动传感器
 }
 
 void AnycubicTFTClass::StartPrint() {
@@ -957,17 +958,17 @@ void AnycubicTFTClass::StartPrint() {
       mediaPauseState    = AMPAUSESTATE_NOT_PAUSED;
       printFile(SelectedFile);
     }
-  #endif // SDUPPORT
+  #endif // SDUPPORT//支持
 }
 
 void AnycubicTFTClass::PausePrint() {
   #if ENABLED(SDSUPPORT)
     if (isPrintingFromMedia() && mediaPrintingState != AMPRINTSTATE_STOP_REQUESTED && mediaPauseState == AMPAUSESTATE_NOT_PAUSED) {
       mediaPrintingState = AMPRINTSTATE_PAUSE_REQUESTED;
-      mediaPauseState    = AMPAUSESTATE_NOT_PAUSED; // need the userconfirm method to update pause state
-      SENDLINE_DBG_PGM("J05", "TFT Serial Debug: SD print pause started... J05"); // J05 printing pause
+      mediaPauseState    = AMPAUSESTATE_NOT_PAUSED; // need the userconfirm method to update pause state//需要userconfirm方法来更新暂停状态
+      SENDLINE_DBG_PGM("J05", "TFT Serial Debug: SD print pause started... J05"); // J05 printing pause//J05打印暂停
 
-      // for some reason pausing the print doesn't retract the extruder so force a manual one here
+      // for some reason pausing the print doesn't retract the extruder so force a manual one here//由于某些原因，暂停打印不会收回挤出机，因此在此处强制使用手动挤出机
       injectCommands_P(PSTR("G91\nG1 E-2 F1800\nG90"));
       pausePrint();
     }
@@ -982,10 +983,10 @@ void AnycubicTFTClass::ResumePrint() {
           SERIAL_ECHOLNPGM("TFT Serial Debug: Resume Print with filament sensor still tripped... ");
         #endif
 
-        // trigger the user message box
+        // trigger the user message box//触发用户消息框
         DoFilamentRunoutCheck();
 
-        // re-enable the continue button
+        // re-enable the continue button//重新启用“继续”按钮
         SENDLINE_DBG_PGM("J18", "TFT Serial Debug: Resume Print with filament sensor still tripped... J18");
         return;
       }
@@ -993,18 +994,18 @@ void AnycubicTFTClass::ResumePrint() {
 
     if (mediaPauseState == AMPAUSESTATE_HEATER_TIMEOUT) {
       mediaPauseState = AMPAUSESTATE_REHEATING;
-      // TODO: JBA I don't think J05 just disables the continue button, i think it injects a rogue M25. So taking this out
-      // // disable the continue button
-      // SENDLINE_DBG_PGM("J05", "TFT Serial Debug: Resume called with heater timeout... J05"); // J05 printing pause
+      // TODO: JBA I don't think J05 just disables the continue button, i think it injects a rogue M25. So taking this out//TODO:JBA我不认为J05只是禁用了继续按钮，我认为它注入了一个流氓M25。所以把这个拿出来
+      // // disable the continue button////禁用“继续”按钮
+      // SENDLINE_DBG_PGM("J05", "TFT Serial Debug: Resume called with heater timeout... J05"); // J05 printing pause//SENDLINE_DBG_PGM（“J05”，“TFT串行调试：使用加热器超时调用恢复…J05”）；//J05打印暂停
 
-      // reheat the nozzle
+      // reheat the nozzle//重新加热喷嘴
       setUserConfirmed();
     }
     else {
       mediaPrintingState = AMPRINTSTATE_PRINTING;
       mediaPauseState    = AMPAUSESTATE_NOT_PAUSED;
 
-      SENDLINE_DBG_PGM("J04", "TFT Serial Debug: SD print resumed... J04"); // J04 printing form sd card now
+      SENDLINE_DBG_PGM("J04", "TFT Serial Debug: SD print resumed... J04"); // J04 printing form sd card now//J04正在打印表单sd卡
       resumePrint();
     }
   #endif
@@ -1016,10 +1017,10 @@ void AnycubicTFTClass::StopPrint() {
     mediaPauseState    = AMPAUSESTATE_NOT_PAUSED;
     SENDLINE_DBG_PGM("J16", "TFT Serial Debug: SD print stop called... J16");
 
-    // for some reason stopping the print doesn't retract the extruder so force a manual one here
+    // for some reason stopping the print doesn't retract the extruder so force a manual one here//由于某些原因，停止打印不会收回挤出机，因此在此处强制手动挤出机
     injectCommands_P(PSTR("G91\nG1 E-2 F1800\nG90"));
     stopPrint();
   #endif
 }
 
-#endif // ANYCUBIC_LCD_I3MEGA
+#endif // ANYCUBIC_LCD_I3MEGA//任意立方液晶显示器

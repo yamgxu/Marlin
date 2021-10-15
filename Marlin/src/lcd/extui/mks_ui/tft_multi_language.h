@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -754,7 +755,7 @@ typedef struct eeprom_disp{
 
 extern eeprom_def eeprom_menu;
 /*****************************************/
-//
+////
 #define TEXT_VALUE          "%d/%d"
 #define TEXT_VALUE_TARGET   "%d -> %d"
 

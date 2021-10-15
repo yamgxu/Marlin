@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*****************
  * resolutions.h *
  *****************/
@@ -75,15 +76,15 @@
     constexpr uint16_t Hsize                =  480;
     constexpr uint16_t Vsize                =  272;
 
-    constexpr uint16_t th                   =  525; // One horizontal line
-    constexpr uint16_t thfp                 =   43; // HS Front porch
-    constexpr uint16_t thb                  =    2; // HS Back porch (blanking)
-    constexpr uint16_t thpw                 =   41; // HS pulse width
+    constexpr uint16_t th                   =  525; // One horizontal line//一条水平线
+    constexpr uint16_t thfp                 =   43; // HS Front porch//前廊
+    constexpr uint16_t thb                  =    2; // HS Back porch (blanking)//HS后廊（下料）
+    constexpr uint16_t thpw                 =   41; // HS pulse width//HS脉冲宽度
 
-    constexpr uint16_t tv                   =  286; // Vertical period time
-    constexpr uint16_t tvfp                 =   12; // VS Front porch
-    constexpr uint16_t tvb                  =    2; // VS Back porch (blanking)
-    constexpr uint16_t tvpw                 =   10; // VS pulse width
+    constexpr uint16_t tv                   =  286; // Vertical period time//垂直周期时间
+    constexpr uint16_t tvfp                 =   12; // VS Front porch//VS前廊
+    constexpr uint16_t tvb                  =    2; // VS Back porch (blanking)//VS后廊（下料）
+    constexpr uint16_t tvpw                 =   10; // VS pulse width//脉冲宽度
 
     COMPUTE_REGS_FROM_DATASHEET;
 
@@ -116,15 +117,15 @@
       constexpr uint16_t Hsize               =  800;
       constexpr uint16_t Vsize               =  480;
 
-      constexpr uint16_t th                  = 1056; // One horizontal line
-      constexpr uint16_t thfp                =  210; // HS Front porch
-      constexpr uint16_t thb                 =   46; // HS Back porch (blanking)
-      constexpr uint16_t thpw                =   23; // HS pulse width
+      constexpr uint16_t th                  = 1056; // One horizontal line//一条水平线
+      constexpr uint16_t thfp                =  210; // HS Front porch//前廊
+      constexpr uint16_t thb                 =   46; // HS Back porch (blanking)//HS后廊（下料）
+      constexpr uint16_t thpw                =   23; // HS pulse width//HS脉冲宽度
 
-      constexpr uint16_t tv                  =  525; // Vertical period time
-      constexpr uint16_t tvfp                =   22; // VS Front porch
-      constexpr uint16_t tvb                 =   23; // VS Back porch (blanking)
-      constexpr uint16_t tvpw                =   10; // VS pulse width
+      constexpr uint16_t tv                  =  525; // Vertical period time//垂直周期时间
+      constexpr uint16_t tvfp                =   22; // VS Front porch//VS前廊
+      constexpr uint16_t tvb                 =   23; // VS Back porch (blanking)//VS后廊（下料）
+      constexpr uint16_t tvpw                =   10; // VS pulse width//脉冲宽度
 
       COMPUTE_REGS_FROM_DATASHEET;
 

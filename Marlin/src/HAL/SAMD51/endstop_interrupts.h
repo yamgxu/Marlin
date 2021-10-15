@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  *
@@ -80,7 +81,7 @@
   && !MATCH_Z4_MAX_EILINE(P) && !MATCH_Z4_MIN_EILINE(P) \
   && !MATCH_Z_MIN_PROBE_EILINE(P) )
 
-// One ISR for all EXT-Interrupts
+// One ISR for all EXT-Interrupts//一个ISR用于所有外部中断
 void endstop_ISR() { endstops.update(); }
 
 void setup_endstop_interrupts() {

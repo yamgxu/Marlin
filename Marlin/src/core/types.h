@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,11 +30,11 @@
 class __FlashStringHelper;
 typedef const __FlashStringHelper *progmem_str;
 
-//
-// Conditional type assignment magic. For example...
-//
-// typename IF<(MYOPT==12), int, float>::type myvar;
-//
+////
+// Conditional type assignment magic. For example...//条件类型赋值魔术。例如
+////
+// typename IF<(MYOPT==12), int, float>::type myvar;//typename如果<（MYOPT==12），int，float>：：键入myvar；
+////
 template <bool, class L, class R>
 struct IF { typedef R type; };
 template <class L, class R>
@@ -65,37 +66,37 @@ struct IF<true, L, R> { typedef L type; };
   #define GANG_ITEM_E(N)
 #endif
 
-//
-// Enumerated axis indices
-//
-//  - X_AXIS, Y_AXIS, and Z_AXIS should be used for axes in Cartesian space
-//  - A_AXIS, B_AXIS, and C_AXIS should be used for Steppers, corresponding to XYZ on Cartesians
-//  - X_HEAD, Y_HEAD, and Z_HEAD should be used for Steppers on Core kinematics
-//
+////
+// Enumerated axis indices//枚举轴索引
+////
+//  - X_AXIS, Y_AXIS, and Z_AXIS should be used for axes in Cartesian space//-X_轴、Y_轴和Z_轴应用于笛卡尔空间中的轴
+//  - A_AXIS, B_AXIS, and C_AXIS should be used for Steppers, corresponding to XYZ on Cartesians//-步进机应使用A_轴、B_轴和C_轴，对应于笛卡尔坐标系上的XYZ
+//  - X_HEAD, Y_HEAD, and Z_HEAD should be used for Steppers on Core kinematics//-X_头、Y_头和Z_头应用于核心运动学上的步进器
+////
 enum AxisEnum : uint8_t {
 
-  // Linear axes may be controlled directly or indirectly
+  // Linear axes may be controlled directly or indirectly//线性轴可以直接或间接控制
   LINEAR_AXIS_LIST(X_AXIS, Y_AXIS, Z_AXIS, I_AXIS, J_AXIS, K_AXIS)
 
-  // Extruder axes may be considered distinctly
+  // Extruder axes may be considered distinctly//可以清楚地考虑挤出机轴
   #define _EN_ITEM(N) , E##N##_AXIS
   REPEAT(EXTRUDERS, _EN_ITEM)
   #undef _EN_ITEM
 
-  // Core also keeps toolhead directions
+  // Core also keeps toolhead directions//Core还保持刀头方向
   #if EITHER(IS_CORE, MARKFORGED_XY)
     , X_HEAD, Y_HEAD, Z_HEAD
   #endif
 
-  // Distinct axes, including all E and Core
+  // Distinct axes, including all E and Core//不同的轴，包括所有E轴和核心
   , NUM_AXIS_ENUMS
 
-  // Most of the time we refer only to the single E_AXIS
+  // Most of the time we refer only to the single E_AXIS//大多数情况下，我们只提到单个E_轴
   #if HAS_EXTRUDERS
     , E_AXIS = E0_AXIS
   #endif
 
-  // A, B, and C are for DELTA, SCARA, etc.
+  // A, B, and C are for DELTA, SCARA, etc.//A、B和C代表三角洲、斯卡拉等。
   , A_AXIS = X_AXIS
   #if LINEAR_AXES >= 2
     , B_AXIS = Y_AXIS
@@ -104,35 +105,35 @@ enum AxisEnum : uint8_t {
     , C_AXIS = Z_AXIS
   #endif
 
-  // To refer to all or none
+  // To refer to all or none//指全部或全部
   , ALL_AXES_ENUM = 0xFE, NO_AXIS_ENUM = 0xFF
 };
 
 typedef IF<(NUM_AXIS_ENUMS > 8), uint16_t, uint8_t>::type axis_bits_t;
 
-//
-// Loop over axes
-//
+////
+// Loop over axes//绕轴旋转
+////
 #define LOOP_ABC(VAR) LOOP_S_LE_N(VAR, A_AXIS, C_AXIS)
 #define LOOP_LINEAR_AXES(VAR) LOOP_S_L_N(VAR, X_AXIS, LINEAR_AXES)
 #define LOOP_LOGICAL_AXES(VAR) LOOP_S_L_N(VAR, X_AXIS, LOGICAL_AXES)
 #define LOOP_DISTINCT_AXES(VAR) LOOP_S_L_N(VAR, X_AXIS, DISTINCT_AXES)
 
-//
-// feedRate_t is just a humble float
-//
+////
+// feedRate_t is just a humble float//进给速度只是一个微不足道的浮动
+////
 typedef float feedRate_t;
 
-//
-// celsius_t is the native unit of temperature. Signed to handle a disconnected thermistor value (-14).
-// For more resolition (e.g., for a chocolate printer) this may later be changed to Celsius x 100
-//
+////
+// celsius_t is the native unit of temperature. Signed to handle a disconnected thermistor value (-14).//摄氏度是自然的温度单位。签名以处理断开的热敏电阻值（-14）。
+// For more resolition (e.g., for a chocolate printer) this may later be changed to Celsius x 100//为了获得更高的分辨率（例如，对于巧克力打印机），这可能会在以后更改为摄氏度x 100
+////
 typedef int16_t celsius_t;
 typedef float celsius_float_t;
 
-//
-// On AVR pointers are only 2 bytes so use 'const float &' for 'const float'
-//
+////
+// On AVR pointers are only 2 bytes so use 'const float &' for 'const float'//AVR上的指针只有2个字节，因此使用“常量浮点&”表示“常量浮点”
+////
 #ifdef __AVR__
   typedef const float & const_float_t;
 #else
@@ -141,22 +142,22 @@ typedef float celsius_float_t;
 typedef const_float_t const_feedRate_t;
 typedef const_float_t const_celsius_float_t;
 
-// Conversion macros
+// Conversion macros//转换宏
 #define MMM_TO_MMS(MM_M) feedRate_t(static_cast<float>(MM_M) / 60.0f)
 #define MMS_TO_MMM(MM_S) (static_cast<float>(MM_S) * 60.0f)
 
-//
-// Coordinates structures for XY, XYZ, XYZE...
-//
+////
+// Coordinates structures for XY, XYZ, XYZE...//XY、XYZ、XYZE的坐标结构。。。
+////
 
-// Helpers
+// Helpers//助手
 #define _RECIP(N) ((N) ? 1.0f / static_cast<float>(N) : 0.0f)
 #define _ABS(N) ((N) < 0 ? -(N) : (N))
 #define _LS(N)  (N = (T)(uint32_t(N) << v))
 #define _RS(N)  (N = (T)(uint32_t(N) >> v))
 #define FI FORCE_INLINE
 
-// Forward declarations
+// Forward declarations//转发声明
 template<typename T> struct XYval;
 template<typename T> struct XYZval;
 template<typename T> struct XYZEval;
@@ -229,7 +230,7 @@ typedef ab_float_t ab_pos_t;
 typedef abc_float_t abc_pos_t;
 typedef abce_float_t abce_pos_t;
 
-// External conversion methods
+// External conversion methods//外部转换方法
 void toLogical(xy_pos_t &raw);
 void toLogical(xyz_pos_t &raw);
 void toLogical(xyze_pos_t &raw);
@@ -237,9 +238,9 @@ void toNative(xy_pos_t &raw);
 void toNative(xyz_pos_t &raw);
 void toNative(xyze_pos_t &raw);
 
-//
-// Paired XY coordinates, counters, flags, etc.
-//
+////
+// Paired XY coordinates, counters, flags, etc.//成对的XY坐标、计数器、标志等。
+////
 template<typename T>
 struct XYval {
   union {
@@ -248,10 +249,10 @@ struct XYval {
     T pos[2];
   };
 
-  // Set all to 0
+  // Set all to 0//将全部设置为0
   FI void reset()                                       { x = y = 0; }
 
-  // Setters taking struct types and arrays
+  // Setters taking struct types and arrays//采用结构类型和数组的setter
   FI void set(const T px)                               { x = px; }
   #if HAS_Y_AXIS
     FI void set(const T px, const T py)                 { x = px; y = py; }
@@ -267,14 +268,14 @@ struct XYval {
     #endif
   #endif
 
-  // Length reduced to one dimension
+  // Length reduced to one dimension//长度缩减为一维
   FI T magnitude()                                const { return (T)sqrtf(x*x + y*y); }
-  // Pointer to the data as a simple array
+  // Pointer to the data as a simple array//以简单数组形式指向数据的指针
   FI operator T* ()                                     { return pos; }
-  // If any element is true then it's true
+  // If any element is true then it's true//如果任何元素为真，那么它就是真的
   FI operator bool()                                    { return x || y; }
 
-  // Explicit copy and copies with conversion
+  // Explicit copy and copies with conversion//显式复制和带转换的复制
   FI XYval<T>           copy()                    const { return *this; }
   FI XYval<T>            ABS()                    const { return { T(_ABS(x)), T(_ABS(y)) }; }
   FI XYval<int16_t>    asInt()                          { return { int16_t(x), int16_t(y) }; }
@@ -287,26 +288,26 @@ struct XYval {
   FI XYval<float>    asFloat()                    const { return { static_cast<float>(x), static_cast<float>(y) }; }
   FI XYval<float> reciprocal()                    const { return {  _RECIP(x),  _RECIP(y) }; }
 
-  // Marlin workspace shifting is done with G92 and M206
+  // Marlin workspace shifting is done with G92 and M206//使用G92和M206完成Marlin工作区移动
   FI XYval<float>  asLogical()                    const { XYval<float> o = asFloat(); toLogical(o); return o; }
   FI XYval<float>   asNative()                    const { XYval<float> o = asFloat(); toNative(o);  return o; }
 
-  // Cast to a type with more fields by making a new object
+  // Cast to a type with more fields by making a new object//通过创建新对象强制转换为具有更多字段的类型
   FI operator XYZval<T>()                               { return { x, y }; }
   FI operator XYZval<T>()                         const { return { x, y }; }
   FI operator XYZEval<T>()                              { return { x, y }; }
   FI operator XYZEval<T>()                        const { return { x, y }; }
 
-  // Accessor via an AxisEnum (or any integer) [index]
+  // Accessor via an AxisEnum (or any integer) [index]//通过AxisEnum（或任何整数）访问器[索引]
   FI       T&  operator[](const int n)                  { return pos[n]; }
   FI const T&  operator[](const int n)            const { return pos[n]; }
 
-  // Assignment operator overrides do the expected thing
+  // Assignment operator overrides do the expected thing//赋值运算符重写执行预期的操作
   FI XYval<T>& operator= (const T v)                    { set(v,    v   ); return *this; }
   FI XYval<T>& operator= (const XYZval<T>  &rs)         { set(rs.x, rs.y); return *this; }
   FI XYval<T>& operator= (const XYZEval<T> &rs)         { set(rs.x, rs.y); return *this; }
 
-  // Override other operators to get intuitive behaviors
+  // Override other operators to get intuitive behaviors//覆盖其他操作符以获得直观的行为
   FI XYval<T>  operator+ (const XYval<T>   &rs)   const { XYval<T> ls = *this; ls.x += rs.x; ls.y += rs.y; return ls; }
   FI XYval<T>  operator+ (const XYval<T>   &rs)         { XYval<T> ls = *this; ls.x += rs.x; ls.y += rs.y; return ls; }
   FI XYval<T>  operator- (const XYval<T>   &rs)   const { XYval<T> ls = *this; ls.x -= rs.x; ls.y -= rs.y; return ls; }
@@ -346,7 +347,7 @@ struct XYval {
   FI const XYval<T> operator-()                   const { XYval<T> o = *this; o.x = -x; o.y = -y; return o; }
   FI XYval<T>       operator-()                         { XYval<T> o = *this; o.x = -x; o.y = -y; return o; }
 
-  // Modifier operators
+  // Modifier operators//修饰运算符
   FI XYval<T>& operator+=(const XYval<T>   &rs)         { x += rs.x; y += rs.y; return *this; }
   FI XYval<T>& operator-=(const XYval<T>   &rs)         { x -= rs.x; y -= rs.y; return *this; }
   FI XYval<T>& operator*=(const XYval<T>   &rs)         { x *= rs.x; y *= rs.y; return *this; }
@@ -361,7 +362,7 @@ struct XYval {
   FI XYval<T>& operator>>=(const int &v)                { _RS(x);    _RS(y);    return *this; }
   FI XYval<T>& operator<<=(const int &v)                { _LS(x);    _LS(y);    return *this; }
 
-  // Exact comparisons. For floats a "NEAR" operation may be better.
+  // Exact comparisons. For floats a "NEAR" operation may be better.//精确的比较。对于浮动，“接近”操作可能更好。
   FI bool      operator==(const XYval<T>   &rs)         { return x == rs.x && y == rs.y; }
   FI bool      operator==(const XYZval<T>  &rs)         { return x == rs.x && y == rs.y; }
   FI bool      operator==(const XYZEval<T> &rs)         { return x == rs.x && y == rs.y; }
@@ -376,9 +377,9 @@ struct XYval {
   FI bool      operator!=(const XYZEval<T> &rs)   const { return !operator==(rs); }
 };
 
-//
-// Linear Axes coordinates, counters, flags, etc.
-//
+////
+// Linear Axes coordinates, counters, flags, etc.//线性轴坐标、计数器、标志等。
+////
 template<typename T>
 struct XYZval {
   union {
@@ -387,10 +388,10 @@ struct XYZval {
     T pos[LINEAR_AXES];
   };
 
-  // Set all to 0
+  // Set all to 0//将全部设置为0
   FI void reset()                                      { LINEAR_AXIS_GANG(x =, y =, z =, i =, j =, k =) 0; }
 
-  // Setters taking struct types and arrays
+  // Setters taking struct types and arrays//采用结构类型和数组的setter
   FI void set(const T px)                              { x = px; }
   FI void set(const T px, const T py)                  { x = px; y = py; }
   FI void set(const XYval<T> pxy)                      { x = pxy.x; y = pxy.y; }
@@ -417,14 +418,14 @@ struct XYZval {
     FI void set(const T px, const T py, const T pz, const T pi, const T pj) { x = px; y = py; z = pz; i = pi; j = pj; }
   #endif
 
-  // Length reduced to one dimension
+  // Length reduced to one dimension//长度缩减为一维
   FI T magnitude()                               const { return (T)sqrtf(LINEAR_AXIS_GANG(x*x, + y*y, + z*z, + i*i, + j*j, + k*k)); }
-  // Pointer to the data as a simple array
+  // Pointer to the data as a simple array//以简单数组形式指向数据的指针
   FI operator T* ()                                    { return pos; }
-  // If any element is true then it's true
+  // If any element is true then it's true//如果任何元素为真，那么它就是真的
   FI operator bool()                                   { return LINEAR_AXIS_GANG(x, || y, || z, || i, || j, || k); }
 
-  // Explicit copy and copies with conversion
+  // Explicit copy and copies with conversion//显式复制和带转换的复制
   FI XYZval<T>          copy()                   const { XYZval<T> o = *this; return o; }
   FI XYZval<T>           ABS()                   const { return LINEAR_AXIS_ARRAY(T(_ABS(x)), T(_ABS(y)), T(_ABS(z)), T(_ABS(i)), T(_ABS(j)), T(_ABS(k))); }
   FI XYZval<int16_t>   asInt()                         { return LINEAR_AXIS_ARRAY(int16_t(x), int16_t(y), int16_t(z), int16_t(i), int16_t(j), int16_t(k)); }
@@ -437,27 +438,27 @@ struct XYZval {
   FI XYZval<float>   asFloat()                   const { return LINEAR_AXIS_ARRAY(static_cast<float>(x), static_cast<float>(y), static_cast<float>(z), static_cast<float>(i), static_cast<float>(j), static_cast<float>(k)); }
   FI XYZval<float> reciprocal()                  const { return LINEAR_AXIS_ARRAY(_RECIP(x),  _RECIP(y),  _RECIP(z),  _RECIP(i),  _RECIP(j),  _RECIP(k)); }
 
-  // Marlin workspace shifting is done with G92 and M206
+  // Marlin workspace shifting is done with G92 and M206//使用G92和M206完成Marlin工作区移动
   FI XYZval<float> asLogical()                   const { XYZval<float> o = asFloat(); toLogical(o); return o; }
   FI XYZval<float>  asNative()                   const { XYZval<float> o = asFloat(); toNative(o);  return o; }
 
-  // In-place cast to types having fewer fields
+  // In-place cast to types having fewer fields//就地转换为字段较少的类型
   FI operator       XYval<T>&()                        { return *(XYval<T>*)this; }
   FI operator const XYval<T>&()                  const { return *(const XYval<T>*)this; }
 
-  // Cast to a type with more fields by making a new object
+  // Cast to a type with more fields by making a new object//通过创建新对象强制转换为具有更多字段的类型
   FI operator       XYZEval<T>()                 const { return LINEAR_AXIS_ARRAY(x, y, z, i, j, k); }
 
-  // Accessor via an AxisEnum (or any integer) [index]
+  // Accessor via an AxisEnum (or any integer) [index]//通过AxisEnum（或任何整数）访问器[索引]
   FI       T&   operator[](const int n)                { return pos[n]; }
   FI const T&   operator[](const int n)          const { return pos[n]; }
 
-  // Assignment operator overrides do the expected thing
+  // Assignment operator overrides do the expected thing//赋值运算符重写执行预期的操作
   FI XYZval<T>& operator= (const T v)                  { set(ARRAY_N_1(LINEAR_AXES, v)); return *this; }
   FI XYZval<T>& operator= (const XYval<T>   &rs)       { set(rs.x, rs.y      ); return *this; }
   FI XYZval<T>& operator= (const XYZEval<T> &rs)       { set(LINEAR_AXIS_ELEM(rs)); return *this; }
 
-  // Override other operators to get intuitive behaviors
+  // Override other operators to get intuitive behaviors//覆盖其他操作符以获得直观的行为
   FI XYZval<T>  operator+ (const XYval<T>   &rs) const { XYZval<T> ls = *this; LINEAR_AXIS_CODE(ls.x += rs.x, ls.y += rs.y, NOOP        , NOOP        , NOOP        , NOOP        ); return ls; }
   FI XYZval<T>  operator+ (const XYval<T>   &rs)       { XYZval<T> ls = *this; LINEAR_AXIS_CODE(ls.x += rs.x, ls.y += rs.y, NOOP        , NOOP        , NOOP        , NOOP        ); return ls; }
   FI XYZval<T>  operator- (const XYval<T>   &rs) const { XYZval<T> ls = *this; LINEAR_AXIS_CODE(ls.x -= rs.x, ls.y -= rs.y, NOOP        , NOOP        , NOOP        , NOOP        ); return ls; }
@@ -497,7 +498,7 @@ struct XYZval {
   FI const XYZval<T> operator-()                 const { XYZval<T> o = *this; LINEAR_AXIS_CODE(o.x = -x, o.y = -y, o.z = -z, o.i = -i, o.j = -j, o.k = -k); return o; }
   FI XYZval<T>       operator-()                       { XYZval<T> o = *this; LINEAR_AXIS_CODE(o.x = -x, o.y = -y, o.z = -z, o.i = -i, o.j = -j, o.k = -k); return o; }
 
-  // Modifier operators
+  // Modifier operators//修饰运算符
   FI XYZval<T>& operator+=(const XYval<T>   &rs)       { LINEAR_AXIS_CODE(x += rs.x, y += rs.y, NOOP,      NOOP,      NOOP,      NOOP     ); return *this; }
   FI XYZval<T>& operator-=(const XYval<T>   &rs)       { LINEAR_AXIS_CODE(x -= rs.x, y -= rs.y, NOOP,      NOOP,      NOOP,      NOOP     ); return *this; }
   FI XYZval<T>& operator*=(const XYval<T>   &rs)       { LINEAR_AXIS_CODE(x *= rs.x, y *= rs.y, NOOP,      NOOP,      NOOP,      NOOP     ); return *this; }
@@ -515,16 +516,16 @@ struct XYZval {
   FI XYZval<T>& operator>>=(const int &v)              { LINEAR_AXIS_CODE(_RS(x),    _RS(y),    _RS(z),    _RS(i),    _RS(j),    _RS(k));    return *this; }
   FI XYZval<T>& operator<<=(const int &v)              { LINEAR_AXIS_CODE(_LS(x),    _LS(y),    _LS(z),    _LS(i),    _LS(j),    _LS(k));    return *this; }
 
-  // Exact comparisons. For floats a "NEAR" operation may be better.
+  // Exact comparisons. For floats a "NEAR" operation may be better.//精确的比较。对于浮动，“接近”操作可能更好。
   FI bool       operator==(const XYZEval<T> &rs)       { return true LINEAR_AXIS_GANG(&& x == rs.x, && y == rs.y, && z == rs.z, && i == rs.i, && j == rs.j, && k == rs.k); }
   FI bool       operator==(const XYZEval<T> &rs) const { return true LINEAR_AXIS_GANG(&& x == rs.x, && y == rs.y, && z == rs.z, && i == rs.i, && j == rs.j, && k == rs.k); }
   FI bool       operator!=(const XYZEval<T> &rs)       { return !operator==(rs); }
   FI bool       operator!=(const XYZEval<T> &rs) const { return !operator==(rs); }
 };
 
-//
-// Logical Axes coordinates, counters, etc.
-//
+////
+// Logical Axes coordinates, counters, etc.//逻辑轴坐标、计数器等。
+////
 template<typename T>
 struct XYZEval {
   union {
@@ -532,10 +533,10 @@ struct XYZEval {
     struct { T LOGICAL_AXIS_LIST(_e, a, b, c, u, v, w); };
     T pos[LOGICAL_AXES];
   };
-  // Reset all to 0
+  // Reset all to 0//全部重置为0
   FI void reset()                     { LOGICAL_AXIS_GANG(e =, x =, y =, z =, i =, j =, k =) 0; }
 
-  // Setters taking struct types and arrays
+  // Setters taking struct types and arrays//采用结构类型和数组的setter
   FI void set(const T px)             { x = px;               }
   FI void set(const T px, const T py) { x = px;    y = py;    }
   FI void set(const XYval<T> pxy)     { x = pxy.x; y = pxy.y; }
@@ -558,14 +559,14 @@ struct XYZEval {
     FI void set(const T px, const T py, const T pz, const T pi, const T pj) { x = px; y = py; z = pz; i = pi; j = pj; }
   #endif
 
-  // Length reduced to one dimension
+  // Length reduced to one dimension//长度缩减为一维
   FI T magnitude()                                 const { return (T)sqrtf(LOGICAL_AXIS_GANG(+ e*e, + x*x, + y*y, + z*z, + i*i, + j*j, + k*k)); }
-  // Pointer to the data as a simple array
+  // Pointer to the data as a simple array//以简单数组形式指向数据的指针
   FI operator T* ()                                      { return pos; }
-  // If any element is true then it's true
+  // If any element is true then it's true//如果任何元素为真，那么它就是真的
   FI operator bool()                                     { return 0 LOGICAL_AXIS_GANG(|| e, || x, || y, || z, || i, || j, || k); }
 
-  // Explicit copy and copies with conversion
+  // Explicit copy and copies with conversion//显式复制和带转换的复制
   FI XYZEval<T>          copy()  const { XYZEval<T> o = *this; return o; }
   FI XYZEval<T>           ABS()  const { return LOGICAL_AXIS_ARRAY(T(_ABS(e)), T(_ABS(x)), T(_ABS(y)), T(_ABS(z)), T(_ABS(i)), T(_ABS(j)), T(_ABS(k))); }
   FI XYZEval<int16_t>   asInt()        { return LOGICAL_AXIS_ARRAY(int16_t(e), int16_t(x), int16_t(y), int16_t(z), int16_t(i), int16_t(j), int16_t(k)); }
@@ -578,26 +579,26 @@ struct XYZEval {
   FI XYZEval<float>   asFloat()  const { return LOGICAL_AXIS_ARRAY(static_cast<float>(e), static_cast<float>(x), static_cast<float>(y), static_cast<float>(z), static_cast<float>(i), static_cast<float>(j), static_cast<float>(k)); }
   FI XYZEval<float> reciprocal() const { return LOGICAL_AXIS_ARRAY(_RECIP(e),  _RECIP(x),  _RECIP(y),  _RECIP(z),  _RECIP(i),  _RECIP(j),  _RECIP(k)); }
 
-  // Marlin workspace shifting is done with G92 and M206
+  // Marlin workspace shifting is done with G92 and M206//使用G92和M206完成Marlin工作区移动
   FI XYZEval<float> asLogical()  const { XYZEval<float> o = asFloat(); toLogical(o); return o; }
   FI XYZEval<float>  asNative()  const { XYZEval<float> o = asFloat(); toNative(o);  return o; }
 
-  // In-place cast to types having fewer fields
+  // In-place cast to types having fewer fields//就地转换为字段较少的类型
   FI operator       XYval<T>&()        { return *(XYval<T>*)this; }
   FI operator const XYval<T>&()  const { return *(const XYval<T>*)this; }
   FI operator       XYZval<T>&()       { return *(XYZval<T>*)this; }
   FI operator const XYZval<T>&() const { return *(const XYZval<T>*)this; }
 
-  // Accessor via an AxisEnum (or any integer) [index]
+  // Accessor via an AxisEnum (or any integer) [index]//通过AxisEnum（或任何整数）访问器[索引]
   FI       T&    operator[](const int n)                  { return pos[n]; }
   FI const T&    operator[](const int n)            const { return pos[n]; }
 
-  // Assignment operator overrides do the expected thing
+  // Assignment operator overrides do the expected thing//赋值运算符重写执行预期的操作
   FI XYZEval<T>& operator= (const T v)                    { set(LIST_N_1(LINEAR_AXES, v)); return *this; }
   FI XYZEval<T>& operator= (const XYval<T>   &rs)         { set(rs.x, rs.y); return *this; }
   FI XYZEval<T>& operator= (const XYZval<T>  &rs)         { set(LINEAR_AXIS_ELEM(rs)); return *this; }
 
-  // Override other operators to get intuitive behaviors
+  // Override other operators to get intuitive behaviors//覆盖其他操作符以获得直观的行为
   FI XYZEval<T>  operator+ (const XYval<T>   &rs)   const { XYZEval<T> ls = *this; ls.x += rs.x; ls.y += rs.y; return ls; }
   FI XYZEval<T>  operator+ (const XYval<T>   &rs)         { XYZEval<T> ls = *this; ls.x += rs.x; ls.y += rs.y; return ls; }
   FI XYZEval<T>  operator- (const XYval<T>   &rs)   const { XYZEval<T> ls = *this; ls.x -= rs.x; ls.y -= rs.y; return ls; }
@@ -637,7 +638,7 @@ struct XYZEval {
   FI const XYZEval<T> operator-()                   const { return LOGICAL_AXIS_ARRAY(-e, -x, -y, -z, -i, -j, -k); }
   FI       XYZEval<T> operator-()                         { return LOGICAL_AXIS_ARRAY(-e, -x, -y, -z, -i, -j, -k); }
 
-  // Modifier operators
+  // Modifier operators//修饰运算符
   FI XYZEval<T>& operator+=(const XYval<T>   &rs)         { x += rs.x; y += rs.y; return *this; }
   FI XYZEval<T>& operator-=(const XYval<T>   &rs)         { x -= rs.x; y -= rs.y; return *this; }
   FI XYZEval<T>& operator*=(const XYval<T>   &rs)         { x *= rs.x; y *= rs.y; return *this; }
@@ -654,7 +655,7 @@ struct XYZEval {
   FI XYZEval<T>& operator>>=(const int &v)                { LOGICAL_AXIS_CODE(_RS(e),    _RS(x),    _RS(y),    _RS(z),    _RS(i),    _RS(j),    _RS(k));    return *this; }
   FI XYZEval<T>& operator<<=(const int &v)                { LOGICAL_AXIS_CODE(_LS(e),    _LS(x),    _LS(y),    _LS(z),    _LS(i),    _LS(j),    _LS(k));    return *this; }
 
-  // Exact comparisons. For floats a "NEAR" operation may be better.
+  // Exact comparisons. For floats a "NEAR" operation may be better.//精确的比较。对于浮动，“接近”操作可能更好。
   FI bool        operator==(const XYZval<T>  &rs)         { return true LINEAR_AXIS_GANG(&& x == rs.x, && y == rs.y, && z == rs.z, && i == rs.i, && j == rs.j, && k == rs.k); }
   FI bool        operator==(const XYZval<T>  &rs)   const { return true LINEAR_AXIS_GANG(&& x == rs.x, && y == rs.y, && z == rs.z, && i == rs.i, && j == rs.j, && k == rs.k); }
   FI bool        operator!=(const XYZval<T>  &rs)         { return !operator==(rs); }

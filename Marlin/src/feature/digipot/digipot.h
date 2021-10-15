@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,9 +22,9 @@
  */
 #pragma once
 
-//
-// Header for MCP4018 and MCP4451 current control i2c devices
-//
+////
+// Header for MCP4018 and MCP4451 current control i2c devices//MCP4018和MCP4451电流控制i2c设备的标题
+////
 class DigipotI2C {
 public:
   static void init();

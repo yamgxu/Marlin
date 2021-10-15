@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -28,4 +29,4 @@ std::chrono::nanoseconds Clock::startup = std::chrono::high_resolution_clock::no
 uint32_t Clock::frequency = F_CPU;
 double Clock::time_multiplier = 1.0;
 
-#endif // __PLAT_LINUX__
+#endif // __PLAT_LINUX__//_uuu平台u LINUX__

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -47,7 +48,7 @@ void TFT_Queue::async() {
   if (!current_task) return;
   queueTask_t *task = (queueTask_t *)current_task;
 
-  // Check IO busy status
+  // Check IO busy status//检查IO忙状态
   if (tft.is_busy()) return;
 
   if (task->state == TASK_STATE_COMPLETED) {
@@ -351,4 +352,4 @@ void TFT_Queue::add_rectangle(uint16_t x, uint16_t y, uint16_t width, uint16_t h
   parameters->nextParameter = end_of_queue;
 }
 
-#endif // HAS_GRAPHICAL_TFT
+#endif // HAS_GRAPHICAL_TFT//有图形化的TFT

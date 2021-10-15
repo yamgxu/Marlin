@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -64,16 +65,16 @@ PGM_P const L64XX_Marlin::index_to_axis[] PROGMEM = {
 
 void echo_yes_no(const bool yes) { DEBUG_ECHOPGM_P(yes ? PSTR(" YES") : PSTR(" NO ")); UNUSED(yes); }
 
-uint8_t L64XX_Marlin::dir_commands[MAX_L64XX];  // array to hold direction command for each driver
+uint8_t L64XX_Marlin::dir_commands[MAX_L64XX];  // array to hold direction command for each driver//为每个驱动器保留方向命令的数组
 
 #define _EN_ITEM(N) , INVERT_E##N##_DIR
 const uint8_t L64XX_Marlin::index_to_dir[MAX_L64XX] = {
     LINEAR_AXIS_LIST(INVERT_X_DIR, INVERT_Y_DIR, INVERT_Z_DIR, INVERT_I_DIR, INVERT_J_DIR, INVERT_K_DIR)
-  , (INVERT_X_DIR) ^ BOTH(X_DUAL_STEPPER_DRIVERS, INVERT_X2_VS_X_DIR) // X2
-  , (INVERT_Y_DIR) ^ BOTH(Y_DUAL_STEPPER_DRIVERS, INVERT_Y2_VS_Y_DIR) // Y2
-  , (INVERT_Z_DIR) ^ ENABLED(INVERT_Z2_VS_Z_DIR) // Z2
-  , (INVERT_Z_DIR) ^ ENABLED(INVERT_Z3_VS_Z_DIR) // Z3
-  , (INVERT_Z_DIR) ^ ENABLED(INVERT_Z4_VS_Z_DIR) // Z4
+  , (INVERT_X_DIR) ^ BOTH(X_DUAL_STEPPER_DRIVERS, INVERT_X2_VS_X_DIR) // X2//X2
+  , (INVERT_Y_DIR) ^ BOTH(Y_DUAL_STEPPER_DRIVERS, INVERT_Y2_VS_Y_DIR) // Y2//Y2
+  , (INVERT_Z_DIR) ^ ENABLED(INVERT_Z2_VS_Z_DIR) // Z2//Z2
+  , (INVERT_Z_DIR) ^ ENABLED(INVERT_Z3_VS_Z_DIR) // Z3//Z3
+  , (INVERT_Z_DIR) ^ ENABLED(INVERT_Z4_VS_Z_DIR) // Z4//Z4
     REPEAT(E_STEPPERS, _EN_ITEM)
 };
 #undef _EN_ITEM
@@ -83,7 +84,7 @@ uint8_t L64XX_Marlin::spi_active = false;
 
 L64XX_Marlin::L64XX_shadow_t L64XX_Marlin::shadow;
 
-//uint32_t UVLO_ADC = 0x0400; // ADC undervoltage event
+//uint32_t UVLO_ADC = 0x0400; // ADC undervoltage event//uint32\u t UVLO\u ADC=0x0400；//ADC欠压事件
 
 void L6470_populate_chain_array() {
 
@@ -170,19 +171,19 @@ uint16_t L64XX_Marlin::get_stepper_status(L64XX &st) {
   shadow.STATUS_AXIS_NOTPERF_CMD   = st.STATUS_NOTPERF_CMD;
 
   switch (shadow.STATUS_AXIS_LAYOUT) {
-    case L6470_STATUS_LAYOUT: {   // L6470
+    case L6470_STATUS_LAYOUT: {   // L6470//L6470
       shadow.L6470_ERROR_MASK      = shadow.STATUS_AXIS_UVLO | shadow.STATUS_AXIS_TH_WRN | shadow.STATUS_AXIS_TH_SD | shadow.STATUS_AXIS_OCD | shadow.STATUS_AXIS_STEP_LOSS_A | shadow.STATUS_AXIS_STEP_LOSS_B;
-      shadow.STATUS_AXIS           ^= (shadow.STATUS_AXIS_WRONG_CMD | shadow.STATUS_AXIS_NOTPERF_CMD);  // invert just error bits that are active high
+      shadow.STATUS_AXIS           ^= (shadow.STATUS_AXIS_WRONG_CMD | shadow.STATUS_AXIS_NOTPERF_CMD);  // invert just error bits that are active high//仅反转高电平活动的错误位
       break;
     }
-    case L6474_STATUS_LAYOUT: {   // L6474
+    case L6474_STATUS_LAYOUT: {   // L6474//L6474
       shadow.L6470_ERROR_MASK      = shadow.STATUS_AXIS_UVLO | shadow.STATUS_AXIS_TH_WRN | shadow.STATUS_AXIS_TH_SD | shadow.STATUS_AXIS_OCD ;
-      shadow.STATUS_AXIS           ^= (shadow.STATUS_AXIS_WRONG_CMD | shadow.STATUS_AXIS_NOTPERF_CMD);  // invert just error bits that are active high
+      shadow.STATUS_AXIS           ^= (shadow.STATUS_AXIS_WRONG_CMD | shadow.STATUS_AXIS_NOTPERF_CMD);  // invert just error bits that are active high//仅反转高电平活动的错误位
       break;
     }
-    case L6480_STATUS_LAYOUT: {   // L6480 & powerSTEP01
+    case L6480_STATUS_LAYOUT: {   // L6480 & powerSTEP01//L6480和功率步骤01
       shadow.L6470_ERROR_MASK      = shadow.STATUS_AXIS_UVLO | shadow.STATUS_AXIS_TH_WRN | shadow.STATUS_AXIS_TH_SD | shadow.STATUS_AXIS_OCD | shadow.STATUS_AXIS_STEP_LOSS_A | shadow.STATUS_AXIS_STEP_LOSS_B;
-      shadow.STATUS_AXIS           ^= (shadow.STATUS_AXIS_CMD_ERR | shadow.STATUS_AXIS_TH_WRN | shadow.STATUS_AXIS_TH_SD);  // invert just error bits that are active high
+      shadow.STATUS_AXIS           ^= (shadow.STATUS_AXIS_CMD_ERR | shadow.STATUS_AXIS_TH_WRN | shadow.STATUS_AXIS_TH_SD);  // invert just error bits that are active high//仅反转高电平活动的错误位
       break;
     }
   }
@@ -190,16 +191,16 @@ uint16_t L64XX_Marlin::get_stepper_status(L64XX &st) {
 }
 
 
-void L64XX_Marlin::init() {               // Set up SPI and then init chips
-  ENABLE_RESET_L64XX_CHIPS(LOW);          // hardware reset of drivers
+void L64XX_Marlin::init() {               // Set up SPI and then init chips//设置SPI，然后设置初始化芯片
+  ENABLE_RESET_L64XX_CHIPS(LOW);          // hardware reset of drivers//驱动程序的硬件重置
   DELAY_US(100);
   ENABLE_RESET_L64XX_CHIPS(HIGH);
-  DELAY_US(1000);                         // need about 650µs for the chip(s) to fully start up
-  L6470_populate_chain_array();           // Set up array to control where in the SPI transfer sequence a particular stepper's data goes
+  DELAY_US(1000);                         // need about 650µs for the chip(s) to fully start up//芯片需要大约650µs才能完全启动
+  L6470_populate_chain_array();           // Set up array to control where in the SPI transfer sequence a particular stepper's data goes//设置阵列以控制特定步进器数据在SPI传输序列中的位置
 
-  spi_init();                             // Since L64XX SPI pins are unset we must init SPI here
+  spi_init();                             // Since L64XX SPI pins are unset we must init SPI here//由于L64XX SPI引脚未设置，我们必须在此处初始化SPI
 
-  init_to_defaults();                     // init the chips
+  init_to_defaults();                     // init the chips//启动芯片
 }
 
 uint16_t L64XX_Marlin::get_status(const L64XX_axis_t axis) {
@@ -258,7 +259,7 @@ uint16_t L64XX_Marlin::get_status(const L64XX_axis_t axis) {
     #endif
   }
 
-  return 0; // Not needed but kills a compiler warning
+  return 0; // Not needed but kills a compiler warning//不需要，但会终止编译器警告
 }
 
 uint32_t L64XX_Marlin::get_param(const L64XX_axis_t axis, const uint8_t param) {
@@ -317,7 +318,7 @@ uint32_t L64XX_Marlin::get_param(const L64XX_axis_t axis, const uint8_t param) {
     #endif
   }
 
-  return 0; // not needed but kills a compiler warning
+  return 0; // not needed but kills a compiler warning//不需要，但会终止编译器警告
 }
 
 void L64XX_Marlin::set_param(const L64XX_axis_t axis, const uint8_t param, const uint32_t value) {
@@ -401,10 +402,10 @@ uint8_t L64XX_Marlin::get_user_input(uint8_t &driver_count, L64XX_axis_t axis_in
                                  float &position_max, float &position_min, float &final_feedrate, uint8_t &kval_hold,
                                  uint8_t over_current_flag, uint8_t &OCD_TH_val, uint8_t &STALL_TH_val, uint16_t &over_current_threshold
 ) {
-  // Return TRUE if the calling routine needs to abort/kill
+  // Return TRUE if the calling routine needs to abort/kill//如果调用例程需要中止/终止，则返回TRUE
 
-  uint16_t displacement = 0;  // " = 0" to eliminate compiler warning
-  uint8_t j;   // general purpose counter
+  uint16_t displacement = 0;  // " = 0" to eliminate compiler warning//“=0”以消除编译器警告
+  uint8_t j;   // general purpose counter//通用计数器
 
   if (!all_axes_homed()) {
     DEBUG_ECHOLNPGM("Test aborted - home all before running this command");
@@ -416,29 +417,29 @@ uint8_t L64XX_Marlin::get_user_input(uint8_t &driver_count, L64XX_axis_t axis_in
     found_displacement = true;
     displacement = _displacement;
     uint8_t axis_offset = parser.byteval('J');
-    axis_mon[0][0] = axis_codes[i];         // Axis first character, one of XYZE
+    axis_mon[0][0] = axis_codes[i];         // Axis first character, one of XYZE//轴第一个字符，XYZE中的一个
     const bool single_or_e = axis_offset >= 2 || axis_mon[0][0] == 'E',
                one_or_more = !single_or_e && axis_offset == 0;
-    uint8_t driver_count_local = 0;         // Can't use "driver_count" directly as a subscript because it's passed by reference
-    if (single_or_e)                        // Single axis, E0, or E1
-      axis_mon[0][1] = axis_offset + '0';   // Index given by 'J' parameter
+    uint8_t driver_count_local = 0;         // Can't use "driver_count" directly as a subscript because it's passed by reference//无法将“driver\u count”直接用作下标，因为它是通过引用传递的
+    if (single_or_e)                        // Single axis, E0, or E1//单轴、E0或E1
+      axis_mon[0][1] = axis_offset + '0';   // Index given by 'J' parameter//由“J”参数给出的索引
 
     if (single_or_e || one_or_more) {
-      for (j = 0; j < MAX_L64XX; j++) {     // Count up the drivers on this axis
-        PGM_P str = (PGM_P)pgm_read_ptr(&index_to_axis[j]); // Get a PGM_P from progmem
-        const char c = pgm_read_byte(str);                  // Get a char from progmem
-        if (axis_mon[0][0] == c) {          // For each stepper on this axis...
+      for (j = 0; j < MAX_L64XX; j++) {     // Count up the drivers on this axis//计算此轴上的驱动程序数
+        PGM_P str = (PGM_P)pgm_read_ptr(&index_to_axis[j]); // Get a PGM_P from progmem//从progmem获得PGM\u P
+        const char c = pgm_read_byte(str);                  // Get a char from progmem//从progmem获取一个字符
+        if (axis_mon[0][0] == c) {          // For each stepper on this axis...//对于此轴上的每个步进电机。。。
           char *mon = axis_mon[driver_count_local];
-          *mon++ = c;                        // Copy the 3 letter axis name
-          *mon++ = pgm_read_byte(&str[1]);   //  to the axis_mon array
+          *mon++ = c;                        // Copy the 3 letter axis name//复制3个字母的轴名称
+          *mon++ = pgm_read_byte(&str[1]);   //  to the axis_mon array//到axis_mon数组
           *mon   = pgm_read_byte(&str[2]);
-          axis_index[driver_count_local] = (L64XX_axis_t)j; // And store the L64XX axis index
+          axis_index[driver_count_local] = (L64XX_axis_t)j; // And store the L64XX axis index//并存储L64XX轴索引
           driver_count_local++;
         }
       }
       if (one_or_more) driver_count = driver_count_local;
     }
-    break; // only take first axis found
+    break; // only take first axis found//只取找到的第一个轴
   }
 
   if (!found_displacement) {
@@ -446,9 +447,9 @@ uint8_t L64XX_Marlin::get_user_input(uint8_t &driver_count, L64XX_axis_t axis_in
     return true;
   }
 
-  //
-  // Position calcs & checks
-  //
+  ////
+  // Position calcs & checks//定位计算和检查
+  ////
 
   const float LOGICAL_AXIS_LIST(
                 E_center = current_position.e,
@@ -542,22 +543,22 @@ uint8_t L64XX_Marlin::get_user_input(uint8_t &driver_count, L64XX_axis_t axis_in
     #endif
   }
 
-  //
-  // Work on the drivers
-  //
+  ////
+  // Work on the drivers//对司机的工作
+  ////
 
   LOOP_L_N(k, driver_count) {
     uint8_t not_found = true;
     for (j = 1; j <= L64XX::chain[0]; j++) {
       PGM_P const str = (PGM_P)pgm_read_ptr(&index_to_axis[L64XX::chain[j]]);
-      if (pgm_read_byte(&str[0]) == axis_mon[k][0] && pgm_read_byte(&str[1]) == axis_mon[k][1]) { // See if a L6470 driver
+      if (pgm_read_byte(&str[0]) == axis_mon[k][0] && pgm_read_byte(&str[1]) == axis_mon[k][1]) { // See if a L6470 driver//查看是否有L6470驱动程序
         not_found = false;
         break;
       }
     }
     if (not_found) {
       driver_count = k;
-      axis_mon[k][0] = ' ';  // mark this entry invalid
+      axis_mon[k][0] = ' ';  // mark this entry invalid//将此条目标记为无效
       break;
     }
   }
@@ -571,15 +572,15 @@ uint8_t L64XX_Marlin::get_user_input(uint8_t &driver_count, L64XX_axis_t axis_in
   for (j = 0; j < driver_count; j++) DEBUG_ECHOPAIR("  ", axis_mon[j]);
   DEBUG_EOL();
 
-  // now have a list of driver(s) to monitor
+  // now have a list of driver(s) to monitor//现在有一个要监视的驱动程序列表
 
-  //
-  // TVAL & kVAL_HOLD checks & settings
-  //
+  ////
+  // TVAL & kVAL_HOLD checks & settings//TVAL和kVAL_保持检查和设置
+  ////
   const L64XX_shadow_t &sh = shadow;
-  get_status(axis_index[0]); // populate shadow array
+  get_status(axis_index[0]); // populate shadow array//填充阴影阵列
 
-  if (sh.STATUS_AXIS_LAYOUT == L6474_STATUS_LAYOUT) {  // L6474 - use TVAL
+  if (sh.STATUS_AXIS_LAYOUT == L6474_STATUS_LAYOUT) {  // L6474 - use TVAL//L6474-使用TVAL
     uint16_t TVAL_current = parser.ushortval('T');
     if (TVAL_current) {
       uint8_t TVAL_count = (TVAL_current /  sh.AXIS_STALL_CURRENT_CONSTANT_INV) - 1;
@@ -587,7 +588,7 @@ uint8_t L64XX_Marlin::get_user_input(uint8_t &driver_count, L64XX_axis_t axis_in
       for (j = 0; j < driver_count; j++)
         set_param(axis_index[j], L6474_TVAL, TVAL_count);
     }
-    // only print the tval from one of the drivers
+    // only print the tval from one of the drivers//仅打印其中一个驱动程序的tval
     kval_hold = get_param(axis_index[0], L6474_TVAL);
     DEBUG_ECHOLNPAIR("TVAL current (mA) = ", (kval_hold + 1) * sh.AXIS_STALL_CURRENT_CONSTANT_INV);
   }
@@ -599,20 +600,20 @@ uint8_t L64XX_Marlin::get_user_input(uint8_t &driver_count, L64XX_axis_t axis_in
         set_param(axis_index[j], L6470_KVAL_HOLD, kval_hold);
     }
     else {
-      // only print the KVAL_HOLD from one of the drivers
+      // only print the KVAL_HOLD from one of the drivers//仅打印其中一个驱动程序的KVAL_保持
       kval_hold = get_param(axis_index[0], L6470_KVAL_HOLD);
       DEBUG_ECHOLNPAIR("KVAL_HOLD = ", kval_hold);
     }
   }
 
-  //
-  // Overcurrent checks & settings
-  //
+  ////
+  // Overcurrent checks & settings//过电流检查和设置
+  ////
 
   if (over_current_flag) {
 
-    uint8_t OCD_TH_val_local = 0,       // compiler thinks OCD_TH_val is unused if use it directly
-            STALL_TH_val_local = 0;     // just in case ...
+    uint8_t OCD_TH_val_local = 0,       // compiler thinks OCD_TH_val is unused if use it directly//如果直接使用OCD，编译器认为它是未使用的
+            STALL_TH_val_local = 0;     // just in case ...//以防万一。。。
 
     over_current_threshold = parser.intval('I');
 
@@ -641,26 +642,26 @@ uint8_t L64XX_Marlin::get_user_input(uint8_t &driver_count, L64XX_axis_t axis_in
       }
     }
     else {
-      // only get & print the OVER_CURRENT values from one of the drivers
+      // only get & print the OVER_CURRENT values from one of the drivers//仅从其中一个驱动程序获取并打印当前值
       STALL_TH_val_local = get_param(axis_index[0], L6470_STALL_TH);
       OCD_TH_val_local = get_param(axis_index[0], L6470_OCD_TH);
 
       if (!(sh.STATUS_AXIS_LAYOUT == L6474_STATUS_LAYOUT)) echo_oct_used((STALL_TH_val_local + 1) * 31.25, true);
       echo_oct_used((OCD_TH_val_local + 1) * 375, false);
-    } // over_current_threshold
+    } // over_current_threshold//过电流阈值
 
-    for (j = 0; j < driver_count; j++) {                 // set all drivers on axis the same
+    for (j = 0; j < driver_count; j++) {                 // set all drivers on axis the same//将轴上的所有驱动器设置为相同
       set_param(axis_index[j], L6470_STALL_TH, STALL_TH_val_local);
       set_param(axis_index[j], L6470_OCD_TH, OCD_TH_val_local);
     }
 
-    OCD_TH_val = OCD_TH_val_local;        // force compiler to update the main routine's copy
-    STALL_TH_val = STALL_TH_val_local;    // force compiler to update the main routine's copy
-  } // end of overcurrent
+    OCD_TH_val = OCD_TH_val_local;        // force compiler to update the main routine's copy//强制编译器更新主例程的副本
+    STALL_TH_val = STALL_TH_val_local;    // force compiler to update the main routine's copy//强制编译器更新主例程的副本
+  } // end of overcurrent//过流结束
 
-  //
-  // Feedrate
-  //
+  ////
+  // Feedrate//进给速度
+  ////
 
   final_feedrate = parser.floatval('F');
   if (final_feedrate == 0) {
@@ -672,17 +673,17 @@ uint8_t L64XX_Marlin::get_user_input(uint8_t &driver_count, L64XX_axis_t axis_in
         break;
       }
     }
-    if (j == 3 && num_feedrates > 4) {   // have more than one extruder feedrate
+    if (j == 3 && num_feedrates > 4) {   // have more than one extruder feedrate//有一个以上的挤出机进料速度
       uint8_t extruder_num = axis_mon[0][1] - '0';
-      if (j <= num_feedrates - extruder_num)     // have a feedrate specifically for this extruder
+      if (j <= num_feedrates - extruder_num)     // have a feedrate specifically for this extruder//有专门针对该挤出机的进给速度
         final_feedrate = default_max_feedrate[j + extruder_num];
       else
-        final_feedrate = default_max_feedrate[3];  // use E0 feedrate for this extruder
+        final_feedrate = default_max_feedrate[3];  // use E0 feedrate for this extruder//此挤出机使用E0进料速率
     }
-    final_feedrate *= 60;  // convert to mm/minute
-  } // end of feedrate
+    final_feedrate *= 60;  // convert to mm/minute//换算为毫米/分钟
+  } // end of feedrate//喂料结束率
 
-  return false;   // FALSE indicates no user input problems
+  return false;   // FALSE indicates no user input problems//FALSE表示没有用户输入问题
 }
 
 void L64XX_Marlin::say_axis(const L64XX_axis_t axis, const uint8_t label/*=true*/) {
@@ -693,7 +694,7 @@ void L64XX_Marlin::say_axis(const L64XX_axis_t axis, const uint8_t label/*=true*
 
 #if ENABLED(L6470_CHITCHAT)
 
-  // Assumes status bits have been inverted
+  // Assumes status bits have been inverted//假设状态位已反转
   void L64XX_Marlin::error_status_decode(const uint16_t status, const L64XX_axis_t axis,
         const uint16_t _status_axis_th_sd, const uint16_t _status_axis_th_wrn,
         const uint16_t _status_axis_step_loss_a, const uint16_t _status_axis_step_loss_b,
@@ -704,7 +705,7 @@ void L64XX_Marlin::say_axis(const L64XX_axis_t axis, const uint8_t label/*=true*
     DEBUG_ECHOPGM_P((status & _status_axis_th_sd) ? PSTR("SHUTDOWN") : (status & _status_axis_th_wrn) ? PSTR("WARNING ") : PSTR("OK      "));
     DEBUG_ECHOPGM("   OVERCURRENT: ");
     echo_yes_no((status & _status_axis_ocd) != 0);
-    if (!(_status_axis_layout == L6474_STATUS_LAYOUT)) {  // L6474 doesn't have these bits
+    if (!(_status_axis_layout == L6474_STATUS_LAYOUT)) {  // L6474 doesn't have these bits//L6474没有这些位
       DEBUG_ECHOPGM("   STALL: ");
       echo_yes_no((status & (_status_axis_step_loss_a | _status_axis_step_loss_b)) != 0);
     }
@@ -713,15 +714,15 @@ void L64XX_Marlin::say_axis(const L64XX_axis_t axis, const uint8_t label/*=true*
 
 #endif
 
-//////////////////////////////////////////////////////////////////////////////////////////////////
-////
-////  MONITOR_L6470_DRIVER_STATUS routines
-////
-//////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////
+////  MONITOR_L6470_DRIVER_STATUS routines////监控L6470驱动程序状态例行程序
+////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #if ENABLED(MONITOR_L6470_DRIVER_STATUS)
 
-  bool L64XX_Marlin::monitor_paused = false; // Flag to skip monitor during M122, M906, M916, M917, M918, etc.
+  bool L64XX_Marlin::monitor_paused = false; // Flag to skip monitor during M122, M906, M916, M917, M918, etc.//在M122、M906、M916、M917、M918等期间跳过监视器的标志。
 
   struct L6470_driver_data {
     L64XX_axis_t driver_index;
@@ -800,28 +801,28 @@ void L64XX_Marlin::say_axis(const L64XX_axis_t axis, const uint8_t label/*=true*
   }
 
   void L64XX_Marlin::monitor_update(L64XX_axis_t stepper_index) {
-    if (spi_abort) return;  // don't do anything if set_directions() has occurred
+    if (spi_abort) return;  // don't do anything if set_directions() has occurred//如果发生set_directions（），请不要执行任何操作
     const L64XX_shadow_t &sh = shadow;
-    get_status(stepper_index); // get stepper status and details
+    get_status(stepper_index); // get stepper status and details//获取步进器状态和详细信息
     uint16_t status = sh.STATUS_AXIS;
     uint8_t kval_hold, tval;
     char temp_buf[120], *p = temp_buf;
     uint8_t j;
-    for (j = 0; j < L64XX::chain[0]; j++) // find the table for this stepper
+    for (j = 0; j < L64XX::chain[0]; j++) // find the table for this stepper//找到这个步进机的表
       if (driver_L6470_data[j].driver_index == stepper_index) break;
 
     driver_L6470_data[j].driver_status = status;
-    uint16_t _status = ~status;     // all error bits are active low
+    uint16_t _status = ~status;     // all error bits are active low//所有错误位均为低电平
 
-    if (status == 0 || status == 0xFFFF) {              // com problem
-      if (driver_L6470_data[j].com_counter == 0) {      // warn user when it first happens
+    if (status == 0 || status == 0xFFFF) {              // com problem//com问题
+      if (driver_L6470_data[j].com_counter == 0) {      // warn user when it first happens//第一次发生时警告用户
         driver_L6470_data[j].com_counter++;
         append_stepper_err(p, stepper_index, PSTR(" - communications lost\n"));
         DEBUG_ECHO(temp_buf);
       }
       else {
         driver_L6470_data[j].com_counter++;
-        if (driver_L6470_data[j].com_counter > 240) {  // remind of com problem about every 2 minutes
+        if (driver_L6470_data[j].com_counter > 240) {  // remind of com problem about every 2 minutes//每2分钟提醒一次com问题
           driver_L6470_data[j].com_counter = 1;
           append_stepper_err(p, stepper_index, PSTR(" - still no communications\n"));
           DEBUG_ECHO(temp_buf);
@@ -829,33 +830,33 @@ void L64XX_Marlin::say_axis(const L64XX_axis_t axis, const uint8_t label/*=true*
       }
     }
     else {
-      if (driver_L6470_data[j].com_counter) {   // comms re-established
+      if (driver_L6470_data[j].com_counter) {   // comms re-established//重建通讯系统
         driver_L6470_data[j].com_counter = 0;
         append_stepper_err(p, stepper_index, PSTR(" - communications re-established\n.. setting all drivers to default values\n"));
         DEBUG_ECHO(temp_buf);
         init_to_defaults();
       }
       else {
-        // no com problems - do the usual checks
+        // no com problems - do the usual checks//没有com问题-执行常规检查
         if (_status & sh.L6470_ERROR_MASK) {
           append_stepper_err(p, stepper_index);
 
-          if (status & STATUS_HIZ) {                         // The driver has shut down. HiZ is active high
+          if (status & STATUS_HIZ) {                         // The driver has shut down. HiZ is active high//司机停车了。HiZ活性高
             driver_L6470_data[j].is_hi_Z = true;
             p += sprintf_P(p, PSTR("%cIS SHUT DOWN"), ' ');
-            //if (_status & sh.STATUS_AXIS_TH_SD) { // strange - TH_SD never seems to go active, must be implied by the HiZ and TH_WRN
-            if (_status & sh.STATUS_AXIS_TH_WRN) {                    // over current shutdown
+            //if (_status & sh.STATUS_AXIS_TH_SD) { // strange - TH_SD never seems to go active, must be implied by the HiZ and TH_WRN//如果（_status&sh.status_AXIS_TH_SD）{//奇怪-TH_SD似乎从未激活，则必须由HiZ和TH_WRN暗示
+            if (_status & sh.STATUS_AXIS_TH_WRN) {                    // over current shutdown//过电流关机
               p += sprintf_P(p, PSTR("%cdue to over temperature"), ' ');
               driver_L6470_data[j].is_ot = true;
-              if (sh.STATUS_AXIS_LAYOUT == L6474_STATUS_LAYOUT) {  // L6474
+              if (sh.STATUS_AXIS_LAYOUT == L6474_STATUS_LAYOUT) {  // L6474//L6474
                 tval = get_param(stepper_index, L6474_TVAL) - 2 * KVAL_HOLD_STEP_DOWN;
-              set_param(stepper_index, L6474_TVAL, tval);     // reduce TVAL
-                p += sprintf_P(p, PSTR(" - TVAL reduced by %d to %d mA"), uint16_t (2 * KVAL_HOLD_STEP_DOWN * sh.AXIS_STALL_CURRENT_CONSTANT_INV), uint16_t ((tval + 1) * sh.AXIS_STALL_CURRENT_CONSTANT_INV));   // let user know
+              set_param(stepper_index, L6474_TVAL, tval);     // reduce TVAL//减少TVAL
+                p += sprintf_P(p, PSTR(" - TVAL reduced by %d to %d mA"), uint16_t (2 * KVAL_HOLD_STEP_DOWN * sh.AXIS_STALL_CURRENT_CONSTANT_INV), uint16_t ((tval + 1) * sh.AXIS_STALL_CURRENT_CONSTANT_INV));   // let user know//让用户知道
               }
               else {
                 kval_hold = get_param(stepper_index, L6470_KVAL_HOLD) - 2 * KVAL_HOLD_STEP_DOWN;
-                set_param(stepper_index, L6470_KVAL_HOLD, kval_hold);     // reduce KVAL_HOLD
-                p += sprintf_P(p, PSTR(" - KVAL_HOLD reduced by %d to %d"), 2 * KVAL_HOLD_STEP_DOWN, kval_hold);   // let user know
+                set_param(stepper_index, L6470_KVAL_HOLD, kval_hold);     // reduce KVAL_HOLD//减少KVAL_保持
+                p += sprintf_P(p, PSTR(" - KVAL_HOLD reduced by %d to %d"), 2 * KVAL_HOLD_STEP_DOWN, kval_hold);   // let user know//让用户知道
               }
             }
             else
@@ -864,26 +865,26 @@ void L64XX_Marlin::say_axis(const L64XX_axis_t axis, const uint8_t label/*=true*
           else {
             driver_L6470_data[j].is_hi_Z = false;
 
-            if (_status & sh.STATUS_AXIS_TH_WRN) {     // have an over temperature warning
+            if (_status & sh.STATUS_AXIS_TH_WRN) {     // have an over temperature warning//有超温警告
               driver_L6470_data[j].is_otw = true;
               driver_L6470_data[j].otw_counter++;
               kval_hold = get_param(stepper_index, L6470_KVAL_HOLD);
-              if (driver_L6470_data[j].otw_counter > 4) {  // otw present for 2 - 2.5 seconds, reduce KVAL_HOLD
+              if (driver_L6470_data[j].otw_counter > 4) {  // otw present for 2 - 2.5 seconds, reduce KVAL_HOLD//otw存在2-2.5秒，减少KVAL_保持
                 driver_L6470_data[j].otw_counter = 0;
                 driver_L6470_data[j].is_otw = true;
-                if (sh.STATUS_AXIS_LAYOUT == L6474_STATUS_LAYOUT) {  // L6474
+                if (sh.STATUS_AXIS_LAYOUT == L6474_STATUS_LAYOUT) {  // L6474//L6474
                   tval = get_param(stepper_index, L6474_TVAL) - KVAL_HOLD_STEP_DOWN;
-                  set_param(stepper_index, L6474_TVAL, tval);     // reduce TVAL
-                  p += sprintf_P(p, PSTR(" - TVAL reduced by %d to %d mA"), uint16_t (KVAL_HOLD_STEP_DOWN * sh.AXIS_STALL_CURRENT_CONSTANT_INV), uint16_t ((tval + 1) * sh.AXIS_STALL_CURRENT_CONSTANT_INV));   // let user know
+                  set_param(stepper_index, L6474_TVAL, tval);     // reduce TVAL//减少TVAL
+                  p += sprintf_P(p, PSTR(" - TVAL reduced by %d to %d mA"), uint16_t (KVAL_HOLD_STEP_DOWN * sh.AXIS_STALL_CURRENT_CONSTANT_INV), uint16_t ((tval + 1) * sh.AXIS_STALL_CURRENT_CONSTANT_INV));   // let user know//让用户知道
                 }
                 else {
                   kval_hold = get_param(stepper_index, L6470_KVAL_HOLD) - KVAL_HOLD_STEP_DOWN;
-                  set_param(stepper_index, L6470_KVAL_HOLD, kval_hold);     // reduce KVAL_HOLD
-                  p += sprintf_P(p, PSTR(" - KVAL_HOLD reduced by %d to %d"), KVAL_HOLD_STEP_DOWN, kval_hold);   // let user know
+                  set_param(stepper_index, L6470_KVAL_HOLD, kval_hold);     // reduce KVAL_HOLD//减少KVAL_保持
+                  p += sprintf_P(p, PSTR(" - KVAL_HOLD reduced by %d to %d"), KVAL_HOLD_STEP_DOWN, kval_hold);   // let user know//让用户知道
                 }
               }
               else if (driver_L6470_data[j].otw_counter)
-                p += sprintf_P(p, PSTR("%c- thermal warning"), ' ');   // warn user
+                p += sprintf_P(p, PSTR("%c- thermal warning"), ' ');   // warn user//警告用户
             }
           }
 
@@ -905,17 +906,17 @@ void L64XX_Marlin::say_axis(const L64XX_axis_t axis, const uint8_t label/*=true*
             p += sprintf_P(p, PSTR("%c\n"), ' ');
           #endif
 
-          DEBUG_ECHOLN(temp_buf);  // print the error message
+          DEBUG_ECHOLN(temp_buf);  // print the error message//打印错误消息
         }
         else {
           driver_L6470_data[j].is_ot = false;
-          driver_L6470_data[j].otw_counter = 0;   //clear out warning indicators
+          driver_L6470_data[j].otw_counter = 0;   //clear out warning indicators//清除警告指示灯
           driver_L6470_data[j].is_otw = false;
-        } // end usual checks
+        } // end usual checks//结束日常检查
 
-      } // comms established but have errors
-    } // comms re-established
-  } // end monitor_update()
+      } // comms established but have errors//已建立通信，但有错误
+    } // comms re-established//重建通讯系统
+  } // end monitor_update()//结束监视器_更新（）
 
 
   void L64XX_Marlin::monitor_driver() {
@@ -923,9 +924,9 @@ void L64XX_Marlin::say_axis(const L64XX_axis_t axis, const uint8_t label/*=true*
     if (ELAPSED(millis(), next_cOT)) {
       next_cOT = millis() + 500;
 
-      if (!monitor_paused) {  // Skip during M122, M906, M916, M917 or M918 (could steal status result from test)
+      if (!monitor_paused) {  // Skip during M122, M906, M916, M917 or M918 (could steal status result from test)//在M122、M906、M916、M917或M918期间跳过（可能会从测试中窃取状态结果）
 
-        spi_active = true;    // Tell set_directions() a series of SPI transfers is underway
+        spi_active = true;    // Tell set_directions() a series of SPI transfers is underway//告诉set_directions（）一系列SPI传输正在进行中
 
         #if AXIS_IS_L64XX(X)
           monitor_update(X);
@@ -987,12 +988,12 @@ void L64XX_Marlin::say_axis(const L64XX_axis_t axis, const uint8_t label/*=true*
 
         if (TERN0(L6470_DEBUG, report_L6470_status)) DEBUG_EOL();
 
-        spi_active = false;   // done with all SPI transfers - clear handshake flags
+        spi_active = false;   // done with all SPI transfers - clear handshake flags//完成所有SPI传输-清除握手标志
         spi_abort = false;
       }
     }
   }
 
-#endif // MONITOR_L6470_DRIVER_STATUS
+#endif // MONITOR_L6470_DRIVER_STATUS//监控L6470驱动程序的状态
 
-#endif // HAS_L64XX
+#endif // HAS_L64XX//有"L64XX"吗?

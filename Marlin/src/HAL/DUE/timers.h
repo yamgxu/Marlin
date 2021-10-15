@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  *
@@ -26,37 +27,37 @@
 
 #include <stdint.h>
 
-// ------------------------
-// Defines
-// ------------------------
+// ------------------------// ------------------------
+// Defines//定义
+// ------------------------// ------------------------
 
 #define FORCE_INLINE __attribute__((always_inline)) inline
 
 typedef uint32_t hal_timer_t;
 #define HAL_TIMER_TYPE_MAX 0xFFFFFFFF
 
-#define HAL_TIMER_RATE         ((F_CPU) / 2)    // frequency of timers peripherals
+#define HAL_TIMER_RATE         ((F_CPU) / 2)    // frequency of timers peripherals//定时器和外围设备的频率
 
 #ifndef STEP_TIMER_NUM
-  #define STEP_TIMER_NUM        2  // Timer Index for Stepper
+  #define STEP_TIMER_NUM        2  // Timer Index for Stepper//步进电机的定时器索引
 #endif
 #ifndef PULSE_TIMER_NUM
   #define PULSE_TIMER_NUM       STEP_TIMER_NUM
 #endif
 #ifndef TEMP_TIMER_NUM
-  #define TEMP_TIMER_NUM        4  // Timer Index for Temperature
+  #define TEMP_TIMER_NUM        4  // Timer Index for Temperature//温度计时器索引
 #endif
 #ifndef TONE_TIMER_NUM
-  #define TONE_TIMER_NUM        6  // index of timer to use for beeper tones
+  #define TONE_TIMER_NUM        6  // index of timer to use for beeper tones//用于蜂鸣器铃声的计时器索引
 #endif
 
-#define TEMP_TIMER_FREQUENCY   1000 // temperature interrupt frequency
+#define TEMP_TIMER_FREQUENCY   1000 // temperature interrupt frequency//温度中断频率
 
-#define STEPPER_TIMER_RATE     HAL_TIMER_RATE   // frequency of stepper timer (HAL_TIMER_RATE / STEPPER_TIMER_PRESCALE)
-#define STEPPER_TIMER_TICKS_PER_US ((STEPPER_TIMER_RATE) / 1000000) // stepper timer ticks per µs
+#define STEPPER_TIMER_RATE     HAL_TIMER_RATE   // frequency of stepper timer (HAL_TIMER_RATE / STEPPER_TIMER_PRESCALE)//步进定时器的频率（HAL\u定时器\u速率/步进定时器\u预刻度）
+#define STEPPER_TIMER_TICKS_PER_US ((STEPPER_TIMER_RATE) / 1000000) // stepper timer ticks per µs//步进定时器滴答声每微秒
 #define STEPPER_TIMER_PRESCALE (CYCLES_PER_MICROSECOND / STEPPER_TIMER_TICKS_PER_US)
 
-#define PULSE_TIMER_RATE       STEPPER_TIMER_RATE   // frequency of pulse timer
+#define PULSE_TIMER_RATE       STEPPER_TIMER_RATE   // frequency of pulse timer//脉冲定时器频率
 #define PULSE_TIMER_PRESCALE   STEPPER_TIMER_PRESCALE
 #define PULSE_TIMER_TICKS_PER_US STEPPER_TIMER_TICKS_PER_US
 
@@ -77,9 +78,9 @@ typedef uint32_t hal_timer_t;
   #define HAL_TONE_TIMER_ISR() void TC6_Handler()
 #endif
 
-// ------------------------
-// Types
-// ------------------------
+// ------------------------// ------------------------
+// Types//类型
+// ------------------------// ------------------------
 
 typedef struct {
   Tc          *pTimerRegs;
@@ -88,15 +89,15 @@ typedef struct {
   uint8_t     priority;
 } tTimerConfig;
 
-// ------------------------
-// Public Variables
-// ------------------------
+// ------------------------// ------------------------
+// Public Variables//公共变量
+// ------------------------// ------------------------
 
 extern const tTimerConfig TimerConfig[];
 
-// ------------------------
-// Public functions
-// ------------------------
+// ------------------------// ------------------------
+// Public functions//公共职能
+// ------------------------// ------------------------
 
 void HAL_timer_start(const uint8_t timer_num, const uint32_t frequency);
 
@@ -121,7 +122,7 @@ bool HAL_timer_interrupt_enabled(const uint8_t timer_num);
 
 FORCE_INLINE static void HAL_timer_isr_prologue(const uint8_t timer_num) {
   const tTimerConfig * const pConfig = &TimerConfig[timer_num];
-  // Reading the status register clears the interrupt flag
+  // Reading the status register clears the interrupt flag//读取状态寄存器将清除中断标志
   pConfig->pTimerRegs->TC_CHANNEL[pConfig->channel].TC_SR;
 }
 

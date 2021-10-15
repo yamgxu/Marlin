@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  *
@@ -26,29 +27,29 @@
 
 #include "watchdog.h"
 
-#define WDT_TIMEOUT_REG TERN(WATCHDOG_DURATION_8S, WDT_CONFIG_PER_CYC8192, WDT_CONFIG_PER_CYC4096) // 4 or 8 second timeout
+#define WDT_TIMEOUT_REG TERN(WATCHDOG_DURATION_8S, WDT_CONFIG_PER_CYC8192, WDT_CONFIG_PER_CYC4096) // 4 or 8 second timeout//4或8秒超时
 
 void watchdog_init() {
-  // The low-power oscillator used by the WDT runs at 32,768 Hz with
-  // a 1:32 prescale, thus 1024 Hz, though probably not super precise.
+  // The low-power oscillator used by the WDT runs at 32,768 Hz with//WDT使用的低功率振荡器以32768 Hz的频率运行，具有
+  // a 1:32 prescale, thus 1024 Hz, though probably not super precise.//一个1:32的预刻度，因此1024赫兹，虽然可能不是超精确的。
 
-  // Setup WDT clocks
+  // Setup WDT clocks//设置WDT时钟
   MCLK->APBAMASK.bit.OSC32KCTRL_ = true;
   MCLK->APBAMASK.bit.WDT_ = true;
-  OSC32KCTRL->OSCULP32K.bit.EN1K = true;      // Enable out 1K (this is what WDT uses)
+  OSC32KCTRL->OSCULP32K.bit.EN1K = true;      // Enable out 1K (this is what WDT uses)//启用输出1K（这是WDT使用的）
 
-  WDT->CTRLA.bit.ENABLE = false;              // Disable watchdog for config
+  WDT->CTRLA.bit.ENABLE = false;              // Disable watchdog for config//禁用配置的监视程序
   SYNC(WDT->SYNCBUSY.bit.ENABLE);
 
-  WDT->INTENCLR.reg = WDT_INTENCLR_EW;        // Disable early warning interrupt
-  WDT->CONFIG.reg = WDT_TIMEOUT_REG;          // Set a 4s or 8s period for chip reset
+  WDT->INTENCLR.reg = WDT_INTENCLR_EW;        // Disable early warning interrupt//禁用早期警告中断
+  WDT->CONFIG.reg = WDT_TIMEOUT_REG;          // Set a 4s or 8s period for chip reset//设置芯片复位的4s或8s周期
 
   HAL_watchdog_refresh();
 
-  WDT->CTRLA.reg = WDT_CTRLA_ENABLE;          // Start watchdog now in normal mode
+  WDT->CTRLA.reg = WDT_CTRLA_ENABLE;          // Start watchdog now in normal mode//现在在正常模式下启动看门狗
   SYNC(WDT->SYNCBUSY.bit.ENABLE);
 }
 
-#endif // USE_WATCHDOG
+#endif // USE_WATCHDOG//使用看门狗
 
-#endif // __SAMD51__
+#endif // __SAMD51__//_uusamd51__

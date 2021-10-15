@@ -1,3 +1,4 @@
+/** translatione by yx */
 /***********************
  * adjuster_widget.cpp *
  ***********************/
@@ -55,6 +56,6 @@ namespace FTDI {
          .tag(tag+1).button(DEC_POS, F("+"));
     }
   }
-} // namespace FTDI
+} // namespace FTDI//名称空间FTDI
 
-#endif // FTDI_EXTENDED
+#endif // FTDI_EXTENDED//FTDI_扩展

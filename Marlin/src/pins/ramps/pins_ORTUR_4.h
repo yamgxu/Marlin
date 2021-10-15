@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -28,35 +29,35 @@
 #define BOARD_INFO_NAME "Ortur 4.3"
 #define DEFAULT_MACHINE_NAME BOARD_INFO_NAME
 
-//
-// Servos
-//
+////
+// Servos//伺服
+////
 #define SERVO0_PIN                            29
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_MAX_PIN                             18
 #define Z_MIN_PIN                             63
 
 #define Z_MIN_PROBE_PIN                        2
 #define FIL_RUNOUT_PIN                        59
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define E0_CS_PIN                             44
 #define E1_CS_PIN                             42
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                            15  // Analog Input
-#define TEMP_1_PIN                            13  // Analog Input
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                            15  // Analog Input//模拟输入
+#define TEMP_1_PIN                            13  // Analog Input//模拟输入
 
-//
-// Software serial
-//
+////
+// Software serial//软件系列
+////
 #define X_SERIAL_TX_PIN                       59
 #define X_SERIAL_RX_PIN                       63
 
@@ -71,9 +72,9 @@
 
 #include "pins_RAMPS.h"
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #undef E0_STEP_PIN
 #undef E0_DIR_PIN
 #undef E0_ENABLE_PIN
@@ -88,9 +89,9 @@
 #define E1_DIR_PIN                            28
 #define E1_ENABLE_PIN                         24
 
-//
-// LCD / Controller
-//
+////
+// LCD / Controller//液晶显示器/控制器
+////
 #if IS_RRD_FG_SC
   #undef BEEPER_PIN
   #define BEEPER_PIN                          35

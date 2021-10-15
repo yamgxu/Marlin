@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -49,7 +50,7 @@
 #if ENABLED(EMERGENCY_PARSER)
 
   bool MarlinSerial::recv_callback(const char c) {
-    // Need to figure out which serial port we are and react in consequence (Marlin does not have CONTAINER_OF macro)
+    // Need to figure out which serial port we are and react in consequence (Marlin does not have CONTAINER_OF macro)//需要确定我们是哪个串行端口，并做出相应反应（Marlin没有宏的容器_）
     if (false) {}
     #if USING_HW_SERIAL0
       else if (this == &_MSerial0) emergency_parser.update(MSerial0.emergency_state, c);
@@ -68,4 +69,4 @@
 
 #endif
 
-#endif // TARGET_LPC1768
+#endif // TARGET_LPC1768//目标为LPC1768

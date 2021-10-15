@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -24,12 +25,12 @@
 #include "../../../inc/MarlinConfig.h"
 
 enum MeshLevelingState : char {
-  MeshReport,     // G29 S0
-  MeshStart,      // G29 S1
-  MeshNext,       // G29 S2
-  MeshSet,        // G29 S3
-  MeshSetZOffset, // G29 S4
-  MeshReset       // G29 S5
+  MeshReport,     // G29 S0//G29 S0
+  MeshStart,      // G29 S1//G29 S1
+  MeshNext,       // G29 S2//G29 S2
+  MeshSet,        // G29 S3//G29 S3
+  MeshSetZOffset, // G29 S4//G29 S4
+  MeshReset       // G29 S5//G29 S5
 };
 
 #define MESH_X_DIST (float(MESH_MAX_X - (MESH_MIN_X)) / (GRID_MAX_CELLS_X))
@@ -61,7 +62,7 @@ public:
   static inline void zigzag(const int8_t index, int8_t &px, int8_t &py) {
     px = index % (GRID_MAX_POINTS_X);
     py = index / (GRID_MAX_POINTS_X);
-    if (py & 1) px = (GRID_MAX_POINTS_X) - 1 - px; // Zig zag
+    if (py & 1) px = (GRID_MAX_POINTS_X) - 1 - px; // Zig zag//之字形
   }
 
   static void set_zigzag_z(const int8_t index, const_float_t z) {

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -89,7 +90,7 @@
 #define _IS_INPUT(IO)         !TEST(DIO ## IO ## _DDR, DIO ## IO ## _PIN)
 #define _IS_OUTPUT(IO)        TEST(DIO ## IO ## _DDR, DIO ## IO ## _PIN)
 
-// digitalRead/Write wrappers
+// digitalRead/Write wrappers//数字读/写包装器
 #ifdef FASTIO_EXT_START
   void extDigitalWrite(const int8_t pin, const uint8_t state);
   uint8_t extDigitalRead(const int8_t pin);
@@ -117,72 +118,72 @@
  * Timer and Interrupt Control
  */
 
-// Waveform Generation Modes
+// Waveform Generation Modes//波形产生模式
 enum WaveGenMode : char {
-  WGM_NORMAL,          //  0
-  WGM_PWM_PC_8,        //  1
-  WGM_PWM_PC_9,        //  2
-  WGM_PWM_PC_10,       //  3
-  WGM_CTC_OCRnA,       //  4  COM OCnx
-  WGM_FAST_PWM_8,      //  5
-  WGM_FAST_PWM_9,      //  6
-  WGM_FAST_PWM_10,     //  7
-  WGM_PWM_PC_FC_ICRn,  //  8
-  WGM_PWM_PC_FC_OCRnA, //  9  COM OCnA
-  WGM_PWM_PC_ICRn,     // 10
-  WGM_PWM_PC_OCRnA,    // 11  COM OCnA
-  WGM_CTC_ICRn,        // 12  COM OCnx
-  WGM_reserved,        // 13
-  WGM_FAST_PWM_ICRn,   // 14  COM OCnA
-  WGM_FAST_PWM_OCRnA   // 15  COM OCnA
+  WGM_NORMAL,          //  0//  0
+  WGM_PWM_PC_8,        //  1//  1
+  WGM_PWM_PC_9,        //  2//  2
+  WGM_PWM_PC_10,       //  3//  3
+  WGM_CTC_OCRnA,       //  4  COM OCnx//4 COM OCnx
+  WGM_FAST_PWM_8,      //  5//  5
+  WGM_FAST_PWM_9,      //  6//  6
+  WGM_FAST_PWM_10,     //  7//  7
+  WGM_PWM_PC_FC_ICRn,  //  8//  8
+  WGM_PWM_PC_FC_OCRnA, //  9  COM OCnA//9 COM OCnA
+  WGM_PWM_PC_ICRn,     // 10// 10
+  WGM_PWM_PC_OCRnA,    // 11  COM OCnA//11 COM OCnA
+  WGM_CTC_ICRn,        // 12  COM OCnx//12 COM OCnx
+  WGM_reserved,        // 13// 13
+  WGM_FAST_PWM_ICRn,   // 14  COM OCnA//14 COM OCnA
+  WGM_FAST_PWM_OCRnA   // 15  COM OCnA//15 COM OCnA
 };
 
-// Wavefore Generation Modes (Timer 2 only)
+// Wavefore Generation Modes (Timer 2 only)//波孔生成模式（仅限计时器2）
 enum WaveGenMode2 : char {
-  WGM2_NORMAL,          // 0
-  WGM2_PWM_PC,          // 1
-  WGM2_CTC_OCR2A,       // 2
-  WGM2_FAST_PWM,        // 3
-  WGM2_reserved_1,      // 4
-  WGM2_PWM_PC_OCR2A,    // 5
-  WGM2_reserved_2,      // 6
-  WGM2_FAST_PWM_OCR2A,  // 7
+  WGM2_NORMAL,          // 0// 0
+  WGM2_PWM_PC,          // 1// 1
+  WGM2_CTC_OCR2A,       // 2// 2
+  WGM2_FAST_PWM,        // 3// 3
+  WGM2_reserved_1,      // 4// 4
+  WGM2_PWM_PC_OCR2A,    // 5// 5
+  WGM2_reserved_2,      // 6// 6
+  WGM2_FAST_PWM_OCR2A,  // 7// 7
 };
 
-// Compare Modes
+// Compare Modes//比较模式
 enum CompareMode : char {
-  COM_NORMAL,          //  0
-  COM_TOGGLE,          //  1  Non-PWM: OCnx ... Both PWM (WGM 9,11,14,15): OCnA only ... else NORMAL
-  COM_CLEAR_SET,       //  2  Non-PWM: OCnx ... Fast PWM: OCnx/Bottom ... PF-FC: OCnx Up/Down
-  COM_SET_CLEAR        //  3  Non-PWM: OCnx ... Fast PWM: OCnx/Bottom ... PF-FC: OCnx Up/Down
+  COM_NORMAL,          //  0//  0
+  COM_TOGGLE,          //  1  Non-PWM: OCnx ... Both PWM (WGM 9,11,14,15): OCnA only ... else NORMAL//1非PWM:OCnx。。。两个PWM（WGM 9,11,14,15）：仅限OCnA。。。否则正常
+  COM_CLEAR_SET,       //  2  Non-PWM: OCnx ... Fast PWM: OCnx/Bottom ... PF-FC: OCnx Up/Down//2非PWM:OCnx。。。快速PWM:OCnx/底部。。。PF-FC:OCnx向上/向下
+  COM_SET_CLEAR        //  3  Non-PWM: OCnx ... Fast PWM: OCnx/Bottom ... PF-FC: OCnx Up/Down//3非PWM:OCnx。。。快速PWM:OCnx/底部。。。PF-FC:OCnx向上/向下
 };
 
-// Clock Sources
+// Clock Sources//时钟源
 enum ClockSource : char {
-  CS_NONE,             //  0
-  CS_PRESCALER_1,      //  1
-  CS_PRESCALER_8,      //  2
-  CS_PRESCALER_64,     //  3
-  CS_PRESCALER_256,    //  4
-  CS_PRESCALER_1024,   //  5
-  CS_EXT_FALLING,      //  6
-  CS_EXT_RISING        //  7
+  CS_NONE,             //  0//  0
+  CS_PRESCALER_1,      //  1//  1
+  CS_PRESCALER_8,      //  2//  2
+  CS_PRESCALER_64,     //  3//  3
+  CS_PRESCALER_256,    //  4//  4
+  CS_PRESCALER_1024,   //  5//  5
+  CS_EXT_FALLING,      //  6//  6
+  CS_EXT_RISING        //  7//  7
 };
 
-// Clock Sources (Timer 2 only)
+// Clock Sources (Timer 2 only)//时钟源（仅限计时器2）
 enum ClockSource2 : char {
-  CS2_NONE,            //  0
-  CS2_PRESCALER_1,     //  1
-  CS2_PRESCALER_8,     //  2
-  CS2_PRESCALER_32,    //  3
-  CS2_PRESCALER_64,    //  4
-  CS2_PRESCALER_128,   //  5
-  CS2_PRESCALER_256,   //  6
-  CS2_PRESCALER_1024   //  7
+  CS2_NONE,            //  0//  0
+  CS2_PRESCALER_1,     //  1//  1
+  CS2_PRESCALER_8,     //  2//  2
+  CS2_PRESCALER_32,    //  3//  3
+  CS2_PRESCALER_64,    //  4//  4
+  CS2_PRESCALER_128,   //  5//  5
+  CS2_PRESCALER_256,   //  6//  6
+  CS2_PRESCALER_1024   //  7//  7
 };
 
-// Get interrupt bits in an orderly way
-// Ex: cs = GET_CS(0); coma1 = GET_COM(A,1);
+// Get interrupt bits in an orderly way//以有序的方式获取中断位
+// Ex: cs = GET_CS(0); coma1 = GET_COM(A,1);//Ex:cs=GET_cs（0）；coma1=得到COM（A，1）；
 #define GET_WGM(T)   (((TCCR##T##A >> WGM##T##0) & 0x3) | ((TCCR##T##B >> WGM##T##2 << 2) & 0xC))
 #define GET_CS(T)    ((TCCR##T##B >> CS##T##0) & 0x7)
 #define GET_COM(T,Q) ((TCCR##T##Q >> COM##T##Q##0) & 0x3)
@@ -196,21 +197,21 @@ enum ClockSource2 : char {
 #define GET_FOCB(T)  GET_FOC(T,B)
 #define GET_FOCC(T)  GET_FOC(T,C)
 
-// Set Wave Generation Mode bits
-// Ex: SET_WGM(5,CTC_ICRn);
+// Set Wave Generation Mode bits//设置波形生成模式位
+// Ex: SET_WGM(5,CTC_ICRn);//Ex:SET_WGM（5，CTC_ICRn）；
 #define _SET_WGM(T,V) do{ \
     TCCR##T##A = (TCCR##T##A & ~(0x3 << WGM##T##0)) | (( int(V)       & 0x3) << WGM##T##0); \
     TCCR##T##B = (TCCR##T##B & ~(0x3 << WGM##T##2)) | (((int(V) >> 2) & 0x3) << WGM##T##2); \
   }while(0)
 #define SET_WGM(T,V) _SET_WGM(T,WGM_##V)
-// Runtime (see set_pwm_frequency):
+// Runtime (see set_pwm_frequency)://运行时间（参见设置pwm频率）：
 #define _SET_WGMnQ(TCCRnQ, V) do{ \
     *(TCCRnQ)[0] = (*(TCCRnQ)[0] & ~(0x3 << 0)) | (( int(V)       & 0x3) << 0); \
     *(TCCRnQ)[1] = (*(TCCRnQ)[1] & ~(0x3 << 3)) | (((int(V) >> 2) & 0x3) << 3); \
   }while(0)
 
-// Set Clock Select bits
-// Ex: SET_CS3(PRESCALER_64);
+// Set Clock Select bits//设置时钟选择位
+// Ex: SET_CS3(PRESCALER_64);//例如：设置CS3（预分频器64）；
 #define _SET_CS(T,V) (TCCR##T##B = (TCCR##T##B & ~(0x7 << CS##T##0)) | ((int(V) & 0x7) << CS##T##0))
 #define _SET_CS0(V) _SET_CS(0,V)
 #define _SET_CS1(V) _SET_CS(1,V)
@@ -233,46 +234,46 @@ enum ClockSource2 : char {
 #define SET_CS4(V) _SET_CS4(CS_##V)
 #define SET_CS5(V) _SET_CS5(CS_##V)
 #define SET_CS(T,V) SET_CS##T(V)
-// Runtime (see set_pwm_frequency)
+// Runtime (see set_pwm_frequency)//运行时间（参见设置pwm频率）
 #define _SET_CSn(TCCRnQ, V) do{ \
     (*(TCCRnQ)[1] = (*(TCCRnQ[1]) & ~(0x7 << 0)) | ((int(V) & 0x7) << 0)); \
   }while(0)
 
-// Set Compare Mode bits
-// Ex: SET_COMS(4,CLEAR_SET,CLEAR_SET,CLEAR_SET);
+// Set Compare Mode bits//设置比较模式位
+// Ex: SET_COMS(4,CLEAR_SET,CLEAR_SET,CLEAR_SET);//例如：设置组件（4，清除组件，清除组件，清除组件）；
 #define _SET_COM(T,Q,V) (TCCR##T##Q = (TCCR##T##Q & ~(0x3 << COM##T##Q##0)) | (int(V) << COM##T##Q##0))
 #define SET_COM(T,Q,V) _SET_COM(T,Q,COM_##V)
 #define SET_COMA(T,V) SET_COM(T,A,V)
 #define SET_COMB(T,V) SET_COM(T,B,V)
 #define SET_COMC(T,V) SET_COM(T,C,V)
 #define SET_COMS(T,V1,V2,V3) do{ SET_COMA(T,V1); SET_COMB(T,V2); SET_COMC(T,V3); }while(0)
-// Runtime (see set_pwm_duty)
+// Runtime (see set_pwm_duty)//运行时（参见设置pwm占空比）
 #define _SET_COMnQ(TCCRnQ, Q, V) do{ \
     (*(TCCRnQ)[0] = (*(TCCRnQ)[0] & ~(0x3 << (6-2*(Q)))) | (int(V) << (6-2*(Q)))); \
   }while(0)
 
-// Set OCRnQ register
-// Runtime (see set_pwm_duty):
+// Set OCRnQ register//设置OCRnQ寄存器
+// Runtime (see set_pwm_duty)://运行时间（参见设置pwm占空比）：
 #define _SET_OCRnQ(OCRnQ, Q, V) do{ \
     (*(OCRnQ)[(Q)] = (0x0000) | (int(V) & 0xFFFF)); \
   }while(0)
 
-// Set ICRn register (one per timer)
-// Runtime (see set_pwm_frequency)
+// Set ICRn register (one per timer)//设置ICRn寄存器（每个定时器一个）
+// Runtime (see set_pwm_frequency)//运行时间（参见设置pwm频率）
 #define _SET_ICRn(ICRn, V) do{ \
     (*(ICRn) = (0x0000) | (int(V) & 0xFFFF)); \
   }while(0)
 
-// Set Noise Canceler bit
-// Ex: SET_ICNC(2,1)
+// Set Noise Canceler bit//设置噪声抵消器位
+// Ex: SET_ICNC(2,1)//Ex:SET_ICNC（2,1）
 #define SET_ICNC(T,V) (TCCR##T##B = (V) ? TCCR##T##B | _BV(ICNC##T) : TCCR##T##B & ~_BV(ICNC##T))
 
-// Set Input Capture Edge Select bit
-// Ex: SET_ICES(5,0)
+// Set Input Capture Edge Select bit//设置输入捕获边缘选择位
+// Ex: SET_ICES(5,0)//例：套冰（5,0）
 #define SET_ICES(T,V) (TCCR##T##B = (V) ? TCCR##T##B | _BV(ICES##T) : TCCR##T##B & ~_BV(ICES##T))
 
-// Set Force Output Compare bit
-// Ex: SET_FOC(3,A,1)
+// Set Force Output Compare bit//设置力输出比较位
+// Ex: SET_FOC(3,A,1)//例：设置焦点（3，A，1）
 #define SET_FOC(T,Q,V) (TCCR##T##C = (V) ? TCCR##T##C | _BV(FOC##T##Q) : TCCR##T##C & ~_BV(FOC##T##Q))
 #define SET_FOCA(T,V) SET_FOC(T,A,V)
 #define SET_FOCB(T,V) SET_FOC(T,B,V)
@@ -284,7 +285,7 @@ enum ClockSource2 : char {
  * PWM availability macros
  */
 
-// Determine which harware PWMs are already in use
+// Determine which harware PWMs are already in use//确定哪些硬件PWM已在使用中
 #define _PWM_CHK_FAN_B(P) (P == E0_AUTO_FAN_PIN || P == E1_AUTO_FAN_PIN || P == E2_AUTO_FAN_PIN || P == E3_AUTO_FAN_PIN || P == E4_AUTO_FAN_PIN || P == E5_AUTO_FAN_PIN || P == E6_AUTO_FAN_PIN || P == E7_AUTO_FAN_PIN || P == CHAMBER_AUTO_FAN_PIN || P == COOLER_AUTO_FAN_PIN)
 #if PIN_EXISTS(CONTROLLER_FAN)
   #define PWM_CHK_FAN_B(P) (_PWM_CHK_FAN_B(P) || P == CONTROLLER_FAN_PIN)
@@ -328,13 +329,13 @@ enum ClockSource2 : char {
 
 #ifdef NUM_SERVOS
   #if AVR_ATmega2560_FAMILY
-    #define PWM_CHK_SERVO(P) (P == 5 || (NUM_SERVOS > 12 && P == 6) || (NUM_SERVOS > 24 && P == 46))  // PWMS 3A, 4A & 5A
+    #define PWM_CHK_SERVO(P) (P == 5 || (NUM_SERVOS > 12 && P == 6) || (NUM_SERVOS > 24 && P == 46))  // PWMS 3A, 4A & 5A//PWMS 3A、4A和5A
   #elif AVR_ATmega2561_FAMILY
-    #define PWM_CHK_SERVO(P)   (P == 5)  // PWM3A
+    #define PWM_CHK_SERVO(P)   (P == 5)  // PWM3A//PWM3A
   #elif AVR_ATmega1284_FAMILY
     #define PWM_CHK_SERVO(P)   false
   #elif AVR_AT90USB1286_FAMILY
-    #define PWM_CHK_SERVO(P)   (P == 16) // PWM3A
+    #define PWM_CHK_SERVO(P)   (P == 16) // PWM3A//PWM3A
   #elif AVR_ATmega328_FAMILY
     #define PWM_CHK_SERVO(P)   false
   #endif
@@ -354,10 +355,10 @@ enum ClockSource2 : char {
 
 #define PWM_CHK(P) (PWM_CHK_HEATER(P) || PWM_CHK_SERVO(P) || PWM_CHK_MOTOR_CURRENT(P) || PWM_CHK_FAN_A(P) || PWM_CHK_FAN_B(P))
 
-#endif // PWM_CHK is not used in Marlin
+#endif // PWM_CHK is not used in Marlin//马林鱼不使用PWM_CHK
 
-// define which hardware PWMs are available for the current CPU
-// all timer 1 PWMS deleted from this list because they are never available
+// define which hardware PWMs are available for the current CPU//定义哪些硬件PWM可用于当前CPU
+// all timer 1 PWMS deleted from this list because they are never available//从该列表中删除所有计时器1 PWM，因为它们永远不可用
 #if AVR_ATmega2560_FAMILY
   #define PWM_PIN(P)  ((P >= 2 && P <= 10) || P == 13 || P == 44 || P == 45 || P == 46)
 #elif AVR_ATmega2561_FAMILY

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -26,8 +27,8 @@
 
 #include "../gcode.h"
 
-#include "../../lcd/marlinui.h" // i2c-based BUZZ
-#include "../../libs/buzzer.h"  // Buzzer, if possible
+#include "../../lcd/marlinui.h" // i2c-based BUZZ//基于i2c的嗡嗡声
+#include "../../libs/buzzer.h"  // Buzzer, if possible//蜂鸣器，如果可能的话
 
 /**
  * M300: Play beep sound S<frequency Hz> P<duration ms>
@@ -36,10 +37,10 @@ void GcodeSuite::M300() {
   uint16_t const frequency = parser.ushortval('S', 260);
   uint16_t duration = parser.ushortval('P', 1000);
 
-  // Limits the tone duration to 0-5 seconds.
+  // Limits the tone duration to 0-5 seconds.//将音调持续时间限制为0-5秒。
   NOMORE(duration, 5000U);
 
   BUZZ(duration, frequency);
 }
 
-#endif // HAS_BUZZER
+#endif // HAS_BUZZER//有蜂鸣器吗

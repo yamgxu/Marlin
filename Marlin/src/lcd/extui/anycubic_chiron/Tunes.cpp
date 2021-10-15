@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -59,4 +60,4 @@ namespace Anycubic {
 
 }
 
-#endif // ANYCUBIC_LCD_CHIRON
+#endif // ANYCUBIC_LCD_CHIRON//任意立方_液晶_凯龙

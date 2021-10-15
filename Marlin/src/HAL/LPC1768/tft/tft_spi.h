@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -25,13 +26,13 @@
 
 #include <SPI.h>
 #include <lpc17xx_ssp.h>
-// #include <lpc17xx_gpdma.h>
+// #include <lpc17xx_gpdma.h>//#包括<lpc17xx_gpdma.h>
 
 #ifndef LCD_READ_ID
-  #define LCD_READ_ID  0x04   // Read display identification information (0xD3 on ILI9341)
+  #define LCD_READ_ID  0x04   // Read display identification information (0xD3 on ILI9341)//读取显示标识信息（ILI9341上的0xD3）
 #endif
 #ifndef LCD_READ_ID4
-  #define LCD_READ_ID4 0xD3   // Read display identification information (0xD3 on ILI9341)
+  #define LCD_READ_ID4 0xD3   // Read display identification information (0xD3 on ILI9341)//读取显示标识信息（ILI9341上的0xD3）
 #endif
 
 #define DATASIZE_8BIT    SSP_DATABIT_8
@@ -63,10 +64,10 @@ public:
   static void WriteReg(uint16_t Reg) { OUT_WRITE(TFT_A0_PIN, LOW); Transmit(Reg); OUT_WRITE(TFT_A0_PIN, HIGH); }
 
   static void WriteSequence(uint16_t *Data, uint16_t Count) { TransmitDMA(DMA_MINC_ENABLE, Data, Count); }
-  // static void WriteMultiple(uint16_t Color, uint16_t Count) { static uint16_t Data; Data = Color; TransmitDMA(DMA_MINC_DISABLE, &Data, Count); }
+  // static void WriteMultiple(uint16_t Color, uint16_t Count) { static uint16_t Data; Data = Color; TransmitDMA(DMA_MINC_DISABLE, &Data, Count); }//静态void WriteMultiple（uint16_t Color，uint16_t Count）{static uint16_t Data；Data=Color；TransmitDMA（DMA_MINC_DISABLE，&Data，Count）；}
   static void WriteMultiple(uint16_t Color, uint32_t Count) {
     static uint16_t Data; Data = Color;
-    //LPC dma can only write 0xFFF bytes at once.
+    //LPC dma can only write 0xFFF bytes at once.//LPC dma一次只能写入0xFFF字节。
     #define MAX_DMA_SIZE (0xFFF - 1)
     while (Count > 0) {
       TransmitDMA(DMA_MINC_DISABLE, &Data, Count > MAX_DMA_SIZE ? MAX_DMA_SIZE : Count);

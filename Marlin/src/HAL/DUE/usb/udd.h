@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * \file
  *
@@ -41,7 +42,7 @@
  *
  */
 /*
- * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>
+ * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>//www.atmel.com/design support/“>atmel支持</a>
  */
 
 #ifndef _UDD_H_
@@ -65,11 +66,11 @@ extern "C" {
  * @{
  */
 
-//! \brief Endpoint identifier
+//! \brief Endpoint identifier//! \简要端点标识符
 typedef uint8_t udd_ep_id_t;
 
-//! \brief Endpoint transfer status
-//! Returned in parameters of callback register via udd_ep_run routine.
+//! \brief Endpoint transfer status//! \简要端点传输状态
+//! Returned in parameters of callback register via udd_ep_run routine.//! 通过udd_ep_运行例程在回调寄存器的参数中返回。
 typedef enum {
 	UDD_EP_TRANSFER_OK = 0,
 	UDD_EP_TRANSFER_ABORT = 1,
@@ -82,39 +83,39 @@ typedef enum {
  * It can be updated by udc_process_setup() from UDC or *setup() from UDIs.
  */
 typedef struct {
-	//! Data received in USB SETUP packet
-	//! Note: The swap of "req.wValues" from uin16_t to le16_t is done by UDD.
+	//! Data received in USB SETUP packet//！在USB安装包中接收到数据
+	//! Note: The swap of "req.wValues" from uin16_t to le16_t is done by UDD.//！注意：从uin16_t到le16_t的“请求值”交换由UDD完成。
 	usb_setup_req_t req;
 
-	//! Point to buffer to send or fill with data following SETUP packet
-	//! This buffer must be word align for DATA IN phase (use prefix COMPILER_WORD_ALIGNED for buffer)
+	//! Point to buffer to send or fill with data following SETUP packet//！指向缓冲区以发送或填充安装数据包后的数据
+	//! This buffer must be word align for DATA IN phase (use prefix COMPILER_WORD_ALIGNED for buffer)//！此缓冲区必须对阶段中的数据进行字对齐（对缓冲区使用前缀编译器\u字对齐）
 	uint8_t *payload;
 
-	//! Size of buffer to send or fill, and content the number of byte transfered
+	//! Size of buffer to send or fill, and content the number of byte transfered//！要发送或填充的缓冲区大小，以及传输的字节数
 	uint16_t payload_size;
 
-	//! Callback called after reception of ZLP from setup request
+	//! Callback called after reception of ZLP from setup request//！从安装请求接收ZLP后调用回调
 	void (*callback)(void);
 
-	//! Callback called when the buffer given (.payload) is full or empty.
-	//! This one return false to abort data transfer, or true with a new buffer in .payload.
+	//! Callback called when the buffer given (.payload) is full or empty.//! 当给定的缓冲区（.payload）已满或为空时调用回调。
+	//! This one return false to abort data transfer, or true with a new buffer in .payload.//! 这一个返回false以中止数据传输，或者返回true以在.payload中使用新缓冲区。
 	bool (*over_under_run)(void);
 } udd_ctrl_request_t;
 extern udd_ctrl_request_t udd_g_ctrlreq;
 
-//! Return true if the setup request \a udd_g_ctrlreq indicates IN data transfer
+//! Return true if the setup request \a udd_g_ctrlreq indicates IN data transfer//! 如果设置请求\a udd\u g\u ctrlreq在数据传输中指示，则返回true
 #define  Udd_setup_is_in()       \
       (USB_REQ_DIR_IN == (udd_g_ctrlreq.req.bmRequestType & USB_REQ_DIR_MASK))
 
-//! Return true if the setup request \a udd_g_ctrlreq indicates OUT data transfer
+//! Return true if the setup request \a udd_g_ctrlreq indicates OUT data transfer//！如果安装请求\a udd\u g\u ctrlreq指示输出数据传输，则返回true
 #define  Udd_setup_is_out()      \
       (USB_REQ_DIR_OUT == (udd_g_ctrlreq.req.bmRequestType & USB_REQ_DIR_MASK))
 
-//! Return the type of the SETUP request \a udd_g_ctrlreq. \see usb_reqtype.
+//! Return the type of the SETUP request \a udd_g_ctrlreq. \see usb_reqtype.//！返回安装请求的类型\a udd\u g\u ctrlreq。\n请参阅usb\u reqtype。
 #define  Udd_setup_type()        \
       (udd_g_ctrlreq.req.bmRequestType & USB_REQ_TYPE_MASK)
 
-//! Return the recipient of the SETUP request \a udd_g_ctrlreq. \see usb_recipient
+//! Return the recipient of the SETUP request \a udd_g_ctrlreq. \see usb_recipient//！返回安装请求的收件人\a udd\u g\u ctrlreq。\n请参阅usb\u收件人
 #define  Udd_setup_recipient()   \
       (udd_g_ctrlreq.req.bmRequestType & USB_REQ_RECIP_MASK)
 
@@ -226,7 +227,7 @@ void udd_set_setup_payload( uint8_t *payload, uint16_t payload_size );
  * endpoints, as well as set, clear and query their "halted" and
  * "wedged" states.
  */
-//@{
+//@{//@{
 
 #if (USB_DEVICE_MAX_EP != 0)
 
@@ -337,7 +338,7 @@ void udd_ep_abort(udd_ep_id_t ep);
 
 #endif
 
-//@}
+//@}//@}
 
 
 /**
@@ -345,12 +346,12 @@ void udd_ep_abort(udd_ep_id_t ep);
  *
  * The following functions allow the device to jump to a specific test mode required in high speed mode.
  */
-//@{
+//@{//@{
 void udd_test_mode_j(void);
 void udd_test_mode_k(void);
 void udd_test_mode_se0_nak(void);
 void udd_test_mode_packet(void);
-//@}
+//@}//@}
 
 
 /**
@@ -358,7 +359,7 @@ void udd_test_mode_packet(void);
  *
  * The following callbacks are used by UDD.
  */
-//@{
+//@{//@{
 
 /**
  * \brief Decodes and manages a setup request
@@ -386,11 +387,11 @@ extern void udc_reset(void);
  */
 extern void udc_sof_notify(void);
 
-//@}
+//@}//@}
 
-//@}
+//@}//@}
 
 #ifdef __cplusplus
 }
 #endif
-#endif // _UDD_H_
+#endif // _UDD_H_//_UDD_H_

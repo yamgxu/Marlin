@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -37,7 +38,7 @@
   #include "../../lcd/extui/ui_api.h"
 #endif
 
-//#define M420_C_USE_MEAN
+//#define M420_C_USE_MEAN//#定义M420_C_使用_平均值
 
 /**
  * M420: Enable/Disable Bed Leveling and/or set the Z fade height.
@@ -86,13 +87,13 @@ void GcodeSuite::M420() {
 
   xyz_pos_t oldpos = current_position;
 
-  // If disabling leveling do it right away
-  // (Don't disable for just M420 or M420 V)
+  // If disabling leveling do it right away//如果你想马上做
+  // (Don't disable for just M420 or M420 V)//（不要仅对M420或M420 V禁用）
   if (seen_S && !to_enable) set_bed_leveling_enabled(false);
 
   #if ENABLED(AUTO_BED_LEVELING_UBL)
 
-    // L to load a mesh from the EEPROM
+    // L to load a mesh from the EEPROM//L从EEPROM加载网格
     if (parser.seen('L')) {
 
       set_bed_leveling_enabled(false);
@@ -123,7 +124,7 @@ void GcodeSuite::M420() {
       #endif
     }
 
-    // L or V display the map info
+    // L or V display the map info//L或V显示地图信息
     if (parser.seen("LV")) {
       ubl.display_map(parser.byteval('T'));
       SERIAL_ECHOPGM("Mesh is ");
@@ -131,7 +132,7 @@ void GcodeSuite::M420() {
       SERIAL_ECHOLNPAIR("valid\nStorage slot: ", ubl.storage_slot);
     }
 
-  #endif // AUTO_BED_LEVELING_UBL
+  #endif // AUTO_BED_LEVELING_UBL//自动调平床
 
   const bool seenV = parser.seen_test('V');
 
@@ -139,7 +140,7 @@ void GcodeSuite::M420() {
 
     if (leveling_is_valid()) {
 
-      // Subtract the given value or the mean from all mesh values
+      // Subtract the given value or the mean from all mesh values//从所有网格值中减去给定值或平均值
       if (parser.seen('C')) {
         const float cval = parser.value_float();
         #if ENABLED(AUTO_BED_LEVELING_UBL)
@@ -151,29 +152,29 @@ void GcodeSuite::M420() {
 
           #if ENABLED(M420_C_USE_MEAN)
 
-            // Get the sum and average of all mesh values
+            // Get the sum and average of all mesh values//获取所有网格值的总和和平均值
             float mesh_sum = 0;
             GRID_LOOP(x, y) mesh_sum += Z_VALUES(x, y);
             const float zmean = mesh_sum / float(GRID_MAX_POINTS);
 
-          #else // midrange
+          #else // midrange//中档
 
-            // Find the low and high mesh values.
+            // Find the low and high mesh values.//查找低网格值和高网格值。
             float lo_val = 100, hi_val = -100;
             GRID_LOOP(x, y) {
               const float z = Z_VALUES(x, y);
               NOMORE(lo_val, z);
               NOLESS(hi_val, z);
             }
-            // Get the midrange plus C value. (The median may be better.)
+            // Get the midrange plus C value. (The median may be better.)//获取中档加C值。（中位数可能更好。）
             const float zmean = (lo_val + hi_val) / 2.0 + cval;
 
           #endif
 
-          // If not very close to 0, adjust the mesh
+          // If not very close to 0, adjust the mesh//如果不是非常接近0，请调整网格
           if (!NEAR_ZERO(zmean)) {
             set_bed_leveling_enabled(false);
-            // Subtract the mean from all values
+            // Subtract the mean from all values//从所有值中减去平均值
             GRID_LOOP(x, y) {
               Z_VALUES(x, y) -= zmean;
               TERN_(EXTENSIBLE_UI, ExtUI::onMeshUpdate(x, y, Z_VALUES(x, y)));
@@ -190,9 +191,9 @@ void GcodeSuite::M420() {
       goto EXIT_M420;
     }
 
-  #endif // HAS_MESH
+  #endif // HAS_MESH//有网格吗
 
-  // V to print the matrix or mesh
+  // V to print the matrix or mesh//V打印矩阵或网格
   if (seenV) {
     #if ABL_PLANAR
       planner.bed_level_matrix.debug(PSTR("Bed Level Correction Matrix:"));
@@ -213,14 +214,14 @@ void GcodeSuite::M420() {
     if (parser.seen('Z')) set_z_fade_height(parser.value_linear_units(), false);
   #endif
 
-  // Enable leveling if specified, or if previously active
+  // Enable leveling if specified, or if previously active//如果指定或之前处于活动状态，则启用调平
   set_bed_leveling_enabled(to_enable);
 
   #if HAS_MESH
     EXIT_M420:
   #endif
 
-  // Error if leveling failed to enable or reenable
+  // Error if leveling failed to enable or reenable//如果水平调整无法启用或重新启用，则出错
   if (to_enable && !planner.leveling_active)
     SERIAL_ERROR_MSG(STR_ERR_M420_FAILED);
 
@@ -237,9 +238,9 @@ void GcodeSuite::M420() {
       SERIAL_ECHOLNPGM(STR_OFF);
   #endif
 
-  // Report change in position
+  // Report change in position//报告职位变动
   if (oldpos != current_position)
     report_current_position();
 }
 
-#endif // HAS_LEVELING
+#endif // HAS_LEVELING//你有找平吗

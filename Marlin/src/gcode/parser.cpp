@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -28,8 +29,8 @@
 
 #include "../MarlinCore.h"
 
-// Must be declared for allocation and to satisfy the linker
-// Zero values need no initialization.
+// Must be declared for allocation and to satisfy the linker//必须声明以进行分配并满足链接器的要求
+// Zero values need no initialization.//零值不需要初始化。
 
 bool GCodeParser::volumetric_enabled;
 
@@ -59,14 +60,14 @@ uint16_t GCodeParser::codenum;
 #endif
 
 #if ENABLED(FASTER_GCODE_PARSER)
-  // Optimized Parameters
-  uint32_t GCodeParser::codebits;  // found bits
-  uint8_t GCodeParser::param[26];  // parameter offsets from command_ptr
+  // Optimized Parameters//优化参数
+  uint32_t GCodeParser::codebits;  // found bits//找到位
+  uint8_t GCodeParser::param[26];  // parameter offsets from command_ptr//参数与命令的偏移量
 #else
-  char *GCodeParser::command_args; // start of parameters
+  char *GCodeParser::command_args; // start of parameters//参数的开始
 #endif
 
-// Create a global instance of the GCode parser singleton
+// Create a global instance of the GCode parser singleton//创建gcodeparser单例的全局实例
 GCodeParser parser;
 
 /**
@@ -76,30 +77,30 @@ GCodeParser parser;
  * this may be optimized by commenting out ZERO(param)
  */
 void GCodeParser::reset() {
-  string_arg = nullptr;                 // No whole line argument
-  command_letter = '?';                 // No command letter
-  codenum = 0;                          // No command code
-  TERN_(USE_GCODE_SUBCODES, subcode = 0); // No command sub-code
+  string_arg = nullptr;                 // No whole line argument//没有整行论证
+  command_letter = '?';                 // No command letter//没有命令信
+  codenum = 0;                          // No command code//没有命令代码
+  TERN_(USE_GCODE_SUBCODES, subcode = 0); // No command sub-code//没有命令子代码
   #if ENABLED(FASTER_GCODE_PARSER)
-    codebits = 0;                       // No codes yet
-    //ZERO(param);                      // No parameters (should be safe to comment out this line)
+    codebits = 0;                       // No codes yet//还没有密码
+    //ZERO(param);                      // No parameters (should be safe to comment out this line)//零（参数）；//无参数（可以安全地注释掉这一行）
   #endif
 }
 
 #if ENABLED(GCODE_QUOTED_STRINGS)
 
-  // Pass the address after the first quote (if any)
+  // Pass the address after the first quote (if any)//在第一个报价后传递地址（如果有）
   char* GCodeParser::unescape_string(char* &src) {
-    if (*src == '"') ++src;     // Skip the leading quote
-    char * const out = src;     // Start of the string
-    char *dst = src;            // Prepare to unescape and terminate
+    if (*src == '"') ++src;     // Skip the leading quote//跳过前导引语
+    char * const out = src;     // Start of the string//字符串的开头
+    char *dst = src;            // Prepare to unescape and terminate//准备退出并终止
     for (;;) {
-      char c = *src++;          // Get the next char
+      char c = *src++;          // Get the next char//获取下一个字符
       switch (c) {
-        case '\\': c = *src++; break; // Get the escaped char
-        case '"' : c = '\0'; break;   // Convert bare quote to nul
+        case '\\': c = *src++; break; // Get the escaped char//获取转义字符
+        case '"' : c = '\0'; break;   // Convert bare quote to nul//将裸引号转换为nul
       }
-      if (!(*dst++ = c)) break; // Copy and break on nul
+      if (!(*dst++ = c)) break; // Copy and break on nul//nul上的复制和中断
     }
     return out;
   }
@@ -112,7 +113,7 @@ void GCodeParser::reset() {
  */
 void GCodeParser::parse(char *p) {
 
-  reset(); // No codes to report
+  reset(); // No codes to report//没有要报告的代码
 
   auto uppercase = [](char c) {
     if (TERN0(GCODE_CASE_INSENSITIVE, WITHIN(c, 'a', 'z')))
@@ -120,28 +121,28 @@ void GCodeParser::parse(char *p) {
     return c;
   };
 
-  // Skip spaces
+  // Skip spaces//跳过空格
   while (*p == ' ') ++p;
 
-  // Skip N[-0-9] if included in the command line
+  // Skip N[-0-9] if included in the command line//如果包含在命令行中，则跳过N[-0-9]
   if (uppercase(*p) == 'N' && NUMERIC_SIGNED(p[1])) {
-    //TERN_(FASTER_GCODE_PARSER, set('N', p + 1)); // (optional) Set the 'N' parameter value
-    p += 2;                  // skip N[-0-9]
-    while (NUMERIC(*p)) ++p; // skip [0-9]*
-    while (*p == ' ')   ++p; // skip [ ]*
+    //TERN_(FASTER_GCODE_PARSER, set('N', p + 1)); // (optional) Set the 'N' parameter value//TERN（更快的代码解析器，set（'N'，p+1））；//（可选）设置“N”参数值
+    p += 2;                  // skip N[-0-9]//跳过N[-0-9]
+    while (NUMERIC(*p)) ++p; // skip [0-9]*//跳过[0-9]*
+    while (*p == ' ')   ++p; // skip [ ]*//跳过[]*
   }
 
-  // *p now points to the current command, which should be G, M, or T
+  // *p now points to the current command, which should be G, M, or T//*p现在指向当前命令，该命令应为G、M或T
   command_ptr = p;
 
-  // Get the command letter, which must be G, M, or T
+  // Get the command letter, which must be G, M, or T//获取命令字母，它必须是G、M或T
   const char letter = uppercase(*p++);
 
-  // Nullify asterisk and trailing whitespace
+  // Nullify asterisk and trailing whitespace//使星号和尾随空格为空
   char *starpos = strchr(p, '*');
   if (starpos) {
-    --starpos;                          // *
-    while (*starpos == ' ') --starpos;  // spaces...
+    --starpos;                          // *// *
+    while (*starpos == ' ') --starpos;  // spaces...//空间。。。
     starpos[1] = '\0';
   }
 
@@ -158,8 +159,8 @@ void GCodeParser::parse(char *p) {
       case 'P': case 'R' ... 'S': {
         uint8_t digits = 0;
         char *a = p;
-        while (*a++ == '0') digits++; // Count up '0' characters
-        if (digits == 3) {            // Three '0' digits is a good command
+        while (*a++ == '0') digits++; // Count up '0' characters//累计“0”个字符
+        if (digits == 3) {            // Three '0' digits is a good command//三个“0”数字是一个很好的命令
           codenum = 0;
           command_letter = letter;
           return;
@@ -174,12 +175,12 @@ void GCodeParser::parse(char *p) {
    */
   switch (letter) {
     case 'G': case 'M': case 'T': TERN_(MARLIN_DEV_MODE, case 'D':) {
-      // Skip spaces to get the numeric part
+      // Skip spaces to get the numeric part//跳过空格以获取数字部分
       while (*p == ' ') p++;
 
       #if HAS_PRUSA_MMU2
         if (letter == 'T') {
-          // check for special MMU2 T?/Tx/Tc commands
+          // check for special MMU2 T?/Tx/Tc commands//检查是否有特殊的MMU2 T？/Tx/Tc命令
           if (*p == '?' || *p == 'x' || *p == 'c') {
             command_letter = letter;
             string_arg = p;
@@ -188,27 +189,27 @@ void GCodeParser::parse(char *p) {
         }
       #endif
 
-      // Bail if there's no command code number
+      // Bail if there's no command code number//如果没有命令代码就保释
       if (!TERN(SIGNED_CODENUM, NUMERIC_SIGNED(*p), NUMERIC(*p))) return;
 
-      // Save the command letter at this point
-      // A '?' signifies an unknown command
+      // Save the command letter at this point//此时保存命令字母
+      // A '?' signifies an unknown command//“？”表示未知命令
       command_letter = letter;
 
       #if ENABLED(SIGNED_CODENUM)
-        int sign = 1; // Allow for a negative code like D-1 or T-1
+        int sign = 1; // Allow for a negative code like D-1 or T-1//允许出现负面代码，如D-1或T-1
         if (*p == '-') { sign = -1; ++p; }
       #endif
 
-      // Get the code number - integer digits only
+      // Get the code number - integer digits only//获取代码-仅限整数位数
       codenum = 0;
 
       do { codenum = codenum * 10 + *p++ - '0'; } while (NUMERIC(*p));
 
-      // Apply the sign, if any
+      // Apply the sign, if any//如有，请使用该标志
       TERN_(SIGNED_CODENUM, codenum *= sign);
 
-      // Allow for decimal point in command
+      // Allow for decimal point in command//允许在命令中使用小数点
       #if USE_GCODE_SUBCODES
         if (*p == '.') {
           p++;
@@ -217,7 +218,7 @@ void GCodeParser::parse(char *p) {
         }
       #endif
 
-      // Skip all spaces to get to the first argument, or nul
+      // Skip all spaces to get to the first argument, or nul//跳过所有空格以转到第一个参数或nul
       while (*p == ' ') p++;
 
       #if ENABLED(GCODE_MOTION_MODES)
@@ -254,7 +255,7 @@ void GCodeParser::parse(char *p) {
         command_letter = 'G';
         codenum = motion_mode_codenum;
         TERN_(USE_GCODE_SUBCODES, subcode = motion_mode_subcode);
-        p--; // Back up one character to use the current parameter
+        p--; // Back up one character to use the current parameter//备份一个字符以使用当前参数
         break;
 
     #endif
@@ -262,11 +263,11 @@ void GCodeParser::parse(char *p) {
     default: return;
   }
 
-  // The command parameters (if any) start here, for sure!
+  // The command parameters (if any) start here, for sure!//当然，命令参数（如果有）从这里开始！
 
-  IF_DISABLED(FASTER_GCODE_PARSER, command_args = p); // Scan for parameters in seen()
+  IF_DISABLED(FASTER_GCODE_PARSER, command_args = p); // Scan for parameters in seen()//扫描seen（）中的参数
 
-  // Only use string_arg for these M codes
+  // Only use string_arg for these M codes//仅对这些M代码使用字符串参数
   if (letter == 'M') switch (codenum) {
     TERN_(GCODE_MACROS, case 810 ... 819:)
     TERN_(EXPECTED_PRINTER_CHECK, case 16:)
@@ -292,14 +293,14 @@ void GCodeParser::parse(char *p) {
     bool quoted_string_arg = false;
   #endif
   string_arg = nullptr;
-  while (const char param = uppercase(*p++)) {  // Get the next parameter. A NUL ends the loop
+  while (const char param = uppercase(*p++)) {  // Get the next parameter. A NUL ends the loop//获取下一个参数。NUL结束循环
 
-    // Special handling for M32 [P] !/path/to/file.g#
-    // The path must be the last parameter
+    // Special handling for M32 [P] !/path/to/file.g#//M32[P]的特殊处理/路径/to/file.g#
+    // The path must be the last parameter//路径必须是最后一个参数
     if (param == '!' && is_command('M', 32)) {
-      string_arg = p;                           // Name starts after '!'
-      char * const lb = strchr(p, '#');         // Already seen '#' as SD char (to pause buffering)
-      if (lb) *lb = '\0';                       // Safe to mark the end of the filename
+      string_arg = p;                           // Name starts after '!'//名字以“！”开头
+      char * const lb = strchr(p, '#');         // Already seen '#' as SD char (to pause buffering)//已将“#”视为SD字符（暂停缓冲）
+      if (lb) *lb = '\0';                       // Safe to mark the end of the filename//可以安全地标记文件名的结尾
       return;
     }
 
@@ -311,7 +312,7 @@ void GCodeParser::parse(char *p) {
     #endif
 
     #if ENABLED(FASTER_GCODE_PARSER)
-      // Arguments MUST be uppercase for fast GCode parsing
+      // Arguments MUST be uppercase for fast GCode parsing//参数必须为大写才能进行快速GCode解析
       #define PARAM_OK(P) WITHIN((P), 'A', 'Z')
     #else
       #define PARAM_OK(P) true
@@ -319,7 +320,7 @@ void GCodeParser::parse(char *p) {
 
     if (PARAM_OK(param)) {
 
-      while (*p == ' ') p++;                    // Skip spaces between parameters & values
+      while (*p == ' ') p++;                    // Skip spaces between parameters & values//跳过参数和值之间的空格
 
       #if ENABLED(GCODE_QUOTED_STRINGS)
         const bool is_str = (*p == '"'), has_val = is_str || valid_float(p);
@@ -338,34 +339,34 @@ void GCodeParser::parse(char *p) {
         }
       #endif
 
-      if (!has_val && !string_arg) {            // No value? First time, keep as string_arg
+      if (!has_val && !string_arg) {            // No value? First time, keep as string_arg//没有价值？第一次，保留为字符串参数
         string_arg = p - 1;
         #if ENABLED(DEBUG_GCODE_PARSER)
-          if (debug) SERIAL_ECHOPAIR(" string_arg: ", hex_address((void*)string_arg)); // DEBUG
+          if (debug) SERIAL_ECHOPAIR(" string_arg: ", hex_address((void*)string_arg)); // DEBUG//调试
         #endif
       }
 
       if (TERN0(DEBUG_GCODE_PARSER, debug)) SERIAL_EOL();
 
-      TERN_(FASTER_GCODE_PARSER, set(param, valptr)); // Set parameter exists and pointer (nullptr for no value)
+      TERN_(FASTER_GCODE_PARSER, set(param, valptr)); // Set parameter exists and pointer (nullptr for no value)//设置参数存在且指针为空（空PTR表示无值）
     }
-    else if (!string_arg) {                     // Not A-Z? First time, keep as the string_arg
+    else if (!string_arg) {                     // Not A-Z? First time, keep as the string_arg//不是A-Z？第一次，保留为字符串参数
       string_arg = p - 1;
       #if ENABLED(DEBUG_GCODE_PARSER)
-        if (debug) SERIAL_ECHOPAIR(" string_arg: ", hex_address((void*)string_arg)); // DEBUG
+        if (debug) SERIAL_ECHOPAIR(" string_arg: ", hex_address((void*)string_arg)); // DEBUG//调试
       #endif
     }
 
-    if (!WITHIN(*p, 'A', 'Z')) {                // Another parameter right away?
-      while (*p && DECIMAL_SIGNED(*p)) p++;     // Skip over the value section of a parameter
-      while (*p == ' ') p++;                    // Skip over all spaces
+    if (!WITHIN(*p, 'A', 'Z')) {                // Another parameter right away?//马上再来一个参数？
+      while (*p && DECIMAL_SIGNED(*p)) p++;     // Skip over the value section of a parameter//跳过参数的值部分
+      while (*p == ' ') p++;                    // Skip over all spaces//跳过所有空格
     }
   }
 }
 
 #if ENABLED(CNC_COORDINATE_SYSTEMS)
 
-  // Parse the next parameter as a new command
+  // Parse the next parameter as a new command//将下一个参数解析为新命令
   bool GCodeParser::chain() {
     #if ENABLED(FASTER_GCODE_PARSER)
       char *next_command = command_ptr;
@@ -381,7 +382,7 @@ void GCodeParser::parse(char *p) {
     return !!next_command;
   }
 
-#endif // CNC_COORDINATE_SYSTEMS
+#endif // CNC_COORDINATE_SYSTEMS//CNC坐标系
 
 void GCodeParser::unknown_command_warning() {
   SERIAL_ECHO_MSG(STR_UNKNOWN_COMMAND, command_ptr, "\"");
@@ -429,4 +430,4 @@ void GCodeParser::unknown_command_warning() {
     }
   }
 
-#endif // DEBUG_GCODE_PARSER
+#endif // DEBUG_GCODE_PARSER//调试代码分析器

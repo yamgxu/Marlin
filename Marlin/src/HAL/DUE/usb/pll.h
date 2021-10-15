@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * \file
  *
@@ -41,7 +42,7 @@
  *
  */
 /*
- * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>
+ * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>//www.atmel.com/design support/“>atmel支持</a>
  */
 
 #ifndef CHIP_PLL_H_INCLUDED
@@ -49,13 +50,13 @@
 
 #include "osc.h"
 
-/// @cond 0
+/// @cond 0///@cond 0
 /**INDENT-OFF**/
 #ifdef __cplusplus
 extern "C" {
 #endif
 /**INDENT-ON**/
-/// @endcond
+/// @endcond///@endcond
 
 /**
  * \weakgroup pll_group
@@ -70,19 +71,19 @@ extern "C" {
 
 #define NR_PLLS             2
 #define PLLA_ID             0
-#define UPLL_ID             1   //!< USB UTMI PLL.
+#define UPLL_ID             1   //!< USB UTMI PLL.//!< USB UTMI锁相环。
 
 #define PLL_UPLL_HZ     480000000
 
 #define PLL_COUNT           0x3FU
 
 enum pll_source {
-	PLL_SRC_MAINCK_4M_RC        = OSC_MAINCK_4M_RC,     //!< Internal 4MHz RC oscillator.
-	PLL_SRC_MAINCK_8M_RC        = OSC_MAINCK_8M_RC,     //!< Internal 8MHz RC oscillator.
-	PLL_SRC_MAINCK_12M_RC       = OSC_MAINCK_12M_RC,    //!< Internal 12MHz RC oscillator.
-	PLL_SRC_MAINCK_XTAL         = OSC_MAINCK_XTAL,      //!< External crystal oscillator.
-	PLL_SRC_MAINCK_BYPASS       = OSC_MAINCK_BYPASS,    //!< External bypass oscillator.
-	PLL_NR_SOURCES,                                     //!< Number of PLL sources.
+	PLL_SRC_MAINCK_4M_RC        = OSC_MAINCK_4M_RC,     //!< Internal 4MHz RC oscillator.//！<内部4MHz RC振荡器。
+	PLL_SRC_MAINCK_8M_RC        = OSC_MAINCK_8M_RC,     //!< Internal 8MHz RC oscillator.//！<内部8MHz RC振荡器。
+	PLL_SRC_MAINCK_12M_RC       = OSC_MAINCK_12M_RC,    //!< Internal 12MHz RC oscillator.//！<内部12MHz RC振荡器。
+	PLL_SRC_MAINCK_XTAL         = OSC_MAINCK_XTAL,      //!< External crystal oscillator.//！<外部晶体振荡器。
+	PLL_SRC_MAINCK_BYPASS       = OSC_MAINCK_BYPASS,    //!< External bypass oscillator.//！<外部旁路振荡器。
+	PLL_NR_SOURCES,                                     //!< Number of PLL sources.//！<PLL源的数量。
 };
 
 struct pll_config {
@@ -158,7 +159,7 @@ static inline void pll_config_write(const struct pll_config *p_cfg, uint32_t ul_
 	Assert(ul_pll_id < NR_PLLS);
 
 	if (ul_pll_id == PLLA_ID) {
-		pmc_disable_pllack(); // Always stop PLL first!
+		pmc_disable_pllack(); // Always stop PLL first!//始终先停止PLL！
 		PMC->CKGR_PLLAR = CKGR_PLLAR_ONE | p_cfg->ctrl;
 	} else {
 		PMC->CKGR_UCKR = p_cfg->ctrl;
@@ -170,7 +171,7 @@ static inline void pll_enable(const struct pll_config *p_cfg, uint32_t ul_pll_id
 	Assert(ul_pll_id < NR_PLLS);
 
 	if (ul_pll_id == PLLA_ID) {
-		pmc_disable_pllack(); // Always stop PLL first!
+		pmc_disable_pllack(); // Always stop PLL first!//始终先停止PLL！
 		PMC->CKGR_PLLAR = CKGR_PLLAR_ONE | p_cfg->ctrl;
 	} else {
 		PMC->CKGR_UCKR = p_cfg->ctrl | CKGR_UCKR_UPLLEN;
@@ -225,7 +226,7 @@ static inline void pll_enable_config_defaults(unsigned int ul_pll_id)
 	struct pll_config pllcfg;
 
 	if (pll_is_locked(ul_pll_id)) {
-		return; // Pll already running
+		return; // Pll already running//Pll已在运行
 	}
 	switch (ul_pll_id) {
 #ifdef CONFIG_PLL0_SOURCE
@@ -275,14 +276,14 @@ static inline int pll_wait_for_lock(unsigned int pll_id)
 	return 0;
 }
 
-//! @}
+//! @}//! @}
 
-/// @cond 0
+/// @cond 0///@cond 0
 /**INDENT-OFF**/
 #ifdef __cplusplus
 }
 #endif
 /**INDENT-ON**/
-/// @endcond
+/// @endcond///@endcond
 
 #endif /* CHIP_PLL_H_INCLUDED */

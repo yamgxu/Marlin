@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,16 +32,16 @@
 
 #define BOARD_INFO_NAME "MKS GEN L V2"
 
-//
-// Heaters / Fans
-//
-// Power outputs EFBF or EFBE
+////
+// Heaters / Fans//加热器/风扇
+////
+// Power outputs EFBF or EFBE//功率输出EFBF或EFBE
 #define MOSFET_D_PIN                           7
 
-//
-// CS Pins wired to avoid conflict with the LCD
-// See https://www.thingiverse.com/asset:66604
-//
+////
+// CS Pins wired to avoid conflict with the LCD//连接CS引脚以避免与LCD冲突
+// See https://www.thingiverse.com/asset:66604//看https://www.thingiverse.com/asset:66604
+////
 
 #ifndef X_CS_PIN
   #define X_CS_PIN                            63
@@ -62,7 +63,7 @@
   #define E1_CS_PIN                           21
 #endif
 
-// TMC2130 Diag Pins (currently just for reference)
+// TMC2130 Diag Pins (currently just for reference)//TMC2130 Diag引脚（目前仅供参考）
 #define X_DIAG_PIN                             3
 #define Y_DIAG_PIN                            14
 #define Z_DIAG_PIN                            18

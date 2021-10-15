@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -40,4 +41,4 @@ void ClosedLoop::set(const byte val) {
   OUT_WRITE(CLOSED_LOOP_ENABLE_PIN, val);
 }
 
-#endif // EXTERNAL_CLOSED_LOOP_CONTROLLER
+#endif // EXTERNAL_CLOSED_LOOP_CONTROLLER//外部闭环控制器

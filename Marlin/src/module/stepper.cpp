@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -79,7 +80,7 @@
 
 #include "stepper.h"
 
-Stepper stepper; // Singleton
+Stepper stepper; // Singleton//独生子女
 
 #define BABYSTEPPING_EXTRA_DIR_WAIT
 
@@ -119,8 +120,8 @@ Stepper stepper; // Singleton
 
 #if HAS_L64XX
   #include "../libs/L64XX/L64XX_Marlin.h"
-  uint8_t L6470_buf[MAX_L64XX + 1];   // chip command sequence - element 0 not used
-  bool L64XX_OK_to_power_up = false;  // flag to keep L64xx steppers powered down after a reset or power up
+  uint8_t L6470_buf[MAX_L64XX + 1];   // chip command sequence - element 0 not used//芯片命令序列-未使用元件0
+  bool L64XX_OK_to_power_up = false;  // flag to keep L64xx steppers powered down after a reset or power up//复位或通电后保持L64xx步进机断电的标志
 #endif
 
 #if ENABLED(POWER_LOSS_RECOVERY)
@@ -131,26 +132,26 @@ Stepper stepper; // Singleton
   #include "../feature/spindle_laser.h"
 #endif
 
-// public:
+// public://公众：
 
 #if EITHER(HAS_EXTRA_ENDSTOPS, Z_STEPPER_AUTO_ALIGN)
   bool Stepper::separate_multi_axis = false;
 #endif
 
 #if HAS_MOTOR_CURRENT_SPI || HAS_MOTOR_CURRENT_PWM
-  bool Stepper::initialized; // = false
-  uint32_t Stepper::motor_current_setting[MOTOR_CURRENT_COUNT]; // Initialized by settings.load()
+  bool Stepper::initialized; // = false//=错误
+  uint32_t Stepper::motor_current_setting[MOTOR_CURRENT_COUNT]; // Initialized by settings.load()//由settings.load（）初始化
   #if HAS_MOTOR_CURRENT_SPI
     constexpr uint32_t Stepper::digipot_count[];
   #endif
 #endif
 
-// private:
+// private://私人：
 
-block_t* Stepper::current_block; // (= nullptr) A pointer to the block currently being traced
+block_t* Stepper::current_block; // (= nullptr) A pointer to the block currently being traced//（=nullptr）指向当前正在跟踪的块的指针
 
-uint8_t Stepper::last_direction_bits, // = 0
-        Stepper::axis_did_move; // = 0
+uint8_t Stepper::last_direction_bits, // = 0// = 0
+        Stepper::axis_did_move; // = 0// = 0
 
 bool Stepper::abort_current_block;
 
@@ -180,7 +181,7 @@ uint32_t Stepper::acceleration_time, Stepper::deceleration_time;
 uint8_t Stepper::steps_per_isr;
 
 #if HAS_FREEZE_PIN
-  bool Stepper::frozen; // = false
+  bool Stepper::frozen; // = false//=错误
 #endif
 
 IF_DISABLED(ADAPTIVE_STEP_SMOOTHING, constexpr) uint8_t Stepper::oversampling_factor;
@@ -189,10 +190,10 @@ xyze_long_t Stepper::delta_error{0};
 
 xyze_ulong_t Stepper::advance_dividend{0};
 uint32_t Stepper::advance_divisor = 0,
-         Stepper::step_events_completed = 0, // The number of step events executed in the current block
-         Stepper::accelerate_until,          // The count at which to stop accelerating
-         Stepper::decelerate_after,          // The count at which to start decelerating
-         Stepper::step_event_count;          // The total event count for the current block
+         Stepper::step_events_completed = 0, // The number of step events executed in the current block//当前块中执行的步骤事件数
+         Stepper::accelerate_until,          // The count at which to stop accelerating//停止加速的计数
+         Stepper::decelerate_after,          // The count at which to start decelerating//开始减速的计数
+         Stepper::step_event_count;          // The total event count for the current block//当前块的总事件计数
 
 #if EITHER(HAS_MULTI_EXTRUDER, MIXING_EXTRUDER)
   uint8_t Stepper::stepper_extruder;
@@ -201,15 +202,15 @@ uint32_t Stepper::advance_divisor = 0,
 #endif
 
 #if ENABLED(S_CURVE_ACCELERATION)
-  int32_t __attribute__((used)) Stepper::bezier_A __asm__("bezier_A");    // A coefficient in Bézier speed curve with alias for assembler
-  int32_t __attribute__((used)) Stepper::bezier_B __asm__("bezier_B");    // B coefficient in Bézier speed curve with alias for assembler
-  int32_t __attribute__((used)) Stepper::bezier_C __asm__("bezier_C");    // C coefficient in Bézier speed curve with alias for assembler
-  uint32_t __attribute__((used)) Stepper::bezier_F __asm__("bezier_F");   // F coefficient in Bézier speed curve with alias for assembler
-  uint32_t __attribute__((used)) Stepper::bezier_AV __asm__("bezier_AV"); // AV coefficient in Bézier speed curve with alias for assembler
+  int32_t __attribute__((used)) Stepper::bezier_A __asm__("bezier_A");    // A coefficient in Bézier speed curve with alias for assembler//装配工用带别名的Bézier速度曲线中的一个系数
+  int32_t __attribute__((used)) Stepper::bezier_B __asm__("bezier_B");    // B coefficient in Bézier speed curve with alias for assembler//装配机用别名Bézier速度曲线中的B系数
+  int32_t __attribute__((used)) Stepper::bezier_C __asm__("bezier_C");    // C coefficient in Bézier speed curve with alias for assembler//装配机用别名Bézier速度曲线中的C系数
+  uint32_t __attribute__((used)) Stepper::bezier_F __asm__("bezier_F");   // F coefficient in Bézier speed curve with alias for assembler//装配机用别名Bézier速度曲线中的F系数
+  uint32_t __attribute__((used)) Stepper::bezier_AV __asm__("bezier_AV"); // AV coefficient in Bézier speed curve with alias for assembler//汇编程序用带别名的Bézier速度曲线中的AV系数
   #ifdef __AVR__
-    bool __attribute__((used)) Stepper::A_negative __asm__("A_negative"); // If A coefficient was negative
+    bool __attribute__((used)) Stepper::A_negative __asm__("A_negative"); // If A coefficient was negative//如果系数为负
   #endif
-  bool Stepper::bezier_2nd_half;    // =false If Bézier curve has been initialized or not
+  bool Stepper::bezier_2nd_half;    // =false If Bézier curve has been initialized or not//=如果Bézier曲线已初始化或未初始化，则为false
 #endif
 
 #if ENABLED(LIN_ADVANCE)
@@ -224,7 +225,7 @@ uint32_t Stepper::advance_divisor = 0,
 
   bool Stepper::LA_use_advance_lead;
 
-#endif // LIN_ADVANCE
+#endif // LIN_ADVANCE//林乌前进
 
 #if ENABLED(INTEGRATED_BABYSTEPPING)
   uint32_t Stepper::nextBabystepISR = BABYSTEP_NEVER;
@@ -236,7 +237,7 @@ uint32_t Stepper::advance_divisor = 0,
 
 int32_t Stepper::ticks_nominal = -1;
 #if DISABLED(S_CURVE_ACCELERATION)
-  uint32_t Stepper::acc_step_rate; // needed for deceleration start point
+  uint32_t Stepper::acc_step_rate; // needed for deceleration start point//需要减速起点
 #endif
 
 xyz_long_t Stepper::endstops_trigsteps;
@@ -432,7 +433,7 @@ xyze_int8_t Stepper::count_direction{0};
 #define CYCLES_TO_NS(CYC) (1000UL * (CYC) / ((F_CPU) / 1000000))
 #define NS_PER_PULSE_TIMER_TICK (1000000000UL / (STEPPER_TIMER_RATE))
 
-// Round up when converting from ns to timer ticks
+// Round up when converting from ns to timer ticks//从ns转换为计时器计时信号时向上取整
 #define NS_TO_PULSE_TIMER_TICKS(NS) (((NS) + (NS_PER_PULSE_TIMER_TICK) / 2) / (NS_PER_PULSE_TIMER_TICK))
 
 #define TIMER_SETUP_NS (CYCLES_TO_NS(TIMER_READ_ADD_AND_STORE_CYCLES))
@@ -482,31 +483,31 @@ void Stepper::set_directions() {
     }
 
   #if HAS_X_DIR
-    SET_STEP_DIR(X); // A
+    SET_STEP_DIR(X); // A//A
   #endif
   #if HAS_Y_DIR
-    SET_STEP_DIR(Y); // B
+    SET_STEP_DIR(Y); // B//B
   #endif
   #if HAS_Z_DIR
-    SET_STEP_DIR(Z); // C
+    SET_STEP_DIR(Z); // C//C
   #endif
 
   #if HAS_I_DIR
-    SET_STEP_DIR(I); // I
+    SET_STEP_DIR(I); // I//我
   #endif
 
   #if HAS_J_DIR
-    SET_STEP_DIR(J); // J
+    SET_STEP_DIR(J); // J//J
   #endif
 
   #if HAS_K_DIR
-    SET_STEP_DIR(K); // K
+    SET_STEP_DIR(K); // K//K
   #endif
 
   #if DISABLED(LIN_ADVANCE)
     #if ENABLED(MIXING_EXTRUDER)
-       // Because this is valid for the whole block we don't know
-       // what e-steppers will step. Likely all. Set all.
+       // Because this is valid for the whole block we don't know//因为这对我们不知道的整个街区都有效
+       // what e-steppers will step. Likely all. Set all.//电子步进器将步进什么。很可能是全部。设置所有。
       if (motor_direction(E_AXIS)) {
         MIXER_STEPPER_LOOP(j) REV_E_DIR(j);
         count_direction.e = -1;
@@ -525,26 +526,26 @@ void Stepper::set_directions() {
         count_direction.e = 1;
       }
     #endif
-  #endif // !LIN_ADVANCE
+  #endif // !LIN_ADVANCE// !林乌前进
 
   #if HAS_L64XX
-    if (L64XX_OK_to_power_up) { // OK to send the direction commands (which powers up the L64XX steppers)
+    if (L64XX_OK_to_power_up) { // OK to send the direction commands (which powers up the L64XX steppers)//确定发送方向命令（为L64XX步进电机通电）
       if (L64xxManager.spi_active) {
-        L64xxManager.spi_abort = true;                    // Interrupted SPI transfer needs to shut down gracefully
+        L64xxManager.spi_abort = true;                    // Interrupted SPI transfer needs to shut down gracefully//中断的SPI传输需要正常关闭
         for (uint8_t j = 1; j <= L64XX::chain[0]; j++)
-          L6470_buf[j] = dSPIN_NOP;                         // Fill buffer with NOOPs
-        L64xxManager.transfer(L6470_buf, L64XX::chain[0]);  // Send enough NOOPs to complete any command
+          L6470_buf[j] = dSPIN_NOP;                         // Fill buffer with NOOPs//用NOOPs填充缓冲区
+        L64xxManager.transfer(L6470_buf, L64XX::chain[0]);  // Send enough NOOPs to complete any command//发送足够的noop来完成任何命令
         L64xxManager.transfer(L6470_buf, L64XX::chain[0]);
         L64xxManager.transfer(L6470_buf, L64XX::chain[0]);
       }
 
-      // L64xxManager.dir_commands[] is an array that holds direction command for each stepper
+      // L64xxManager.dir_commands[] is an array that holds direction command for each stepper//L64xxManager.dir_commands[]是一个数组，用于保存每个步进机的方向命令
 
-      // Scan command array, copy matches into L64xxManager.transfer
+      // Scan command array, copy matches into L64xxManager.transfer//扫描命令数组，将匹配项复制到L64xxManager.transfer
       for (uint8_t j = 1; j <= L64XX::chain[0]; j++)
         L6470_buf[j] = L64xxManager.dir_commands[L64XX::chain[j]];
 
-      L64xxManager.transfer(L6470_buf, L64XX::chain[0]);  // send the command stream to the drivers
+      L64xxManager.transfer(L6470_buf, L64XX::chain[0]);  // send the command stream to the drivers//将命令流发送到驱动程序
     }
   #endif
 
@@ -788,13 +789,13 @@ void Stepper::set_directions() {
 
   #ifdef __AVR__
 
-    // For AVR we use assembly to maximize speed
+    // For AVR we use assembly to maximize speed//对于AVR，我们使用组装来最大化速度
     void Stepper::_calc_bezier_curve_coeffs(const int32_t v0, const int32_t v1, const uint32_t av) {
 
-      // Store advance
+      // Store advance//预购
       bezier_AV = av;
 
-      // Calculate the rest of the coefficients
+      // Calculate the rest of the coefficients//计算其余的系数
       uint8_t r2 = v0 & 0xFF;
       uint8_t r3 = (v0 >> 8) & 0xFF;
       uint8_t r12 = (v0 >> 16) & 0xFF;
@@ -893,7 +894,7 @@ void Stepper::set_directions() {
 
     FORCE_INLINE int32_t Stepper::_eval_bezier_curve(const uint32_t curr_step) {
 
-      // If dealing with the first step, save expensive computing and return the initial speed
+      // If dealing with the first step, save expensive computing and return the initial speed//如果处理第一步，请节省昂贵的计算并返回初始速度
       if (!curr_step)
         return bezier_F;
 
@@ -1278,9 +1279,9 @@ void Stepper::set_directions() {
 
   #else
 
-    // For all the other 32bit CPUs
+    // For all the other 32bit CPUs//对于所有其他32位CPU
     FORCE_INLINE void Stepper::_calc_bezier_curve_coeffs(const int32_t v0, const int32_t v1, const uint32_t av) {
-      // Calculate the Bézier coefficients
+      // Calculate the Bézier coefficients//计算Bézier系数
       bezier_A =  768 * (v1 - v0);
       bezier_B = 1920 * (v0 - v1);
       bezier_C = 1280 * (v1 - v0);
@@ -1291,7 +1292,7 @@ void Stepper::set_directions() {
     FORCE_INLINE int32_t Stepper::_eval_bezier_curve(const uint32_t curr_step) {
       #if defined(__arm__) || defined(__thumb__)
 
-        // For ARM Cortex M3/M4 CPUs, we have the optimized assembler version, that takes 43 cycles to execute
+        // For ARM Cortex M3/M4 CPUs, we have the optimized assembler version, that takes 43 cycles to execute//对于ARM Cortex M3/M4 CPU，我们有优化的汇编程序版本，需要43个周期才能执行
         uint32_t flo = 0;
         uint32_t fhi = bezier_AV * curr_step;
         uint32_t t = fhi;
@@ -1302,28 +1303,28 @@ void Stepper::set_directions() {
         int32_t C = bezier_C;
 
          __asm__ __volatile__(
-          ".syntax unified" "\n\t"              // is to prevent CM0,CM1 non-unified syntax
-          A("lsrs  %[ahi],%[alo],#1")           // a  = F << 31      1 cycles
-          A("lsls  %[alo],%[alo],#31")          //                   1 cycles
-          A("umull %[flo],%[fhi],%[fhi],%[t]")  // f *= t            5 cycles [fhi:flo=64bits]
-          A("umull %[flo],%[fhi],%[fhi],%[t]")  // f>>=32; f*=t      5 cycles [fhi:flo=64bits]
-          A("lsrs  %[flo],%[fhi],#1")           //                   1 cycles [31bits]
-          A("smlal %[alo],%[ahi],%[flo],%[C]")  // a+=(f>>33)*C;     5 cycles
-          A("umull %[flo],%[fhi],%[fhi],%[t]")  // f>>=32; f*=t      5 cycles [fhi:flo=64bits]
-          A("lsrs  %[flo],%[fhi],#1")           //                   1 cycles [31bits]
-          A("smlal %[alo],%[ahi],%[flo],%[B]")  // a+=(f>>33)*B;     5 cycles
-          A("umull %[flo],%[fhi],%[fhi],%[t]")  // f>>=32; f*=t      5 cycles [fhi:flo=64bits]
-          A("lsrs  %[flo],%[fhi],#1")           // f>>=33;           1 cycles [31bits]
-          A("smlal %[alo],%[ahi],%[flo],%[A]")  // a+=(f>>33)*A;     5 cycles
-          A("lsrs  %[alo],%[ahi],#6")           // a>>=38            1 cycles
+          ".syntax unified" "\n\t"              // is to prevent CM0,CM1 non-unified syntax//是为了防止CM0、CM1语法不统一
+          A("lsrs  %[ahi],%[alo],#1")           // a  = F << 31      1 cycles//a=F<31个周期
+          A("lsls  %[alo],%[alo],#31")          //                   1 cycles//1个周期
+          A("umull %[flo],%[fhi],%[fhi],%[t]")  // f *= t            5 cycles [fhi:flo=64bits]//f*=t 5个周期[fhi:flo=64位]
+          A("umull %[flo],%[fhi],%[fhi],%[t]")  // f>>=32; f*=t      5 cycles [fhi:flo=64bits]//f>>=32；f*=t 5个周期[fhi:flo=64位]
+          A("lsrs  %[flo],%[fhi],#1")           //                   1 cycles [31bits]//1个周期[31位]
+          A("smlal %[alo],%[ahi],%[flo],%[C]")  // a+=(f>>33)*C;     5 cycles//a+=（f>>33）*C；5个周期
+          A("umull %[flo],%[fhi],%[fhi],%[t]")  // f>>=32; f*=t      5 cycles [fhi:flo=64bits]//f>>=32；f*=t 5个周期[fhi:flo=64位]
+          A("lsrs  %[flo],%[fhi],#1")           //                   1 cycles [31bits]//1个周期[31位]
+          A("smlal %[alo],%[ahi],%[flo],%[B]")  // a+=(f>>33)*B;     5 cycles//a+=（f>>33）*B；5个周期
+          A("umull %[flo],%[fhi],%[fhi],%[t]")  // f>>=32; f*=t      5 cycles [fhi:flo=64bits]//f>>=32；f*=t 5个周期[fhi:flo=64位]
+          A("lsrs  %[flo],%[fhi],#1")           // f>>=33;           1 cycles [31bits]//f>>=33；1个周期[31位]
+          A("smlal %[alo],%[ahi],%[flo],%[A]")  // a+=(f>>33)*A;     5 cycles//a+=（f>>33）*a；5个周期
+          A("lsrs  %[alo],%[ahi],#6")           // a>>=38            1 cycles//a>>=38 1个周期
           : [alo]"+r"( alo ) ,
             [flo]"+r"( flo ) ,
             [fhi]"+r"( fhi ) ,
             [ahi]"+r"( ahi ) ,
-            [A]"+r"( A ) ,  // <== Note: Even if A, B, C, and t registers are INPUT ONLY
-            [B]"+r"( B ) ,  //  GCC does bad optimizations on the code if we list them as
-            [C]"+r"( C ) ,  //  such, breaking this function. So, to avoid that problem,
-            [t]"+r"( t )    //  we list all registers as input-outputs.
+            [A]"+r"( A ) ,  // <== Note: Even if A, B, C, and t registers are INPUT ONLY//<==注：即使A、B、C和t寄存器仅为输入
+            [B]"+r"( B ) ,  //  GCC does bad optimizations on the code if we list them as//如果我们将代码列为
+            [C]"+r"( C ) ,  //  such, breaking this function. So, to avoid that problem,//这样，破坏了这个功能。所以为了避免这个问题,，
+            [t]"+r"( t )    //  we list all registers as input-outputs.//我们将所有寄存器列为输入输出。
           :
           : "cc"
         );
@@ -1331,30 +1332,30 @@ void Stepper::set_directions() {
 
       #else
 
-        // For non ARM targets, we provide a fallback implementation. Really doubt it
-        // will be useful, unless the processor is fast and 32bit
+        // For non ARM targets, we provide a fallback implementation. Really doubt it//对于非ARM目标，我们提供了一个回退实现。我真的很怀疑
+        // will be useful, unless the processor is fast and 32bit//将非常有用，除非处理器速度快且32位
 
-        uint32_t t = bezier_AV * curr_step;               // t: Range 0 - 1^32 = 32 bits
+        uint32_t t = bezier_AV * curr_step;               // t: Range 0 - 1^32 = 32 bits//t：范围0-1^32=32位
         uint64_t f = t;
-        f *= t;                                           // Range 32*2 = 64 bits (unsigned)
-        f >>= 32;                                         // Range 32 bits  (unsigned)
-        f *= t;                                           // Range 32*2 = 64 bits  (unsigned)
-        f >>= 32;                                         // Range 32 bits : f = t^3  (unsigned)
-        int64_t acc = (int64_t) bezier_F << 31;           // Range 63 bits (signed)
-        acc += ((uint32_t) f >> 1) * (int64_t) bezier_C;  // Range 29bits + 31 = 60bits (plus sign)
-        f *= t;                                           // Range 32*2 = 64 bits
-        f >>= 32;                                         // Range 32 bits : f = t^3  (unsigned)
-        acc += ((uint32_t) f >> 1) * (int64_t) bezier_B;  // Range 29bits + 31 = 60bits (plus sign)
-        f *= t;                                           // Range 32*2 = 64 bits
-        f >>= 32;                                         // Range 32 bits : f = t^3  (unsigned)
-        acc += ((uint32_t) f >> 1) * (int64_t) bezier_A;  // Range 28bits + 31 = 59bits (plus sign)
-        acc >>= (31 + 7);                                 // Range 24bits (plus sign)
+        f *= t;                                           // Range 32*2 = 64 bits (unsigned)//范围32*2=64位（无符号）
+        f >>= 32;                                         // Range 32 bits  (unsigned)//范围32位（无符号）
+        f *= t;                                           // Range 32*2 = 64 bits  (unsigned)//范围32*2=64位（无符号）
+        f >>= 32;                                         // Range 32 bits : f = t^3  (unsigned)//范围32位：f=t^3（无符号）
+        int64_t acc = (int64_t) bezier_F << 31;           // Range 63 bits (signed)//范围63位（有符号）
+        acc += ((uint32_t) f >> 1) * (int64_t) bezier_C;  // Range 29bits + 31 = 60bits (plus sign)//范围29位+31=60位（加号）
+        f *= t;                                           // Range 32*2 = 64 bits//范围32*2=64位
+        f >>= 32;                                         // Range 32 bits : f = t^3  (unsigned)//范围32位：f=t^3（无符号）
+        acc += ((uint32_t) f >> 1) * (int64_t) bezier_B;  // Range 29bits + 31 = 60bits (plus sign)//范围29位+31=60位（加号）
+        f *= t;                                           // Range 32*2 = 64 bits//范围32*2=64位
+        f >>= 32;                                         // Range 32 bits : f = t^3  (unsigned)//范围32位：f=t^3（无符号）
+        acc += ((uint32_t) f >> 1) * (int64_t) bezier_A;  // Range 28bits + 31 = 59bits (plus sign)//范围28位+31=59位（加号）
+        acc >>= (31 + 7);                                 // Range 24bits (plus sign)//范围24位（加号）
         return (int32_t) acc;
 
       #endif
     }
   #endif
-#endif // S_CURVE_ACCELERATION
+#endif // S_CURVE_ACCELERATION//S_曲线
 
 /**
  * Stepper Driver Interrupt
@@ -1363,15 +1364,9 @@ void Stepper::set_directions() {
  */
 
 HAL_STEP_TIMER_ISR() {
-    SERIAL_ECHO_MSG("HAL_STEP_TIMER_ISR");
-
   HAL_timer_isr_prologue(STEP_TIMER_NUM);
-
   Stepper::isr();
-
   HAL_timer_isr_epilogue(STEP_TIMER_NUM);
-    SERIAL_ECHO_MSG("HAL_STEP_TIMER_ISR ok");
-
 }
 
 #ifdef CPU_32_BIT
@@ -1381,74 +1376,73 @@ HAL_STEP_TIMER_ISR() {
 #endif
 
 void Stepper::isr() {
-    SERIAL_ECHO_MSG("Stepper::isr");
 
-  static uint32_t nextMainISR = 0;  // Interval until the next main Stepper Pulse phase (0 = Now)
+  static uint32_t nextMainISR = 0;  // Interval until the next main Stepper Pulse phase (0 = Now)//到下一个主步进脉冲相位的间隔（0=现在）
 
   #ifndef __AVR__
-    // Disable interrupts, to avoid ISR preemption while we reprogram the period
-    // (AVR enters the ISR with global interrupts disabled, so no need to do it here)
+    // Disable interrupts, to avoid ISR preemption while we reprogram the period//禁用中断，以避免在重新编程期间ISR抢占
+    // (AVR enters the ISR with global interrupts disabled, so no need to do it here)//（AVR在禁用全局中断的情况下进入ISR，因此无需在此处执行此操作）
     DISABLE_ISRS();
   #endif
 
-  // Program timer compare for the maximum period, so it does NOT
-  // flag an interrupt while this ISR is running - So changes from small
-  // periods to big periods are respected and the timer does not reset to 0
+  // Program timer compare for the maximum period, so it does NOT//程序计时器比较最长周期，因此它不会
+  // flag an interrupt while this ISR is running - So changes from small//在ISR运行时标记一个中断-因此从小到小
+  // periods to big periods are respected and the timer does not reset to 0//将周期设置为大周期，并且计时器不会重置为0
   HAL_timer_set_compare(STEP_TIMER_NUM, hal_timer_t(HAL_TIMER_TYPE_MAX));
 
-  // Count of ticks for the next ISR
+  // Count of ticks for the next ISR//下一次ISR的滴答声计数
   hal_timer_t next_isr_ticks = 0;
 
-  // Limit the amount of iterations
+  // Limit the amount of iterations//限制迭代次数
   uint8_t max_loops = 10;
 
-  // We need this variable here to be able to use it in the following loop
+  // We need this variable here to be able to use it in the following loop//我们需要这个变量才能在下面的循环中使用它
   hal_timer_t min_ticks;
   do {
-    // Enable ISRs to reduce USART processing latency
+    // Enable ISRs to reduce USART processing latency//启用ISR以减少USART处理延迟
     ENABLE_ISRS();
 
-    if (!nextMainISR) pulse_phase_isr();                            // 0 = Do coordinated axes Stepper pulses
+    if (!nextMainISR) pulse_phase_isr();                            // 0 = Do coordinated axes Stepper pulses//0=执行坐标轴步进器脉冲
 
     #if ENABLED(LIN_ADVANCE)
-      if (!nextAdvanceISR) nextAdvanceISR = advance_isr();          // 0 = Do Linear Advance E Stepper pulses
+      if (!nextAdvanceISR) nextAdvanceISR = advance_isr();          // 0 = Do Linear Advance E Stepper pulses//0=线性前进E步进器脉冲
     #endif
 
     #if ENABLED(INTEGRATED_BABYSTEPPING)
-      const bool is_babystep = (nextBabystepISR == 0);              // 0 = Do Babystepping (XY)Z pulses
+      const bool is_babystep = (nextBabystepISR == 0);              // 0 = Do Babystepping (XY)Z pulses//0=Do Babystepping（XY）Z脉冲
       if (is_babystep) nextBabystepISR = babystepping_isr();
     #endif
 
-    // ^== Time critical. NOTHING besides pulse generation should be above here!!!
+    // ^== Time critical. NOTHING besides pulse generation should be above here!!!//^==时间关键型。除了脉冲产生之外，这里没有其他内容！！！
 
-    if (!nextMainISR) nextMainISR = block_phase_isr();  // Manage acc/deceleration, get next block
+    if (!nextMainISR) nextMainISR = block_phase_isr();  // Manage acc/deceleration, get next block//管理acc/减速，进入下一个街区
 
 #if ENABLED(INTEGRATED_BABYSTEPPING)
-      if (is_babystep)                                  // Avoid ANY stepping too soon after baby-stepping
-        NOLESS(nextMainISR, (BABYSTEP_TICKS) / 8);      // FULL STOP for 125µs after a baby-step
+      if (is_babystep)                                  // Avoid ANY stepping too soon after baby-stepping//避免在婴儿踏步后过早踏步
+        NOLESS(nextMainISR, (BABYSTEP_TICKS) / 8);      // FULL STOP for 125µs after a baby-step//婴儿步后完全停止125µs
 
-      if (nextBabystepISR != BABYSTEP_NEVER)            // Avoid baby-stepping too close to axis Stepping
-        NOLESS(nextBabystepISR, nextMainISR / 2);       // TODO: Only look at axes enabled for baby-stepping
+      if (nextBabystepISR != BABYSTEP_NEVER)            // Avoid baby-stepping too close to axis Stepping//避免婴儿步进太靠近轴步进
+        NOLESS(nextBabystepISR, nextMainISR / 2);       // TODO: Only look at axes enabled for baby-stepping//TODO:仅查看为婴儿步进启用的轴
     #endif
 
-    // Get the interval to the next ISR call
+    // Get the interval to the next ISR call//获取下一次ISR呼叫的间隔
     const uint32_t interval = _MIN(
-      nextMainISR                                       // Time until the next Pulse / Block phase
+      nextMainISR                                       // Time until the next Pulse / Block phase//到下一个脉冲/块相位的时间
       #if ENABLED(LIN_ADVANCE)
-        , nextAdvanceISR                                // Come back early for Linear Advance?
+        , nextAdvanceISR                                // Come back early for Linear Advance?//提前回来进行线性推进？
       #endif
       #if ENABLED(INTEGRATED_BABYSTEPPING)
-        , nextBabystepISR                               // Come back early for Babystepping?
+        , nextBabystepISR                               // Come back early for Babystepping?//早点回来陪孩子？
       #endif
-      , uint32_t(HAL_TIMER_TYPE_MAX)                    // Come back in a very long time
+      , uint32_t(HAL_TIMER_TYPE_MAX)                    // Come back in a very long time//很长时间后再来
     );
 
-    //
-    // Compute remaining time for each ISR phase
-    //     NEVER : The phase is idle
-    //      Zero : The phase will occur on the next ISR call
-    //  Non-zero : The phase will occur on a future ISR call
-    //
+    ////
+    // Compute remaining time for each ISR phase//计算每个ISR阶段的剩余时间
+    //     NEVER : The phase is idle//从不：该阶段处于空闲状态
+    //      Zero : The phase will occur on the next ISR call//零：该阶段将在下一次ISR呼叫时发生
+    //  Non-zero : The phase will occur on a future ISR call//非零：该阶段将在未来ISR呼叫时发生
+    ////
 
     nextMainISR -= interval;
 
@@ -1483,7 +1477,7 @@ void Stepper::isr() {
      * accounting for double/quad stepping, which makes it even worse).
      */
 
-    // Compute the tick count for the next ISR
+    // Compute the tick count for the next ISR//计算下一次ISR的滴答数
     next_isr_ticks += interval;
 
     /**
@@ -1495,7 +1489,6 @@ void Stepper::isr() {
      * read and the write of the new period value).
      */
     DISABLE_ISRS();
-      SERIAL_ECHO_MSG("DISABLE_ISRS st");
 
     /**
      * Get the current tick value + margin
@@ -1520,21 +1513,17 @@ void Stepper::isr() {
      */
     if (!--max_loops) next_isr_ticks = min_ticks;
 
-    // Advance pulses if not enough time to wait for the next ISR
+    // Advance pulses if not enough time to wait for the next ISR//如果没有足够的时间等待下一次ISR，则提前脉冲
   } while (next_isr_ticks < min_ticks);
 
-  // Now 'next_isr_ticks' contains the period to the next Stepper ISR - And we are
-  // sure that the time has not arrived yet - Warrantied by the scheduler
-    SERIAL_ECHO_MSG("ENABLE_ISRS wb1");
+  // Now 'next_isr_ticks' contains the period to the next Stepper ISR - And we are//现在“下一步isr_ticks”包含到下一步进isr的周期-我们正在
+  // sure that the time has not arrived yet - Warrantied by the scheduler//确保时间尚未到达-由调度程序保证
 
-  // Set the next ISR to fire at the proper time
+  // Set the next ISR to fire at the proper time//将下一个ISR设置为在适当的时间开火
   HAL_timer_set_compare(STEP_TIMER_NUM, hal_timer_t(next_isr_ticks));
-  SERIAL_ECHO_MSG("ENABLE_ISRS wb");
 
-  // Don't forget to finally reenable interrupts
+  // Don't forget to finally reenable interrupts//别忘了最后重新启用中断
   ENABLE_ISRS();
-    SERIAL_ECHO_MSG("ENABLE_ISRS wb3");
-
 }
 
 #if MINIMUM_STEPPER_PULSE || MAXIMUM_STEPPER_RATE
@@ -1553,28 +1542,26 @@ void Stepper::isr() {
  */
 void Stepper::pulse_phase_isr() {
 
-    SERIAL_ECHO_MSG("pulse_phase_isr");
-
-  // If we must abort the current block, do so!
+  // If we must abort the current block, do so!//如果我们必须中止当前块，请这样做！
   if (abort_current_block) {
     abort_current_block = false;
     if (current_block) discard_current_block();
   }
 
-  // If there is no current block, do nothing
+  // If there is no current block, do nothing//如果没有当前块，则不执行任何操作
   if (!current_block) return;
 
-  // Skipping step processing causes motion to freeze
+  // Skipping step processing causes motion to freeze//跳过步骤处理会导致运动冻结
   if (TERN0(HAS_FREEZE_PIN, frozen)) return;
 
-  // Count of pending loops and events for this iteration
+  // Count of pending loops and events for this iteration//此迭代的挂起循环和事件计数
   const uint32_t pending_events = step_event_count - step_events_completed;
   uint8_t events_to_do = _MIN(pending_events, steps_per_isr);
 
-  // Just update the value we will get at the end of the loop
+  // Just update the value we will get at the end of the loop//只需更新我们将在循环结束时获得的值
   step_events_completed += events_to_do;
 
-  // Take multiple steps per interrupt (For high speed moves)
+  // Take multiple steps per interrupt (For high speed moves)//每个中断采取多个步骤（对于高速移动）
   #if ISR_MULTI_STEPS
     bool firstStep = true;
     USING_TIMED_PULSE();
@@ -1585,7 +1572,7 @@ void Stepper::pulse_phase_isr() {
     #define _APPLY_STEP(AXIS, INV, ALWAYS) AXIS ##_APPLY_STEP(INV, ALWAYS)
     #define _INVERT_STEP_PIN(AXIS) INVERT_## AXIS ##_STEP_PIN
 
-    // Determine if a pulse is needed using Bresenham
+    // Determine if a pulse is needed using Bresenham//使用Bresenham确定是否需要脉冲
     #define PULSE_PREP(AXIS) do{ \
       delta_error[_AXIS(AXIS)] += advance_dividend[_AXIS(AXIS)]; \
       step_needed[_AXIS(AXIS)] = (delta_error[_AXIS(AXIS)] >= 0); \
@@ -1595,25 +1582,25 @@ void Stepper::pulse_phase_isr() {
       } \
     }while(0)
 
-    // Start an active pulse if needed
+    // Start an active pulse if needed//如果需要，启动一个激活脉冲
     #define PULSE_START(AXIS) do{ \
       if (step_needed[_AXIS(AXIS)]) { \
         _APPLY_STEP(AXIS, !_INVERT_STEP_PIN(AXIS), 0); \
       } \
     }while(0)
 
-    // Stop an active pulse if needed
+    // Stop an active pulse if needed//如果需要，停止激活的脉冲
     #define PULSE_STOP(AXIS) do { \
       if (step_needed[_AXIS(AXIS)]) { \
         _APPLY_STEP(AXIS, _INVERT_STEP_PIN(AXIS), 0); \
       } \
     }while(0)
 
-    // Direct Stepping page?
+    // Direct Stepping page?//直接步进页面？
     const bool is_page = IS_PAGE(current_block);
 
     #if ENABLED(DIRECT_STEPPING)
-      // TODO (DerAndere): Add support for LINEAR_AXES >= 4
+      // TODO (DerAndere): Add support for LINEAR_AXES >= 4//TODO（DerAndere）：添加对线性轴>=4的支持
       if (is_page) {
 
         #if STEPPER_PAGE_FORMAT == SP_4x4D_128
@@ -1634,7 +1621,7 @@ void Stepper::pulse_phase_isr() {
             case DirectStepping::Config::SEGMENT_STEPS:
               page_step_state.segment_idx += 2;
               page_step_state.segment_steps = 0;
-              // fallthru
+              // fallthru//直通
             case 0: {
               const uint8_t low = page_step_state.page[page_step_state.segment_idx],
                            high = page_step_state.page[page_step_state.segment_idx + 1];
@@ -1675,7 +1662,7 @@ void Stepper::pulse_phase_isr() {
             case DirectStepping::Config::SEGMENT_STEPS:
               page_step_state.segment_idx++;
               page_step_state.segment_steps = 0;
-              // fallthru
+              // fallthru//直通
             case 0: {
               const uint8_t b = page_step_state.page[page_step_state.segment_idx];
               PAGE_SEGMENT_UPDATE(X, (b >> 6) & 0x3);
@@ -1716,10 +1703,10 @@ void Stepper::pulse_phase_isr() {
         #endif
       }
 
-    #endif // DIRECT_STEPPING
+    #endif // DIRECT_STEPPING//直接步进
 
     if (!is_page) {
-      // Determine if pulses are needed
+      // Determine if pulses are needed//确定是否需要脉冲
       #if HAS_X_STEP
         PULSE_PREP(X);
       #endif
@@ -1744,7 +1731,7 @@ void Stepper::pulse_phase_isr() {
         if (delta_error.e >= 0) {
           #if ENABLED(LIN_ADVANCE)
             delta_error.e -= advance_divisor;
-            // Don't step E here - But remember the number of steps to perform
+            // Don't step E here - But remember the number of steps to perform//不要在这里执行步骤E，但要记住要执行的步骤数
             motor_direction(E_AXIS) ? --LA_steps : ++LA_steps;
           #else
             count_position.e += count_direction.e;
@@ -1763,7 +1750,7 @@ void Stepper::pulse_phase_isr() {
         AWAIT_LOW_PULSE();
     #endif
 
-    // Pulse start
+    // Pulse start//脉冲启动
     #if HAS_X_STEP
       PULSE_START(X);
     #endif
@@ -1795,13 +1782,13 @@ void Stepper::pulse_phase_isr() {
       i2s_push_sample();
     #endif
 
-    // TODO: need to deal with MINIMUM_STEPPER_PULSE over i2s
+    // TODO: need to deal with MINIMUM_STEPPER_PULSE over i2s//TODO:需要处理i2s上的最小步进脉冲
     #if ISR_MULTI_STEPS
       START_HIGH_PULSE();
       AWAIT_HIGH_PULSE();
     #endif
 
-    // Pulse stop
+    // Pulse stop//脉冲停止
     #if HAS_X_STEP
       PULSE_STOP(X);
     #endif
@@ -1839,23 +1826,21 @@ void Stepper::pulse_phase_isr() {
   } while (--events_to_do);
 }
 
-// This is the last half of the stepper interrupt: This one processes and
-// properly schedules blocks from the planner. This is executed after creating
-// the step pulses, so it is not time critical, as pulses are already done.
+// This is the last half of the stepper interrupt: This one processes and//这是步进中断的最后一半：这一个处理和
+// properly schedules blocks from the planner. This is executed after creating//从计划器中正确地计划块。这是在创建后执行的
+// the step pulses, so it is not time critical, as pulses are already done.//步进脉冲，因此它不是时间关键，因为脉冲已经完成。
 
 uint32_t Stepper::block_phase_isr() {
-    SERIAL_ECHO_MSG("block_phase_isr");
-
-  // If no queued movements, just wait 1ms for the next block
+  // If no queued movements, just wait 1ms for the next block//如果没有排队移动，只需等待1毫秒，等待下一个街区
   uint32_t interval = (STEPPER_TIMER_RATE) / 1000UL;
 
-  // If there is a current block
+  // If there is a current block//如果有当前块
   if (current_block) {
 
-    // If current block is finished, reset pointer and finalize state
+    // If current block is finished, reset pointer and finalize state//若当前块已完成，则重置指针并完成状态
     if (step_events_completed >= step_event_count) {
       #if ENABLED(DIRECT_STEPPING)
-        // TODO (DerAndere): Add support for LINEAR_AXES >= 4
+        // TODO (DerAndere): Add support for LINEAR_AXES >= 4//TODO（DerAndere）：添加对线性轴>=4的支持
         #if STEPPER_PAGE_FORMAT == SP_4x4D_128
           #define PAGE_SEGMENT_UPDATE_POS(AXIS) \
             count_position[_AXIS(AXIS)] += page_step_state.bd[_AXIS(AXIS)] - 128 * 7;
@@ -1875,13 +1860,13 @@ uint32_t Stepper::block_phase_isr() {
       discard_current_block();
     }
     else {
-      // Step events not completed yet...
+      // Step events not completed yet...//步骤事件尚未完成。。。
 
-      // Are we in acceleration phase ?
-      if (step_events_completed <= accelerate_until) { // Calculate new timer value
+      // Are we in acceleration phase ?//我们在加速阶段吗？
+      if (step_events_completed <= accelerate_until) { // Calculate new timer value//计算新的计时器值
 
         #if ENABLED(S_CURVE_ACCELERATION)
-          // Get the next speed to use (Jerk limited!)
+          // Get the next speed to use (Jerk limited!)//获得下一个要使用的速度（Jerk limited！）
           uint32_t acc_step_rate = acceleration_time < current_block->acceleration_time
                                    ? _eval_bezier_curve(acceleration_time)
                                    : current_block->cruise_rate;
@@ -1890,21 +1875,21 @@ uint32_t Stepper::block_phase_isr() {
           NOMORE(acc_step_rate, current_block->nominal_rate);
         #endif
 
-        // acc_step_rate is in steps/second
+        // acc_step_rate is in steps/second//acc_步进速度以步进/秒为单位
 
-        // step_rate to timer interval and steps per stepper isr
+        // step_rate to timer interval and steps per stepper isr//步进速率至定时器间隔和每步进isr步进
         interval = calc_timer_interval(acc_step_rate, &steps_per_isr);
         acceleration_time += interval;
 
         #if ENABLED(LIN_ADVANCE)
           if (LA_use_advance_lead) {
-            // Fire ISR if final adv_rate is reached
+            // Fire ISR if final adv_rate is reached//如果达到最终预警率，则发射ISR
             if (LA_steps && LA_isr_rate != current_block->advance_speed) nextAdvanceISR = 0;
           }
           else if (LA_steps) nextAdvanceISR = 0;
         #endif
 
-        // Update laser - Accelerating
+        // Update laser - Accelerating//更新激光加速
         #if ENABLED(LASER_POWER_INLINE_TRAPEZOID)
           if (laser_trap.enabled) {
             #if DISABLED(LASER_POWER_INLINE_TRAPEZOID_CONT)
@@ -1912,7 +1897,7 @@ uint32_t Stepper::block_phase_isr() {
                 laser_trap.acc_step_count -= step_events_completed - laser_trap.last_step_count;
                 laser_trap.last_step_count = step_events_completed;
 
-                // Should be faster than a divide, since this should trip just once
+                // Should be faster than a divide, since this should trip just once//应该比分水岭快，因为它只会跳一次
                 if (laser_trap.acc_step_count < 0) {
                   while (laser_trap.acc_step_count < 0) {
                     laser_trap.acc_step_count += current_block->laser.entry_per;
@@ -1927,36 +1912,36 @@ uint32_t Stepper::block_phase_isr() {
               else {
                 laser_trap.till_update = LASER_POWER_INLINE_TRAPEZOID_CONT_PER;
                 laser_trap.cur_power = (current_block->laser.power * acc_step_rate) / current_block->nominal_rate;
-                cutter.set_ocr_power(laser_trap.cur_power); // Cycle efficiency is irrelevant it the last line was many cycles
+                cutter.set_ocr_power(laser_trap.cur_power); // Cycle efficiency is irrelevant it the last line was many cycles//循环效率与最后一行的循环数无关
               }
             #endif
           }
         #endif
       }
-      // Are we in Deceleration phase ?
+      // Are we in Deceleration phase ?//我们是否处于减速阶段？
       else if (step_events_completed > decelerate_after) {
         uint32_t step_rate;
 
         #if ENABLED(S_CURVE_ACCELERATION)
-          // If this is the 1st time we process the 2nd half of the trapezoid...
+          // If this is the 1st time we process the 2nd half of the trapezoid...//如果这是我们第一次加工梯形的下半部分。。。
           if (!bezier_2nd_half) {
-            // Initialize the Bézier speed curve
+            // Initialize the Bézier speed curve//初始化Bézier速度曲线
             _calc_bezier_curve_coeffs(current_block->cruise_rate, current_block->final_rate, current_block->deceleration_time_inverse);
             bezier_2nd_half = true;
-            // The first point starts at cruise rate. Just save evaluation of the Bézier curve
+            // The first point starts at cruise rate. Just save evaluation of the Bézier curve//第一个点以巡航速度开始。只需保存对Bézier曲线的评估
             step_rate = current_block->cruise_rate;
           }
           else {
-            // Calculate the next speed to use
+            // Calculate the next speed to use//计算下一个要使用的速度
             step_rate = deceleration_time < current_block->deceleration_time
               ? _eval_bezier_curve(deceleration_time)
               : current_block->final_rate;
           }
         #else
 
-          // Using the old trapezoidal control
+          // Using the old trapezoidal control//使用旧的梯形控制
           step_rate = STEP_MULTIPLY(deceleration_time, current_block->acceleration_rate);
-          if (step_rate < acc_step_rate) { // Still decelerating?
+          if (step_rate < acc_step_rate) { // Still decelerating?//还在减速吗？
             step_rate = acc_step_rate - step_rate;
             NOLESS(step_rate, current_block->final_rate);
           }
@@ -1964,24 +1949,24 @@ uint32_t Stepper::block_phase_isr() {
             step_rate = current_block->final_rate;
         #endif
 
-        // step_rate is in steps/second
+        // step_rate is in steps/second//步进速率以步数/秒为单位
 
-        // step_rate to timer interval and steps per stepper isr
+        // step_rate to timer interval and steps per stepper isr//步进速率至定时器间隔和每步进isr步进
         interval = calc_timer_interval(step_rate, &steps_per_isr);
         deceleration_time += interval;
 
         #if ENABLED(LIN_ADVANCE)
           if (LA_use_advance_lead) {
-            // Wake up eISR on first deceleration loop and fire ISR if final adv_rate is reached
+            // Wake up eISR on first deceleration loop and fire ISR if final adv_rate is reached//在第一个减速回路上唤醒eISR，并在达到最终adv_率时触发ISR
             if (step_events_completed <= decelerate_after + steps_per_isr || (LA_steps && LA_isr_rate != current_block->advance_speed)) {
               initiateLA();
               LA_isr_rate = current_block->advance_speed;
             }
           }
           else if (LA_steps) nextAdvanceISR = 0;
-        #endif // LIN_ADVANCE
+        #endif // LIN_ADVANCE//林乌前进
 
-        // Update laser - Decelerating
+        // Update laser - Decelerating//更新激光-减速
         #if ENABLED(LASER_POWER_INLINE_TRAPEZOID)
           if (laser_trap.enabled) {
             #if DISABLED(LASER_POWER_INLINE_TRAPEZOID_CONT)
@@ -1989,7 +1974,7 @@ uint32_t Stepper::block_phase_isr() {
                 laser_trap.acc_step_count -= step_events_completed - laser_trap.last_step_count;
                 laser_trap.last_step_count = step_events_completed;
 
-                // Should be faster than a divide, since this should trip just once
+                // Should be faster than a divide, since this should trip just once//应该比分水岭快，因为它只会跳一次
                 if (laser_trap.acc_step_count < 0) {
                   while (laser_trap.acc_step_count < 0) {
                     laser_trap.acc_step_count += current_block->laser.exit_per;
@@ -2004,30 +1989,30 @@ uint32_t Stepper::block_phase_isr() {
               else {
                 laser_trap.till_update = LASER_POWER_INLINE_TRAPEZOID_CONT_PER;
                 laser_trap.cur_power = (current_block->laser.power * step_rate) / current_block->nominal_rate;
-                cutter.set_ocr_power(laser_trap.cur_power); // Cycle efficiency isn't relevant when the last line was many cycles
+                cutter.set_ocr_power(laser_trap.cur_power); // Cycle efficiency isn't relevant when the last line was many cycles//当最后一行是多个循环时，循环效率不相关
               }
             #endif
           }
         #endif
       }
-      // Must be in cruise phase otherwise
+      // Must be in cruise phase otherwise//必须处于巡航阶段，否则
       else {
 
         #if ENABLED(LIN_ADVANCE)
-          // If there are any esteps, fire the next advance_isr "now"
+          // If there are any esteps, fire the next advance_isr "now"//如果有任何ESTEP，立即发射下一个advance_isr
           if (LA_steps && LA_isr_rate != current_block->advance_speed) initiateLA();
         #endif
 
-        // Calculate the ticks_nominal for this nominal speed, if not done yet
+        // Calculate the ticks_nominal for this nominal speed, if not done yet//如果尚未完成，则计算该标称速度的标称滴答声
         if (ticks_nominal < 0) {
-          // step_rate to timer interval and loops for the nominal speed
+          // step_rate to timer interval and loops for the nominal speed//步进速率到定时器间隔和标称速度的循环
           ticks_nominal = calc_timer_interval(current_block->nominal_rate, &steps_per_isr);
         }
 
-        // The timer interval is just the nominal value for the nominal speed
+        // The timer interval is just the nominal value for the nominal speed//定时器间隔只是标称速度的标称值
         interval = ticks_nominal;
 
-        // Update laser - Cruising
+        // Update laser - Cruising//更新激光巡航
         #if ENABLED(LASER_POWER_INLINE_TRAPEZOID)
           if (laser_trap.enabled) {
             if (!laser_trap.cruise_set) {
@@ -2046,14 +2031,14 @@ uint32_t Stepper::block_phase_isr() {
     }
   }
 
-  // If there is no current block at this point, attempt to pop one from the buffer
-  // and prepare its movement
+  // If there is no current block at this point, attempt to pop one from the buffer//如果此时没有当前块，请尝试从缓冲区中弹出一个
+  // and prepare its movement//准备好它的动作
   if (!current_block) {
 
-    // Anything in the buffer?
+    // Anything in the buffer?//缓冲区里有东西吗？
     if ((current_block = planner.get_current_block())) {
 
-      // Sync block? Sync the stepper counts or fan speeds and return
+      // Sync block? Sync the stepper counts or fan speeds and return//同步块？同步步进机计数或风扇速度并返回
       while (current_block->flag & BLOCK_MASK_SYNC) {
 
         #if ENABLED(LASER_SYNCHRONOUS_M106_M107)
@@ -2067,12 +2052,12 @@ uint32_t Stepper::block_phase_isr() {
 
         discard_current_block();
 
-        // Try to get a new block
+        // Try to get a new block//试着换一个新的街区
         if (!(current_block = planner.get_current_block()))
-          return interval; // No more queued movements!
+          return interval; // No more queued movements!//不要再排队了！
       }
 
-      // For non-inline cutter, grossly apply power
+      // For non-inline cutter, grossly apply power//对于非直列式切割器，请用力
       #if ENABLED(LASER_FEATURE) && DISABLED(LASER_POWER_INLINE)
         cutter.apply_power(current_block->cutter_power);
       #endif
@@ -2096,10 +2081,10 @@ uint32_t Stepper::block_phase_isr() {
         }
       #endif
 
-      // Flag all moving axes for proper endstop handling
+      // Flag all moving axes for proper endstop handling//标记所有移动轴，以进行正确的末端停止处理
 
       #if IS_CORE
-        // Define conditions for checking endstops
+        // Define conditions for checking endstops//定义检查终止点的条件
         #define S_(N) current_block->steps[CORE_AXIS_##N]
         #define D_(N) TEST(current_block->direction_bits, CORE_AXIS_##N)
       #endif
@@ -2169,43 +2154,43 @@ uint32_t Stepper::block_phase_isr() {
         if (current_block->steps.j) SBI(axis_bits, J_AXIS),
         if (current_block->steps.k) SBI(axis_bits, K_AXIS)
       );
-      //if (current_block->steps.e) SBI(axis_bits, E_AXIS);
-      //if (current_block->steps.a) SBI(axis_bits, X_HEAD);
-      //if (current_block->steps.b) SBI(axis_bits, Y_HEAD);
-      //if (current_block->steps.c) SBI(axis_bits, Z_HEAD);
+      //if (current_block->steps.e) SBI(axis_bits, E_AXIS);//if（当前_块->步骤.e）SBI（轴_位，e_轴）；
+      //if (current_block->steps.a) SBI(axis_bits, X_HEAD);//if（当前_块->步骤a）SBI（轴_位，X_头）；
+      //if (current_block->steps.b) SBI(axis_bits, Y_HEAD);//if（当前_块->步骤b）SBI（轴_位，Y_头）；
+      //if (current_block->steps.c) SBI(axis_bits, Z_HEAD);//if（当前_块->步骤c）SBI（轴_位，Z_头）；
       axis_did_move = axis_bits;
 
-      // No acceleration / deceleration time elapsed so far
+      // No acceleration / deceleration time elapsed so far//到目前为止没有经过加速/减速时间
       acceleration_time = deceleration_time = 0;
 
       #if ENABLED(ADAPTIVE_STEP_SMOOTHING)
-        uint8_t oversampling = 0;                           // Assume no axis smoothing (via oversampling)
-        // Decide if axis smoothing is possible
-        uint32_t max_rate = current_block->nominal_rate;    // Get the step event rate
-        while (max_rate < MIN_STEP_ISR_FREQUENCY) {         // As long as more ISRs are possible...
-          max_rate <<= 1;                                   // Try to double the rate
-          if (max_rate < MIN_STEP_ISR_FREQUENCY)            // Don't exceed the estimated ISR limit
-            ++oversampling;                                 // Increase the oversampling (used for left-shift)
+        uint8_t oversampling = 0;                           // Assume no axis smoothing (via oversampling)//假设没有轴平滑（通过过采样）
+        // Decide if axis smoothing is possible//确定轴平滑是否可行
+        uint32_t max_rate = current_block->nominal_rate;    // Get the step event rate//获取阶跃事件速率
+        while (max_rate < MIN_STEP_ISR_FREQUENCY) {         // As long as more ISRs are possible...//只要更多的ISR是可能的。。。
+          max_rate <<= 1;                                   // Try to double the rate//试着把价格提高一倍
+          if (max_rate < MIN_STEP_ISR_FREQUENCY)            // Don't exceed the estimated ISR limit//不要超过预计的行业特殊风险限额
+            ++oversampling;                                 // Increase the oversampling (used for left-shift)//增加过采样（用于左移）
         }
-        oversampling_factor = oversampling;                 // For all timer interval calculations
+        oversampling_factor = oversampling;                 // For all timer interval calculations//用于所有计时器间隔计算
       #else
         constexpr uint8_t oversampling = 0;
       #endif
 
-      // Based on the oversampling factor, do the calculations
+      // Based on the oversampling factor, do the calculations//根据过采样系数进行计算
       step_event_count = current_block->step_event_count << oversampling;
 
-      // Initialize Bresenham delta errors to 1/2
+      // Initialize Bresenham delta errors to 1/2//将Bresenham增量错误初始化为1/2
       delta_error = -int32_t(step_event_count);
 
-      // Calculate Bresenham dividends and divisors
+      // Calculate Bresenham dividends and divisors//计算Bresenham红利和除数
       advance_dividend = current_block->steps << 1;
       advance_divisor = step_event_count << 1;
 
-      // No step events completed so far
+      // No step events completed so far//到目前为止，尚未完成任何step事件
       step_events_completed = 0;
 
-      // Compute the acceleration and deceleration points
+      // Compute the acceleration and deceleration points//计算加速点和减速点
       accelerate_until = current_block->accelerate_until << oversampling;
       decelerate_after = current_block->decelerate_after << oversampling;
 
@@ -2213,24 +2198,24 @@ uint32_t Stepper::block_phase_isr() {
 
       TERN_(HAS_MULTI_EXTRUDER, stepper_extruder = current_block->extruder);
 
-      // Initialize the trapezoid generator from the current block.
+      // Initialize the trapezoid generator from the current block.//从当前块初始化梯形生成器。
       #if ENABLED(LIN_ADVANCE)
         #if DISABLED(MIXING_EXTRUDER) && E_STEPPERS > 1
-          // If the now active extruder wasn't in use during the last move, its pressure is most likely gone.
+          // If the now active extruder wasn't in use during the last move, its pressure is most likely gone.//如果现在使用的挤出机在最后一次移动中没有使用，它的压力很可能已经消失。
           if (stepper_extruder != last_moved_extruder) LA_current_adv_steps = 0;
         #endif
 
         if ((LA_use_advance_lead = current_block->use_advance_lead)) {
           LA_final_adv_steps = current_block->final_adv_steps;
           LA_max_adv_steps = current_block->max_adv_steps;
-          initiateLA(); // Start the ISR
+          initiateLA(); // Start the ISR//启动ISR
           LA_isr_rate = current_block->advance_speed;
         }
         else LA_isr_rate = LA_ADV_NEVER;
       #endif
 
-      if ( ENABLED(HAS_L64XX)       // Always set direction for L64xx (Also enables the chips)
-        || ENABLED(DUAL_X_CARRIAGE) // TODO: Find out why this fixes "jittery" small circles
+      if ( ENABLED(HAS_L64XX)       // Always set direction for L64xx (Also enables the chips)//始终为L64xx设置方向（也启用芯片）
+        || ENABLED(DUAL_X_CARRIAGE) // TODO: Find out why this fixes "jittery" small circles//TODO:找出为什么这会修复“神经过敏”的小圆圈
         || current_block->direction_bits != last_direction_bits
         || TERN(MIXING_EXTRUDER, false, stepper_extruder != last_moved_extruder)
       ) {
@@ -2243,7 +2228,7 @@ uint32_t Stepper::block_phase_isr() {
         const power_status_t stat = current_block->laser.status;
         #if ENABLED(LASER_POWER_INLINE_TRAPEZOID)
           laser_trap.enabled = stat.isPlanned && stat.isEnabled;
-          laser_trap.cur_power = current_block->laser.power_entry; // RESET STATE
+          laser_trap.cur_power = current_block->laser.power_entry; // RESET STATE//重置状态
           laser_trap.cruise_set = false;
           #if DISABLED(LASER_POWER_INLINE_TRAPEZOID_CONT)
             laser_trap.last_step_count = 0;
@@ -2251,65 +2236,65 @@ uint32_t Stepper::block_phase_isr() {
           #else
             laser_trap.till_update = 0;
           #endif
-          // Always have PWM in this case
-          if (stat.isPlanned) {                        // Planner controls the laser
+          // Always have PWM in this case//在这种情况下，始终使用PWM
+          if (stat.isPlanned) {                        // Planner controls the laser//计划者控制激光器
             cutter.set_ocr_power(
-              stat.isEnabled ? laser_trap.cur_power : 0 // ON with power or OFF
+              stat.isEnabled ? laser_trap.cur_power : 0 // ON with power or OFF//通电还是断电
             );
           }
         #else
-          if (stat.isPlanned) {                        // Planner controls the laser
+          if (stat.isPlanned) {                        // Planner controls the laser//计划者控制激光器
             #if ENABLED(SPINDLE_LASER_PWM)
               cutter.set_ocr_power(
-                stat.isEnabled ? current_block->laser.power : 0 // ON with power or OFF
+                stat.isEnabled ? current_block->laser.power : 0 // ON with power or OFF//通电还是断电
               );
             #else
               cutter.set_enabled(stat.isEnabled);
             #endif
           }
         #endif
-      #endif // LASER_POWER_INLINE
+      #endif // LASER_POWER_INLINE//激光功率在线
 
-      // At this point, we must ensure the movement about to execute isn't
-      // trying to force the head against a limit switch. If using interrupt-
-      // driven change detection, and already against a limit then no call to
-      // the endstop_triggered method will be done and the movement will be
-      // done against the endstop. So, check the limits here: If the movement
-      // is against the limits, the block will be marked as to be killed, and
-      // on the next call to this ISR, will be discarded.
+      // At this point, we must ensure the movement about to execute isn't//此时，我们必须确保即将执行的运动不会
+      // trying to force the head against a limit switch. If using interrupt-//试图将头部顶在限位开关上。如果使用中断-
+      // driven change detection, and already against a limit then no call to//驱动更改检测，并且已经达到了限制，然后没有调用
+      // the endstop_triggered method will be done and the movement will be//将完成endstop_触发的方法，并停止移动
+      // done against the endstop. So, check the limits here: If the movement//逆着终点完成。所以，检查这里的限制：如果
+      // is against the limits, the block will be marked as to be killed, and//如果不符合限制，则块将标记为要终止，并且
+      // on the next call to this ISR, will be discarded.//在下次调用此ISR时，将丢弃。
       endstops.update();
 
       #if ENABLED(Z_LATE_ENABLE)
-        // If delayed Z enable, enable it now. This option will severely interfere with
-        // timing between pulses when chaining motion between blocks, and it could lead
-        // to lost steps in both X and Y axis, so avoid using it unless strictly necessary!!
+        // If delayed Z enable, enable it now. This option will severely interfere with//如果延迟Z启用，请立即启用它。此选项将严重干扰
+        // timing between pulses when chaining motion between blocks, and it could lead//当在块之间链接运动时，脉冲之间的计时，它可能导致
+        // to lost steps in both X and Y axis, so avoid using it unless strictly necessary!!//要在X轴和Y轴上丢失步数，请避免使用，除非严格必要！！
         if (current_block->steps.z) ENABLE_AXIS_Z();
       #endif
 
-      // Mark the time_nominal as not calculated yet
+      // Mark the time_nominal as not calculated yet//将时间_标记为尚未计算
       ticks_nominal = -1;
 
       #if ENABLED(S_CURVE_ACCELERATION)
-        // Initialize the Bézier speed curve
+        // Initialize the Bézier speed curve//初始化Bézier速度曲线
         _calc_bezier_curve_coeffs(current_block->initial_rate, current_block->cruise_rate, current_block->acceleration_time_inverse);
-        // We haven't started the 2nd half of the trapezoid
+        // We haven't started the 2nd half of the trapezoid//我们还没有开始梯形的下半场
         bezier_2nd_half = false;
       #else
-        // Set as deceleration point the initial rate of the block
+        // Set as deceleration point the initial rate of the block//将块的初始速率设置为减速点
         acc_step_rate = current_block->initial_rate;
       #endif
 
-      // Calculate the initial timer interval
+      // Calculate the initial timer interval//计算初始计时器间隔
       interval = calc_timer_interval(current_block->initial_rate, &steps_per_isr);
     }
     #if ENABLED(LASER_POWER_INLINE_CONTINUOUS)
-      else { // No new block found; so apply inline laser parameters
-        // This should mean ending file with 'M5 I' will stop the laser; thus the inline flag isn't needed
+      else { // No new block found; so apply inline laser parameters//未发现新区块；所以应用内联激光参数
+        // This should mean ending file with 'M5 I' will stop the laser; thus the inline flag isn't needed//这意味着以“M5 I”结尾的文件将停止激光器；因此，不需要内联标志
         const power_status_t stat = planner.laser_inline.status;
-        if (stat.isPlanned) {             // Planner controls the laser
+        if (stat.isPlanned) {             // Planner controls the laser//计划者控制激光器
           #if ENABLED(SPINDLE_LASER_PWM)
             cutter.set_ocr_power(
-              stat.isEnabled ? planner.laser_inline.power : 0 // ON with power or OFF
+              stat.isEnabled ? planner.laser_inline.power : 0 // ON with power or OFF//通电还是断电
             );
           #else
             cutter.set_enabled(stat.isEnabled);
@@ -2319,13 +2304,13 @@ uint32_t Stepper::block_phase_isr() {
     #endif
   }
 
-  // Return the interval to wait
+  // Return the interval to wait//返回等待间隔
   return interval;
 }
 
 #if ENABLED(LIN_ADVANCE)
 
-  // Timer interrupt for E. LA_steps is set in the main routine
+  // Timer interrupt for E. LA_steps is set in the main routine//E.LA_步骤的定时器中断在主程序中设置
   uint32_t Stepper::advance_isr() {
     uint32_t interval;
 
@@ -2346,13 +2331,13 @@ uint32_t Stepper::block_phase_isr() {
     else
       interval = LA_ADV_NEVER;
 
-    if (!LA_steps) return interval; // Leave pins alone if there are no steps!
+    if (!LA_steps) return interval; // Leave pins alone if there are no steps!//如果没有台阶，别管别针！
 
     DIR_WAIT_BEFORE();
 
     #if ENABLED(MIXING_EXTRUDER)
-      // We don't know which steppers will be stepped because LA loop follows,
-      // with potentially multiple steps. Set all.
+      // We don't know which steppers will be stepped because LA loop follows,//我们不知道哪些步进器将被步进，因为LA loop会跟随，
+      // with potentially multiple steps. Set all.//可能需要多个步骤。设置所有。
       if (LA_steps > 0) {
         MIXER_STEPPER_LOOP(j) NORM_E_DIR(j);
         count_direction.e = 1;
@@ -2374,9 +2359,9 @@ uint32_t Stepper::block_phase_isr() {
 
     DIR_WAIT_AFTER();
 
-    //const hal_timer_t added_step_ticks = hal_timer_t(ADDED_STEP_TICKS);
+    //const hal_timer_t added_step_ticks = hal_timer_t(ADDED_STEP_TICKS);//常数hal\U timer\U t ADTED\U step\U ticks=hal\U timer\t（ADTED\U step\U ticks）；
 
-    // Step E stepper if we have steps
+    // Step E stepper if we have steps//步骤E步进器，如果我们有步骤
     #if ISR_MULTI_STEPS
       bool firstStep = true;
       USING_TIMED_PULSE();
@@ -2392,14 +2377,14 @@ uint32_t Stepper::block_phase_isr() {
 
       count_position.e += count_direction.e;
 
-      // Set the STEP pulse ON
+      // Set the STEP pulse ON//打开步进脉冲
       #if ENABLED(MIXING_EXTRUDER)
         E_STEP_WRITE(mixer.get_next_stepper(), !INVERT_E_STEP_PIN);
       #else
         E_STEP_WRITE(stepper_extruder, !INVERT_E_STEP_PIN);
       #endif
 
-      // Enforce a minimum duration for STEP pulse ON
+      // Enforce a minimum duration for STEP pulse ON//强制执行阶跃脉冲开启的最小持续时间
       #if ISR_PULSE_CONTROL
         START_HIGH_PULSE();
       #endif
@@ -2410,28 +2395,28 @@ uint32_t Stepper::block_phase_isr() {
         AWAIT_HIGH_PULSE();
       #endif
 
-      // Set the STEP pulse OFF
+      // Set the STEP pulse OFF//关闭步进脉冲
       #if ENABLED(MIXING_EXTRUDER)
         E_STEP_WRITE(mixer.get_stepper(), INVERT_E_STEP_PIN);
       #else
         E_STEP_WRITE(stepper_extruder, INVERT_E_STEP_PIN);
       #endif
 
-      // For minimum pulse time wait before looping
-      // Just wait for the requested pulse duration
+      // For minimum pulse time wait before looping//循环前等待最短脉冲时间
+      // Just wait for the requested pulse duration//只需等待请求的脉冲持续时间
       #if ISR_PULSE_CONTROL
         if (LA_steps) START_LOW_PULSE();
       #endif
-    } // LA_steps
+    } // LA_steps//拉乌台阶
 
     return interval;
   }
 
-#endif // LIN_ADVANCE
+#endif // LIN_ADVANCE//林乌前进
 
 #if ENABLED(INTEGRATED_BABYSTEPPING)
 
-  // Timer interrupt for baby-stepping
+  // Timer interrupt for baby-stepping//婴儿步进计时器中断
   uint32_t Stepper::babystepping_isr() {
     babystep.task();
     return babystep.has_steps() ? BABYSTEP_TICKS : BABYSTEP_NEVER;
@@ -2439,19 +2424,19 @@ uint32_t Stepper::block_phase_isr() {
 
 #endif
 
-// Check if the given block is busy or not - Must not be called from ISR contexts
-// The current_block could change in the middle of the read by an Stepper ISR, so
-// we must explicitly prevent that!
+// Check if the given block is busy or not - Must not be called from ISR contexts//检查给定块是否忙-不得从ISR上下文调用
+// The current_block could change in the middle of the read by an Stepper ISR, so/CurrnEng块可以通过步进ISR在读取的中间改变，因此
+// we must explicitly prevent that!//我们必须明确防止这种情况发生！
 bool Stepper::is_block_busy(const block_t * const block) {
   #ifdef __AVR__
-    // A SW memory barrier, to ensure GCC does not overoptimize loops
+    // A SW memory barrier, to ensure GCC does not overoptimize loops//软件内存屏障，确保GCC不会过度优化循环
     #define sw_barrier() asm volatile("": : :"memory");
 
-    // Keep reading until 2 consecutive reads return the same value,
-    // meaning there was no update in-between caused by an interrupt.
-    // This works because stepper ISRs happen at a slower rate than
-    // successive reads of a variable, so 2 consecutive reads with
-    // the same value means no interrupt updated it.
+    // Keep reading until 2 consecutive reads return the same value,//继续读取，直到两次连续读取返回相同的值，
+    // meaning there was no update in-between caused by an interrupt.//这意味着中间没有由中断引起的更新。
+    // This works because stepper ISRs happen at a slower rate than//这是因为步进式ISR的发生速度比
+    // successive reads of a variable, so 2 consecutive reads with//一个变量的连续读取，因此使用
+    // the same value means no interrupt updated it.//相同的值表示没有中断更新它。
     block_t *vold, *vnew = current_block;
     sw_barrier();
     do {
@@ -2463,7 +2448,7 @@ bool Stepper::is_block_busy(const block_t * const block) {
     block_t *vnew = current_block;
   #endif
 
-  // Return if the block is busy or not
+  // Return if the block is busy or not//如果块忙或不忙，则返回
   return block == vnew;
 }
 
@@ -2478,10 +2463,10 @@ void Stepper::init() {
     }
   #endif
 
-  // Init Microstepping Pins
+  // Init Microstepping Pins//初始微步进引脚
   TERN_(HAS_MICROSTEPS, microstep_init());
 
-  // Init Dir Pins
+  // Init Dir Pins//Init Dir引脚
   TERN_(HAS_X_DIR, X_DIR_INIT());
   TERN_(HAS_X2_DIR, X2_DIR_INIT());
   #if HAS_Y_DIR
@@ -2536,7 +2521,7 @@ void Stepper::init() {
     E7_DIR_INIT();
   #endif
 
-  // Init Enable Pins - steppers default to disabled.
+  // Init Enable Pins - steppers default to disabled.//初始启用引脚-步进器默认为禁用。
   #if HAS_X_ENABLE
     X_ENABLE_INIT();
     if (!X_ENABLE_ON) X_ENABLE_WRITE(HIGH);
@@ -2625,7 +2610,7 @@ void Stepper::init() {
 
   #define E_AXIS_INIT(NUM) AXIS_INIT(E## NUM, E)
 
-  // Init Step Pins
+  // Init Step Pins//初始步进销
   #if HAS_X_STEP
     #if EITHER(X_DUAL_STEPPER_DRIVERS, DUAL_X_CARRIAGE)
       X2_STEP_INIT();
@@ -2692,13 +2677,13 @@ void Stepper::init() {
     E_AXIS_INIT(7);
   #endif
 
-/*  #if DISABLED(I2S_STEPPER_STREAM)
-    HAL_timer_start(STEP_TIMER_NUM, 122); // Init Stepper ISR to 122 Hz for quick starting
+  #if DISABLED(I2S_STEPPER_STREAM)
+    HAL_timer_start(STEP_TIMER_NUM, 122); // Init Stepper ISR to 122 Hz for quick starting//初始步进电机ISR至122 Hz，用于快速启动
     wake_up();
     sei();
-  #endif*/
+  #endif
 
-  // Init direction bits for first moves
+  // Init direction bits for first moves//第一次移动的初始方向位
   set_directions(0
     LINEAR_AXIS_GANG(
       | TERN0(INVERT_X_DIR, _BV(X_AXIS)),
@@ -2728,21 +2713,21 @@ void Stepper::init() {
 void Stepper::_set_position(const abce_long_t &spos) {
   #if EITHER(IS_CORE, MARKFORGED_XY)
     #if CORE_IS_XY
-      // corexy positioning
-      // these equations follow the form of the dA and dB equations on https://www.corexy.com/theory.html
+      // corexy positioning//核心定位
+      // these equations follow the form of the dA and dB equations on https://www.corexy.com/theory.html//这些方程遵循上的dA和dB方程的形式https://www.corexy.com/theory.html
       count_position.set(spos.a + spos.b, CORESIGN(spos.a - spos.b), spos.c);
     #elif CORE_IS_XZ
-      // corexz planning
+      // corexz planning//corexz规划
       count_position.set(spos.a + spos.c, spos.b, CORESIGN(spos.a - spos.c));
     #elif CORE_IS_YZ
-      // coreyz planning
+      // coreyz planning//科雷兹规划
       count_position.set(spos.a, spos.b + spos.c, CORESIGN(spos.b - spos.c));
     #elif ENABLED(MARKFORGED_XY)
       count_position.set(spos.a - spos.b, spos.b, spos.c);
     #endif
     TERN_(HAS_EXTRUDERS, count_position.e = spos.e);
   #else
-    // default non-h-bot planning
+    // default non-h-bot planning//默认非h-bot规划
     count_position = spos;
   #endif
 }
@@ -2752,21 +2737,21 @@ void Stepper::_set_position(const abce_long_t &spos) {
  */
 int32_t Stepper::position(const AxisEnum axis) {
   #ifdef __AVR__
-    // Protect the access to the position. Only required for AVR, as
-    //  any 32bit CPU offers atomic access to 32bit variables
+    // Protect the access to the position. Only required for AVR, as//保护进入该位置的通道。仅适用于AVR，如
+    //  any 32bit CPU offers atomic access to 32bit variables//任何32位CPU都提供对32位变量的原子访问
     const bool was_enabled = suspend();
   #endif
 
   const int32_t v = count_position[axis];
 
   #ifdef __AVR__
-    // Reenable Stepper ISR
+    // Reenable Stepper ISR//可重入步进电机
     if (was_enabled) wake_up();
   #endif
   return v;
 }
 
-// Set the current position in steps
+// Set the current position in steps//按步设置当前位置
 void Stepper::set_position(const xyze_long_t &spos) {
   planner.synchronize();
   const bool was_enabled = suspend();
@@ -2778,25 +2763,25 @@ void Stepper::set_axis_position(const AxisEnum a, const int32_t &v) {
   planner.synchronize();
 
   #ifdef __AVR__
-    // Protect the access to the position. Only required for AVR, as
-    //  any 32bit CPU offers atomic access to 32bit variables
+    // Protect the access to the position. Only required for AVR, as//保护进入该位置的通道。仅适用于AVR，如
+    //  any 32bit CPU offers atomic access to 32bit variables//任何32位CPU都提供对32位变量的原子访问
     const bool was_enabled = suspend();
   #endif
 
   count_position[a] = v;
 
   #ifdef __AVR__
-    // Reenable Stepper ISR
+    // Reenable Stepper ISR//可重入步进电机
     if (was_enabled) wake_up();
   #endif
 }
 
-// Signal endstops were triggered - This function can be called from
-// an ISR context  (Temperature, Stepper or limits ISR), so we must
-// be very careful here. If the interrupt being preempted was the
-// Stepper ISR (this CAN happen with the endstop limits ISR) then
-// when the stepper ISR resumes, we must be very sure that the movement
-// is properly canceled
+// Signal endstops were triggered - This function can be called from//已触发信号终止-可从调用此函数
+// an ISR context  (Temperature, Stepper or limits ISR), so we must//ISR上下文（温度、步进或限制ISR），因此我们必须
+// be very careful here. If the interrupt being preempted was the//在这里要非常小心。如果被抢占的中断是
+// Stepper ISR (this CAN happen with the endstop limits ISR) then//步进式ISR（这可能发生在endstop限制ISR中）然后
+// when the stepper ISR resumes, we must be very sure that the movement//当步进机ISR恢复时，我们必须非常确定移动
+// is properly canceled//被适当地取消了
 void Stepper::endstop_triggered(const AxisEnum axis) {
     SERIAL_ECHO_MSG("endstop_triggered");
     return;
@@ -2811,12 +2796,12 @@ void Stepper::endstop_triggered(const AxisEnum axis) {
       axis == CORE_AXIS_1
         ? count_position[CORE_AXIS_1] - count_position[CORE_AXIS_2]
         : count_position[CORE_AXIS_2]
-    #else // !IS_CORE
+    #else // !IS_CORE// !你的核心是什么
       count_position[axis]
     #endif
   );
 
-  // Discard the rest of the move if there is a current block
+  // Discard the rest of the move if there is a current block//如果存在当前块，则放弃移动的其余部分
   quick_stop();
 
   if (was_enabled) wake_up();
@@ -2824,15 +2809,15 @@ void Stepper::endstop_triggered(const AxisEnum axis) {
 
 int32_t Stepper::triggered_position(const AxisEnum axis) {
   #ifdef __AVR__
-    // Protect the access to the position. Only required for AVR, as
-    //  any 32bit CPU offers atomic access to 32bit variables
+    // Protect the access to the position. Only required for AVR, as//保护进入该位置的通道。仅适用于AVR，如
+    //  any 32bit CPU offers atomic access to 32bit variables//任何32位CPU都提供对32位变量的原子访问
     const bool was_enabled = suspend();
   #endif
 
   const int32_t v = endstops_trigsteps[axis];
 
   #ifdef __AVR__
-    // Reenable Stepper ISR
+    // Reenable Stepper ISR//可重入步进电机
     if (was_enabled) wake_up();
   #endif
 
@@ -2862,7 +2847,7 @@ void Stepper::report_a_position(const xyz_long_t &pos) {
 void Stepper::report_positions() {
 
   #ifdef __AVR__
-    // Protect the access to the position.
+    // Protect the access to the position.//保护进入该位置的通道。
     const bool was_enabled = suspend();
   #endif
 
@@ -2960,8 +2945,8 @@ void Stepper::report_positions() {
 
   #endif
 
-  // MUST ONLY BE CALLED BY AN ISR,
-  // No other ISR should ever interrupt this!
+  // MUST ONLY BE CALLED BY AN ISR,//只能由ISR调用，
+  // No other ISR should ever interrupt this!//任何其他ISR都不应中断此操作！
   void Stepper::do_babystep(const AxisEnum axis, const bool direction) {
   SERIAL_ECHO_MSG("do_babystep");
 
@@ -3002,7 +2987,7 @@ void Stepper::report_positions() {
         #elif DISABLED(DELTA)
           BABYSTEP_AXIS(Z, BABYSTEP_INVERT_Z, direction);
 
-        #else // DELTA
+        #else // DELTA//三角洲
 
           const bool z_direction = direction ^ BABYSTEP_INVERT_Z;
 
@@ -3074,7 +3059,7 @@ void Stepper::report_positions() {
             K_STEP_WRITE(INVERT_K_STEP_PIN);
           #endif
 
-          // Restore direction bits
+          // Restore direction bits//恢复方向位
           EXTRA_DIR_WAIT_BEFORE();
 
           X_DIR_WRITE(old_dir.x);
@@ -3116,7 +3101,7 @@ void Stepper::report_positions() {
     IF_DISABLED(INTEGRATED_BABYSTEPPING, sei());
   }
 
-#endif // BABYSTEPPING
+#endif // BABYSTEPPING//婴儿步
 
 /**
  * Software-controlled Stepper Motor Current
@@ -3124,16 +3109,16 @@ void Stepper::report_positions() {
 
 #if HAS_MOTOR_CURRENT_SPI
 
-  // From Arduino DigitalPotControl example
+  // From Arduino DigitalPotControl example//来自Arduino DigitalPotControl示例
   void Stepper::set_digipot_value_spi(const int16_t address, const int16_t value) {
-    WRITE(DIGIPOTSS_PIN, LOW);  // Take the SS pin low to select the chip
-    SPI.transfer(address);      // Send the address and value via SPI
+    WRITE(DIGIPOTSS_PIN, LOW);  // Take the SS pin low to select the chip//将SS引脚放低以选择芯片
+    SPI.transfer(address);      // Send the address and value via SPI//通过SPI发送地址和值
     SPI.transfer(value);
-    WRITE(DIGIPOTSS_PIN, HIGH); // Take the SS pin high to de-select the chip
-    //delay(10);
+    WRITE(DIGIPOTSS_PIN, HIGH); // Take the SS pin high to de-select the chip//将SS引脚置于高位以取消选择芯片
+    //delay(10);//延迟（10）；
   }
 
-#endif // HAS_MOTOR_CURRENT_SPI
+#endif // HAS_MOTOR_CURRENT_SPI//有电机电流SPI
 
 #if HAS_MOTOR_CURRENT_PWM
 
@@ -3156,7 +3141,7 @@ void Stepper::report_positions() {
     }
   }
 
-#endif // HAS_MOTOR_CURRENT_PWM
+#endif // HAS_MOTOR_CURRENT_PWM//有\u电机\u电流\u PWM
 
 #if !MB(PRINTRBOARD_G2)
 
@@ -3164,13 +3149,13 @@ void Stepper::report_positions() {
 
     void Stepper::set_digipot_current(const uint8_t driver, const int16_t current) {
       if (WITHIN(driver, 0, MOTOR_CURRENT_COUNT - 1))
-        motor_current_setting[driver] = current; // update motor_current_setting
+        motor_current_setting[driver] = current; // update motor_current_setting//更新电机的当前设置
 
       if (!initialized) return;
 
       #if HAS_MOTOR_CURRENT_SPI
 
-        //SERIAL_ECHOLNPAIR("Digipotss current ", current);
+        //SERIAL_ECHOLNPAIR("Digipotss current ", current);//串行回波对（“Digipotss电流”，电流）；
 
         const uint8_t digipot_ch[] = DIGIPOT_CHANNELS;
         set_digipot_value_spi(digipot_ch[driver], current);
@@ -3246,7 +3231,7 @@ void Stepper::report_positions() {
 
         refresh_motor_power();
 
-        // Set Timer5 to 31khz so the PWM of the motor power is as constant as possible. (removes a buzzing noise)
+        // Set Timer5 to 31khz so the PWM of the motor power is as constant as possible. (removes a buzzing noise)//将定时器5设置为31khz，使电机功率的PWM尽可能恒定。（消除嗡嗡声）
         #ifdef __AVR__
           SET_CS5(PRESCALER_1);
         #endif
@@ -3255,7 +3240,7 @@ void Stepper::report_positions() {
 
   #endif
 
-#else // PRINTRBOARD_G2
+#else // PRINTRBOARD_G2//PrinterBoard_G2
 
   #include HAL_PATH(../HAL, fastio/G2_PWM.h)
 
@@ -3715,4 +3700,4 @@ void Stepper::report_positions() {
     SERIAL_EOL();
   }
 
-#endif // HAS_MICROSTEPS
+#endif // HAS_MICROSTEPS//有多少微步

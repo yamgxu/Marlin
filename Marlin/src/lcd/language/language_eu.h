@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -32,7 +33,7 @@
 #define NOT_EXTENDED_ISO10646_1_5X7
 
 namespace Language_eu {
-  using namespace Language_en; // Inherit undefined strings from English
+  using namespace Language_en; // Inherit undefined strings from English//从英语中继承未定义的字符串
 
   constexpr uint8_t    CHARSIZE                            = 1;
   PROGMEM Language_Str LANGUAGE                            = _UxGT("Basque-Euskera");
@@ -246,9 +247,9 @@ namespace Language_eu {
   PROGMEM Language_Str MSG_ERR_MINTEMP                     = _UxGT("Err: Tenp Minimoa");
   PROGMEM Language_Str MSG_HALTED                          = _UxGT("INPRIMA. GELDIRIK");
   PROGMEM Language_Str MSG_PLEASE_RESET                    = _UxGT("Berrabia. Mesedez");
-  PROGMEM Language_Str MSG_SHORT_DAY                       = _UxGT("d"); // One character only
-  PROGMEM Language_Str MSG_SHORT_HOUR                      = _UxGT("h"); // One character only
-  PROGMEM Language_Str MSG_SHORT_MINUTE                    = _UxGT("m"); // One character only
+  PROGMEM Language_Str MSG_SHORT_DAY                       = _UxGT("d"); // One character only//只有一个字符
+  PROGMEM Language_Str MSG_SHORT_HOUR                      = _UxGT("h"); // One character only//只有一个字符
+  PROGMEM Language_Str MSG_SHORT_MINUTE                    = _UxGT("m"); // One character only//只有一个字符
   PROGMEM Language_Str MSG_HEATING                         = _UxGT("Berotzen...");
   PROGMEM Language_Str MSG_BED_HEATING                     = _UxGT("Ohea Berotzen...");
   PROGMEM Language_Str MSG_DELTA_CALIBRATE                 = _UxGT("Delta Kalibraketa");
@@ -310,10 +311,10 @@ namespace Language_eu {
 
   PROGMEM Language_Str MSG_KILL_EXPECTED_PRINTER           = _UxGT("Inprimagailu okerra");
 
-  //
-  // Filament Change screens show up to 3 lines on a 4-line display
-  //                        ...or up to 2 lines on a 3-line display
-  //
+  ////
+  // Filament Change screens show up to 3 lines on a 4-line display//灯丝更换屏幕在4行显示屏上最多显示3行
+  //                        ...or up to 2 lines on a 3-line display//…或在3行显示器上最多显示2行
+  ////
   PROGMEM Language_Str MSG_FILAMENT_CHANGE_INIT            = _UxGT(MSG_1_LINE("Mesedez, itxaron..."));
   PROGMEM Language_Str MSG_FILAMENT_CHANGE_UNLOAD          = _UxGT(MSG_1_LINE("Deskargatzen..."));
   PROGMEM Language_Str MSG_FILAMENT_CHANGE_INSERT          = _UxGT(MSG_1_LINE("Sartu eta click egin"));

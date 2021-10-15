@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,7 +32,7 @@
 #define BOARD_INFO_NAME "RAMPS-FD v2"
 
 #ifndef E0_CS_PIN
-  #define E0_CS_PIN        69 // moved from A13 to A15 on v2.2, if not earlier
+  #define E0_CS_PIN        69 // moved from A13 to A15 on v2.2, if not earlier//在v2.2上从A13移动到A15，如果不是更早
 #endif
 
 #include "pins_RAMPS_FD_V1.h"
@@ -41,12 +42,12 @@
 #undef INVERTED_FAN_PINS
 
 #define I2C_EEPROM
-#define MARLIN_EEPROM_SIZE 0x10000 // 64K in a 24C512
+#define MARLIN_EEPROM_SIZE 0x10000 // 64K in a 24C512//24C512中的64K
 
 #ifndef PS_ON_PIN
   #define PS_ON_PIN        12
 #endif
 
 #ifndef FILWIDTH_PIN
-  #define FILWIDTH_PIN      5   // Analog Input on AUX2
+  #define FILWIDTH_PIN      5   // Analog Input on AUX2//AUX2上的模拟输入
 #endif

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -47,65 +48,65 @@
  * Why double up on these macros? see https://gcc.gnu.org/onlinedocs/gcc-4.8.5/cpp/Stringification.html
  */
 
-/// Read a pin
+/// Read a pin///读别针
 #define _READ(IO)             READ_PIN(IO)
 
-/// Write to a pin
+/// Write to a pin///用别针写字
 #define _WRITE(IO,V)          WRITE_PIN(IO,V)
 
-/// toggle a pin
+/// toggle a pin///拨动别针
 #define _TOGGLE(IO)          _WRITE(IO, !READ(IO))
 
-/// set pin as input
+/// set pin as input///将引脚设置为输入
 #define _SET_INPUT(IO)        SET_DIR_INPUT(IO)
 
-/// set pin as output
+/// set pin as output///将引脚设置为输出
 #define _SET_OUTPUT(IO)       SET_DIR_OUTPUT(IO)
 
-/// set pin as input with pullup mode
+/// set pin as input with pullup mode///使用上拉模式将引脚设置为输入
 #define _PULLUP(IO,V)         pinMode(IO, (V) ? INPUT_PULLUP : INPUT)
 
-/// set pin as input with pulldown mode
+/// set pin as input with pulldown mode///使用下拉模式将引脚设置为输入
 #define _PULLDOWN(IO,V)       pinMode(IO, (V) ? INPUT_PULLDOWN : INPUT)
 
-// hg42: all pins can be input or output (I hope)
-// hg42: undefined pins create compile error (IO, is no pin)
-// hg42: currently not used, but was used by pinsDebug
+// hg42: all pins can be input or output (I hope)//hg42：所有引脚都可以输入或输出（我希望）
+// hg42: undefined pins create compile error (IO, is no pin)//hg42:未定义的管脚创建编译错误（IO，是无管脚）
+// hg42: currently not used, but was used by pinsDebug//hg42：目前未使用，但已被pinsDebug使用
 
-/// check if pin is an input
+/// check if pin is an input///检查引脚是否为输入
 #define _IS_INPUT(IO)         (LPC1768_PIN_PIN(IO) >= 0)
 
-/// check if pin is an output
+/// check if pin is an output///检查引脚是否为输出
 #define _IS_OUTPUT(IO)        (LPC1768_PIN_PIN(IO) >= 0)
 
-/// Read a pin wrapper
+/// Read a pin wrapper///读一个别针包装
 #define READ(IO)             _READ(IO)
 
-/// Write to a pin wrapper
+/// Write to a pin wrapper///写一个别针包装器
 #define WRITE(IO,V)          _WRITE(IO,V)
 
-/// toggle a pin wrapper
+/// toggle a pin wrapper///拨动别针包装器
 #define TOGGLE(IO)           _TOGGLE(IO)
 
-/// set pin as input wrapper
+/// set pin as input wrapper///将pin设置为输入包装器
 #define SET_INPUT(IO)        _SET_INPUT(IO)
-/// set pin as input with pullup wrapper
+/// set pin as input with pullup wrapper///使用上拉包装器将引脚设置为输入
 #define SET_INPUT_PULLUP(IO)  do{ _SET_INPUT(IO); _PULLUP(IO, HIGH); }while(0)
-/// set pin as input with pulldown wrapper
+/// set pin as input with pulldown wrapper///使用下拉包装器将pin设置为输入
 #define SET_INPUT_PULLDOWN(IO) do{ _SET_INPUT(IO); _PULLDOWN(IO, HIGH); }while(0)
-/// set pin as output wrapper  -  reads the pin and sets the output to that value
+/// set pin as output wrapper  -  reads the pin and sets the output to that value///将pin设置为输出包装器-读取pin并将输出设置为该值
 #define SET_OUTPUT(IO)        do{ _WRITE(IO, _READ(IO)); _SET_OUTPUT(IO); }while(0)
-// set pin as PWM
+// set pin as PWM//将引脚设置为PWM
 #define SET_PWM(IO)           SET_OUTPUT(IO)
 
-/// check if pin is an input wrapper
+/// check if pin is an input wrapper///检查pin是否为输入包装
 #define IS_INPUT(IO)         _IS_INPUT(IO)
-/// check if pin is an output wrapper
+/// check if pin is an output wrapper///检查pin是否为输出包装器
 #define IS_OUTPUT(IO)        _IS_OUTPUT(IO)
 
-// Shorthand
+// Shorthand//速记
 #define OUT_WRITE(IO,V)       do{ SET_OUTPUT(IO); WRITE(IO,V); }while(0)
 
-// digitalRead/Write wrappers
+// digitalRead/Write wrappers//数字读/写包装器
 #define extDigitalRead(IO)    digitalRead(IO)
 #define extDigitalWrite(IO,V) digitalWrite(IO,V)

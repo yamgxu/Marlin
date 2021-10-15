@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -23,8 +24,8 @@
 
 #ifndef __AVR__
 #ifndef __PGMSPACE_H_
-// This define should prevent reading the system pgmspace.h if included elsewhere
-// This is not normally needed.
+// This define should prevent reading the system pgmspace.h if included elsewhere//此定义应防止读取系统pgmspace.h（如果包含在其他地方）
+// This is not normally needed.//这通常是不需要的。
 #define __PGMSPACE_H_ 1
 #endif
 
@@ -182,8 +183,8 @@
 #define pgm_read_pointer
 #endif
 
-// Fix bug in pgm_read_ptr
+// Fix bug in pgm_read_ptr//修复pgm_read_ptr中的错误
 #undef pgm_read_ptr
 #define pgm_read_ptr(addr) (*((void**)(addr)))
 
-#endif // __AVR__
+#endif // __AVR__//_uuuavr__

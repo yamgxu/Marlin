@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -36,7 +37,7 @@
 #include "../../module/planner.h"
 #include "../../lcd/marlinui.h"
 
-#include "../../MarlinCore.h" // for startOrResumeJob, etc.
+#include "../../MarlinCore.h" // for startOrResumeJob, etc.//对于startOrResumeJob等。
 
 #if ENABLED(PRINTJOB_TIMER_AUTOSTART)
   #include "../../module/printcounter.h"
@@ -87,7 +88,7 @@ void GcodeSuite::M104_M109(const bool isM109) {
   bool got_temp = false;
   celsius_t temp = 0;
 
-  // Accept 'I' if temperature presets are defined
+  // Accept 'I' if temperature presets are defined//如果定义了温度预设，则接受“I”
   #if PREHEAT_COUNT
     got_temp = parser.seenval('I');
     if (got_temp) {
@@ -96,7 +97,7 @@ void GcodeSuite::M104_M109(const bool isM109) {
     }
   #endif
 
-  // Get the temperature from 'S' or 'R'
+  // Get the temperature from 'S' or 'R'//从“S”或“R”获取温度
   bool no_wait_for_cooling = false;
   if (!got_temp) {
     no_wait_for_cooling = parser.seenval('S');
@@ -135,4 +136,4 @@ void GcodeSuite::M104_M109(const bool isM109) {
     (void)thermalManager.wait_for_hotend(target_extruder, no_wait_for_cooling);
 }
 
-#endif // EXTRUDERS
+#endif // EXTRUDERS//挤出机

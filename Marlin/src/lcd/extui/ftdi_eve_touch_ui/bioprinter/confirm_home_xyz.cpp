@@ -1,3 +1,4 @@
+/** translatione by yx */
 /****************************
  * bio_confirm_home_xyz.cpp *
  ****************************/
@@ -52,4 +53,4 @@ bool BioConfirmHomeXYZ::onTouchEnd(uint8_t tag) {
   return true;
 }
 
-#endif // FTDI_BIO_CONFIRM_HOME_XYZ
+#endif // FTDI_BIO_CONFIRM_HOME_XYZ//FTDI_BIO_确认_HOME_XYZ

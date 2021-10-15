@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -40,19 +41,19 @@
 #include "../../inc/MarlinConfig.h"
 #include "../shared/Delay.h"
 
-// ------------------------
-// Public functions
-// ------------------------
+// ------------------------// ------------------------
+// Public functions//公共职能
+// ------------------------// ------------------------
 
 #if EITHER(DUE_SOFTWARE_SPI, FORCE_SOFT_SPI)
 
-  // ------------------------
-  // Software SPI
-  // ------------------------
+  // ------------------------// ------------------------
+  // Software SPI//软件SPI
+  // ------------------------// ------------------------
 
-  // Make sure GCC optimizes this file.
-  // Note that this line triggers a bug in GCC which is fixed by casting.
-  // See the note below.
+  // Make sure GCC optimizes this file.//确保GCC优化了这个文件。
+  // Note that this line triggers a bug in GCC which is fixed by casting.//注意，这一行触发了GCC中的一个bug，该bug通过强制转换修复。
+  // See the note below.//见下面的注释。
   #pragma GCC optimize (3)
 
   typedef uint8_t (*pfnSpiTransfer)(uint8_t b);
@@ -67,8 +68,8 @@
   #define PIN_MASK(IO) _PIN_MASK(IO)
   #define PIN_SHIFT(IO) _PIN_SHIFT(IO)
 
-  // run at ~8 .. ~10Mhz - Tx version (Rx data discarded)
-  static uint8_t spiTransferTx0(uint8_t bout) { // using Mode 0
+  // run at ~8 .. ~10Mhz - Tx version (Rx data discarded)//以大约8英里的速度运行~10Mhz-发送版本（已丢弃接收数据）
+  static uint8_t spiTransferTx0(uint8_t bout) { // using Mode 0//使用模式0
     uint32_t MOSI_PORT_PLUS30 = ((uint32_t) PORT(SD_MOSI_PIN)) + 0x30;  /* SODR of port */
     uint32_t MOSI_MASK = PIN_MASK(SD_MOSI_PIN);
     uint32_t SCK_PORT_PLUS30 = ((uint32_t) PORT(SD_SCK_PIN)) + 0x30;    /* SODR of port */
@@ -80,7 +81,7 @@
 
     /* The software SPI routine */
     __asm__ __volatile__(
-      A(".syntax unified") // is to prevent CM0,CM1 non-unified syntax
+      A(".syntax unified") // is to prevent CM0,CM1 non-unified syntax//是为了防止CM0、CM1语法不统一
 
       /* Bit 7 */
       A("ubfx %[idx],%[txval],#7,#1")                      /* Place bit 7 in bit 0 of idx*/
@@ -144,14 +145,14 @@
     return 0;
   }
 
-   // Calculates the bit band alias address and returns a pointer address to word.
-   // addr: The byte address of bitbanding bit.
-   // bit:  The bit position of bitbanding bit.
+   // Calculates the bit band alias address and returns a pointer address to word.//计算位带别名地址并返回指向word的指针地址。
+   // addr: The byte address of bitbanding bit.//地址：位带位的字节地址。
+   // bit:  The bit position of bitbanding bit.//位：位带位的位位置。
   #define BITBAND_ADDRESS(addr, bit) \
     (((uint32_t)(addr) & 0xF0000000) + 0x02000000 + ((uint32_t)(addr)&0xFFFFF)*32 + (bit)*4)
 
-  // run at ~8 .. ~10Mhz - Rx version (Tx line not altered)
-  static uint8_t spiTransferRx0(uint8_t) { // using Mode 0
+  // run at ~8 .. ~10Mhz - Rx version (Tx line not altered)//以大约8英里的速度运行~10Mhz-Rx版本（Tx线路未更改）
+  static uint8_t spiTransferRx0(uint8_t) { // using Mode 0//使用模式0
     uint32_t bin = 0;
     uint32_t work = 0;
     uint32_t BITBAND_MISO_PORT = BITBAND_ADDRESS( ((uint32_t)PORT(SD_MISO_PIN))+0x3C, PIN_SHIFT(SD_MISO_PIN));  /* PDSR of port in bitband area */
@@ -160,7 +161,7 @@
 
     /* The software SPI routine */
     __asm__ __volatile__(
-      A(".syntax unified") // is to prevent CM0,CM1 non-unified syntax
+      A(".syntax unified") // is to prevent CM0,CM1 non-unified syntax//是为了防止CM0、CM1语法不统一
 
       /* bit 7 */
       A("str %[sck_mask],[%[sck_port]]")           /* SODR */
@@ -221,32 +222,32 @@
     return bin;
   }
 
-  // run at ~4Mhz
-  static uint8_t spiTransfer1(uint8_t b) { // using Mode 0
+  // run at ~4Mhz//以~4Mhz的频率运行
+  static uint8_t spiTransfer1(uint8_t b) { // using Mode 0//使用模式0
     int bits = 8;
     do {
       WRITE(SD_MOSI_PIN, b & 0x80);
-      b <<= 1;        // little setup time
+      b <<= 1;        // little setup time//设置时间短
 
       WRITE(SD_SCK_PIN, HIGH);
-      DELAY_NS(125);  // 10 cycles @ 84mhz
+      DELAY_NS(125);  // 10 cycles @ 84mhz//84mhz下的10个周期
 
       b |= (READ(SD_MISO_PIN) != 0);
 
       WRITE(SD_SCK_PIN, LOW);
-      DELAY_NS(125);  // 10 cycles @ 84mhz
+      DELAY_NS(125);  // 10 cycles @ 84mhz//84mhz下的10个周期
     } while (--bits);
     return b;
   }
 
-  // all the others
-  static uint32_t spiDelayCyclesX4 = 4 * (F_CPU) / 1000000; // 4µs => 125khz
+  // all the others//所有其他的
+  static uint32_t spiDelayCyclesX4 = 4 * (F_CPU) / 1000000; // 4µs => 125khz//4µs=>125khz
 
-  static uint8_t spiTransferX(uint8_t b) { // using Mode 0
+  static uint8_t spiTransferX(uint8_t b) { // using Mode 0//使用模式0
     int bits = 8;
     do {
       WRITE(SD_MOSI_PIN, b & 0x80);
-      b <<= 1; // little setup time
+      b <<= 1; // little setup time//设置时间短
 
       WRITE(SD_SCK_PIN, HIGH);
       DELAY_CYCLES(spiDelayCyclesX4);
@@ -259,7 +260,7 @@
     return b;
   }
 
-  // Pointers to generic functions for byte transfers
+  // Pointers to generic functions for byte transfers//指向字节传输的通用函数的指针
 
   /**
    * Note: The cast is unnecessary, but without it, this file triggers a GCC 4.8.3-2014 bug.
@@ -269,7 +270,7 @@
   static pfnSpiTransfer spiTransferRx = (pfnSpiTransfer)spiTransferX;
   static pfnSpiTransfer spiTransferTx = (pfnSpiTransfer)spiTransferX;
 
-  // Block transfers run at ~8 .. ~10Mhz - Tx version (Rx data discarded)
+  // Block transfers run at ~8 .. ~10Mhz - Tx version (Rx data discarded)//块传输在~8~10Mhz-发送版本（已丢弃接收数据）
   static void spiTxBlock0(const uint8_t *ptr, uint32_t todo) {
     uint32_t MOSI_PORT_PLUS30 = ((uint32_t) PORT(SD_MOSI_PIN)) + 0x30;  /* SODR of port */
     uint32_t MOSI_MASK = PIN_MASK(SD_MOSI_PIN);
@@ -280,7 +281,7 @@
 
     /* The software SPI routine */
     __asm__ __volatile__(
-      A(".syntax unified") // is to prevent CM0,CM1 non-unified syntax
+      A(".syntax unified") // is to prevent CM0,CM1 non-unified syntax//是为了防止CM0、CM1语法不统一
 
       L("loop%=")
       A("ldrb.w %[txval], [%[ptr]], #1")                   /* Load value to send, increment buffer */
@@ -358,7 +359,7 @@
 
     /* The software SPI routine */
     __asm__ __volatile__(
-      A(".syntax unified")                  // is to prevent CM0,CM1 non-unified syntax
+      A(".syntax unified")                  // is to prevent CM0,CM1 non-unified syntax//是为了防止CM0、CM1语法不统一
 
       L("loop%=")
 
@@ -437,7 +438,7 @@
     } while (--todo);
   }
 
-  // Pointers to generic functions for block tranfers
+  // Pointers to generic functions for block tranfers//指向块传输的泛型函数的指针
   static pfnSpiTxBlock spiTxBlock = (pfnSpiTxBlock)spiTxBlockX;
   static pfnSpiRxBlock spiRxBlock = (pfnSpiRxBlock)spiRxBlockX;
 
@@ -457,7 +458,7 @@
 
   uint8_t spiRec() {
     _SS_WRITE(LOW);
-    WRITE(SD_MOSI_PIN, HIGH); // Output 1s 1
+    WRITE(SD_MOSI_PIN, HIGH); // Output 1s 1//输出1s1
     uint8_t b = spiTransferRx(0xFF);
     _SS_WRITE(HIGH);
     return b;
@@ -466,7 +467,7 @@
   void spiRead(uint8_t *buf, uint16_t nbyte) {
     if (nbyte) {
       _SS_WRITE(LOW);
-      WRITE(SD_MOSI_PIN, HIGH); // Output 1s 1
+      WRITE(SD_MOSI_PIN, HIGH); // Output 1s 1//输出1s1
       spiRxBlock(buf, nbyte);
       _SS_WRITE(HIGH);
     }
@@ -510,7 +511,7 @@
         spiRxBlock = (pfnSpiRxBlock)spiRxBlockX;
         break;
       default:
-        spiDelayCyclesX4 = ((F_CPU) / 1000000) >> (6 - spiRate) << 2; // spiRate of 2 gives the maximum error with current CPU
+        spiDelayCyclesX4 = ((F_CPU) / 1000000) >> (6 - spiRate) << 2; // spiRate of 2 gives the maximum error with current CPU//spiRate为2表示当前CPU的最大错误
         spiTransferTx = (pfnSpiTransfer)spiTransferX;
         spiTransferRx = (pfnSpiTransfer)spiTransferX;
         spiTxBlock = (pfnSpiTxBlock)spiTxBlockX;
@@ -525,12 +526,12 @@
 
   /** Begin SPI transaction, set clock, bit order, data mode */
   void spiBeginTransaction(uint32_t spiClock, uint8_t bitOrder, uint8_t dataMode) {
-    // TODO: to be implemented
+    // TODO: to be implemented//待办事项：待实施
   }
 
   #pragma GCC reset_options
 
-#else // !SOFTWARE_SPI
+#else // !SOFTWARE_SPI// !软件SPI
 
   #define WHILE_TX(N) while ((SPI0->SPI_SR & SPI_SR_TDRE) == (N))
   #define WHILE_RX(N) while ((SPI0->SPI_SR & SPI_SR_RDRF) == (N))
@@ -538,31 +539,31 @@
 
   #if MB(ALLIGATOR)
 
-    // slave selects controlled by SPI controller
-    // doesn't support changing SPI speeds for SD card
+    // slave selects controlled by SPI controller//从机选择由SPI控制器控制
+    // doesn't support changing SPI speeds for SD card//不支持更改SD卡的SPI速度
 
-    // ------------------------
-    // hardware SPI
-    // ------------------------
+    // ------------------------// ------------------------
+    // hardware SPI//硬件SPI
+    // ------------------------// ------------------------
     static bool spiInitialized = false;
 
     void spiInit(uint8_t spiRate) {
       if (spiInitialized) return;
 
-      // 8.4 MHz, 4 MHz, 2 MHz, 1 MHz, 0.5 MHz, 0.329 MHz, 0.329 MHz
+      // 8.4 MHz, 4 MHz, 2 MHz, 1 MHz, 0.5 MHz, 0.329 MHz, 0.329 MHz//8.4兆赫、4兆赫、2兆赫、1兆赫、0.5兆赫、0.329兆赫、0.329兆赫
       constexpr int spiDivider[] = { 10, 21, 42, 84, 168, 255, 255 };
       if (spiRate > 6) spiRate = 1;
 
-      // Set SPI mode 1, clock, select not active after transfer, with delay between transfers
+      // Set SPI mode 1, clock, select not active after transfer, with delay between transfers//设置SPI模式1，时钟，选择传输后不激活，传输之间有延迟
       SPI_ConfigureNPCS(SPI0, SPI_CHAN_DAC,
                         SPI_CSR_CSAAT | SPI_CSR_SCBR(spiDivider[spiRate]) |
                         SPI_CSR_DLYBCT(1));
-      // Set SPI mode 0, clock, select not active after transfer, with delay between transfers
+      // Set SPI mode 0, clock, select not active after transfer, with delay between transfers//设置SPI模式0，时钟，选择传输后不激活，传输之间有延迟
       SPI_ConfigureNPCS(SPI0, SPI_CHAN_EEPROM1, SPI_CSR_NCPHA |
                         SPI_CSR_CSAAT | SPI_CSR_SCBR(spiDivider[spiRate]) |
                         SPI_CSR_DLYBCT(1));
 
-      // Set SPI mode 0, clock, select not active after transfer, with delay between transfers
+      // Set SPI mode 0, clock, select not active after transfer, with delay between transfers//设置SPI模式0，时钟，选择传输后不激活，传输之间有延迟
       SPI_ConfigureNPCS(SPI0, SPI_CHAN, SPI_CSR_NCPHA |
                         SPI_CSR_CSAAT | SPI_CSR_SCBR(spiDivider[spiRate]) |
                         SPI_CSR_DLYBCT(1));
@@ -573,7 +574,7 @@
     void spiBegin() {
       if (spiInitialized) return;
 
-      // Configure SPI pins
+      // Configure SPI pins//配置SPI引脚
       PIO_Configure(
          g_APinDescription[SD_SCK_PIN].pPort,
          g_APinDescription[SD_SCK_PIN].ulPinType,
@@ -590,7 +591,7 @@
          g_APinDescription[SD_MISO_PIN].ulPin,
          g_APinDescription[SD_MISO_PIN].ulPinConfiguration);
 
-      // set master mode, peripheral select, fault detection
+      // set master mode, peripheral select, fault detection//设置主模式、外围设备选择、故障检测
       SPI_Configure(SPI0, ID_SPI0, SPI_MR_MSTR | SPI_MR_MODFDIS | SPI_MR_PS);
       SPI_Enable(SPI0);
 
@@ -620,15 +621,15 @@
       spiInit(1);
     }
 
-    // Read single byte from SPI
+    // Read single byte from SPI//从SPI读取单字节
     uint8_t spiRec() {
-      // write dummy byte with address and end transmission flag
+      // write dummy byte with address and end transmission flag//使用地址和结束传输标志写入虚拟字节
       SPI0->SPI_TDR = 0x000000FF | SPI_PCS(SPI_CHAN) | SPI_TDR_LASTXFER;
 
       WHILE_TX(0);
       WHILE_RX(0);
 
-      //DELAY_US(1U);
+      //DELAY_US(1U);//延迟（1U）；
       return SPI0->SPI_RDR;
     }
 
@@ -637,35 +638,35 @@
       WHILE_TX(0);
       FLUSH_RX();
 
-      // write dummy byte with address and end transmission flag
+      // write dummy byte with address and end transmission flag//使用地址和结束传输标志写入虚拟字节
       SPI0->SPI_TDR = 0x000000FF | SPI_PCS(chan) | SPI_TDR_LASTXFER;
       WHILE_RX(0);
 
       return SPI0->SPI_RDR;
     }
 
-    // Read from SPI into buffer
+    // Read from SPI into buffer//从SPI读入缓冲区
     void spiRead(uint8_t *buf, uint16_t nbyte) {
       if (!nbyte) return;
       --nbyte;
       for (int i = 0; i < nbyte; i++) {
-        //WHILE_TX(0);
+        //WHILE_TX(0);//而_-TX（0）；
         SPI0->SPI_TDR = 0x000000FF | SPI_PCS(SPI_CHAN);
         WHILE_RX(0);
         buf[i] = SPI0->SPI_RDR;
-        //DELAY_US(1U);
+        //DELAY_US(1U);//延迟（1U）；
       }
       buf[nbyte] = spiRec();
     }
 
-    // Write single byte to SPI
+    // Write single byte to SPI//将单字节写入SPI
     void spiSend(const byte b) {
-      // write byte with address and end transmission flag
+      // write byte with address and end transmission flag//写入带有地址和结束传输标志的字节
       SPI0->SPI_TDR = (uint32_t)b | SPI_PCS(SPI_CHAN) | SPI_TDR_LASTXFER;
       WHILE_TX(0);
       WHILE_RX(0);
       SPI0->SPI_RDR;
-      //DELAY_US(1U);
+      //DELAY_US(1U);//延迟（1U）；
     }
 
     void spiSend(const uint8_t *buf, size_t nbyte) {
@@ -676,14 +677,14 @@
         WHILE_TX(0);
         WHILE_RX(0);
         SPI0->SPI_RDR;
-        //DELAY_US(1U);
+        //DELAY_US(1U);//延迟（1U）；
       }
       spiSend(buf[nbyte]);
     }
 
     void spiSend(uint32_t chan, byte b) {
       WHILE_TX(0);
-      // write byte with address and end transmission flag
+      // write byte with address and end transmission flag//写入带有地址和结束传输标志的字节
       SPI0->SPI_TDR = (uint32_t)b | SPI_PCS(chan) | SPI_TDR_LASTXFER;
       WHILE_RX(0);
       FLUSH_RX();
@@ -701,30 +702,30 @@
       spiSend(chan, buf[nbyte]);
     }
 
-    // Write from buffer to SPI
+    // Write from buffer to SPI//从缓冲区写入SPI
     void spiSendBlock(uint8_t token, const uint8_t *buf) {
       SPI0->SPI_TDR = (uint32_t)token | SPI_PCS(SPI_CHAN);
       WHILE_TX(0);
-      //WHILE_RX(0);
-      //SPI0->SPI_RDR;
+      //WHILE_RX(0);//而_RX（0）；
+      //SPI0->SPI_RDR;//SPI0->SPI\r；
       for (int i = 0; i < 511; i++) {
         SPI0->SPI_TDR = (uint32_t)buf[i] | SPI_PCS(SPI_CHAN);
         WHILE_TX(0);
         WHILE_RX(0);
         SPI0->SPI_RDR;
-        //DELAY_US(1U);
+        //DELAY_US(1U);//延迟（1U）；
       }
       spiSend(buf[511]);
     }
 
     /** Begin SPI transaction, set clock, bit order, data mode */
     void spiBeginTransaction(uint32_t spiClock, uint8_t bitOrder, uint8_t dataMode) {
-      // TODO: to be implemented
+      // TODO: to be implemented//待办事项：待实施
     }
 
-  #else // U8G compatible hardware SPI
+  #else // U8G compatible hardware SPI//U8G兼容硬件SPI
 
-    #define SPI_MODE_0_DUE_HW 2  // DUE CPHA control bit is inverted
+    #define SPI_MODE_0_DUE_HW 2  // DUE CPHA control bit is inverted//由于CPHA控制位被反转
     #define SPI_MODE_1_DUE_HW 3
     #define SPI_MODE_2_DUE_HW 0
     #define SPI_MODE_3_DUE_HW 1
@@ -761,39 +762,39 @@
      *  display to use software SPI.
      */
 
-    void spiInit(uint8_t spiRate=6) {  // Default to slowest rate if not specified)
-                                       // Also sets U8G SPI rate to 4MHz and the SPI mode to 3
+    void spiInit(uint8_t spiRate=6) {  // Default to slowest rate if not specified)//默认为最慢速率（如果未指定）
+                                       // Also sets U8G SPI rate to 4MHz and the SPI mode to 3//还将U8G SPI速率设置为4MHz，SPI模式设置为3
 
-      // 8.4 MHz, 4 MHz, 2 MHz, 1 MHz, 0.5 MHz, 0.329 MHz, 0.329 MHz
+      // 8.4 MHz, 4 MHz, 2 MHz, 1 MHz, 0.5 MHz, 0.329 MHz, 0.329 MHz//8.4兆赫、4兆赫、2兆赫、1兆赫、0.5兆赫、0.329兆赫、0.329兆赫
       constexpr int spiDivider[] = { 10, 21, 42, 84, 168, 255, 255 };
       if (spiRate > 6) spiRate = 1;
 
-      // Enable PIOA and SPI0
+      // Enable PIOA and SPI0//启用PIOA和SPI0
       REG_PMC_PCER0 = (1UL << ID_PIOA) | (1UL << ID_SPI0);
 
-      // Disable PIO on A26 and A27
+      // Disable PIO on A26 and A27//禁用A26和A27上的PIO
       REG_PIOA_PDR = 0x0C000000;
       OUT_WRITE(SDSS, HIGH);
 
-      // Reset SPI0 (from sam lib)
+      // Reset SPI0 (from sam lib)//重置SPI0（来自sam库）
       SPI0->SPI_CR = SPI_CR_SPIDIS;
       SPI0->SPI_CR = SPI_CR_SWRST;
       SPI0->SPI_CR = SPI_CR_SWRST;
       SPI0->SPI_CR = SPI_CR_SPIEN;
 
-      // TMC2103 compatible setup
-      // Master mode, no fault detection, PCS bits in data written to TDR select CSR register
+      // TMC2103 compatible setup//TMC2103兼容设置
+      // Master mode, no fault detection, PCS bits in data written to TDR select CSR register//主模式，无故障检测，数据中的PCS位写入TDR选择CSR寄存器
       SPI0->SPI_MR = SPI_MR_MSTR | SPI_MR_PS | SPI_MR_MODFDIS;
-      // SPI mode 3, 8 Bit data transfer, baud rate
-      SPI0->SPI_CSR[3] = SPI_CSR_SCBR(spiDivider[spiRate]) | SPI_CSR_CSAAT | SPI_MODE_3_DUE_HW;  // use same CSR as TMC2130
-      SPI0->SPI_CSR[0] = SPI_CSR_SCBR(spiDivider[1]) | SPI_CSR_CSAAT | SPI_MODE_3_DUE_HW;  // U8G default to 4MHz
+      // SPI mode 3, 8 Bit data transfer, baud rate//SPI模式3，8位数据传输，波特率
+      SPI0->SPI_CSR[3] = SPI_CSR_SCBR(spiDivider[spiRate]) | SPI_CSR_CSAAT | SPI_MODE_3_DUE_HW;  // use same CSR as TMC2130//使用与TMC2130相同的CSR
+      SPI0->SPI_CSR[0] = SPI_CSR_SCBR(spiDivider[1]) | SPI_CSR_CSAAT | SPI_MODE_3_DUE_HW;  // U8G default to 4MHz//U8G默认为4MHz
     }
 
     void spiBegin() { spiInit(); }
 
     static uint8_t spiTransfer(uint8_t data) {
       WHILE_TX(0);
-      SPI0->SPI_TDR = (uint32_t)data | 0x00070000UL;  // Add TMC2130 PCS bits to every byte (use SPI0->SPI_CSR[3])
+      SPI0->SPI_TDR = (uint32_t)data | 0x00070000UL;  // Add TMC2130 PCS bits to every byte (use SPI0->SPI_CSR[3])//将TMC2130 PCS位添加到每个字节（使用SPI0->SPI\U CSR[3]）
       WHILE_TX(0);
       WHILE_RX(0);
       return SPI0->SPI_RDR;
@@ -819,7 +820,7 @@
         spiTransfer(buf[i]);
     }
 
-  #endif // !ALLIGATOR
-#endif // !SOFTWARE_SPI
+  #endif // !ALLIGATOR// !短吻鳄
+#endif // !SOFTWARE_SPI// !软件SPI
 
-#endif // ARDUINO_ARCH_SAM
+#endif // ARDUINO_ARCH_SAM//阿杜伊诺·阿丘·萨姆

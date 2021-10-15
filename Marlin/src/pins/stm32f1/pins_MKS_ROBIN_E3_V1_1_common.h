@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,13 +22,13 @@
  */
 #pragma once
 
-//
-// EEPROM
-//
-// Onboard I2C EEPROM
+////
+// EEPROM//电可擦可编程只读存储器
+////
+// Onboard I2C EEPROM//板载I2C EEPROM
 #if NO_EEPROM_SELECTED
   #define I2C_EEPROM
-  #define MARLIN_EEPROM_SIZE                0x1000// 4KB
+  #define MARLIN_EEPROM_SIZE                0x1000// 4KB//4KB
   #undef NO_EEPROM_SELECTED
 #endif
 

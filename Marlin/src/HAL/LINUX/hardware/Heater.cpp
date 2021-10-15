@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -40,7 +41,7 @@ Heater::~Heater() {
 }
 
 void Heater::update() {
-  // crude pwm read and cruder heat simulation
+  // crude pwm read and cruder heat simulation//粗pwm读取和粗热模拟
   auto now = Clock::micros();
   double delta = (now - last);
   if (delta > 1000 ) {
@@ -54,7 +55,7 @@ void Heater::update() {
 }
 
 void Heater::interrupt(GpioEvent ev) {
-  // ununsed
+  // ununsed//未使用
 }
 
-#endif // __PLAT_LINUX__
+#endif // __PLAT_LINUX__//_uuu平台u LINUX__

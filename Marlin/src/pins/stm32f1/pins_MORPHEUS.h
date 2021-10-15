@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -36,24 +37,24 @@
 
 #define BOARD_INFO_NAME "Bluepill based board"
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_STOP_PIN                          PB14
 #define Y_STOP_PIN                          PB13
 #define Z_STOP_PIN                          PB12
 
-//
-// Z Probe (when not Z_MIN_PIN)
-//
+////
+// Z Probe (when not Z_MIN_PIN)//Z探头（非Z_MIN_引脚时）
+////
 #ifndef Z_MIN_PROBE_PIN
   #define Z_MIN_PROBE_PIN                   PB9
 #endif
 
-//
-// Steppers
-//
-// X & Y enable are the same
+////
+// Steppers//踏步机
+////
+// X & Y enable are the same//X&Y启用是相同的
 #define X_STEP_PIN                          PB7
 #define X_DIR_PIN                           PB6
 #define X_ENABLE_PIN                        PB8
@@ -70,23 +71,23 @@
 #define E0_DIR_PIN                          PB15
 #define E0_ENABLE_PIN                       PA9
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                          PB1   // Analog Input (HOTEND thermistor)
-#define TEMP_BED_PIN                        PB0   // Analog Input (BED thermistor)
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                          PB1   // Analog Input (HOTEND thermistor)//模拟输入（热端热敏电阻）
+#define TEMP_BED_PIN                        PB0   // Analog Input (BED thermistor)//模拟输入（床用热敏电阻）
 
-//
-// Heaters / Fans
-//
-#define HEATER_0_PIN                        PA2   // HOTEND MOSFET
-#define HEATER_BED_PIN                      PA0   // BED MOSFET
+////
+// Heaters / Fans//加热器/风扇
+////
+#define HEATER_0_PIN                        PA2   // HOTEND MOSFET//热端MOSFET
+#define HEATER_BED_PIN                      PA0   // BED MOSFET//床层MOSFET
 
-#define FAN_PIN                             PA1   // FAN1 header on board - PRINT FAN
+#define FAN_PIN                             PA1   // FAN1 header on board - PRINT FAN//FAN1板上页眉-打印风扇
 
-//
-// Misc.
-//
+////
+// Misc.//杂项。
+////
 #define LED_PIN                             PC13
 #define SDSS                                PA3
 #define TFTGLCD_CS                          PA4

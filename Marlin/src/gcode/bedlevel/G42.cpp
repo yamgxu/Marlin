@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -25,9 +26,9 @@
 #if HAS_MESH
 
 #include "../gcode.h"
-#include "../../MarlinCore.h" // for IsRunning()
+#include "../../MarlinCore.h" // for IsRunning()//对于IsRunning（）
 #include "../../module/motion.h"
-#include "../../module/probe.h" // for probe.offset
+#include "../../module/probe.h" // for probe.offset//用于探测偏移量
 #include "../../feature/bedlevel/bedlevel.h"
 
 /**
@@ -45,7 +46,7 @@ void GcodeSuite::G42() {
       return;
     }
 
-    // Move to current_position, as modified by I, J, P parameters
+    // Move to current_position, as modified by I, J, P parameters//移动到由I、J、P参数修改的当前_位置
     destination = current_position;
 
     if (hasI) destination.x = _GET_MESH_X(ix);
@@ -61,7 +62,7 @@ void GcodeSuite::G42() {
     const feedRate_t fval = parser.linearval('F'),
                      fr_mm_s = MMM_TO_MMS(fval > 0 ? fval : 0.0f);
 
-    // SCARA kinematic has "safe" XY raw moves
+    // SCARA kinematic has "safe" XY raw moves//SCARA运动学具有“安全”XY原始移动
     #if IS_SCARA
       prepare_internal_fast_move_to_destination(fr_mm_s);
     #else
@@ -70,4 +71,4 @@ void GcodeSuite::G42() {
   }
 }
 
-#endif // HAS_MESH
+#endif // HAS_MESH//有网格吗

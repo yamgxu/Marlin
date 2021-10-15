@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -64,7 +65,7 @@ class Nozzle {
      */
     static void circle(const xyz_pos_t &start, const xyz_pos_t &middle, const uint8_t &strokes, const_float_t radius) _Os;
 
-  #endif // NOZZLE_CLEAN_FEATURE
+  #endif // NOZZLE_CLEAN_FEATURE//喷嘴清洁功能
 
   public:
 
@@ -79,7 +80,7 @@ class Nozzle {
      */
     static void clean(const uint8_t &pattern, const uint8_t &strokes, const_float_t radius, const uint8_t &objects, const uint8_t cleans) _Os;
 
-  #endif // NOZZLE_CLEAN_FEATURE
+  #endif // NOZZLE_CLEAN_FEATURE//喷嘴清洁功能
 
   #if ENABLED(NOZZLE_PARK_FEATURE)
 

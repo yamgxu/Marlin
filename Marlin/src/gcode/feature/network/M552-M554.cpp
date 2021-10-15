@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -55,8 +56,8 @@ void MAC_report() {
   SERIAL_EOL();
 }
 
-// Display current values when the link is active,
-// otherwise show the stored values
+// Display current values when the link is active,//链接激活时显示当前值，
+// otherwise show the stored values//否则显示存储的值
 void ip_report(const uint16_t cmd, PGM_P const post, const IPAddress &ipo) {
   SERIAL_CHAR('M'); SERIAL_ECHO(cmd); SERIAL_CHAR(' ');
   LOOP_L_N(i, 4) {
@@ -123,4 +124,4 @@ void GcodeSuite::M554() {
   M554_report();
 }
 
-#endif // HAS_ETHERNET
+#endif // HAS_ETHERNET//有以太网吗

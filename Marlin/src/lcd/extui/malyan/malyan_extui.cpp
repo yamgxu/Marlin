@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -31,14 +32,14 @@
 #include "../ui_api.h"
 #include "malyan.h"
 
-//#include "../../marlinui.h"
-//#include "../../../sd/cardreader.h"
-//#include "../../../module/temperature.h"
-//#include "../../../module/stepper.h"
-//#include "../../../module/motion.h"
-//#include "../../../libs/duration_t.h"
-//#include "../../../module/printcounter.h"
-//#include "../../../gcode/queue.h"
+//#include "../../marlinui.h"//#包括“../../marlinui.h”
+//#include "../../../sd/cardreader.h"//#包括“../../sd/cardreader.h”
+//#include "../../../module/temperature.h"//#包括“../../../module/temperature.h”
+//#include "../../../module/stepper.h"//#包括“../../../module/stepper.h”
+//#include "../../../module/motion.h"//#包括“../../../module/motion.h”
+//#include "../../../libs/duration_t.h"//#包括“../../../libs/duration\u t.h”
+//#include "../../../module/printcounter.h"//#包括“../../../module/printcounter.h”
+//#include "../../../gcode/queue.h"//#包括“../../../gcode/queue.h”
 
 namespace ExtUI {
   void onStartup() {
@@ -54,13 +55,13 @@ namespace ExtUI {
     #endif
     LCD_SERIAL.begin(LCD_BAUDRATE);
 
-    // Signal init
+    // Signal init//信号初始化
     write_to_lcd_P(PSTR("{SYS:STARTED}\r\n"));
 
-    // send a version that says "unsupported"
+    // send a version that says "unsupported"//发送一个显示“不支持”的版本
     write_to_lcd_P(PSTR("{VER:99}\r\n"));
 
-    // No idea why it does this twice.
+    // No idea why it does this twice.//不知道为什么它会这样做两次。
     write_to_lcd_P(PSTR("{SYS:STARTED}\r\n"));
     update_usb_status(true);
   }
@@ -71,22 +72,22 @@ namespace ExtUI {
      * {SYS:STARTED}{VER:29}{SYS:STARTED}{R:UD}
      */
 
-    // First report USB status.
+    // First report USB status.//首先报告USB状态。
     update_usb_status(false);
 
-    // now drain commands...
+    // now drain commands...//现在排水命令。。。
     while (LCD_SERIAL.available())
       parse_lcd_byte((byte)LCD_SERIAL.read());
 
     #if ENABLED(SDSUPPORT)
-      // The way last printing status works is simple:
-      // The UI needs to see at least one TQ which is not 100%
-      // and then when the print is complete, one which is.
+      // The way last printing status works is simple://上次打印状态的工作方式很简单：
+      // The UI needs to see at least one TQ which is not 100%//UI需要至少看到一个不是100%的TQ
+      // and then when the print is complete, one which is.//然后当打印完成时，一个是。
       static uint8_t last_percent_done = 100;
 
-      // If there was a print in progress, we need to emit the final
-      // print status as {TQ:100}. Reset last percent done so a new print will
-      // issue a percent of 0.
+      // If there was a print in progress, we need to emit the final//如果有打印正在进行，我们需要发出最终结果
+      // print status as {TQ:100}. Reset last percent done so a new print will//打印状态为{TQ:100}。重置完成的最后百分比，以便重新打印
+      // issue a percent of 0.//发出0的百分比。
       const uint8_t percent_done = (ExtUI::isPrinting() || ExtUI::isPrintingFromMediaPaused()) ? ExtUI::getProgress_percent() : last_printing_status ? 100 : 0;
       if (percent_done != last_percent_done) {
         char message_buffer[16];
@@ -105,8 +106,8 @@ namespace ExtUI {
   #if HAS_PID_HEATING
 
     void onPidTuning(const result_t rst) {
-      // Called for temperature PID tuning result
-      //SERIAL_ECHOLNPAIR("OnPidTuning:", rst);
+      // Called for temperature PID tuning result//调用温度PID调整结果
+      //SERIAL_ECHOLNPAIR("OnPidTuning:", rst);//串行回波对（“onpidtunning:”，rst）；
       switch (rst) {
         case PID_BAD_EXTRUDER_NUM:
           set_lcd_error_P(GET_TEXT(MSG_PID_BAD_EXTRUDER_NUM));
@@ -129,7 +130,7 @@ namespace ExtUI {
   void onPrintTimerPaused() {}
   void onPrintTimerStopped() { write_to_lcd_P(PSTR("{TQ:100}")); }
 
-  // Not needed for Malyan LCD
+  // Not needed for Malyan LCD//Malyan LCD不需要
   void onStatusChanged(const char * const) {}
   void onMediaInserted() {}
   void onMediaError() {}
@@ -161,4 +162,4 @@ namespace ExtUI {
   void onSteppersEnabled()  {}
 }
 
-#endif // MALYAN_LCD
+#endif // MALYAN_LCD//MALYAN_液晶显示器

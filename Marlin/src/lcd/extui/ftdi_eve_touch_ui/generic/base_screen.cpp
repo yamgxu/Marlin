@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*******************
  * base_screen.cpp *
  *******************/
@@ -59,7 +60,7 @@ bool BaseScreen::buttonStyleCallback(CommandProcessor &cmd, uint8_t tag, uint8_t
     cmd.tag(0);
     style &= ~cmd.STYLE_DISABLED;
     cmd.colors(disabled_btn);
-    return true; // Call me again to reset the colors
+    return true; // Call me again to reset the colors//再打电话给我重新设置颜色
   }
   return false;
 }
@@ -84,4 +85,4 @@ void BaseScreen::reset_menu_timeout() {
   uint32_t BaseScreen::last_interaction;
 #endif
 
-#endif // FTDI_BASE_SCREEN
+#endif // FTDI_BASE_SCREEN//FTDI_基本屏幕

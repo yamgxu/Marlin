@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -23,7 +24,7 @@
 
 #define REVERSE_TEMP_SENSOR_RANGE_20 1
 
-// Pt100 with INA826 amp on Ultimaker v2.0 electronics
+// Pt100 with INA826 amp on Ultimaker v2.0 electronics//Ultimaker v2.0电子设备上配备INA826放大器的Pt100
 constexpr temp_entry_t temptable_20[] PROGMEM = {
   { OV(  0),    0 },
   { OV(227),    1 },

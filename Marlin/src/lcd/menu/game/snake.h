@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -24,7 +25,7 @@
 #include "types.h"
 
 typedef struct {
-  int8_t snake_dir,     // NESW
+  int8_t snake_dir,     // NESW//雀巢
          foodx, foody,
          food_cnt,
          old_encoder;

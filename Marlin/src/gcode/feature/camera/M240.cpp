@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -25,14 +26,14 @@
 #if ENABLED(PHOTO_GCODE)
 
 #include "../../gcode.h"
-#include "../../../module/motion.h" // for active_extruder and current_position
+#include "../../../module/motion.h" // for active_extruder and current_position//用于主动式_挤出机和当前_位置
 
 #if PIN_EXISTS(CHDK)
-  millis_t chdk_timeout; // = 0
+  millis_t chdk_timeout; // = 0// = 0
 #endif
 
 #if defined(PHOTO_POSITION) && PHOTO_DELAY_MS > 0
-  #include "../../../MarlinCore.h" // for idle()
+  #include "../../../MarlinCore.h" // for idle()//对于空闲（）
 #endif
 
 #ifdef PHOTO_RETRACT_MM
@@ -62,7 +63,7 @@
       #ifdef PHOTO_PULSES_US
         PHOTO_PULSE_DELAY_US
       #else
-        15                    // 15.24 from _delay_ms(0.01524)
+        15                    // 15.24 from _delay_ms(0.01524)//15.24从延迟到毫秒（0.01524）
       #endif
     );
     WRITE(PHOTOGRAPH_PIN, state);
@@ -201,4 +202,4 @@ void GcodeSuite::M240() {
   #endif
 }
 
-#endif // PHOTO_GCODE
+#endif // PHOTO_GCODE//照片编码

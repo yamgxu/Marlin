@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*********************
  * string_format.cpp *
  *********************/
@@ -105,4 +106,4 @@ void format_position(char *str, float x, float y, float z) {
 
 #pragma GCC diagnostic pop
 
-#endif // TOUCH_UI_FTDI_EVE
+#endif // TOUCH_UI_FTDI_EVE//触摸屏

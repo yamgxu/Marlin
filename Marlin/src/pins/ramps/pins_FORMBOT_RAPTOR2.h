@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -38,26 +39,26 @@
 
 #define GREEDY_PANEL ANY(PANEL_ONE, VIKI2, miniVIKI, MINIPANEL, REPRAPWORLD_KEYPAD)
 
-//
-// M3/M4/M5 - Spindle/Laser Control
-//
+////
+// M3/M4/M5 - Spindle/Laser Control//M3/M4/M5-主轴/激光控制
+////
 #if HAS_CUTTER && !PIN_EXISTS(SPINDLE_LASER_ENA)
-  #if !NUM_SERVOS                                 // Try to use servo connector first
-    #define SPINDLE_LASER_ENA_PIN              6  // Pullup or pulldown!
-    #define SPINDLE_LASER_PWM_PIN              4  // Hardware PWM
+  #if !NUM_SERVOS                                 // Try to use servo connector first//首先尝试使用伺服连接器
+    #define SPINDLE_LASER_ENA_PIN              6  // Pullup or pulldown!//拉起还是拉下！
+    #define SPINDLE_LASER_PWM_PIN              4  // Hardware PWM//硬件脉宽调制
     #define SPINDLE_DIR_PIN                    5
-  #elif !GREEDY_PANEL                             // Try to use AUX2
-    #define SPINDLE_LASER_ENA_PIN              4  // Pullup or pulldown!
-    #define SPINDLE_LASER_PWM_PIN             44  // Hardware PWM
+  #elif !GREEDY_PANEL                             // Try to use AUX2//尝试使用AUX2
+    #define SPINDLE_LASER_ENA_PIN              4  // Pullup or pulldown!//拉起还是拉下！
+    #define SPINDLE_LASER_PWM_PIN             44  // Hardware PWM//硬件脉宽调制
     #define SPINDLE_DIR_PIN                   65
   #endif
 #endif
 
 #if ENABLED(CASE_LIGHT_ENABLE) && !PIN_EXISTS(CASE_LIGHT)
-  #if NUM_SERVOS <= 1                             // Try to use servo connector first
-    #define CASE_LIGHT_PIN                     6  // Hardware PWM
-  #elif !GREEDY_PANEL                             // Try to use AUX2
-    #define CASE_LIGHT_PIN                    44  // Hardware PWM
+  #if NUM_SERVOS <= 1                             // Try to use servo connector first//首先尝试使用伺服连接器
+    #define CASE_LIGHT_PIN                     6  // Hardware PWM//硬件脉宽调制
+  #elif !GREEDY_PANEL                             // Try to use AUX2//尝试使用AUX2
+    #define CASE_LIGHT_PIN                    44  // Hardware PWM//硬件脉宽调制
   #endif
 #endif
 

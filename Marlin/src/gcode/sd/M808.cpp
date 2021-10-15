@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -40,12 +41,12 @@
  */
 void GcodeSuite::M808() {
 
-  // Handled early and ignored here in the queue.
-  // Allowed to go into the queue for logging purposes.
+  // Handled early and ignored here in the queue.//在队列中提前处理并在此处忽略。
+  // Allowed to go into the queue for logging purposes.//允许进入队列进行日志记录。
 
-  // M808 K sent from the host to cancel all loops
+  // M808 K sent from the host to cancel all loops//从主机发送M808 K以取消所有循环
   if (parser.seen_test('K')) repeat.cancel();
 
 }
 
-#endif // GCODE_REPEAT_MARKERS
+#endif // GCODE_REPEAT_MARKERS//GCODE_REPEAT_标记

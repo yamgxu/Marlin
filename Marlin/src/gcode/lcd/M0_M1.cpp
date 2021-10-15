@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -28,8 +29,8 @@
 
 #include "../gcode.h"
 
-#include "../../module/planner.h" // for synchronize()
-#include "../../MarlinCore.h"     // for wait_for_user_response()
+#include "../../module/planner.h" // for synchronize()//用于同步（）
+#include "../../MarlinCore.h"     // for wait_for_user_response()//等待用户响应（）
 
 #if HAS_LCD_MENU
   #include "../../lcd/marlinui.h"
@@ -47,8 +48,8 @@
  */
 void GcodeSuite::M0_M1() {
   millis_t ms = 0;
-  if (parser.seenval('P')) ms = parser.value_millis();              // Milliseconds to wait
-  if (parser.seenval('S')) ms = parser.value_millis_from_seconds(); // Seconds to wait
+  if (parser.seenval('P')) ms = parser.value_millis();              // Milliseconds to wait//等待毫秒
+  if (parser.seenval('S')) ms = parser.value_millis_from_seconds(); // Seconds to wait//等待秒数
 
   planner.synchronize();
 
@@ -65,7 +66,7 @@ void GcodeSuite::M0_M1() {
 
   #elif ENABLED(EXTENSIBLE_UI)
     if (parser.string_arg)
-      ExtUI::onUserConfirmRequired(parser.string_arg); // Can this take an SRAM string??
+      ExtUI::onUserConfirmRequired(parser.string_arg); // Can this take an SRAM string??//这可以接受SRAM字符串吗？？
     else
       ExtUI::onUserConfirmRequired_P(GET_TEXT(MSG_USERWAIT));
   #else
@@ -84,4 +85,4 @@ void GcodeSuite::M0_M1() {
   TERN_(HAS_LCD_MENU, ui.reset_status());
 }
 
-#endif // HAS_RESUME_CONTINUE
+#endif // HAS_RESUME_CONTINUE//继续吗

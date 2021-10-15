@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,7 +22,7 @@
  */
 #pragma once
 
-// R25 = 100 kOhm, beta25 = 3960 K, 4.7 kOhm pull-up, GE Sensing AL03006-58.2K-97-G1
+// R25 = 100 kOhm, beta25 = 3960 K, 4.7 kOhm pull-up, GE Sensing AL03006-58.2K-97-G1//R25=100千欧，beta25=3960千欧，4.7千欧上拉，GE传感AL03006-58.2K-97-G1
 constexpr temp_entry_t temptable_9[] PROGMEM = {
   { OV(   1), 936 },
   { OV(  36), 300 },

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * \file
  *
@@ -41,7 +42,7 @@
  *
  */
 /*
- * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>
+ * Support and FAQ: visit <a href="https://www.atmel.com/design-support/">Atmel Support</a>//www.atmel.com/design support/“>atmel支持</a>
  */
 
 #ifndef _TPASTE_H_
@@ -65,7 +66,7 @@
  * UTYPE(WIDTH) and invoked as UTYPE(UL_WIDTH) with UL_WIDTH \#defined as 32 is
  * equivalent to writing U32.
  */
-//! @{
+//! @{//! @{
 #define TPASTE2( a, b)                            a##b
 #define TPASTE3( a, b, c)                         a##b##c
 #define TPASTE4( a, b, c, d)                      a##b##c##d
@@ -75,7 +76,7 @@
 #define TPASTE8( a, b, c, d, e, f, g, h)          a##b##c##d##e##f##g##h
 #define TPASTE9( a, b, c, d, e, f, g, h, i)       a##b##c##d##e##f##g##h##i
 #define TPASTE10(a, b, c, d, e, f, g, h, i, j)    a##b##c##d##e##f##g##h##i##j
-//! @}
+//! @}//! @}
 
 /*! \name Absolute Token Paste
  *
@@ -86,7 +87,7 @@
  * For example, writing ATPASTE2(U, UL_WIDTH) anywhere with UL_WIDTH \#defined
  * as 32 is equivalent to writing U32.
  */
-//! @{
+//! @{//! @{
 #define ATPASTE2( a, b)                           TPASTE2( a, b)
 #define ATPASTE3( a, b, c)                        TPASTE3( a, b, c)
 #define ATPASTE4( a, b, c, d)                     TPASTE4( a, b, c, d)
@@ -96,10 +97,10 @@
 #define ATPASTE8( a, b, c, d, e, f, g, h)         TPASTE8( a, b, c, d, e, f, g, h)
 #define ATPASTE9( a, b, c, d, e, f, g, h, i)      TPASTE9( a, b, c, d, e, f, g, h, i)
 #define ATPASTE10(a, b, c, d, e, f, g, h, i, j)   TPASTE10(a, b, c, d, e, f, g, h, i, j)
-//! @}
+//! @}//! @}
 
 /**
  * \}
  */
 
-#endif  // _TPASTE_H_
+#endif  // _TPASTE_H_//_TPASTE_H_

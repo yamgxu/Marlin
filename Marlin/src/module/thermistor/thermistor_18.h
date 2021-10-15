@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -21,7 +22,7 @@
  */
 #pragma once
 
-// ATC Semitec 204GT-2 (4.7k pullup) Dagoma.Fr - MKS_Base_DKU001327 - version (measured/tested/approved)
+// ATC Semitec 204GT-2 (4.7k pullup) Dagoma.Fr - MKS_Base_DKU001327 - version (measured/tested/approved)//ATC Semitec 204GT-2（4.7k上拉）Dagoma.Fr-MKS_基地DKU001327-版本（测量/测试/批准）
 constexpr temp_entry_t temptable_18[] PROGMEM = {
   { OV(   1), 713 },
   { OV(  17), 284 },
@@ -55,5 +56,5 @@ constexpr temp_entry_t temptable_18[] PROGMEM = {
   { OV( 986),  20 },
   { OV(1000),  10 },
   { OV(1010),   0 },
-  { OV(1024),-273 } // for safety
+  { OV(1024),-273 } // for safety//为了安全
 };

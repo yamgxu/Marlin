@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,4 +30,4 @@
 uint8_t baricuda_valve_pressure = 0,
         baricuda_e_to_p_pressure = 0;
 
-#endif // BARICUDA
+#endif // BARICUDA//巴里库达

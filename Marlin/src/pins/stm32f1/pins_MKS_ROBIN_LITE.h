@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -34,20 +35,20 @@
 
 #define BOARD_NO_NATIVE_USB
 
-//#define DISABLE_DEBUG
+//#define DISABLE_DEBUG//#定义禁用调试
 #define DISABLE_JTAG
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_STOP_PIN                          PC13
 #define Y_STOP_PIN                          PC0
 #define Z_MIN_PIN                           PC12
 #define Z_MAX_PIN                           PB9
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                          PC6
 #define X_DIR_PIN                           PB12
 #define X_ENABLE_PIN                        PB10
@@ -64,24 +65,24 @@
 #define E0_DIR_PIN                          PA5
 #define E0_ENABLE_PIN                       PA4
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_0_PIN                        PC9
 #define FAN_PIN                             PA8
 #define HEATER_BED_PIN                      PC8
 
-//
-// Temperature Sensors
-//
+////
+// Temperature Sensors//温度传感器
+////
 #define TEMP_BED_PIN                        PA1
 #define TEMP_0_PIN                          PA0
 
-#define FIL_RUNOUT_PIN                      PB8   // MT_DET
+#define FIL_RUNOUT_PIN                      PB8   // MT_DET//德特山
 
-//
-// LCD Pins
-//
+////
+// LCD Pins//LCD引脚
+////
 #if HAS_WIRED_LCD
   #define BEEPER_PIN                        PD2
   #define BTN_ENC                           PB3
@@ -101,7 +102,7 @@
     #define DOGLCD_SCK                      PB13
     #define DOGLCD_MOSI                     PB15
 
-  #else                                           // !MKS_MINI_12864
+  #else                                           // !MKS_MINI_12864// !MKS_MINI_12864
 
     #define LCD_PINS_D4                     PC1
     #if IS_ULTIPANEL
@@ -110,7 +111,7 @@
       #define LCD_PINS_D7                   -1
     #endif
 
-  #endif // !MKS_MINI_12864
+  #endif // !MKS_MINI_12864// !MKS_MINI_12864
 
   #if HAS_MARLINUI_U8GLIB
     #ifndef BOARD_ST7920_DELAY_1
@@ -124,23 +125,23 @@
     #endif
   #endif
 
-#endif // HAS_WIRED_LCD
+#endif // HAS_WIRED_LCD//有有线液晶显示器吗
 
-// Motor current PWM pins
+// Motor current PWM pins//电机电流PWM引脚
 #define MOTOR_CURRENT_PWM_XY_PIN            PB0
 #define MOTOR_CURRENT_PWM_Z_PIN             PA7
 #define MOTOR_CURRENT_PWM_E_PIN             PA6
-#define MOTOR_CURRENT_PWM_RANGE (65535/10/3.3) // (255 * (1000mA / 65535)) * 257 = 1000 is equal 1.6v Vref in turn equal 1Amp
-#define DEFAULT_PWM_MOTOR_CURRENT { 1000, 1000, 1000 } // 1.05Amp per driver, here is XY, Z and E. This values determined empirically.
+#define MOTOR_CURRENT_PWM_RANGE (65535/10/3.3) // (255 * (1000mA / 65535)) * 257 = 1000 is equal 1.6v Vref in turn equal 1Amp//（255*（1000mA/65535））*257=1000等于1.6v Vref，反过来等于1MP
+#define DEFAULT_PWM_MOTOR_CURRENT { 1000, 1000, 1000 } // 1.05Amp per driver, here is XY, Z and E. This values determined empirically.//每个驱动器1.05安培，这里是XY、Z和E。该值根据经验确定。
 
-//
-// SD Card
-//
+////
+// SD Card//SD卡
+////
 #define SD_DETECT_PIN                       PC10
 
-//
-// SPI
-//
+////
+// SPI//SPI
+////
 #define SPI_DEVICE                             2
 #define SD_SCK_PIN                          PB13
 #define SD_MISO_PIN                         P1B4

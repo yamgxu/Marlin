@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -25,23 +26,23 @@
 
 #define BOARD_INFO_NAME "GMARSH X6 REV1"
 
-// Ignore temp readings during develpment.
-//#define BOGUS_TEMPERATURE_GRACE_PERIOD    2000
+// Ignore temp readings during develpment.//在开发过程中忽略温度读数。
+//#define BOGUS_TEMPERATURE_GRACE_PERIOD    2000//#定义2000年的假温度宽限期
 
-//
-// Enable 12MHz clock output on P1.27 pin to sync TMC2208 chip clocks
-//
+////
+// Enable 12MHz clock output on P1.27 pin to sync TMC2208 chip clocks//在P1.27引脚上启用12MHz时钟输出，以同步TMC2208芯片时钟
+////
 #define LPC1768_ENABLE_CLKOUT_12M
 
-//
-// Servos
-//
-#define SERVO0_PIN                         P1_26  // PWM1[6]
-#define SERVO1_PIN                         P1_18  // PWM1[1]
+////
+// Servos//伺服
+////
+#define SERVO0_PIN                         P1_26  // PWM1[6]//PWM1[6]
+#define SERVO1_PIN                         P1_18  // PWM1[1]//PWM1[1]
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_MIN_PIN                          P0_00
 #define X_MAX_PIN                          P0_01
 #define Y_MIN_PIN                          P0_10
@@ -49,9 +50,9 @@
 #define Z_MIN_PIN                          P2_13
 #define Z_MAX_PIN                          P2_22
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 
 #define X_STEP_PIN                         P1_01
 #define X_DIR_PIN                          P1_04
@@ -77,9 +78,9 @@
 #define E2_DIR_PIN                         P2_08
 #define E2_ENABLE_PIN                      P2_05
 
-//
-// TMC2208 UART pins
-//
+////
+// TMC2208 UART pins//TMC2208 UART引脚
+////
 #if HAS_TMC_UART
   #define X_SERIAL_TX_PIN                  P1_00
   #define X_SERIAL_RX_PIN                  P1_00
@@ -94,36 +95,36 @@
   #define E2_SERIAL_TX_PIN                 P2_06
   #define E2_SERIAL_RX_PIN                 P2_06
 
-  // Reduce baud rate to improve software serial reliability
+  // Reduce baud rate to improve software serial reliability//降低波特率以提高软件串行可靠性
   #define TMC_BAUD_RATE                    19200
 #else
   #error "TMC2208 UART configuration is required for GMarsh X6."
 #endif
 
-//
-// Temperature Sensors
-//  3.3V max when defined as an analog input
-//
-#define TEMP_0_PIN                      P0_24_A1  // AD0[0] on P0_23
-#define TEMP_BED_PIN                    P0_23_A0  // AD0[1] on P0_24
+////
+// Temperature Sensors//温度传感器
+//  3.3V max when defined as an analog input//当定义为模拟输入时，最大电压为3.3V
+////
+#define TEMP_0_PIN                      P0_24_A1  // AD0[0] on P0_23//P0_23上的AD0[0]
+#define TEMP_BED_PIN                    P0_23_A0  // AD0[1] on P0_24//P0_24上的AD0[1]
 
-//
-// Heaters / Fans
-//
-#define HEATER_BED_PIN                     P1_19  // Not a PWM pin, software PWM required
-#define HEATER_0_PIN                       P3_26  // PWM1[3]
-#define FAN_PIN                            P3_25  // Part cooling fan - connected to PWM1[2]
-#define E0_AUTO_FAN_PIN                    P0_27  // Extruder cooling fan
+////
+// Heaters / Fans//加热器/风扇
+////
+#define HEATER_BED_PIN                     P1_19  // Not a PWM pin, software PWM required//不是PWM引脚，需要软件PWM
+#define HEATER_0_PIN                       P3_26  // PWM1[3]//PWM1[3]
+#define FAN_PIN                            P3_25  // Part cooling fan - connected to PWM1[2]//零件冷却风扇-连接至PWM1[2]
+#define E0_AUTO_FAN_PIN                    P0_27  // Extruder cooling fan//挤出机冷却风扇
 
-//
-// Misc. Functions
-//
+////
+// Misc. Functions//杂项。功能
+////
 #define LED_PIN                            P1_31
 #define POWER_MONITOR_VOLTAGE_PIN       P0_25_A2
 
-//
-// LCD
-//
+////
+// LCD//液晶显示器
+////
 #if IS_RRD_SC
   #define BEEPER_PIN                       P0_19
   #define BTN_EN1                          P1_23
@@ -137,20 +138,20 @@
   #define LCD_PINS_D7                      P1_28
 
   #if ENABLED(REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER)
-    #define BTN_ENC_EN               LCD_PINS_D7  // Detect the presence of the encoder
+    #define BTN_ENC_EN               LCD_PINS_D7  // Detect the presence of the encoder//检测编码器的存在
   #endif
 
 #endif
 
-//
-// SD Support
-//
+////
+// SD Support//SD支持
+////
 
 #ifndef SDCARD_CONNECTION
   #define SDCARD_CONNECTION                  LCD
 #endif
 
-#define ONBOARD_SD_CS_PIN                  P0_06  // Chip select for "System" SD card
+#define ONBOARD_SD_CS_PIN                  P0_06  // Chip select for "System" SD card//“系统”SD卡的芯片选择
 
 #if SD_CONNECTION_IS(LCD)
   #define SD_SCK_PIN                       P0_15

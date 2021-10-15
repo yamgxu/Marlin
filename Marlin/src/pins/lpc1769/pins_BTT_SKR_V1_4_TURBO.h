@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -23,8 +24,8 @@
 
 #define BOARD_INFO_NAME "BTT SKR V1.4 TURBO"
 
-//
-// Include SKR 1.4 pins
-//
+////
+// Include SKR 1.4 pins//包括SKR 1.4引脚
+////
 #define REQUIRE_LPC1769
 #include "../lpc1768/pins_BTT_SKR_V1_4.h"

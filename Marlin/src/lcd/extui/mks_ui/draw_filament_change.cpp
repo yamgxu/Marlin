@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -107,7 +108,7 @@ static void event_handler(lv_obj_t *obj, lv_event_t event) {
 
 void lv_draw_filament_change() {
   scr = lv_screen_create(FILAMENTCHANGE_UI);
-  // Create an Image button
+  // Create an Image button//创建图像按钮
   lv_obj_t *buttonIn = lv_big_button_create(scr, "F:/bmp_in.bin", filament_menu.in, INTERVAL_V, titleHeight, event_handler, ID_FILAMNT_IN);
   lv_obj_clear_protect(buttonIn, LV_PROTECT_FOLLOW);
   lv_big_button_create(scr, "F:/bmp_out.bin", filament_menu.out, BTN_X_PIXEL * 3 + INTERVAL_V * 4, titleHeight, event_handler, ID_FILAMNT_OUT);
@@ -121,7 +122,7 @@ void lv_draw_filament_change() {
 
   lv_big_button_create(scr, "F:/bmp_return.bin", common_menu.text_back, BTN_X_PIXEL * 3 + INTERVAL_V * 4, BTN_Y_PIXEL + INTERVAL_H + titleHeight, event_handler, ID_FILAMNT_RETURN);
 
-  // Create labels on the image buttons
+  // Create labels on the image buttons//在图像按钮上创建标签
   labelType = lv_label_create_empty(buttonType);
 
   disp_filament_type();
@@ -169,4 +170,4 @@ void lv_clear_filament_change() {
   lv_obj_del(scr);
 }
 
-#endif // HAS_TFT_LVGL_UI
+#endif // HAS_TFT_LVGL_UI//有TFT\U LVGL\U用户界面

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*****************
  * font_size_t.h *
  *****************/
@@ -33,10 +34,10 @@ namespace FTDI {
    */
   class font_size_t {
     private:
-      // Standard height for font bitmaps
+      // Standard height for font bitmaps//字体位图的标准高度
       static constexpr uint8_t std_height = 49;
 
-      // 8.8 fixed point scaling coefficient
+      // 8.8 fixed point scaling coefficient//8.8定点比例系数
       uint16_t coefficient;
 
       font_size_t(uint16_t v) : coefficient(v) {}

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /******************************************************************************
  * The MIT License
  *
@@ -95,7 +96,7 @@ static const spi_pins board_spi_pins[] __FLASH__ = {
  * Constructor
  */
 SPIClass::SPIClass(uint32_t spi_num) {
-  _currentSetting = &_settings[spi_num - 1];  // SPI channels are called 1 2 and 3 but the array is zero indexed
+  _currentSetting = &_settings[spi_num - 1];  // SPI channels are called 1 2 and 3 but the array is zero indexed//SPI通道称为1、2和3，但数组的索引为零
 
   switch (spi_num) {
     #if BOARD_NR_SPI >= 1
@@ -119,8 +120,8 @@ SPIClass::SPIClass(uint32_t spi_num) {
     default: ASSERT(0);
   }
 
-  // Init things specific to each SPI device
-  // clock divider setup is a bit of hack, and needs to be improved at a later date.
+  // Init things specific to each SPI device//初始化特定于每个SPI设备的内容
+  // clock divider setup is a bit of hack, and needs to be improved at a later date.//时钟分频器的设置有点麻烦，需要在以后改进。
   #if BOARD_NR_SPI >= 1
     _settings[0].spi_d = SPI1;
     _settings[0].clockDivider = determine_baud_rate(_settings[0].spi_d, _settings[0].clock);
@@ -143,7 +144,7 @@ SPIClass::SPIClass(uint32_t spi_num) {
     _settings[2].spiRxDmaChannel = DMA_CH1;
   #endif
 
-  // added for DMA callbacks.
+  // added for DMA callbacks.//添加了DMA回调。
   _currentSetting->state = SPI_STATE_IDLE;
 }
 
@@ -171,7 +172,7 @@ void SPIClass::begin() {
   spi_init(_currentSetting->spi_d);
   configure_gpios(_currentSetting->spi_d, 1);
   updateSettings();
-  // added for DMA callbacks.
+  // added for DMA callbacks.//添加了DMA回调。
   _currentSetting->state = SPI_STATE_READY;
 }
 
@@ -180,24 +181,24 @@ void SPIClass::beginSlave() {
   configure_gpios(_currentSetting->spi_d, 0);
   uint32_t flags = ((_currentSetting->bitOrder == MSBFIRST ? SPI_FRAME_MSB : SPI_FRAME_LSB) | _currentSetting->dataSize);
   spi_slave_enable(_currentSetting->spi_d, (spi_mode)_currentSetting->dataMode, flags);
-  // added for DMA callbacks.
+  // added for DMA callbacks.//添加了DMA回调。
   _currentSetting->state = SPI_STATE_READY;
 }
 
 void SPIClass::end() {
   if (!spi_is_enabled(_currentSetting->spi_d)) return;
 
-  // Follows RM0008's sequence for disabling a SPI in master/slave
-  // full duplex mode.
+  // Follows RM0008's sequence for disabling a SPI in master/slave//遵循RM0008在主/从系统中禁用SPI的顺序
+  // full duplex mode.//全双工模式。
   while (spi_is_rx_nonempty(_currentSetting->spi_d)) {
-    // FIXME [0.1.0] remove this once you have an interrupt based driver
+    // FIXME [0.1.0] remove this once you have an interrupt based driver//FIXME[0.1.0]一旦您有了基于中断的驱动程序，就删除此选项
     volatile uint16_t rx __attribute__((unused)) = spi_rx_reg(_currentSetting->spi_d);
   }
   waitSpiTxEnd(_currentSetting->spi_d);
 
   spi_peripheral_disable(_currentSetting->spi_d);
-  // added for DMA callbacks.
-  // Need to add unsetting the callbacks for the DMA channels.
+  // added for DMA callbacks.//添加了DMA回调。
+  // Need to add unsetting the callbacks for the DMA channels.//需要为DMA通道添加取消设置回调。
   _currentSetting->state = SPI_STATE_IDLE;
 }
 
@@ -286,22 +287,22 @@ uint16_t SPIClass::read() {
 
 void SPIClass::read(uint8_t *buf, uint32_t len) {
   if (len == 0) return;
-  spi_rx_reg(_currentSetting->spi_d);   // clear the RX buffer in case a byte is waiting on it.
+  spi_rx_reg(_currentSetting->spi_d);   // clear the RX buffer in case a byte is waiting on it.//清除RX缓冲区，以防有字节等待它。
   spi_reg_map * regs = _currentSetting->spi_d->regs;
-  // start sequence: write byte 0
-  regs->DR = 0x00FF;            // write the first byte
-  // main loop
+  // start sequence: write byte 0//开始顺序：写入字节0
+  regs->DR = 0x00FF;            // write the first byte//写入第一个字节
+  // main loop//主回路
   while (--len) {
-    while (!(regs->SR & SPI_SR_TXE)) { /* nada */ } // wait for TXE flag
-    noInterrupts();    // go atomic level - avoid interrupts to surely get the previously received data
-    regs->DR = 0x00FF; // write the next data item to be transmitted into the SPI_DR register. This clears the TXE flag.
-    while (!(regs->SR & SPI_SR_RXNE)) { /* nada */ } // wait till data is available in the DR register
-    *buf++ = (uint8)(regs->DR); // read and store the received byte. This clears the RXNE flag.
-    interrupts();      // let systick do its job
+    while (!(regs->SR & SPI_SR_TXE)) { /* nada */ } // wait for TXE flag//等待TXE标志
+    noInterrupts();    // go atomic level - avoid interrupts to surely get the previously received data//转到原子级-避免中断以确保获得先前接收的数据
+    regs->DR = 0x00FF; // write the next data item to be transmitted into the SPI_DR register. This clears the TXE flag.//将下一个要传输的数据项写入SPI_DR寄存器。这将清除TXE标志。
+    while (!(regs->SR & SPI_SR_RXNE)) { /* nada */ } // wait till data is available in the DR register//等待DR寄存器中的数据可用
+    *buf++ = (uint8)(regs->DR); // read and store the received byte. This clears the RXNE flag.//读取并存储接收到的字节。这将清除RXNE标志。
+    interrupts();      // let systick do its job//让systick完成它的工作
   }
-  // read remaining last byte
-  while (!(regs->SR & SPI_SR_RXNE)) { /* nada */ } // wait till data is available in the Rx register
-  *buf++ = (uint8)(regs->DR);  // read and store the received byte
+  // read remaining last byte//读取剩余的最后一个字节
+  while (!(regs->SR & SPI_SR_RXNE)) { /* nada */ } // wait till data is available in the Rx register//等待接收寄存器中的数据可用
+  *buf++ = (uint8)(regs->DR);  // read and store the received byte//读取并存储接收到的字节
 }
 
 void SPIClass::write(uint16_t data) {
@@ -310,53 +311,53 @@ void SPIClass::write(uint16_t data) {
    * by taking the Tx code from transfer(byte)
    * This almost doubles the speed of this function.
    */
-  spi_tx_reg(_currentSetting->spi_d, data); // write the data to be transmitted into the SPI_DR register (this clears the TXE flag)
+  spi_tx_reg(_currentSetting->spi_d, data); // write the data to be transmitted into the SPI_DR register (this clears the TXE flag)//将要传输的数据写入SPI_DR寄存器（这将清除TXE标志）
   waitSpiTxEnd(_currentSetting->spi_d);
 }
 
 void SPIClass::write16(uint16_t data) {
-  // Added by stevestrong: write two consecutive bytes in 8 bit mode (DFF=0)
-  spi_tx_reg(_currentSetting->spi_d, data>>8); // write high byte
-  while (!spi_is_tx_empty(_currentSetting->spi_d)) { /* nada */ } // Wait until TXE=1
-  spi_tx_reg(_currentSetting->spi_d, data); // write low byte
+  // Added by stevestrong: write two consecutive bytes in 8 bit mode (DFF=0)//stevestrong添加：以8位模式写入两个连续字节（DFF=0）
+  spi_tx_reg(_currentSetting->spi_d, data>>8); // write high byte//写入高字节
+  while (!spi_is_tx_empty(_currentSetting->spi_d)) { /* nada */ } // Wait until TXE=1//等到TXE=1
+  spi_tx_reg(_currentSetting->spi_d, data); // write low byte//写入低字节
   waitSpiTxEnd(_currentSetting->spi_d);
 }
 
 void SPIClass::write(uint16_t data, uint32_t n) {
-  // Added by stevstrong: Repeatedly send same data by the specified number of times
+  // Added by stevstrong: Repeatedly send same data by the specified number of times//stevstrong添加：按指定次数重复发送相同数据
   spi_reg_map * regs = _currentSetting->spi_d->regs;
   while (n--) {
-    regs->DR = data; // write the data to be transmitted into the SPI_DR register (this clears the TXE flag)
-    while (!(regs->SR & SPI_SR_TXE)) { /* nada */ } // wait till Tx empty
+    regs->DR = data; // write the data to be transmitted into the SPI_DR register (this clears the TXE flag)//将要传输的数据写入SPI_DR寄存器（这将清除TXE标志）
+    while (!(regs->SR & SPI_SR_TXE)) { /* nada */ } // wait till Tx empty//等到Tx空了
   }
-  while (regs->SR & SPI_SR_BSY) { /* nada */ } // wait until BSY=0 before returning
+  while (regs->SR & SPI_SR_BSY) { /* nada */ } // wait until BSY=0 before returning//等待BSY=0后返回
 }
 
 void SPIClass::write(const void *data, uint32_t length) {
   spi_dev * spi_d = _currentSetting->spi_d;
-  spi_tx(spi_d, data, length); // data can be array of bytes or words
+  spi_tx(spi_d, data, length); // data can be array of bytes or words//数据可以是字节数组或字数组
   waitSpiTxEnd(spi_d);
 }
 
 uint8_t SPIClass::transfer(uint8_t byte) const {
   spi_dev * spi_d = _currentSetting->spi_d;
-  spi_rx_reg(spi_d); // read any previous data
-  spi_tx_reg(spi_d, byte); // Write the data item to be transmitted into the SPI_DR register
+  spi_rx_reg(spi_d); // read any previous data//读取任何以前的数据
+  spi_tx_reg(spi_d, byte); // Write the data item to be transmitted into the SPI_DR register//将要传输的数据项写入SPI_DR寄存器
   waitSpiTxEnd(spi_d);
-  return (uint8)spi_rx_reg(spi_d); // "... and read the last received data."
+  return (uint8)spi_rx_reg(spi_d); // "... and read the last received data."//“…并读取上次接收的数据。”
 }
 
 uint16_t SPIClass::transfer16(uint16_t data) const {
-  // Modified by stevestrong: write & read two consecutive bytes in 8 bit mode (DFF=0)
-  // This is more effective than two distinct byte transfers
+  // Modified by stevestrong: write & read two consecutive bytes in 8 bit mode (DFF=0)//stevestrong修改：在8位模式下写入和读取两个连续字节（DFF=0）
+  // This is more effective than two distinct byte transfers//这比两个不同的字节传输更有效
   spi_dev * spi_d = _currentSetting->spi_d;
-  spi_rx_reg(spi_d);                              // read any previous data
-  spi_tx_reg(spi_d, data>>8);                     // write high byte
-  waitSpiTxEnd(spi_d);                            // wait until TXE=1 and then wait until BSY=0
-  uint16_t ret = spi_rx_reg(spi_d)<<8;            // read and shift high byte
-  spi_tx_reg(spi_d, data);                        // write low byte
-  waitSpiTxEnd(spi_d);                            // wait until TXE=1 and then wait until BSY=0
-  ret += spi_rx_reg(spi_d);                       // read low byte
+  spi_rx_reg(spi_d);                              // read any previous data//读取任何以前的数据
+  spi_tx_reg(spi_d, data>>8);                     // write high byte//写入高字节
+  waitSpiTxEnd(spi_d);                            // wait until TXE=1 and then wait until BSY=0//等待TXE=1，然后等待BSY=0
+  uint16_t ret = spi_rx_reg(spi_d)<<8;            // read and shift high byte//读取和移位高位字节
+  spi_tx_reg(spi_d, data);                        // write low byte//写入低字节
+  waitSpiTxEnd(spi_d);                            // wait until TXE=1 and then wait until BSY=0//等待TXE=1，然后等待BSY=0
+  ret += spi_rx_reg(spi_d);                       // read low byte//读取低字节
   return ret;
 }
 
@@ -369,19 +370,19 @@ uint16_t SPIClass::transfer16(uint16_t data) const {
  */
 void SPIClass::dmaTransferSet(const void *transmitBuf, void *receiveBuf) {
   dma_init(_currentSetting->spiDmaDev);
-  //spi_rx_dma_enable(_currentSetting->spi_d);
-  //spi_tx_dma_enable(_currentSetting->spi_d);
+  //spi_rx_dma_enable(_currentSetting->spi_d);//spi_接收_dma_启用（_currentSetting->spi_d）；
+  //spi_tx_dma_enable(_currentSetting->spi_d);//spi\U tx\U dma\U启用（当前设置->spi\U d）；
   dma_xfer_size dma_bit_size = (_currentSetting->dataSize==DATA_SIZE_16BIT) ? DMA_SIZE_16BITS : DMA_SIZE_8BITS;
   dma_setup_transfer(_currentSetting->spiDmaDev, _currentSetting->spiRxDmaChannel, &_currentSetting->spi_d->regs->DR,
-      dma_bit_size, receiveBuf, dma_bit_size, (DMA_MINC_MODE | DMA_TRNS_CMPLT ));// receive buffer DMA
+      dma_bit_size, receiveBuf, dma_bit_size, (DMA_MINC_MODE | DMA_TRNS_CMPLT ));// receive buffer DMA//接收缓冲区DMA
   if (!transmitBuf) {
     transmitBuf = &ff;
     dma_setup_transfer(_currentSetting->spiDmaDev, _currentSetting->spiTxDmaChannel, &_currentSetting->spi_d->regs->DR,
-        dma_bit_size, (volatile void*)transmitBuf, dma_bit_size, (DMA_FROM_MEM));// Transmit FF repeatedly
+        dma_bit_size, (volatile void*)transmitBuf, dma_bit_size, (DMA_FROM_MEM));// Transmit FF repeatedly//重复发送FF
   }
   else {
     dma_setup_transfer(_currentSetting->spiDmaDev, _currentSetting->spiTxDmaChannel, &_currentSetting->spi_d->regs->DR,
-        dma_bit_size, (volatile void*)transmitBuf, dma_bit_size, (DMA_MINC_MODE |  DMA_FROM_MEM ));// Transmit buffer DMA
+        dma_bit_size, (volatile void*)transmitBuf, dma_bit_size, (DMA_MINC_MODE |  DMA_FROM_MEM ));// Transmit buffer DMA//发送缓冲区DMA
   }
   dma_set_priority(_currentSetting->spiDmaDev, _currentSetting->spiTxDmaChannel, DMA_PRIORITY_LOW);
   dma_set_priority(_currentSetting->spiDmaDev, _currentSetting->spiRxDmaChannel, DMA_PRIORITY_VERY_HIGH);
@@ -393,22 +394,22 @@ uint8_t SPIClass::dmaTransferRepeat(uint16_t length) {
   _currentSetting->state = SPI_STATE_TRANSFER;
   dma_set_num_transfers(_currentSetting->spiDmaDev, _currentSetting->spiRxDmaChannel, length);
   dma_set_num_transfers(_currentSetting->spiDmaDev, _currentSetting->spiTxDmaChannel, length);
-  dma_enable(_currentSetting->spiDmaDev, _currentSetting->spiRxDmaChannel);// enable receive
-  dma_enable(_currentSetting->spiDmaDev, _currentSetting->spiTxDmaChannel);// enable transmit
+  dma_enable(_currentSetting->spiDmaDev, _currentSetting->spiRxDmaChannel);// enable receive//启用接收
+  dma_enable(_currentSetting->spiDmaDev, _currentSetting->spiTxDmaChannel);// enable transmit//启用传输
   spi_rx_dma_enable(_currentSetting->spi_d);
   spi_tx_dma_enable(_currentSetting->spi_d);
   if (_currentSetting->receiveCallback)
     return 0;
 
-  //uint32_t m = millis();
+  //uint32_t m = millis();//uint32_t m=millis（）；
   uint8_t b = 0;
   uint32_t m = millis();
   while (!(dma_get_isr_bits(_currentSetting->spiDmaDev, _currentSetting->spiTxDmaChannel) & DMA_ISR_TCIF1)) {
-    // Avoid interrupts and just loop waiting for the flag to be set.
+    // Avoid interrupts and just loop waiting for the flag to be set.//避免中断，只需循环等待设置标志。
     if ((millis() - m) > DMA_TIMEOUT) { b = 2; break; }
   }
 
-  waitSpiTxEnd(_currentSetting->spi_d); // until TXE=1 and BSY=0
+  waitSpiTxEnd(_currentSetting->spi_d); // until TXE=1 and BSY=0//直到TXE=1和BSY=0
   spi_tx_dma_disable(_currentSetting->spi_d);
   spi_rx_dma_disable(_currentSetting->spi_d);
   dma_disable(_currentSetting->spiDmaDev, _currentSetting->spiTxDmaChannel);
@@ -443,7 +444,7 @@ void SPIClass::dmaSendSet(const void * transmitBuf, bool minc) {
   dma_init(_currentSetting->spiDmaDev);
   dma_xfer_size dma_bit_size = (_currentSetting->dataSize==DATA_SIZE_16BIT) ? DMA_SIZE_16BITS : DMA_SIZE_8BITS;
   dma_setup_transfer(_currentSetting->spiDmaDev, _currentSetting->spiTxDmaChannel, &_currentSetting->spi_d->regs->DR, dma_bit_size,
-             (volatile void*)transmitBuf, dma_bit_size, flags);// Transmit buffer DMA
+             (volatile void*)transmitBuf, dma_bit_size, flags);// Transmit buffer DMA//发送缓冲区DMA
   dma_set_priority(_currentSetting->spiDmaDev, _currentSetting->spiTxDmaChannel, DMA_PRIORITY_LOW);
 }
 
@@ -453,17 +454,17 @@ uint8_t SPIClass::dmaSendRepeat(uint16_t length) {
   dma_clear_isr_bits(_currentSetting->spiDmaDev, _currentSetting->spiTxDmaChannel);
   dma_set_num_transfers(_currentSetting->spiDmaDev, _currentSetting->spiTxDmaChannel, length);
   _currentSetting->state = SPI_STATE_TRANSMIT;
-  dma_enable(_currentSetting->spiDmaDev, _currentSetting->spiTxDmaChannel);   // enable transmit
+  dma_enable(_currentSetting->spiDmaDev, _currentSetting->spiTxDmaChannel);   // enable transmit//启用传输
   spi_tx_dma_enable(_currentSetting->spi_d);
   if (_currentSetting->transmitCallback) return 0;
 
   uint32_t m = millis();
   uint8_t b = 0;
   while (!(dma_get_isr_bits(_currentSetting->spiDmaDev, _currentSetting->spiTxDmaChannel) & DMA_ISR_TCIF1)) {
-    // Avoid interrupts and just loop waiting for the flag to be set.
+    // Avoid interrupts and just loop waiting for the flag to be set.//避免中断，只需循环等待设置标志。
     if ((millis() - m) > DMA_TIMEOUT) { b = 2; break; }
   }
-  waitSpiTxEnd(_currentSetting->spi_d); // until TXE=1 and BSY=0
+  waitSpiTxEnd(_currentSetting->spi_d); // until TXE=1 and BSY=0//直到TXE=1和BSY=0
   spi_tx_dma_disable(_currentSetting->spi_d);
   dma_disable(_currentSetting->spiDmaDev, _currentSetting->spiTxDmaChannel);
   dma_clear_isr_bits(_currentSetting->spiDmaDev, _currentSetting->spiTxDmaChannel);
@@ -482,11 +483,11 @@ uint8_t SPIClass::dmaSendAsync(const void * transmitBuf, uint16_t length, bool m
   if (_currentSetting->state != SPI_STATE_READY) {
     uint32_t m = millis();
     while (!(dma_get_isr_bits(_currentSetting->spiDmaDev, _currentSetting->spiTxDmaChannel) & DMA_ISR_TCIF1)) {
-      //Avoid interrupts and just loop waiting for the flag to be set.
-      //delayMicroseconds(10);
+      //Avoid interrupts and just loop waiting for the flag to be set.//避免中断，只需循环等待设置标志。
+      //delayMicroseconds(10);//延迟微秒（10）；
       if ((millis() - m) > DMA_TIMEOUT) { b = 2; break; }
     }
-    waitSpiTxEnd(_currentSetting->spi_d); // until TXE=1 and BSY=0
+    waitSpiTxEnd(_currentSetting->spi_d); // until TXE=1 and BSY=0//直到TXE=1和BSY=0
     spi_tx_dma_disable(_currentSetting->spi_d);
     dma_disable(_currentSetting->spiDmaDev, _currentSetting->spiTxDmaChannel);
     _currentSetting->state = SPI_STATE_READY;
@@ -496,13 +497,13 @@ uint8_t SPIClass::dmaSendAsync(const void * transmitBuf, uint16_t length, bool m
   uint32_t flags = ( (DMA_MINC_MODE*minc) | DMA_FROM_MEM | DMA_TRNS_CMPLT);
 
   dma_init(_currentSetting->spiDmaDev);
-  // TX
+  // TX//德克萨斯州
   dma_xfer_size dma_bit_size = (_currentSetting->dataSize==DATA_SIZE_16BIT) ? DMA_SIZE_16BITS : DMA_SIZE_8BITS;
   dma_setup_transfer(_currentSetting->spiDmaDev, _currentSetting->spiTxDmaChannel, &_currentSetting->spi_d->regs->DR,
-      dma_bit_size, (volatile void*)transmitBuf, dma_bit_size, flags);// Transmit buffer DMA
+      dma_bit_size, (volatile void*)transmitBuf, dma_bit_size, flags);// Transmit buffer DMA//发送缓冲区DMA
   dma_set_num_transfers(_currentSetting->spiDmaDev, _currentSetting->spiTxDmaChannel, length);
   dma_clear_isr_bits(_currentSetting->spiDmaDev, _currentSetting->spiTxDmaChannel);
-  dma_enable(_currentSetting->spiDmaDev, _currentSetting->spiTxDmaChannel);// enable transmit
+  dma_enable(_currentSetting->spiDmaDev, _currentSetting->spiTxDmaChannel);// enable transmit//启用传输
   spi_tx_dma_enable(_currentSetting->spi_d);
 
   _currentSetting->state = SPI_STATE_TRANSMIT;
@@ -583,15 +584,15 @@ void SPIClass::EventCallback() {
     _currentSetting->state = SPI_STATE_READY;
     spi_tx_dma_disable(_currentSetting->spi_d);
     spi_rx_dma_disable(_currentSetting->spi_d);
-    //dma_disable(_currentSetting->spiDmaDev, _currentSetting->spiTxDmaChannel);
-    //dma_disable(_currentSetting->spiDmaDev, _currentSetting->spiRxDmaChannel);
+    //dma_disable(_currentSetting->spiDmaDev, _currentSetting->spiTxDmaChannel);//dma_禁用（_currentSetting->spiDmaDev，_currentSetting->spiTxDmaChannel）；
+    //dma_disable(_currentSetting->spiDmaDev, _currentSetting->spiRxDmaChannel);//dma_禁用（_currentSetting->spiDmaDev，_currentSetting->spiRxDmaChannel）；
     if (_currentSetting->receiveCallback)
       _currentSetting->receiveCallback();
     break;
   case SPI_STATE_TRANSMIT:
     _currentSetting->state = SPI_STATE_READY;
     spi_tx_dma_disable(_currentSetting->spi_d);
-    //dma_disable(_currentSetting->spiDmaDev, _currentSetting->spiTxDmaChannel);
+    //dma_disable(_currentSetting->spiDmaDev, _currentSetting->spiTxDmaChannel);//dma_禁用（_currentSetting->spiDmaDev，_currentSetting->spiTxDmaChannel）；
     if (_currentSetting->transmitCallback)
       _currentSetting->transmitCallback();
     break;
@@ -601,11 +602,11 @@ void SPIClass::EventCallback() {
 }
 
 void SPIClass::attachInterrupt() {
-  // Should be enableInterrupt()
+  // Should be enableInterrupt()//应该是enableInterrupt（）
 }
 
 void SPIClass::detachInterrupt() {
-  // Should be disableInterrupt()
+  // Should be disableInterrupt()//应该是disableInterrupt（）
 }
 
 /**
@@ -715,8 +716,8 @@ static spi_baud_rate determine_baud_rate(spi_dev *dev, uint32_t freq) {
   uint32_t clock = 0;
   switch (rcc_dev_clk(dev->clk_id)) {
     case RCC_AHB:
-    case RCC_APB2: clock = STM32_PCLK2; break; // 72 Mhz
-    case RCC_APB1: clock = STM32_PCLK1; break; // 36 Mhz
+    case RCC_APB2: clock = STM32_PCLK2; break; // 72 Mhz//72兆赫
+    case RCC_APB1: clock = STM32_PCLK1; break; // 36 Mhz//36兆赫
   }
   clock >>= 1;
 
@@ -727,4 +728,4 @@ static spi_baud_rate determine_baud_rate(spi_dev *dev, uint32_t freq) {
 
 SPIClass SPI(SPI_DEVICE);
 
-#endif // __STM32F1__
+#endif // __STM32F1__//_uustm32f1__

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -20,9 +21,9 @@
  *
  */
 
-//
-// Delta Calibrate Menu
-//
+////
+// Delta Calibrate Menu//增量校准菜单
+////
 
 #include "../../inc/MarlinConfigPre.h"
 
@@ -53,11 +54,11 @@ void _man_probe_pt(const xy_pos_t &xy) {
 
 #if ENABLED(DELTA_AUTO_CALIBRATION)
 
-  #include "../../MarlinCore.h" // for wait_for_user_response()
+  #include "../../MarlinCore.h" // for wait_for_user_response()//等待用户响应（）
   #include "../../gcode/gcode.h"
 
   #if ENABLED(HOST_PROMPT_SUPPORT)
-    #include "../../feature/host_actions.h" // for host_prompt_do
+    #include "../../feature/host_actions.h" // for host_prompt_do//对于主机提示
   #endif
 
   float lcd_probe_pt(const xy_pos_t &xy) {
@@ -99,7 +100,7 @@ void _man_probe_pt(const xy_pos_t &xy) {
 
 void lcd_delta_settings() {
   auto _recalc_delta_settings = []{
-    TERN_(HAS_LEVELING, reset_bed_level()); // After changing kinematics bed-level data is no longer valid
+    TERN_(HAS_LEVELING, reset_bed_level()); // After changing kinematics bed-level data is no longer valid//更改运动学后，床位标高数据不再有效
     recalc_delta_settings();
   };
   START_MENU();
@@ -120,7 +121,7 @@ void lcd_delta_settings() {
 
 void menu_delta_calibrate() {
   #if ENABLED(DELTA_CALIBRATION_MENU)
-    const bool all_homed = all_axes_homed();  // Acquire ahead of loop
+    const bool all_homed = all_axes_homed();  // Acquire ahead of loop//循环前获取
   #endif
 
   START_MENU();
@@ -149,4 +150,4 @@ void menu_delta_calibrate() {
   END_MENU();
 }
 
-#endif // HAS_LCD_MENU && (DELTA_CALIBRATION_MENU || DELTA_AUTO_CALIBRATION)
+#endif // HAS_LCD_MENU && (DELTA_CALIBRATION_MENU || DELTA_AUTO_CALIBRATION)//具有| LCD |菜单和&（增量|校准|菜单|增量|自动校准）

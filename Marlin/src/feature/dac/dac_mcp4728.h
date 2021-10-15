@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -47,7 +48,7 @@
   #define highByte(w) ((uint8_t) ((w) >> 8))
 #endif
 
-#define defaultVDD     DAC_STEPPER_MAX //was 5000 but differs with internal Vref
+#define defaultVDD     DAC_STEPPER_MAX //was 5000 but differs with internal Vref//为5000，但与内部Vref不同
 #define BASE_ADDR      0x60
 #define RESET          0b00000110
 #define WAKE           0b00001001
@@ -61,8 +62,8 @@
 #define GENERALCALL    0b00000000
 #define GAINWRITE      0b11000000
 
-// This is taken from the original lib, makes it easy to edit if needed
-// DAC_OR_ADDRESS defined in pins_BOARD.h  file
+// This is taken from the original lib, makes it easy to edit if needed//这是从原始库中提取的，便于在需要时进行编辑
+// DAC_OR_ADDRESS defined in pins_BOARD.h  file//pins_BOARD.h文件中定义的DAC_或_地址
 #define DAC_DEV_ADDRESS (BASE_ADDR | DAC_OR_ADDRESS)
 
 class MCP4728 {

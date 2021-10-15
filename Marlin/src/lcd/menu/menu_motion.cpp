@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -20,9 +21,9 @@
  *
  */
 
-//
-// Motion Menu
-//
+////
+// Motion Menu//动作菜单
+////
 
 #include "../../inc/MarlinConfigPre.h"
 
@@ -34,7 +35,7 @@
 #include "menu_addon.h"
 
 #include "../../module/motion.h"
-#include "../../gcode/parser.h" // for inch support
+#include "../../gcode/parser.h" // for inch support//用于英寸支撑
 
 #if ENABLED(DELTA)
   #include "../../module/delta.h"
@@ -53,27 +54,27 @@
   float manual_move_e_origin = 0;
 #endif
 
-//
-// "Motion" > "Move Axis" submenu
-//
+////
+// "Motion" > "Move Axis" submenu//“运动”>“移动轴”子菜单
+////
 
 static void _lcd_move_xyz(PGM_P const name, const AxisEnum axis) {
   if (ui.use_click()) return ui.goto_previous_screen_no_defer();
   if (ui.encoderPosition && !ui.manual_move.processing) {
-    // Get motion limit from software endstops, if any
+    // Get motion limit from software endstops, if any//从软件endstops（如果有）获取运动限制
     float min, max;
     soft_endstop.get_manual_axis_limits(axis, min, max);
 
-    // Delta limits XY based on the current offset from center
-    // This assumes the center is 0,0
+    // Delta limits XY based on the current offset from center//基于当前中心偏移量的增量限制XY
+    // This assumes the center is 0,0//这假定中心为0,0
     #if ENABLED(DELTA)
       if (axis != Z_AXIS) {
-        max = SQRT(sq((float)(DELTA_PRINTABLE_RADIUS)) - sq(current_position[Y_AXIS - axis])); // (Y_AXIS - axis) == the other axis
+        max = SQRT(sq((float)(DELTA_PRINTABLE_RADIUS)) - sq(current_position[Y_AXIS - axis])); // (Y_AXIS - axis) == the other axis//（Y_轴-轴）=另一个轴
         min = -max;
       }
     #endif
 
-    // Get the new position
+    // Get the new position//获得新职位
     const float diff = float(int32_t(ui.encoderPosition)) * ui.manual_move.menu_scale;
     (void)ui.manual_move.apply_diff(axis, diff, min, max);
     ui.manual_move.soon(axis);
@@ -129,14 +130,14 @@ void lcd_move_x() { _lcd_move_xyz(GET_TEXT(MSG_MOVE_X), X_AXIS); }
           MINUS_TERN0(MANUAL_E_MOVES_RELATIVE, manual_move_e_origin)
         )
       );
-    } // should_draw
+    } // should_draw//你应该画画吗
   }
 
-#endif // E_MANUAL
+#endif // E_MANUAL//E_手册
 
-//
-// "Motion" > "Move Xmm" > "Move XYZ" submenu
-//
+////
+// "Motion" > "Move Xmm" > "Move XYZ" submenu//“运动”>“移动Xmm”>“移动XYZ”子菜单
+////
 
 #ifndef FINE_MANUAL_MOVE
   #define FINE_MANUAL_MOVE 0.025
@@ -178,7 +179,7 @@ void _menu_move_distance(const AxisEnum axis, const screenFunc_t func, const int
     SUBMENU(MSG_MOVE_1MM,  []{ _goto_manual_move( 1);    });
     SUBMENU(MSG_MOVE_01MM, []{ _goto_manual_move( 0.1f); });
     if (axis == Z_AXIS && (FINE_MANUAL_MOVE) > 0.0f && (FINE_MANUAL_MOVE) < 0.1f) {
-      // Determine digits needed right of decimal
+      // Determine digits needed right of decimal//确定小数点右边所需的位数
       constexpr uint8_t digs = !UNEAR_ZERO((FINE_MANUAL_MOVE) * 1000 - int((FINE_MANUAL_MOVE) * 1000)) ? 4 :
                                !UNEAR_ZERO((FINE_MANUAL_MOVE) *  100 - int((FINE_MANUAL_MOVE) *  100)) ? 3 : 2;
       PGM_P const label = GET_TEXT(MSG_MOVE_N_MM);
@@ -220,7 +221,7 @@ void _menu_move_distance(const AxisEnum axis, const screenFunc_t func, const int
     _goto_menu_move_distance_e();
   }
 
-#endif // E_MANUAL
+#endif // E_MANUAL//E_手册
 
 void menu_move() {
   START_MENU();
@@ -296,26 +297,26 @@ void menu_move() {
 
   #if E_MANUAL
 
-    // The current extruder
+    // The current extruder//当前的挤出机
     SUBMENU(MSG_MOVE_E, []{ _menu_move_distance_e_maybe(); });
 
     #define SUBMENU_MOVE_E(N) SUBMENU_N(N, MSG_MOVE_EN, []{ _menu_move_distance(E_AXIS, []{ lcd_move_e(MenuItemBase::itemIndex); }, MenuItemBase::itemIndex); });
 
     #if EITHER(SWITCHING_EXTRUDER, SWITCHING_NOZZLE)
 
-      // ...and the non-switching
+      // ...and the non-switching//…以及非交换
       #if E_MANUAL == 7 || E_MANUAL == 5 || E_MANUAL == 3
         SUBMENU_MOVE_E(E_MANUAL - 1);
       #endif
 
     #elif MULTI_E_MANUAL
 
-      // Independent extruders with one E-stepper per hotend
+      // Independent extruders with one E-stepper per hotend//独立挤出机，每个热端有一个E步进机
       LOOP_L_N(n, E_MANUAL) SUBMENU_MOVE_E(n);
 
     #endif
 
-  #endif // E_MANUAL
+  #endif // E_MANUAL//E_手册
 
   END_MENU();
 }
@@ -333,20 +334,20 @@ void menu_move() {
 void menu_motion() {
   START_MENU();
 
-  //
-  // ^ Main
-  //
+  ////
+  // ^ Main//^Main
+  ////
   BACK_ITEM(MSG_MAIN);
 
-  //
-  // Move Axis
-  //
+  ////
+  // Move Axis//移动轴
+  ////
   if (TERN1(DELTA, all_axes_homed()))
     SUBMENU(MSG_MOVE_AXIS, menu_move);
 
-  //
-  // Auto Home
-  //
+  ////
+  // Auto Home//自动回家
+  ////
   GCODES_ITEM(MSG_AUTO_HOME, G28_STR);
   #if ENABLED(INDIVIDUAL_AXIS_HOMING_MENU)
     GCODES_ITEM(MSG_AUTO_HOME_X, PSTR("G28X"));
@@ -367,30 +368,30 @@ void menu_motion() {
     #endif
   #endif
 
-  //
-  // Auto-calibration
-  //
+  ////
+  // Auto-calibration//自动校准
+  ////
   #if ENABLED(CALIBRATION_GCODE)
     GCODES_ITEM(MSG_AUTO_CALIBRATE, PSTR("G425"));
   #endif
 
-  //
-  // Auto Z-Align
-  //
+  ////
+  // Auto Z-Align//自动Z对齐
+  ////
   #if EITHER(Z_STEPPER_AUTO_ALIGN, MECHANICAL_GANTRY_CALIBRATION)
     GCODES_ITEM(MSG_AUTO_Z_ALIGN, PSTR("G34"));
   #endif
 
-  //
-  // Assisted Bed Tramming
-  //
+  ////
+  // Assisted Bed Tramming//辅助床牵引
+  ////
   #if ENABLED(ASSISTED_TRAMMING_WIZARD)
     SUBMENU(MSG_TRAMMING_WIZARD, goto_tramming_wizard);
   #endif
 
-  //
-  // Level Bed
-  //
+  ////
+  // Level Bed//水平床
+  ////
   #if ENABLED(AUTO_BED_LEVELING_UBL)
 
     SUBMENU(MSG_UBL_LEVEL_BED, _lcd_ubl_level_bed);
@@ -426,12 +427,12 @@ void menu_motion() {
     GCODES_ITEM(MSG_M48_TEST, PSTR("G28O\nM48 P10"));
   #endif
 
-  //
-  // Disable Steppers
-  //
+  ////
+  // Disable Steppers//禁用步进器
+  ////
   GCODES_ITEM(MSG_DISABLE_STEPPERS, PSTR("M84"));
 
   END_MENU();
 }
 
-#endif // HAS_LCD_MENU
+#endif // HAS_LCD_MENU//有LCD菜单吗

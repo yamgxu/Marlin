@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -25,11 +26,11 @@
   #define HAS_SD_HOST_DRIVE 1
 #endif
 
-// Fix F_CPU not being a compile-time constant in STSTM32 framework
+// Fix F_CPU not being a compile-time constant in STSTM32 framework//修复F_CPU在STSTM32框架中不是编译时常量的问题
 #ifdef BOARD_F_CPU
   #undef F_CPU
   #define F_CPU BOARD_F_CPU
 #endif
 
-// The Sensitive Pins array is not optimizable
+// The Sensitive Pins array is not optimizable//敏感管脚阵列不可优化
 #define RUNTIME_ONLY_ANALOG_TO_DIGITAL

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -60,4 +61,4 @@ void GcodeSuite::M145() {
   }
 }
 
-#endif // PREHEAT_COUNT
+#endif // PREHEAT_COUNT//预热计数

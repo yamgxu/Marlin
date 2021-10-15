@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -45,11 +46,11 @@
 
 #define MAX_TUNE_LENGTH 128
 
-// Special notes!
-#define n_P    0       // silence or pause
-#define n_END  10000   // end of tune marker
+// Special notes!//特别提示！
+#define n_P    0       // silence or pause//沉默或停顿
+#define n_END  10000   // end of tune marker//调谐结束标记
 
-// Note duration divisors
+// Note duration divisors//注：持续时间因子
 #define l_T1   1
 #define l_T2   2
 #define l_T3   3
@@ -57,7 +58,7 @@
 #define l_T8   8
 #define l_T16 16
 
-// Note Frequency
+// Note Frequency//音符频率
 #define n_C0     16
 #define n_CS0    17
 #define n_D0     18
@@ -171,9 +172,9 @@ namespace Anycubic {
 
   void PlayTune(uint8_t beeperPin, const uint16_t *tune, uint8_t speed);
 
-  // Only uncomment the tunes you are using to save memory
-  // This will help you write tunes!
-  // https://www.apronus.com/music/flashpiano.htm
+  // Only uncomment the tunes you are using to save memory//仅取消注释您用于节省内存的乐曲
+  // This will help you write tunes!//这将帮助你写曲子！
+  // https://www.apronus.com/music/flashpiano.htm// https://www.apronus.com/music/flashpiano.htm
 
   const uint16_t SOS[] = {
     250,

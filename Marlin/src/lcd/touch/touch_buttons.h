@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -32,7 +33,7 @@
 #define BUTTON_WIDTH  UPSCALE0(BUTTON_DRAW_WIDTH)
 #define BUTTON_HEIGHT UPSCALE0(BUTTON_DRAW_HEIGHT)
 
-// calc the space between buttons
+// calc the space between buttons//计算按钮之间的间距
 #define BUTTON_SPACING (((TFT_WIDTH) - (BUTTON_WIDTH * 4)) / 5)
 
 #define BUTTOND_X_LO BUTTON_SPACING

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2021 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -28,16 +29,16 @@
 #define BOARD_INFO_NAME      "BTT SKR SE BX"
 #define DEFAULT_MACHINE_NAME "BIQU-BX"
 
-// Onboard I2C EEPROM
+// Onboard I2C EEPROM//板载I2C EEPROM
 #define I2C_EEPROM
-#define MARLIN_EEPROM_SIZE                0x1000  // 4KB (24C32 ... 32Kb = 4KB)
+#define MARLIN_EEPROM_SIZE                0x1000  // 4KB (24C32 ... 32Kb = 4KB)//4KB（24C32…32Kb=4KB）
 
-// USB Flash Drive support
+// USB Flash Drive support//USB闪存驱动器支持
 #define HAS_OTG_USB_HOST_SUPPORT
 
-//
-// Limit Switches
-//
+////
+// Limit Switches//限位开关
+////
 #define X_MIN_PIN                           PB11
 #define X_MAX_PIN                           PD13
 #define Y_MIN_PIN                           PB12
@@ -59,16 +60,16 @@
 #define SAFE_POWER_PIN                      PI11
 #define SERVO0_PIN                          PA2
 
-//
-// Z Probe (when not Z_MIN_PIN)
-//
+////
+// Z Probe (when not Z_MIN_PIN)//Z探头（非Z_MIN_引脚时）
+////
 #ifndef Z_MIN_PROBE_PIN
-  #define Z_MIN_PROBE_PIN                   PH2   // Probe
+  #define Z_MIN_PROBE_PIN                   PH2   // Probe//探测
 #endif
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                          PG13
 #define X_DIR_PIN                           PG12
 #define X_ENABLE_PIN                        PG14
@@ -94,9 +95,9 @@
 #define E1_ENABLE_PIN                       PD2
 #define E1_CS_PIN                           PC8
 
-//
-// Software SPI pins for TMC2130 stepper drivers
-//
+////
+// Software SPI pins for TMC2130 stepper drivers//TMC2130步进驱动器的软件SPI引脚
+////
 #if ENABLED(TMC_USE_SW_SPI)
   #ifndef TMC_SW_MOSI
     #define TMC_SW_MOSI                     PC6
@@ -116,24 +117,24 @@
    * Hardware serial communication ports.
    * If undefined software serial is used according to the pins below
    */
-  //#define X_HARDWARE_SERIAL  Serial
-  //#define X2_HARDWARE_SERIAL Serial1
-  //#define Y_HARDWARE_SERIAL  Serial1
-  //#define Y2_HARDWARE_SERIAL Serial1
-  //#define Z_HARDWARE_SERIAL  Serial1
-  //#define Z2_HARDWARE_SERIAL Serial1
-  //#define E0_HARDWARE_SERIAL Serial1
-  //#define E1_HARDWARE_SERIAL Serial1
-  //#define E2_HARDWARE_SERIAL Serial1
-  //#define E3_HARDWARE_SERIAL Serial1
-  //#define E4_HARDWARE_SERIAL Serial1
-  //#define E5_HARDWARE_SERIAL Serial1
-  //#define E6_HARDWARE_SERIAL Serial1
-  //#define E7_HARDWARE_SERIAL Serial1
+  //#define X_HARDWARE_SERIAL  Serial//#定义X_硬件_串行
+  //#define X2_HARDWARE_SERIAL Serial1//#定义X2_硬件_串行1
+  //#define Y_HARDWARE_SERIAL  Serial1//#定义Y_硬件_串行1
+  //#define Y2_HARDWARE_SERIAL Serial1//#定义Y2\u硬件\u串行1
+  //#define Z_HARDWARE_SERIAL  Serial1//#定义Z_硬件_串行1
+  //#define Z2_HARDWARE_SERIAL Serial1//#定义Z2_硬件_串行1
+  //#define E0_HARDWARE_SERIAL Serial1//#定义E0_硬件_串行1
+  //#define E1_HARDWARE_SERIAL Serial1//#定义E1_硬件_串行1
+  //#define E2_HARDWARE_SERIAL Serial1//#定义E2_硬件_串行1
+  //#define E3_HARDWARE_SERIAL Serial1//#定义E3\u硬件\u串行1
+  //#define E4_HARDWARE_SERIAL Serial1//#定义E4\u硬件\u串行1
+  //#define E5_HARDWARE_SERIAL Serial1//#定义E5_硬件_串行1
+  //#define E6_HARDWARE_SERIAL Serial1//#定义E6_硬件_串行1
+  //#define E7_HARDWARE_SERIAL Serial1//#定义E7_硬件_串行1
 
-  //
-  // Software serial
-  //
+  ////
+  // Software serial//软件系列
+  ////
   #define X_SERIAL_TX_PIN                   PG10
   #define X_SERIAL_RX_PIN                   PG10
 
@@ -149,65 +150,65 @@
   #define E1_SERIAL_TX_PIN                  PC8
   #define E1_SERIAL_RX_PIN                  PC8
 
-  // Reduce baud rate to improve software serial reliability
+  // Reduce baud rate to improve software serial reliability//降低波特率以提高软件串行可靠性
   #define TMC_BAUD_RATE                    19200
 #endif
 
-//
-// Temperature Sensors
-//
-#define TEMP_0_PIN                          PH4   // TH0
-#define TEMP_1_PIN                          PA3   // TH1
-#define TEMP_BED_PIN                        PH5   // TB
+////
+// Temperature Sensors//温度传感器
+////
+#define TEMP_0_PIN                          PH4   // TH0//TH0
+#define TEMP_1_PIN                          PA3   // TH1//TH1
+#define TEMP_BED_PIN                        PH5   // TB//结核病
 
-//
-// Heaters / Fans
-//
+////
+// Heaters / Fans//加热器/风扇
+////
 #define HEATER_0_PIN                        PC4
 #define HEATER_1_PIN                        PC5
 #define HEATER_BED_PIN                      PA4
 
-#define FAN_PIN                             PA5   // "FAN0"
-#define FAN1_PIN                            PA6   // "FAN1"
-#define FAN2_PIN                            PA7   // "FAN2"
+#define FAN_PIN                             PA5   // "FAN0"//“FAN0”
+#define FAN1_PIN                            PA6   // "FAN1"//“FAN1”
+#define FAN2_PIN                            PA7   // "FAN2"//“风扇2”
 
 #define NEOPIXEL_PIN                        PH3
 #define NEOPIXEL2_PIN                       PB1
 
 #if HAS_LTDC_TFT
 
-  // LTDC_LCD Timing
-  #define LTDC_LCD_CLK                        50  // LTDC clock frequency = 50Mhz
-  #define LTDC_LCD_HSYNC                      30  // Horizontal synchronization
-  #define LTDC_LCD_HBP                       114  // Horizontal back porch
-  #define LTDC_LCD_HFP                        16  // Horizontal front porch
-  #define LTDC_LCD_VSYNC                       3  // Vertical synchronization
-  #define LTDC_LCD_VBP                        32  // Vertical back porch
-  #define LTDC_LCD_VFP                        10  // Vertical front porch
+  // LTDC_LCD Timing//LCD定时
+  #define LTDC_LCD_CLK                        50  // LTDC clock frequency = 50Mhz//LTDC时钟频率=50Mhz
+  #define LTDC_LCD_HSYNC                      30  // Horizontal synchronization//水平同步
+  #define LTDC_LCD_HBP                       114  // Horizontal back porch//水平后廊
+  #define LTDC_LCD_HFP                        16  // Horizontal front porch//水平前廊
+  #define LTDC_LCD_VSYNC                       3  // Vertical synchronization//垂直同步
+  #define LTDC_LCD_VBP                        32  // Vertical back porch//垂直后廊
+  #define LTDC_LCD_VFP                        10  // Vertical front porch//垂直前廊
 
   #define TFT_BACKLIGHT_PIN                 PB5
   #define LCD_DE_PIN                        PF10
   #define LCD_CLK_PIN                       PG7
   #define LCD_VSYNC_PIN                     PI9
   #define LCD_HSYNC_PIN                     PI10
-  #define LCD_R7_PIN                        PG6   // R5
+  #define LCD_R7_PIN                        PG6   // R5//R5
   #define LCD_R6_PIN                        PH12
   #define LCD_R5_PIN                        PH11
   #define LCD_R4_PIN                        PH10
   #define LCD_R3_PIN                        PH9
-  #define LCD_G7_PIN                        PI2   // G6
+  #define LCD_G7_PIN                        PI2   // G6//G6
   #define LCD_G6_PIN                        PI1
   #define LCD_G5_PIN                        PI0
   #define LCD_G4_PIN                        PH15
   #define LCD_G3_PIN                        PH14
   #define LCD_G2_PIN                        PH13
-  #define LCD_B7_PIN                        PI7   // B5
+  #define LCD_B7_PIN                        PI7   // B5//B5
   #define LCD_B6_PIN                        PI6
   #define LCD_B5_PIN                        PI5
   #define LCD_B4_PIN                        PI4
   #define LCD_B3_PIN                        PG11
 
-  // GT911 Capacitive Touch Sensor
+  // GT911 Capacitive Touch Sensor//GT911电容式触摸传感器
   #if ENABLED(TFT_TOUCH_DEVICE_GT911)
     #define GT911_RST_PIN                   PE4
     #define GT911_INT_PIN                   PE3

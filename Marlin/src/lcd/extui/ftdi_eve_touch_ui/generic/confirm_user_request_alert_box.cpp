@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**************************************
  * confirm_user_request_alert_box.cpp *
  **************************************/
@@ -29,14 +30,14 @@
 using namespace FTDI;
 
 void ConfirmUserRequestAlertBox::onRedraw(draw_mode_t mode) {
-  AlertDialogBox::onRedraw(mode); // Required for the GOTO_SCREEN function to work
+  AlertDialogBox::onRedraw(mode); // Required for the GOTO_SCREEN function to work//GOTO_屏幕功能工作所需
 }
 
 bool ConfirmUserRequestAlertBox::onTouchEnd(uint8_t tag) {
   switch (tag) {
     case 1:
       if (ExtUI::isPrintingPaused()) {
-        // The TuneMenu will call ExtUI::setUserConfirmed()
+        // The TuneMenu will call ExtUI::setUserConfirmed()//TuneMenu将调用ExtUI:：setuserconfirm（）
         GOTO_SCREEN(TuneMenu);
         current_screen.forget();
       }
@@ -68,4 +69,4 @@ void ConfirmUserRequestAlertBox::hide() {
     GOTO_PREVIOUS();
 }
 
-#endif // FTDI_CONFIRM_USER_REQUEST_ALERT_BOX
+#endif // FTDI_CONFIRM_USER_REQUEST_ALERT_BOX//FTDI确认用户请求警报框

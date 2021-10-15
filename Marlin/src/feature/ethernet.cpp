@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -30,19 +31,19 @@
 #define DEBUG_OUT ENABLED(DEBUG_ETHERNET)
 #include "../core/debug_out.h"
 
-bool MarlinEthernet::hardware_enabled, // = false
-     MarlinEthernet::have_telnet_client; // = false
+bool MarlinEthernet::hardware_enabled, // = false//=错误
+     MarlinEthernet::have_telnet_client; // = false//=错误
 
 IPAddress MarlinEthernet::ip,
           MarlinEthernet::myDns,
           MarlinEthernet::gateway,
           MarlinEthernet::subnet;
 
-EthernetClient  MarlinEthernet::telnetClient;  // connected client
+EthernetClient  MarlinEthernet::telnetClient;  // connected client//连接客户端
 
 MarlinEthernet ethernet;
 
-EthernetServer server(23);    // telnet server
+EthernetServer server(23);    // telnet server//远程登录服务器
 
 enum linkStates { UNLINKED, LINKING, LINKED, CONNECTING, CONNECTED, NO_HARDWARE } linkState;
 
@@ -71,14 +72,14 @@ void MarlinEthernet::init() {
 
   SERIAL_ECHO_MSG("Starting network...");
 
-  // Init the Ethernet device
+  // Init the Ethernet device//初始化以太网设备
   #ifdef __IMXRT1062__
     uint8_t mac[6];
     teensyMAC(mac);
   #endif
 
   if (!ip) {
-    Ethernet.begin(mac); // use DHCP
+    Ethernet.begin(mac); // use DHCP//使用DHCP
   }
   else {
     if (!gateway) {
@@ -92,7 +93,7 @@ void MarlinEthernet::init() {
     Ethernet.begin(mac, ip, myDns, gateway, subnet);
   }
 
-  // Check for Ethernet hardware present
+  // Check for Ethernet hardware present//检查是否存在以太网硬件
   if (Ethernet.hardwareStatus() == EthernetNoHardware) {
     SERIAL_ERROR_MSG("No Ethernet hardware found.");
     linkState = NO_HARDWARE;
@@ -172,4 +173,4 @@ void MarlinEthernet::check() {
   }
 }
 
-#endif // HAS_ETHERNET
+#endif // HAS_ETHERNET//有以太网吗

@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -28,9 +29,9 @@
 #define BOARD_INFO_NAME      "Creality v4.3.1"
 #define DEFAULT_MACHINE_NAME "Creality3D"
 
-//
-// Steppers
-//
+////
+// Steppers//踏步机
+////
 #define X_STEP_PIN                        PB8
 #define X_DIR_PIN                         PB7
 

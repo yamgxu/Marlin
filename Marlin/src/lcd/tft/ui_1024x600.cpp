@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -66,12 +67,12 @@ void MarlinUI::tft_idle() {
 
     tft.canvas(0, 0, TFT_WIDTH, TFT_HEIGHT);
     #if ENABLED(BOOT_MARLIN_LOGO_SMALL)
-      #define BOOT_LOGO_W 195   // MarlinLogo195x59x16
+      #define BOOT_LOGO_W 195   // MarlinLogo195x59x16//Marlinlogo 195x59x16
       #define BOOT_LOGO_H  59
       #define SITE_URL_Y (TFT_HEIGHT - 70)
       tft.set_background(COLOR_BACKGROUND);
     #else
-      #define BOOT_LOGO_W TFT_WIDTH   // MarlinLogo480x320x16
+      #define BOOT_LOGO_W TFT_WIDTH   // MarlinLogo480x320x16//Marlinlogo 480x320x16
       #define BOOT_LOGO_H TFT_HEIGHT
       #define SITE_URL_Y (TFT_HEIGHT - 90)
     #endif
@@ -121,7 +122,7 @@ void draw_heater_status(uint16_t x, uint16_t y, const int8_t Heater) {
   uint16_t Color;
   celsius_t currentTemperature, targetTemperature;
 
-  if (Heater >= 0) { // HotEnd
+  if (Heater >= 0) { // HotEnd//热端
     currentTemperature = thermalManager.wholeDegHotend(Heater);
     targetTemperature = thermalManager.degTargetHotend(Heater);
   }
@@ -155,7 +156,7 @@ void draw_heater_status(uint16_t x, uint16_t y, const int8_t Heater) {
 
   Color = currentTemperature < 0 ? COLOR_INACTIVE : COLOR_COLD;
 
-  if (Heater >= 0) { // HotEnd
+  if (Heater >= 0) { // HotEnd//热端
     if (currentTemperature >= 50) Color = COLOR_HOTEND;
   }
   #if HAS_HEATED_BED
@@ -220,7 +221,7 @@ void MarlinUI::draw_status_screen() {
 
   TERN_(TOUCH_SCREEN, touch.clear());
 
-  // heaters and fan
+  // heaters and fan//加热器和风扇
   uint16_t i, x, y = TFT_STATUS_TOP_Y;
 
   for (i = 0 ; i < ITEMS_COUNT; i++) {
@@ -252,7 +253,7 @@ void MarlinUI::draw_status_screen() {
 
   y += 200;
 
-  // coordinates
+  // coordinates//坐标
   tft.canvas(4, y, TFT_WIDTH - 8, FONT_LINE_HEIGHT);
   tft.set_background(COLOR_BACKGROUND);
   tft.add_rectangle(0, 0, TFT_WIDTH - 8, FONT_LINE_HEIGHT, COLOR_AXIS_HOMED);
@@ -286,7 +287,7 @@ void MarlinUI::draw_status_screen() {
   TERN_(TOUCH_SCREEN, touch.add_control(MOVE_AXIS, 4, y, TFT_WIDTH - 8, FONT_LINE_HEIGHT));
 
   y += 100;
-  // feed rate
+  // feed rate//进给速度
   tft.canvas(274, y, 100, 32);
   tft.set_background(COLOR_BACKGROUND);
   uint16_t color = feedrate_percentage == 100 ? COLOR_RATE_100 : COLOR_RATE_ALTERED;
@@ -296,7 +297,7 @@ void MarlinUI::draw_status_screen() {
   tft.add_text(36, 1, color , tft_string);
   TERN_(TOUCH_SCREEN, touch.add_control(FEEDRATE, 274, y, 100, 32));
 
-  // flow rate
+  // flow rate//流量
   tft.canvas(650, y, 100, 32);
   tft.set_background(COLOR_BACKGROUND);
   color = planner.flow_percentage[0] == 100 ? COLOR_RATE_100 : COLOR_RATE_ALTERED;
@@ -312,7 +313,7 @@ void MarlinUI::draw_status_screen() {
   #endif
 
   y += 100;
-  // print duration
+  // print duration//打印持续时间
   char buffer[14];
   duration_t elapsed = print_job_timer.duration();
   elapsed.toDigital(buffer);
@@ -323,7 +324,7 @@ void MarlinUI::draw_status_screen() {
   tft.add_text(tft_string.center(128), 0, COLOR_PRINT_TIME, tft_string);
 
   y += 50;
-  // progress bar
+  // progress bar//进度条
   const uint8_t progress = ui.get_progress_percent();
   tft.canvas(4, y, TFT_WIDTH - 8, 9);
   tft.set_background(COLOR_PROGRESS_BG);
@@ -332,7 +333,7 @@ void MarlinUI::draw_status_screen() {
     tft.add_bar(1, 1, ((TFT_WIDTH - 10) * progress) / 100, 7, COLOR_PROGRESS_BAR);
 
   y += 50;
-  // status message
+  // status message//状态消息
   tft.canvas(0, y, TFT_WIDTH, FONT_LINE_HEIGHT - 5);
   tft.set_background(COLOR_BACKGROUND);
   tft_string.set(status_message);
@@ -340,7 +341,7 @@ void MarlinUI::draw_status_screen() {
   tft.add_text(tft_string.center(TFT_WIDTH), 0, COLOR_STATUS_MESSAGE, tft_string);
 }
 
-// Low-level draw_edit_screen can be used to draw an edit screen from anyplace
+// Low-level draw_edit_screen can be used to draw an edit screen from anyplace//低级绘制编辑屏幕可用于从任何位置绘制编辑屏幕
 void MenuEditItemBase::draw_edit_screen(PGM_P const pstr, const char * const value/*=nullptr*/) {
   ui.encoder_direction_normal();
   TERN_(TOUCH_SCREEN, touch.clear());
@@ -352,7 +353,7 @@ void MenuEditItemBase::draw_edit_screen(PGM_P const pstr, const char * const val
   tft_string.trim();
   tft.add_text(tft_string.center(TFT_WIDTH), MENU_TEXT_Y_OFFSET, COLOR_MENU_TEXT, tft_string);
 
-  TERN_(AUTO_BED_LEVELING_UBL, if (ui.external_control) line++);  // ftostr52() will overwrite *value so *value has to be displayed first
+  TERN_(AUTO_BED_LEVELING_UBL, if (ui.external_control) line++);  // ftostr52() will overwrite *value so *value has to be displayed first//ftostr52（）将覆盖*值，因此必须首先显示*值
 
   menu_line(line);
   tft_string.set(value);
@@ -409,7 +410,7 @@ void TFT::draw_edit_screen_buttons() {
   #endif
 }
 
-// The Select Screen presents a prompt and two "buttons"
+// The Select Screen presents a prompt and two "buttons"//选择屏幕显示一个提示和两个“按钮”
 void MenuItem_confirm::draw_select_screen(PGM_P const yes, PGM_P const no, const bool yesno, PGM_P const pref, const char * const string/*=nullptr*/, PGM_P const suff/*=nullptr*/) {
   uint16_t line = 1;
 
@@ -475,7 +476,7 @@ void MenuItem_confirm::draw_select_screen(PGM_P const yes, PGM_P const no, const
     tft.add_text(tft_string.center(TFT_WIDTH), 0, COLOR_MENU_TEXT, tft_string);
   }
 
-#endif // ADVANCED_PAUSE_FEATURE
+#endif // ADVANCED_PAUSE_FEATURE//高级暂停功能
 
 #if ENABLED(AUTO_BED_LEVELING_UBL)
   #define GRID_OFFSET_X   8
@@ -548,7 +549,7 @@ void MenuItem_confirm::draw_select_screen(PGM_P const yes, PGM_P const no, const
       add_control(224, TFT_HEIGHT - 34, BACK, imgBack);
     #endif
   }
-#endif // AUTO_BED_LEVELING_UBL
+#endif // AUTO_BED_LEVELING_UBL//自动调平床
 
 #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
   #include "../../feature/babystep.h"
@@ -584,7 +585,7 @@ MotionAxisState motionAxisState;
 
 static void quick_feedback() {
   #if HAS_CHIRP
-    ui.chirp(); // Buzz and wait. Is the delay needed for buttons to settle?
+    ui.chirp(); // Buzz and wait. Is the delay needed for buttons to settle?//嗡嗡叫，等待。按钮设置是否需要延迟？
     #if BOTH(HAS_LCD_MENU, USE_BEEPER)
       for (int8_t i = 5; i--;) { buzzer.tick(); delay(2); }
     #elif HAS_LCD_MENU
@@ -678,14 +679,14 @@ static void moveAxis(const AxisEnum axis, const int8_t direction) {
           probe.offset.z = new_offs;
         else
           TERN(BABYSTEP_HOTEND_Z_OFFSET, hotend_offset[active_extruder].z = new_offs, NOOP);
-        drawMessage(""); // clear the error
+        drawMessage(""); // clear the error//清除错误
         drawAxisValue(axis);
       }
       else {
         drawMessage(GET_TEXT(MSG_LCD_SOFT_ENDSTOPS));
       }
     #elif HAS_BED_PROBE
-      // only change probe.offset.z
+      // only change probe.offset.z//仅更改probe.offset.z
       probe.offset.z += diff;
       if (direction < 0 && current_position[axis] < Z_PROBE_OFFSET_RANGE_MIN) {
         current_position[axis] = Z_PROBE_OFFSET_RANGE_MIN;
@@ -696,7 +697,7 @@ static void moveAxis(const AxisEnum axis, const int8_t direction) {
         drawMessage(GET_TEXT(MSG_LCD_SOFT_ENDSTOPS));
       }
       else {
-        drawMessage(""); // clear the error
+        drawMessage(""); // clear the error//清除错误
       }
       drawAxisValue(axis);
     #endif
@@ -704,20 +705,20 @@ static void moveAxis(const AxisEnum axis, const int8_t direction) {
   }
 
   if (!ui.manual_move.processing) {
-    // Get motion limit from software endstops, if any
+    // Get motion limit from software endstops, if any//从软件endstops（如果有）获取运动限制
     float min, max;
     soft_endstop.get_manual_axis_limits(axis, min, max);
 
-    // Delta limits XY based on the current offset from center
-    // This assumes the center is 0,0
+    // Delta limits XY based on the current offset from center//基于当前中心偏移量的增量限制XY
+    // This assumes the center is 0,0//这假定中心为0,0
     #if ENABLED(DELTA)
       if (axis != Z_AXIS && axis != E_AXIS) {
-        max = SQRT(sq((float)(DELTA_PRINTABLE_RADIUS)) - sq(current_position[Y_AXIS - axis])); // (Y_AXIS - axis) == the other axis
+        max = SQRT(sq((float)(DELTA_PRINTABLE_RADIUS)) - sq(current_position[Y_AXIS - axis])); // (Y_AXIS - axis) == the other axis//（Y_轴-轴）=另一个轴
         min = -max;
       }
     #endif
 
-    // Get the new position
+    // Get the new position//获得新职位
     const bool limited = ui.manual_move.apply_diff(axis, diff, min, max);
     #if IS_KINEMATIC
       UNUSED(limited);
@@ -757,7 +758,7 @@ static void z_minus() { moveAxis(Z_AXIS, -1); }
     quick_feedback();
     drawMessage(GET_TEXT(MSG_LEVEL_BED_HOMING));
     queue.inject_P(G28_STR);
-    // Disable touch until home is done
+    // Disable touch until home is done//禁用触摸，直到完成主页
     TERN_(TOUCH_SCREEN, touch.disable());
     drawAxisValue(E_AXIS);
     drawAxisValue(X_AXIS);
@@ -797,7 +798,7 @@ static void drawBtn(int x, int y, const char *label, intptr_t data, MarlinImage 
   tft.set_background(COLOR_BACKGROUND);
   tft.add_image(0, 0, imgBtn52Rounded, bgColor, COLOR_BACKGROUND, COLOR_DARKGREY);
 
-  // TODO: Make an add_text() taking a font arg
+  // TODO: Make an add_text() taking a font arg//TODO:使用字体参数创建一个add_text（）
   if (label) {
     tft_string.set(label);
     tft_string.trim();
@@ -811,7 +812,7 @@ static void drawBtn(int x, int y, const char *label, intptr_t data, MarlinImage 
 }
 
 void MarlinUI::move_axis_screen() {
-  // Reset
+  // Reset//重置
   defer_status_screen(true);
   motionAxisState.blocked = false;
   TERN_(TOUCH_SCREEN, touch.enable());
@@ -822,11 +823,11 @@ void MarlinUI::move_axis_screen() {
 
   const bool busy = printingIsActive();
 
-  // Babysteps during printing? Select babystep for Z probe offset
+  // Babysteps during printing? Select babystep for Z probe offset//印刷过程中的婴儿步？为Z探头偏移选择babystep
   if (busy && ENABLED(BABYSTEP_ZPROBE_OFFSET))
     motionAxisState.z_selection = Z_SELECTION_Z_PROBE;
 
-  // ROW 1 -> E- Y- CurY Z+
+  // ROW 1 -> E- Y- CurY Z+//第1行->E-Y-CurY Z+
   int x = X_MARGIN, y = Y_MARGIN, spacing = 0;
 
   drawBtn(x, y, "E+", (intptr_t)e_plus, imgUp, E_BTN_COLOR, !busy);
@@ -835,16 +836,16 @@ void MarlinUI::move_axis_screen() {
   x += BTN_WIDTH + spacing;
   drawBtn(x, y, "Y+", (intptr_t)y_plus, imgUp, Y_BTN_COLOR, !busy);
 
-  // Cur Y
+  // Cur Y//cury
   x += BTN_WIDTH;
   motionAxisState.yValuePos.x = x + 2;
   motionAxisState.yValuePos.y = y;
   drawAxisValue(Y_AXIS);
 
   x += spacing;
-  drawBtn(x, y, "Z+", (intptr_t)z_plus, imgUp, Z_BTN_COLOR, !busy || ENABLED(BABYSTEP_ZPROBE_OFFSET)); //only enabled when not busy or have baby step
+  drawBtn(x, y, "Z+", (intptr_t)z_plus, imgUp, Z_BTN_COLOR, !busy || ENABLED(BABYSTEP_ZPROBE_OFFSET)); //only enabled when not busy or have baby step//仅在不忙或有小步骤时启用
 
-  // ROW 2 -> "Ex"  X-  HOME X+  "Z"
+  // ROW 2 -> "Ex"  X-  HOME X+  "Z"//第2行->“Ex”X-主X+“Z”
   y += BTN_HEIGHT + (TFT_HEIGHT - Y_MARGIN * 2 - 4 * BTN_HEIGHT) / 3;
   x = X_MARGIN;
   spacing = (TFT_WIDTH - X_MARGIN * 2 - 5 * BTN_WIDTH) / 4;
@@ -857,7 +858,7 @@ void MarlinUI::move_axis_screen() {
   x += BTN_WIDTH + spacing;
   drawBtn(x, y, "X-", (intptr_t)x_minus, imgLeft, X_BTN_COLOR, !busy);
 
-  x += BTN_WIDTH + spacing; //imgHome is 64x64
+  x += BTN_WIDTH + spacing; //imgHome is 64x64//imgHome是64x64
   TERN_(TOUCH_SCREEN, add_control(TFT_WIDTH / 2 - Images[imgHome].width / 2, y - (Images[imgHome].width - BTN_HEIGHT) / 2, BUTTON, (intptr_t)do_home, imgHome, !busy));
 
   x += BTN_WIDTH + spacing;
@@ -872,20 +873,20 @@ void MarlinUI::move_axis_screen() {
     if (!busy) touch.add_control(BUTTON, x, y, BTN_WIDTH, 34 * 2, (intptr_t)z_select);
   #endif
 
-  // ROW 3 -> E- CurX Y-  Z-
+  // ROW 3 -> E- CurX Y-  Z-//第3行->E-CurX Y-Z-
   y += BTN_HEIGHT + (TFT_HEIGHT - Y_MARGIN * 2 - 4 * BTN_HEIGHT) / 3;
   x = X_MARGIN;
   spacing = (TFT_WIDTH - X_MARGIN * 2 - 3 * BTN_WIDTH) / 2;
 
   drawBtn(x, y, "E-", (intptr_t)e_minus, imgDown, E_BTN_COLOR, !busy);
 
-  // Cur E
+  // Cur E//电流
   motionAxisState.eValuePos.x = x;
   motionAxisState.eValuePos.y = y + BTN_HEIGHT + 2;
   drawAxisValue(E_AXIS);
 
-  // Cur X
-  motionAxisState.xValuePos.x = BTN_WIDTH + (TFT_WIDTH - X_MARGIN * 2 - 5 * BTN_WIDTH) / 4; //X- pos
+  // Cur X//curx
+  motionAxisState.xValuePos.x = BTN_WIDTH + (TFT_WIDTH - X_MARGIN * 2 - 5 * BTN_WIDTH) / 4; //X- pos//X-pos
   motionAxisState.xValuePos.y = y - 10;
   drawAxisValue(X_AXIS);
 
@@ -893,15 +894,15 @@ void MarlinUI::move_axis_screen() {
   drawBtn(x, y, "Y-", (intptr_t)y_minus, imgDown, Y_BTN_COLOR, !busy);
 
   x += BTN_WIDTH + spacing;
-  drawBtn(x, y, "Z-", (intptr_t)z_minus, imgDown, Z_BTN_COLOR, !busy || ENABLED(BABYSTEP_ZPROBE_OFFSET)); //only enabled when not busy or have baby step
+  drawBtn(x, y, "Z-", (intptr_t)z_minus, imgDown, Z_BTN_COLOR, !busy || ENABLED(BABYSTEP_ZPROBE_OFFSET)); //only enabled when not busy or have baby step//仅在不忙或有小步骤时启用
 
-  // Cur Z
+  // Cur Z//curz
   motionAxisState.zValuePos.x = x;
   motionAxisState.zValuePos.y = y + BTN_HEIGHT + 2;
   drawAxisValue(Z_AXIS);
 
-  // ROW 4 -> step_size  disable steppers back
-  y = TFT_HEIGHT - Y_MARGIN - 32; //
+  // ROW 4 -> step_size  disable steppers back//第4行->步进大小禁用步进后退
+  y = TFT_HEIGHT - Y_MARGIN - 32; ////
   x = TFT_WIDTH / 2 - CUR_STEP_VALUE_WIDTH / 2;
   motionAxisState.stepValuePos.x = x;
   motionAxisState.stepValuePos.y = y;
@@ -910,10 +911,10 @@ void MarlinUI::move_axis_screen() {
     TERN_(TOUCH_SCREEN, touch.add_control(BUTTON, motionAxisState.stepValuePos.x, motionAxisState.stepValuePos.y, CUR_STEP_VALUE_WIDTH, BTN_HEIGHT, (intptr_t)step_size));
   }
 
-  // aligned with x+
+  // aligned with x+//与x对齐+
   drawBtn(xplus_x, TFT_HEIGHT - Y_MARGIN - BTN_HEIGHT, "off", (intptr_t)disable_steppers, imgCancel, COLOR_WHITE, !busy);
 
   TERN_(TOUCH_SCREEN, add_control(TFT_WIDTH - X_MARGIN - BTN_WIDTH, y, BACK, imgBack));
 }
 
-#endif // HAS_UI_480x320
+#endif // HAS_UI_480x320//有480x320

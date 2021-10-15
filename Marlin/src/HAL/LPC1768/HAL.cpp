@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -33,7 +34,7 @@ DefaultSerial1 USBSerial(false, UsbSerial);
 
 uint32_t HAL_adc_reading = 0;
 
-// U8glib required functions
+// U8glib required functions//U8glib必需的函数
 extern "C" {
   void u8g_xMicroDelay(uint16_t val) { DELAY_US(val); }
   void u8g_MicroDelay()              { u8g_xMicroDelay(1); }
@@ -43,7 +44,7 @@ extern "C" {
 
 //************************//
 
-// return free heap space
+// return free heap space//返回可用堆空间
 int freeMemory() {
   char stack_end;
   void *heap_start = malloc(sizeof(uint32_t));
@@ -54,9 +55,9 @@ int freeMemory() {
   return result;
 }
 
-// scan command line for code
-//   return index into pin map array if found and the pin is valid.
-//   return dval if not found or not a valid pin.
+// scan command line for code//扫描命令行中的代码
+//   return index into pin map array if found and the pin is valid.//如果找到索引且pin有效，则将索引返回到pin映射数组中。
+//   return dval if not found or not a valid pin.//如果未找到或pin无效，则返回dval。
 int16_t PARSED_PIN_INDEX(const char code, const int16_t dval) {
   const uint16_t val = (uint16_t)parser.intval(code, -1), port = val / 100, pin = val % 100;
   const  int16_t ind = (port < ((NUM_DIGITAL_PINS) >> 5) && pin < 32) ? ((port << 5) | pin) : -2;
@@ -64,9 +65,9 @@ int16_t PARSED_PIN_INDEX(const char code, const int16_t dval) {
 }
 
 void flashFirmware(const int16_t) {
-  delay(500);          // Give OS time to disconnect
-  USB_Connect(false);  // USB clear connection
-  delay(1000);         // Give OS time to notice
+  delay(500);          // Give OS time to disconnect//给操作系统时间断开连接
+  USB_Connect(false);  // USB clear connection//USB清除连接
+  delay(1000);         // Give OS time to notice//给操作系统时间通知
   HAL_reboot();
 }
 
@@ -83,4 +84,4 @@ uint8_t HAL_get_reset_source(void) {
 
 void HAL_reboot() { NVIC_SystemReset(); }
 
-#endif // TARGET_LPC1768
+#endif // TARGET_LPC1768//目标为LPC1768

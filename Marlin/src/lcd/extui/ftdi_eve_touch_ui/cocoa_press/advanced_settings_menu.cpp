@@ -1,3 +1,4 @@
+/** translatione by yx */
 /*****************************************
  * cocoa_press/advance_settings_menu.cpp *
  *****************************************/
@@ -92,4 +93,4 @@ bool AdvancedSettingsMenu::onTouchEnd(uint8_t tag) {
   }
   return true;
 }
-#endif // COCOA_ADVANCED_SETTINGS_MENU
+#endif // COCOA_ADVANCED_SETTINGS_MENU//可可豆\高级\设置\菜单

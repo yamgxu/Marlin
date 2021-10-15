@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -29,7 +30,7 @@
 #include <EEPROM.h>
 
 #ifndef MARLIN_EEPROM_SIZE
-  #define MARLIN_EEPROM_SIZE 0x1000 // 4KB
+  #define MARLIN_EEPROM_SIZE 0x1000 // 4KB//4KB
 #endif
 size_t PersistentStore::capacity()    { return MARLIN_EEPROM_SIZE; }
 
@@ -53,5 +54,5 @@ bool PersistentStore::read_data(int &pos, uint8_t *value, size_t size, uint16_t 
   return false;
 }
 
-#endif // EEPROM_SETTINGS
-#endif // ARDUINO_ARCH_ESP32
+#endif // EEPROM_SETTINGS//EEPROM_设置
+#endif // ARDUINO_ARCH_ESP32//ARDUINO_ARCH_ESP32

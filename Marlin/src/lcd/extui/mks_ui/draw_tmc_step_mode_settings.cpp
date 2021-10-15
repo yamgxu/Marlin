@@ -1,3 +1,4 @@
+/** translatione by yx */
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -131,4 +132,4 @@ void lv_clear_tmc_step_mode_settings() {
   lv_obj_del(scr);
 }
 
-#endif // HAS_TFT_LVGL_UI && HAS_STEALTHCHOP
+#endif // HAS_TFT_LVGL_UI && HAS_STEALTHCHOP//拥有TFT、LVGL、UI和隐形印章
