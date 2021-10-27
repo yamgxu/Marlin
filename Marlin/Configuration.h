@@ -922,7 +922,7 @@
  * Override with M92
  *                                      X, Y, Z [, I [, J [, K]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 8*5, 8*5, 4*100, 500 }
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 8*5, 8*5, 4*100, 4*23.885375 }
 
 /**
  * Default Max Feed Rate (mm/s)
@@ -1025,7 +1025,7 @@
  * The probe replaces the Z-MIN endstop and is used for Z homing.
  * (Automatically enables USE_PROBE_FOR_Z_HOMING.)
  */
-#define Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN
+//#define Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN
 
 // Force the use of the probe for Z-axis homing//强制使用探针进行Z轴归位
 //#define USE_PROBE_FOR_Z_HOMING//#定义使用探头进行自导
@@ -1059,7 +1059,7 @@
  * Use G29 repeatedly, adjusting the Z height at each point with movement commands
  * or (with LCD_BED_LEVELING) the LCD controller.
  */
-//#define PROBE_MANUALLY//#手动定义探测单元
+#define PROBE_MANUALLY//#手动定义探测单元
 
 /**
  * A Fix-Mounted Probe either doesn't deploy or needs manual deployment.
@@ -1316,8 +1316,8 @@
 // @section machine//型材机
 
 // Invert the stepper direction. Change (or reverse the motor connector) if an axis goes the wrong way.//反转步进电机的方向。如果轴走错方向，则更换（或反转电机接头）。
-#define INVERT_X_DIR false
-#define INVERT_Y_DIR true
+#define INVERT_X_DIR true
+#define INVERT_Y_DIR false
 #define INVERT_Z_DIR false
 //#define INVERT_I_DIR false//#定义反转方向false
 //#define INVERT_J_DIR false//#定义反转方向false

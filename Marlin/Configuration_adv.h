@@ -642,7 +642,7 @@
 
 // If you want endstops to stay on (by default) even when not homing//如果希望端点停止（默认情况下）即使在不归位时也保持启用状态
 // enable this option. Override at any time with M120, M121.//启用此选项。随时用M120、M121替代。
-//#define ENDSTOPS_ALWAYS_ON_DEFAULT//#默认情况下，定义终止点\u始终\u
+#define ENDSTOPS_ALWAYS_ON_DEFAULT//#默认情况下，定义终止点\u始终\u
 
 // @section extras//@额外部分
 
@@ -785,16 +785,16 @@
  * the position of the toolhead relative to the workspace.
  */
 
-//#define SENSORLESS_BACKOFF_MM  { 2, 2, 0 }  // (mm) Backoff from endstops before sensorless homing//#在无传感器归位之前，定义无传感器回退{2,2,0}//（MM）从端止点回退
+#define SENSORLESS_BACKOFF_MM  { 2, 2, 0 }  // (mm) Backoff from endstops before sensorless homing//#在无传感器归位之前，定义无传感器回退{2,2,0}//（MM）从端止点回退
 
 #define HOMING_BUMP_MM      { 5, 5, 2 }       // (mm) Backoff from endstops after first bump//（mm）第一次碰撞后从止动块后退
 #define HOMING_BUMP_DIVISOR { 2, 2, 4 }       // Re-Bump Speed Divisor (Divides the Homing Feedrate)//重碰撞速度分割器（分割回零进给速度）
 
 //#define HOMING_BACKOFF_POST_MM { 2, 2, 2 }  // (mm) Backoff from endstops after homing//#定义归位后的归位回退(POST)MM{2,2,2}//(MM)从归位后的结束停止回退
 
-//#define QUICK_HOME                          // If G28 contains XY do a diagonal move first//#定义QUICK_HOME//如果G28包含XY，则首先进行对角线移动
+#define QUICK_HOME                          // If G28 contains XY do a diagonal move first//#定义QUICK_HOME//如果G28包含XY，则首先进行对角线移动
 //#define HOME_Y_BEFORE_X                     // If G28 contains XY home Y before X//#在X之前定义HOME\u Y\u//如果G28在X之前包含XY HOME Y
-//#define HOME_Z_FIRST                        // Home Z first. Requires a Z-MIN endstop (not a probe).//#定义HOME_Z_FIRST//HOME Z FIRST。需要Z-MIN止动块（不是探针）。
+#define HOME_Z_FIRST                        // Home Z first. Requires a Z-MIN endstop (not a probe).//#定义HOME_Z_FIRST//HOME Z FIRST。需要Z-MIN止动块（不是探针）。
 //#define CODEPENDENT_XY_HOMING               // If X/Y can't home without homing Y/X first//#如果X/Y在没有先返回Y/X的情况下无法返回，则定义相互依赖的返回
 
 // @section bltouch//@bltouch节
@@ -2230,7 +2230,7 @@
  * - During Hold all Emergency Parser commands are available, as usual.
  * - Enable NANODLP_Z_SYNC and NANODLP_ALL_AXIS for move command end-state reports.
  */
-#define REALTIME_REPORTING_COMMANDS
+//#define REALTIME_REPORTING_COMMANDS
 #if ENABLED(REALTIME_REPORTING_COMMANDS)
 #define FULL_REPORT_TO_HOST_FEATURE   // Auto-report the machine status like Grbl CNC//自动报告机器状态，如Grbl CNC
 #endif

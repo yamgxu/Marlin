@@ -23,6 +23,7 @@
 #pragma once
 
 #include "i2s.h"
+#include "HAL.h"
 
 /**
  * Utility functions
@@ -45,7 +46,7 @@
 #define READ(IO)                (IS_I2S_EXPANDER_PIN(IO) ? i2s_state(I2S_EXPANDER_PIN_INDEX(IO)) : digitalRead(IO))
 
 // Write to a pin wrapper//写一个别针包装器
-#define WRITE(IO, v)            (IS_I2S_EXPANDER_PIN(IO) ? i2s_write(I2S_EXPANDER_PIN_INDEX(IO), v) : digitalWrite(IO, v))
+#define WRITE(IO, v)            (IS_I2S_EXPANDER_PIN(IO) ? i2s_write(I2S_EXPANDER_PIN_INDEX(IO), v) : digitalWrite1(IO, v))
 
 // Set pin as input wrapper//将pin设置为输入包装器
 #define SET_INPUT(IO)           _SET_INPUT(IO)

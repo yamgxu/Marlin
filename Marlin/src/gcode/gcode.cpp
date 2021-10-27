@@ -279,7 +279,6 @@ void GcodeSuite::dwell(millis_t time) {
  */
 void GcodeSuite::process_parsed_command(const bool no_ok/*=false*/) {
   KEEPALIVE_STATE(IN_HANDLER);
-    SERIAL_ECHO_MSG("process_parsed_command");
 
  /**
   * Block all Gcodes except M511 Unlock Printer, if printer is locked

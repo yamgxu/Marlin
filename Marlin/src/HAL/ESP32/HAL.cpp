@@ -266,15 +266,32 @@ void HAL_adc_start_conversion(const uint8_t adc_pin) {
   adc1_set_attenuation(chan, atten);
 }
 
+
+
+void digitalWrite1(pin_t pin, int value) {
+
+       // SERIAL_ECHO_MSG("analogWrite");
+       // SERIAL_ECHO(int(pin));
+       // SERIAL_ECHO(value);
+       // SERIAL_ECHO_MSG("analogWrite ok");
+      //if(pin == 2 ){
+      //   if(value>0){
+      //       value=0;
+      //   }else{
+      //       value=255;
+      //   }
+      //}
+      digitalWrite(pin, value);
+}
 void analogWrite(pin_t pin, int value) {
-      if(pin >0){
-         SERIAL_ECHO_MSG("analogWrite");
-        SERIAL_ECHO(int(pin));
-        SERIAL_ECHO(value);
-        SERIAL_ECHO_MSG("analogWrite ok");
-      }
 
-
+      if(pin == 2 ){
+          if(value>0){
+              value=0;
+          }else{
+              value=255;
+          }
+       }
   // Use ledc hardware for internal pins//内部引脚使用ledc硬件
   if (pin < 34) {
     static int cnt_channel = 1, pin_to_channel[40] = { 0 };

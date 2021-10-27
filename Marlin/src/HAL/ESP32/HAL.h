@@ -138,8 +138,8 @@ int freeMemory();
   #pragma GCC diagnostic pop
 #endif
 
+void digitalWrite1(pin_t pin, int value);
 void analogWrite(pin_t pin, int value);
-
 // ADC//模数转换器
 #define HAL_ANALOG_SELECT(pin)
 
