@@ -455,7 +455,7 @@ class Stepper {
 
     // Quickly stop all steppers
     FORCE_INLINE static void quick_stop() {
-        SERIAL_ECHO_MSG("quick_stop");
+        //SERIAL_ECHO_MSG("quick_stop");
 
         abort_current_block = true; }
 

@@ -2783,8 +2783,7 @@ void Stepper::set_axis_position(const AxisEnum a, const int32_t &v) {
 // when the stepper ISR resumes, we must be very sure that the movement//当步进机ISR恢复时，我们必须非常确定移动
 // is properly canceled//被适当地取消了
 void Stepper::endstop_triggered(const AxisEnum axis) {
-    SERIAL_ECHO_MSG("endstop_triggered");
-    return;
+    //SERIAL_ECHO_MSG("endstop_triggered");
   const bool was_enabled = suspend();
   endstops_trigsteps[axis] = (
     #if IS_CORE
@@ -2948,7 +2947,7 @@ void Stepper::report_positions() {
   // MUST ONLY BE CALLED BY AN ISR,//只能由ISR调用，
   // No other ISR should ever interrupt this!//任何其他ISR都不应中断此操作！
   void Stepper::do_babystep(const AxisEnum axis, const bool direction) {
-  SERIAL_ECHO_MSG("do_babystep");
+  //SERIAL_ECHO_MSG("do_babystep");
 
     IF_DISABLED(INTEGRATED_BABYSTEPPING, cli());
 
@@ -3196,7 +3195,7 @@ void Stepper::report_positions() {
     }
 
     void Stepper::digipot_init() {
-        SERIAL_ECHO_MSG("digipot_init");
+       // SERIAL_ECHO_MSG("digipot_init");
       #if HAS_MOTOR_CURRENT_SPI
 
         SPI.begin();

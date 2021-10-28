@@ -71,12 +71,6 @@ void temperatureTask(void *params) {
     tempTC_Handler();
   }
 }
-void stepTCTask(void *params) {
-  for (;;) {
-    ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
-    stepTC_Handler();
-  }
-}
 
 void IRAM_ATTR timer_isr(void *para) {
   const tTimerConfig& timer = TimerConfig[(int)para];
@@ -204,8 +198,8 @@ void HAL_timer_enable_interrupt(const uint8_t timer_num) {
  * @param timer_num timer number to disable interrupts on
  */
 void HAL_timer_disable_interrupt(const uint8_t timer_num) {
-   const tTimerConfig timer = TimerConfig[timer_num];//const tTimerConfig timer=TimerConfig[timer_num]；
-   timer_disable_intr(timer.group, timer.idx);//timer\u disable\u intr（timer.group、timer.idx）；
+   //const tTimerConfig timer = TimerConfig[timer_num];//const tTimerConfig timer=TimerConfig[timer_num]；
+   //timer_disable_intr(timer.group, timer.idx);//timer\u disable\u intr（timer.group、timer.idx）；
 }
 
 bool HAL_timer_interrupt_enabled(const uint8_t timer_num) {

@@ -642,7 +642,7 @@
 
 // If you want endstops to stay on (by default) even when not homing//如果希望端点停止（默认情况下）即使在不归位时也保持启用状态
 // enable this option. Override at any time with M120, M121.//启用此选项。随时用M120、M121替代。
-#define ENDSTOPS_ALWAYS_ON_DEFAULT//#默认情况下，定义终止点\u始终\u
+//#define ENDSTOPS_ALWAYS_ON_DEFAULT//#默认情况下，定义终止点\u始终\u
 
 // @section extras//@额外部分
 
