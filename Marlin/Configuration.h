@@ -497,7 +497,7 @@
 #define TEMP_SENSOR_5 0
 #define TEMP_SENSOR_6 0
 #define TEMP_SENSOR_7 0
-#define TEMP_SENSOR_BED 0
+#define TEMP_SENSOR_BED 331
 #define TEMP_SENSOR_PROBE 0
 #define TEMP_SENSOR_CHAMBER 0
 #define TEMP_SENSOR_COOLER 0
@@ -922,8 +922,8 @@
  * Override with M92
  *                                      X, Y, Z [, I [, J [, K]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 8*5, 8*5, 16*100, 16*23.885375 }
-
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 8*5, 8*5, 16*100,  16*23.885375 +3.6}
+//16*200*3/(8*3.1415926535)
 /**
  * Default Max Feed Rate (mm/s)
  * Override with M203

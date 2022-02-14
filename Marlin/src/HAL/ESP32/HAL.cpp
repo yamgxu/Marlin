@@ -176,6 +176,11 @@ adc1_channel_t get_channel(int pin) {
     case 3: return ADC1_CHANNEL(3);
     case 4: return ADC1_CHANNEL(4);
     case 5: return ADC1_CHANNEL(5);
+    case 6: return ADC1_CHANNEL(6);
+    case 7: return ADC1_CHANNEL(7);
+    case 8: return ADC1_CHANNEL(8);
+    case 9: return ADC1_CHANNEL(9);
+    case 10: return ADC1_CHANNEL(10);
     // case 39: return ADC1_CHANNEL(39);//情况39：返回ADC1_信道（39）；
     // case 36: return ADC1_CHANNEL(36);//情况36：返回ADC1_信道（36）；
     // case 35: return ADC1_CHANNEL(35);//情况35：返回ADC1_信道（35）；
@@ -231,19 +236,20 @@ void HAL_adc_start_conversion(const uint8_t adc_pin) {
     uint32_t adcRead = analogRead(adc_pin);
     //SERIAL_ECHOPAIR("adcRead", adcRead);//序列回波对（“adcRead”，adcRead）；
     //SERIAL_ECHO("\r\n");//串行回波（“\r\n”）；
-    double xadc = (adcRead +72.27488151 )/1.2664459692;
+    double xadc = (adcRead +72.27488151 )/1.2664459692; //修正adc
     //SERIAL_ECHO("xadc" );//串行回波（“xadc”）；
     //SERIAL_ECHOLN(xadc);//串行_-ECHOLN（xadc）；
-    double vy = xadc/8191.0*3.6;
+    double vy = xadc/8191.0*3.6;  //算电压
    // SERIAL_ECHO("vy" );//序列回波（“vy”）；
     //SERIAL_ECHOLN(vy);//序列号（vy）；
     double v47=3.6-vy;
-    double rc=4.7/(v47/vy);
-    double r=1.0/(1.0/rc-1.0/4.7);
-    //print('测温电阻',1/(1/y-1/4.7));//打印（'测温电阻',1/（1/y-1/4.7））；
-    //SERIAL_ECHO("r" );//序列回波（“r”）；
-    //SERIAL_ECHOLN(r);//序列号_-ECHOLN（r）；
-    double adc=1024/(4.7/r+1 ); //还原 adc//还原 模数转换器
+    double rc=4.7/(v47/vy); // 测温电阻和4.7 并联合计电阻
+    double r=1.0/(1.0/rc-1.0/4.7); //算测温电阻 阻值
+   // print('测温电阻',1/(1/y-1/4.7));//打印（'测温电阻',1/（1/y-1/4.7））；
+   // SERIAL_ECHO("r" );//序列回波（“r”）；
+    //SERIAL_ECHO(adc_pin );//序列回波（“r”）；
+   // SERIAL_ECHOLN(r);//序列号_-ECHOLN（r）；
+    double adc=1024/(4.7/r+1 ); //还原  查温表中adc   其实就是测温电阻 和4.7k并联后所占的电压比例
     //SERIAL_ECHO("adc" );//串行回波（“adc”）；
     //SERIAL_ECHOLN(adc);//串行接口（adc）；
     //SERIAL_ECHO("\r\n");//串行回波（“\r\n”）；
@@ -333,7 +339,7 @@ void analogWrite(pin_t pin, int value) {
 
 // Handle PWM timer interrupt//处理PWM定时器中断
 HAL_PWM_TIMER_ISR() {
-      SERIAL_ECHO_MSG("HAL_PWM_TIMER_ISR");
+
       return;
   HAL_timer_isr_prologue(PWM_TIMER_NUM);
 

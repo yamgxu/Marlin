@@ -63,7 +63,7 @@
 //#define Z_CS_PIN                             5  // SS_PIN//#定义Z_CS_引脚5//SS_引脚
 
 #define E0_STEP_PIN                          9
-#define E0_DIR_PIN                           10
+#define E0_DIR_PIN                           14
 #define E0_ENABLE_PIN                        X_ENABLE_PIN
 //#define E0_CS_PIN                           21//#定义E0_CS_引脚21
 
@@ -71,14 +71,14 @@
 // Temperature Sensors//温度传感器
 ////
 #define TEMP_0_PIN                            3  // Analog Input//模拟输入
-#define TEMP_BED_PIN                          0  // Analog Input//模拟输入
+#define TEMP_BED_PIN                          10  // Analog Input//模拟输入
 
 ////
 // Heaters / Fans//加热器/风扇
 ////
 #define HEATER_0_PIN                           12
-#define FAN_PIN                                2
-#define HEATER_BED_PIN                         0
+#define FAN_PIN                                0
+#define HEATER_BED_PIN                         2
 
 // SPI//SPI
 #define SDSS                                   34
