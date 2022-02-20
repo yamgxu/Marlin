@@ -1942,10 +1942,13 @@ void Temperature::updateTemperaturesFromRawValues() {
   #endif
 
     //SERIAL_ECHOPAIR(" temp_hotend[0].raw", temp_hotend[0].raw);//串行回波对（“临时热端[0].raw”，临时热端[0].raw）；
-   // SERIAL_ECHOPAIR_F(" celsius", temp_hotend[0].celsius);//串行回波对（“摄氏度”，温度热端[0]。摄氏度）；
-    //SERIAL_ECHO("\r\n");//串行回波（“\r\n”）；
+    //SERIAL_ECHOPAIR_F(" celsius", temp_hotend[0].celsius);//串行回波对（“摄氏度”，温度热端[0]。摄氏度）；
+    //SERIAL_ECHO("\r\n");//串行回波（“\r\n”）;
 
     TERN_(HAS_HEATED_BED,     temp_bed.celsius       = analog_to_celsius_bed(temp_bed.raw));
+   //SERIAL_ECHOPAIR(" HAS_HEATED_BED.raw", temp_bed.raw);//串行回波对（“临时热端[0].raw”，临时热端[0].raw）；
+   //SERIAL_ECHOPAIR_F(" celsius", temp_bed.celsius);//串行回波对（“摄氏度”，温度热端[0]。摄氏度）；
+   //SERIAL_ECHO("\r\n");//串行回波（“\r\n”）;
   TERN_(HAS_TEMP_CHAMBER,   temp_chamber.celsius   = analog_to_celsius_chamber(temp_chamber.raw));
   TERN_(HAS_TEMP_COOLER,    temp_cooler.celsius    = analog_to_celsius_cooler(temp_cooler.raw));
   TERN_(HAS_TEMP_PROBE,     temp_probe.celsius     = analog_to_celsius_probe(temp_probe.raw));
