@@ -794,7 +794,7 @@
 
 #define QUICK_HOME                          // If G28 contains XY do a diagonal move first//#定义QUICK_HOME//如果G28包含XY，则首先进行对角线移动
 //#define HOME_Y_BEFORE_X                     // If G28 contains XY home Y before X//#在X之前定义HOME\u Y\u//如果G28在X之前包含XY HOME Y
-#define HOME_Z_FIRST                        // Home Z first. Requires a Z-MIN endstop (not a probe).//#定义HOME_Z_FIRST//HOME Z FIRST。需要Z-MIN止动块（不是探针）。
+//#define HOME_Z_FIRST                        // Home Z first. Requires a Z-MIN endstop (not a probe).//#定义HOME_Z_FIRST//HOME Z FIRST。需要Z-MIN止动块（不是探针）。
 //#define CODEPENDENT_XY_HOMING               // If X/Y can't home without homing Y/X first//#如果X/Y在没有先返回Y/X的情况下无法返回，则定义相互依赖的返回
 
 // @section bltouch//@bltouch节

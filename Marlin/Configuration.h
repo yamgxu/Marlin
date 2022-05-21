@@ -1025,7 +1025,7 @@
  * The probe replaces the Z-MIN endstop and is used for Z homing.
  * (Automatically enables USE_PROBE_FOR_Z_HOMING.)
  */
-//#define Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN
+#define Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN
 
 // Force the use of the probe for Z-axis homing//强制使用探针进行Z轴归位
 //#define USE_PROBE_FOR_Z_HOMING//#定义使用探头进行自导
@@ -1059,13 +1059,13 @@
  * Use G29 repeatedly, adjusting the Z height at each point with movement commands
  * or (with LCD_BED_LEVELING) the LCD controller.
  */
-#define PROBE_MANUALLY//#手动定义探测单元
+//#define PROBE_MANUALLY//#手动定义探测单元
 
 /**
  * A Fix-Mounted Probe either doesn't deploy or needs manual deployment.
  *   (e.g., an inductive probe or a nozzle-based probe-switch.)
  */
-//#define FIX_MOUNTED_PROBE//#定义固定式探头
+#define FIX_MOUNTED_PROBE//#定义固定式探头
 
 /**
  * Use the nozzle as the probe, as with a conductive
@@ -1174,7 +1174,7 @@
  *     |    [-]    |
  *     O-- FRONT --+
  */
-#define NOZZLE_TO_PROBE_OFFSET { 10, 10, 0 }
+#define NOZZLE_TO_PROBE_OFFSET { 0, -25, 0 }
 
 // Most probes should stay away from the edges of the bed, but//大多数探头应远离床的边缘，但
 // with NOZZLE_AS_PROBE this can be negative for a wider probing area.//使用喷嘴作为探头时，对于更宽的探测区域，这可能是负面的。
@@ -1254,7 +1254,7 @@
 #define Z_PROBE_OFFSET_RANGE_MAX 20
 
 // Enable the M48 repeatability test to test probe accuracy//启用M48重复性测试以测试探针精度
-//#define Z_MIN_PROBE_REPEATABILITY_TEST//#定义Z_MIN_探头_重复性_测试
+#define Z_MIN_PROBE_REPEATABILITY_TEST//#定义Z_MIN_探头_重复性_测试
 
 // Before deploy/stow pause for user confirmation//展开/收起前暂停以供用户确认
 //#define PAUSE_BEFORE_DEPLOY_STOW//#在部署前定义暂停
@@ -1337,7 +1337,7 @@
 
 // @section homing//@段归位
 
-//#define NO_MOTION_BEFORE_HOMING // Inhibit movement until all axes have been homed. Also enable HOME_AFTER_DEACTIVATE for extra safety.//#在归位前定义无运动//禁止运动，直到所有轴都归位。也可以在禁用后启用HOME_，以提高安全性。
+#define NO_MOTION_BEFORE_HOMING // Inhibit movement until all axes have been homed. Also enable HOME_AFTER_DEACTIVATE for extra safety.//#在归位前定义无运动//禁止运动，直到所有轴都归位。也可以在禁用后启用HOME_，以提高安全性。
 //#define HOME_AFTER_DEACTIVATE   // Require rehoming after steppers are deactivated. Also enable NO_MOTION_BEFORE_HOMING for extra safety.//#取消激活后定义主页//取消激活步进器后需要重新命名。还可以在归位前启用无运动，以获得额外的安全性。
 
 /**
@@ -1365,7 +1365,7 @@
 
 // The size of the printable area//可打印区域的大小
 #define X_BED_SIZE 210
-#define Y_BED_SIZE 210
+#define Y_BED_SIZE 180
 
 // Travel limits (mm) after homing, corresponding to endstop positions.//归位后的行程限制（mm），对应于末端停止位置。
 #define X_MIN_POS 0
@@ -1531,7 +1531,7 @@
  */
 //#define AUTO_BED_LEVELING_3POINT//#定义自动平层点
 //#define AUTO_BED_LEVELING_LINEAR//#定义自动平层线性
-//#define AUTO_BED_LEVELING_BILINEAR//#定义自动调平双线性
+#define AUTO_BED_LEVELING_BILINEAR//#定义自动调平双线性
 //#define AUTO_BED_LEVELING_UBL//#定义自动调平床
 //#define MESH_BED_LEVELING//#定义网格\u床\u找平
 
@@ -1557,7 +1557,7 @@
  * Turn on with the command 'M111 S32'.
  * NOTE: Requires a lot of PROGMEM!
  */
-//#define DEBUG_LEVELING_FEATURE//#定义调试功能
+#define DEBUG_LEVELING_FEATURE//#定义调试功能
 
 #if ANY(MESH_BED_LEVELING, AUTO_BED_LEVELING_UBL, PROBE_MANUALLY)
 // Set a height for the start of manual adjustment//设置开始手动调整的高度
@@ -1582,7 +1582,7 @@
   /**
    * Enable the G26 Mesh Validation Pattern tool.
    */
-  //#define G26_MESH_VALIDATION//#定义G26网格验证
+  #define G26_MESH_VALIDATION//#定义G26网格验证
   #if ENABLED(G26_MESH_VALIDATION)
     #define MESH_TEST_NOZZLE_SIZE    0.4  // (mm) Diameter of primary nozzle.//（mm）主喷嘴的直径。
     #define MESH_TEST_LAYER_HEIGHT   0.2  // (mm) Default layer height for G26.//（mm）G26的默认层高度。
@@ -1718,9 +1718,9 @@
 
 // Manually set the home position. Leave these undefined for automatic settings.//手动设置起始位置。保留这些未定义的自动设置。
 // For DELTA this is the top-center of the Cartesian print volume.//对于DELTA，这是笛卡尔打印卷的顶部中心。
-//#define MANUAL_X_HOME_POS 0//#定义手动\u X\u主页\u位置0
-//#define MANUAL_Y_HOME_POS 0//#定义手动_Y_HOME_位置0
-//#define MANUAL_Z_HOME_POS 0//#定义手动_Z_HOME_位置0
+#define MANUAL_X_HOME_POS -20//#定义手动\u X\u主页\u位置0
+#define MANUAL_Y_HOME_POS -40//#定义手动_Y_HOME_位置0
+#define MANUAL_Z_HOME_POS 0//#定义手动_Z_HOME_位置0
 //#define MANUAL_I_HOME_POS 0//#定义手动\u I\u主页\u位置0
 //#define MANUAL_J_HOME_POS 0//#定义手动回家位置0
 //#define MANUAL_K_HOME_POS 0//#定义手动\u K\u主页\u位置0
@@ -1732,12 +1732,12 @@
  * - Allows Z homing only when XY positions are known and trusted.
  * - If stepper drivers sleep, XY homing may be required again before Z homing.
  */
-//#define Z_SAFE_HOMING//#定义Z_安全归位
+#define Z_SAFE_HOMING//#定义Z_安全归位
+#define Z_SAFE_HOMING_X_POINT 110  // X point for Z homing//Z原点的X点
+#define Z_SAFE_HOMING_Y_POINT 110  // Y point for Z homing//Z原点的Y点
+/*#if ENABLED(Z_SAFE_HOMING)
 
-#if ENABLED(Z_SAFE_HOMING)
-#define Z_SAFE_HOMING_X_POINT X_CENTER  // X point for Z homing//Z原点的X点
-  #define Z_SAFE_HOMING_Y_POINT Y_CENTER  // Y point for Z homing//Z原点的Y点
-#endif
+#endif*/
 
 // Homing speeds (mm/min)//归位速度（毫米/分钟）
 #define HOMING_FEEDRATE_MM_M { (50*60), (50*60), (4*60) }
@@ -1817,7 +1817,7 @@
  *   M501 - Read settings from EEPROM. (i.e., Throw away unsaved changes)
  *   M502 - Revert settings to "factory" defaults. (Follow with M500 to init the EEPROM.)
  */
-//#define EEPROM_SETTINGS     // Persistent storage with M500 and M501//#定义EEPROM_设置//使用M500和M501进行持久存储
+#define EEPROM_SETTINGS     // Persistent storage with M500 and M501//#定义EEPROM_设置//使用M500和M501进行持久存储
 //#define DISABLE_M503        // Saves ~2700 bytes of PROGMEM. Disable for release!//#define DISABLE_M503//保存约2700字节的程序。禁用发布！
 #define EEPROM_CHITCHAT       // Give feedback on EEPROM commands. Disable to save PROGMEM.//对EEPROM命令进行反馈。禁用以保存程序。
 #define EEPROM_BOOT_SILENT    // Keep M503 quiet and only give errors during first load//保持M503安静，仅在首次加载时给出错误
