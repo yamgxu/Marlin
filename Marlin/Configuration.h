@@ -603,9 +603,9 @@
     #define DEFAULT_Ki_LIST {   1.08,   1.08 }
     #define DEFAULT_Kd_LIST { 114.00, 114.00 }
   #else
-    #define DEFAULT_Kp  22.20
-    #define DEFAULT_Ki   1.08
-    #define DEFAULT_Kd 114.00
+    #define DEFAULT_Kp 23.94
+    #define DEFAULT_Ki 1.53
+    #define DEFAULT_Kd 93.88
   #endif
 #endif // PIDTEMP//皮特姆
 
@@ -920,9 +920,9 @@
 /**
  * Default Axis Steps Per Unit (steps/mm)
  * Override with M92
- *                                      X, Y, Z [, I [, J [, K]]], E0 [, E1[, E2...]]
+ *                                      X, Y, Z [, I [, J [, K]]], E0 [, E1[, E2...]]//
  */
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 8*5, 8*5, 16*100,  16*23.885375 +3.6}
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 8*5, 8*5, 16*100,  199.333}
 //16*200*3/(8*3.1415926535)
 /**
  * Default Max Feed Rate (mm/s)
@@ -1364,8 +1364,8 @@
 // @section machine//型材机
 
 // The size of the printable area//可打印区域的大小
-#define X_BED_SIZE 200
-#define Y_BED_SIZE 200
+#define X_BED_SIZE 210
+#define Y_BED_SIZE 210
 
 // Travel limits (mm) after homing, corresponding to endstop positions.//归位后的行程限制（mm），对应于末端停止位置。
 #define X_MIN_POS 0
@@ -1373,7 +1373,7 @@
 #define Z_MIN_POS 0
 #define X_MAX_POS X_BED_SIZE
 #define Y_MAX_POS Y_BED_SIZE
-#define Z_MAX_POS 200
+#define Z_MAX_POS 300
 //#define I_MIN_POS 0//#定义I_MIN_位置0
 //#define I_MAX_POS 50//#定义I_MAX_位置50
 //#define J_MIN_POS 0//#定义J_MIN_位置0
