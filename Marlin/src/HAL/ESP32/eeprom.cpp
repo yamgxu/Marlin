@@ -35,7 +35,17 @@
 size_t PersistentStore::capacity()    { return MARLIN_EEPROM_SIZE; }
 
 bool PersistentStore::access_start()  { return EEPROM.begin(MARLIN_EEPROM_SIZE); }
-bool PersistentStore::access_finish() { EEPROM.commit(); return true; }
+bool PersistentStore::access_finish() {
+
+    if(EEPROM.commit()){
+        SERIAL_ECHO_MSG("EEPROM commit true" );
+    }else{
+                SERIAL_ECHO_MSG("EEPROM commit false");
+
+    }
+
+    return true;
+}
 
 bool PersistentStore::write_data(int &pos, const uint8_t *value, size_t size, uint16_t *crc) {
   for (size_t i = 0; i < size; i++) {
