@@ -929,7 +929,7 @@
  * Override with M203
  *                                      X, Y, Z [, I [, J [, K]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_MAX_FEEDRATE          { 300, 300, 5, 25 }
+#define DEFAULT_MAX_FEEDRATE          { 300*60, 300*60, 5*60, 25*60 }
 
 //#define LIMITED_MAX_FR_EDITING        // Limit edit via M203 or LCD to DEFAULT_MAX_FEEDRATE * 2//#定义有限的最大进给量编辑//通过M203或LCD将编辑限制为默认的最大进给量*2
 #if ENABLED(LIMITED_MAX_FR_EDITING)
@@ -942,7 +942,7 @@
  * Override with M201
  *                                      X, Y, Z [, I [, J [, K]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_MAX_ACCELERATION      { 3000, 3000, 100, 10000 }
+#define DEFAULT_MAX_ACCELERATION      { 6000, 6000, 200, 20000 }
 
 //#define LIMITED_MAX_ACCEL_EDITING     // Limit edit via M201 or LCD to DEFAULT_MAX_ACCELERATION * 2//#定义有限的最大加速度编辑//通过M201或LCD将编辑限制为默认的最大加速度*2
 #if ENABLED(LIMITED_MAX_ACCEL_EDITING)
@@ -957,9 +957,9 @@
  *   M204 R    Retract Acceleration
  *   M204 T    Travel Acceleration
  */
-#define DEFAULT_ACCELERATION          3000    // X, Y, Z and E acceleration for printing moves//用于打印移动的X、Y、Z和E加速度
-#define DEFAULT_RETRACT_ACCELERATION  3000    // E acceleration for retracts//E收缩加速度
-#define DEFAULT_TRAVEL_ACCELERATION   3000    // X, Y, Z acceleration for travel (non printing) moves//移动（非打印）时的X、Y、Z加速度
+#define DEFAULT_ACCELERATION          6000    // X, Y, Z and E acceleration for printing moves//用于打印移动的X、Y、Z和E加速度
+#define DEFAULT_RETRACT_ACCELERATION  6000    // E acceleration for retracts//E收缩加速度
+#define DEFAULT_TRAVEL_ACCELERATION   8000    // X, Y, Z acceleration for travel (non printing) moves//移动（非打印）时的X、Y、Z加速度
 
 /**
  * Default Jerk limits (mm/s)
@@ -1174,7 +1174,7 @@
  *     |    [-]    |
  *     O-- FRONT --+
  */
-#define NOZZLE_TO_PROBE_OFFSET { 0, -25, 0 }
+#define NOZZLE_TO_PROBE_OFFSET { 0, -45, 0 }
 
 // Most probes should stay away from the edges of the bed, but//大多数探头应远离床的边缘，但
 // with NOZZLE_AS_PROBE this can be negative for a wider probing area.//使用喷嘴作为探头时，对于更宽的探测区域，这可能是负面的。
@@ -1337,7 +1337,7 @@
 
 // @section homing//@段归位
 
-#define NO_MOTION_BEFORE_HOMING // Inhibit movement until all axes have been homed. Also enable HOME_AFTER_DEACTIVATE for extra safety.//#在归位前定义无运动//禁止运动，直到所有轴都归位。也可以在禁用后启用HOME_，以提高安全性。
+//#define NO_MOTION_BEFORE_HOMING // Inhibit movement until all axes have been homed. Also enable HOME_AFTER_DEACTIVATE for extra safety.//#在归位前定义无运动//禁止运动，直到所有轴都归位。也可以在禁用后启用HOME_，以提高安全性。
 //#define HOME_AFTER_DEACTIVATE   // Require rehoming after steppers are deactivated. Also enable NO_MOTION_BEFORE_HOMING for extra safety.//#取消激活后定义主页//取消激活步进器后需要重新命名。还可以在归位前启用无运动，以获得额外的安全性。
 
 /**
@@ -1364,13 +1364,13 @@
 // @section machine//型材机
 
 // The size of the printable area//可打印区域的大小
-#define X_BED_SIZE 210
-#define Y_BED_SIZE 180
+#define X_BED_SIZE 200
+#define Y_BED_SIZE 200
 
 // Travel limits (mm) after homing, corresponding to endstop positions.//归位后的行程限制（mm），对应于末端停止位置。
-#define X_MIN_POS 0
-#define Y_MIN_POS 0
-#define Z_MIN_POS 0
+#define X_MIN_POS -35
+#define Y_MIN_POS -10
+#define Z_MIN_POS -5
 #define X_MAX_POS X_BED_SIZE
 #define Y_MAX_POS Y_BED_SIZE
 #define Z_MAX_POS 300
@@ -1718,8 +1718,8 @@
 
 // Manually set the home position. Leave these undefined for automatic settings.//手动设置起始位置。保留这些未定义的自动设置。
 // For DELTA this is the top-center of the Cartesian print volume.//对于DELTA，这是笛卡尔打印卷的顶部中心。
-#define MANUAL_X_HOME_POS -20//#定义手动\u X\u主页\u位置0
-#define MANUAL_Y_HOME_POS -40//#定义手动_Y_HOME_位置0
+#define MANUAL_X_HOME_POS -10//#定义手动\u X\u主页\u位置0
+#define MANUAL_Y_HOME_POS -35//#定义手动_Y_HOME_位置0
 #define MANUAL_Z_HOME_POS 0//#定义手动_Z_HOME_位置0
 //#define MANUAL_I_HOME_POS 0//#定义手动\u I\u主页\u位置0
 //#define MANUAL_J_HOME_POS 0//#定义手动回家位置0
