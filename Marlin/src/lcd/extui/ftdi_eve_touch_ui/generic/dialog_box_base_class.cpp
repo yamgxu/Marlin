@@ -32,7 +32,7 @@ using namespace Theme;
 #define GRID_ROWS 8
 
 template<typename T>
-void DialogBoxBaseClass::drawMessage(T message, int16_t font) {
+void DialogBoxBaseClass::drawMessage(T message, const int16_t font) {
   CommandProcessor cmd;
   cmd.cmd(CMD_DLSTART)
      .cmd(CLEAR_COLOR_RGB(bg_color))
@@ -43,8 +43,7 @@ void DialogBoxBaseClass::drawMessage(T message, int16_t font) {
   cmd.colors(normal_btn);
 }
 
-template void DialogBoxBaseClass::drawMessage(const char *, int16_t font);
-template void DialogBoxBaseClass::drawMessage(progmem_str, int16_t font);
+template void DialogBoxBaseClass::drawMessage(PGM_P const, const int16_t);
 
 void DialogBoxBaseClass::drawYesNoButtons(uint8_t default_btn) {
   CommandProcessor cmd;
@@ -67,7 +66,7 @@ void DialogBoxBaseClass::drawButton(T label) {
 }
 
 template void DialogBoxBaseClass::drawButton(const char *);
-template void DialogBoxBaseClass::drawButton(progmem_str);
+template void DialogBoxBaseClass::drawButton(FSTR_P);
 
 bool DialogBoxBaseClass::onTouchEnd(uint8_t tag) {
   switch (tag) {
