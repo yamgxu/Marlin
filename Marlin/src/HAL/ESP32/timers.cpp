@@ -77,36 +77,27 @@ void IRAM_ATTR timer_isr(void *para) {
 
   // Retrieve the interrupt status and the counter value//检索中断状态和计数器值
   // from the timer that reported the interrupt//从报告中断的计时器
-  #if CONFIG_IDF_TARGET_ESP32
+
     uint32_t intr_status = TG[timer.group]->int_st_timers.val;
-  #elif CONFIG_IDF_TARGET_ESP32S2
-    uint32_t intr_status = TG[timer.group]->int_st.val;
-  #endif
+
   TG[timer.group]->hw_timer[timer.idx].update.val = 1;
 
   // Clear the interrupt//清除中断
   if (intr_status & BIT(timer.idx)) {
-    #if CONFIG_IDF_TARGET_ESP32
+
       switch (timer.idx) {
-        case TIMER_0: TG[timer.group]->int_clr_timers.t0 = 1; break;
-        case TIMER_1: TG[timer.group]->int_clr_timers.t1 = 1; break;
+        case TIMER_0: TG[timer.group]->int_clr_timers.t0_int_clr = 1; break;
+        case TIMER_1: TG[timer.group]->int_clr_timers.t1_int_clr = 1; break;
         case TIMER_MAX: break;
       }
-    #elif CONFIG_IDF_TARGET_ESP32S2
-      // TODO: cleanup//TODO:清理
-      switch (timer.idx) {
-        case TIMER_0: TG[timer.group]->int_clr.t0 = 1; break;
-        case TIMER_1: TG[timer.group]->int_clr.t1 = 1; break;
-        case TIMER_MAX: break;
-      }
-    #endif
+
   }
 
   timer.fn();
 
   // After the alarm has been triggered//警报触发后
   // Enable it again so it gets triggered the next time//再次启用它，以便下次触发它
-  TG[timer.group]->hw_timer[timer.idx].config.alarm_en = TIMER_ALARM_EN;
+  TG[timer.group]->hw_timer[timer.idx].config.tx_alarm_en = TIMER_ALARM_EN;
 }
 
 /**
@@ -204,7 +195,7 @@ void HAL_timer_disable_interrupt(const uint8_t timer_num) {
 
 bool HAL_timer_interrupt_enabled(const uint8_t timer_num) {
   const tTimerConfig timer = TimerConfig[timer_num];
-  return TG[timer.group]->int_ena.val | BIT(timer_num);
+  return TG[timer.group]->int_ena_timers.val | BIT(timer_num);
 }
 
 #endif // ARDUINO_ARCH_ESP32//ARDUINO_ARCH_ESP32

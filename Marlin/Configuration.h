@@ -1350,7 +1350,7 @@
 //#define Z_HOMING_HEIGHT  4      // (mm) Minimal Z height before homing (G28) for Z clearance above the bed, clamps, ...//#定义Z_归位高度4/（mm）归位前的最小Z高度（G28），用于床身、夹具等上方的Z间隙。。。
 // Be sure to have this much clearance over your Z_MAX_POS to prevent grinding.//确保在Z_MAX_位置上有这么大的间隙，以防止研磨。
 
-//#define Z_AFTER_HOMING  10      // (mm) Height to move to after homing Z//#定义Z_归位后的Z_10//（mm）高度，以便在归位Z后移动
+#define Z_AFTER_HOMING  2      // (mm) Height to move to after homing Z//#定义Z_归位后的Z_10//（mm）高度，以便在归位Z后移动
 
 // Direction of endstops when homing; 1=MAX, -1=MIN//归位时的终止方向；1=最大值，-1=最小值
 // :[-1,1]// :[-1,1]
@@ -1368,9 +1368,9 @@
 #define Y_BED_SIZE 200
 
 // Travel limits (mm) after homing, corresponding to endstop positions.//归位后的行程限制（mm），对应于末端停止位置。
-#define X_MIN_POS -10
+#define X_MIN_POS -20
 #define Y_MIN_POS -35
-#define Z_MIN_POS -5
+#define Z_MIN_POS 1
 #define X_MAX_POS X_BED_SIZE
 #define Y_MAX_POS Y_BED_SIZE
 #define Z_MAX_POS 300
@@ -1718,7 +1718,7 @@
 
 // Manually set the home position. Leave these undefined for automatic settings.//手动设置起始位置。保留这些未定义的自动设置。
 // For DELTA this is the top-center of the Cartesian print volume.//对于DELTA，这是笛卡尔打印卷的顶部中心。
-#define MANUAL_X_HOME_POS -10//#定义手动\u X\u主页\u位置0
+#define MANUAL_X_HOME_POS -20//#定义手动\u X\u主页\u位置0
 #define MANUAL_Y_HOME_POS -35//#定义手动_Y_HOME_位置0
 #define MANUAL_Z_HOME_POS 0//#定义手动_Z_HOME_位置0
 //#define MANUAL_I_HOME_POS 0//#定义手动\u I\u主页\u位置0
@@ -1733,8 +1733,8 @@
  * - If stepper drivers sleep, XY homing may be required again before Z homing.
  */
 #define Z_SAFE_HOMING//#定义Z_安全归位
-#define Z_SAFE_HOMING_X_POINT 110  // X point for Z homing//Z原点的X点
-#define Z_SAFE_HOMING_Y_POINT 110  // Y point for Z homing//Z原点的Y点
+#define Z_SAFE_HOMING_X_POINT 100  // X point for Z homing//Z原点的X点
+#define Z_SAFE_HOMING_Y_POINT 100  // Y point for Z homing//Z原点的Y点
 /*#if ENABLED(Z_SAFE_HOMING)
 
 #endif*/
