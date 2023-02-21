@@ -1364,7 +1364,7 @@
 // @section machine//型材机
 
 // The size of the printable area//可打印区域的大小
-#define X_BED_SIZE 200
+#define X_BED_SIZE 180
 #define Y_BED_SIZE 200
 
 // Travel limits (mm) after homing, corresponding to endstop positions.//归位后的行程限制（mm），对应于末端停止位置。
