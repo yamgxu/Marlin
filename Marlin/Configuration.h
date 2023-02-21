@@ -1174,7 +1174,7 @@
  *     |    [-]    |
  *     O-- FRONT --+
  */
-#define NOZZLE_TO_PROBE_OFFSET { 0, -45, 0 }
+#define NOZZLE_TO_PROBE_OFFSET { 0, 0, 0 }
 
 // Most probes should stay away from the edges of the bed, but//大多数探头应远离床的边缘，但
 // with NOZZLE_AS_PROBE this can be negative for a wider probing area.//使用喷嘴作为探头时，对于更宽的探测区域，这可能是负面的。
@@ -1368,9 +1368,9 @@
 #define Y_BED_SIZE 200
 
 // Travel limits (mm) after homing, corresponding to endstop positions.//归位后的行程限制（mm），对应于末端停止位置。
-#define X_MIN_POS -20
-#define Y_MIN_POS -35
-#define Z_MIN_POS 1
+#define X_MIN_POS -35
+#define Y_MIN_POS -20
+#define Z_MIN_POS 0
 #define X_MAX_POS X_BED_SIZE
 #define Y_MAX_POS Y_BED_SIZE
 #define Z_MAX_POS 300
@@ -1718,9 +1718,9 @@
 
 // Manually set the home position. Leave these undefined for automatic settings.//手动设置起始位置。保留这些未定义的自动设置。
 // For DELTA this is the top-center of the Cartesian print volume.//对于DELTA，这是笛卡尔打印卷的顶部中心。
-#define MANUAL_X_HOME_POS -20//#定义手动\u X\u主页\u位置0
-#define MANUAL_Y_HOME_POS -35//#定义手动_Y_HOME_位置0
-#define MANUAL_Z_HOME_POS 0//#定义手动_Z_HOME_位置0
+#define MANUAL_X_HOME_POS -35//#定义手动\u X\u主页\u位置0
+#define MANUAL_Y_HOME_POS -20//#定义手动_Y_HOME_位置0
+#define MANUAL_Z_HOME_POS -1//#定义手动_Z_HOME_位置0
 //#define MANUAL_I_HOME_POS 0//#定义手动\u I\u主页\u位置0
 //#define MANUAL_J_HOME_POS 0//#定义手动回家位置0
 //#define MANUAL_K_HOME_POS 0//#定义手动\u K\u主页\u位置0
@@ -1740,7 +1740,7 @@
 #endif*/
 
 // Homing speeds (mm/min)//归位速度（毫米/分钟）
-#define HOMING_FEEDRATE_MM_M { (50*60), (50*60), (4*60) }
+#define HOMING_FEEDRATE_MM_M { (50*60), (50*60), (200) }
 
 // Validate that endstops are triggered on homing moves//验证归位移动时是否触发结束停止
 #define VALIDATE_HOMING_ENDSTOPS
