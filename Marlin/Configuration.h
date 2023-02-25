@@ -1720,7 +1720,7 @@
 // For DELTA this is the top-center of the Cartesian print volume.//对于DELTA，这是笛卡尔打印卷的顶部中心。
 #define MANUAL_X_HOME_POS -35//#定义手动\u X\u主页\u位置0
 #define MANUAL_Y_HOME_POS -20//#定义手动_Y_HOME_位置0
-#define MANUAL_Z_HOME_POS -1//#定义手动_Z_HOME_位置0
+#define MANUAL_Z_HOME_POS 0//#定义手动_Z_HOME_位置0
 //#define MANUAL_I_HOME_POS 0//#定义手动\u I\u主页\u位置0
 //#define MANUAL_J_HOME_POS 0//#定义手动回家位置0
 //#define MANUAL_K_HOME_POS 0//#定义手动\u K\u主页\u位置0
